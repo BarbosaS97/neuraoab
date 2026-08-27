@@ -10,10 +10,16 @@
 <link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180.png">
 <link rel="manifest" href="../manifest.webmanifest">
 <meta name="theme-color" content="#0d1117">
-<link rel="stylesheet" href="style.css?v=18">
+<link rel="stylesheet" href="style.css?v=19">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
+
+<div class="loading-splash" id="loadingSplash">
+  <img src="../images/carregamento.png" alt="" class="loading-image" id="loadingImage">
+  <p class="loading-message" id="loadingMessage">Questões sendo carregadas...</p>
+  <button type="button" class="loading-start-btn" id="loadingStartBtn" hidden>Começar</button>
+</div>
 
 <a href="../index.html" class="brand-logo" id="brandLogo"><img src="../images/logotipo.png" alt="NeuraOAB"></a>
 
@@ -123,7 +129,7 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=11"></script>
+<script src="estudos.js?v=12"></script>
 <script src="dr-laureano.js?v=8"></script>
 </body>
 </html>

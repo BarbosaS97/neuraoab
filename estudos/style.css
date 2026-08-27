@@ -45,6 +45,80 @@ body {
 
 a { color: inherit; }
 
+/* -------------------------------------------------------- Tela de carga */
+/*
+  Cobre a tela inteira (menu, questao, chat) enquanto TODAS as questoes do
+  banco sao carregadas de uma vez (nao so' a pagina atual) — assim, depois
+  que o aluno clica em "Comecar", navegar entre questoes fica instantaneo,
+  sem precisar buscar cada uma na hora. Some so' quando o aluno clica no
+  botao, mesmo que o carregamento em si ja' tenha terminado antes disso.
+*/
+.loading-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  gap: 22px;
+}
+
+.loading-image {
+  width: min(200px, 45vw);
+  height: auto;
+  animation: loadingPulse 1.7s ease-in-out infinite;
+}
+
+.loading-splash.ready .loading-image { animation: none; }
+
+@keyframes loadingPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.07); opacity: 0.8; }
+}
+
+.loading-message {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 440px;
+}
+
+.loading-splash.ready .loading-message { color: var(--text); }
+
+.loading-start-btn {
+  background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 48px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  box-shadow: 0 16px 36px -16px rgba(122, 24, 252, 0.6);
+  transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
+}
+
+.loading-start-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 20px 42px -14px rgba(122, 24, 252, 0.7);
+}
+
+.loading-start-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.loading-error {
+  color: var(--error);
+}
+
 /* ------------------------------------------------------------------ App */
 /*
   Sem barra superior: toda a navegacao (logo, links, avatar) mora dentro da

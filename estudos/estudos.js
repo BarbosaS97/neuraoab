@@ -16,6 +16,10 @@ const fDisc = document.getElementById("fDisc");
 const clearFiltersBtn = document.getElementById("clearFilters");
 const scoreText = document.getElementById("scoreText");
 const resetScoreBtn = document.getElementById("resetScore");
+const loadingSplash = document.getElementById("loadingSplash");
+const loadingImage = document.getElementById("loadingImage");
+const loadingMessage = document.getElementById("loadingMessage");
+const loadingStartBtn = document.getElementById("loadingStartBtn");
 
 let allQuestions = [];
 let filtered = [];
@@ -378,11 +382,11 @@ function renderQuestionBody(q, body) {
   }
 }
 
-// So busca enunciado/alternativas (os campos pesados) quando a questao e'
-// de fato exibida — ver fetchQuestionDetails, mais abaixo. Enquanto isso
-// nao chega, mostra um placeholder de carregamento so' nessa area; meta e
-// navegacao aparecem de imediato, pois ja vem completos na busca inicial.
-async function renderQuestion() {
+// Todas as questoes (enunciado e alternativas incluidos) ja' foram
+// carregadas de uma vez so' na tela de carregamento (ver init(), mais
+// abaixo) — entao renderizar uma questao aqui e' sempre sincrono, sem
+// nenhuma busca de rede no meio.
+function renderQuestion() {
   if (filtered.length === 0) {
     viewer.innerHTML = "";
     const empty = document.createElement("div");
@@ -400,7 +404,6 @@ async function renderQuestion() {
   }
 
   const q = filtered[currentIndex];
-  const requestedId = q.id;
 
   // Reinicia a animacao de entrada do card (definida via CSS em
   // .question-card) a cada troca de questao — sem isso, ela so tocaria
@@ -414,23 +417,8 @@ async function renderQuestion() {
   viewer.appendChild(buildMetaBadges(q));
 
   const body = document.createElement("div");
-  body.innerHTML = `<div class="loading">Carregando enunciado...</div>`;
   viewer.appendChild(body);
   viewer.appendChild(buildNavButtons());
-
-  if (q.statement === undefined) {
-    try {
-      Object.assign(q, await fetchQuestionDetails(q.id));
-    } catch {
-      if (filtered[currentIndex]?.id === requestedId) {
-        body.innerHTML = `<div class="err-box">Erro ao carregar o enunciado desta questão.</div>`;
-      }
-      return;
-    }
-    // O usuario pode ter navegado para outra questao enquanto isso
-    // carregava — nesse caso, essa resposta chegou atrasada, nao mexe na tela.
-    if (filtered[currentIndex]?.id !== requestedId) return;
-  }
 
   renderQuestionBody(q, body);
   document.dispatchEvent(new CustomEvent("question:changed", { detail: q }));
@@ -486,20 +474,19 @@ document.addEventListener("keydown", (ev) => {
 // ao fim.
 const PAGE_SIZE = 1000;
 
-// Colunas leves o bastante para montar os filtros e a lista de questoes.
-// De proposito NAO inclui "statement" e "alternatives" (o texto pesado de
-// cada questao) — isso e' buscado so' sob demanda, ver fetchQuestionDetails,
-// quando a questao e' de fato aberta. Isso e' o que torna o carregamento
-// inicial rapido mesmo com milhares de questoes no banco.
-const INDEX_COLUMNS = "id, year, exam_number, exam_type, number, discipline, correct_answer";
+// Busca TODAS as colunas de TODAS as questoes de uma vez (enunciado e
+// alternativas incluidos) — de proposito, mesmo sendo mais pesado que so'
+// os campos leves: e' isso que permite, depois da tela de carregamento,
+// navegar entre questoes sem nenhuma espera nem busca de rede no meio.
+const QUESTION_COLUMNS = "id, year, exam_number, exam_type, number, discipline, correct_answer, statement, alternatives";
 
-async function fetchQuestionIndex() {
+async function fetchAllQuestions() {
   const rows = [];
   let from = 0;
   while (true) {
     const { data, error } = await client
       .from("oab_questions")
-      .select(INDEX_COLUMNS)
+      .select(QUESTION_COLUMNS)
       .order("year", { ascending: false })
       .order("exam_number", { ascending: false })
       .order("exam_type", { ascending: true })
@@ -516,40 +503,41 @@ async function fetchQuestionIndex() {
   return rows;
 }
 
-// Busca enunciado + alternativas de UMA questao, por id (chave primaria —
-// rapido mesmo com o banco grande). Guarda a promise em voo para nao
-// disparar duas buscas iguais se o usuario navegar rapido pra frente e
-// pra tras antes da primeira resposta chegar.
-const pendingDetailFetches = new Map();
+// Troca a tela de carregamento de "carregando" pra "pronto pra comecar":
+// para a animacao de pulso, atualiza a mensagem e revela o botao. So'
+// desaparece de fato quando o aluno clica nele (nao sozinha), pra dar
+// tempo de ler a orientacao sobre o menu e o chat.
+let loadingMode = "loading"; // "loading" | "ready" | "error"
 
-function fetchQuestionDetails(id) {
-  if (pendingDetailFetches.has(id)) return pendingDetailFetches.get(id);
-
-  const promise = client
-    .from("oab_questions")
-    .select("statement, alternatives")
-    .eq("id", id)
-    .single()
-    .then(({ data, error }) => {
-      pendingDetailFetches.delete(id);
-      if (error) throw error;
-      return data;
-    })
-    .catch(err => {
-      pendingDetailFetches.delete(id);
-      throw err;
-    });
-
-  pendingDetailFetches.set(id, promise);
-  return promise;
+function showLoadingReady() {
+  loadingMode = "ready";
+  loadingSplash.classList.add("ready");
+  loadingMessage.textContent = "Questões carregadas. Abra o menu no lado esquerdo para configurar os " +
+    "parâmetros e abra o chat com Dr. Laureano do lado direito para tirar dúvidas sobre as questões.";
+  loadingStartBtn.hidden = false;
+  loadingStartBtn.focus();
 }
+
+function showLoadingError(message) {
+  loadingMode = "error";
+  loadingSplash.classList.add("ready");
+  loadingMessage.textContent = message;
+  loadingMessage.classList.add("loading-error");
+  loadingStartBtn.hidden = false;
+  loadingStartBtn.textContent = "Tentar novamente";
+}
+
+loadingStartBtn.addEventListener("click", () => {
+  if (loadingMode === "error") location.reload();
+  else loadingSplash.remove();
+});
 
 async function init() {
   let data;
   try {
-    data = await fetchQuestionIndex();
+    data = await fetchAllQuestions();
   } catch (error) {
-    viewer.innerHTML = `<div class="err-box">Erro ao carregar questões: ${error.message}</div>`;
+    showLoadingError(`Erro ao carregar questões: ${error.message}`);
     filterCountEl.textContent = "Erro ao carregar.";
     return;
   }
@@ -557,13 +545,14 @@ async function init() {
   allQuestions = data || [];
 
   if (allQuestions.length === 0) {
-    viewer.innerHTML = `<div class="empty">Nenhuma questão no banco ainda. Importe um JSON na aba Admin.</div>`;
+    showLoadingError("Nenhuma questão no banco ainda. Importe um JSON na aba Admin.");
     filterCountEl.textContent = "0 questão(ões) encontrada(s)";
     return;
   }
 
   refreshFilterOptions(null);
   applyFilters();
+  showLoadingReady();
 }
 
 init();

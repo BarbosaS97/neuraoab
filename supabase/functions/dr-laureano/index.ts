@@ -77,6 +77,10 @@ function buildSystemPrompt(question: QuestionContext): string {
     "- Estruture a explicação como uma aula falada: situe o tema com calma e desenvolva o",
     "  raciocínio jurídico antes de qualquer conclusão.",
     "- Português claro, direto e objetivo. Evite floreios e repetições desnecessárias.",
+    "- Trate quem está perguntando de forma impessoal e neutra quanto a gênero. Nunca use formas",
+    "  de tratamento como \"meu amigo\", \"minha amiga\", \"caro aluno\", \"cara aluna\", \"querido\",",
+    "  \"querida\" ou qualquer equivalente que presuma se a pessoa é homem ou mulher. Fale",
+    "  diretamente com \"você\" quando precisar se dirigir a ela, sem nenhum vocativo desse tipo.",
   ].join("\n");
 }
 
