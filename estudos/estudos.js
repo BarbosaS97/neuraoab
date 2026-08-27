@@ -56,14 +56,49 @@ sidebarToggle.addEventListener("click", () => {
 setSidebarExpanded(false);
 
 // ------------------------------------------------------------------ Mode
+//
+// Escopado por ".mode-switch" (nao por todos os ".mode-btn" da pagina de
+// uma vez) — sao dois grupos independentes (Pratica/Simulado e
+// Escuro/Claro), cada um com sua propria selecao unica.
 
-document.querySelectorAll(".mode-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    if (btn.disabled) return;
-    document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
+document.querySelectorAll(".mode-switch").forEach(group => {
+  const buttons = group.querySelectorAll(".mode-btn");
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (btn.disabled) return;
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      if (btn.dataset.themeBtn) applyTheme(btn.dataset.themeBtn);
+    });
   });
 });
+
+// ------------------------------------------------------------------ Tema
+
+const THEME_STORAGE_KEY = "neuraoab-theme";
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  document.querySelectorAll("[data-theme-btn]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.themeBtn === theme);
+  });
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch {
+    // localStorage indisponivel (modo privado, etc.) — o tema so' nao
+    // persiste entre sessoes, mas continua funcionando na atual.
+  }
+}
+
+(function initTheme() {
+  let saved = null;
+  try {
+    saved = localStorage.getItem(THEME_STORAGE_KEY);
+  } catch {
+    // idem — segue com o padrao (escuro).
+  }
+  applyTheme(saved === "light" ? "light" : "dark");
+})();
 
 // ----------------------------------------------------------------- Score
 

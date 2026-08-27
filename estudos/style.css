@@ -29,6 +29,27 @@
   --chat-bg: #17110c;
 }
 
+/* Tema claro: so' redefine os tons de fundo/texto/borda — as cores de
+   marca (--primary, --secondary, --logo-*) continuam as mesmas nos dois
+   temas, ja' que funcionam bem tanto no escuro quanto no claro. Alternado
+   via JS (ver applyTheme em estudos.js), que so' liga/desliga esse
+   atributo em <html> — todo o resto do CSS ja' usa as variaveis, entao
+   se ajusta sozinho. */
+:root[data-theme="light"] {
+  --bg: #f6f8fa;
+  --card: #ffffff;
+  --card-hover: #eef1f4;
+  --border: #d0d7de;
+  --text: #1f2328;
+  --text-dim: #59636e;
+  --primary-dim: rgba(139, 92, 246, 0.1);
+  --success: #1a7f37;
+  --success-dim: rgba(26, 127, 55, 0.1);
+  --error: #cf222e;
+  --error-dim: rgba(207, 34, 46, 0.1);
+  --chat-bg: #fdf6f0;
+}
+
 * { box-sizing: border-box; }
 
 html, body {
@@ -111,7 +132,7 @@ a { color: inherit; }
 }
 
 .loading-start-btn:focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid var(--text);
   outline-offset: 3px;
 }
 
