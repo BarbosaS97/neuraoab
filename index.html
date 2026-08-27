@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuraOAB</title>
+<style>
+  :root {
+    --bg: #0f1420;
+    --panel: #161d2e;
+    --panel-border: #262f45;
+    --panel-hover: #1c2438;
+    --text: #e6e9f0;
+    --text-dim: #8b93a7;
+    --accent: #4f7cff;
+    --accent-hover: #6b91ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 24px;
+    border-bottom: 1px solid var(--panel-border);
+  }
+  nav .brand {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+  }
+  nav .brand img { height: 40px; width: auto; display: block; }
+  nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 6px;
+  }
+  nav a.active { color: var(--text); background: var(--panel); }
+  nav a:hover { color: var(--text); }
+
+  .hero {
+    max-width: 640px;
+    margin: 64px auto 0;
+    padding: 0 24px;
+    text-align: center;
+  }
+  .hero h1 { font-size: 26px; margin: 0 0 8px; }
+  .hero p { color: var(--text-dim); font-size: 14px; margin: 0 0 32px; }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px 48px;
+  }
+  @media (max-width: 560px) {
+    .cards { grid-template-columns: 1fr; }
+  }
+  .card {
+    display: block;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    padding: 22px;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color .15s, background .15s;
+  }
+  .card:hover { border-color: var(--accent); background: var(--panel-hover); }
+  .card .icon { font-size: 22px; margin-bottom: 10px; }
+  .card h2 { font-size: 15px; margin: 0 0 6px; }
+  .card p { font-size: 12.5px; color: var(--text-dim); margin: 0; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="brand"><img src="images/logotipo.png" alt="NeuraOAB"></a>
+  <a href="index.html" class="active">Início</a>
+  <a href="estudos/index.html">Estudos</a>
+  <a href="admin/import.html">Admin</a>
+</nav>
+
+<div class="hero">
+  <h1>NeuraOAB</h1>
+  <p>Questões da OAB importadas e organizadas para estudo.</p>
+</div>
+
+<div class="cards">
+  <a class="card" href="estudos/index.html">
+    <div class="icon">📚</div>
+    <h2>Estudos</h2>
+    <p>Navegue pelas questões por ano, prova e disciplina, e pratique respondendo às alternativas.</p>
+  </a>
+  <a class="card" href="admin/import.html">
+    <div class="icon">⬆️</div>
+    <h2>Admin — Importação</h2>
+    <p>Upload de JSON gerado pelo extrator e importação para o Supabase.</p>
+  </a>
+</div>
+
+</body>
+</html>

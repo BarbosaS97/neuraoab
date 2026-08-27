@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuraOAB — Importação de Questões</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<style>
+  :root {
+    --bg: #0f1420;
+    --panel: #161d2e;
+    --panel-border: #262f45;
+    --text: #e6e9f0;
+    --text-dim: #8b93a7;
+    --accent: #4f7cff;
+    --accent-hover: #6b91ff;
+    --ok: #35c78a;
+    --err: #ef5757;
+    --warn: #e8b339;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 24px;
+    border-bottom: 1px solid var(--panel-border);
+  }
+  nav .brand {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+  }
+  nav .brand img { height: 40px; width: auto; display: block; }
+  nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 6px;
+  }
+  nav a.active { color: var(--text); background: var(--panel); }
+  nav a:hover { color: var(--text); }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px;
+  }
+  h1 {
+    font-size: 22px;
+    margin: 0 0 4px;
+  }
+  .sub {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .panel h2 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--text-dim);
+    margin: 0 0 14px;
+  }
+  .counter {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .counter .num {
+    font-size: 28px;
+    font-weight: 600;
+  }
+  .counter .label {
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+  #dropzone {
+    border: 2px dashed var(--panel-border);
+    border-radius: 8px;
+    padding: 36px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  #dropzone.drag {
+    border-color: var(--accent);
+    background: rgba(79,124,255,.08);
+  }
+  #dropzone .icon { font-size: 28px; margin-bottom: 8px; }
+  #dropzone .primary { font-size: 14px; }
+  #dropzone .secondary { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+  input[type=file] { display: none; }
+
+  .file-info {
+    margin-top: 14px;
+    font-size: 13px;
+    display: none;
+  }
+  .file-info.show { display: block; }
+  .file-info .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .file-info .row:last-child { border-bottom: none; }
+  .file-info .row span:first-child { color: var(--text-dim); }
+
+  .validation {
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    display: none;
+  }
+  .validation.show { display: block; }
+  .validation.ok { background: rgba(53,199,138,.1); border: 1px solid rgba(53,199,138,.35); color: var(--ok); }
+  .validation.err { background: rgba(239,87,87,.1); border: 1px solid rgba(239,87,87,.35); color: var(--err); }
+  .validation ul { margin: 6px 0 0; padding-left: 18px; }
+
+  button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 14px;
+    transition: background .15s;
+  }
+  button:hover:not(:disabled) { background: var(--accent-hover); }
+  button:disabled { background: #33394a; color: #767c8c; cursor: not-allowed; }
+
+  #log {
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 12.5px;
+    max-height: 320px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  #log:empty::before {
+    content: "Nenhuma importação executada ainda.";
+    color: var(--text-dim);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 13px;
+  }
+  .log-line { display: flex; gap: 8px; }
+  .log-line .t { color: var(--text-dim); flex-shrink: 0; }
+  .log-line.ok .m { color: var(--ok); }
+  .log-line.err .m { color: var(--err); }
+  .log-line.warn .m { color: var(--warn); }
+  .log-line.info .m { color: var(--text); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="brand"><img src="../images/logotipo.png" alt="NeuraOAB"></a>
+  <a href="../index.html">Início</a>
+  <a href="../estudos/index.html">Estudos</a>
+  <a href="import.html" class="active">Admin</a>
+</nav>
+
+<div class="wrap">
+  <h1>NeuraOAB — Importação de Questões</h1>
+  <div class="sub">Upload do JSON gerado pelo extrator Python e importação para o Supabase (tabela <code>oab_questions</code>).</div>
+
+  <div class="panel">
+    <h2>Banco de dados</h2>
+    <div class="counter">
+      <div class="num" id="dbCount">—</div>
+      <div class="label">questões cadastradas no banco</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Upload</h2>
+    <div id="dropzone">
+      <div class="icon">📄</div>
+      <div class="primary">Arraste o arquivo JSON aqui ou clique para selecionar</div>
+      <div class="secondary">Formato esperado: saída do extract_oab.py</div>
+      <input type="file" id="fileInput" accept="application/json,.json">
+    </div>
+
+    <div class="file-info" id="fileInfo">
+      <div class="row"><span>Arquivo</span><span id="fiName"></span></div>
+      <div class="row"><span>Ano</span><span id="fiYear"></span></div>
+      <div class="row"><span>Exame</span><span id="fiExam"></span></div>
+      <div class="row"><span>Tipo de prova</span><span id="fiType"></span></div>
+      <div class="row"><span>Questões no arquivo</span><span id="fiCount"></span></div>
+    </div>
+
+    <div class="validation" id="validation"></div>
+
+    <button id="importBtn" disabled>Importar para o banco</button>
+  </div>
+
+  <div class="panel">
+    <h2>Log de importação</h2>
+    <div id="log"></div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://lgcphxncteqpbntnlzhe.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnY3BoeG5jdGVxcGJudG5semhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc3NzI5NTIsImV4cCI6MjEwMzM0ODk1Mn0.gQltbgj-OPpDEPuyOSonM3G8h1ppwwez0Dwi3SOdx98";
+
+const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const dropzone = document.getElementById("dropzone");
+const fileInput = document.getElementById("fileInput");
+const fileInfo = document.getElementById("fileInfo");
+const validationBox = document.getElementById("validation");
+const importBtn = document.getElementById("importBtn");
+const logEl = document.getElementById("log");
+const dbCountEl = document.getElementById("dbCount");
+
+let parsedData = null;
+
+function logLine(message, level = "info") {
+  const line = document.createElement("div");
+  line.className = `log-line ${level}`;
+  const time = new Date().toLocaleTimeString("pt-BR");
+  const t = document.createElement("span");
+  t.className = "t";
+  t.textContent = `[${time}]`;
+  const m = document.createElement("span");
+  m.className = "m";
+  m.textContent = message;
+  line.appendChild(t);
+  line.appendChild(m);
+  logEl.appendChild(line);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+async function refreshCount() {
+  const { count, error } = await client
+    .from("oab_questions")
+    .select("*", { count: "exact", head: true });
+  if (error) {
+    dbCountEl.textContent = "erro";
+    logLine(`Falha ao consultar contagem: ${error.message}`, "err");
+    return;
+  }
+  dbCountEl.textContent = count ?? 0;
+}
+
+function validateStructure(data) {
+  const errors = [];
+
+  if (typeof data !== "object" || data === null) {
+    return ["O arquivo não contém um objeto JSON válido."];
+  }
+  if (typeof data.year !== "number") errors.push("Campo 'year' ausente ou inválido.");
+  if (typeof data.exam_type !== "string" || !data.exam_type) errors.push("Campo 'exam_type' ausente ou inválido.");
+  if (!Array.isArray(data.questions)) {
+    errors.push("Campo 'questions' ausente ou não é uma lista.");
+    return errors;
+  }
+  if (data.questions.length === 0) {
+    errors.push("A lista 'questions' está vazia.");
+  }
+
+  data.questions.forEach((q, idx) => {
+    const ref = `questions[${idx}]${q && q.number !== undefined ? ` (nº ${q.number})` : ""}`;
+    if (typeof q !== "object" || q === null) {
+      errors.push(`${ref}: não é um objeto.`);
+      return;
+    }
+    if (typeof q.number !== "number") errors.push(`${ref}: campo 'number' ausente ou inválido.`);
+    if (typeof q.statement !== "string" || !q.statement) errors.push(`${ref}: campo 'statement' ausente ou inválido.`);
+    if (!Array.isArray(q.alternatives) || q.alternatives.length === 0) errors.push(`${ref}: campo 'alternatives' ausente ou inválido.`);
+    if (typeof q.correct_answer !== "string" || !q.correct_answer) errors.push(`${ref}: campo 'correct_answer' ausente ou inválido.`);
+  });
+
+  return errors;
+}
+
+function showValidation(errors) {
+  validationBox.classList.remove("ok", "err", "show");
+  validationBox.innerHTML = "";
+
+  if (errors.length === 0) {
+    validationBox.classList.add("ok", "show");
+    validationBox.textContent = "Estrutura do JSON válida.";
+    return true;
+  }
+
+  validationBox.classList.add("err", "show");
+  const title = document.createElement("div");
+  title.textContent = `${errors.length} problema(s) encontrado(s):`;
+  const list = document.createElement("ul");
+  errors.slice(0, 20).forEach(e => {
+    const li = document.createElement("li");
+    li.textContent = e;
+    list.appendChild(li);
+  });
+  if (errors.length > 20) {
+    const li = document.createElement("li");
+    li.textContent = `... e mais ${errors.length - 20} problema(s).`;
+    list.appendChild(li);
+  }
+  validationBox.appendChild(title);
+  validationBox.appendChild(list);
+  return false;
+}
+
+function handleFile(file) {
+  if (!file) return;
+  parsedData = null;
+  importBtn.disabled = true;
+  fileInfo.classList.remove("show");
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    let data;
+    try {
+      data = JSON.parse(reader.result);
+    } catch (e) {
+      showValidation([`JSON malformado: ${e.message}`]);
+      return;
+    }
+
+    const errors = validateStructure(data);
+    const valid = showValidation(errors);
+
+    document.getElementById("fiName").textContent = file.name;
+    document.getElementById("fiYear").textContent = data.year ?? "—";
+    document.getElementById("fiExam").textContent = data.exam_number ? `${data.exam_number}º` : "—";
+    document.getElementById("fiType").textContent = data.exam_type ?? "—";
+    document.getElementById("fiCount").textContent = Array.isArray(data.questions) ? data.questions.length : "—";
+    fileInfo.classList.add("show");
+
+    if (valid) {
+      parsedData = data;
+      importBtn.disabled = false;
+      logLine(`Arquivo "${file.name}" validado com sucesso (${data.questions.length} questões).`, "ok");
+    } else {
+      logLine(`Arquivo "${file.name}" reprovado na validação.`, "err");
+    }
+  };
+  reader.onerror = () => {
+    logLine(`Falha ao ler o arquivo "${file.name}".`, "err");
+  };
+  reader.readAsText(file);
+}
+
+dropzone.addEventListener("click", () => fileInput.click());
+fileInput.addEventListener("change", () => handleFile(fileInput.files[0]));
+
+["dragenter", "dragover"].forEach(evt => {
+  dropzone.addEventListener(evt, e => {
+    e.preventDefault();
+    dropzone.classList.add("drag");
+  });
+});
+["dragleave", "drop"].forEach(evt => {
+  dropzone.addEventListener(evt, e => {
+    e.preventDefault();
+    dropzone.classList.remove("drag");
+  });
+});
+dropzone.addEventListener("drop", e => {
+  const file = e.dataTransfer.files[0];
+  handleFile(file);
+});
+
+importBtn.addEventListener("click", async () => {
+  if (!parsedData) return;
+  importBtn.disabled = true;
+
+  const { year, exam_type, exam_number, questions } = parsedData;
+  logLine(
+    `Iniciando importação de ${questions.length} questões (ano ${year}, ` +
+    `exame ${exam_number ?? "—"}, tipo ${exam_type})...`,
+    "info"
+  );
+
+  const rows = questions.map(q => ({
+    year,
+    exam_number: q.exam_number ?? exam_number ?? null,
+    exam_type,
+    number: q.number,
+    discipline: q.discipline ?? null,
+    statement: q.statement,
+    alternatives: q.alternatives,
+    correct_answer: q.correct_answer,
+  }));
+
+  try {
+    const { data, error } = await client
+      .from("oab_questions")
+      .upsert(rows, { onConflict: "year,exam_number,exam_type,number", ignoreDuplicates: true })
+      .select("number");
+
+    if (error) {
+      if (/no unique or exclusion constraint/i.test(error.message)) {
+        logLine(
+          "Erro na importação: o banco ainda não tem o índice único " +
+          "atualizado (year, exam_number, exam_type, number). Rode de novo " +
+          "o supabase/schema.sql mais recente no SQL Editor do Supabase.",
+          "err"
+        );
+      } else {
+        logLine(`Erro na importação: ${error.message}`, "err");
+      }
+      importBtn.disabled = false;
+      return;
+    }
+
+    const inserted = data.length;
+    const skipped = rows.length - inserted;
+
+    logLine(`Importação concluída: ${inserted} questão(ões) inserida(s).`, "ok");
+    if (skipped > 0) {
+      logLine(`${skipped} questão(ões) já existiam no banco e foram ignoradas (duplicatas).`, "warn");
+    }
+
+    await refreshCount();
+  } catch (e) {
+    logLine(`Erro inesperado: ${e.message}`, "err");
+  } finally {
+    importBtn.disabled = false;
+  }
+});
+
+refreshCount();
+</script>
+</body>
+</html>

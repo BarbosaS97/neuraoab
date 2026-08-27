@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuraOAB — Estudos</title>
+<link rel="stylesheet" href="style.css?v=14">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body>
+
+<a href="../index.html" class="brand-logo" id="brandLogo"><img src="../images/logotipo.png" alt="NeuraOAB"></a>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <button id="sidebarToggle" class="sidebar-handle" aria-label="Expandir menu" aria-expanded="false">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+
+    <div class="sidebar-clip">
+    <div class="sidebar-scroll">
+      <div class="side-brand">
+        <div class="avatar" title="Sua sessão de estudo">E</div>
+      </div>
+
+      <nav class="side-nav">
+        <a href="index.html" class="active">Estudos</a>
+        <a href="#" class="soon" aria-disabled="true" title="Em breve">Estatísticas</a>
+        <a href="../admin/import.html">Admin</a>
+      </nav>
+
+      <section class="side-section">
+        <h2 class="side-title">Filtros</h2>
+
+        <div class="field">
+          <label for="fYear">Ano</label>
+          <select id="fYear"><option value="all">Todos</option></select>
+        </div>
+
+        <div class="field">
+          <label for="fExam">Exame</label>
+          <select id="fExam"><option value="all">Todos</option></select>
+        </div>
+
+        <div class="field">
+          <label for="fDisc">Disciplina</label>
+          <select id="fDisc"><option value="all">Todas</option></select>
+        </div>
+
+        <p class="result-count" id="filterCount">Carregando...</p>
+        <button type="button" id="clearFilters" class="btn-ghost clear-filters" hidden>Limpar filtros</button>
+      </section>
+
+      <section class="side-section mode-section">
+        <h2 class="side-title">Modo</h2>
+        <div class="mode-switch">
+          <button class="mode-btn active" data-mode="pratica" type="button">Prática</button>
+          <button class="mode-btn" data-mode="simulado" type="button" disabled title="Em breve">Simulado</button>
+        </div>
+      </section>
+
+      <section class="side-section qlist-section">
+        <div class="qlist-header">
+          <h2 class="side-title">Selecionar Questões</h2>
+          <span class="qlist-count" id="qlistCount">0</span>
+        </div>
+        <div id="qlist" class="qlist"></div>
+      </section>
+
+      <section class="side-section score-section">
+        <div class="score-row">
+          <span class="score-label">Acertos nesta sessão</span>
+          <b id="scoreText">0 / 0</b>
+        </div>
+        <button id="resetScore" class="btn-ghost" type="button">Reiniciar sessão</button>
+      </section>
+    </div>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div id="viewer" class="question-card">
+      <div class="loading">Carregando questões do banco...</div>
+    </div>
+  </main>
+
+  <aside class="chat-panel" id="chatPanel">
+    <div class="chat-toggle-group">
+      <img src="../images/Dr.%20Laureano.png" alt="Dr. Laureano" class="chat-toggle-avatar">
+      <button id="chatToggle" class="chat-handle" aria-label="Abrir chat com Dr. Laureano" aria-expanded="false">IA</button>
+    </div>
+
+    <div class="chat-clip">
+    <div class="chat-scroll">
+      <div class="chat-header">
+        <img src="../images/Dr.%20Laureano.png" alt="Dr. Laureano" class="chat-avatar">
+        <div>
+          <div class="chat-title">Dr. Laureano</div>
+          <div class="chat-subtitle">Tira-dúvidas da questão atual</div>
+        </div>
+        <button type="button" id="chatClose" class="chat-close" aria-label="Fechar chat">&times;</button>
+      </div>
+
+      <div class="chat-messages" id="chatMessages"></div>
+
+      <form class="chat-input-row" id="chatForm">
+        <textarea id="chatInput" rows="1" placeholder="Pergunte sobre esta questão..."></textarea>
+        <button type="submit" class="chat-send" id="chatSend" aria-label="Enviar pergunta">&rarr;</button>
+      </form>
+    </div>
+    </div>
+  </aside>
+</div>
+
+<script src="estudos.js?v=11"></script>
+<script src="dr-laureano.js?v=4"></script>
+</body>
+</html>
