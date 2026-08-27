@@ -6,106 +6,120 @@
 <title>NeuraOAB</title>
 <style>
   :root {
-    --bg: #0f1420;
-    --panel: #161d2e;
-    --panel-border: #262f45;
-    --panel-hover: #1c2438;
-    --text: #e6e9f0;
-    --text-dim: #8b93a7;
-    --accent: #4f7cff;
-    --accent-hover: #6b91ff;
+    --bg: #0d1117;
+    --text: #f0f6fc;
+    --text-dim: #8b949e;
+    --primary: #8b5cf6;
+    --logo-orange: #e2500a;
+    --logo-purple: #7a18fc;
+    --logo-blue: #0a6bfd;
   }
+
   * { box-sizing: border-box; }
-  body {
+
+  html, body {
     margin: 0;
+    height: 100%;
+  }
+
+  body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
+    overflow: hidden;
   }
-  nav {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 10px 24px;
-    border-bottom: 1px solid var(--panel-border);
-  }
-  nav .brand {
-    display: flex;
-    align-items: center;
-    margin-right: 8px;
-  }
-  nav .brand img { height: 40px; width: auto; display: block; }
-  nav a {
-    color: var(--text-dim);
-    text-decoration: none;
-    font-size: 13px;
-    padding: 6px 12px;
-    border-radius: 6px;
-  }
-  nav a.active { color: var(--text); background: var(--panel); }
-  nav a:hover { color: var(--text); }
 
-  .hero {
-    max-width: 640px;
-    margin: 64px auto 0;
-    padding: 0 24px;
+  .landing {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    padding: 24px;
   }
-  .hero h1 { font-size: 26px; margin: 0 0 8px; }
-  .hero p { color: var(--text-dim); font-size: 14px; margin: 0 0 32px; }
 
-  .cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 0 24px 48px;
+  /* Brilho ambiente atras da logo, nas cores da marca — da' o "impacto"
+     da landing sem precisar de mais nenhum elemento na tela. */
+  .landing::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 38%, rgba(226, 80, 10, 0.16), transparent 32%),
+      radial-gradient(circle at 42% 45%, rgba(122, 24, 252, 0.18), transparent 38%),
+      radial-gradient(circle at 58% 45%, rgba(10, 107, 253, 0.16), transparent 38%);
+    pointer-events: none;
   }
-  @media (max-width: 560px) {
-    .cards { grid-template-columns: 1fr; }
-  }
-  .card {
+
+  .logo {
+    position: relative;
+    width: min(340px, 70vw);
+    height: auto;
     display: block;
-    background: var(--panel);
-    border: 1px solid var(--panel-border);
-    border-radius: 10px;
-    padding: 22px;
-    text-decoration: none;
-    color: var(--text);
-    transition: border-color .15s, background .15s;
+    filter: drop-shadow(0 0 26px rgba(226, 80, 10, 0.35)) drop-shadow(0 0 34px rgba(10, 107, 253, 0.3));
+    animation: riseIn 0.6s ease both;
   }
-  .card:hover { border-color: var(--accent); background: var(--panel-hover); }
-  .card .icon { font-size: 22px; margin-bottom: 10px; }
-  .card h2 { font-size: 15px; margin: 0 0 6px; }
-  .card p { font-size: 12.5px; color: var(--text-dim); margin: 0; line-height: 1.5; }
+
+  .tagline {
+    position: relative;
+    margin: 28px 0 0;
+    font-size: clamp(15px, 2.4vw, 19px);
+    color: var(--text-dim);
+    max-width: 480px;
+    line-height: 1.5;
+    animation: riseIn 0.6s ease 0.1s both;
+  }
+
+  .tagline strong { color: var(--text); font-weight: 600; }
+
+  .cta {
+    position: relative;
+    margin-top: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 56px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    box-shadow: 0 16px 40px -16px rgba(122, 24, 252, 0.65);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+    animation: riseIn 0.6s ease 0.2s both;
+  }
+
+  .cta:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+    box-shadow: 0 20px 46px -14px rgba(122, 24, 252, 0.75);
+  }
+
+  .cta:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo, .tagline, .cta { animation: none; }
+  }
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="brand"><img src="images/logotipo.png" alt="NeuraOAB"></a>
-  <a href="index.html" class="active">Início</a>
-  <a href="estudos/index.html">Estudos</a>
-  <a href="admin/import.html">Admin</a>
-</nav>
-
-<div class="hero">
-  <h1>NeuraOAB</h1>
-  <p>Questões da OAB importadas e organizadas para estudo.</p>
-</div>
-
-<div class="cards">
-  <a class="card" href="estudos/index.html">
-    <div class="icon">📚</div>
-    <h2>Estudos</h2>
-    <p>Navegue pelas questões por ano, prova e disciplina, e pratique respondendo às alternativas.</p>
-  </a>
-  <a class="card" href="admin/import.html">
-    <div class="icon">⬆️</div>
-    <h2>Admin — Importação</h2>
-    <p>Upload de JSON gerado pelo extrator e importação para o Supabase.</p>
-  </a>
+<div class="landing">
+  <img class="logo" src="images/logotipo.png" alt="NeuraOAB">
+  <p class="tagline"><strong>+ 2.000 questões oficiais</strong> e Chat IA embutido</p>
+  <a class="cta" href="estudos/index.html">INICIAR</a>
 </div>
 
 </body>
