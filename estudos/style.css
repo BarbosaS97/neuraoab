@@ -733,16 +733,24 @@ select:focus { outline: none; border-color: var(--primary); }
 .chat-handle:hover { border-color: var(--primary); color: var(--text); }
 
 .chat-clip {
+  position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
+/* Posicionamento absoluto (em vez de height: 100% encadeado por varios
+   niveis de flex) para garantir, sem ambiguidade, que essa caixa preenche
+   exatamente a altura do .chat-clip — se a altura ficar indefinida em
+   algum nivel da cadeia flex, e' isso que faz o overflow "vazar" pro
+   .chat-clip (que so' esconde, nao rola) em vez de rolar aqui dentro,
+   que era a causa da barra de rolagem sumida. */
 .chat-scroll {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
   width: var(--chat-w);
-  height: 100%;
   display: flex;
   flex-direction: column;
   opacity: 0;
@@ -783,6 +791,12 @@ select:focus { outline: none; border-color: var(--primary); }
 
 .chat-close:hover { color: var(--text); border-color: var(--primary); }
 
+.chat-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
 .chat-avatar {
   width: 36px;
   height: 36px;
@@ -790,11 +804,60 @@ select:focus { outline: none; border-color: var(--primary); }
   object-fit: cover;
   object-position: top center;
   border: 1px solid var(--border);
-  flex-shrink: 0;
+  display: block;
+}
+
+.chat-status-dot {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--success);
+  border: 2px solid var(--chat-bg);
 }
 
 .chat-title { font-size: 13.5px; font-weight: 600; }
 .chat-subtitle { font-size: 11.5px; color: var(--text-dim); }
+
+/* Barra de rolagem discreta e no tema do sistema, para qualquer area
+   scrollavel do app (chat, menu de filtros, lista de questoes) — em vez da
+   barra padrao do navegador, que destoa do resto do visual escuro. */
+.chat-messages,
+.sidebar-scroll,
+.qlist {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.chat-messages::-webkit-scrollbar,
+.sidebar-scroll::-webkit-scrollbar,
+.qlist::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-track,
+.sidebar-scroll::-webkit-scrollbar-track,
+.qlist::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-messages::-webkit-scrollbar-thumb,
+.sidebar-scroll::-webkit-scrollbar-thumb,
+.qlist::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover,
+.sidebar-scroll::-webkit-scrollbar-thumb:hover,
+.qlist::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary);
+  background-clip: padding-box;
+}
 
 .chat-messages {
   flex: 1;
@@ -805,6 +868,44 @@ select:focus { outline: none; border-color: var(--primary); }
   flex-direction: column;
   gap: 10px;
 }
+
+/* Ancora as mensagens embaixo quando ha' pouco conteudo (em vez do vao
+   vazio estranho entre a ultima bolha e o campo de digitar), sem usar
+   "justify-content: flex-end" — combinado com "overflow-y: auto" isso tem
+   um bug conhecido no Chromium: o navegador simplesmente NAO conta o
+   conteudo que "vaza" pra cima no scrollHeight, entao a barra de rolagem
+   nunca aparece e da' pra "perder" mensagens sem como rolar ate' elas.
+   "margin-top: auto" num spacer (pseudo-elemento, sempre o primeiro
+   filho) empurra o conteudo pra baixo do mesmo jeito quando sobra espaco,
+   mas sem esse bug quando o conteudo excede a altura disponivel. */
+.chat-messages::before {
+  content: "";
+  margin-top: auto;
+}
+
+.chat-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.chat-suggestion {
+  align-self: flex-start;
+  max-width: 92%;
+  text-align: left;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: border-color 0.12s ease, color 0.12s ease, background 0.12s ease;
+}
+
+.chat-suggestion:hover { border-color: var(--primary); color: var(--text); background: var(--card-hover); }
 
 .chat-msg {
   max-width: 90%;
@@ -829,19 +930,38 @@ select:focus { outline: none; border-color: var(--primary); }
 
 .chat-msg.pending { color: var(--text-dim); font-style: italic; }
 
+.chat-interrupted-note {
+  align-self: flex-start;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--text-dim);
+  padding: 0 4px;
+}
+
 .chat-msg.error-msg {
   border-color: rgba(218, 54, 51, 0.4);
   background: var(--error-dim);
   color: var(--error);
 }
 
+.chat-input-area {
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
 .chat-input-row {
   display: flex;
   gap: 8px;
   align-items: flex-end;
-  padding: 12px 16px 18px;
-  border-top: 1px solid var(--border);
-  flex-shrink: 0;
+  padding: 12px 16px 6px;
+}
+
+.chat-hint {
+  margin: 0;
+  padding: 0 16px 12px;
+  font-size: 10.5px;
+  color: var(--text-dim);
+  opacity: 0.7;
 }
 
 .chat-input-row textarea {
@@ -862,9 +982,9 @@ select:focus { outline: none; border-color: var(--primary); }
 .chat-input-row textarea:disabled { opacity: 0.6; }
 
 .chat-send {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
   border: none;
   background: var(--primary);
   color: #fff;
@@ -873,8 +993,14 @@ select:focus { outline: none; border-color: var(--primary); }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  transition: filter 0.12s ease, background 0.12s ease, transform 0.12s ease;
 }
 
-.chat-send:hover:not(:disabled) { filter: brightness(1.1); }
-.chat-send:disabled { background: var(--card-hover); color: var(--text-dim); cursor: not-allowed; }
+.chat-send:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-1px); }
+.chat-send:disabled { background: var(--card-hover); color: var(--text-dim); cursor: not-allowed; transform: none; }
+
+/* Enquanto o Dr. Laureano esta' respondendo, o mesmo botao vira "parar"
+   (ver setSendButtonMode em dr-laureano.js) — cor de alerta discreta pra
+   deixar claro que a acao mudou de sentido. */
+.chat-send.stop-mode { background: var(--error); }
+.chat-send.stop-mode:hover:not(:disabled) { filter: brightness(1.12); }

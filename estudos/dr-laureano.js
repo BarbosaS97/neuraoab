@@ -15,6 +15,24 @@ const chatSendBtn = document.getElementById("chatSend");
 let currentQuestion = null;
 let chatHistory = []; // { role: "user" | "assistant", content } — so' para o contexto enviado a IA
 let sending = false;
+let stopRequested = false;
+let suggestionsEl = null;
+
+// Incrementado a cada troca de questao — usado pra uma chamada assincrona
+// antiga (resetChatForQuestion ou sendChatMessage de uma questao anterior)
+// perceber que foi superada e desistir, em vez de escrever por cima do
+// chat da questao atual (ex.: duplicar as sugestoes, ou uma resposta
+// chegar depois do aluno ja' ter trocado de questao).
+let chatGeneration = 0;
+
+const SEND_ICON = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="4" y1="12" x2="20" y2="12"></line>
+  <polyline points="13 5 20 12 13 19"></polyline>
+</svg>`;
+
+const STOP_ICON = `<svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+  <rect x="5" y="5" width="14" height="14" rx="2.5"></rect>
+</svg>`;
 
 // -------------------------------------------------------------- Recolher
 
@@ -80,6 +98,10 @@ function appendMessageBubble(role) {
 // Velocidade em caracteres por segundo, independente da taxa de quadros.
 const TYPING_CHARS_PER_SECOND = 40;
 
+// Devolve { interrupted, shownText }: se o botao "parar" for clicado no
+// meio da digitacao, congela exatamente onde estava (NAO pula pro texto
+// inteiro) — o resto da resposta e' descartado de verdade, nao so'
+// escondido visualmente.
 function typeIntoBubble(el, text) {
   return new Promise(resolve => {
     let shown = 0;
@@ -87,6 +109,11 @@ function typeIntoBubble(el, text) {
     let lastTime = null;
 
     function step(time) {
+      if (stopRequested) {
+        resolve({ interrupted: true, shownText: el.textContent });
+        return;
+      }
+
       if (lastTime === null) lastTime = time;
       carry += ((time - lastTime) / 1000) * TYPING_CHARS_PER_SECOND;
       lastTime = time;
@@ -103,7 +130,7 @@ function typeIntoBubble(el, text) {
       if (shown < text.length) {
         requestAnimationFrame(step);
       } else {
-        resolve();
+        resolve({ interrupted: false, shownText: text });
       }
     }
 
@@ -111,23 +138,82 @@ function typeIntoBubble(el, text) {
   });
 }
 
+function appendInterruptedNote() {
+  const wasNearBottom = isNearBottom();
+  const note = document.createElement("div");
+  note.className = "chat-interrupted-note";
+  note.textContent = "Resposta interrompida.";
+  chatMessagesEl.appendChild(note);
+  if (wasNearBottom) chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+}
+
 async function sayAsLaureano(text) {
   const clean = stripMarkdown(text);
   const bubble = appendMessageBubble("assistant");
-  await typeIntoBubble(bubble, clean);
+  const result = await typeIntoBubble(bubble, clean);
+  if (result.interrupted) {
+    appendInterruptedNote();
+    return result.shownText;
+  }
   return clean;
 }
 
 function updateInputAvailability() {
-  const disabled = !currentQuestion || sending;
-  chatInput.disabled = disabled;
-  chatSendBtn.disabled = disabled;
+  // O textarea trava enquanto o Dr. Laureano esta' respondendo (nao da'
+  // pra mandar outra pergunta em cima), mas o botao continua habilitado —
+  // nesse estado ele vira "parar" em vez de "enviar" (ver setSendButtonMode).
+  chatInput.disabled = !currentQuestion || sending;
+  chatSendBtn.disabled = !currentQuestion;
+}
+
+function setSendButtonMode(mode) {
+  const isStop = mode === "stop";
+  chatSendBtn.innerHTML = isStop ? STOP_ICON : SEND_ICON;
+  chatSendBtn.classList.toggle("stop-mode", isStop);
+  chatSendBtn.setAttribute("aria-label", isStop ? "Parar resposta" : "Enviar pergunta");
+}
+
+// Perguntas prontas mostradas logo apos a saudacao, pra dar um ponto de
+// partida claro em vez de uma caixa de texto vazia — somem assim que o
+// aluno manda a primeira pergunta (dele ou clicando numa sugestao).
+const STARTER_SUGGESTIONS = [
+  "Me ajuda a entender o enunciado?",
+  "Como devo pensar sobre as alternativas?",
+  "Qual é a resposta certa?",
+];
+
+function showSuggestions() {
+  const wrap = document.createElement("div");
+  wrap.className = "chat-suggestions";
+  STARTER_SUGGESTIONS.forEach(text => {
+    const chip = document.createElement("button");
+    chip.type = "button";
+    chip.className = "chat-suggestion";
+    chip.textContent = text;
+    chip.addEventListener("click", () => sendChatMessage(text));
+    wrap.appendChild(chip);
+  });
+  chatMessagesEl.appendChild(wrap);
+  chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+  suggestionsEl = wrap;
+}
+
+function clearSuggestions() {
+  if (suggestionsEl) {
+    suggestionsEl.remove();
+    suggestionsEl = null;
+  }
 }
 
 async function resetChatForQuestion(question) {
+  const myGeneration = ++chatGeneration;
   currentQuestion = question;
   chatHistory = [];
   chatMessagesEl.innerHTML = "";
+  suggestionsEl = null;
+  stopRequested = false;
+  sending = false; // abandona qualquer resposta pendente da questao anterior
+  setSendButtonMode("send");
   updateInputAvailability();
 
   if (question) {
@@ -136,7 +222,12 @@ async function resetChatForQuestion(question) {
       "Pode perguntar sobre o enunciado ou as alternativas, e eu te ajudo a raciocinar. " +
       "Se quiser saber a resposta certa direto, é só pedir.";
     const shown = await sayAsLaureano(greeting);
+    // Se outra chamada mais nova comecou nesse meio tempo (o aluno trocou
+    // de questao de novo antes desta saudacao terminar de "digitar"), essa
+    // chamada foi superada — desiste sem mexer no chat da questao atual.
+    if (myGeneration !== chatGeneration) return;
     chatHistory.push({ role: "assistant", content: shown });
+    showSuggestions();
   } else {
     await sayAsLaureano("Selecione uma questão para eu poder ajudar.");
   }
@@ -148,10 +239,34 @@ document.addEventListener("question:changed", (ev) => {
 
 // ----------------------------------------------------------------- Envio
 
+// Cancelamento "suave": a biblioteca do Supabase nao expoe um jeito
+// confiavel de abortar o fetch em andamento, entao em vez disso corremos a
+// chamada de rede contra uma promise que resolve assim que stopRequested
+// vira true. A chamada real continua rodando em segundo plano ate' chegar
+// (inofensivo — so' ignoramos o resultado), mas o aluno nao fica esperando.
+function waitForStopRequest() {
+  return new Promise(resolve => {
+    const check = () => {
+      if (stopRequested) { resolve("__STOPPED__"); return; }
+      if (sending) requestAnimationFrame(check);
+    };
+    check();
+  });
+}
+
+function stopGenerating() {
+  if (!sending) return;
+  stopRequested = true;
+}
+
 async function sendChatMessage(text) {
   if (!currentQuestion || sending) return;
+  const myGeneration = chatGeneration;
   sending = true;
+  stopRequested = false;
+  clearSuggestions();
   updateInputAvailability();
+  setSendButtonMode("stop");
 
   chatHistory.push({ role: "user", content: text });
   appendMessageBubble("user").textContent = text;
@@ -159,30 +274,50 @@ async function sendChatMessage(text) {
   const pending = appendMessageBubble("assistant pending");
   pending.textContent = "Dr. Laureano está digitando...";
 
-  let replyText = null;
-  try {
-    const { data, error } = await client.functions.invoke("dr-laureano", {
-      body: {
-        question: {
-          number: currentQuestion.number,
-          statement: currentQuestion.statement,
-          alternatives: currentQuestion.alternatives,
-          discipline: currentQuestion.discipline,
-          correct_answer: currentQuestion.correct_answer,
-        },
-        messages: chatHistory,
+  const invokePromise = client.functions.invoke("dr-laureano", {
+    body: {
+      question: {
+        number: currentQuestion.number,
+        statement: currentQuestion.statement,
+        alternatives: currentQuestion.alternatives,
+        discipline: currentQuestion.discipline,
+        correct_answer: currentQuestion.correct_answer,
       },
-    });
-
+      messages: chatHistory,
+    },
+  }).then(({ data, error }) => {
     if (error || !data?.reply) throw error || new Error("Resposta vazia.");
-    replyText = data.reply;
+    return data.reply;
+  });
+
+  let replyText = null;
+  let stoppedBeforeReply = false;
+  try {
+    const result = await Promise.race([invokePromise, waitForStopRequest()]);
+    if (result === "__STOPPED__") stoppedBeforeReply = true;
+    else replyText = result;
   } catch {
     replyText = null;
   }
 
+  // O aluno pode ter trocado de questao enquanto isso estava em andamento
+  // — resetChatForQuestion ja' limpou o chat e resetou sending/botao/input
+  // pra questao nova, entao so' descarta essa resposta atrasada em
+  // silencio (nao mexe em mais nada global, que ja' pertence a outra
+  // questao agora).
+  if (myGeneration !== chatGeneration) {
+    pending.remove();
+    return;
+  }
+
   pending.remove();
 
-  if (replyText === null) {
+  if (stoppedBeforeReply) {
+    // Cancelado antes da resposta chegar — nao ha' texto nenhum pra
+    // mostrar, so' o aviso (nao entra no historico, pra IA nao "achar" que
+    // respondeu algo que na verdade foi interrompido).
+    appendInterruptedNote();
+  } else if (replyText === null) {
     const shown = await sayAsLaureano("Desculpe, não consegui responder agora. Tente novamente em instantes.");
     chatHistory.push({ role: "assistant", content: shown });
   } else {
@@ -191,6 +326,7 @@ async function sendChatMessage(text) {
   }
 
   sending = false;
+  setSendButtonMode("send");
   updateInputAvailability();
 }
 
@@ -201,6 +337,10 @@ function autoResizeChatInput() {
 
 chatForm.addEventListener("submit", (ev) => {
   ev.preventDefault();
+  if (sending) {
+    stopGenerating();
+    return;
+  }
   const text = chatInput.value.trim();
   if (!text) return;
   chatInput.value = "";
@@ -217,4 +357,5 @@ chatInput.addEventListener("keydown", (ev) => {
   }
 });
 
+setSendButtonMode("send");
 resetChatForQuestion(null);

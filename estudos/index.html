@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NeuraOAB — Estudos</title>
-<link rel="stylesheet" href="style.css?v=14">
+<link rel="stylesheet" href="style.css?v=18">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
@@ -92,7 +92,10 @@
     <div class="chat-clip">
     <div class="chat-scroll">
       <div class="chat-header">
-        <img src="../images/Dr.%20Laureano.png" alt="Dr. Laureano" class="chat-avatar">
+        <div class="chat-avatar-wrap">
+          <img src="../images/Dr.%20Laureano.png" alt="Dr. Laureano" class="chat-avatar">
+          <span class="chat-status-dot" aria-hidden="true"></span>
+        </div>
         <div>
           <div class="chat-title">Dr. Laureano</div>
           <div class="chat-subtitle">Tira-dúvidas da questão atual</div>
@@ -102,16 +105,19 @@
 
       <div class="chat-messages" id="chatMessages"></div>
 
-      <form class="chat-input-row" id="chatForm">
-        <textarea id="chatInput" rows="1" placeholder="Pergunte sobre esta questão..."></textarea>
-        <button type="submit" class="chat-send" id="chatSend" aria-label="Enviar pergunta">&rarr;</button>
-      </form>
+      <div class="chat-input-area">
+        <form class="chat-input-row" id="chatForm">
+          <textarea id="chatInput" rows="1" placeholder="Pergunte sobre esta questão..."></textarea>
+          <button type="submit" class="chat-send" id="chatSend" aria-label="Enviar pergunta">&rarr;</button>
+        </form>
+        <p class="chat-hint">Enter envia · Shift+Enter quebra linha</p>
+      </div>
     </div>
     </div>
   </aside>
 </div>
 
 <script src="estudos.js?v=11"></script>
-<script src="dr-laureano.js?v=4"></script>
+<script src="dr-laureano.js?v=8"></script>
 </body>
 </html>
