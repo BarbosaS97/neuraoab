@@ -1,0 +1,398 @@
+{
+  "exam_number": 45,
+  "phase": 2,
+  "area": "Direito Constitucional",
+  "source_provas_file": "45º_provas_Direito_Constitucional.pdf",
+  "source_resposta_file": "45º_resposta_Direito_Constitucional.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "A sociedade empresária Alfa, regularmente constituída e em devido funcionamento com estrita observância da sistemática legal vigente, é especializada na comercialização de radioisótopos para fins medicinais, com destaque para os materiais utilizados em radioterapias, em que doses de radiação são aplicadas na região do corpo afetada por células cancerígenas.\n\nEm razão da natureza dos radioisótopos e do risco que oferecem para o ser humano e o meio ambiente, Alfa está obrigada a observar rígidos protocolos de segurança, estabelecidos pelo ente federativo competente para a outorga da permissão de comercialização.\n\nEmbora fosse promovida a estrita observância dos protocolos de segurança, o Secretário Municipal da recém-criada Secretaria Municipal de Controle de Radioisótopos e de Irradiadores de Energia Cinética do Município Sigma compareceu à sede de Alfa.\n\nDe acordo com o Secretário, a Lei Municipal nº XX, que criou a nova estrutura estatal de poder, com o objetivo de zelar pela observância dos mais avançados protocolos de segurança em relação a esses materiais, detalhou a forma de acondicionamento, os protocolos de transporte, principalmente quando forem utilizadas aeronaves, os planos de evacuação, na hipótese de falhas na contenção etc. As sanções estabelecidas para a hipótese de inobservância dos seus comandos variavam da multa pecuniária à interdição do estabelecimento.\n\nApesar da tentativa dos dirigentes de Alfa em explicar ao Secretário que essas medidas eram incompatíveis com os balizamentos estabelecidos por ocasião da outorga da permissão, não lograram êxito em convencê-lo. O Secretário, pessoalmente e por escrito, notificou a sociedade empresária Alfa de sua decisão, no sentido de que ela teria cinco dias para se ajustar aos novos protocolos de segurança, sob pena de os fiscais municipais lacrarem a sede, interditando a continuidade de sua atividade econômica.\n\nOs dirigentes de Alfa ficaram muito preocupados com o teor da notificação e com as consequências sobre a sua inobservância, que não seriam meramente patrimoniais, decorrentes da paralisação da atividade empresarial, já que a estocagem dos radioisótopos exigia o acompanhamento constante e determinadas medidas de preservação, o que seria posto em risco caso a sede fosse lacrada. Por tal razão, no dia seguinte, contrataram os seus serviços, como advogado(a), e solicitaram o ajuizamento da ação constitucional cabível, em que não houvesse a possibilidade de condenação em honorários advocatícios nem de instrução probatória, para que a sociedade empresária fosse desobrigada de atender à notificação, afastando-se o risco de ter a sede lacrada.\n\nElabore, na condição de advogado(a) da sociedade empresária, a peça processual adequada ao caso concreto.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A peça adequada nesta situação é a petição inicial de mandado de segurança.\n\nA petição deve ser endereçada ao Juízo Cível da Comarca X ou ao Juízo de Fazenda Pública da Comarca X, já que os dados constantes do enunciado não permitem identificar a organização judiciária do local, portanto, o X significa que não há uma localidade específica.\n\nO examinando deve indicar, na qualificação das partes, a impetrante sociedade empresária Alfa e, como autoridade coatora, o Secretário Municipal de Controle de Radioisótopos e de Irradiadores de Energia Cinética do Município Sigma. A legitimidade ativa de Alfa decorre do fato de ser a titular do direito cuja proteção postula. A legitimidade passiva do Secretário Municipal, por sua vez, é justificada pelo fato de ser o responsável pela decisão que afronta o direito de Alfa.\n\nO examinando deve indicar, no mérito, que a decisão do Secretário afronta a ordem jurídica: (I) por estar baseada na Lei Municipal nº XX, que é inconstitucional, pois a lei municipal afronta a competência legislativa privativa da União para legislar sobre atividades nucleares de qualquer natureza, nos termos do Art. 22, inciso XXVI, da CRFB/88, e altera os balizamentos estabelecidos pela União quando da outorga de permissão para a exploração de uma atividade titularizada por esse ente federativo, nos termos do Art. 21, inciso XXIII, alínea c, da CRFB/88; bem como (II) por afrontar a livre iniciativa no exercício da atividade econômica, à margem do permissivo legal válido, nos termos do Art. 170, caput ou parágrafo único, da CRFB/88.\n\nEssa base normativa justifica a escolha do instrumento processual (MS) previsto no Art. 5º, inciso LXIX, da CRFB/88, ou no Art. 1º, caput, da Lei nº 12.016/2009. Há direito líquido e certo lastreado em prova pré- constituída, o que decorre da notificação formal da sociedade empresária Alfa, realizada pelo Secretário Municipal de Controle de Radioisótopos e de Irradiadores de Energia Cinética do Município Sigma. Além disso, é observado o prazo decadencial de 120 (cento e vinte) dias para a impetração, previsto no Art. 23 da Lei nº 12.016/2009.\n\nO examinando deve sustentar que, além do fundamento relevante do direito de Alfa, é premente a necessidade de concessão de tutela liminar para evitar a lacração da sede, com os prejuízos econômicos decorrentes da paralisação da atividade empresarial e com o risco oferecido pelo não acompanhamento constante e pela consequente não adoção de medidas de conservação dos radioisótopos.\n\nA peça deve conter os requerimentos de (i) concessão da medida liminar, para que Alfa possa continuar a desenvolver as suas atividades sem o cumprimento da Lei Municipal nº XX, e a autoridade coatora se abstenha de lacrar a sede, (ii) e de procedência do pedido, com confirmação da concessão da ordem, atribuindo-se caráter definitivo à tutela liminar.\n\nO examinando deve, ainda, qualificar-se como advogado e atribuir valor à causa.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "A petição deve ser endereçada ao Juízo Cível da Comarca X ou ao Juízo de Fazenda Pública da Comarca X (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Impetrante: a sociedade empresária Alfa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Autoridade coatora: o Secretário Municipal de Controle de Radioisótopos e de Irradiadores de Energia Cinética do Município Sigma (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Endereçamento",
+        "descricao": "A legitimidade ativa de Alfa decorre do fato de ser o titular do direito que postula (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Endereçamento",
+        "descricao": "A legitimidade passiva do Secretário Municipal é justificada pelo fato de ter proferido a decisão que afronta o direito de Alfa (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "A decisão é incompatível com a ordem jurídica por estar baseada na Lei Municipal nº XX (0,10), que é inconstitucional (0,20).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "A decisão é incompatível com a ordem jurídica, porque afrontou a competência legislativa privativa da União para legislar sobre atividades nucleares de qualquer natureza, (0,60) nos termos do Art. 22, inciso XXVI, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "A decisão é incompatível com a ordem jurídica, porque alterou os balizamentos estabelecidos pela União quando da outorga da permissão para a exploração de uma atividade titularizada por esse ente federativo (0,60), nos termos do Art. 21, inciso XXIII, alínea c, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "A decisão é incompatível com a ordem jurídica, por afrontar a livre iniciativa no exercício da atividade econômica, à margem do permissivo legal válido (0,60), nos termos do Art. 170, caput ou parágrafo único, ou Art 1º Inciso IV ambos da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "Há prova pré-constituída, já que foi feita uma notificação formal a Alfa (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "Foi observado o prazo decadencial de 120 (cento e vinte) dias para a impetração (0,10), previsto no Art. 23 da Lei nº 12.016/2009 (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Fundamentos da liminar",
+        "descricao": "Indicar a existência de fundamento relevante (0,10), e risco de ineficácia da medida (0,10), nos termos do Art. 7º, Inciso III da lei 12.016/2009 (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Fundamentos da liminar",
+        "descricao": "O direito será violado se a liminar não for deferida (0,10), tendo em vista a urgência da situação (0,10), já que ocorrerão prejuízos econômicos com a paralisação da atividade empresarial (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "Concessão da medida liminar (0,10), para que Alfa possa continuar a desenvolver as suas atividades (0,10) sem o cumprimento da Lei Municipal nº XX (0,10), e a autoridade coatora se abstenha de lacrar a sede (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Pedidos",
+        "descricao": "Ao final, procedência do pedido (0,10), com a confirmação da concessão da ordem (0,10), atribuindo-se caráter definitivo à tutela liminar (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Fechamento",
+        "descricao": "Valor da causa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "17",
+        "categoria": "Fechamento",
+        "descricao": "Local, data, advogado e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. A petição deve ser endereçada ao Juízo Cível da Comarca X ou ao Juízo de Fazenda Pública da\n0,00/0,10\nComarca X (0,10).\n2. Impetrante: a sociedade empresária Alfa (0,10). 0,00/0,10\n3. Autoridade coatora: o Secretário Municipal de Controle de Radioisótopos e de Irradiadores de\n0,00/0,10\nEnergia Cinética do Município Sigma (0,10).\n4. A legitimidade ativa de Alfa decorre do fato de ser o titular do direito que postula (0,20). 0,00/0,20\n5. A legitimidade passiva do Secretário Municipal é justificada pelo fato de ter proferido a decisão\n0,00/0,20\nque afronta o direito de Alfa (0,20).\nFundamentos de mérito\n6. A decisão é incompatível com a ordem jurídica por estar baseada na Lei Municipal nº XX (0,10),\n0,00/0,10/0,30\nque é inconstitucional (0,20).\n7. A decisão é incompatível com a ordem jurídica, porque afrontou a competência legislativa\nprivativa da União para legislar sobre atividades nucleares de qualquer natureza, (0,60) nos termos 0,00/0,60/0,70\ndo Art. 22, inciso XXVI, da CRFB/88 (0,10).\n8. A decisão é incompatível com a ordem jurídica, porque alterou os balizamentos estabelecidos\npela União quando da outorga da permissão para a exploração de uma atividade titularizada por 0,00/0,60/0,70\nesse ente federativo (0,60), nos termos do Art. 21, inciso XXIII, alínea c, da CRFB/88 (0,10).\n9. A decisão é incompatível com a ordem jurídica, por afrontar a livre iniciativa no exercício da\natividade econômica, à margem do permissivo legal válido (0,60), nos termos do Art. 170, caput ou 0,00/0,60/0,70\nparágrafo único, ou Art 1º Inciso IV ambos da CRFB/88 (0,10).\n10. Há prova pré-constituída, já que foi feita uma notificação formal a Alfa (0,20). 0,00/0,20\n11. Foi observado o prazo decadencial de 120 (cento e vinte) dias para a impetração (0,10),\n0,00/0,10/0,20\nprevisto no Art. 23 da Lei nº 12.016/2009 (0,10).\nFundamentos da liminar\n12. Indicar a existência de fundamento relevante (0,10), e risco de ineficácia da medida (0,10), nos\n0,00/0,10/0,20/0,30\ntermos do Art. 7º, Inciso III da lei 12.016/2009 (0,10).\n13. O direito será violado se a liminar não for deferida (0,10), tendo em vista a urgência da situação\n0,00/0,10/0,20/0,30\n(0,10), já que ocorrerão prejuízos econômicos com a paralisação da atividade empresarial (0,10).\nPedidos\n14. Concessão da medida liminar (0,10), para que Alfa possa continuar a desenvolver as suas\n0,00/0,10/0,20/\natividades (0,10) sem o cumprimento da Lei Municipal nº XX (0,10), e a autoridade coatora se\n0,30/0,40\nabstenha de lacrar a sede (0,10).\n15. Ao final, procedência do pedido (0,10), com a confirmação da concessão da ordem (0,10), 0,00/0,10/\natribuindo-se caráter definitivo à tutela liminar (0,10). 0,20/0,30\nFechamento\n16. Valor da causa (0,10). 0,00/0,10\n17. Local, data, advogado e OAB (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "A União editou a Lei nº Y, disciplinando o transporte marítimo de produtos acondicionados em contêineres, entre portos situados no território nacional. Esse diploma normativo, que revogou a legislação preexistente, gerou grande preocupação para alguns armadores proprietários das embarcações.\n\nOs proprietários de embarcações nacionais insurgiram-se contra a determinação que restringia o transporte entre dois portos situados no mesmo Estado às embarcações cujos proprietários, brasileiros, tivessem sede ou domicílio no respectivo Estado. Os proprietários de embarcações estrangeiras, por sua vez, estranharam a ausência de menção a essas embarcações em particular, o que foi interpretado como consagradora de uma cláusula de isonomia em relação às embarcações nacionais.\n\nÀ luz desse quadro, os referidos proprietários procuraram você, como advogado(a), e formularam os seguintes questionamentos:",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O transporte marítimo, nas circunstâncias indicadas na narrativa, entre dois portos situados no mesmo Estado, pode ser restringido às embarcações nacionais cujos proprietários tenham sede ou domicílio no respectivo Estado? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A ausência de menção às embarcações estrangeiras na Lei nº Y indica a incidência do princípio da isonomia em relação às embarcações nacionais? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. A criação de distinções entre brasileiros é vedada pelo Art. 19, inciso III, da CRFB/88, ou é livre a locomoção no território nacional em tempo de paz, nos termos do Art. 5º, inciso XV, da CRFB/1988. B) Não. É necessária lei dispondo expressamente sobre as condições em que o transporte de mercadorias na cabotagem poderá ser feito pelas embarcações estrangeiras, conforme determina o Art. 178, parágrafo único, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A criação de distinções entre brasileiros é vedada (0,55) pelo Art. 19, inciso III, da CRFB/88 (0,10), ou é livre a locomoção no território nacional em tempo de paz (0,55), nos termos do Art. 5º, inciso XV, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. É necessária lei dispondo expressamente sobre as condições em que o transporte de mercadorias na cabotagem poderá ser feito pelas embarcações estrangeiras (0,50), conforme determina o Art. 178, parágrafo único, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A criação de distinções entre brasileiros é vedada (0,55) pelo Art. 19, inciso III,\nda CRFB/88 (0,10),\nou 0,00/0,55/0,65\né livre a locomoção no território nacional em tempo de paz (0,55), nos termos do Art.\n5º, inciso XV, da CRFB/88 (0,10).\nB. Não. É necessária lei dispondo expressamente sobre as condições em que o\ntransporte de mercadorias na cabotagem poderá ser feito pelas embarcações 0,00/0,50/0,60\nestrangeiras (0,50), conforme determina o Art. 178, parágrafo único, da CRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "O Projeto de Lei Ordinária nº X tramita no Congresso Nacional. Seu objetivo declarado na justificativa é o de evitar o ajuizamento de “ações desarrazoadas e pouco técnicas”. De acordo com o Art. 1º desse projeto, compete privativamente ao ente público lesado, às associações que preenchessem os requisitos ali estabelecidos e ao Ministério Público ajuizar ações com o objetivo de anular ato lesivo ao patrimônio público, que tenha acarretado a produção de danos superiores a R$ 1.000.000,00 (um milhão de reais).\n\nO Art. 2º, por sua vez, dispõe que a condenação de quaisquer pessoas naturais, em ações dessa natureza, impediria que elas concorressem a cargos eletivos nas eleições a serem realizadas nos dez anos subsequentes à condenação.\n\nPara subsidiar o voto que deveria exarar, um parlamentar solicitou o seu pronunciamento como advogado(a), apresentando-lhe os questionamentos a seguir, a serem respondidos em conformidade com a sistemática constitucional.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É possível a concentração da legitimidade ativa no ente público lesado, nas associações e no Ministério Público para o ajuizamento dessas ações? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Como sugerido no Art. 2º da proposição, é possível impedir que as pessoas naturais, que venham a ser condenadas nas referidas ações, concorram a cargos eletivos no período indicado? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. O cidadão tem legitimidade para ajuizar ação popular visando à anulação de ato lesivo ao patrimônio público, nos termos do Art. 5º, inciso LXXIII, da CRFB/88. B) Não. As inelegibilidades devem ser veiculadas em lei complementar, nos termos do Art. 14, §9º, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. O cidadão tem legitimidade para ajuizar ação popular visando à anulação de ato lesivo ao patrimônio público (0,55), nos termos do Art. 5º, inciso LXXIII, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. As inelegibilidades devem ser veiculadas em lei complementar, (0,50) nos termos do Art. 14, §9º ou Art. 15, ambos da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. O cidadão tem legitimidade para ajuizar ação popular visando à anulação de ato\nlesivo ao patrimônio público (0,55), nos termos do Art. 5º, inciso LXXIII, da CRFB/88 0,00/0,55/0,65\n(0,10).\nB. Não. As inelegibilidades devem ser veiculadas em lei complementar, (0,50) nos\n0,00/0,50/0,60\ntermos do Art. 14, §9º ou Art. 15, ambos da CRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "O Deputado Estadual João, em atuação na Assembleia Legislativa do Estado Beta, conhecido por suas iniciativas direcionadas para o aumento da transparência no emprego dos recursos públicos e do controle social, encaminhou uma representação ao órgão competente, noticiando que recebera, em seu gabinete, informações fidedignas de que duas autoridades estaduais tiveram movimentação financeira incompatível com a sua renda nos três últimos exercícios financeiros.\n\nNa ocasião, João forneceu, de maneira detalhada, a movimentação realizada pelos referidos agentes, mês a mês, durante o referido período, tendo solicitado o ajuizamento de ação penal em razão da presença, a seu ver, de indícios de crime.\n\nAs referidas autoridades, ao tomarem conhecimento de que o órgão competente estava analisando a representação, argumentaram com a impossibilidade de uso da movimentação financeira fornecida por João e solicitaram que ele fosse instado a informar a identidade da pessoa que lhe passou tal informação.\n\nJoão procurou você, como advogado(a), e formulou os questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A movimentação financeira que João forneceu ao órgão competente pode ser usada como prova de atos ilícitos praticados pelas duas autoridades estaduais? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "João está obrigado a fornecer a identidade da pessoa que lhe passou a movimentação financeira? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não, pois configura prova ilícita, impedindo o seu uso, conforme o Art. 5º, inciso LVI, da CRFB/88, o que decorre da violação à intimidade, consagrada no Art. 5º, inciso X, da CRFB/88, ou da violação ao sigilo de dados, previsto no Art. 5º, inciso XII, da CRFB/88.\n\nB) Não. A movimentação financeira foi recebida no curso do mandato, incidindo a prerrogativa de não fornecer a identidade da pessoa que passou a informação, nos termos do Art. 27, § 1º, c/c o Art. 53, § 6º, ambos da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não, pois configura prova ilícita, impedindo o seu uso (0,30), conforme o Art. 5º, inciso LVI, da CRFB/88 (0,10), o que decorre da violação à intimidade,(0,15) consagrada no Art. 5º, inciso X, da CRFB/88 (0,10), ou da violação ao sigilo de dados (0,15), previsto no Art. 5º, inciso XII, da CRFB/88.(0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.15,
+            0.25,
+            0.3,
+            0.35,
+            0.45,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A movimentação financeira foi recebida no exercício do mandato,(0,25) incidindo a prerrogativa de não fornecer a identidade da pessoa que lhe passou a informação (0,25), nos termos do Art. 27, §1º, c/c o Art. 53, §6º, ambos da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.35,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não, pois configura prova ilícita, impedindo o seu uso (0,30), conforme o Art. 5º,\ninciso LVI, da CRFB/88 (0,10), o que decorre da violação à intimidade,(0,15) consagrada\n0,00/0,15/0,25/0,30/\nno Art. 5º, inciso X, da CRFB/88 (0,10),\n0,35/0,45/0,55/0,65\nou da violação ao sigilo de dados (0,15), previsto no Art. 5º, inciso XII, da\nCRFB/88.(0,10).\nB. Não. A movimentação financeira foi recebida no exercício do mandato,(0,25)\nincidindo a prerrogativa de não fornecer a identidade da pessoa que lhe passou a 0,00/0,25/0,35/\ninformação (0,25), nos termos do Art. 27, §1º, c/c o Art. 53, §6º, ambos da CRFB/88 0,50/0,60\n(0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Apesar da grande resistência do Partido Político Alfa, cuja bancada foi vencida nas votações realizadas em ambas as casas do Congresso Nacional, foi sancionada e publicada a Lei nº X/2025, que entrará em vigor seis meses após a sua publicação, período de vacatio que ainda se encontra em curso.\n\nA grande resistência de Alfa em relação a esse diploma normativo decorria do fato de haver um consenso, entre os parlamentares que votaram a favor de sua aprovação, a respeito do sentido que deve ser atribuído ao Art. Y da lei, que é instrumentalizado pelos demais artigos. Esse sentido era tido como equivocado por Alfa, que o considerava incompatível com a Constituição da República.\n\nAssim, no dia seguinte à publicação da Lei nº X/2025, os dirigentes de Alfa procuraram você, como advogado(a), e formularam os questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A Lei nº X pode ser imediatamente submetida ao controle concentrado de constitucionalidade? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "É possível que seja formulado o pedido, em sede de controle concentrado de constitucionalidade, para que o Art. Y da Lei nº X/2025 ganhe outro sentido, compatível com a Constituição da República, em razão da inconstitucionalidade do sentido preferido pelos parlamentares vitoriosos na votação? Justique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. A falta de eficácia da Lei nº X não impede que ela seja objeto da Ação Direta de Inconstitucionalidade, considerando o disposto no Art. 102, inciso I, alínea a, da CRFB/88. B) Sim. Pode ser formulado o pedido de interpretação conforme a Constituição, com base no Art. 28, parágrafo único, da Lei nº 9.868/1999.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. A falta de eficácia da Lei nº X não impede que seja objeto da Ação Direta de Inconstitucionalidade (0,50), nos termos do Art. 102, inciso I, alínea a, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. Pode ser formulado o pedido de interpretação conforme a Constituição (0,55), com base no Art. 28, parágrafo único, da Lei nº 9.868/1999 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. A falta de eficácia da Lei nº X não impede que seja objeto da Ação Direta de\nInconstitucionalidade (0,50), nos termos do Art. 102, inciso I, alínea a, da CRFB/88 0,00/0,50/0,60\n(0,10).\nB. Sim. Pode ser formulado o pedido de interpretação conforme a Constituição (0,55),\n0,00/0,55/0,65\ncom base no Art. 28, parágrafo único, da Lei nº 9.868/1999 (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

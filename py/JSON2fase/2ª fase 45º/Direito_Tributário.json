@@ -1,0 +1,378 @@
+{
+  "exam_number": 45,
+  "phase": 2,
+  "area": "Direito Tributário",
+  "source_provas_file": "45º_provas_Direito_Tributário.pdf",
+  "source_resposta_file": "45º_resposta_Direito_Tributário.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "A sociedade empresária 1234 Soluções Industriais Ltda., com sede em São Paulo, SP, atua no fornecimento de componentes industriais. Atualmente, possui três débitos inscritos em dívida ativa:\n\ni) Débito referente à contribuição ao Programa de Integração Social (PIS), objeto de execução fiscal já ajuizada, com embargos à execução opostos pela sociedade empresária, após a penhora de bens da executada;\n\nii) Débito com a exigibilidade ativa, referente à Contribuição para o Financiamento da Seguridade Social ( COFINS), incidente sobre as receitas de exportação, ainda não ajuizado; e\n\niii) Débito referente ao Imposto sobre a Renda das Pessoas Jurídicas (IRPJ), constituído definitivamente em 1º/2/2020, quando a sociedade empresária foi notificada para o pagamento do valor, ainda não ajuizado.\n\nA sociedade empresária requereu, junto à Receita Federal do Brasil, a Certidão de Regularidade Fiscal de Débitos Relativos a Créditos Tributários Federais e a Dívida Ativa da União, sendo emitida certidão positiva de débitos tributários, o que impossibilita a sua participação em processo licitatório, a ocorrer dentro do prazo de 15 dias, aberto pelo Ministério do Desenvolvimento Econômico, que exige, como condição de habilitação, a certidão negativa ou certidão positiva com efeitos de negativa.\n\nA sociedade empresária procurou a Receita Federal para requerer que fosse emitida a certidão positiva de débitos com efeitos de negativa, demonstrando que os débitos não são exigíveis, mas o seu pedido foi indeferido.\n\nConsiderando a proximidade da data-limite para a habilitação na licitação, a sociedade empresária procurou você, como advogado(a), requerendo que fosse ajuizada uma medida judicial urgente, que não gere risco de condenação em honorários de sucumbência, no caso de insucesso na medida judicial a ser proposta.\n\nCom base nas informações acima, elabore a peça processual cabível, ciente de que o indeferimento do pedido administrativo da Certidão de Regularidade Fiscal ocorreu há menos de 30 (trinta) dias e que, para a demonstração dos fatos, há a necessidade, apenas, de prova documental que lhe foi entregue.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "O examinando deverá elaborar a pe(cid:29)ção inicial de um Mandado de Segurança com pedido liminar, diante da existência de prova pré-cons(cid:29)tuída e ausência do decurso do prazo de 120 dias desde a nega(cid:29)va do pedido administra(cid:29)vo rela(cid:29)vo à Cer(cid:29)dão de Regularidade Fiscal. Não seriam cabíveis ações como a declaratória ou a anulatória, diante da informação de que a pessoa jurídica não quer se expor ao risco de condenação em honorários de sucumbência.\n\nA pe(cid:29)ção deve ser endereçada ao Juízo da Vara Federal da Seção Judiciária de São Paulo.\n\nDeve-se indicar, na qualificação das partes, a sociedade empresária 1234 Soluções Industriais Ltda., como impetrante, e, como autoridade coatora, o Delegado da Receita Federal do Estado de São Paulo. Deve-se, ainda, indicar a União como pessoa jurídica interessada, nos termos do Art. 7º, inciso II, da Lei nº 12.016/2009.\n\nNo mérito, quanto ao primeiro débito, o examinando deverá alegar que como a impetrante já opôs embargos à execução, o débito está garan(cid:29)do por penhora, tendo a impetrante, nos termos do Art. 206 do CTN, direito à cer(cid:29)dão posi(cid:29)va com efeitos de nega(cid:29)va.\n\nQuanto ao segundo débito, o examinando deverá alegar que a Cofins não incide sobre as receitas decorrentes de exportação, trata-se de imunidade estabelecida pelo Art. 149, §2º, inciso I, da CRFB/88.\n\nCom relação ao terceiro débito, o examinando deverá alegar que o débito está prescrito. Nos termos do Art. 174 do CTN, a “ação para a cobrança do crédito tributário prescreve em cinco anos, contados da data da sua cons!tuição defini!va.”\n\nConsiderando-se que a sociedade empresária está em vias de par(cid:29)cipar de um processo licitatório em que é requerida a juntada de Cer(cid:29)dão de Regularidade Fiscal, o examinando deve requerer liminar, demonstrando a existência dos requisitos de fumus boni iuris e periculum in mora, suspendendo-se a exigibilidade do crédito tributário, conforme o Art. 151, inciso IV, do CTN.\n\nA peça deve conter os pedidos de:\n\ni) concessão da medida liminar, para que a autoridade coatora emita a Cer(cid:29)dão de Regularidade Fiscal, até decisão final;\n\nii) concessão da ordem para reconhecer a existência de crédito executado com garan(cid:29)a; imunidade da Cofins; e ex(cid:29)nção do crédito pela prescrição, possibilitando à impetrante a obtenção de cer(cid:29)dão posi(cid:29)va com efeitos de nega(cid:29)va.\n\nO examinando ainda deve atribuir valor à causa e obedecer às normas de fechamento da peça, qualificando-se como advogado.\n\nProva Prá,co-Profissional Página 2/7",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "A pe(cid:29)ção deve ser endereçada ao Juízo da Vara Federal da Seção Judiciária de São Paulo (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Partes",
+        "descricao": "Impetrante: 1234 Soluções Industriais Ltda. (0,10) e impetrado ou autoridade coatora: Delegado da Receita Federal em São Paulo ou ainda a demonstração, pelo examinando, de que a autoridade é responsável pela negativa da emissão da Certidão de Regularidade Fiscal (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Partes",
+        "descricao": "Pessoa jurídica interessada: a União (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Fatos",
+        "descricao": "Breve descrição dos fatos (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Cabimento e Tempes,vidade",
+        "descricao": "Demonstração do cabimento do Mandado de Segurança (0,30), nos termos do Art. 1º da Lei no 12.016/2009 ou do Art. 5º, inciso LXIX, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Cabimento e Tempes,vidade",
+        "descricao": "Tempes(cid:29)vidade por ter sido impetrado antes dos 120 dias (0,20) na forma do Art. 23 da Lei 12.016/2009 (0,10)",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Fundamento de mérito",
+        "descricao": "Em relação ao débito do PIS, ele está garan(cid:29)do pela penhora, tendo a impetrante direito à cer(cid:29)dão posi(cid:29)va com efeitos de nega(cid:29)va (0,70), nos termos do Art. 206 do CTN (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fundamento de mérito",
+        "descricao": "Em relação ao débito da Cofins, não incide contribuição social sobre as receitas de exportação, pois são imunes (0,70), nos termos do Art. 149, § 2º, inciso I, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fundamento de mérito",
+        "descricao": "O débito de IRPJ está prescrito (0,40), pois a cons(cid:29)tuição defini(cid:29)va ocorreu há mais de cinco anos (0,30), nos termos do Art. 174 do CTN (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fundamentos da liminar",
+        "descricao": "Presença do fumus boni iuris por inconstitucionalidades/ilegalidade flagrantes apresentadas nos fundamentos de mérito (0,20) E presença do periculum in mora, porque a impetrante está em vias de participar de um processo licitatório em que se exige a Certidão de Regularidade Fiscal (0,20).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Pedidos",
+        "descricao": "Concessão da medida liminar, para determinar que a autoridade coatora emita a certidão positiva com efeitos de negativa (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Procedência do pedido, com a concessão da ordem em definitivo (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Notificação da autoridade coatora para prestar informações (0,10), cientificação (ou citação) da União (0,10) e intimação do Ministério Público (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "Condenação da União nas custas processuais (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Fechamento",
+        "descricao": "Atribuição de valor à causa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Fechamento",
+        "descricao": "Local, data, advogado e OAB... (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "TRIBUIÇÃO DOS PONTOS\nITEM PONTUAÇÃO\nEndereçamento\n1. A pe(cid:29)ção deve ser endereçada ao Juízo da Vara Federal da Seção Judiciária de\n0,00/0,10\nSão Paulo (0,10).\nPartes\n2. Impetrante: 1234 Soluções Industriais Ltda. (0,10) e impetrado ou autoridade\ncoatora: Delegado da Receita Federal em São Paulo ou ainda a demonstração, pelo\n0,00/0,10/0,20\nexaminando, de que a autoridade é responsável pela negativa da emissão da\nCertidão de Regularidade Fiscal (0,10).\n3. Pessoa jurídica interessada: a União (0,10). 0,00/0,10\nFatos\n4. Breve descrição dos fatos (0,10). 0,00/0,10\nCabimento e Tempes,vidade\n5. Demonstração do cabimento do Mandado de Segurança (0,30), nos termos do\n0,00/0,30/0,40\nArt. 1º da Lei no 12.016/2009 ou do Art. 5º, inciso LXIX, da CRFB/88 (0,10).\n6. Tempes(cid:29)vidade por ter sido impetrado antes dos 120 dias (0,20) na forma do\n0,00/0,20/0,30\nArt. 23 da Lei 12.016/2009 (0,10)\nFundamento de mérito\n7. Em relação ao débito do PIS, ele está garan(cid:29)do pela penhora, tendo a\nimpetrante direito à cer(cid:29)dão posi(cid:29)va com efeitos de nega(cid:29)va (0,70), nos termos 0,00/0,70/0,80\ndo Art. 206 do CTN (0,10).\n8. Em relação ao débito da Cofins, não incide contribuição social sobre as receitas\nde exportação, pois são imunes (0,70), nos termos do Art. 149, § 2º, inciso I, da 0,00/0,70/0,80\nCRFB/88 (0,10).\n9. O débito de IRPJ está prescrito (0,40), pois a cons(cid:29)tuição defini(cid:29)va ocorreu há\n0,00/0,30/0,40/0,70/0,80\nmais de cinco anos (0,30), nos termos do Art. 174 do CTN (0,10).\nFundamentos da liminar\n10. Presença do fumus boni iuris por inconstitucionalidades/ilegalidade flagrantes\napresentadas nos fundamentos de mérito (0,20) E presença do periculum in mora,\n0,00/0,20/0,40\nporque a impetrante está em vias de participar de um processo licitatório em que\nse exige a Certidão de Regularidade Fiscal (0,20).\nPedidos\n11. Concessão da medida liminar, para determinar que a autoridade coatora emita\n0,00/0,20\na certidão positiva com efeitos de negativa (0,20).\n12. Procedência do pedido, com a concessão da ordem em definitivo (0,20). 0,00/0,20\n13. Notificação da autoridade coatora para prestar informações (0,10),\n0,00/0,10/0,20/0,30\ncientificação (ou citação) da União (0,10) e intimação do Ministério Público (0,10).\n14. Condenação da União nas custas processuais (0,10). 0,00/0,10\nFechamento\n15. Atribuição de valor à causa (0,10). 0,00/0,10\n16. Local, data, advogado e OAB... (0,10). 0,00/0,10\nProva Prá,co-Profissional Página 3/7",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Em abril de 2023, a indústria de bebidas Tomo Todas Ltda., situada no Município Alfa, incorporou a fabricante de garrafas de vidros Mil Litros Ltda., situada no mesmo Município, cujo estabelecimento funcionava em um imóvel do tipo galpão de sua propriedade, passando este a integrar o patrimônio da sociedade empresária incorporadora no ato da operação societária. Em agosto do mesmo ano, a indústria de bebidas (incorporadora) recebeu uma notificação fiscal para o pagamento do Imposto sobre a Transmissão de Bens Imóveis Inter Vivos (ITBI) referente à transmissão do imóvel de propriedade da sociedade empresária incorporada ao seu patrimônio na realização de capital social, bem como uma notificação fiscal para o pagamento do Imposto sobre a Propriedade Predial e Territorial Urbana (IPTU) dos últimos três anos, que não estavam quitados. Inconformada com as cobranças, a sociedade empresária Tomo Todas Ltda. contratou você, como advogado(a), e pediu que você respondesse aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A cobrança do ITBI sobre a transferência do imóvel nessa incorporação está correta? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A cobrança do IPTU em face da incorporadora é válida? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. A cobrança do ITBI sobre a transferência do imóvel nesta incorporação não está correta, porque o ITBI não incide sobre a transmissão de bens ou direitos incorporados ao patrimônio de pessoa jurídica em realização de capital, nem sobre a transmissão de bens ou direitos decorrente de fusão, incorporação, cisão ou ex(cid:29)nção de pessoa jurídica, conforme o Art. 156, § 2º, inciso I, da CRFB/88.\n\nB) Sim. A cobrança do IPTU em face da incorporadora é válida, porque os créditos tributários rela(cid:29)vos a impostos, cujo fato gerador seja a propriedade, o domínio ú(cid:29)l ou a posse de bens imóveis, e, bem assim, os rela(cid:29)vos a taxas pela prestação de serviços referentes a tais bens, ou às contribuições de melhoria, subrogam-se na pessoa dos respec(cid:29)vos adquirentes, salvo quando a prova de sua quitação constar do Ntulo, segundo o Art. 130, caput, do CTN.\n\nou: Sim. A pessoa jurídica de direito privado que resultar de fusão, transformação ou incorporação de outra ou em outra é responsável pelos tributos devidos até a data do ato pelas pessoas jurídicas de direito privado fusionadas, transformadas ou incorporadas, cf. Art. 132, caput, do CTN.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. O ITBI não incide sobre a transmissão de imóveis decorrente de incorporação de pessoa jurídica (0,55), conforme o Art. 156, § 2º, inciso I, da CRFB/88 ou Art. 36, inciso II, do CTN (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. Os créditos tributários rela(cid:29)vos a impostos cujo fato gerador seja a propriedade, o domínio ú(cid:29)l ou a posse de bens imóveis subrogam-se na pessoa dos respec(cid:29)vos adquirentes (0,50), segundo o Art. 130, caput, do CTN (0,10). ou: Sim. A pessoa jurídica de direito privado que resultar de fusão, transformação ou incorporação de outra ou em outra é responsável pelos tributos devidos até a data do ato pelas pessoas jurídicas de direito privado fusionadas, transformadas ou incorporadas (0,50), cf. Art. 132, caput, do CTN (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. O ITBI não incide sobre a transmissão de imóveis decorrente de incorporação de pessoa\n0,00/0,55/0,65\njurídica (0,55), conforme o Art. 156, § 2º, inciso I, da CRFB/88 ou Art. 36, inciso II, do CTN (0,10).\nB. Sim. Os créditos tributários rela(cid:29)vos a impostos cujo fato gerador seja a propriedade, o domínio\nú(cid:29)l ou a posse de bens imóveis subrogam-se na pessoa dos respec(cid:29)vos adquirentes (0,50), segundo\no Art. 130, caput, do CTN (0,10).\nou: Sim. A pessoa jurídica de direito privado que resultar de fusão, transformação ou incorporação 0,00/0,50/0,60\nde outra ou em outra é responsável pelos tributos devidos até a data do ato pelas pessoas jurídicas\nde direito privado fusionadas, transformadas ou incorporadas (0,50), cf. Art. 132, caput, do CTN\n(0,10).\nProva Prá,co-Profissional Página 4/7",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "O Estado Alfa, com problemas financeiros e atuariais para a manutenção do regime próprio de previdência social dos seus servidores instituiu, mediante lei complementar, duas novas alíquotas, sendo a primeira 30%, e a segunda 50% superiores à alíquota ordinária já existente de 11% sobre o salário de contribuição, para incidir sobre as remunerações que sejam superiores a R$ 10.000,00 (dez mil reais) e R$ 15.000,00 (quinze mil reais), respectivamente. A mesma lei instituiu, também, uma nova contribuição compulsória de 1% sobre a mesma base de cálculo, para fins de custeio de assistência médica e odontológica de seus servidores. Determinada Associação representativa de categoria de servidores daquele Estado contrata você, como advogado(a), para defender os seus interesses. Diante desse cenário, responda às dúvidas apresentadas pela Associação.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A criação de novas alíquotas para a contribuição previdenciária dos servidores estaduais é correta? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A criação de nova contribuição compulsória para custear assistência médica e odontológica de seus servidores é válida? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, está correta. Os Estados, ao cobrar dos servidores a(cid:29)vos, dos aposentados e dos pensionistas, por meio de lei, contribuições para o custeio do regime próprio de previdência social, poderão ins(cid:29)tuir alíquotas progressivas de acordo com o valor da base de contribuição ou dos proventos de aposentadoria e de pensões, com base no Art. 149, § 1º, da CRFB/88.\n\nB) Não é válida. Compete exclusivamente à União ins(cid:29)tuir contribuições sociais dis(cid:29)ntas das contribuições para o custeio do regime próprio de previdência social estadual, segundo o Art. 149, caput, da CRFB/88. ou: Somente por lei complementar da União poderia ser ins(cid:29)tuída outra fonte des(cid:29)nada a garan(cid:29)r a manutenção ou expansão da seguridade social, cf. Art. 195, § 4º, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. Os Estados podem ins(cid:29)tuir alíquotas progressivas nas contribuições para o custeio do regime próprio de previdência social cobradas dos servidores a(cid:29)vos, dos aposentados e dos pensionistas, de acordo com o valor da base de contribuição ou dos proventos de aposentadoria e de pensões (0,55), com base no Art. 149, § 1º, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. Compete exclusivamente à União ins(cid:29)tuir contribuições sociais dis(cid:29)ntas das contribuições para o custeio do regime próprio de previdência social estadual (0,50), segundo o Art. 149, caput, da CRFB/88 (0,10). ou: Somente por lei complementar da União poderia ser ins(cid:29)tuída outra fonte des(cid:29)nada a garan(cid:29)r a manutenção ou expansão da seguridade social (0,50), cf. Art. 195, § 4º, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. Os Estados podem ins(cid:29)tuir alíquotas progressivas nas contribuições para o custeio do\nregime próprio de previdência social cobradas dos servidores a(cid:29)vos, dos aposentados e dos\n0,00/0,55/0,65\npensionistas, de acordo com o valor da base de contribuição ou dos proventos de aposentadoria e\nde pensões (0,55), com base no Art. 149, § 1º, da CRFB/88 (0,10).\nB. Não. Compete exclusivamente à União ins(cid:29)tuir contribuições sociais dis(cid:29)ntas das contribuições\npara o custeio do regime próprio de previdência social estadual (0,50), segundo o Art. 149, caput,\nda CRFB/88 (0,10). 0,00/0,50/0,60\nou: Somente por lei complementar da União poderia ser ins(cid:29)tuída outra fonte des(cid:29)nada a garan(cid:29)r\na manutenção ou expansão da seguridade social (0,50), cf. Art. 195, § 4º, da CRFB/88 (0,10).\nProva Prá,co-Profissional Página 5/7",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Uma entidade fechada de previdência social privada foi criada em favor dos empregados de certa empresa, contando com contribuições feitas tanto pela empresa quanto pelos empregados. Contudo, o Fisco Federal sempre insistiu em cobrar impostos de tal entidade de previdência, a qual, irresignada, por meio de seu advogado, ajuizou ação judicial contra a União, pedindo o reconhecimento de sua imunidade tributária e a desconstituição dos lançamentos que reputava indevidos. Todavia, não obteve êxito, restando a entidade vencida e a sua imunidade não reconhecida. Anos depois, a empresa, em má situação financeira, encerrou as suas atividades, de modo que a entidade de previdência social privada foi liquidada, devendo ser rateado o seu patrimônio entre os funcionários da empresa. Coube a cada participante, por rateio do patrimônio, uma quantia superior ao valor das respectivas contribuições à entidade em liquidação, devidamente atualizadas e corrigidas. Sobre tal valor, o Fisco Federal pretende cobrar Imposto sobre a Renda da Pessoa Física (IRPF).\n\nDiante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Tinha razão a entidade fechada de previdência social privada em pleitear a sua imunidade de impostos? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Tem razão o Fisco Federal em cobrar IRPF incidente sobre a quantia devida a cada participante por rateio do patrimônio dessa entidade? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não (cid:29)nha razão. A imunidade tributária conferida a ins(cid:29)tuições de assistência social sem fins lucra(cid:29)vos, pelo Art. 150, inciso VI, alínea c, da Cons(cid:29)tuição, somente alcança as en(cid:29)dades fechadas de previdência social privada se não houver contribuição dos beneficiários, cf. Súmula nº 730 do STF. No caso, havia também contribuição dos beneficiários, razão pela qual fica a imunidade descaracterizada.\n\nB) Sim, tem razão. Cons(cid:29)tui acréscimo patrimonial a atrair a incidência do imposto de renda, em caso de liquidação de en(cid:29)dade de previdência privada, a quan(cid:29)a que couber a cada par(cid:29)cipante, por rateio do patrimônio, superior ao valor das respec(cid:29)vas contribuições à en(cid:29)dade em liquidação, devidamente atualizadas e corrigidas, cf. Súmula 590 do STJ.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A imunidade tributária conferida a ins(cid:29)tuições de assistência social sem fins lucra(cid:29)vos, pelo Art. 150, inciso VI, alínea c, da CRFB/88, somente alcança as en(cid:29)dades fechadas de previdência social privada se não houver a contribuição dos beneficiários (0,50), cf. Súmula 730 do STF (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. Cons(cid:29)tui acréscimo patrimonial a atrair a incidência do Imposto sobre a Renda, em caso da liquidação da en(cid:29)dade de previdência privada, sobre a quan(cid:29)a que couber a cada par(cid:29)cipante, por rateio do patrimônio, superior ao valor das respec(cid:29)vas contribuições à en(cid:29)dade em liquidação, devidamente atualizadas e corrigidas (0,55), cf. Súmula 590 do STJ (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A imunidade tributária conferida a ins(cid:29)tuições de assistência social sem fins lucra(cid:29)vos, pelo\nArt. 150, inciso VI, alínea c, da CRFB/88, somente alcança as en(cid:29)dades fechadas de previdência social 0,00/0,50/0,60\nprivada se não houver a contribuição dos beneficiários (0,50), cf. Súmula 730 do STF (0,10).\nB. Sim. Cons(cid:29)tui acréscimo patrimonial a atrair a incidência do Imposto sobre a Renda, em caso da\nliquidação da en(cid:29)dade de previdência privada, sobre a quan(cid:29)a que couber a cada par(cid:29)cipante, por\n0,00/0,55/0,65\nrateio do patrimônio, superior ao valor das respec(cid:29)vas contribuições à en(cid:29)dade em liquidação,\ndevidamente atualizadas e corrigidas (0,55), cf. Súmula 590 do STJ (0,10).\nProva Prá,co-Profissional Página 6/7",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "A revendedora de medicamentos Saúde Ltda., inserida no regime de substituição tributária típica do seu setor, em que é a substituta tributária do Imposto sobre Circulação de Mercadorias e Serviços (ICMS), protocola pedido administrativo de imediata e preferencial restituição do referido imposto recolhido antecipadamente a maior, em base de cálculo presumida, pela indústria fabricante na qualidade de substituta tributária. Fundamenta ser devida a restituição da diferença daquele imposto pago a maior no regime de substituição tributária para frente, uma vez que a base de cálculo efetiva da operação foi inferior à presumida.\n\nO referido pedido é negado pela Secretaria Estadual de Fazenda, com base em dois fundamentos: i) a falta de legitimidade ativa do requerente, pois deveria ser a indústria fabricante dos medicamentos (a substituta tributária) a protocolar tal pedido; e ii) ainda que o pedido fosse feito pela legitimada, a mera diferença a maior no recolhimento do tributo não enseja a restituição, uma vez que o fato gerador efetivamente ocorreu.\n\nDiante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Está correta a Secretaria Estadual de Fazenda ao afirmar a ilegitimidade ativa da requerente Saúde Ltda.? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "É correto que o Fisco Estadual retenha em seu favor a diferença do imposto pago no caso concreto? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Item anulado pela Coordenação do Exame.\n\nSim, está correta. Somente aquele que efe(cid:29)vamente suportou o encargo financeiro da cobrança, a saber, o subs(cid:29)tuto tributário (indústria fabricante), seria o legi(cid:29)mado a(cid:29)vo para o pedido de res(cid:29)tuição desse valor, conforme o Art. 166 do CTN.\n\nB) Não é correto. De acordo com o Art. 150, §7º, da CRFB/88, “a lei poderá atribuir a sujeito passivo de obrigação tributária a condição de responsável pelo pagamento de imposto ou contribuição, cujo fato gerador deva ocorrer posteriormente, assegurada a imediata e preferencial res!tuição da quan!a paga, caso não se realize o fato gerador presumido.” A correta exegese da parte final da norma indica que, quando o fato gerador ocorreu posteriormente, mas apenas parcialmente (não do modo como originalmente foi presumido, pois o fato gerador ocorreu com a base de cálculo menor que a presumida), quanto à parcela cobrada a maior, subsiste o dever do Fisco de res(cid:29)tuir.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Item anulado pela Coordenação do Exame. Sim. Apenas quem efe(cid:29)vamente suportou o encargo financeiro da cobrança seria o legi(cid:29)mado a(cid:29)vo para o pedido de res(cid:29)tuição desse valor (0,55), cf. o Art. 166 do CTN. (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. O Fisco tem o dever de res(cid:29)tuir o tributo quando o fato gerador presumido ocorreu posteriormente (0,50), cf. o Art. 150, §7º, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Item anulado pela Coordenação do Exame.\nSim. Apenas quem efe(cid:29)vamente suportou o encargo financeiro da cobrança seria o legi(cid:29)mado 0,00/0,55/0,65\na(cid:29)vo para o pedido de res(cid:29)tuição desse valor (0,55), cf. o Art. 166 do CTN. (0,10).\nB. Não. O Fisco tem o dever de res(cid:29)tuir o tributo quando o fato gerador presumido ocorreu\n0,00/0,50/0,60\nposteriormente (0,50), cf. o Art. 150, §7º, da CRFB/88 (0,10).\nProva Prá,co-Profissional Página 7/7",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

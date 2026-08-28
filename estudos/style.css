@@ -1153,3 +1153,118 @@ select:focus { outline: none; border-color: var(--primary); }
    deixar claro que a acao mudou de sentido. */
 .chat-send.stop-mode { background: var(--error); }
 .chat-send.stop-mode:hover:not(:disabled) { filter: brightness(1.12); }
+
+/* --------------------------------------------------- Menu e chat no mobile */
+/*
+  Em telas estreitas nao ha' largura de sobra para o menu lateral (260px) ou
+  o chat do Dr. Laureano (420px) crescerem DENTRO do layout flex de sempre
+  sem espremer o .content contra a borda — abaixo do ponto de corte, os dois
+  passam a se comportar como um painel overlay em tela cheia (position:
+  fixed, cobrindo o viewport inteiro) em vez de dividir espaco com o
+  conteudo. Como cada um ja' e' controlado por uma unica classe ".expanded"
+  (ver JS em estudos.js/dr-laureano.js), basta sobrescrever essa mesma
+  classe aqui: nenhuma mudanca de HTML/JS e' necessaria. Os botoes de abrir
+  e fechar tambem crescem para um alvo de toque confortavel (~44px).
+
+  Este bloco fica DE PROPOSITO no fim do arquivo: ".sidebar.expanded" e
+  ".chat-panel.expanded" (regras normais, la' em cima) tem a MESMA
+  especificidade que as regras aqui dentro (duas classes cada), entao em
+  caso de empate quem vem DEPOIS no arquivo e' que vale — nao quem "parece"
+  mais especifico por estar dentro de @media. Colar esse bloco no meio do
+  arquivo (antes das regras normais de chat, por exemplo) faz a regra de
+  desktop vencer o empate mesmo dentro da media query mobile.
+*/
+@media (max-width: 680px) {
+  .sidebar.expanded,
+  .chat-panel.expanded {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+  }
+
+  .sidebar.expanded .sidebar-scroll {
+    width: 100%;
+  }
+
+  .chat-panel.expanded .chat-scroll {
+    width: 100%;
+  }
+
+  /* Alca de abrir/fechar o menu: mesma logica de sempre (um so' botao
+     alterna os dois estados), so' maior para tocar com facilidade. */
+  .sidebar-handle {
+    width: 42px;
+    height: 76px;
+  }
+
+  .sidebar-handle .bar { width: 18px; }
+
+  /* Expandido em tela cheia, a alca NAO pode continuar em "left: 100%"
+     (metade dentro, metade fora da borda direita do menu): como o menu
+     agora tem a largura da tela toda, essa borda direita passa a ser a
+     borda direita da PROPRIA TELA — exatamente onde mora, sempre, a faixa
+     recolhida + retrato flutuante do chat do Dr. Laureano (que continua
+     visivel, sticky, do lado direito). As duas alcas colidiam ali, uma por
+     cima da outra. Aqui o botao de fechar o menu vira um botao de canto
+     (estilo "X" de menu mobile), no topo, longe da faixa do chat.*/
+  .sidebar.expanded .sidebar-handle {
+    top: 16px;
+    left: auto;
+    right: 16px;
+    transform: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+
+  /* E, por garantia (mesmo com a alca reposicionada acima), some com o
+     retrato+botao do chat enquanto o menu mobile estiver aberto — os dois
+     paineis em tela cheia nao fazem sentido abertos ao mesmo tempo, e sem
+     isso o avatar do Dr. Laureano ficaria flutuando por cima do menu. */
+  .sidebar.expanded ~ .chat-panel .chat-toggle-group {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Botao "IA" de abrir o chat (visivel so' com o chat fechado) e retrato
+     do Dr. Laureano acima dele, ambos maiores para o toque. */
+  .chat-handle {
+    width: 46px;
+    height: 44px;
+    font-size: 13px;
+  }
+
+  .chat-toggle-avatar {
+    width: 56px;
+    height: 56px;
+  }
+
+  /* X de fechar o chat expandido: era 26x26px (menor que o alvo de toque
+     recomendado de ~44px) — aqui e' o botao de "minimizar" que o usuario
+     efetivamente usa no mobile, entao precisa ser facil de acertar. */
+  .chat-close {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    font-size: 24px;
+  }
+
+  /* Evita o zoom automatico que o iOS Safari faz ao focar um campo de
+     texto com font-size menor que 16px. */
+  .chat-input-row textarea {
+    font-size: 16px;
+  }
+
+  /* A logo do site (".brand-logo") fica FORA da ".app" (irma anterior de
+     ".sidebar"/".chat-panel", nao filha) e sempre em position: fixed no
+     canto superior esquerdo — no desktop isso nunca incomoda, mas com o
+     menu/chat agora em tela cheia no mobile, esse canto e' exatamente onde
+     mora o cabecalho de cada painel (avatar/titulo do Dr. Laureano, ou o
+     brasao "E" do menu), e a logo ficava por cima, sobreposta. Some com
+     ela enquanto qualquer um dos dois estiver expandido. */
+  body:has(.sidebar.expanded) .brand-logo,
+  body:has(.chat-panel.expanded) .brand-logo {
+    display: none;
+  }
+}

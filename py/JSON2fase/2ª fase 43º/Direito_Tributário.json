@@ -1,0 +1,366 @@
+{
+  "exam_number": 43,
+  "phase": 2,
+  "area": "Direito Tributário",
+  "source_provas_file": "43º_provas_Direito_Tributário.pdf",
+  "source_resposta_file": "43º_respostas_Direito_Tributário.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "A sociedade empresária Informática Tudo Certo Ltda., prestadora de serviços de suporte técnico, está em dificuldades financeiras e em recuperação judicial, sendo devedora de R$ 120.000,00 (cento e vinte mil reais) de ISS declarado, mas não pago (e que ainda não foi alcançado pela prescrição).\n\nPor isso, requereu administrativamente ao Fisco do Município Alfa (Estado Beta), credor tributário desse montante, o parcelamento da dívida em 120 (cento e vinte) parcelas (tal como previsto no Art. 10-A, inciso V, da Lei nº 10.522/2002, lei federal específica que traz o prazo de parcelamento de dívidas de devedores tributários em recuperação judicial), para que fosse concedida a suspensão da exigibilidade do crédito tributário com o deferimento da adesão ao parcelamento.\n\nO pedido de adesão ao parcelamento foi negado em decisão administrativa de 1ª instância pelo Município, sob os seguintes argumentos:\n\ni) Ausente lei municipal específica de parcelamento para devedores em recuperação judicial, a lei geral de parcelamento do Município apenas admite o parcelamento em até 84 (oitenta e quatro) parcelas. Em razão da autonomia municipal, deve ser aplicado o número máximo de parcelas previsto na lei municipal, e não aquele previsto em lei federal, tal como incorretamente requerido pela empresa; ii) O parcelamento não tem o condão de suspensão da exigibilidade do crédito tributário, a qual somente se efetiva após o depósito prévio de, ao menos, 20% do valor total da dívida.\n\nA sociedade empresária, inconformada, interpôs recurso administrativo contra a decisão de 1ª instância, o qual não foi admitido, sob o argumento de que não foi acompanhado do depósito prévio de 20% do valor total da dívida, requisito de admissibilidade do recurso administrativo previsto em lei municipal.\n\nIrresignada, a sociedade ingressou com ação anulatória da decisão administrativa perante a Vara Única da Comarca do Município Alfa, com o fim de anular tal decisão administrativa e buscar sua inclusão no parcelamento por ordem judicial, sem necessidade de fazer qualquer depósito prévio e podendo parcelar a dívida em até 120 (cento e vinte) vezes.\n\nEm contestação, o Município Alfa sustentou a correção das decisões administrativas, com base nos mesmos argumentos que já haviam sido expostos pelo Fisco no processo administrativo tributário.\n\nO Magistrado julgou improcedentes os pedidos da sociedade empresária, entendendo que as alegações do Município em contestação estavam corretas.\n\nDiante desse cenário, como advogado(a) constituído(a) pela sociedade empresária nos autos, estando no 11º dia útil após a intimação da sentença judicial, redija a peça processual cabível.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "O examinando deverá elaborar a peça recursal de apelação, com o objetivo de ver reformada a decisão do Magistrado de 1º grau. Como se trata de uma decisão que extinguiu o processo com resolução do mérito, configura- se uma sentença, a ser atacada pelo recurso de apelação, nos termos do Art. 1009, caput, do CPC.\n\nO recurso deve ser interposto perante o Juízo de 1º grau (Vara Única da Comarca do Município Alfa), mas as razões recursais devem ser endereçadas ao Desembargador Relator da Apelação no Tribunal de Justiça do Estado Beta.\n\nÉ apelante a sociedade empresária Informática Tudo Certo Ltda. e, apelado o Município Alfa.\n\nQuanto ao cabimento, deve-se indicar que contra essa sentença cabe apelação, nos termos do Art. 1.009, caput, do CPC, sendo o prazo de apelação de 15 (quinze) dias úteis, nos termos do Art. 1.003, §5º, do CPC. Deve-se, também, indicar o recolhimento do preparo recursal.\n\nOs fatos devem ser descritos nos termos colocados pelo enunciado.\n\nNas razões recursais, o examinando deve indicar:\n\ni) Ausente uma lei municipal específica de parcelamento para devedores em recuperação judicial, deve-se conceder ao devedor em recuperação judicial o prazo de parcelamento em 120 (cento e vinte) parcelas, isto é, não inferior ao concedido no Art. 10-A, inciso V, da Lei Federal nº 10.522/2002, lei federal específica que trata do parcelamento de débitos de devedor em recuperação judicial, segundo o Art. 155-A, §4º, do CTN.\n\n“Art. 155. §3º. Lei específica disporá sobre as condições de parcelamento dos créditos tributários do devedor em recuperação judicial.\n\n§4º A inexistência da lei específica a que se refere o §3º deste artigo importa na aplicação das leis gerais de parcelamento do ente da Federação ao devedor em recuperação judicial, não podendo, neste caso, ser o prazo de parcelamento inferior ao concedido pela lei federal específica.”\n\nii) A suspensão da exigibilidade do crédito tributário se dá com a simples adesão ao parcelamento, não estando condicionada ao depósito prévio de, ao menos, 20% do valor total da dívida, nos termos do Art. 151, inciso VI, do CTN.\n\niii) A exigência de depósito prévio de 20% do valor total da dívida como requisito de admissibilidade do recurso administrativo é inconstitucional, por violar o direito de petição e o direito ao contraditório e ampla defesa, com os meios e recursos a ela inerentes, segundo o Art. 5º, incisos XXIV e LV, da CRFB/88 ou da Súmula Vinculante 21 do STF: “É inconstitucional a exigência de depósito ou arrolamento prévios de dinheiro ou bens para admissibilidade de recurso administrativo”.\n\nNos pedidos, deve o examinando requerer que seja dado provimento ao recurso para reformar a sentença.\n\nDeve-se requerer, também, a inversão dos ônus de sucumbência.\n\nPor fim, o examinando deve respeitar as normas de fechamento da peça.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "Interposição da apelação por petição dirigida à Vara Única da Comarca do Município Alfa (0,10)",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Endereçamento das razões recursais ao Desembargador Relator da Apelação no Tribunal de Justiça do Estado Beta (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Apelante: Informática Tudo Certo Ltda. (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Endereçamento",
+        "descricao": "Apelado: Município Alfa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Cabimento",
+        "descricao": "Cabimento: recurso cabível para a reforma de sentença é a apelação (0,30), nos termos do Art. 1009, caput, do CPC (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Cabimento",
+        "descricao": "Tempestividade: apelação interposta tempestivamente, a saber, dentro do prazo de 15 dias úteis (0,30), nos termos do Art. 1.003, §5º, do CPC (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Cabimento",
+        "descricao": "Recolhimento do devido preparo recursal (0,20), na forma do Art. 1.007, caput, do CPC (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Cabimento",
+        "descricao": "Descrição dos Fatos (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fundamentos da apelação",
+        "descricao": "Ausente lei municipal específica de parcelamento para devedores em recuperação judicial, deve-se conceder ao devedor em recuperação judicial o prazo de parcelamento em 120 parcelas, isto é, não inferior ao concedido em lei específica que trata do parcelamento de débitos de devedor em recuperação judicial (0,70), nos termos do Art. 155-A, § 4º, do CTN (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fundamentos da apelação",
+        "descricao": "A suspensão da exigibilidade do crédito tributário se dá com a simples adesão ao parcelamento, não estando condicionada ao depósito prévio de, ao menos, 20% do valor total da dívida (0,70), segundo o Art. 151, inciso VI, do CTN (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Fundamentos da apelação",
+        "descricao": "A exigência de depósito prévio de 20% do valor total da dívida como requisito de admissibilidade do recurso administrativo é inconstitucional, por violar o direito de petição e o direito ao contraditório e ampla defesa, com os meios e recursos a ela inerentes (0,70), nos termos do Art. 5º, incisos XXIV ou LV, da CRFB/88, ou da Súmula Vinculante 21 do STF, ou Súmula 373 do STJ (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Dar provimento ao recurso para reformar a sentença, concedendo o parcelamento em 120 (cento e vinte) parcelas (0,20) e a suspensão da exigibilidade do crédito tributário (0,20).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Intimação do apelado, para, querendo, apresentar contrarrazões (0,20), nos termos do Art. 1.010, § 1º, do CPC (0,10);",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "Condenação do apelado ao ressarcimento das custas processuais (0,10) e ao pagamento dos honorários advocatícios (0,10) ou reversão dos ônus de sucumbência (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Fechamento",
+        "descricao": "Data, local, advogado, OAB. (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. Interposição da apelação por petição dirigida à Vara Única da Comarca do Município Alfa (0,10) 0,00/0,10\n2. Endereçamento das razões recursais ao Desembargador Relator da Apelação no Tribunal de\n0,00/0,10\nJustiça do Estado Beta (0,10).\n3. Apelante: Informática Tudo Certo Ltda. (0,10). 0,00/0,10\n4. Apelado: Município Alfa (0,10). 0,00/0,10\nCabimento\n5. Cabimento: recurso cabível para a reforma de sentença é a apelação (0,30), nos termos do Art.\n0,00/0,30/0,40\n1009, caput, do CPC (0,10).\n6. Tempestividade: apelação interposta tempestivamente, a saber, dentro do prazo de 15 dias\n0,00/0,30/0,40\núteis (0,30), nos termos do Art. 1.003, §5º, do CPC (0,10).\n7. Recolhimento do devido preparo recursal (0,20), na forma do Art. 1.007, caput, do CPC (0,10). 0,00/0,20/0,30\n8. Descrição dos Fatos (0,10). 0,00/0,10\nFundamentos da apelação\n9. Ausente lei municipal específica de parcelamento para devedores em recuperação judicial,\ndeve-se conceder ao devedor em recuperação judicial o prazo de parcelamento em 120 parcelas,\n0,00/0,70/0,80\nisto é, não inferior ao concedido em lei específica que trata do parcelamento de débitos de\ndevedor em recuperação judicial (0,70), nos termos do Art. 155-A, § 4º, do CTN (0,10).\n10. A suspensão da exigibilidade do crédito tributário se dá com a simples adesão ao\nparcelamento, não estando condicionada ao depósito prévio de, ao menos, 20% do valor total da 0,00/0,70/0,80\ndívida (0,70), segundo o Art. 151, inciso VI, do CTN (0,10).\n11. A exigência de depósito prévio de 20% do valor total da dívida como requisito de\nadmissibilidade do recurso administrativo é inconstitucional, por violar o direito de petição e o\ndireito ao contraditório e ampla defesa, com os meios e recursos a ela inerentes (0,70), nos 0,00/0,70/0,80\ntermos do Art. 5º, incisos XXIV ou LV, da CRFB/88, ou da Súmula Vinculante 21 do STF, ou Súmula\n373 do STJ (0,10).\nPedidos\n12. Dar provimento ao recurso para reformar a sentença, concedendo o parcelamento em 120\n0,00/0,20/0,40\n(cento e vinte) parcelas (0,20) e a suspensão da exigibilidade do crédito tributário (0,20).\n13. Intimação do apelado, para, querendo, apresentar contrarrazões (0,20), nos termos do Art.\n0,00/0,20/0,30\n1.010, § 1º, do CPC (0,10);\n14. Condenação do apelado ao ressarcimento das custas processuais (0,10) e ao pagamento dos\n0,00/0,10/0,20\nhonorários advocatícios (0,10) ou reversão dos ônus de sucumbência (0,20).\nFechamento\n15. Data, local, advogado, OAB. (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "João é citado em ação de execução fiscal referente a débitos de taxa de coleta domiciliar de lixo (TCDL) no valor de R$ 12.000,00 (doze mil reais). Além do seu único imóvel, em que reside e do qual se originaram as dívidas da taxa cobrada, é proprietário somente de um cavalo manga-larga marchador e de debêntures com cotação em bolsa de valores, com valor aproximado de R$ 12.000,00 (doze mil reais) cada um, não dispondo de dinheiro em banco nem de outros bens que possam responder pela dívida. O advogado de João optou por indicar à penhora o cavalo, por entender que tais debêntures estavam em último lugar na ordem de preferência prevista para a penhora ou o arresto de bens na execução fiscal. Diante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O único imóvel de João, em que reside e do qual se originaram as dívidas de TCDL, poderia responder por tal dívida? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Está correta a apreciação do advogado de que o cavalo vem antes das debêntures na ordem de preferência prevista para a penhora ou o arresto de bens na execução fiscal? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, poderia. O único imóvel de propriedade do executado em que reside é considerado bem de família, sendo em regra impenhorável. Contudo, a impenhorabilidade do bem de família é inoponível ao Fisco se a execução for movida para cobrança de impostos, predial ou territorial, taxas e contribuições devidas em função do imóvel familiar, o que é exatamente o caso do tributo cobrado no enunciado, segundo o Art. 3º, inciso IV, da Lei nº 8.009/1990. B) Não está correta. O cavalo é um semovente, estando apenas na sétima posição de preferência na ordem de preferência prevista para a penhora ou o arresto de bens na execução fiscal, enquanto as debêntures com cotação em bolsa de valores estão na segunda posição, por configurarem título de crédito que tem cotação em bolsa, conforme o Art. 11, inciso II, da Lei nº 6.830/1980 ou Art. 835, inciso III, do CPC.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. A impenhorabilidade do bem de família é inoponível ao Fisco se a execução for movida para cobrança de taxa incidente sobre o próprio imóvel familiar (0,55), segundo o Art. 3º, inciso IV, da Lei nº 8.009/1990 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. O cavalo é um semovente, estando apenas na sétima posição na ordem de preferência prevista para a penhora ou o arresto de bens na execução fiscal, enquanto as debêntures com cotação em bolsa de valores estão na segunda posição, por serem título de crédito que tem cotação em bolsa (0,50), conforme o Art. 11, inciso II, da Lei nº 6.830/1980 ou Art. 835, inciso III, do CPC (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA. Sim. A impenhorabilidade do bem de família é inoponível ao Fisco se a execução for movida\npara cobrança de taxa incidente sobre o próprio imóvel familiar (0,55), segundo o Art. 3º, inciso 0,00/0,55/0,65\nIV, da Lei nº 8.009/1990 (0,10).\nB. Não. O cavalo é um semovente, estando apenas na sétima posição na ordem de preferência\nprevista para a penhora ou o arresto de bens na execução fiscal, enquanto as debêntures com\ncotação em bolsa de valores estão na segunda posição, por serem título de crédito que tem 0,00/0,50/0,60\ncotação em bolsa (0,50), conforme o Art. 11, inciso II, da Lei nº 6.830/1980 ou Art. 835, inciso III,\ndo CPC (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "João da Silva Gomes de Souza, ao receber uma citação judicial, por correio eletrônico, expressamente requerida pela Fazenda Pública Estadual, da sua inclusão no polo passivo de uma ação de execução fiscal movida em face da sociedade empresária XPTO Ltda., percebe que, embora contenha exatamente o mesmo nome próprio, o CPF indicado era de outra pessoa. Despreocupado, demorou cinco meses para procurar um(a) advogado(a) para o defender contra o redirecionamento fiscal nos autos da ação de execução fiscal. Diante deste cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Pode a Fazenda Pública requerer a citação de João em ação de execução fiscal por meio de correio eletrônico? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Qual medida judicial será cabível para que o(a) advogado(a) possa defender os interesses de João nessa ação de execução fiscal? Justifique, indicando o fundamento dessa medida.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, é possível, desde que requerido pela Fazenda Pública, segundo o Art. 8º, inciso I, da Lei nº 6.830/1980 c/c o Art. 246 do CPC. Art. 8º - O executado será citado para, no prazo de cinco dias, pagar a dívida com os juros e a multa de mora e os encargos indicados na Certidão de Dívida Ativa, ou garantir a execução, observadas as seguintes normas: I - A citação será feita pelo correio, com aviso de recepção, se a Fazenda Pública não a requerer por outra forma. Art. 246. A citação será feita preferencialmente por meio eletrônico, no prazo de até dois dias úteis, contado da decisão que a determinar, por meio dos endereços eletrônicos indicados pelo citando no banco de dados do Poder Judiciário, conforme regulamento do Conselho Nacional de Justiça. B) A medida judicial cabível será a Exceção de Pré-Executividade, pois não houve penhora (garantia do juízo) e se trata de matéria conhecível de ofício que não demanda dilação probatória, conforme a Súmula 393 do STJ. Além disso, o enunciado nada fala de penhora, de modo que está ausente a garantia do juízo. Tampouco cabe mandado de segurança, pois já se passaram mais de 120 (cento e vinte) dias do ato reputado ilegal do Magistrado. Ademais, a pergunta se refere à medida cabível naquela execução fiscal.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim, é possível, desde que requerido pela Fazenda Pública (0,55), segundo o Art. 8º, inciso I, da Lei nº 6.830/1980 c/c o Art. 246 do CPC (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "A medida cabível será a Exceção de Pré-Executividade, pois se trata de matéria conhecível de ofício que não demanda dilação probatória (0,50), conforme a Súmula 393 do STJ (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA. Sim, é possível, desde que requerido pela Fazenda Pública (0,55), segundo o Art. 8º, inciso\n0,00/0,55/0,65\nI, da Lei nº 6.830/1980 c/c o Art. 246 do CPC (0,10).\nB. A medida cabível será a Exceção de Pré-Executividade, pois se trata de matéria conhecível\n0,00/0,50/0,60\nde ofício que não demanda dilação probatória (0,50), conforme a Súmula 393 do STJ (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Maria, servidora pública do Estado Alfa, está sendo investigada pela Corregedoria do órgão estadual em que está lotada por suspeita de enriquecimento indevido, decorrente de concessão irregular de licenças administrativas no exercício de seu cargo público efetivo. Havendo fundados indícios de irregularidades e corrupção, a Corregedoria abriu processo administrativo disciplinar (PAD) em desfavor de Maria e formulou requerimento administrativo escrito à Receita Federal do Brasil (RFB) para que forneça informações sobre a evolução patrimonial da servidora. A Receita Federal do Brasil recusou-se a fornecer tais informações, alegando que estão protegidas por sigilo fiscal. Mesmo assim, a Corregedoria conseguiu outras provas cabais das irregularidades e, em decisão administrativa, condenou Maria à pena de demissão, emitindo cópias do PAD para o Ministério Público Estadual e para a RFB. A Receita Federal do Brasil, de posse do PAD, a partir das ilicitudes praticadas por Maria, verificando que tais atos ilícitos foram cometidos mediante pagamentos ilícitos não declarados à RFB, decidiu efetuar lançamento de ofício do Imposto sobre a Renda de Pessoa Física (IRPF) em relação aos valores ilicitamente recebidos por Maria.\n\nDiante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A Receita Federal do Brasil está correta em recusar-se a fornecer as informações fiscais à Corregedoria do órgão estadual? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Poderia ser efetuado o lançamento de ofício do Imposto sobre a Renda de Pessoa Física (IRPF) em relação aos valores ilicitamente recebidos por Maria? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não está correta. O Fisco tem o dever de oferecer tais informações mediante solicitações de autoridade administrativa no interesse da Administração Pública, desde que seja comprovada a instauração regular de processo administrativo, no órgão ou na entidade respectiva, com o objetivo de investigar o sujeito passivo a que se refere a informação, por prática de infração administrativa, cf. Art. 198, § 1º, inciso II, do CTN. Art. 198. Sem prejuízo do disposto na legislação criminal, é vedada a divulgação, por parte da Fazenda Pública ou de seus servidores, de informação obtida em razão do ofício sobre a situação econômica ou financeira do sujeito passivo ou de terceiros e sobre a natureza e o estado de seus negócios ou atividades. § 1º. Excetuam-se do disposto neste artigo, além dos casos previstos no Art. 199, os seguintes: II – solicitações de autoridade administrativa no interesse da Administração Pública, desde que seja comprovada a instauração regular de processo administrativo, no órgão ou na entidade respectiva, com o objetivo de investigar o sujeito passivo a que se refere a informação, por prática de infração administrativa. B) Sim, poderia, pois, segundo o princípio do non olet (pecunia non olet, isto é, o “dinheiro não tem cheiro”), mesmo a renda obtida a partir de atividades ilícitas deve ser objeto de tributação, cf. Art. 118, inciso I, do CTN: Art. 118. A definição legal do fato gerador é interpretada abstraindo-se: I - da validade jurídica dos atos efetivamente praticados pelos contribuintes, responsáveis, ou terceiros, bem como da natureza do seu objeto ou dos seus efeitos. ou Art. 43, § 1º, do CTN.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. O Fisco tem o dever de oferecer tais informações mediante solicitações de autoridade administrativa no interesse da Administração Pública, desde que seja comprovada a instauração regular de processo administrativo, no órgão ou na entidade respectiva, com o objetivo de investigar o sujeito passivo a que se refere a informação, por prática de infração administrativa (0,55), cf. Art. 198, § 1º, inciso II, do CTN (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. Segundo o princípio do non olet, mesmo a renda obtida a partir de atividades ilícitas deve ser objeto de tributação (0,50), cf. Art. 118, inciso I, do CTN ou Art. 43, § 1º, do CTN (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA. Não. O Fisco tem o dever de oferecer tais informações mediante solicitações de\nautoridade administrativa no interesse da Administração Pública, desde que seja\ncomprovada a instauração regular de processo administrativo, no órgão ou na entidade 0,00/0,55/0,65\nrespectiva, com o objetivo de investigar o sujeito passivo a que se refere a informação,\npor prática de infração administrativa (0,55), cf. Art. 198, § 1º, inciso II, do CTN (0,10).\nB. Sim. Segundo o princípio do non olet, mesmo a renda obtida a partir de atividades\nilícitas deve ser objeto de tributação (0,50), cf. Art. 118, inciso I, do CTN ou Art. 43, § 1º, 0,00/0,50/0,60\ndo CTN (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "A Editora ABC Ltda., especializada na publicação de álbuns de figurinhas, pretende importar da Alemanha milhares de exemplares de um novo álbum de figurinhas de times de futebol europeus, bem como uma nova máquina impressora. Para realizar o desembaraço aduaneiro, a Editora ABC Ltda., que fez diretamente a importação, requereu à Receita Federal do Brasil que reconhecesse a imunidade do imposto de importação e da PIS/COFINS – Importação incidente sobre a importação dos álbuns de figurinhas de times de futebol europeus e sobre a máquina impressora. Diante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O pedido da Editora ABC Ltda. em relação ao PIS/COFINS – Importação incidente sobre a importação dos álbuns de figurinhas de times de futebol europeus deve ser aceito? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Em relação ao imposto de importação incidente sobre a importação da máquina impressora, o pedido da Editora ABC Ltda. deve ser aceito? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não deve ser reconhecida a imunidade da PIS/COFINS-Importação incidente sobre a importação dos álbuns de figurinhas de times de futebol europeus, pois o Art. 150, inciso VI, da CRFB/88, em todos os seus incisos, apenas garante imunidade de impostos, mas não abarca contribuições especiais, tais como PIS/COFINS-Importação. B) Não deve ser reconhecida a imunidade do imposto de importação sobre a máquina importada, uma vez que, de acordo com o texto literal do Art. 150, inciso VI, alínea d, da CRFB/88, a imunidade objetiva prevista nesse dispositivo abarca apenas livros, jornais, periódicos e o papel destinado à sua impressão, e não máquinas impressoras.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. O Art. 150, inciso VI, da CRFB/88 (0,10) apenas garante imunidade de impostos, mas não abarca contribuições especiais, tais como PIS/COFINS-Importação (0,50).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A imunidade objetiva em favor de livros, jornais, periódicos e o papel destinado à impressão não abarca máquinas impressoras (0,55), cf. Art. 150, inciso VI, alínea d, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA. Não. O Art. 150, inciso VI, da CRFB/88 (0,10) apenas garante imunidade de impostos, mas\n0,00/0,50/0,60\nnão abarca contribuições especiais, tais como PIS/COFINS-Importação (0,50).\nB. Não. A imunidade objetiva em favor de livros, jornais, periódicos e o papel destinado à\nimpressão não abarca máquinas impressoras (0,55), cf. Art. 150, inciso VI, alínea d, da 0,00/0,55/0,65\nCRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

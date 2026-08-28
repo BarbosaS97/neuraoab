@@ -1,0 +1,445 @@
+{
+  "exam_number": 43,
+  "phase": 2,
+  "area": "Direito Constitucional",
+  "source_provas_file": "43º_provas_Direito_Constitucional.pdf",
+  "source_resposta_file": "43º_resposta_Direito_Constitucional.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "Após ampla mobilização de alguns setores da classe política, iniciou-se um processo de conscientização coletiva no âmbito do Município Alfa, com o objetivo de estimular a participação dos munícipes nas associações de moradores e nos movimentos sociais. O principal problema detectado era a debilidade dos movimentos dos bairros, o que diminuía o conhecimento dos problemas e dificultava a formação de pautas de interesse comum.\n\nCom o objetivo de combater as causas desse problema e tornar o Município Alfa um exemplo de coesão social e de articulação dos interesses individuais com o interesse coletivo, foi aprovada a Lei Municipal nº XX, que passou a ser conhecida como Lei do Associativismo Bairrista. De acordo com esse diploma normativo, os moradores que residissem há mais de dez anos em determinado bairro e não estivessem associados à associação de moradores existente no local estariam sujeitos ao pagamento de multa administrativa, calculada no percentual de 20% do salário mínimo, devida a cada mês em que perdurasse a omissão. A multa seria aplicada ao fim de processo administrativo, instaurado na Secretaria Municipal de Ordem Pública, no qual seriam assegurados o contraditório e a ampla defesa.\n\nApesar de o processo de conscientização coletiva ter sido plenamente exitoso, daí decorrendo uma ampla adesão dos munícipes às associações de moradores existentes em cada bairro, alguns, por variadas razões, permaneceram recalcitrantes. Era o caso de João, que decidira não se associar.\n\nEm razão de sua decisão, foi instaurado processo administrativo em face de João, na Secretaria Municipal de Ordem Pública, visando à aplicação da multa prevista na Lei Municipal nº XX. Após o trâmite regular, João foi notificado pelo Secretário Municipal de Ordem Pública de Alfa de que a multa de 20% do salário mínimo havia sido aplicada a ele, sendo fixado o prazo de pagamento e informado de que a inobservância desse prazo acarretaria a negativação do seu nome. Dessa decisão, não cabia mais recurso administrativo.\n\nJoão ficou muito preocupado com o ocorrido, pois, além de entender que sua liberdade de gerir os seus próprios interesses fora afrontada, a sua renda era de um salário mínimo, logo não teria condições de pagar a multa sem prejuízo de sua própria subsistência, quadro que se agravaria caso ainda tivesse o nome negativado, deixando de ter crédito na praça.\n\nPor essa razão, dez dias após o recebimento da notificação, João procurou você, como advogado(a), e solicitou o ajuizamento da ação constitucional cabível, com o procedimento mais célere para a defesa dos seus interesses, que não contasse com instrução probatória e não o submetesse à condenação em honorários sucumbenciais, para que a sua condenação ao pagamento de multa fosse afastada, considerando a manifesta incompatibilidade da Lei Municipal nº XX com a Constituição da República.\n\nElabore, na condição de advogado(a) de João, a peça processual adequada ao caso concreto.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A peça adequada nesta situação é a Petição Inicial de Mandado de Segurança. A petição deve ser endereçada ao Juízo Cível da Comarca X ou ao Juízo de Fazenda Pública da Comarca X, já que os dados constantes do enunciado não permitem identificar a organização judiciária do local, portanto o X não indica uma localidade específica. O examinando deve indicar, na qualificação das partes, o impetrante João e, como autoridade coatora, o Secretário Municipal de Ordem Pública do Município Alfa. A legitimidade ativa de João decorre do fato de ser o titular do direito cuja proteção postula. A legitimidade passiva do Secretário Municipal, por sua vez, é justificada pelo fato de ser o responsável pela decisão que afronta o direito de João. O Secretário, ademais, está vinculado à pessoa jurídica de direito público Alfa. O examinando deve indicar, no mérito, que a Lei Municipal nº XX é inconstitucional, porque: (i) afrontou a competência legislativa privativa da União para legislar sobre Direito Civil, nos termos do Art. 22, inciso I, da CRFB/88; (ii) violou a liberdade de associação, prevista no Art. 5º, inciso XX, da CRFB/88; e (iii) afrontou a vedação de vinculação do valor da multa ao salário mínimo, prevista no Art. 7º, inciso IV, da CRFB/88. Portanto, deve ser reconhecida incidentalmente a inconstitucionalidade da Lei Municipal nº XX. Como a decisão do Secretário Municipal de Ordem Pública se baseou em uma lei dissonante da Constituição, padece do mesmo vício. Essa base normativa justifica a escolha do instrumento processual (Mandado de Segurança) previsto no Art. 5º, inciso LXIX, da CRFB, ou no Art. 1º, caput, da Lei nº 12.016/2009. Há direito líquido e certo lastreado em prova pré- constituída, o que decorre da notificação formal de João, realizada pelo Secretário Municipal de Ordem Pública de Alfa. O Mandado de Segurança, ademais, observa o prazo decadencial de 120 (cento e vinte) dias, nos termos do Art. 23 da Lei nº 12.016/2009. O examinando deve sustentar que, além do fundamento relevante do direito de João, é premente a necessidade de concessão de tutela liminar para evitar a negativação do seu nome, em razão de sua hipossuficiência econômica. A peça deve conter os requerimentos de (i) concessão da medida liminar, para se suspender a determinação de pagamento da multa e para que a autoridade coatora se abstenha de negativar o nome de João; e (ii) procedência do pedido, com confirmação da concessão da ordem, atribuindo-se caráter definitivo à tutela liminar. O examinando deve, ainda, qualificar-se como advogado e atribuir valor à causa.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "A petição deve ser endereçada ao Juízo Cível da Comarca X ou ao Juízo de Fazenda Pública da Comarca X (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Impetrante: João (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Autoridade coatora: Secretário Municipal de Ordem Pública do Município Alfa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Endereçamento",
+        "descricao": "Legitimidade ativa de João: decorre do fato de ser o titular do direito que postula (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Endereçamento",
+        "descricao": "Legitimidade passiva do Secretário Municipal é justificada pelo fato de ter proferido a decisão que afronta o direito de João (0,10). O Secretário está vinculado à pessoa jurídica de direito público Alfa (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "O examinando deve indicar, no mérito, que a Lei Municipal nº XX é inconstitucional (0,20), porque",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "6.1",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "afronta a competência legislativa privativa da União para legislar sobre Direito Civil (0,50), nos termos do Art. 22, inciso I, da CRFB/88 (0,10);",
+        "pontuacao_maxima": 0.6,
+        "faixas_possiveis": [
+          0.0,
+          0.5,
+          0.6
+        ]
+      },
+      {
+        "rotulo": "6.2",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "viola a liberdade de associação (0,50), prevista no Art. 5º, inciso XX, da CRFB/88 (0,10);",
+        "pontuacao_maxima": 0.6,
+        "faixas_possiveis": [
+          0.0,
+          0.5,
+          0.6
+        ]
+      },
+      {
+        "rotulo": "6.3",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "afronta a vedação de vinculação do valor da multa ao salário mínimo (0,50), prevista no Art. 7º, inciso IV, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.6,
+        "faixas_possiveis": [
+          0.0,
+          0.5,
+          0.6
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "A inconstitucionalidade da Lei Municipal nº XX deve ser reconhecida incidentalmente (0,30).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "Como a decisão do Secretário Municipal de Ordem Pública se baseou em uma lei dissonante da Constituição, padece do mesmo vício (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "Há direito líquido e certo (0,10), conforme exigido pelo Art. 5º, inciso LXIX, da CRFB/88 ou pelo Art. 1º, caput, da Lei nº 12.016/2009 (0,10),",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "9.1",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "lastreado em prova pré-constituída (0,10), o que decorre da notificação formal de João, realizada pelo Secretário Municipal (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "9.2",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "O mandado de segurança observa o prazo decadencial de 120 (cento e vinte) dias (0,10), nos termos do Art. 23 da Lei nº 12.016/2009 (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fundamentos da liminar",
+        "descricao": "O fundamento relevante do direito está expresso nos argumentos de mérito (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Fundamentos da liminar",
+        "descricao": "O direito será violado se a liminar não for deferida e o provimento concedido apenas ao final (0,10), tendo em vista a urgência da situação (0,10), já que o nome de João poderá ser negativado (0,10), em razão de sua hipossuficiência econômica (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Concessão da medida liminar (0,10), para suspender a determinação de pagamento da multa (0,10) e para que a autoridade coatora se abstenha de negativar o nome de João (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Ao final, procedência do pedido, com confirmação da concessão da ordem, atribuindo-se caráter definitivo à tutela liminar (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "Valor da causa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Fechamento",
+        "descricao": "Local, data, advogado e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. A petição deve ser endereçada ao Juízo Cível da Comarca X ou ao Juízo de Fazenda\n0,00/0,10\nPública da Comarca X (0,10).\n2. Impetrante: João (0,10). 0,00/0,10\n3. Autoridade coatora: Secretário Municipal de Ordem Pública do Município Alfa (0,10). 0,00/0,10\n4. Legitimidade ativa de João: decorre do fato de ser o titular do direito que postula\n0,00/0,10\n(0,10).\n5. Legitimidade passiva do Secretário Municipal é justificada pelo fato de ter proferido a\ndecisão que afronta o direito de João (0,10). O Secretário está vinculado à pessoa jurídica 0,00/0,10/0,20\nde direito público Alfa (0,10).\nFundamentos de mérito\n6. O examinando deve indicar, no mérito, que a Lei Municipal nº XX é inconstitucional\n0,00/0,20\n(0,20), porque\n6.1. afronta a competência legislativa privativa da União para legislar sobre Direito Civil\n0,00/0,50/0,60\n(0,50), nos termos do Art. 22, inciso I, da CRFB/88 (0,10);\n6.2. viola a liberdade de associação (0,50), prevista no Art. 5º, inciso XX, da CRFB/88\n0,00/0,50/0,60\n(0,10);\n6.3. afronta a vedação de vinculação do valor da multa ao salário mínimo (0,50), prevista\n0,00/0,50/0,60\nno Art. 7º, inciso IV, da CRFB/88 (0,10).\n7. A inconstitucionalidade da Lei Municipal nº XX deve ser reconhecida incidentalmente\n0,00/0,30\n(0,30).\n8. Como a decisão do Secretário Municipal de Ordem Pública se baseou em uma lei\n0,00/0,20\ndissonante da Constituição, padece do mesmo vício (0,20).\n9. Há direito líquido e certo (0,10), conforme exigido pelo Art. 5º, inciso LXIX, da CRFB/88\n0,00/0,10/0,20\nou pelo Art. 1º, caput, da Lei nº 12.016/2009 (0,10),\n9.1. lastreado em prova pré-constituída (0,10), o que decorre da notificação formal de\n0,00/0,10/0,20\nJoão, realizada pelo Secretário Municipal (0,10).\n9.2. O mandado de segurança observa o prazo decadencial de 120 (cento e vinte) dias\n0,00/0,10/0,20\n(0,10), nos termos do Art. 23 da Lei nº 12.016/2009 (0,10).\nFundamentos da liminar\n10. O fundamento relevante do direito está expresso nos argumentos de mérito (0,20). 0,00/0,20\n11. O direito será violado se a liminar não for deferida e o provimento concedido apenas\n0,00/0,10/0,20\nao final (0,10), tendo em vista a urgência da situação (0,10), já que o nome de João\n0,30/0,40\npoderá ser negativado (0,10), em razão de sua hipossuficiência econômica (0,10).\nPedidos\n12. Concessão da medida liminar (0,10), para suspender a determinação de pagamento da\nmulta (0,10) e para que a autoridade coatora se abstenha de negativar o nome de João 0,00/0,10/0,20/0,30\n(0,10).\n13. Ao final, procedência do pedido, com confirmação da concessão da ordem,\n0,00/0,20\natribuindo-se caráter definitivo à tutela liminar (0,20).\n14. Valor da causa (0,10). 0,00/0,10\nFechamento\n15. Local, data, advogado e OAB (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Alguns vereadores da Câmara Municipal de Alfa iniciaram discussões em relação ao reajuste dos valores que recebiam pelo exercício da vereança, que deveria produzir efeitos a partir da legislatura subsequente. No entanto, em razão das divergências políticas existentes no Município, tinham dúvidas se o Prefeito apoiaria a medida. Além disso, desconheciam se havia algum limitador constitucional em relação à percepção da verba de representação, de natureza remuneratória, que se mostrava necessária, no entendimento deles, para valorizar a posição institucional de cada vereador. Por tal razão, a partir de permissivo regimental, formularam ao Procurador-Geral do Município Alfa os questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O Prefeito Municipal pode vetar a proposição legislativa que venha a ser aprovada pela Câmara Municipal reajustando o valor que os vereadores recebiam mensalmente pelo exercício da vereança? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A verba de representação pode ser agregada ao valor recebido mensalmente pelos vereadores? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. O valor é fixado pela Câmara Municipal, nos termos do Art. 29, inciso VI, da CRFB/1988. O Prefeito Municipal não participa do processo legislativo. B) Não. Os vereadores são remunerados exclusivamente por subsídio, fixado em parcela única, sendo vedado o acréscimo da verba de representação, nos termos do Art. 39, § 4º, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. O valor é fixado pela Câmara Municipal, (0,35), nos termos do Art. 29, inciso VI, da CRFB/88 (0,10). O Prefeito Municipal não participa do processo legislativo (0,20).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.35,
+            0.45,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. Os vereadores são remunerados exclusivamente por subsídio, fixado em parcela única, sendo vedado o acréscimo da verba de representação (0,50), nos termos do Art. 39, § 4º, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA. Não. O valor é fixado pela Câmara Municipal, (0,35), nos termos do Art. 29, inciso VI, da 0,00/0,20/0,35/\nCRFB/88 (0,10). O Prefeito Municipal não participa do processo legislativo (0,20). 0,45/0,55/0,65\nB. Não. Os vereadores são remunerados exclusivamente por subsídio, fixado em parcela\núnica, sendo vedado o acréscimo da verba de representação (0,50), nos termos do Art. 39, 0,00/0,50/0,60\n§ 4º, da CRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Com o objetivo de reduzir os elevados níveis de criminalidade detectados no território do Estado Alfa, foi editada a Lei Estadual nº X/24, que “dispõe sobre os procedimentos a serem adotados pela Polícia Civil nas hipótese de prisão em flagrante.” De acordo com o Art. 3º desse diploma normativo, todas as pessoas presas em flagrante delito devem ser encaminhadas e mantidas na prisão, independentemente de a lei prever a possibilidade de liberdade provisória, com ou sem fiança. Irresignado com o teor da Lei estadual nº X/24, o Partido Político Alfa procurou você, como advogado(a), e formulou os questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O Art. 3º da Lei Estadual nº X observa os direitos e as garantias fundamentais? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Com o uso da arguição de descumprimento de preceito fundamental, pode ser arguida, perante o Supremo Tribunal Federal, a inconstitucionalidade do Art. 3º da Lei Estadual nº X? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Ninguém pode ser levado à prisão quando a lei admitir a liberdade provisória, o que pode ocorrer com ou sem fiança, nos termos do Art. 5º, inciso LXVI, da CRFB/88. B) Não. Como é cabível o uso da Ação Direta de Inconstitucionalidade, nos termos do Art. 102, inciso I, alínea a, da CRFB/88, não está atendido o requisito da subsidiariedade, exigido pelo Art. 4º, §1º, da Lei nº 9.882/1999.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. Ninguém pode ser levado à prisão quando a lei admitir a liberdade provisória, o que pode ocorrer com ou sem fiança (0,50), nos termos do Art. 5º, inciso LXVI, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. Como é cabível o uso da Ação Direta de Inconstitucionalidade (0,20), nos termos do Art. 102, inciso I, alínea a, da CRFB/88 (0,10), não está atendido o requisito da subsidiariedade (0,25), exigido pelo Art. 4º, §1º, da Lei nº 9.882/1999 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.25,
+            0.3,
+            0.35,
+            0.45,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA. Não. Ninguém pode ser levado à prisão quando a lei admitir a liberdade provisória, o\nque pode ocorrer com ou sem fiança (0,50), nos termos do Art. 5º, inciso LXVI, da CRFB/88 0,00/0,50/0,60\n(0,10).\nB. Não. Como é cabível o uso da Ação Direta de Inconstitucionalidade (0,20), nos termos\n0,00/0,20/0,25/0,30/\ndo Art. 102, inciso I, alínea a, da CRFB/88 (0,10), não está atendido o requisito da\n0,35/0,45/0,55/0,65\nsubsidiariedade (0,25), exigido pelo Art. 4º, §1º, da Lei nº 9.882/1999 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Com o alegado objetivo de superar uma histórica situação de desequilíbrio geográfico entre oferta e procura, bem como de proteger o consumidor, a Lei nº XX do Estado Alfa dispôs que é vedada a concessão de alvará de localização e funcionamento para a exploração da atividade de comércio de materiais de construção, caso haja estabelecimento similar, preexistente, em um raio de 300 (trezentos) metros. Apesar dos motivos que subsidiaram a edição da Lei nº XX, a sociedade empresária Delta, que tinha como objeto social a exploração da referida atividade e estava em franca expansão no território de Alfa, formulou os seguintes questionamentos ao(à) seu(sua) advogado(a).",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O Estado Alfa tem competência para legislar sobre a matéria? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A Lei nº XX se ajusta aos princípios constitucionais afetos à atividade econômica? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Trata-se de matéria de interesse local, de competência dos municípios, nos termos do Art. 30, inciso I, da CRFB/88. B) Não. Há afronta à livre iniciativa, nos termos do Art. 1º, inciso IV, ou do Art. 170, caput, ambos da CRFB/88, e à livre concorrência, nos termos do Art. 170, inciso IV, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. Trata-se de matéria de interesse local,(0,30) de competência dos municípios (0,25), nos termos do Art. 30, inciso I, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. Há afronta à livre iniciativa (0,20), nos termos do Art. 1º, inciso IV, ou do Art. 170, caput, ambos da CRFB/88 (0,10), e à livre concorrência (0,20), nos termos do Art. 170, inciso IV, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA. Não. Trata-se de matéria de interesse local,(0,30) de competência dos municípios (0,25), 0,00/0,25/0,30/\nnos termos do Art. 30, inciso I, da CRFB/88 (0,10). 0,35/0,40/0,55/0,65\nB. Não. Há afronta à livre iniciativa (0,20), nos termos do Art. 1º, inciso IV, ou do Art. 170,\n0,00/0,20/0,30/\ncaput, ambos da CRFB/88 (0,10), e à livre concorrência (0,20), nos termos do Art. 170, inciso\n0,40/0,50/0,60\nIV, da CRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Durante uma discussão legislativa para a alteração da Lei de Organização e Divisão Judiciária do Estado Alfa (LODJ), constatou-se que, segundo o Art. YY do projeto, compete aos Juízes de Direito das Varas de Fazenda Pública processar e julgar as causas em que figurem, como partes, a instituição gestora do Regime Geral de Previdência Social e o segurado, sempre que a comarca do domicílio deste último não for sede de órgão de primeira instância da Justiça Federal.\n\nAlém disso, uma proposta de emenda à Constituição do Estado Alfa dispunha, em seu Art. ZZ, que o recurso cabível contra as decisões proferidas pelos Juízes de Direito das Varas de Fazenda Pública, no exercício da referida competência, seria apreciado pelo Tribunal de Justiça do Estado Alfa.\n\nA Comissão de Constituição e Justiça da Assembleia Legislativa, com base no regimento interno, solicitou que o Procurador-Geral desta Casa Legislativa respondesse aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Os Juízes de Direito das Varas de Fazenda Pública podem receber a competência referida no Art. YY do projeto de lei? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A competência do Tribunal de Justiça do Estado Alfa, prevista no Art. ZZ da proposta de emenda, foi corretamente estabelecida? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. A delegação de competência deve ser feita por meio de Lei Federal, nos termos do Art. 109, §3º, da CRFB/88, cabendo ao Congresso Nacional dispor sobre a matéria, conforme prevê o Art. 48, inciso IX, da CRFB/88. B) Não. A competência recursal é sempre do Tribunal Regional Federal, nos termos do Art. 109, § 4º, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A delegação de competência deve ser feita por meio de Lei Federal (0,25), nos 1 termos do Art. 109, §3º, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.35,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.35
+          ]
+        },
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Cabe ao Congresso Nacional dispor sobre a matéria (0,20), conforme o Art. 48, inciso IX, 2 da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.3,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A competência recursal é sempre do Tribunal Regional Federal (0,50), nos termos do Art. 109, § 4º, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA . Não. A delegação de competência deve ser feita por meio de Lei Federal (0,25), nos\n1 0,00/0,25/0,35\ntermos do Art. 109, §3º, da CRFB/88 (0,10).\nA . Cabe ao Congresso Nacional dispor sobre a matéria (0,20), conforme o Art. 48, inciso IX,\n2 0,00/0,20/0,30\nda CRFB/88 (0,10).\nB. Não. A competência recursal é sempre do Tribunal Regional Federal (0,50), nos termos\n0,00/0,50/0,60\ndo Art. 109, § 4º, da CRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

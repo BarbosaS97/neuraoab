@@ -1,0 +1,374 @@
+{
+  "exam_number": 44,
+  "phase": 2,
+  "area": "Direito Administrativo",
+  "source_provas_file": "44º_provas_Direito_Administrativo.pdf",
+  "source_resposta_file": "44º_resposta_Direito_Administrativo.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "Fred, servidor público federal estável, ocupante de um cargo público no Ministério do Meio Ambiente, em Brasília, no Distrito Federal, respondeu a um processo administrativo disciplinar, sob o fundamento de que, em maio de 2022, teria oposto resistência injustificada à execução de determinado serviço.\n\nO referido agente público, que não ostenta qualquer antecedente disciplinar ou criminal, acessou os autos do procedimento em curso e, na sequência, contratou você, como advogado, para patrocinar os seus interesses, na esfera administrativa. Ao despachar com o Presidente da Comissão Processante, você foi informado, inclusive tendo acesso a prova documental, de que a Administração tomou conhecimento da falta disciplinar no dia 31 de maio de 2022, mas que, por força do excesso de trabalho, a apuração disciplinar foi inicialmente deflagrada apenas no dia 20 de junho de 2024.\n\nFindo o processo administrativo, com a observância do contraditório e da ampla defesa, a Comissão Processante, formada por João, como Presidente, e por outros dois servidores estáveis, encaminhou o relatório a Carlos, Chefe da Repartição Pública, que aplicou a Fred a penalidade de suspensão por 180 (cento e oitenta) dias. Registre-se que Carlos é a autoridade subordinada ao Ministro e a dez outros agentes públicos da hierarquia do Ministério do Meio Ambiente.\n\nPassados sete meses do trânsito em julgado da decisão na esfera administrativa, mesmo já tendo cumprido o período de suspensão, inclusive suportando prejuízos em suas vantagens legais, Fred o procurou novamente para que você adotasse as medidas judiciais para a tutela dos seus interesses, afirmando que não possui, em razão da situação de suspensão, os meios necessários para arcar com os custos de eventual processo. Aduziu e comprovou, ainda, que a falta disciplinar praticada não gerou danos concretos para o serviço público.\n\nDiante das circunstâncias narradas, redija a peça cabível, apresentando todos os fundamentos jurídicos pertinentes para a defesa dos interesses de Fred.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação. DIREITO ADMINISTRATIVO PROVA PRÁTICO-PROFISSIONAL – PÁGINA 2",
+    "valor_total": 5.0,
+    "gabarito_comentado": "O (a) examinando (a) deve apresentar uma petição inicial de ação anulatória, cumulada com pedido de ressarcimento de vantagens ou petição inicial de ação de procedimento comum. A peça deve ser endereçada ao Juízo Federal da Seção Judiciária do Distrito Federal. Na petição inicial, devem constar os nomes das partes: Fred é o autor e, a União, a ré. Deve constar requerimento de gratuidade de justiça em favor de Fred, em razão da sua hipossuficiência econômica, na forma do Art. 98, caput, do Código de Processo Civil. Preliminarmente, deve ser destacada a caracterização da prescrição. A ação disciplinar prescreve em dois anos quanto às infrações puníveis com suspensão, nos termos do Art. 142, inciso II, da Lei no 8.112/1990. Com efeito, como já transcorreu prazo superior a dois anos, tem-se a manifestação da prescrição. ou Inexistindo justificativa para imposição de penalidade mais grave, a oposição de resistência injustificada à execução de serviço é falta disciplinar punida com advertência, estando sujeita ao prazo prescricional de cento e oitenta dias, nos termos do Art. 142, inciso III, da Lei no 8.112/1990. Com efeito, como já transcorreu prazo superior a cento e oitenta dias, tem-se a manifestação da prescrição. A fundamentação deve conter os seguintes argumentos: - A falta disciplinar praticada por Fred, que não possui qualquer antecedente, deveria ser punida com advertência, e não com a penalidade de suspensão, até porque não houve qualquer dano ao serviço público, não havendo justificativa para a imposição de penalidade mais grave, nos termos do Art. 129, da Lei no 8.112/1990. - A penalidade de suspensão não pode ser fixada por prazo superior a noventa dias. Logo, a suspensão de Fred por 180 dias está em contrariedade à lei, nos termos do Art. 130, caput, da Lei no 8.112/1990. - Carlos, chefe da repartição pública onde Fred atua, não tem competência para aplicar a penalidade de suspensão por mais de trinta dias, conforme o Art. 141, inciso II ou inciso III, da Lei nº 8.112/1990. Deve ser pleiteada a concessão de gratuidade de justiça, além de se protestar pela produção de prova documental para comprovar os fatos alegados. Deve ser pleiteada a procedência dos pedidos para que haja a anulação da decisão administrativa que ensejou a suspensão de Fred. Deve ser requerido, ainda, o ressarcimento de todas as vantagens a que Fred faz jus pelo período de suspensão, acrescido de juros de mora e de correção monetária. Por fim, deve ser requerida a citação do réu, a sua condenação em custas e honorários, a determinação do valor da causa, além da opção do autor pela realização, ou não, de audiência de conciliação Fechamento da peça, com a indicação de local, data, espaço para assinatura do advogado e número de sua inscrição na OAB.\n\nPadrão de Resposta da Prova Prático-Profissional Página 2/7",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "A peça deve ser endereçada ao Juízo Federal da Seção Judiciária do Distrito Federal (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Qualificação",
+        "descricao": "Autor: Fred (0,10). 3. Réu: a União (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Preliminares",
+        "descricao": "Requerimento de gratuidade de justiça em favor de Fred, em razão da sua hipossuficiência econômica (0,20), na forma do Art. 98, caput, do Código de Processo Civil (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Preliminares",
+        "descricao": "A ação disciplinar prescreve em dois anos quanto às infrações puníveis com suspensão (0,60), nos termos do Art. 142, inciso II, da Lei no 8.112/1990 (0,10). ou Inexistindo justificativa para imposição de penalidade mais grave, a oposição de resistência injustificada à execução de serviço é falta disciplinar punida com advertência, estando sujeita ao prazo prescricional de cento e oitenta dias (0,60), nos termos do Art. 142, inciso III, da Lei no 8.112/1990 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Mérito",
+        "descricao": "A falta disciplinar praticada por Fred, que não possui qualquer antecedente, deveria ser punida com advertência, e não com a penalidade de suspensão, até porque não houve qualquer dano ao serviço público, não havendo justificativa para a imposição de penalidade mais grave (0,70), nos termos do Art. 129 da Lei no 8.112/1990 (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Mérito",
+        "descricao": "A pena de suspensão não pode ser fixada por prazo superior a noventa dias (0,70), segundo o Art. 130, caput, da Lei no 8.112/1990 (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Mérito",
+        "descricao": "Carlos, chefe da repartição pública onde Fred atua, não tem competência para aplicar a penalidade de suspensão por mais de trinta dias, (0,70), conforme se extrai do Art. 141, inciso II ou inciso III, da Lei no 8.112/1990 (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Pedidos",
+        "descricao": "Concessão de gratuidade de justiça (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Pedidos",
+        "descricao": "Citação do réu (0,10). Procedência dos pedidos para:",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Pedidos",
+        "descricao": "Anular a decisão administrativa que ensejou a suspensão de Fred (0,30).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Ressarcimento de todas as vantagens a que faz jus pelo período de suspensão (0,20), acrescido de juros de mora e de correção monetária (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Produção de prova documental para comprovar os fatos alegados (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "Opção do autor pela realização, ou não, de audiência de conciliação (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Pedidos",
+        "descricao": "Condenação em custas e honorários (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Fechamento",
+        "descricao": "Valor da causa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "17",
+        "categoria": "Fechamento",
+        "descricao": "Local, data, advogado e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. A peça deve ser endereçada ao Juízo Federal da Seção Judiciária do Distrito Federal (0,10). 0,00/0,10\nQualificação\n2. Autor: Fred (0,10).\n0,00/0,10/0,20\n3. Réu: a União (0,10).\nPreliminares\n4. Requerimento de gratuidade de justiça em favor de Fred, em razão da sua hipossuficiência\n0,00/0,20/0,30\neconômica (0,20), na forma do Art. 98, caput, do Código de Processo Civil (0,10).\n5. A ação disciplinar prescreve em dois anos quanto às infrações puníveis com suspensão (0,60), nos\ntermos do Art. 142, inciso II, da Lei no 8.112/1990 (0,10). ou\nInexistindo justificativa para imposição de penalidade mais grave, a oposição de resistência\n0,00/0,60/0,70\ninjustificada à execução de serviço é falta disciplinar punida com advertência, estando sujeita ao\nprazo prescricional de cento e oitenta dias (0,60), nos termos do Art. 142, inciso III, da Lei no\n8.112/1990 (0,10).\nMérito\n6. A falta disciplinar praticada por Fred, que não possui qualquer antecedente, deveria ser punida\ncom advertência, e não com a penalidade de suspensão, até porque não houve qualquer dano ao\n0,00/0,70/0,80\nserviço público, não havendo justificativa para a imposição de penalidade mais grave (0,70), nos\ntermos do Art. 129 da Lei no 8.112/1990 (0,10).\n7. A pena de suspensão não pode ser fixada por prazo superior a noventa dias (0,70), segundo o Art.\n0,00/0,70/0,80\n130, caput, da Lei no 8.112/1990 (0,10).\n8. Carlos, chefe da repartição pública onde Fred atua, não tem competência para aplicar a\npenalidade de suspensão por mais de trinta dias, (0,70), conforme se extrai do Art. 141, inciso II ou 0,00/0,70/0,80\ninciso III, da Lei no 8.112/1990 (0,10).\nPedidos\n9. Concessão de gratuidade de justiça (0,10). 0,00/0,10\n10. Citação do réu (0,10). 0,00/0,10\nProcedência dos pedidos para:\n11. Anular a decisão administrativa que ensejou a suspensão de Fred (0,30). 0,00/0,30\n12. Ressarcimento de todas as vantagens a que faz jus pelo período de suspensão (0,20), acrescido\n0,00/0,20/0,30\nde juros de mora e de correção monetária (0,10).\n13. Produção de prova documental para comprovar os fatos alegados (0,10). 0,00/0,10\n14. Opção do autor pela realização, ou não, de audiência de conciliação (0,10). 0,00/0,10\n15. Condenação em custas e honorários (0,10). 0,00/0,10\nFechamento\n16. Valor da causa (0,10). 0,00/0,10\n17. Local, data, advogado e OAB (0,10). 0,00/0,10\nPadrão de Resposta da Prova Prático-Profissional Página 3/7",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Em janeiro de 2025, a sociedade empresária ABC, após a observância de todas as formalidades legais, celebrou contrato administrativo com a União, visando à reforma de um determinado edifício público. No curso da avença, a Administração Pública Federal alterou, unilateralmente, o pacto, em razão de modificações no projeto, para uma melhor adequação técnica a seus objetivos, ensejando a redução dos custos da obra. Assim sendo, houve uma supressão de 20% (vinte por cento) do valor inicial atualizado do contrato, sem transfiguração do objeto da contratação. Nesse contexto, os sócios da sociedade empresária, surpresos com o ocorrido, buscaram sua orientação como advogado(a), em especial, porque a contratada já havia adquirido os materiais que seriam empregados na obra, colocando-os no local dos trabalhos. Diante dessa situação hipotética, na qualidade de advogado(a) da sociedade empresária e à luz das disposições da Lei no 14.133/2021, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A União, ao alterar unilateralmente o contrato administrativo, com a supressão de 20% (vinte por cento) do seu valor inicial atualizado, atuou de forma regular? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A União é obrigada a pagar à sociedade empresária ABC os materiais já adquiridos e colocados no local dos trabalhos? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO ADMINISTRATIVO QUESTÃO 1 – PÁGINA 8",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) A União atuou de forma regular, porquanto o contrato administrativo pode ser alterado, unilateralmente pela Administração Pública, quando houver modificação do projeto ou das especificações, para melhor adequação técnica a seus objetivos e o contratado é obrigado a aceitar, nas mesmas condições contratuais, supressões de até vinte e cinco por cento do valor inicial atualizado do contrato, nos termos do Art. 125 da Lei nº 14.133/2021. B) Sim. Nas alterações contratuais para supressão de obras, se o contratado já houver adquirido os materiais e os colocado no local dos trabalhos, estes deverão ser pagos pela Administração pelos custos de aquisição regularmente comprovados e monetariamente reajustados, na forma do Art. 129 da Lei nº 14.133/2021.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim, porque o contrato administrativo pode ser alterado, unilateralmente pela Administração Pública, respeitado o percentual de até 25% do valor inicial atualizado do contrato (0,55), nos termos do Art. 125 da Lei nº 14.133/2021 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim, pois, nas alterações contratuais para supressão de obras, se o contratado já houver adquirido os materiais e os colocado no local dos trabalhos, estes deverão ser pagos pela Administração pelos custos de aquisição regularmente comprovados e monetariamente reajustados (0,50), na forma do Art. 129 da Lei nº 14.133/2021 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim, porque o contrato administrativo pode ser alterado, unilateralmente pela Administração\nPública, respeitado o percentual de até 25% do valor inicial atualizado do contrato (0,55), nos 0,00/0,55/0,65\ntermos do Art. 125 da Lei nº 14.133/2021 (0,10).\nB. Sim, pois, nas alterações contratuais para supressão de obras, se o contratado já houver\nadquirido os materiais e os colocado no local dos trabalhos, estes deverão ser pagos pela\n0,00/0,50/0,60\nAdministração pelos custos de aquisição regularmente comprovados e monetariamente\nreajustados (0,50), na forma do Art. 129 da Lei nº 14.133/2021 (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 4/7",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Alison almeja comprar uma casa em frente a uma praia marítima continental, em determinado Município litorâneo. A praia não está localizada em uma ilha, razão pela qual ele está interessado em saber se é possível a aquisição da respectiva faixa de areia e do mar (ou seja, a praia em si), que está em frente ao mencionado imóvel. Após tomar conhecimento de que a praia marítima é um bem público, Alison procurou você, na qualidade de advogado(a), para dirimir suas dúvidas quanto à possibilidade aventada. Sobre a hipótese apresentada, como advogado(a) responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Quem é o titular do bem público em questão? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Considerando a classificação dos bens públicos quanto à sua destinação, é possível a alienação daquele almejado por Alison? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO ADMINISTRATIVO QUESTÃO 2 – PÁGINA 10",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) A praia marítima em questão é de titularidade da União, nos termos do Art. 20, inciso IV, da CRFB/88.\n\nB) Não. A praia é bem de uso comum do povo, consoante o Art. 99, inciso I, do Código Civil, de modo que não pode ser alienada (ou somente é admitida a alienação dos bens dominicais), nos termos do Art. 100 do Código Civil.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "A praia marítima em questão é de titularidade da União (0,50), nos termos do Art. 20, inciso IV, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A praia é bem de uso comum do povo, de modo que não pode ser alienada (0,55), nos termos do Art. 100 do Código Civil (0,10). ou Não, pois só é possível a alienação dos bens dominicais (0,55), nos termos do Art. do Código Civil (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. A praia marítima em questão é de titularidade da União (0,50), nos termos do Art.\n0,00/0,50/0,60\n20, inciso IV, da CRFB/88 (0,10).\nB. Não. A praia é bem de uso comum do povo, de modo que não pode ser alienada\n(0,55), nos termos do Art. 100 do Código Civil (0,10).\nou 0,00/0,55/0,65\nB. Não, pois só é possível a alienação dos bens dominicais (0,55), nos termos do Art.\n100 do Código Civil (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 5/7",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "O Ministério Público ajuizou ação civil pública em face do deputado José e da sociedade empresária Bomcaminho, em decorrência da prática de ato de improbidade que importou em enriquecimento ilícito, bem como em lesão ao erário, com fulcro no Art. 9º, inciso IX, e no Art. 10, inciso VI, ambos da Lei nº 8.429/1992, com a redação conferida pela Lei nº 14.230/2021.\n\nA inicial narra a conduta praticada com dolo específico, no sentido de que a sociedade pagou ao agente público vultosa quantia para fins de obter a liberação de verba pública, vindo a ser realizada a operação financeira sem a observância das normas legais e regulamentares para tal finalidade.\n\nApós os devidos trâmites e diante de sua citação na aludida demanda, os representantes da mencionada pessoa jurídica, procuram sua assessoria jurídica para que você elabore a estratégia de defesa, em relação à qual devem ser enfrentados os aspectos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É necessária a imputação de ato de improbidade administrativa ao deputado José para responsabilização por ato de improbidade da sociedade empresária Bomcaminho? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Havendo fusão ou incorporação da sociedade Bomcaminho, sem comprovada simulação ou fraude, poderá a sucessora ser responsabilizada pela reparação integral do dano na hipótese de o patrimônio transferido ser superior à lesão ocasionada? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO ADMINISTRATIVO QUESTÃO 3 – PÁGINA 12",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. As disposições da lei em comento são aplicáveis àquele que, mesmo não sendo agente público, induza ou concorra dolosamente para a prática do ilícito, não sendo possível, porém, a responsabilização do terceiro isoladamente, ou seja, sem a responsabilização do agente público, tal como se depreende do Art. 3º da Lei nº 8.429/1992.\n\nB) Sim. Nas hipóteses de fusão e de incorporação, a sucessora será responsabilizada pela reparação integral do dano, até o limite do patrimônio transferido, na forma do Art. 8º-A, parágrafo único, da Lei nº 8.429/1992.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. As disposições da lei em comento são aplicáveis aquele que, mesmo não sendo agente público, induza ou concorra dolosamente para a prática do ilícito, não sendo possível, porém, a responsabilização do terceiro isoladamente, ou seja, sem a responsabilização do agente público (0,55), tal como se depreende do Art. 3º da Lei nº 8.429/1992 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. Nas hipóteses de fusão e de incorporação, a sucessora será responsabilizada pela reparação integral do dano, até o limite do patrimônio transferido (0,50), na forma do Art. 8º-A, parágrafo único, da Lei nº 8.429/92 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. As disposições da lei em comento são aplicáveis aquele que, mesmo não sendo\nagente público, induza ou concorra dolosamente para a prática do ilícito, não sendo\npossível, porém, a responsabilização do terceiro isoladamente, ou seja, sem a 0,00/0,55/0,65\nresponsabilização do agente público (0,55), tal como se depreende do Art. 3º da Lei nº\n8.429/1992 (0,10).\nB. Sim. Nas hipóteses de fusão e de incorporação, a sucessora será responsabilizada pela\nreparação integral do dano, até o limite do patrimônio transferido (0,50), na forma do 0,00/0,50/0,60\nArt. 8º-A, parágrafo único, da Lei nº 8.429/92 (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 6/7",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "No exercício de suas atribuições como guarda municipal, José adentrou a casa de Maria, ali permanecendo por algum tempo, à revelia da moradora, sem a devida ordem judicial, sob o argumento de que estaria no estrito cumprimento do dever legal. Ciente de que a conduta de José está tipificada na Lei nº 13.869/2019 (Lei de Abuso de Autoridade), Maria buscou a sua assessoria jurídica, para dirimir as dúvidas a seguir, acerca da viabilidade da responsabilização administrativa disciplinar de José.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A aplicação de sanção administrativa disciplinar a José em decorrência da conduta tipificada como abuso de autoridade depende de sua condenação criminal pelo mesmo fato? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "A sentença penal irrecorrível que reconheça que José estava no estrito cumprimento do dever legal faz coisa julgada no âmbito administrativo disciplinar? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO ADMINISTRATIVO QUESTÃO 4 – PÁGINA 14",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. A aplicação de sanção administrativo-disciplinar por abuso de autoridade independe da condenação criminal, consoante o Art. 6º ou o Art. 7º da Lei nº 13.869/2019.\n\nB) Sim. A sentença penal que reconheça que José estava no estrito cumprimento do dever de legal faz coisa julgada no âmbito administrativo-disciplinar, conforme o Art. 8º da Lei nº 13.869/2019.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A aplicação de sanção administrativo-disciplinar por abuso de autoridade independe da condenação criminal (0,50), consoante o Art. 6º ou o Art. 7º da Lei nº 13.869/2019 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. A sentença penal que reconheça que José estava no estrito cumprimento do dever de legal faz coisa julgada no âmbito administrativo-disciplinar (0,55), conforme o Art. 8º da Lei nº 13.869/2019 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A aplicação de sanção administrativo-disciplinar por abuso de autoridade\nindepende da condenação criminal (0,50), consoante o Art. 6º ou o Art. 7º da Lei nº 0,00/0,50/0,60\n13.869/2019 (0,10).\nB. Sim. A sentença penal que reconheça que José estava no estrito cumprimento do dever\nde legal faz coisa julgada no âmbito administrativo-disciplinar (0,55), conforme o Art. 8º 0,0/0,55/0,65\nda Lei nº 13.869/2019 (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 7/7",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

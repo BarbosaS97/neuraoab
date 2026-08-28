@@ -259,8 +259,12 @@ els.timerReset.addEventListener("click", () => {
 (function initTimer() {
   timerState = loadTimerState();
   renderTimerDisplay();
+  // Sempre desenha o icone (play OU pausa) — antes so' fazia isso quando o
+  // cronometro ja estava rodando ao carregar a pagina; parado (o estado
+  // inicial mais comum), o botao ficava com o innerHTML vazio, sem icone
+  // nenhum.
+  setTimerButtonRunning(timerState.running);
   if (timerState.running) {
-    setTimerButtonRunning(true);
     timerInterval = setInterval(renderTimerDisplay, 1000);
   }
 })();

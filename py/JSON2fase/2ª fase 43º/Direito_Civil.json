@@ -1,0 +1,427 @@
+{
+  "exam_number": 43,
+  "phase": 2,
+  "area": "Direito Civil",
+  "source_provas_file": "43º_provas_Direito_Civil.pdf",
+  "source_resposta_file": "43º_resposta_Direito_Civil.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "Gabriela foi aprovada em um processo de seleção para trabalhar na cidade de São Paulo e passou a procurar um imóvel para morar. Após algumas semanas de busca, encontrou o imóvel situado na Rua Margarida, no bairro de Vila Madalena, de propriedade de Ricardo.\n\nGabriela entrou em contato com o proprietário e, após agendar uma visita ao imóvel, apresentou uma proposta. O contrato de locação por 30 (trinta) meses foi firmado em julho de 2022, no valor de R$ 4.000,00 (quatro mil reais), tendo sido prorrogado de forma automática ao fim do prazo determinado. O valor do aluguel não foi alterado desde o início do contrato.\n\nQuando da contratação, Gabriela contou com seu cunhado como fiador, apresentando a garantia exigida por Ricardo. Como, um ano depois, o relacionamento de sua irmã terminou, seu ex-cunhado pediu a exoneração da fiança, o que foi aceito por Ricardo. No mesmo momento, Gabriela apresentou a possibilidade de realizar um seguro fiança em substituição ao fiador, mas Ricardo, o proprietário, afirmou não ser necessário.\n\nDurante todo o período, Gabriela seguiu pagando o aluguel na data de vencimento, guardando todos os comprovantes.\n\nEm julho de 2025, Gabriela foi surpreendida com sua citação em uma ação de despejo promovida por Ricardo, tramitando na 3ª Vara Cível da Comarca de São Paulo, sob o fundamento de que necessitava do imóvel para uso residencial de seu filho mais velho, Ronaldo. Gabriela estranhou o fato já que Ricardo sempre falava dos filhos com muito orgulho e alardeava que todos já tinham adquirido mais de um imóvel residencial.\n\nAlegou também que Gabriela não havia apresentado nova garantia quando da saída do fiador e que não havia quitado os aluguéis dos últimos três meses. Ricardo ainda apresentou requerimento para a concessão de liminar de retomada do imóvel diante da inadimplência dos aluguéis. Por fim, informou o valor da causa no total de R$ 100.000,00 (cem mil reais).\n\nA petição inicial da ação de despejo foi apresentada desprovida de qualquer documento, não tendo sido apreciado o pedido de liminar.\n\nIndignada, Gabriela recorreu a você, como advogado(a), para auxiliá-la.\n\nConsiderando as informações expostas, elabore, na qualidade de advogado(a) de Gabriela, a peça processual cabível para a defesa dos interesses de sua cliente, indicando seus requisitos e fundamentos, com base na legislação vigente.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A peça processual a ser apresentada é uma contestação à ação de despejo ajuizada, no prazo de 15 (quinze) dias, conforme Art. 335 do CPC, e deverá ser direcionada para a 3ª Vara Cível da Comarca de São Paulo. A peça deverá conter o nome e a identificação das partes. Preliminarmente, deverá impugnar ou alegar a incorreção do valor da causa apresentado pelo proprietário, no total de R$100.000,00, com base no Art. 293 ou Art. 337, inciso III, ambos do CPC, já que nos casos de ação de despejo, o valor da causa corresponderá a 12 (doze) meses de aluguel, de acordo com o Art. 58, inciso III, da Lei no 8.245/1991, portanto, no total de R$48.000,00 (quarenta e oito mil reais). Deverá ser alegada a inépcia da inicial, na forma do Art. 330, §1º, ou Art. 337, inciso IV, ambos do CPC, ou a ausência de documentos essenciais para a propositura da ação, na forma do Art. 320 do CPC. Deverá também impugnar o requerimento de liminar de desocupação, já que, apesar de o contrato não estar mais garantido pela fiança, Gabriela apresentou a possibilidade de contratação de um seguro fiança, bem como vem arcando com o pagamento dos aluguéis regularmente, conforme os comprovantes que possui. Assim, não restou configurada a hipótese do Art. 59, §1º, inciso IX, da Lei no 8245/1991. No mérito, deverá alegar a irregularidade dos pleitos apresentados por Ricardo. Com relação à retomada do imóvel para uso do descendente, alegada pelo autor, deveria o proprietário comprovar judicialmente a necessidade, conforme Art. 47, §1º, alínea b, da Lei no 8245/1991, o que não ocorreu, já que a inicial foi apresentada sem qualquer documento. Deve alegar também que o proprietário sempre informou que seus filhos já possuíam mais de um imóvel residencial cada um, desconstituindo a necessidade de embasar a ação de despejo. Quanto à alegada inadimplência, deverá informar que apresenta todos os comprovantes de pagamento dos aluguéis a fim de comprovar a regularidade dos pagamentos, não tendo ocorrido a inadimplência informada. Logo, não se deu a hipótese do Art. 9o, inciso III, da Lei no 8245/1991, que embasaria a ação de despejo. Argumentar que a ausência da fiança foi consentida, pelo que não é motivo da decretação do despejo, na forma do Art. 422 do Código Civil. Por fim, alegar litigância de má fé, uma vez que o locador havia dispensado a substituição de garantia e fundamentou o despejo pela ausência de garantias, na forma do Art. 80, inciso II ou inciso V, do CPC. Por tais razões deverá pedir: - o indeferimento da liminar de desocupação do imóvel; - a correção do valor da causa; - a improcedência dos pedidos; - a condenação pela litigância de má fé; - a produção de provas; - a condenação do autor em custas e honorários de sucumbência. Ao final, deverá indicar o local, a data, o nome e o nº de inscrição OAB.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "A contestação deve ser encaminhada para a 3ª Vara Cível da Comarca de São Paulo/SP (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Indicação da ré, Gabriela (0,10) e do autor Ricardo (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Tempestividade – contestação apresentada dentro do prazo de 15 (quinze) dias (0,10), com base no Art. 335 do CPC (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Endereçamento",
+        "descricao": "Exposição dos fatos (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "5A",
+        "categoria": "Endereçamento",
+        "descricao": "Impugnação/Incorreção do valor da causa (0,20), com base no Art. 293 ou Art. 337, inciso III, ambos do CPC (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "5B",
+        "categoria": "Endereçamento",
+        "descricao": "Em ação de despejo, o valor da causa deve ser referente a 12 (doze) vezes o aluguel ou R$48.000,00 (quarenta e oito mil reais) (0,20), conforme o Art. 58, inciso III, da Lei no 8.245/91 (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Endereçamento",
+        "descricao": "Impugnação do pedido de desocupação liminar do imóvel, pois a locatária possui todos os comprovantes de pagamento dos alugueres, não ocorrendo a inadimplência alegada (0,20), portanto não configurada a hipótese do Art. 59, §1º, inciso IX, da Lei no 8.245/1991 (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Endereçamento",
+        "descricao": "Alegação de inépcia da inicial (0,20), na forma do Art. 330, §1º, ou Art. 337, inciso IV, ambos do CPC (0,10). OU Ausência de documentos essenciais para a propositura da ação (0,20), na forma do Art. 320 do CPC (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Mérito",
+        "descricao": "Ausência de prova do fato constitutivo do direito do autor, pois não foi apresentado o documento comprovando que o filho do proprietário necessita do imóvel ou que não possui imóvel residencial, já que a inicial veio desacompanhada de documentos (0,50), conforme exigiria o Art. 47, §1º, alínea b, da Lei no 8.245/1991, alegado pelo autor (0,10).",
+        "pontuacao_maxima": 0.6,
+        "faixas_possiveis": [
+          0.0,
+          0.5,
+          0.6
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Mérito",
+        "descricao": "A locatária apresenta os comprovantes de pagamento de todos os alugueres, dentro do prazo, não restando configurada a inadimplência alegada (0,60), não subsistindo a hipótese do Art. 9, inciso III, da Lei no 8.245/1991 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Mérito",
+        "descricao": "Argumentar que a ausência da fiança foi consentida, pelo que não é motivo da decretação do despejo (0,30), na forma do Art. 422 do Código Civil (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Mérito",
+        "descricao": "Alegar litigância de má fé, uma vez que o locador havia dispensado a substituição de garantia e fundamentou o despejo pela ausência de garantias (0,10), na forma do Art. 80, inciso II ou inciso V, do CPC. (0,10)",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos e requerimentos",
+        "descricao": "Indeferimento da liminar de desocupação do imóvel (0,30).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos e requerimentos",
+        "descricao": "Alteração do valor da causa para que faça constar o valor correto (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos e requerimentos",
+        "descricao": "Improcedência dos pedidos (0,30).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Pedidos e requerimentos",
+        "descricao": "Condenação por litigância de má fé (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Pedidos e requerimentos",
+        "descricao": "Produção de provas (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "17",
+        "categoria": "Pedidos e requerimentos",
+        "descricao": "Condenação da parte autora em custas (0,10) e honorários de sucumbência (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "18",
+        "categoria": "Fechamento",
+        "descricao": "Local, data, assinatura, OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. A contestação deve ser encaminhada para a 3ª Vara Cível da Comarca de São Paulo/SP (0,10). 0,00/0,10\n2. Indicação da ré, Gabriela (0,10) e do autor Ricardo (0,10). 0,00/0,10/0,20\n3. Tempestividade – contestação apresentada dentro do prazo de 15 (quinze) dias (0,10), com\n0,00/0,10/0,20\nbase no Art. 335 do CPC (0,10).\n4. Exposição dos fatos (0,10). 0,00/0,10\n5A. Impugnação/Incorreção do valor da causa (0,20), com base no Art. 293 ou Art. 337, inciso\n0,00/0,20/0,30\nIII, ambos do CPC (0,10).\n5B. Em ação de despejo, o valor da causa deve ser referente a 12 (doze) vezes o aluguel ou\nR$48.000,00 (quarenta e oito mil reais) (0,20), conforme o Art. 58, inciso III, da Lei no 8.245/91 0,00/0,20/0,30\n(0,10).\n6. Impugnação do pedido de desocupação liminar do imóvel, pois a locatária possui todos os\ncomprovantes de pagamento dos alugueres, não ocorrendo a inadimplência alegada (0,20), 0,00/0,20/0,30\nportanto não configurada a hipótese do Art. 59, §1º, inciso IX, da Lei no 8.245/1991 (0,10).\n7. Alegação de inépcia da inicial (0,20), na forma do Art. 330, §1º, ou Art. 337, inciso IV, ambos\ndo CPC (0,10).\nOU 0,00/0,20/0,30\nAusência de documentos essenciais para a propositura da ação (0,20), na forma do Art. 320 do\nCPC (0,10).\nMérito\n8. Ausência de prova do fato constitutivo do direito do autor, pois não foi apresentado o\ndocumento comprovando que o filho do proprietário necessita do imóvel ou que não possui\n0,00/0,50/0,60\nimóvel residencial, já que a inicial veio desacompanhada de documentos (0,50), conforme\nexigiria o Art. 47, §1º, alínea b, da Lei no 8.245/1991, alegado pelo autor (0,10).\n9. A locatária apresenta os comprovantes de pagamento de todos os alugueres, dentro do\nprazo, não restando configurada a inadimplência alegada (0,60), não subsistindo a hipótese do 0,00/0,60/0,70\nArt. 9, inciso III, da Lei no 8.245/1991 (0,10).\n10. Argumentar que a ausência da fiança foi consentida, pelo que não é motivo da decretação\n0,00/0,30/0,40\ndo despejo (0,30), na forma do Art. 422 do Código Civil (0,10).\n11. Alegar litigância de má fé, uma vez que o locador havia dispensado a substituição de\ngarantia e fundamentou o despejo pela ausência de garantias (0,10), na forma do Art. 80, inciso 0,00/0,10/0,20\nII ou inciso V, do CPC. (0,10)\nPedidos e requerimentos\n12. Indeferimento da liminar de desocupação do imóvel (0,30). 0,00/0,30\n13. Alteração do valor da causa para que faça constar o valor correto (0,20). 0,00/0,20\n14. Improcedência dos pedidos (0,30). 0,00/0,30\n15. Condenação por litigância de má fé (0,10). 0,00/0,10\n16. Produção de provas (0,10). 0,00/0,10\n17. Condenação da parte autora em custas (0,10) e honorários de sucumbência (0,10). 0,00/0,10/0,20\nFechamento\n18. Local, data, assinatura, OAB (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Camila e João, casados no regime da comunhão parcial de bens, residiam em Tatuapé, São Paulo, e tiveram cinco filhos durante o casamento: Rebeca, Talita, Marcos, Alexandre e Miguel. Os filhos, à exceção de Miguel, concluíram a graduação em suas áreas de interesse. Miguel, o único que não se formou, conseguiu um emprego em uma empresa local, mas sem grandes conquistas. João, com pena de Miguel, o caçula e seu preferido, decidiu vender um apartamento pequeno, localizado em Santos, SP, por um preço mais acessível, para Miguel, pois achou que o filho não teria capacidade financeira de adquirir um imóvel. Os documentos foram juntados e o contrato firmado entre João e Miguel, sem que qualquer dos irmãos e mesmo Camila soubessem do acerto. Tempos depois, Marcos e Rebeca descobriram o que aconteceu e reclamaram com o pai a venda do imóvel para Miguel. João, porém, defendeu sua posição e sustentou que teria feito o correto.\n\nDiante da situação apresentada, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Considerando o negócio entre João e Miguel, o que poderia Camila e seus demais filhos fazer sobre o ocorrido? E em que prazo? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Qual o foro competente para reclamar do negócio jurídico firmado entre João e Miguel? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Camila e seus demais filhos poderiam pleitear a anulação do negócio jurídico firmado entre ascendente e descendente, pois não contou com a anuência do cônjuge e dos demais descendentes, conforme Art. 496 do CC, no prazo de dois anos, de acordo com o Art. 179 do CC. B) B. Camila e seus demais filhos deverão propor ação de anulação do negócio jurídico em Santos, SP, por ser o foro de localização do imóvel objeto da lide, conforme o Art. 47 do CPC. OU\n\nEm São Paulo, SP, o foro do domicílio do réu, entendendo ser obrigação pessoal, conforme Art. 46 do CPC.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Camila e seus demais filhos poderiam pleitear a anulação do negócio jurídico firmado entre ascendente e descendente, pois não contou com a anuência do cônjuge e dos demais descendentes (0,30), conforme o Art. 496 do CC (0,10), no prazo de dois anos (0,15), de acordo com o Art. 179 do CC (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.3,
+            0.4,
+            0.45,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Camila e seus demais filhos deverão propor ação de anulação do negócio jurídico em Santos, SP (0,20), por ser o foro de localização do imóvel objeto da lide (0,30), conforme o Art. 47 do CPC (0,10) OU Em São Paulo, SP (0,20), o foro do domicílio do réu, entendendo ser obrigação pessoal (0,30), conforme Art. 46 do CPC (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA. Camila e seus demais filhos poderiam pleitear a anulação do negócio jurídico firmado entre\nascendente e descendente, pois não contou com a anuência do cônjuge e dos demais 0,00/0,30/0,40/\ndescendentes (0,30), conforme o Art. 496 do CC (0,10), no prazo de dois anos (0,15), de acordo 0,45/0,55/0,65\ncom o Art. 179 do CC (0,10).\nB. Camila e seus demais filhos deverão propor ação de anulação do negócio jurídico em Santos,\nSP (0,20), por ser o foro de localização do imóvel objeto da lide (0,30), conforme o Art. 47 do CPC\n(0,10) 0,00/0,20/0,30/\nOU 0,40/0,50/0,60\nEm São Paulo, SP (0,20), o foro do domicílio do réu, entendendo ser obrigação pessoal (0,30),\nconforme Art. 46 do CPC (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Ilan, Paula e Flávio, coproprietários de um imóvel que herdaram em conjunto, celebraram contrato irretratável de compra e venda desse imóvel com Tiago e Tereza, recém-casados. No contrato, foi estabelecido o preço do imóvel e a forma de pagamento, incluindo o pagamento de 20% do valor acordado a título de sinal, no ato da celebração do pacto, bem como pactuado que a assinatura da escritura definitiva seria feita em 30 (trinta) dias. Em cláusula específica, foi destacado que o objeto do contrato era a propriedade integral do imóvel e não eventuais direitos sobre o bem. Contudo, antes da data marcada, Flávio, um dos promitentes vendedores, desiste do negócio e se recusa a cumprir suas obrigações contratuais, não comparecendo para a assinatura da escritura definitiva. Diante da situação, Tiago e Tereza contratam você, na qualidade de advogado(a), para orientá-los respondendo às indagações a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Qual é a responsabilidade dos promitentes vendedores perante os compradores, considerando que apenas Flávio desistiu do negócio e não compareceu para a assinatura da escritura definitiva? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Diante da recusa de Flávio, qual a medida que Tiago e Tereza podem adotar e em qual via, para assegurar a aquisição do imóvel? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Cada um dos promitentes vendedores responde pela integralidade da obrigação, pois se trata de obrigação indivisível, nos termos do Art. 259 do CC. B) Tiago e Tereza devem demonstrar a quitação do preço e requerer a adjudicação compulsória visando à outorga da escritura definitiva, pela via judicial, nos termos do Art. 501 do CPC ou Art. 1.418 do CC, ou extrajudicial, nos termos do Art. 216-B da Lei nº 6.015/1973.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Cada um dos promitentes vendedores responde pela integralidade da obrigação (0,25), pois se trata de obrigação indivisível (0,30), nos termos do Art. 259 do CC (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.35,
+            0.4,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Tiago e Tereza devem demonstrar a quitação do preço e requerer adjudicação compulsória, pela via judicial (0,50), nos termos do Art. 501 do CPC ou Art. 1.418 do CC (0,10), ou pela via extrajudicial (0,50), nos termos do Art. 216-B da Lei no 6.015/1973 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA. Cada um dos promitentes vendedores responde pela integralidade da obrigação (0,25), pois 0,00/0,25/0,35/\nse trata de obrigação indivisível (0,30), nos termos do Art. 259 do CC (0,10). 0,40/0,55/0,65\nB. Tiago e Tereza devem demonstrar a quitação do preço e requerer adjudicação compulsória,\npela via judicial (0,50), nos termos do Art. 501 do CPC ou Art. 1.418 do CC (0,10), ou pela via 0,00/0,50/0,60\nextrajudicial (0,50), nos termos do Art. 216-B da Lei no 6.015/1973 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Renato, em março de 2023, invadiu uma chácara de propriedade de Valdir, de quem é vizinho há mais de dez anos. Uma semana depois, Valdir notificou extrajudicialmente Renato para que desocupasse o imóvel no prazo de 30 (trinta) dias. Renato ignorou o teor da notificação e permaneceu no local, explorando os cultivos de arroz, trigo e feijão iniciados por Valdir, vendendo a produção e auferindo a renda daí advinda. Por tal razão, em outubro de 2023, Valdir ajuizou ação de reintegração de posse, requerendo a reintegração de posse do imóvel, bem como a condenação de Renato ao pagamento de indenização referente à venda da produção de arroz, trigo e feijão, desde a data da notificação extrajudicial. Tomando o caso acima como premissa, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Assiste razão a Valdir quanto à pretensão de receber os valores percebidos por Renato? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Valdir pode cumular, na mesma ação, os pedidos de reintegração de posse e de indenização? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, assiste razão a Valdir. Isso porque Renato é possuidor de má-fé, razão pela qual responde por todos os frutos colhidos e percebidos, nos termos do Art. 1.216 do Código Civil. B) Sim. Valdir pode cumular os pedidos na mesma ação. Isso porque é lícito ao autor cumular ao pedido possessório o de indenização dos frutos, nos termos do Art. 555, inciso II, do Código de Processo Civil.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Assiste razão a Valdir. Isso porque Renato é possuidor de má-fé (0,35), razão pela qual responde por todos os frutos colhidos e percebidos (0,20), nos termos do Art. 1.216 do Código Civil (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.35,
+            0.45,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. A lei permite ao autor cumular ao pedido possessório o pedido de indenização dos frutos (0,50), nos termos do Art. 555, inciso II, do Código de Processo Civil (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA. Assiste razão a Valdir. Isso porque Renato é possuidor de má-fé (0,35), razão pela qual\n0,00/0,20/0,35/\nresponde por todos os frutos colhidos e percebidos (0,20), nos termos do Art. 1.216 do Código\n0/45/0,55/0,65\nCivil (0,10).\nB. Sim. A lei permite ao autor cumular ao pedido possessório o pedido de indenização dos frutos\n0,00/0,50/0,60\n(0,50), nos termos do Art. 555, inciso II, do Código de Processo Civil (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Durante uma festividade realizada em uma praça pública no município de São Cristóvão, Estado de Sergipe, Joaquim, dez anos de idade, com diagnóstico médico que atesta transtornos psíquicos severos, inclusive a ausência de discernimento, arremessou uma pedra em um veículo estacionado nas proximidades do logradouro, causando expressivos danos à lataria e aos vidros do automóvel de propriedade da Sra. Severiana, residente na mesma cidade. Diante do ocorrido, a vítima ajuizou ação de reparação por danos materiais e morais em face dos genitores de Joaquim e, subsidiariamente, contra a própria criança, sustentando que esta é titular de patrimônio próprio, oriundo de doação realizada por seus avós, e que os pais possuem capacidade patrimonial diminuta, insuficiente para arcar com a reparação integral dos prejuízos. Recebida a petição inicial, o Magistrado, de ofício, determinou a exclusão do menor do polo passivo da demanda, ao fundamento de que se trata de absolutamente incapaz, nos termos do Art. 3º, inciso I, do Código Civil, e, por conseguinte, não pode figurar como réu em ação indenizatória, mesmo que possua patrimônio próprio. Sobre o caso, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Considerando a condição de absolutamente incapaz de Joaquim, é juridicamente possível que ele responda civilmente pelos danos que causou? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Qual o meio processual cabível que a Sra. Severiana poderá usar contra a decisão judicial de ofício que excluiu o menor do polo passivo da demanda? Indique a natureza jurídica da decisão judicial que exclui o menor da relação processual. Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. É juridicamente possível que Joaquim responda civilmente pelos danos que causou, desde que demonstrado que seus genitores não possuem meios suficientes para arcar com a reparação, nos termos do Art. 928 do Código Civil. B) Trata-se de decisão interlocutória que versa sobre a exclusão de litisconsorte passivo, hipótese expressamente contemplada pela legislação processual como passível de impugnação imediata, por meio de agravo de instrumento, nos termos do Art. 1.015, inciso VII, do Código de Processo Civil.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim, é juridicamente possível que Joaquim responda civilmente pelos danos que causou, (0,25) desde que demonstrado que seus genitores não possuem meios suficientes para arcar com a reparação (0,30), nos termos do Art. 928 do Código Civil (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Trata-se de decisão interlocutória que versa sobre a exclusão de litisconsorte passivo (0,20), hipótese expressamente contemplada pela legislação processual como passível de impugnação imediata por meio de agravo de instrumento (0,30), nos termos do Art. 1.015, inciso VII, do CPC (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA. Sim, é juridicamente possível que Joaquim responda civilmente pelos danos que\n0,00/0,25/0,30/0,35/\ncausou, (0,25) desde que demonstrado que seus genitores não possuem meios suficientes\n0,40/0,55/0,65\npara arcar com a reparação (0,30), nos termos do Art. 928 do Código Civil (0,10).\nB. Trata-se de decisão interlocutória que versa sobre a exclusão de litisconsorte passivo\n(0,20), hipótese expressamente contemplada pela legislação processual como passível de 0,00/0,20/0,30/0,40/\nimpugnação imediata por meio de agravo de instrumento (0,30), nos termos do Art. 0,50/0,60\n1.015, inciso VII, do CPC (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

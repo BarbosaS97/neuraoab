@@ -1,0 +1,432 @@
+{
+  "exam_number": 44,
+  "phase": 2,
+  "area": "Direito Constitucional",
+  "source_provas_file": "44º_provas_Direito_Constitucional.pdf",
+  "source_resposta_file": "44º_resposta_Direito_Constitucional.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "O Município Alfa, com apenas 20.000 (vinte mil) habitantes, possui uma pequena área urbana e uma extensa área rural, em sua maior parte desabitada, sendo caracterizada pela existência de grandes latifúndios improdutivos.\n\nUma das promessas de campanha de João, atual Prefeito do Município Alfa, foi a de reorganizar o transporte coletivo municipal, de modo a aumentar a mobilidade da população e a evitar o desvio produtivo, o que ocorria frequentemente com a necessidade de se aguardar por algumas horas a chegada de um ônibus. Esse quadro era sensivelmente agravado em razão da opacidade do sistema de transporte, de modo que a população desconhecia a quantidade de ônibus em circulação e até os horários em que cada um passaria por cada local, o que apresentava grandes variações durante os dias da semana.\n\nJoão se responsabilizou pessoalmente pela elaboração do Edital de Licitação para a Concessão da Exploração do Serviço de Transporte Coletivo Municipal. A publicação do Edital foi informada à população, sendo enaltecida como oinício da solução de todos os problemas apresentados. A sociedade empresária Delta saiu vencedora na licitação e a solenidade de assinatura do contrato de concessão com o Município Alfa, representado pelo Prefeito Municipal João, foi marcada para a semana seguinte.\n\nAntes da assinatura do contrato, em uma conversa informal, o motorista de João disse que a população do Município Alfa era “muito inocente”, pois não tinha percebido que, das quatro linhas de ônibus licitadas, uma delas era “especial”. Tratava-se da linha que passaria em uma localidade quase que totalmente desabitada, contando com apenas quatro casas, na qual circularia metade da frota de ônibus, pois era exigido que os ônibus por ali passassem de 30 em 30 minutos, 24 horas por dia. Nas outras linhas, por sua vez, os ônibus passariam de 60 em 60 minutos, sendo o serviço interrompido das 20 horas às 7 horas do dia seguinte. Ao ser indagado sobre a razão desse tratamento diferenciado, o motorista de João informou que as quatro casas existentes no local eram ocupadas pelos parentes do Prefeito Municipal, que ainda subvencionaria, com dinheiro público, a prestação do serviço nessa linha em especial, que seria visivelmente deficitária. Ainda acresceu que a subvenção corresponderia ao dobro do que seria necessário para compensar o caráter deficitário da linha. Ressaltou, no entanto, que os parentes desconheciam a manobra de João.\n\nMaria, eleitora e residente no Município Alfa, escutou o comentário do motorista de João e achou absurda a atitude do Prefeito Municipal, que afrontara um referencial de decência e ainda causaria prejuízo aos cofres públicos. Após obter provas de que os parentes do Chefe do Poder Executivo efetivamente residiam no local a ser atendido por uma das linhas de ônibus, e de que a minuta do contrato de concessão, já aprovada, previa a subvenção referida pelo motorista, Maria decidiu procurá-lo, como advogado(a), para o ajuizamento da ação constitucional mais apropriada ao caso, considerando a necessidade de instrução probatória, visando impedir que o contrato administrativo seja celebrado e venha a ser iniciada a prestação do serviço, o que causaria grande prejuízo aos cofres públicos, considerando não só as despesas em si, como também a reduzida arrecadação do Município Alfa. Ao final, Maria ainda acresceu que a ação a ser ajuizada deveria isentá-la de custas judiciais e ônus de sucumbência, pois sabidamente não está agindo de má-fé.\n\nA partir da narrativa acima, elabore a peça processual adequada.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação. DIREITO CONSTITUCIONAL",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A peça adequada nesta situação é a petição inicial de Ação Popular (Art. 5º, inciso LXXIII, da CRFB/88 e Lei nº 4.717/1965). A petição deve ser endereçada ao Juízo Cível da Comarca X ou ao Juízo de Fazenda Pública da Comarca X, que abranja a esfera territorial do Município Alfa, já que os dados constantes do enunciado não permitem identificar a organização judiciária do local (Art. 5º da Lei nº 4.717/1965).\n\nO examinando deve indicar, na qualificação das partes, a autora Maria e, como demandados, João, prefeito do Município Alfa, e a sociedade empresária Delta, que irá se beneficiar do contrato a ser celebrado. A legitimidade ativa de Maria decorre do fato de ser cidadã, conforme dispõe o Art. 5º, inciso LXXIII, da CRFB/88 ou o Art. 1º, caput, da Lei nº 4.717/1965, qualidade intrínseca à sua condição de eleitora. A legitimidade passiva de João decorre do fato de ser o responsável pela confecção do edital de licitação, e ainda irá assinar o contrato administrativo, conforme dispõe o Art. 6º, caput, da Lei nº 4.717/1965; da sociedade empresária Delta pelo fato de que será beneficiada pelos atos praticados por João, (Art. 6º, caput, da Lei nº 4.717/1965); e a do Município Alfa por se almejar impedir a celebração do contrato administrativo (Art. 6º, caput, da Lei nº 4.717/1965).\n\nÉ possível a declaração de nulidade do ato, via ação popular, por afrontar a moralidade administrativa (Art. 5º, inciso LXXIII, da CRFB/88) e ainda ser potencialmente lesivo ao patrimônio público (Art. 5º, inciso LXXIII, da CRFB/88 ou Art. 1º, caput, da Lei nº 4.717/1965). O examinando deve indicar, no mérito, que\n\n(i) o tratamento diferenciado, dado a uma das linhas de ônibus, com o objetivo de beneficiar os parentes de João, afronta a moralidade administrativa, protegida pelo Art. 37, caput, ou pelo Art. 5º, inciso LXXIII, ambos da CRFB/88; (ii) a organização do serviço público, visando a conferir tratamento diferenciado a algumas pessoas em detrimento das demais, afronta a impessoalidade, consagrada no Art. 37, caput, da CRFB/88; (iii) a fixação da subvenção a ser paga pelos cofres públicos, em valor correspondente ao dobro do devido, afronta a economicidade da despesa pública, consagrada no Art. 70, caput, da CRFB/88, ou a moralidade administrativa, como fundamento da atuação proba do gestor público, nos termos do Art. 37, caput, ou Art. 5º, inciso LXXIII, ambos da CRFB/88 ou a eficiência administrativa, que exige o melhor uso do dinheiro público, nos termos do Art. 37, caput, da CRFB/88. Em consequência, o edital de licitação é nulo, nos termos do Art. 2º, alíneas c e e, bem como o parágrafo único, alíneas c e e, da Lei nº 4.717/1965, em razão do desvio de finalidade e de sua manifesta dissonância das normas constitucionais.\n\nO examinando deve requerer a concessão de provimento liminar, para impedir a assinatura do contrato administrativo. O fumus boni iuris decorre da flagrante ofensa aos comandos constitucionais, o que acarreta a nulidade do edital da licitação, e o periculum in mora decorre da iminência de o contrato administrativo ser celebrado.\n\nO examinando deve formular o pedido de declaração de nulidade do edital de licitação e de todos os atos praticados no procedimento licitatório, impedindo-se, portanto, a celebração de contrato administrativo que o tome por base, que deve ser considerado igualmente nulo caso seja celebrado. O examinando ainda deve atribuir valor à causa e fechar a petição inicial, qualificando-se como advogado.\n\nPadrão de Resposta da Prova Prático-Profissional Página 2/8",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "A petição deve ser endereçada ao Juízo Cível da Comarca X ou ao Juízo de Fazenda Pública da Comarca X (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Demandante: Maria (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Demandados: João, prefeito municipal (0,10), a sociedade empresária Delta (0,10) e o Município Alfa (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Endereçamento",
+        "descricao": "A legitimidade ativa de Maria decorre do fato de ser cidadã (0,10), conforme dispõe o Art. 5º, inciso LXXIII, da CRFB/88 ou o Art. 1º, caput, da Lei nº 4.717/1965 (0,10), qualidade intrínseca à sua condição de eleitora (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Legitimidade passiva",
+        "descricao": "de João, por ser o responsável pela confecção do edital de licitação (0,10), nos termos da Art. 6º, caput, da Lei nº 4.717/1965 (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Legitimidade passiva",
+        "descricao": "da sociedade empresária Delta, porque irá se beneficiar do contrato administrativo a ser celebrado (0,10), nos termos do Art. 6º, caput, da Lei nº 4.717/1965 (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Legitimidade passiva",
+        "descricao": "do Município Alfa, por se almejar reverter os efeitos dos pagamentos realizados (0,10), nos termos do Art. 6º, caput, da Lei nº 4.717/1965 (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Cabimento da ação",
+        "descricao": "É possível o uso da ação popular, porque o edital de licitação afrontou a moralidade administrativa (0,10), segundo o Art. 5º, inciso LXXIII, ou Art. 37, caput, ambos da CRFB/88 (0,10), e ainda ser potencialmente lesivo ao patrimônio público (0,10), com base no Art. 5º, inciso LXXIII, da CRFB/88 ou no Art. 1º, caput, da Lei nº 4.717/1965 (0,10)).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "O tratamento diferenciado, dado a uma das linhas de ônibus, com o objetivo de beneficiar os parentes de João, afronta a moralidade administrativa (0,40), protegida pelo Art. 37, caput, ou pelo Art. 5º, inciso LXXIII, ambos da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "A organização do serviço público, visando a conferir tratamento diferenciado a algumas pessoas em detrimento das demais, afronta a impessoalidade (0,40), consagrada no Art. 37, caput, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "A fixação da subvenção a ser paga pelos cofres públicos, em valor correspondente ao dobro do devido, afronta a economicidade da despesa pública (0,40), consagrada no Art. 70, caput, da CRFB/88 (0,10). ou afronta a moralidade administrativa, (0,20) como fundamento da atuação proba do gestor público, (0,20) nos termos do Art. 37, caput, ou do Art. 5º, inciso LXXIII, ambos da CRFB/88 (0,10). ou afronta a eficiência administrativa (0,20), que exige o melhor uso do dinheiro público (0,20), nos termos do Art. 37, caput, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "O edital de licitação é nulo (0,10), em razão do desvio de finalidade (0,10) (Art. 2º, alínea e, bem como o parágrafo único, alínea e, da Lei nº 4.717/1965) (0,10) e da manifesta dissonância das normas constitucionais (0,10), segundo o Art. 2º, alínea c, bem como o parágrafo único, alínea c, da Lei nº 4.717/1965 (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Concessão de provimento liminar, para impedir a assinatura do contrato administrativo (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "O fumus boni iuris decorre da flagrante ofensa aos comandos constitucionais (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Pedidos",
+        "descricao": "O periculum in mora decorre da iminência de o contrato administrativo ser celebrado (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Pedidos",
+        "descricao": "Declaração de nulidade do edital de licitação (0,10), impedindo-se, portanto, a celebração do contrato administrativo que o tome por base (0,10), que deve ser considerado igualmente nulo caso seja celebrado. (0,10)",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "17",
+        "categoria": "Pedidos",
+        "descricao": "Juntada de título de eleitor (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "18",
+        "categoria": "Pedidos",
+        "descricao": "Condenação em honorários advocatícios (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "19",
+        "categoria": "Fechamento",
+        "descricao": "Valor da causa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "20",
+        "categoria": "Fechamento",
+        "descricao": "Local, data, advogado e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. A petição deve ser endereçada ao Juízo Cível da Comarca X ou ao Juízo de Fazenda\n0,00/0,10\nPública da Comarca X (0,10).\n2. Demandante: Maria (0,10). 0,00/0,10\n3. Demandados: João, prefeito municipal (0,10), a sociedade empresária Delta (0,10) e 0,00/0,10/\no Município Alfa (0,10). 0,20/0,30\n4. A legitimidade ativa de Maria decorre do fato de ser cidadã (0,10), conforme dispõe\n0,00/0,10/\no Art. 5º, inciso LXXIII, da CRFB/88 ou o Art. 1º, caput, da Lei nº 4.717/1965 (0,10),\n0,20/0,30\nqualidade intrínseca à sua condição de eleitora (0,10).\nLegitimidade passiva\n5. de João, por ser o responsável pela confecção do edital de licitação (0,10), nos\n0,00/0,10/0,20\ntermos da Art. 6º, caput, da Lei nº 4.717/1965 (0,10).\n6. da sociedade empresária Delta, porque irá se beneficiar do contrato administrativo\n0,00/0,10/0,20\na ser celebrado (0,10), nos termos do Art. 6º, caput, da Lei nº 4.717/1965 (0,10).\n7. do Município Alfa, por se almejar reverter os efeitos dos pagamentos realizados\n0,00/0,10/0,20\n(0,10), nos termos do Art. 6º, caput, da Lei nº 4.717/1965 (0,10).\nCabimento da ação\n8. É possível o uso da ação popular, porque o edital de licitação afrontou a moralidade\nadministrativa (0,10), segundo o Art. 5º, inciso LXXIII, ou Art. 37, caput, ambos da\n0,00/0,10/0,20/\nCRFB/88 (0,10), e ainda ser potencialmente lesivo ao patrimônio público (0,10), com\n0,30/0,40\nbase no Art. 5º, inciso LXXIII, da CRFB/88 ou no Art. 1º, caput, da Lei nº 4.717/1965\n(0,10)).\nFundamentos de mérito\n9. O tratamento diferenciado, dado a uma das linhas de ônibus, com o objetivo de\n0,00/0,40/0,50\nbeneficiar os parentes de João, afronta a moralidade administrativa (0,40), protegida\npelo Art. 37, caput, ou pelo Art. 5º, inciso LXXIII, ambos da CRFB/88 (0,10).\n10. A organização do serviço público, visando a conferir tratamento diferenciado a\n0,00/0,40/0,50\nalgumas pessoas em detrimento das demais, afronta a impessoalidade (0,40),\nconsagrada no Art. 37, caput, da CRFB/88 (0,10).\n11. A fixação da subvenção a ser paga pelos cofres públicos, em valor correspondente\nao dobro do devido, afronta a economicidade da despesa pública (0,40), consagrada\nno Art. 70, caput, da CRFB/88 (0,10). 0,00/0,20/0,30/\nou afronta a moralidade administrativa, (0,20) como fundamento da atuação proba do 0,40/0,50\ngestor público, (0,20) nos termos do Art. 37, caput, ou do Art. 5º, inciso LXXIII, ambos\nda CRFB/88 (0,10).\nou afronta a eficiência administrativa (0,20), que exige o melhor uso do dinheiro\npúblico (0,20), nos termos do Art. 37, caput, da CRFB/88 (0,10).\n12. O edital de licitação é nulo (0,10), em razão do desvio de finalidade (0,10) (Art. 2º,\nalínea e, bem como o parágrafo único, alínea e, da Lei nº 4.717/1965) (0,10) e da 0,00/0,10/0,20/\nmanifesta dissonância das normas constitucionais (0,10), segundo o Art. 2º, alínea c, 0,30/0,40/0,50\nbem como o parágrafo único, alínea c, da Lei nº 4.717/1965 (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 3/8\nPedidos\n13. Concessão de provimento liminar, para impedir a assinatura do contrato\n0,00/0,20\nadministrativo (0,20).\n14. O fumus boni iuris decorre da flagrante ofensa aos comandos constitucionais (0,10). 0,00/0,10\n15. O periculum in mora decorre da iminência de o contrato administrativo ser\n0,00/0,10\ncelebrado (0,10).\n16. Declaração de nulidade do edital de licitação (0,10), impedindo-se, portanto, a\ncelebração do contrato administrativo que o tome por base (0,10), que deve ser 0,00/0,10/0,20/0,30\nconsiderado igualmente nulo caso seja celebrado. (0,10)\n17. Juntada de título de eleitor (0,10). 0,00/0,10\n18. Condenação em honorários advocatícios (0,20). 0,00/0,20\nFechamento\n19. Valor da causa (0,10). 0,00/0,10\n20. Local, data, advogado e OAB (0,10). 0,00/0,10\nPadrão de Resposta da Prova Prático-Profissional Página 4/8",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Um grupo de jovens do Município Alfa, sensibilizado com a defasagem da remuneração dos servidores públicos municipais, iniciou um grande movimento popular para a coleta de assinaturas visando à apresentação de projeto de lei municipal, cujo objeto seria a concessão de aumento remuneratório a esses agentes. Em determinado momento, no qual muitas pessoas já tinham aderido ao movimento, os jovens foram informados de que a Lei Orgânica do Município Alfa não contemplava a possibilidade de iniciativa popular em projetos de lei. Além disso, mesmo que esse óbice fosse superado, um projeto de lei contendo a referida matéria não poderia ser de iniciativa popular. Preocupados com as informações recebidas, os jovens contrataram você, como advogado(a), e formularam os questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Há liberdade valorativa da Câmara Municipal de Alfa para prever, ou não, na Lei Orgânica do Município, a iniciativa popular para a apresentação de projetos de lei? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Um projeto de lei de iniciativa popular pode ter por objeto a concessão de aumento remuneratório para os servidores públicos? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO CONSTITUCIONAL",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. A possibilidade de apresentação de projetos de lei de iniciativa popular está prevista na Constituição da República, em seu Art. 29, inciso XIII, logo, deve ser prevista na Lei Orgânica do Município.\n\nB) Não. O projeto de lei que visa a conceder aumento remuneratório aos servidores públicos é de iniciativa privativa do Prefeito Municipal, nos termos do Art. 61, § 1º, inciso II, alínea a, c/c o Art. 29, caput, ambos da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não, pois deve estar prevista na Lei Orgânica do Município a possibilidade de apresentação de projetos de lei de iniciativa popular (0,55), nos termos do Art. 29, inciso XIII da CRFB (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não, pois a iniciativa é privativa do Prefeito Municipal (0,50), nos termos do Art. 61, § 1º, inciso II, alínea a, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não, pois deve estar prevista na Lei Orgânica do Município a possibilidade de\napresentação de projetos de lei de iniciativa popular (0,55), nos termos do Art. 29, 0,00/0,55/0,65\ninciso XIII da CRFB (0,10).\nB. Não, pois a iniciativa é privativa do Prefeito Municipal (0,50), nos termos do\n0,00/0,50/0,60\nArt. 61, § 1º, inciso II, alínea a, da CRFB/88 (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 5/8",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "A família de João foi tomada de grande preocupação ao constatar que ele saíra para trabalhar e há dois dias não retornava a casa, o que jamais ocorrera em seus 52 anos de vida. Por tal razão, decidiu comparecer à Delegacia de Polícia do Município e registrar o desaparecimento, momento em que foram informados que João fora preso em flagrante delito por, alegadamente, integrar uma organização criminosa envolvida em diversas extorsões mediante sequestro. Ao afirmar que desejavam falar com João, o policial de plantão informou aos familiares que não seria possível, pois ele não se encontrava na unidade e o Delegado de Polícia, em razão da periculosidade da organização criminosa, exarara o despacho escrito proibindo que fosse informado o paradeiro de João e dos outros presos, de modo a evitar que fossem resgatados pelos comparsas. Determinou, ainda, a omissão da identidade dos agentes responsáveis pela prisão de João, de modo que tivessem sua segurança preservada. À luz desse quadro, a família de João contratou seus serviços como advogado(a) e solicitou que você respondesse aos seguintes questionamentos.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Está correta a negativa de se informar a localização de João? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A identidade dos responsáveis pela prisão de João pode ser omitida? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO CONSTITUCIONAL QUESTÃO 2 – PÁGINA 10",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. A família de João deve ser informada do local onde se encontra preso, nos termos do Art. 5º, inciso LXII, da CRFB/88. B) Não. Todo preso tem o direito à identificação dos responsáveis por sua prisão, nos termos do Art. 5º, inciso LXIV, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A família de João deve ser informada do local onde ele se encontra preso (0,55), nos termos do Art. 5º, inciso LXII, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. Todo preso tem o direito à identificação dos responsáveis por sua prisão (0,50), nos termos do Art. 5º, inciso LXIV, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A família de João deve ser informada do local onde ele se encontra\n0,00/0,55/0,65\npreso (0,55), nos termos do Art. 5º, inciso LXII, da CRFB/88 (0,10).\nB. Não. Todo preso tem o direito à identificação dos responsáveis por sua\n0,00/0,50/0,60\nprisão (0,50), nos termos do Art. 5º, inciso LXIV, da CRFB/88 (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 6/8",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "A Lei Orgânica do Município Alfa dispôs, ao tratar do seu processo de reforma, que o respectivo projeto, uma vez aprovado em dois turnos de votação, por dois terços dos membros da Câmara Municipal, seria encaminhado para a sanção do Prefeito Municipal, a quem caberia a sanção e correspondente promulgação. Na hipótese de veto, a Câmara Municipal poderá derrubá-lo pelo voto da maioria absoluta dos seus membros. Por entender que essa sistemática era manifestamente inconstitucional, o líder da oposição solicitou que você, como advogado(a) respondesse aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O processo de reforma da Lei Orgânica do Município Alfa está em harmonia com a ordem constitucional? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Uma norma municipal, a exemplo do preceito da Lei Orgânica do Município Alfa, pode ser submetida, por um legitimado, ao controle concentrado de constitucionalidade perante o Supremo Tribunal Federal? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO CONSTITUCIONAL",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. A reforma da lei orgânica municipal deve ser promulgada pela Câmara Municipal, não sendo prevista a sanção do chefe do Poder Executivo, nos termos do Art. 29, caput, ou do Art. 60, § 3º c/c o Art. 29, caput, todos da CRFB/88.\n\nB) Sim. Pode ser submetida por meio da arguição de descumprimento de preceito fundamental, nos termos do Art. 1º, parágrafo único, inciso I, da Lei nº 9.882/1999 ou do Art. 102, § 1º, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A reforma da lei orgânica municipal deve ser promulgada pela Câmara Municipal (0,30), não sendo prevista a sanção do chefe do Poder Executivo (0,25), nos termos do Art. 29, caput, ou do Art. 60, § 3º, c/c o Art. 29, caput, todos da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. Pode ser submetida por meio da arguição de descumprimento de preceito fundamental (0,50), nos termos do Art. 1º, parágrafo único, inciso I, da Lei nº 9.882/1999 ou do Art. 102, § 1º, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A reforma da lei orgânica municipal deve ser promulgada pela Câmara\nMunicipal (0,30), não sendo prevista a sanção do chefe do Poder Executivo (0,25), 0,00/0,25/0,30/0,35/\nnos termos do Art. 29, caput, ou do Art. 60, § 3º, c/c o Art. 29, caput, todos da 0,40/0,55/0,65\nCRFB/88 (0,10).\nB. Sim. Pode ser submetida por meio da arguição de descumprimento de preceito\nfundamental (0,50), nos termos do Art. 1º, parágrafo único, inciso I, da Lei nº 0,00/0,50/0,60\n9.882/1999 ou do Art. 102, § 1º, da CRFB/88 (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 7/8",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Com o objetivo de estimular o empreendorismo, o Estado Alfa, conhecido nacionalmente pela grande produção de componentes eletrônicos, editou a Lei nº XX. Esse diploma normativo estabeleceu a disciplina da atividade de radiodifusão, consistente na transmissão de sons e imagens realizada a partir do seu território, e ainda estatuiu regramento específico, na perspectiva da ordenação territorial, para a localização das sociedades empresárias que viessem a se instalar em Alfa, o que deveria ocorrer na capital do Estado, mais especificamente, nas zonas indicadas na própria Lei nº XX.\n\nSobre a hipótese apresentada, responda aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O Estado Alfa tinha competência para editar a Lei nº XX, disciplinando a atividade de transmissão de sons e imagens? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A indicação, pela Lei nº XX, das zonas situadas na capital do Estado Alfa, em que deve ocorrer a futura instalação das sociedades empresárias, é compatível com a divisão constitucional de competências? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO CONSTITUCIONAL",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Compete privativamente à União legislar sobre radiodifusão, nos termos do Art. 22, inciso IV, da CRFB/88.\n\nB) Não. A ordenação territorial é matéria de competência legislativa municipal, nos termos do Art. 30, inciso VIII, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. Compete privativamente à União legislar sobre radiodifusão (0,55), nos termos do Art. 22, inciso IV, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A ordenação territorial é matéria de competência legislativa municipal (0,50), nos termos do Art. 30, inciso VIII, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. Compete privativamente à União legislar sobre radiodifusão (0,55), nos termos\n0,00/0,55/0,65\ndo Art. 22, inciso IV, da CRFB/88 (0,10).\nB. Não. A ordenação territorial é matéria de competência legislativa municipal (0,50), nos\n0,00/0,50/0,60\ntermos do Art. 30, inciso VIII, da CRFB/88 (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 8/8",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

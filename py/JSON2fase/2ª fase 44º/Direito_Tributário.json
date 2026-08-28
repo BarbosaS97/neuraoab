@@ -1,0 +1,355 @@
+{
+  "exam_number": 44,
+  "phase": 2,
+  "area": "Direito Tributário",
+  "source_provas_file": "44º_provas_Direito_Tributário.pdf",
+  "source_resposta_file": "44º_resposta_Direito_Tributário.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "A sociedade empresária Panos Belos Ltda., que atua no atacado de tecidos, sediada no Município Alfa, Estado Beta, enfrentando dificuldades financeiras no período entre janeiro e junho de 2024, embora tenha corretamente declarado o ICMS devido que lhe cabia recolher, deixou de efetuar o pagamento do tributo declarado, uma vez que preferiu honrar o pagamento de seus funcionários e fornecedores.\n\nEm razão disso, o Fisco do Estado Beta notificou a sociedade empresária para o pagamento em setembro de 2024, mas, como esta não adimpliu o débito, inscreveu-a em dívida ativa, iniciando a sua cobrança judicial por meio de Ação de Execução Fiscal distribuída à Vara Única do Município Alfa em 5/3/2025.\n\nA sociedade empresária foi encontrada para ser citada no endereço indicado perante o Fisco Estadual, mas não foram encontrados bens penhoráveis da sociedade empresária devedora, o que levou o Fisco estadual a requerer oredirecionamento da execução fiscal para Mateus, que fora sócio cotista da sociedade empresária até dezembro de 2023, quando se retirou da sociedade.\n\nDeferido o redirecionamento pelo Juízo, por meio do sistema RENAJUD, foram encontrados em nome de Mateus dois automóveis importados, os quais sofreram constrição judicial. Embora intimado da penhora em junho de 2025, Mateus quedou-se inerte e nem mesmo procurou advogado. Apenas em setembro de 2025, quando o Oficial de Justiça apareceu na porta de sua casa, com ordem judicial para remover os automóveis para o depósito judicial, Mateus resolveu procurar você, como advogado(a), para realizar sua defesa nessa execução fiscal.\n\nMateus entrega-lhe cópia do contrato social da sociedade empresária, no qual fica atestado que era sócio cotista, assim como a cópia da ata em que se retirou da sociedade em dezembro de 2023 e a nova versão do contrato social, em que seu nome já não consta, tudo devidamente levado a registro perante a Junta Comercial do Estado Beta. Informa também não dispor, naquele momento, de recursos financeiros para realizar qualquer pagamento, sendo proprietário apenas dos dois automóveis penhorados.\n\nDiante dos fatos expostos, redija a peça de defesa adequada para defender o seu cliente, a ser apresentada nos autos da própria execução fiscal.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação. DIREITO TRIBUTÁRIO PROVA PRÁTICO-PROFISSIONAL – PÁGINA 2",
+    "valor_total": 5.0,
+    "gabarito_comentado": "O examinando deverá elaborar a peça de exceção de pré-executividade, uma vez que todos os temas a serem tratados configuram matéria cognoscível de ofício pelo magistrado, sem necessidade de dilação probatória (comprováveis de plano por prova documental), nos termos da Súmula nº 393 do STJ ou Art. 803, parágrafo único, do CPC. Ademais, o prazo para oferta de embargos à execução ou agravo de instrumento já se esvaiu. Não são devidas custas processuais nem garantia do juízo, diferentemente dos embargos à execução (o que atende à necessidade de Mateus de não dispor de recursos financeiros para realizar qualquer pagamento), podendo a exceção ser invocada por simples petição nos autos da execução fiscal.\n\nA petição deve ser endereçada à Vara Única do Município Alfa.\n\nO excipiente é Mateus, e a parte excepta (exequente) é o Estado Beta.\n\nNo mérito, o examinando deverá alegar:\n\n1) O mero inadimplemento do crédito tributário ocorrido entre janeiro a junho de 2024 não constitui, por si só, infração legal capaz de ensejar a responsabilização dos sócios pelas dívidas tributárias da pessoa jurídica, cf. a Súmula 430 do STJ. 2) Mateus nunca foi sócio-administrador (sócio-gerente) da empresa, razão pela qual não caberia o redirecionamento da execução fiscal contra si, cf. Art. 135, inciso III, do CTN, que apenas admite responsabilização de diretores, gerentes ou representantes de pessoas jurídicas de direito privado, o que não é o caso de Mateus. 3) Mateus já havia se retirado da sociedade desde dezembro de 2023, não ostentando mais a condição de sócio quando os fatos geradores ocorreram (janeiro a junho de 2024), não podendo ser responsabilizado pela cobrança de tributos devidos após a sua saída.\n\nNa parte dos pedidos, deve o examinando requerer sua exclusão do polo passivo da execução fiscal e o levantamento da restrição judicial sobre seus automóveis.\n\nO examinando ainda deve obedecer às normas de fechamento da peça.\n\nPadrão de Resposta da Prova Prático-Profissional Página 2/6",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "Endereçamento à Vara Única do Município Alfa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Partes",
+        "descricao": "Excipiente: Mateus (0,10);",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Partes",
+        "descricao": "Excepto: Estado Beta (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Descrição dos fatos",
+        "descricao": "Breve descrição dos fatos (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Cabimento",
+        "descricao": "É cabível a exceção de pré-executividade, que é admissível na execução fiscal relativamente às matérias conhecíveis de ofício (0,30) que não demandem dilação probatória (0,30), conforme Súmula 393 do STJ ou Art. 803, parágrafo único, do CPC (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Cabimento",
+        "descricao": "Tempestividade: a exceção de pré-executividade não precisa obedecer à limitação de prazo de 30 dias de embargos à execução fiscal (0,30).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Fundamentos",
+        "descricao": "O mero inadimplemento do crédito tributário ocorrido entre janeiro a junho de 2024 não constitui infração legal capaz de ensejar a responsabilização dos sócios pelas dívidas tributárias da pessoa jurídica (0,70), cf. Súmula 430 do STJ (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fundamentos",
+        "descricao": "Mateus nunca foi sócio administrador (sócio-gerente) da empresa, razão pela qual não caberia o redirecionamento da execução fiscal contra si, mero sócio cotista sem poderes de administração ou gerência (0,70), não estando abarcado pelo Art. 135, inciso III, do CTN (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fundamentos",
+        "descricao": "Mateus já havia se retirado da sociedade desde dezembro de 2023, não ostentando mais a condição de sócio quando os fatos geradores ocorreram (janeiro a junho de 2024), não podendo ser responsabilizado pela cobrança de tributos devidos após sua saída (0,80).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Pedidos",
+        "descricao": "Intimação do Estado Beta para ciência da exceção (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Pedidos",
+        "descricao": "Exclusão do excipiente do polo passivo da execução fiscal (0,40).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Pedido de desconstituição da penhora sobre os automóveis (0,40).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Condenação em honorários de sucumbência (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Fechamento",
+        "descricao": "Local, data, advogado e OAB... (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. Endereçamento à Vara Única do Município Alfa (0,10). 0,00/0,10\nPartes\n2. Excipiente: Mateus (0,10); 0,00/0,10\n3. Excepto: Estado Beta (0,10). 0,00/0,10\nDescrição dos fatos\n4. Breve descrição dos fatos (0,10). 0,00/0,10\nCabimento\n5. É cabível a exceção de pré-executividade, que é admissível na execução fiscal relativamente às\n0,00/0,30/0,40/\nmatérias conhecíveis de ofício (0,30) que não demandem dilação probatória (0,30), conforme\n0,60/0,70\nSúmula 393 do STJ ou Art. 803, parágrafo único, do CPC (0,10).\n6. Tempestividade: a exceção de pré-executividade não precisa obedecer à limitação de prazo de\n0,00/0,30\n30 dias de embargos à execução fiscal (0,30).\nFundamentos\n7. O mero inadimplemento do crédito tributário ocorrido entre janeiro a junho de 2024 não\nconstitui infração legal capaz de ensejar a responsabilização dos sócios pelas dívidas tributárias da 0,00/0,70/0,80\npessoa jurídica (0,70), cf. Súmula 430 do STJ (0,10).\n8. Mateus nunca foi sócio administrador (sócio-gerente) da empresa, razão pela qual não caberia\no redirecionamento da execução fiscal contra si, mero sócio cotista sem poderes de administração 0,00/0,70/0,80\nou gerência (0,70), não estando abarcado pelo Art. 135, inciso III, do CTN (0,10).\n9. Mateus já havia se retirado da sociedade desde dezembro de 2023, não ostentando mais a\ncondição de sócio quando os fatos geradores ocorreram (janeiro a junho de 2024), não podendo 0,00/0,80\nser responsabilizado pela cobrança de tributos devidos após sua saída (0,80).\nPedidos\n10. Intimação do Estado Beta para ciência da exceção (0,20). 0,00/0,20\n11. Exclusão do excipiente do polo passivo da execução fiscal (0,40). 0,00/0,40\n12. Pedido de desconstituição da penhora sobre os automóveis (0,40). 0,00/0,40\n13. Condenação em honorários de sucumbência (0,10). 0,00/0,10\nFechamento\n14. Local, data, advogado e OAB... (0,10). 0,00/0,10\nPadrão de Resposta da Prova Prático-Profissional Página 3/6",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Em 29/12/2023, o Município Alfa instituiu, por lei ordinária, uma contribuição voltada a custear a instalação e a operação de câmeras de segurança para monitorar os principais logradouros públicos da área urbana do Município. Diversas entidades religiosas do Município insurgiram-se contra a cobrança alegando que, em razão de sua imunidade tributária, não deveriam pagar tal contribuição. Diante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A instituição de tal contribuição para custear a instalação e operação de câmeras de segurança para monitorar os principais logradouros públicos da área urbana do Município é válida? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Estão corretas as entidades religiosas em sua alegação de que, em razão de sua imunidade tributária, não deveriam pagar tal contribuição? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO TRIBUTÁRIO QUESTÃO 1 – PÁGINA 8",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) É válida. A Constituição Federal de 1988, em sua redação atual dada pela EC nº 132, de 20 de dezembro de 2023, autoriza os Municípios a instituírem contribuição para o custeio, a expansão e a melhoria de sistemas de monitoramento para segurança e preservação de logradouros públicos, cf. o Art. 149-A da CRFB/88.\n\nB) Não estão corretas. A espécie tributária das contribuições não está abarcada pela imunidade tributária restrita aos impostos prevista no Art. 150, inciso VI, alínea b, da CRFB/88 em favor das entidades religiosas e templos de qualquer culto.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "É válida. Os Municípios podem instituir contribuição para o custeio, a expansão e a melhoria de sistemas de monitoramento para segurança e preservação de logradouros públicos (0,55), cf. Art. 149-A da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A espécie tributária das contribuições não está abarcada pela imunidade tributária restrita aos impostos em favor das entidades religiosas e templos de qualquer culto (0,50), prevista no Art. 150, inciso VI, alínea b, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. É válida. Os Municípios podem instituir contribuição para o custeio, a expansão e a\nmelhoria de sistemas de monitoramento para segurança e preservação de logradouros 0,00/0,55/0,65\npúblicos (0,55), cf. Art. 149-A da CRFB/88 (0,10).\nB. Não. A espécie tributária das contribuições não está abarcada pela imunidade tributária\nrestrita aos impostos em favor das entidades religiosas e templos de qualquer culto (0,50), 0,00/0,50/0,60\nprevista no Art. 150, inciso VI, alínea b, da CRFB/88 (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 4/6",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Uma lei federal ordinária do início de 2023, acompanhada de estimativa de impacto financeiro e orçamentário, concedeu benefícios tributários de Imposto sobre Produtos Industrializados (IPI) a contribuintes que não haviam declarado ou que não haviam pago devidamente o tributo referente aos anos de 2021 e 2022. Tais benefícios consistiram em não cobrar multa sobre os valores não declarados nem recolhidos e em conceder desconto de 20% sobre o valor do tributo que foi declarado, mas não chegou a ser recolhido. A lei também beneficiava, com a não cobrança de multa, aqueles atos praticados com dolo pelo sujeito passivo para ocultar a ocorrência dos fatos geradores. Diante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A concessão de desconto de 20% sobre o valor do tributo que foi declarado, mas não chegou a ser recolhido, constitui anistia? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Poderia tal lei determinar a não cobrança de multa para os atos praticados com dolo pelo sujeito passivo para ocultar a ocorrência dos fatos geradores? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO TRIBUTÁRIO QUESTÃO 2 – PÁGINA 10",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Configura remissão parcial, isto é, perdão de parte do valor da dívida, como causa de extinção parcial do crédito tributário (Art. 156, inciso IV, do CTN).\n\nOu Não. A anistia é causa de exclusão do crédito tributário, atingindo apenas penalidades tributárias, conforme Art. 172, ou Art. 175, inciso II ou Art. 180, caput, todos do CTN.\n\nB) Não. A anistia não se aplica aos atos qualificados em lei como crimes ou contravenções e aos que, mesmo sem essa qualificação, sejam praticados com dolo, fraude ou simulação pelo sujeito passivo ou por terceiro em benefício daquele, cf. Art. 180, inciso I, do CTN.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. Configura remissão parcial, isto é, perdão de parte do valor da dívida, como causa de extinção parcial do crédito tributário (0,55) conforme o Art. 156, inciso IV, do CTN. (0,10). Ou Não. A anistia é causa de exclusão do crédito tributário, atingindo apenas penalidades tributárias (0,55), conforme Art. 172, ou Art. 175, inciso II ou Art. 180, caput, todos do CTN. (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A anistia não se aplica aos atos qualificados em lei como crimes ou contravenções e aos que, mesmo sem essa qualificação, sejam praticados com dolo, fraude ou simulação pelo sujeito passivo ou por terceiro em benefício daquele (0,50), cf. Art. 180, inciso I, do CTN (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. Configura remissão parcial, isto é, perdão de parte do valor da dívida, como\ncausa de extinção parcial do crédito tributário (0,55) conforme o Art. 156, inciso IV, do\nCTN. (0,10).\nOu 0,00/0,55/0,65\nNão. A anistia é causa de exclusão do crédito tributário, atingindo apenas penalidades\ntributárias (0,55), conforme Art. 172, ou Art. 175, inciso II ou Art. 180, caput, todos do\nCTN. (0,10).\nB. Não. A anistia não se aplica aos atos qualificados em lei como crimes ou\ncontravenções e aos que, mesmo sem essa qualificação, sejam praticados com dolo,\n0,00/0,50/0,60\nfraude ou simulação pelo sujeito passivo ou por terceiro em benefício daquele (0,50),\ncf. Art. 180, inciso I, do CTN (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 5/6",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "José recebeu em 2025, em seu domicílio, uma notificação para pagar ao Município Alfa o Imposto sobre a Transmissão de Bens Imóveis Inter Vivos (ITBI) referente à aquisição de um imóvel, situado no território municipal, levada a registro no ano de 2018. A cobrança também aplicara uma alíquota maior sobre a transmissão em razão do valor venal do imóvel. O fundamento legal da cobrança indicava que lei complementar do Município Alfa, em vigor desde 1/1/2017, estabelecera o prazo decadencial para a constituição dos créditos tributários municipais em dez anos. A mesma lei complementar determinara que o ITBI nesse Município passaria a ter alíquotas progressivas em razão do valor venal do imóvel. Diante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "José poderia ter sido notificado para pagar tal ITBI no ano de 2025? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Poderia ter sido aplicada a alíquota progressiva na cobrança de tal ITBI feita a José? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO TRIBUTÁRIO QUESTÃO 3 – PÁGINA 12",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. A alteração do prazo decadencial tributário está reservada a lei complementar de caráter nacional, cf. Art. 146, inciso III, alínea b, da CRFB/88 ou Súmula Vinculante 8 do STF, assim a obrigação tributária já foi alcançada pela decadência, visto que o prazo decadencial para constituição do crédito tributário é de apenas cinco anos, cf. Art. 173 do CTN.\n\nB) Não. O ITBI não admite a aplicação de alíquotas progressivas em razão do valor venal do imóvel. Segundo a Súmula 656 do STF, é inconstitucional a lei que estabelece alíquotas progressivas para o imposto de transmissão inter vivos de bens imóveis - ITBI com base no valor venal do imóvel.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A alteração do prazo decadencial tributário está reservada a lei complementar de caráter nacional (0,20), cf. Art. 146, inciso III, alínea b, da CRFB/88 ou Súmula Vinculante 8 do STF (0,10), assim a obrigação tributária já foi alcançada pela decadência, visto que o prazo decadencial para constituição do crédito tributário é de apenas cinco anos (0,20), cf. Art. 173 do CTN (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A lei que estabelece alíquotas progressivas para o imposto de transmissão inter vivos de bens imóveis – ITBI, com base no valor venal do imóvel, é inconstitucional (0,55), segundo a Súmula 656 do STF (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A alteração do prazo decadencial tributário está reservada a lei complementar\nde caráter nacional (0,20), cf. Art. 146, inciso III, alínea b, da CRFB/88 ou Súmula\n0,00/0,20/0,30\nVinculante 8 do STF (0,10), assim a obrigação tributária já foi alcançada pela decadência,\n0,40/0,50/0,60\nvisto que o prazo decadencial para constituição do crédito tributário é de apenas cinco\nanos (0,20), cf. Art. 173 do CTN (0,10).\nB. Não. A lei que estabelece alíquotas progressivas para o imposto de transmissão inter\nvivos de bens imóveis – ITBI, com base no valor venal do imóvel, é inconstitucional 0,00/0,55/0,65\n(0,55), segundo a Súmula 656 do STF (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 6/6",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Um Juiz de Vara Federal de Execuções Fiscais despachou petição inicial de medida cautelar fiscal contra Mário, em 10/7/2024, concedendo liminar para o bloqueio de seus bens em valor que satisfizesse a dívida. A razão da concessão da liminar se deveu ao fato de que Mário, notificado pela Fazenda Nacional para que procedesse ao recolhimento de vultoso crédito fiscal, tentou colocar seus bens em nome de terceiros como forma de esvaziar seu patrimônio capaz de responder pelo débito. A liminar foi cumprida no dia 12/7/2024, por meio do bloqueio dos valores presentes na conta de Mário, com a juntada aos autos do mandado de cumprimento em 15/7/2024. A citação efetiva de Mário ocorreu apenas em 16/7/2024, com a juntada aos autos do mandado de citação devidamente cumprido em 18/7/2024. Diante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Qual o recurso cabível contra a concessão dessa liminar previsto na lei específica sobre medidas cautelares fiscais? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "A partir de quando se conta o prazo para Mário contestar o pedido liminar na medida cautelar fiscal descrita no enunciado? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO TRIBUTÁRIO QUESTÃO 4 – PÁGINA 14",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) O recurso cabível contra a concessão da liminar previsto na lei específica sobre medidas cautelares fiscais é o agravo de instrumento, com base no Art. 7º, parágrafo único, da Lei nº 8.397/1992.\n\nB) O prazo para Mário contestar o pedido na medida cautelar fiscal conta-se da juntada aos autos do mandado da execução da medida cautelar fiscal, quando concedida liminarmente, segundo o Art. 8º, parágrafo único, alínea b, da Lei nº 8.397/1992. Art. 8º. O requerido será citado para, no prazo de quinze dias, contestar o pedido, indicando as provas que pretenda produzir. Parágrafo único. Conta-se o prazo da juntada aos autos do mandado: a) de citação, devidamente cumprido; b) da execução da medida cautelar fiscal, quando concedida liminarmente.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Agravo de instrumento (0,50), de acordo com o Art. 7º, parágrafo único, da Lei nº 8.397/1992 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Da juntada aos autos do mandado da execução da medida cautelar fiscal, quando concedida liminarmente (0,55), segundo o Art. 8º, parágrafo único, alínea b, da Lei nº 8.397/1992 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Agravo de instrumento (0,50), de acordo com o Art. 7º, parágrafo único, da Lei nº\n0,00/0,50/0,60\n8.397/1992 (0,10).\nB. Da juntada aos autos do mandado da execução da medida cautelar fiscal, quando\nconcedida liminarmente (0,55), segundo o Art. 8º, parágrafo único, alínea b, da Lei nº 0,00/0,55/0,65\n8.397/1992 (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 7/6",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

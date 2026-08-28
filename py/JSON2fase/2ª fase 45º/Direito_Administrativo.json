@@ -1,0 +1,390 @@
+{
+  "exam_number": 45,
+  "phase": 2,
+  "area": "Direito Administrativo",
+  "source_provas_file": "45º_provas_Direito_Administrativo.pdf",
+  "source_resposta_file": "45º_resposta_Direito_Administrativo.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "Matheus, servidor público estatutário do Município Alfa, conduzia um veículo oficial de propriedade do referido ente federativo, em velocidade superior à máxima permitida, ocasião em que colidiu com o automóvel de João, que avançara o sinal vermelho de trânsito, no cruzamento das vias de rolamento.\n\nApós ambos os condutores serem encaminhados ao hospital mais próximo, constatou-se que, por sorte, Matheus e João sofreram apenas pequenas escoriações, sendo imediatamente liberados. Registre-se que o automóvel de João, uma grande caminhonete, suportou leves avarias, enquanto o automóvel pertencente ao Município Alfa teve sua perda total reconhecida.\n\nTranscorridos três meses da data do evento danoso, João ingressou com ação indenizatória em face do Município Alfa e de Matheus, em litisconsórcio passivo, requerendo a condenação de ambos ao pagamento de indenização por dano material, além de compensação financeira em razão dos danos morais e estéticos suportados. Afirmou, para tanto, que a responsabilidade civil do Poder Público e de seus agentes é objetiva, à luz da teoria do risco integral, tornando-se prescindível a discussão sobre dolo e culpa. Anexada à petição inicial, a parte autora juntou, apenas, fotografias do seu braço, contendo diminutos cortes. O Juízo da Vara Única da Comarca do Município Alfa, onde a demanda foi distribuída, recebeu a petição inicial, determinando a citação dos requeridos.\n\nDevidamente citado na última sexta-feira, Matheus procurou você para, na qualidade de advogado(a), apresentar a medida judicial de defesa dos seus interesses. Registre-se que não há qualquer interesse das partes da relação processual no emprego dos métodos adequados para a solução consensual de litígios.\n\nDiante das circunstâncias narradas, redija a peça cabível, mediante a apresentação de todos os fundamentos jurídicos pertinentes para a defesa dos interesses de Matheus.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "O(a) examinando(a) deve apresentar uma contestação. A peça deve ser endereçada ao Juízo da Vara Única da Comarca do Município Alfa. Na contestação, devem constar os nomes das partes: Matheus e o Município Alfa são os réus, ocupantes do polo passivo (contestantes), e João é o autor (contestado). O examinando(a) deve indicar a tempestividade da defesa, na forma do Art. 335, caput, do Código de Processo Civil. Preliminarmente, deve ser destacada a ilegitimidade passiva de Matheus, na forma do Art. 337, inciso XI, do Código de Processo Civil. À luz da teoria da dupla garantia, insculpida no Art. 37, §6º, da CRFB/88, e agasalhada pela jurisprudência do Supremo Tribunal Federal, no âmbito do Tema 940, a ação por danos causados por agente público deve ser ajuizada contra o Estado, sendo parte ilegítima para a ação o autor do ato. A fundamentação deve conter os seguintes argumentos: - Muito embora a responsabilidade civil do Estado seja objetiva, a responsabilização dos agentes públicos pressupõe a comprovação do dolo ou da culpa, nos termos do Art. 37, §6º, da CRFB/88. - A responsabilidade civil do Estado, embora objetiva, não está sujeita, como regra geral – aplicável ao caso em análise – à teoria do risco integral, mas sim à teoria do risco administrativo, na forma do Art. 37, §6º, da CRFB/88. - João não se desincumbiu do ônus probatório previsto em lei, juntando aos autos, apenas, fotografias do seu braço, que continha diminutos cortes. Não há, portanto, comprovação efetiva dos danos materiais, estéticos e morais suportados, em contrariedade ao Art. 373, inciso I, do Código de Processo Civil. - A título subsidiário, em caso de condenação, o valor da indenização deverá ser atenuado, já que o evento danoso foi fruto de culpa concorrente/concausa, isto é, das condutas de Matheus, que conduzia o veículo automotor em excesso de velocidade, e de João, que avançou o sinal vermelho de trânsito, no cruzamento das vias de rolamento, nos termos do Art. 945 do Código Civil. Deve-se protestar pela produção de provas, em especial a pericial, para demonstrar a inexistência de qualquer dano estético. Deve-se requerer o acolhimento da preliminar, com a extinção do processo sem a resolução de mérito em relação ao réu Matheus, nos termos do Art. 485, inciso VI, do Código de Processo Civil. Subsidiariamente, o examinando(a) deve postular pela improcedência dos pedidos constantes da petição inicial. Deve-se requerer, ainda, a condenação do autor ao pagamento de honorários advocatícios de sucumbência, na forma do Art. 85, caput, do Código de Processo Civil. Fechamento da peça, com a indicação de local, data, espaço para assinatura do advogado e número de sua inscrição na OAB.\n\nProva Prá-co-Profissional Página 2/8",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "A peça deve ser endereçada ao Juízo da Vara Única da Comarca do Município Alfa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Qualificação das partes",
+        "descricao": "Réus: Matheus (0,10) e Município Alfa (0,10). Autor: João (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Tempestividade",
+        "descricao": "Deve ser indicada a tempestividade da defesa (0,10), na forma do Art. 335, caput, do CPC (0,10). (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "5.1",
+        "categoria": "Preliminar",
+        "descricao": "Ilegitimidade passiva de Matheus (0,40), na forma do Art. 337, inciso XI, do Código de Processo Civil (0,10)",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "5.2",
+        "categoria": "Preliminar",
+        "descricao": "a ação por danos causados por agente público deve ser ajuizada contra o Estado, à luz da teoria da dupla garantia (0,20), decorrente do Art. 37, §6º, da CRFB, ou Tema 940 do Supremo Tribunal Federal. (0,10)",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "6.1",
+        "categoria": "Mérito",
+        "descricao": "A responsabilidade civil do ente público, embora objetiva, não está sujeita à teoria do risco integral (0,20)",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "6.2",
+        "categoria": "Mérito",
+        "descricao": "A responsabilidade civil do ente público é objetiva e sujeita à teoria do risco administrativo (0,20), na forma do Art. 37, §6º, da CRFB/88 (0,10)",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "6.3",
+        "categoria": "Mérito",
+        "descricao": "A responsabilidade civil do ente público admite excludentes e/ou atenuantes, como, no caso, a culpa da vítima, que avançou o sinal (0,20)",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Mérito",
+        "descricao": "A responsabilidade de Matheus, agente público, dar-se-á em ação de regresso do poder público (0,40), e exige demonstração de dolo ou culpa (0,30), na forma do Art. 37, §6°, da CRFB/88 (0,10)",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4,
+          0.5,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Mérito",
+        "descricao": "João não comprovou efetivamente a ocorrência dos danos materiais, estéticos e morais alegados (0,30), pois as fotos juntadas mostram apenas pequenos cortes, insuficientes à caracterização do dano (0,20), em contrariedade ao Art. 373, inciso I, do Código de Processo Civil (0,10).",
+        "pontuacao_maxima": 0.6,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Mérito",
+        "descricao": "A título subsidiário, em caso de condenação, o valor da indenização deverá ser atenuado (0,15), já que o evento danoso foi fruto de culpa concorrente/concausa, isto é, das condutas de Matheus, que conduzia o veículo automotor em excesso de velocidade, e de João, que avançou o sinal vermelho de trânsito, no cruzamento das vias de rolamento (0,25), nos termos do Art. 945 do Código Civil (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.25,
+          0.35,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Pedidos",
+        "descricao": "Protestar pela produção de provas (0,10), em especial a pericial (0,10), para demonstrar a inexistência de qualquer dano.",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Pedidos",
+        "descricao": "Requerer o acolhimento da preliminar (0,20), com a extinção do processo sem a resolução de mérito em relação ao réu Matheus (0,10), nos termos do Art. 485, inciso VI, do Código de Processo Civil (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Subsidiariamente, o examinando(a) deve postular pela improcedência dos pedidos constantes da petição inicial (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Requerer, ainda, a condenação do autor ao pagamento de honorários advocatícios de sucumbência (0,10), na forma do Art. 85, caput, do CPC (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Fechamento",
+        "descricao": "Local, data, advogado e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. A peça deve ser endereçada ao Juízo da Vara Única da Comarca do Município Alfa (0,10). 0,00/0,10\nQualificação das partes\n2. Réus: Matheus (0,10) e Município Alfa (0,10).\n0,00/0,10/0,20/0,30\n3. Autor: João (0,10).\nTempestividade\n4. Deve ser indicada a tempestividade da defesa (0,10), na forma do Art. 335, caput, do CPC\n0,00/0,10/0,20\n(0,10).\nPreliminar\n5. Ilegitimidade passiva de Matheus (0,40), na forma do Art. 337, inciso XI, do Código de\nProcesso Civil (0,10), pois a ação por danos causados por agente público deve ser ajuizada 0,00/0,20/0,30/0,40\ncontra o Estado, à luz da teoria da dupla garantia (0,20), decorrente do Art. 37, §6º, da CRFB, 0,50/0,60/0,70/0,80\nou Tema 940 do Supremo Tribunal Federal. (0,10)\n5.1. Ilegitimidade passiva de Matheus (0,40), na forma do Art. 337, inciso XI, do Código de\n0,00/0,40/0,50\nProcesso Civil (0,10)\n5.2. a ação por danos causados por agente público deve ser ajuizada contra o Estado, à luz da\nteoria da dupla garantia (0,20), decorrente do Art. 37, §6º, da CRFB, ou Tema 940 do Supremo 0,00/0,20/0,30\nTribunal Federal. (0,10)\nMérito\n6. A responsabilidade civil do ente público, embora objetiva, não está sujeita à teoria do risco\nintegral (0,20), mas sim à teoria do risco administrativo (0,20), na forma do Art. 37, §6º, da 0,00/0,20/0,30/0,40/\nCRFB/88 (0,10), admitindo excludentes e/ou atenuantes, como, no caso, a culpa da vítima, que 0,50/0,60/0,70\navançou o sinal (0,20).\n6.1 A responsabilidade civil do ente público, embora objetiva, não está sujeita à teoria do risco\n0,00/0,20\nintegral (0,20)\n6.2. A responsabilidade civil do ente público é objetiva e sujeita à teoria do risco administrativo\n0,00/0,20/0,30\n(0,20), na forma do Art. 37, §6º, da CRFB/88 (0,10)\n6.3 A responsabilidade civil do ente público admite excludentes e/ou atenuantes, como, no\n0,00/0,20\ncaso, a culpa da vítima, que avançou o sinal (0,20)\n7. A responsabilidade de Matheus, agente público, dar-se-á em ação de regresso do poder\n0,00/0,30/0,40/\npúblico (0,40), e exige demonstração de dolo ou culpa (0,30), na forma do Art. 37, §6°, da\n0,50/0,70/0,80\nCRFB/88 (0,10)\n8. João não comprovou efetivamente a ocorrência dos danos materiais, estéticos e morais\nalegados (0,30), pois as fotos juntadas mostram apenas pequenos cortes, insuficientes à 0,00/0,20/0,30/\ncaracterização do dano (0,20), em contrariedade ao Art. 373, inciso I, do Código de Processo 0,40/0,50/0,60\nCivil (0,10).\n9. A título subsidiário, em caso de condenação, o valor da indenização deverá ser atenuado\n(0,15), já que o evento danoso foi fruto de culpa concorrente/concausa, isto é, das condutas\n0,00/0,15/0,25/\nde Matheus, que conduzia o veículo automotor em excesso de velocidade, e de João, que\n0,35/0,40/0,50\navançou o sinal vermelho de trânsito, no cruzamento das vias de rolamento (0,25), nos termos\ndo Art. 945 do Código Civil (0,10).\nProva Prá-co-Profissional Página 3/8\nPedidos\n10. Protestar pela produção de provas (0,10), em especial a pericial (0,10), para demonstrar a\n0,00/0,10/0,20\ninexistência de qualquer dano.\n11. Requerer o acolhimento da preliminar (0,20), com a extinção do processo sem a resolução\n0,00/0,10/0,20\nde mérito em relação ao réu Matheus (0,10), nos termos do Art. 485, inciso VI, do Código de\n0,30/0,40\nProcesso Civil (0,10).\n12. Subsidiariamente, o examinando(a) deve postular pela improcedência dos pedidos\n0,00/0,10\nconstantes da petição inicial (0,10).\n13. Requerer, ainda, a condenação do autor ao pagamento de honorários advocatícios de\n0,00/0,10/0,20\nsucumbência (0,10), na forma do Art. 85, caput, do CPC (0,10).\nFechamento\n14. Local, data, advogado e OAB (0,10). 0,00/0,10\nProva Prá-co-Profissional Página 4/8",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Por não se conformar com determinada penalidade aplicada pelos agentes competentes em âmbito federal, no exercício do poder de polícia, a sociedade empresária Açucena apresentou o recurso administrativo pertinente para impugnar tal sanção, cujo processo administrativo não se submete à legislação específica. Tal recurso foi interposto para a segunda instância administrativa, sendo a ele conferido efeito suspensivo, mas, ao final, foi proferida a decisão pela autoridade detentora da respectiva atribuição, que não acolheu o pleito formulado. Diante de tais circunstâncias, os representantes da mencionada pessoa jurídica procuraram você, como advogado(a), para esclarecer as dúvidas a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A sociedade Açucena poderia, em tese, interpor recurso administrativo para uma terceira instância administrativa? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "O efeito suspensivo do recurso administrativo apresentado pela sociedade Açucena é automático? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. O recurso administrativo tramitará, no máximo, por três instâncias administrativas, consoante Art. 57 da Lei nº 9.784/1999. B) Não. O recurso administrativo não tem efeito suspensivo automático, podendo ser atribuído de ofício ou a pedido, caso haja justo receio de prejuízo de difícil ou incerta reparação, nos termos do Art. 61, caput e parágrafo único, da Lei nº 9.784/1999.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. O recurso administrativo tramitará, no máximo, por três instâncias administrativas (0,50), consoante o Art. 57 da Lei nº 9.784/1999 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. O recurso administrativo não tem efeito suspensivo automático podendo ser atribuído de ofício ou a pedido, caso haja justo receio de prejuízo de difícil ou incerta reparação (0,55), nos termos do Art. 61, caput e parágrafo único, da Lei nº 9.784/1999 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. O recurso administrativo tramitará, no máximo, por três instâncias\n0,00/0,50/0,60\nadministrativas (0,50), consoante o Art. 57 da Lei nº 9.784/1999 (0,10).\nB. Não. O recurso administrativo não tem efeito suspensivo automático podendo ser\natribuído de ofício ou a pedido, caso haja justo receio de prejuízo de difícil ou incerta\n0,00/0,55/0,65\nreparação (0,55), nos termos do Art. 61, caput e parágrafo único, da Lei nº 9.784/1999\n(0,10).\nProva Prá-co-Profissional Página 5/8",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "O Estado Alfa publicou edital de chamamento público, visando à celebração de parceria com determinada organização da sociedade civil, para a consecução de finalidades de interesse público e recíproco, atreladas à promoção e à defesa dos Direitos Humanos. Registre-se que o plano de trabalho é de iniciativa do Estado Alfa e que haverá a transferência de recursos financeiros no bojo da parceria.\n\nNesse contexto, os dirigentes da organização da sociedade civil Beta, interessados em participar do chamamento público, procuraram você para, na qualidade de advogado(a), orientá-los, afirmando e comprovando que a Administração Pública rejeitou as suas contas há dois anos, embora a irregularidade constatada à época tenha sido devidamente sanada, estando os débitos imputados à entidade em situação regular de parcelamento junto ao Poder Público.\n\nDiante dessa situação hipotética, com base na Lei no 13.019/2014, que estabelece o regime jurídico das parcerias entre a Administração Pública e as organizações da sociedade civil, em regime de mútua cooperação para a consecução de finalidades de interesse público e recíproco, responda aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Qual instrumento jurídico o Estado Alfa adotará para celebrar a parceria desejada com determinada organização da sociedade civil? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "A organização da sociedade civil Beta está impedida de celebrar a referida parceria com o Estado Alfa? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) O Estado Alfa empregará o termo de colaboração para celebrar a parceria desejada com determinada organização da sociedade civil, por se tratar do instrumento utilizado para a consecução de finalidades de interesse público e recíproco, propostas pela Administração Pública, e que envolvam a transferência de recursos financeiros, na forma do Art. 2º, inciso VII, ou do Art. 16, caput, ambos da Lei no 13.019/2014. B) Não. A organização da sociedade civil Beta poderá celebrar a parceria com o Estado Alfa, pois as irregularidades que ensejaram a rejeição das contas foram sanadas, sendo certo que os débitos estão em situação regular de parcelamento junto ao Poder Público, nos termos do Art. 39, inciso IV, alínea a, e § 4º, da Lei no 13.019/2014.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "O Estado Alfa empregará o termo de colaboração para celebrar a parceria almejada (0,50), na forma do Art. 2º, inciso VII, ou do Art. 16, caput, ambos da Lei no 13.019/2014 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A organização da sociedade civil Beta poderá celebrar a parceria com o Estado Alfa, pois as irregularidades que ensejaram a rejeição das contas foram sanadas, sendo certo que os débitos estão em situação regular de parcelamento junto ao Poder Público (0,55), nos termos do Art. 39, inciso IV, alínea a, e § 4º, da Lei no 13.019/2014 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. O Estado Alfa empregará o termo de colaboração para celebrar a parceria almejada\n(0,50), na forma do Art. 2º, inciso VII, ou do Art. 16, caput, ambos da Lei no 13.019/2014 0,00/0,50/0,60\n(0,10).\nB. Não. A organização da sociedade civil Beta poderá celebrar a parceria com o Estado\nAlfa, pois as irregularidades que ensejaram a rejeição das contas foram sanadas, sendo\n0,00/0,55/0,65\ncerto que os débitos estão em situação regular de parcelamento junto ao Poder Público\n(0,55), nos termos do Art. 39, inciso IV, alínea a, e § 4º, da Lei no 13.019/2014 (0,10).\nProva Prá-co-Profissional Página 6/8",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Lucas, brasileiro, residente e domiciliado no Distrito Federal, recebeu, em sua casa, uma notificação do Instituto do Patrimônio Histórico e Artístico Nacional (Iphan), para que ele anuísse ou oferecesse impugnação ao tombamento de determinado bem móvel de sua propriedade, cuja conservação é de interesse público, em razão da sua vinculação a fatos memoráveis da história do Brasil. Nesse contexto, Lucas procurou você para, na qualidade de advogado(a), orientá-lo, aduzindo que é contrário ao tombamento da referida coisa. O particular afirmou, ainda, que recebeu convites para levar, em breve, o bem móvel para o exterior, onde seria exposto por poucos dias, no contexto de intercâmbio cultural, durante conferências que realizar-se-ão em Lisboa, Portugal.\n\nDiante dessa situação hipotética e com base na legislação que organiza a proteção do patrimônio histórico e artístico nacional, responda aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A concordância de Lucas é essencial para que o tombamento do bem móvel seja efetivado? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Considerados os convites recebidos por Lucas, em caso de efetivação do tombamento, o bem móvel poderá sair do país para fins de intercâmbio cultural? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Como Lucas é contrário ao tombamento do bem móvel que lhe pertence, o Poder Público poderá efetivar o tombamento compulsório, na forma do Art. 8º ou do Art. 6º, ambos do Decreto-Lei no 25/1937. B) Sim. O bem tombado pode sair do país para fins de intercâmbio cultural, por curto prazo e sem trânsferência de domínio, a juízo do Conselho Consultivo do Patrimônio Cultural do Iphan, nos termos do Art. 14 do Decreto- lei no 25/1937.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. O Poder Público poderá efetivar o tombamento compulsório (0,50), na forma do Art. 8º ou do Art. 6º, ambos do Decreto-Lei no 25/1937 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. Por curto prazo e sem trânsferência de domínio, a juízo do Conselho Consultivo do Patrimônio Cultural do Iphan (0,55), nos termos do Art. 14 do Decreto-Lei no 25/1937 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. O Poder Público poderá efetivar o tombamento compulsório (0,50), na forma do\n0,00/0,50/0,60\nArt. 8º ou do Art. 6º, ambos do Decreto-Lei no 25/1937 (0,10).\nB. Sim. Por curto prazo e sem trânsferência de domínio, a juízo do Conselho Consultivo\ndo Patrimônio Cultural do Iphan (0,55), nos termos do Art. 14 do Decreto-Lei no 25/1937 0,00/0,55/0,65\n(0,10).\nProva Prá-co-Profissional Página 7/8",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "O Município Alfa e o empresário João Santos celebraram contrato administrativo, tendo por objeto o fornecimento de centenas de equipamentos. Provocado, o Tribunal de Contas do Estado passou a analisar a regularidade da avença, verificando que, no processo de contratação direta, consignou-se que seria dispensável a licitação, por se tratar de aquisição de equipamentos que só poderiam ser fornecidos por produtor exclusivo. Apurou-se, ainda, que Caio, agente público responsável pela contratação, e João Santos agiram com dolo, com o objetivo de desviar os recursos públicos por intermédio do contrato. Nesse contexto, Caio e João Santos, preocupados com as repercussões do caso, procuraram você para, na qualidade de advogado (a), orientá-los sobre a matéria.\n\nDiante da situação hipotética, com base na Lei nº 14.133/2021 (Lei de Licitações e Contratos Administrativos), responda aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A contratação firmada entre o Município Alfa e o empresário João Santos, envolvendo a aquisição de equipamentos que só poderiam ser fornecidos por produtor exclusivo, materializa a hipótese de licitação dispensável? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Em razão da contratação direta indevida ocorrida com dolo, quais são as consequências jurídicas para Caio e João Santos? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Caso os equipamentos só possam ser fornecidos por produtor exclusivo, estar-se-á diante de uma situação de inexigibilidade de licitação, nos termos do Art. 74, inciso I, da Lei no 14.133/2021. B) Em se tratando de contratação direta indevida, Caio, agente público responsável pela contratação, e João Santos, contratado, responderão solidariamente pelo dano causado ao erário, sem prejuízo de outras sanções legais cabíveis, na forma do Art. 73 da Lei no 14.133/2021.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. Caso os equipamentos só possam ser fornecidos por produtor exclusivo, estar-se-á diante de uma situação de inexigibilidade de licitação (0,50), nos termos do Art. 74, inciso I, da Lei no 14.133/2021 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Caio e João Santos responderão solidariamente pelo dano causado ao erário, sem prejuízo de outras sanções legais cabíveis (0,55), na forma do Art. 73 da Lei no 14.133/2021 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. Caso os equipamentos só possam ser fornecidos por produtor exclusivo, estar-se-á\ndiante de uma situação de inexigibilidade de licitação (0,50), nos termos do Art. 74, inciso 0,00/0,50/0,60\nI, da Lei no 14.133/2021 (0,10).\nB. Caio e João Santos responderão solidariamente pelo dano causado ao erário, sem\nprejuízo de outras sanções legais cabíveis (0,55), na forma do Art. 73 da Lei no 14.133/2021 0,00/0,55/0,65\n(0,10).\nProva Prá-co-Profissional Página 8/8",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

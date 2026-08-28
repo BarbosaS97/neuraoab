@@ -1,0 +1,384 @@
+{
+  "exam_number": 45,
+  "phase": 2,
+  "area": "Direito Empresarial",
+  "source_provas_file": "45º_provas_Direito_Empresarial.pdf",
+  "source_resposta_file": "45º_resposta_Direito_Empresarial.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "O Sr. Mallet Vivida instituiu, em novembro de 2019, uma sociedade limitada unipessoal, com a denominação de Apiário Pinhão Ltda. A sociedade não tem filiais, possui sede em Ponta Grossa, PR, e é fruto da transformação de uma empresa constituída e exercida por ele em nome individual, em 2015. Em 28 de março de 2024, a sociedade empresária Assaí, Porecatu & Cia. Ltda., em situação regular, sacou duplicata a seu favor, no valor de R$ 25.000,00 (vinte e cinco mil reais), contra Apiário Pinhão Ltda., com vencimento para o dia 22 de setembro de 2024. A duplicata não é escritural, não foi aceita e não foi endossada. Além disso, o credor tem o comprovante de entrega da mercadoria.\n\nA partir do mês de maio de 2024, a sociedade passou a atrasar o pagamento aos credores e a funcionar de modo intermitente, até que, em julho do mesmo ano, cessou as suas atividades. Nunca foi formulado um pedido de recuperação judicial pela sociedade, o estabelecimento está abandonado e não há empregados trabalhando.\n\nComo a administração da sociedade incumbe exclusivamente ao sócio único, de acordo com o documento de constituição arquivado na Junta Comercial, não há representante habilitado para pagar os credores. Há, portanto, a presunção de insolvência de Apiário Pinhão Ltda. diante dos atos praticados pelo Sr. Mallet Vivida, mesmo sem o registro de títulos protestados por falta de pagamento em nome da devedora.\n\nVocê é procurado(a) pela credora, na pessoa de seu representante legal e administrador, Joaquim Assaí. O administrador lhe narra a situação e se mostra preocupado quanto ao recebimento da duplicata vincenda, pois a sociedade devedora está negativada conforme consta dos registros da Serasa; além disso, as fotos e os vídeos do estabelecimento, bem como os depoimentos de vizinhos, comprovam o abandono da atividade pelo sócio único, que não responde às mensagens de texto nem atende às chamadas telefônicas.\n\nNa condição de advogado(a) da credora, redija a peça processual apta a instaurar a execução coletiva dos bens da devedora, considerando que a comarca de Ponta Grossa, PR, possui mais de um Juízo competente para conhecer e julgar a matéria.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "O enunciado informa que deve ser elaborada a peça processual capaz de instaurar a execução coletiva dos bens da devedora. Logo, não são adequadas ações monitórias de execução, ou de procedimento comum, pois nenhuma delas tem esse efeito em caso de procedência do pedido. Por fim, não há processo de recuperação judicial em curso, afastando-se o pedido de convolação desse instituto em falência. Assim, a única peça processual adequada é o requerimento de falência, fundamentado no Art. 94, caput, inciso III, alínea f, da Lei nº 11.101/2005 (prática de ato de falência). I- Endereçamento: a petição deve ser dirigida a um dos Juízos cíveis da comarca de Ponta Grossa/PR. II- Qualificação das partes: A autora, Assaí, Porecatu & Cia. Ltda., deve ser qualificada e representada por seu administrador, Sr. Joaquim Assaí, e a ré, Apiário Pinhão Ltda., qualificada e representada por seu administrador Sr. Mallet Vivida. III- Há legitimidade da autora por ser credora da duplicata, com fundamento no Art. 97, inciso IV, da Lei nº 11.101/2005. IV- Juízo competente: a ação está sendo proposta no lugar da sede e único estabelecimento (Art. 3º da Lei nº 11.101/2005). V- Nos fundamentos jurídicos o(a) examinando(a) deve demonstrar o conhecimento dos aspectos fundamentais relacionados ao pedido de falência, com fundamento no Art. 94, caput, inciso III, (atos de falência), quais sejam:\n\n(i) a inexistência de limite mínimo para a dívida; (ii) a facultatividade do título executivo; (iii) a prescindibilidade do protesto por falta de pagamento; e (iv) a necessidade de ficar comprovado o ato de falência pelas provas apresentadas e pelos fatos imputados ao devedor, associados ao abandono do estabelecimento e à alínea f do inciso III do caput do Art. 94.\n\nFica caracterizado o ato de falência, ensejando a sua decretação pelo fato de o sócio único estar ausente, o estabelecimento estar abandonado, e não haver representante habilitado a pagar os credores. Qualquer credor, independentemente de o título estar vencido e o valor dele, pode requerer a falência, sem a necessidade de protesto.\n\nVI- Nos pedidos, a peça deve incluir: a) a citação da devedora, na pessoa de seu administrador, para apresentar contestação; b) a procedência do pedido para a decretação da falência da sociedade; c) a condenação da ré ao pagamento de custas e honorários advocatícios.\n\nVII- Quanto às provas, a peça deve observar a disposição do Art. 94, § 5º, da Lei nº 11.101/2005, juntando as provas que houver e especificando as que serão produzidas. Deve haver referência expressa como provas anexas:\n\na) a duplicata; b) a certidão de inscrição da credora na Junta Comercial (Art. 97, § 1º, da Lei nº 11.101/2005); c) o comprovante de entrega da mercadoria; d) os vídeos e as imagens do abandono do estabelecimento; e) a negativação da devedora na SERASA; f) o protesto por outras provas, especialmente a testemunhal (depoimentos dos vizinhos sobre o estabelecimento).\n\nVIII- Menção ao valor da causa: R$ 25.000,00 (vinte e cinco mil reais).\n\nIX- Fechamento conforme o edital: Local..., Data..., Advogado(a)..., OAB...",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "Ao Juízo da ___Vara Cível da Comarca de Ponta Grossa, PR (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Qualificação das partes: autora: Assaí, Porecatu & Cia. Ltda., representada por seu administrador, Sr. Joaquim Assaí, qualificação etc. (0,10); ré: Apiário Pinhão Ltda., representada por seu administrador Sr. Mallet Vivida, qualificação etc. (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Há legitimidade da autora por ser credora da duplicata (0,35), com fundamento no Art. 97, inciso IV, da Lei nº 11.101/2005 (0,10).",
+        "pontuacao_maxima": 0.45,
+        "faixas_possiveis": [
+          0.0,
+          0.35,
+          0.45
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Endereçamento",
+        "descricao": "Juízo competente: a ação está sendo proposta no lugar da sede e único estabelecimento (0,30), com fundamento no Art. 3º da Lei nº 11.101/2005 (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Dos Fundamentos Jurídicos",
+        "descricao": "O sócio único da ré abandonou o estabelecimento (0,40) e não há representante habilitado para pagar os credores (0,30).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Dos Fundamentos Jurídicos",
+        "descricao": "Tal conduta caracteriza ato de falência (0,60), com fundamento no Art. 94, caput, inciso III, alínea f, da Lei nº 11.101/2005 (0,10). Obs: o respaldo legal deve estar completo, precisando a tipificação do ato de falência na alínea f.",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Dos pedidos",
+        "descricao": "Citação da devedora, na pessoa de seu administrador, para apresentar a contestação (0,25);",
+        "pontuacao_maxima": 0.25,
+        "faixas_possiveis": [
+          0.0,
+          0.25
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Dos pedidos",
+        "descricao": "Procedência do pedido para decretação da falência da sociedade (0,25);",
+        "pontuacao_maxima": 0.25,
+        "faixas_possiveis": [
+          0.0,
+          0.25
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Dos pedidos",
+        "descricao": "Condenação da ré ao pagamento de custas e honorários advocatícios (0,20). Das provas (deve haver referência expressa como provas anexas):",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Dos pedidos",
+        "descricao": "a duplicata (0,25);",
+        "pontuacao_maxima": 0.25,
+        "faixas_possiveis": [
+          0.0,
+          0.25
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Dos pedidos",
+        "descricao": "a certidão de inscrição da credora na Junta Comercial (0,35);",
+        "pontuacao_maxima": 0.35,
+        "faixas_possiveis": [
+          0.0,
+          0.35
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Dos pedidos",
+        "descricao": "o comprovante de entrega da mercadoria (0,25);",
+        "pontuacao_maxima": 0.25,
+        "faixas_possiveis": [
+          0.0,
+          0.25
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Dos pedidos",
+        "descricao": "os vídeos e as imagens do abandono do estabelecimento (0,25);",
+        "pontuacao_maxima": 0.25,
+        "faixas_possiveis": [
+          0.0,
+          0.25
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Dos pedidos",
+        "descricao": "a negativação da devedora na Serasa (0,25);",
+        "pontuacao_maxima": 0.25,
+        "faixas_possiveis": [
+          0.0,
+          0.25
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Dos pedidos",
+        "descricao": "o protesto por outras provas (0,10), especialmente a testemunhal (0,10);",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Valor da Causa",
+        "descricao": "R$ 25.000,00 (vinte e cinco mil reais) (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "17",
+        "categoria": "Fechamento",
+        "descricao": "Local.... ou Município..., Data..., Advogado(a)..., OAB... (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. Ao Juízo da ___Vara Cível da Comarca de Ponta Grossa, PR (0,10). 0,00/0,10\n2. Qualificação das partes: autora: Assaí, Porecatu & Cia. Ltda., representada por seu\nadministrador, Sr. Joaquim Assaí, qualificação etc. (0,10); ré: Apiário Pinhão Ltda., representada 0,00/0,10/0,20\npor seu administrador Sr. Mallet Vivida, qualificação etc. (0,10).\n3. Há legitimidade da autora por ser credora da duplicata (0,35), com fundamento no Art. 97,\n0,00/0,35/0,45\ninciso IV, da Lei nº 11.101/2005 (0,10).\n4. Juízo competente: a ação está sendo proposta no lugar da sede e único estabelecimento\n0,00/0,30/0,40\n(0,30), com fundamento no Art. 3º da Lei nº 11.101/2005 (0,10).\nDos Fundamentos Jurídicos\n5. O sócio único da ré abandonou o estabelecimento (0,40) e não há representante habilitado\n0,00/0,30/0,40/0,70\npara pagar os credores (0,30).\n6. Tal conduta caracteriza ato de falência (0,60), com fundamento no Art. 94, caput, inciso III,\nalínea f, da Lei nº 11.101/2005 (0,10). 0,00/0,60/0,70\nObs: o respaldo legal deve estar completo, precisando a tipificação do ato de falência na alínea f.\nDos pedidos\n7. Citação da devedora, na pessoa de seu administrador, para apresentar a contestação (0,25); 0,00/0,25\n8. Procedência do pedido para decretação da falência da sociedade (0,25); 0,00/0,25\n9. Condenação da ré ao pagamento de custas e honorários advocatícios (0,20). 0,00/0,20\nDas provas (deve haver referência expressa como provas anexas):\n10. a duplicata (0,25); 0,00/0,25\n11. a certidão de inscrição da credora na Junta Comercial (0,35); 0,00/0,35\n12. o comprovante de entrega da mercadoria (0,25); 0,00/0,25\n13. os vídeos e as imagens do abandono do estabelecimento (0,25); 0,00/0,25\n14. a negativação da devedora na Serasa (0,25); 0,00/0,25\n15. o protesto por outras provas (0,10), especialmente a testemunhal (0,10); 0,00/0,10/0,20\nValor da Causa\n16. R$ 25.000,00 (vinte e cinco mil reais) (0,10). 0,00/0,10\nFechamento\n17. Local.... ou Município..., Data..., Advogado(a)..., OAB... (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "A sociedade empresária Castro & Cia. Ltda. emitiu uma nota promissória não à ordem desprovida de qualquer garantia para o pagamento em favor de instituição financeira. Verificado o inadimplemento do título e promovida a execução no lugar do pagamento, São Paulo, SP, a devedora alegou a falta de requisito para a execução, fundada na nulidade do título em razão de: i) ausência da garantia pessoal do aval, que, segundo a devedora, é requisito essencial para a validade da emissão; ii) a cláusula não à ordem ser proibida por lei, pois a única forma de circulação é por endosso, já que a cláusula à ordem é presumida. Considerados os argumentos apresentados e a legislação aplicável ao título, responda aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É procedente o argumento de nulidade do título, em razão da ausência da garantia pessoal do aval?",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "É procedente o argumento de nulidade do título, em razão da cláusula não à ordem?",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão tem por finalidade verificar o conhecimento do examinando sobre a validade da nota promissória independente de ter ou não o aval como garantia pessoal do pagamento. Espera-se, também, que o examinando seja capaz de conhecer a possibilidade de, por cláusula expressa, a nota promissória ser não à ordem quanto a sua circulação por cláusula expressa inserida pelo emitente. A) Não. A nota promissória pode ser emitida sem a garantia pessoal do aval, que não é requisito de validade do título, por não constar do Art. 75 da LUG (Decreto nº 57.663/1966). B) Não. É válida a nota promissória com cláusula não à ordem desde que seja inserida expressamente no título pelo emitente, de acordo com o Art. 77 c/c o Art. 11 da LUG (Decreto nº 57.663/1966).",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A nota promissória pode ser emitida sem o aval, que não é requisito de validade do título (0,50), de acordo com o Art. 75 da LUG (Decreto nº 57.663/1966) (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. É válida a nota promissória com cláusula não à ordem desde que seja inserida expressamente no título pelo emitente (0,55) , de acordo com o Art. 77 c/c o Art. 11, ambos da LUG (Decreto nº 57.663/1966) (0,10) .",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A nota promissória pode ser emitida sem o aval, que não é requisito de validade\n0,00/0,50/0,60\ndo título (0,50), de acordo com o Art. 75 da LUG (Decreto nº 57.663/1966) (0,10).\nB. Não. É válida a nota promissória com cláusula não à ordem desde que seja inserida\nexpressamente no título pelo emitente (0,55), de acordo com o Art. 77 c/c o Art. 11, 0,00/0,55/0,65\nambos da LUG (Decreto nº 57.663/1966) (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Mariana Campo Belo, credora da sociedade empresária Cerealista Abre Campo Ltda., enquadrada como microempresa, questiona, em Juízo, a legalidade dos atos praticados pelo administrador Espinosa em nome da sociedade. Espinosa sucedeu a sócia Leopoldina Carvalhos, que renunciara ao cargo. Como a sociedade não efetuou a publicação do ato societário, apenas o arquivou na Junta Comercial, Mariana Campo Belo entende que teria havido descumprimento da legislação societária. Em outra ação, o ex-sócio minoritário Martinho Piranga pleiteia a anulação de deliberação tomada por dois sócios, que juntos reúnem 55% do valor do capital social. O referido ato excluiu Martinho Piranga por justa causa da sociedade, sem que tivesse havido prévia deliberação dos sócios em assembleia especialmente convocada para este fim. Sobre o caso narrado, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Em relação à ausência de publicação do ato de renúncia da ex-administradora, o argumento de Mariana Campo Belo é procedente? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A deliberação dos sócios, que excluiu extrajudicialmente o sócio minoritário Martinho Piranga, deve ser invalidada? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão tem por objetivo verificar o conhecimento do examinando sobre a dispensa de publicação de atos societários para as sociedades enquadradas como microempresas e a necessidade de ser realizada uma assembleia de sócios para deliberar sobre a exclusão extrajudicial de um sócio minoritário por justa causa, mesmo que a sociedade seja enquadrada como microempresa. A) Não. Como a sociedade Cerealista Abre Campo Ltda. está enquadrada como microempresa, é dispensável a publicação do ato de renúncia da ex-administradora, com fundamento no Art. 71 da Lei Complementar nº 123/2006. B) Sim. Mesmo que a sociedade seja enquadrada como microempresa, é indispensável a realização de assembleia para deliberar a exclusão de sócio por justa causa, com fundamento no Art. 70, §§ 1º e 2º, da Lei Complementar nº 123/2006.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não . Por estar a sociedade enquadrada como microempresa, é dispensável a publicação do ato de renúncia da ex-administradora (0,55), com fundamento no Art. 71 da Lei Complementar nº 123/2006 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim . Mesmo que a sociedade seja enquadrada como microempresa, é indispensável a realização de assembleia para deliberar a exclusão de um sócio por justa causa (0,50), com fundamento no Art. 70, §§ 1º e 2º, da Lei Complementar nº 123/2006 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. Por estar a sociedade enquadrada como microempresa, é dispensável a\npublicação do ato de renúncia da ex-administradora (0,55), com fundamento no Art. 71 0,00/0,55/0,65\nda Lei Complementar nº 123/2006 (0,10).\nB. Sim. Mesmo que a sociedade seja enquadrada como microempresa, é indispensável a\nrealização de assembleia para deliberar a exclusão de um sócio por justa causa (0,50), 0,00/0,50/0,60\ncom fundamento no Art. 70, §§ 1º e 2º, da Lei Complementar nº 123/2006 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "A Assembleia Geral Ordinária e Extraordinária (AGOE) de Pau d´Arco Navegação Marítima S.A., companhia aberta, teve deferido o processamento de sua recuperação judicial e, antes da aprovação do plano, aprovou a proibição da distribuição de dividendos aos acionistas. A mesma assembleia aprovou a dissolução do Conselho Fiscal, alterando o estatuto social para que ele deixasse de ser um órgão com funcionamento permanente, sob a justificativa da necessidade de eliminar os custos com o órgão e a remuneração dos conselheiros. Ambas as deliberações foram tomadas antes da aprovação do Plano de Recuperação. Um dos acionistas minoritários da companhia, Mário Campos, preocupado com o impacto das medidas tomadas, consultou você, como advogado(a), sobre a legalidade das deliberações da AGOE e formulou as perguntas a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A Assembleia Geral pode privar o acionista do direito essencial de participar dos lucros sociais? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A Assembleia Geral poderá dissolver o Conselho Fiscal para que ele deixe de funcionar como órgão permanente? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão tem por objetivo verificar o conhecimento do examinando sobre os efeitos da recuperação judicial em relação à distribuição de dividendos aos acionistas e em relação ao funcionamento do Conselho Fiscal. A) Sim. A sociedade em recuperação judicial pode, até a aprovação do Plano de Recuperação Judicial, proibir a distribuição de dividendos aos acionistas, por se tratar de uma determinação legal prevista no Art. 6º-A da Lei nº 11.101/2005. B) Não. O Conselho Fiscal nas companhias abertas deve funcionar de modo permanente enquanto durar a fase da recuperação judicial, incluindo o período de cumprimento das obrigações assumidas pelo Plano de Recuperação, de acordo com o Art. 48-A da Lei nº 11.101/2005.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. A sociedade em recuperação judicial pode, até a aprovação do plano de recuperação judicial, proibir a distribuição de dividendos aos acionistas (0,55), de acordo com o Art. 6º-A da Lei nº 11.101/2005 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. O Conselho Fiscal nas companhias abertas deve funcionar de modo permanente enquanto durar a fase da recuperação judicial (0,50), de acordo com o Art. 48-A da Lei nº 11.101/2005 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. A sociedade em recuperação judicial pode, até a aprovação do plano de\nrecuperação judicial, proibir a distribuição de dividendos aos acionistas (0,55), de acordo 0,00/0,55/0,65\ncom o Art. 6º-A da Lei nº 11.101/2005 (0,10).\nB. Não. O Conselho Fiscal nas companhias abertas deve funcionar de modo permanente\nenquanto durar a fase da recuperação judicial (0,50), de acordo com o Art. 48-A da Lei 0,00/0,50/0,60\nnº 11.101/2005 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Em 2022, Irapuan, Marco e Graça constituíram a sociedade Cerâmica e Olaria Abaiara Ltda., tendo o contrato social sido registrado no dia 7 de abril do mesmo ano na Junta Comercial. As quotas de Marco foram integralizadas em dinheiro e as quotas de Irapuan e de Graça foram integralizadas com um imóvel pertencente a ambos em condomínio. O imóvel não foi avaliado antes de sua incorporação ao capital social, limitando-se os sócios a estimar o seu valor e, assim, declará-lo no contrato. Em 2025, a sociedade foi executada pela Companhia Energética de Maranguape S.A. e teve penhorado o referido imóvel. A avaliação judicial constatou que a estimação do imóvel não foi exata, pois o valor de integralização das quotas previsto no contrato social era 30% maior que o valor real. Sobre a hipótese, responda aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Em 2025, o credor poderia exigir o pagamento da diferença entre o valor estimado e o valor real do imóvel? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Marco, tendo integralizado as suas quotas em dinheiro, está isento de responsabilidade? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão tem por objetivo aferir o conhecimento do examinando sobre a solidariedade legal entre todos os sócios da sociedade limitada pela exata estimação dos bens aportados ao capital social a título de integralização de quotas. Também se pretende aferir se o examinando reconhece que tal solidariedade é temporária, extinguindo-se após cinco anos da data do registro da sociedade. A) Sim, até o prazo de cinco anos da data do registro da sociedade (em 07/04/2022), o credor pode exigir o pagamento da diferença entre o valor estimado e o valor real do imóvel, de acordo com o Art. 1.055, § 1º, do Código Civil. B) Não. A responsabilidade pela exata estimação do imóvel é solidária entre os sócios, de modo que todos eles devem prestar a diferença, inclusive o sócio que integralizou as suas quotas em dinheiro, de acordo com o Art. 1.055, § 1º, do Código Civil.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim, até o prazo de cinco anos da data do registro da sociedade (em 07/04/2022), o credor pode exigir o pagamento da diferença entre o valor estimado e o valor real do imóvel (0,50), de acordo com o Art. 1.055, § 1º, do Código Civil (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A responsabilidade pela exata estimação do imóvel é solidária entre os sócios, de modo que todos eles devem prestar a diferença, inclusive o sócio que integralizou as suas quotas em dinheiro (0,55), de acordo com o Art. 1.055, § 1º, do Código Civil (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim, até o prazo de cinco anos da data do registro da sociedade (em 07/04/2022), o\ncredor pode exigir o pagamento da diferença entre o valor estimado e o valor real do 0,00/0,50/0,60\nimóvel (0,50), de acordo com o Art. 1.055, § 1º, do Código Civil (0,10).\nB. Não. A responsabilidade pela exata estimação do imóvel é solidária entre os sócios,\nde modo que todos eles devem prestar a diferença, inclusive o sócio que integralizou as 0,00/0,55/0,65\nsuas quotas em dinheiro (0,55), de acordo com o Art. 1.055, § 1º, do Código Civil (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

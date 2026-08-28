@@ -1,0 +1,373 @@
+{
+  "exam_number": 44,
+  "phase": 2,
+  "area": "Direito Civil",
+  "source_provas_file": "44º_provas_Direito_Civil.pdf",
+  "source_resposta_file": "44º_resposta_Direito_Civil.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "Em 1º/3/2024, Caroline recebeu e-mail da agência de viagens vinculada à companhia aérea Bons Voos S.A., ofertando-lhe uma promoção especial (voucher) com 40% de desconto em qualquer voo (ida e volta) com destino nacional, com validade de 30 dias. Empolgada, decidiu realizar a viagem dos seus sonhos, partindo de sua cidade (Rio de Janeiro, RJ), com destino a Natal, RN, na data de 24/4/2024 (quarta-feira), com retorno em 29/4/2024 (segunda-feira).\n\nContudo, na data de 03/03/2024 (domingo), ao tentar contratar o serviço de transporte aéreo nacional ofertado no site da agência, que se qualifica como representante autônomo da companhia aérea, não logrou êxito em adicionar o voucher com o cupom de desconto, aparecendo a mensagem de “erro desconhecido”.\n\nInconformada, tentou resolver o problema pelos canais de comunicação da agência, com os quais manteve contato por mais de cinco vezes nos quinze dias seguintes, sem sucesso. Os(as) atendentes sempre pediam 48 horas para resolver a questão, prometendo retornar a ligação, o que nunca ocorreu.\n\nCom receio de perder o prazo de validade do voucher, Caroline decide propor ação em face da Bons Voos S.A. (empresa aérea), na data de 20/3/2024 (quarta-feira), com pedido de tutela de urgência antecipada, a fim de compeli-la a emitir os bilhetes aéreos pelo preço ofertado na promoção, requerendo, ao final, a confirmação da tutela antecipada e a condenação da ré ao pagamento de indenização de danos morais pela perda do tempo útil.\n\nEm 21/03/2024 (quinta-feira), o juízo da 22ª Vara Cível da Comarca do Rio de Janeiro/RJ indeferiu o pedido de tutela de urgência antecipada com o argumento de que não vislumbrava, em cognição sumária, a legitimidade da parte ré para figurar no polo passivo da ação, e que o princípio da liberdade de contratar garante à parte ré o direito de opor-se à contratação nos termos pretendidos pela parte autora, considerando que a promoção direcionada à Caroline não obriga a companhia aérea. A decisão não conteve qualquer erro material, omissão, obscuridade ou contradição e foi publicada em 22/03/2024 (sexta-feira). Considere que o processo é eletrônico. Na qualidade de advogado(a) de Caroline, elabore a peça processual cabível para a defesa imediata dos interesses de sua cliente, indicando seus requisitos e fundamentos nos termos da legislação vigente. Desconsidere a existência de feriados ou qualquer outro evento que possa suspender ou interromper os prazos processuais, realizando o protocolo da peça processual no último dia do prazo.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação. DIREITO CIVIL",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A peça processual adequada é o recurso de agravo de instrumento (Art. 1.015 e seguintes do Código de Processo Civil).\n\nA decisão que indeferiu o pedido de urgência antecipada tem natureza de decisão interlocutória, que versa sobre tutela provisória, razão pela qual o recurso cabível é o de agravo de instrumento, na forma do Art. 1.015, inciso I, do CPC.\n\nO recurso deve ser interposto, tempestivamente, perante o Tribunal de Justiça do Rio de Janeiro/RJ, na data de 12/04/2024, considerando o prazo de 15 (quinze) dias úteis, previsto no Art. 1.003, § 5º, do CPC, com a indicação do número dos autos de origem e com o respectivo pedido de antecipação dos efeitos da tutela recursal, na forma do Art. 1.019, inciso I, ambos do CPC, com a confirmação do provimento do recurso ao final.\n\nA petição do recurso deve obedecer aos requisitos formais do Art. 1.016 do CPC, assim como deve ser instruída na forma do Art. 1.017 do CPC, considerando o disposto no § 5º.\n\nAs razões recursais devem apresentar os seguintes argumentos jurídicos para a obtenção da reforma da decisão recorrida:\n\na) A parte ré é legítima para compor o polo passivo da demanda, porque o fornecedor do serviço é solidariamente responsável pelos atos de seus representantes autônomos, na forma do Art. 34 do Código de Defesa do Consumidor.\n\nb) A oferta veiculada à autora obriga o fornecedor que a fizer veicular ou dela se utilizar, integrando o contrato que vier a ser celebrado, na forma do Art. 30 do Código de Defesa do Consumidor.\n\nc) Em razão do efeito vinculante da oferta de consumo, a consumidora tem o direito de, ante a recusa do fornecedor em cumprir a oferta, exigir o cumprimento forçado da obrigação, nos termos da oferta, apresentação ou publicidade, conforme o Art. 35, inciso I, do Código de Defesa do Consumidor.\n\nd) Pelos fundamentos acima expostos, está demonstrada a probabilidade do direito autoral (Art. 300, caput, do CPC).\n\ne) Assim como resta evidente o perigo de dano, considerando a proximidade da viagem programada (Art. 300, caput, do CPC).\n\nf) Estão presentes os pressupostos para a concessão da antecipação da tutela recursal, notadamente a probabilidade de provimento do recurso e o perigo de dano grave, dada a proximidade da data programada para a viagem, considerando que a não concessão da tutela antecipada recursal implicará impossibilidade irrecuperável de obtenção da tutela específica, na forma do Art. 1.019, inciso I, ambos do CPC. Deve-se requerer o conhecimento e o provimento do recurso para que a decisão seja reformada, confirmando-se a tutela de urgência recursal que deferiu o pedido de emissão dos bilhetes com aplicação do desconto ofertado. Ao final, fazer o fechamento da peça, indicando local, data e advogado.\n\nPadrão de Resposta da Prova Prático-Profissional Página 2/6",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "Tribunal de Justiça do Rio de Janeiro (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Qualificação: Indicação da agravante, Caroline (0,10), e da agravada, Bons Voos S/A (0,10). Indicação do nome e endereço completo dos advogados constantes do processo (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Admissibilidade",
+        "descricao": "Demonstrar a tempestividade da peça, oferecida dentro do prazo de 15 dias úteis (0,20), na forma do Art. 1.003, § 5º, do CPC (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Admissibilidade",
+        "descricao": "Indicar a juntada da guia de recolhimento do preparo ou pedido de gratuidade de justiça (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Fatos e Fundamentação Jurídica/Legal",
+        "descricao": "Expor os fatos relevantes à solução da controvérsia (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Fatos e Fundamentação Jurídica/Legal",
+        "descricao": "Demonstrar que a parte ré é legítima para compor o polo passivo da demanda, pois o fornecedor do serviço é solidariamente responsável pelos atos de seus representantes autônomos (0,50), na forma do Art. 34 do Código de Defesa do Consumidor (0,10).",
+        "pontuacao_maxima": 0.6,
+        "faixas_possiveis": [
+          0.0,
+          0.5,
+          0.6
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Fatos e Fundamentação Jurídica/Legal",
+        "descricao": "Argumentar que a oferta veiculada à autora obriga o fornecedor que dela se utiliza (0,50), na forma do Art. 30 do Código de Defesa do Consumidor (0,10).",
+        "pontuacao_maxima": 0.6,
+        "faixas_possiveis": [
+          0.0,
+          0.5,
+          0.6
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fatos e Fundamentação Jurídica/Legal",
+        "descricao": "Apontar que o consumidor tem a faculdade de exigir o cumprimento forçado da obrigação, nos termos da oferta, apresentação ou publicidade (0,50), conforme o Art. 35, inciso I, do Código de Defesa do Consumidor (0,10).",
+        "pontuacao_maxima": 0.6,
+        "faixas_possiveis": [
+          0.0,
+          0.5,
+          0.6
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fatos e Fundamentação Jurídica/Legal",
+        "descricao": "Indicar que estão presentes os requisitos da tutela provisória de urgência (0,15), uma vez que está demonstrada a probabilidade do direito autoral (0,20), bem como existe risco de dano pela não concessão da tutela antecipada (0,20), na forma do Art. 300, caput, do CPC (0,10).",
+        "pontuacao_maxima": 0.65,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.25,
+          0.35,
+          0.45,
+          0.55,
+          0.65
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Antecipação da Tutela Recursal",
+        "descricao": "Estão presentes os pressupostos da antecipação da tutela recursal (0,15), considerando a probabilidade de provimento do recurso (0,20) e o risco de dano, dada a proximidade da data da viagem programada (0,20), na forma do Art. 1.019, inciso I, do CPC ou Art. 995, parágrafo único do CPC (0,10).",
+        "pontuacao_maxima": 0.65,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.25,
+          0.35,
+          0.45,
+          0.55,
+          0.65
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Pedidos",
+        "descricao": "Concessão da antecipação da tutela recursal ou efeito suspensivo ativo (0,30).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Conhecimento e provimento do recurso (0,15), para que seja reformada a decisão de origem, de modo a deferir o pedido de concessão da tutela de urgência antecipada (0,25).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.25,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Intimação da parte agravada para apresentar contrarrazões (0,10), na forma do Art. 1019, inciso II, do CPC (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Fechamento",
+        "descricao": "Local, data (com indicação expressa da data final de 12/04/2024), assinatura e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. Tribunal de Justiça do Rio de Janeiro (0,10). 0,00/0,10\n2. Qualificação: Indicação da agravante, Caroline (0,10), e da agravada, Bons Voos S/A (0,10).\n0,00/0,10/0,20/0,30\nIndicação do nome e endereço completo dos advogados constantes do processo (0,10).\nAdmissibilidade\n3. Demonstrar a tempestividade da peça, oferecida dentro do prazo de 15 dias úteis (0,20), na\n0,00/0,20/0,30\nforma do Art. 1.003, § 5º, do CPC (0,10).\n4. Indicar a juntada da guia de recolhimento do preparo ou pedido de gratuidade de justiça (0,10). 0,00/0,10\nFatos e Fundamentação Jurídica/Legal\n5. Expor os fatos relevantes à solução da controvérsia (0,10). 0,00/0,10\n6. Demonstrar que a parte ré é legítima para compor o polo passivo da demanda, pois o\nfornecedor do serviço é solidariamente responsável pelos atos de seus representantes 0,00/0,50/0,60\nautônomos (0,50), na forma do Art. 34 do Código de Defesa do Consumidor (0,10).\n7. Argumentar que a oferta veiculada à autora obriga o fornecedor que dela se utiliza (0,50), na\n0,00/0,50/0,60\nforma do Art. 30 do Código de Defesa do Consumidor (0,10).\n8. Apontar que o consumidor tem a faculdade de exigir o cumprimento forçado da obrigação,\nnos termos da oferta, apresentação ou publicidade (0,50), conforme o Art. 35, inciso I, do Código 0,00/0,50/0,60\nde Defesa do Consumidor (0,10).\n9. Indicar que estão presentes os requisitos da tutela provisória de urgência (0,15), uma vez que\n0,00/0,15/0,25/0,35\nestá demonstrada a probabilidade do direito autoral (0,20), bem como existe risco de dano pela\n/0,45/0,55/0,65\nnão concessão da tutela antecipada (0,20), na forma do Art. 300, caput, do CPC (0,10).\nAntecipação da Tutela Recursal\n10. Estão presentes os pressupostos da antecipação da tutela recursal (0,15), considerando a\nprobabilidade de provimento do recurso (0,20) e o risco de dano, dada a proximidade da data da 0,00/0,15/0,25/0,35\nviagem programada (0,20), na forma do Art. 1.019, inciso I, do CPC ou Art. 995, parágrafo único /0,45/0,55/0,65\ndo CPC (0,10).\nPedidos\n11. Concessão da antecipação da tutela recursal ou efeito suspensivo ativo (0,30). 0,00/0,30\n12. Conhecimento e provimento do recurso (0,15), para que seja reformada a decisão de origem,\n0,00/0,15/0,25/0,40\nde modo a deferir o pedido de concessão da tutela de urgência antecipada (0,25).\n13. Intimação da parte agravada para apresentar contrarrazões (0,10), na forma do Art. 1019,\n0,00/0,10/0,20\ninciso II, do CPC (0,10).\nFechamento\n14. Local, data (com indicação expressa da data final de 12/04/2024), assinatura e OAB (0,10). 0,00/0,10\nPadrão de Resposta da Prova Prático-Profissional Página 3/6",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Guilherme ingressou com uma ação de execução de título extrajudicial em face de Fabiano, cobrando dívida no valor de R$ 50.000,00 (cinquenta mil reais). Ao longo do processo de execução, houve a penhora de um automóvel, avaliado no valor de R$ 50.000,00 (cinquenta mil reais), fruto de herança recebida por Fabiano quando da conclusão do processo de inventário de seu pai, falecido há dois anos. Guilherme solicitou ao Juízo a adjudicação do bem. Maria, casada com Fabiano há 15 (quinze) anos pelo regime de comunhão parcial de bens, procurou você, advogado(a), e questionou acerca de seus direitos relativamente ao automóvel penhorado. Diante do caso narrado, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O automóvel penhorado entra na comunhão de bens de Maria e Fabiano? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Diante da já manifestada intenção do credor de adjudicar o bem, poderia Maria adjudicá-lo? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO CIVIL",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Tendo em vista que o bem móvel penhorado foi adquirido por Fabiano em razão de herança recebida na constância do casamento, ele estará excluído da comunhão, nos termos do Art. 1.659, inciso I, do CC. B) Sim. Considerando o regime da comunhão parcial de bens, o direito de adjudicação poderá ser exercido pelo cônjuge do executado, que gozará de preferência em caso de igualdade de ofertas, conforme o Art. 876, §5º ou §6º, do CPC.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não, pois foi adquirido por Fabiano em razão de herança recebida na constância do casamento e estará excluído da comunhão (0,50), nos termos do Art. 1.659, inciso I, do CC (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. O direito de adjudicação poderá ser exercido pelo cônjuge do executado (0,25), que gozará de preferência em caso de igualdade de ofertas (0,30), conforme o Art. 876, §5º ou §6º, do CPC (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.35,
+            0.4,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não, pois foi adquirido por Fabiano em razão de herança recebida na constância do\ncasamento e estará excluído da comunhão (0,50), nos termos do Art. 1.659, inciso I, do 0,00/0,50/0,60\nCC (0,10).\nB. Sim. O direito de adjudicação poderá ser exercido pelo cônjuge do executado (0,25),\n0,00/0,25/0,35/\nque gozará de preferência em caso de igualdade de ofertas (0,30), conforme o Art. 876,\n0,40/0,55/0,65\n§5º ou §6º, do CPC (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 4/6",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Maria realizou contrato de seguro para seu carro com a sociedade empresária ABC, que incluía em sua cobertura eventuais danos ao carro e também a terceiros. Seis meses após a celebração do contrato e estando com todos os valores adimplidos, Maria atropelou Joana que, em razão do acidente, ficou três meses sem poder trabalhar como manicure. Sem renda, Joana ingressou com ação de responsabilidade civil em face de Maria que, comovida com a situação, pensou em elaborar um acordo com Joana, a fim de pagar a indenização para, posteriormente, informar e cobrar do segurador. Na dúvida de como concretizar a ideia, Joana procurou você, como advogado(a), para assessorá-la.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Você orientaria Maria a formalizar o acordo com Joana sem anuência expressa da seguradora? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Diante da situação narrada, seria possível Maria se valer de alguma forma de intervenção de terceiros? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO CIVIL QUESTÃO 2 – PÁGINA 10",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Maria não deve formalizar um acordo sem anuência da seguradora, em razão da expressa exigência legal, nos termos do Art. 787, §2º, do CC. B) Sim. Maria poderá denunciar à lide a seguradora, na forma do Art. 787, §3º, do CC ou do Art. 125, inciso II, do CPC, ou da Súmula 537 do STJ.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. Maria não deve formalizar um acordo sem anuência da seguradora, em razão da expressa exigência legal (0,55), nos termos do Art. 787, §2º, do CC (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. Maria poderá denunciar à lide a seguradora (0,50), na forma do Art. 787, §3º, do CC ou do Art. 125, inciso II, do CPC ou da Súmula 537 do STJ. (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. Maria não deve formalizar um acordo sem anuência da seguradora, em\n0,00/0,55/0,65\nrazão da expressa exigência legal (0,55), nos termos do Art. 787, §2º, do CC (0,10).\nB. Sim. Maria poderá denunciar à lide a seguradora (0,50), na forma do Art. 787,\n0,00/0,50/0,60\n§3º, do CC ou do Art. 125, inciso II, do CPC ou da Súmula 537 do STJ. (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 5/6",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Antônio ajuizou ação monitória em face da pessoa jurídica Suinocultura Ltda. Como fundamento, o autor sustentou que prestou diversos serviços de manutenção na sede da sociedade, os quais não foram adimplidos na data do vencimento, a despeito da existência de contrato escrito entre as partes. Após exercer o juízo de admissibilidade da petição inicial, o Juízo determinou a expedição de mandado de pagamento a ser cumprido pela Suinocultura Ltda. Em defesa, veiculada por meio de embargos monitórios, a pessoa jurídica alegou a compensação da dívida, pois Antônio adquiriu 400 kg de carne suína da contratante, cujo respectivo pagamento, no mesmo valor dos serviços que foram prestados, deverá ser feito em janeiro do próximo ano. O Juízo, entretanto, rejeitou os embargos monitórios. Tomando o caso acima como premissa, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A compensação alegada pela Suinocultura Ltda. poderá ser acolhida como defesa? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "É cabível recurso em face da decisão que rejeitou os embargos monitórios? Em caso positivo, qual a espécie recursal cabível? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO CIVIL",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não, porque a compensação pressupõe a existência de dívidas líquidas, vencidas e de coisas fungíveis, nos termos do Art. 369 do Código Civil. A dívida de Antônio, porém, não é vencida. B) Sim. É cabível recurso de apelação, nos termos do Art. 702, § 9º, do Código de Processo Civil.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não, pois a dívida de Antônio não está vencida (0,30). A compensação pressupõe a existência de dívidas líquidas, vencidas e de coisas fungíveis (0,25), nos termos do Art. 369 do Código Civil (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.3,
+            0.4,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. É cabível a apelação (0,50), nos termos do Art. 702, § 9º, do Código de Processo Civil (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não, pois a dívida de Antônio não está vencida (0,30). A compensação pressupõe\na existência de dívidas líquidas, vencidas e de coisas fungíveis (0,25), nos termos do 0,00/0,30/0,40/0,55/0,65\nArt. 369 do Código Civil (0,10).\nB. Sim. É cabível a apelação (0,50), nos termos do Art. 702, § 9º, do Código de\n0,00/0,50/0,60\nProcesso Civil (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 6/6",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Thomaz, com 21 anos de idade, herdou de seu avô materno um apartamento, que ele quer vender, para fazer uma viagem. Thomaz tem diagnóstico de Transtorno do Espectro Autista (TEA). Juliana, mãe dele, não concorda com as ideias do filho. Para evitar que o apartamento seja vendido, Juliana ajuizou ação pedindo a curatela de Thomaz, com base no TEA, bem como a nomeação dela como curadora, com pedido de tutela de urgência, alegando que o negócio, se celebrado, traria grande prejuízo para o filho. A petição inicial foi instruída com o laudo médico do diagnóstico de TEA de Thomaz, no qual se afirma que ele tem o necessário discernimento para gerir seu patrimônio. Na decisão acerca da tutela de urgência, em que foi mencionado o Estatuto da Pessoa com Deficiência, o Juiz reconheceu haver prova documental de deficiência mental, não analisando a informação constante do laudo de que Thomaz teria o necessário discernimento para gerir seu patrimônio, e deferiu o pedido, com a decretação da curatela de Thomaz e a nomeação de Juliana como sua curadora provisória. Sobre o tema, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O deferimento da curatela de Thomaz encontra fundamento na legislação brasileira? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Diante da omissão da decisão sobre a informação constante do laudo, qual a medida cabível para questionar a decisão o quanto antes? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação. DIREITO CIVIL",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. O Estatuto da Pessoa com Deficiência – Lei nº 13.146/2015 – revogou as hipóteses de incapacidade de fato baseadas na condição patológica apenas (Art. 3º do CC), bem como estabeleceu, no Art. 6º, que a deficiência não interfere na plena capacidade civil da pessoa. Assim, diante do laudo afirmando o discernimento, o pedido liminar não encontra fundamento, pois Thomaz, que é maior de dezoito anos, é considerado plenamente capaz. B) A decisão foi omissa, ao desconsiderar a informação, no laudo médico, de que Thomaz tem o necessário discernimento para gerir seu patrimônio. Logo, cabem embargos de declaração com efeito modificativo, para que o próprio Juiz reveja a decisão e sane a omissão, conforme o Art. 1.022, inciso II, do CPC.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. Thomaz é plenamente capaz (0,55), conforme o Art. 3º do CC e/ou o Art. 6º do Estatuto da Pessoa com Deficiência – Lei nº 13.146/2015 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Embargos de declaração (0,30), com pedido de efeito modificativo, diante da omissão quanto à informação constante do laudo que não foi analisada na decisão (0,20), conforme o Art. 1.022, inciso II, do CPC (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. Thomaz é plenamente capaz (0,55), conforme o Art. 3º do CC e/ou o Art. 6º\n0,00/0,55/0,65\ndo Estatuto da Pessoa com Deficiência – Lei nº 13.146/2015 (0,10).\nB. Embargos de declaração (0,30), com pedido de efeito modificativo, diante da\n0,00/0,30/0,40/\nomissão quanto à informação constante do laudo que não foi analisada na decisão\n0,50/0,60\n(0,20), conforme o Art. 1.022, inciso II, do CPC (0,10).\nPadrão de Resposta da Prova Prático-Profissional Página 7/6",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

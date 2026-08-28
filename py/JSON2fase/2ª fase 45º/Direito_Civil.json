@@ -1,0 +1,417 @@
+{
+  "exam_number": 45,
+  "phase": 2,
+  "area": "Direito Civil",
+  "source_provas_file": "45º_provas_Direito_Civil.pdf",
+  "source_resposta_file": "45º_resposta_Direito_Civil.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "Sandoval, residente em Aracaju, SE, 57 anos, solteiro e sem filhos, é portador de grave enfermidade neurológica, que se agravou após ele ter sofrido um acidente de carro, em razão do qual permaneceu em coma por dez dias. Ele foi aposentado por invalidez, recebendo mensalmente o benefício previdenciário do INSS, e contava, ainda, com uma renda decorrente do aluguel de imóvel de sua propriedade.\n\nAtualmente, Sandoval conta apenas com sua mãe, de 89 anos, e com seu irmão Marcelo, de 61 anos. Sua mãe, em virtude da idade avançada, não possui condições de administrar sequer a própria rotina, sendo, inclusive, auxiliada por Marcelo nas tarefas diárias, circunstância que evidencia a impossibilidade de assumir a gestão dos interesses do filho enfermo.\n\nDiante do agravamento da condição clínica de Sandoval, Marcelo buscou uma avaliação médica especializada, cujo laudo atestou que o irmão não possui discernimento para a prática de quaisquer atos da vida civil, em razão de quadro de demência avançada, intensificada pelo acidente automobilístico.\n\nMarcelo ficou preocupado com a administração do patrimônio do irmão e com a necessidade de evitar prejuízos decorrentes do recebimento do benefício previdenciário e dos aluguéis, já que antes do acidente Sandoval ia pessoal e mensalmente receber o benefício e o aluguel, usando esses valores para o seu tramento. Por isso, procurou você, na condição de advogado(a), com a intenção de assumir legalmente a gestão dos bens e interesses de Sandoval o quanto antes, com a finalidade de gerir o patrimônio e evitar os prejuízos oriundos do agravamento da doença.\n\nNa condição de advogado(a) de Marcelo, elabore a peça processual cabível e mais adequada para a tutela integral de todos os pedidos.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "O objetivo da peça processual é a curatela de Sandoval por meio da ação de curatela e/ou de interdição, prevista no Art. 747 do CPC, proposta pelo seu irmão Marcelo, diante da incapacidade da mãe, cuja possibilidade é prevista no inciso II do mesmo artigo. Portanto, a peça cabível é a ação de interdição com pedido de curatela provisória, com fundamento no Art. 747 do CPC e no Art. 1.767 do CC.\n\nA petição deve ser endereçada a uma das Varas Cíveis ou de Família ou de Órfãos, Sucessões e Interditos de Aracaju, SE, no foro do domícilio do réu, nos termos do Art. 46 do CPC. Marcelo será o autor e Sandoval o réu.\n\nA petição deverá conter a justificativa de legitimidade contida no Art. 747, inciso II, justificando que a mãe de Sandoval não pode assumir tal responsabilidade, e que Sandoval é solteiro, afastando a ordem de preferência do Art. 1.775, §3º, do Código Civil.\n\nNos fundamentos deve ser destacado que Sandoval é incapaz, pois não pode exprimir sua vontade para a prática dos atos da vida civil, na forma do Art. 4° Inciso III ou do Art. 1.767, Inciso I, ambos do Código Civil.\n\nDiante da necessidade da urgência para receber o benefício do INSS e do aluguel do inquilino mensalmente, deve ser requerida tutela de urgência para a decretação da interdição ou curatela e nomeação de curador provisório, nos termos do Art. 749 ou do Art. 300, ambos do CPC, demonstrando a presença dos seus requisitos.\n\nCitação do curatelado ou interditando ou requerido para comparecer em Juízo com a finalidade da entrevista, nos termos do Art. 751 do CPC. Comprovação de recolhimento de custas ou pedido de recolhimento posterior.\n\nIntimação do Ministério Público, nos termos do Art. 752, parágrafo primeiro ou Art. 178, inciso II, ambos do CPC. Procedência do pedido para decretar a interdição ou a curatela com a nomeação de curador, nos termos do\n\nArt. 755, inciso I, do CPC.\n\nPor fim, o examinando deve redigir o fechamento, incluindo local, data, assinatura e OAB.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "A peça deve ser endereçada ao Juízo da ___Vara Cível, Família ou Órfãos e Sucessões da Comarca da Aracaju, SE (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Nome e qualificação das partes: Marcelo (autor) (0,10) e Sandoval (réu) (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Fatos",
+        "descricao": "Exposição dos fatos (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Fundamentos Jurídicos",
+        "descricao": "Competência do Foro do domicílio do réu em Aracaju/SE (0,10), nos termos do Art. 46 do CPC (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Fundamentos Jurídicos",
+        "descricao": "Indicar que Marcelo é parte legítima, irmão do réu, em razão da impossibilidade da mãe (0,40), nos termos do Art. 747 do CPC e/ou do Art. 1.775, §3º, do Código Civil. (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Fundamentos Jurídicos",
+        "descricao": "Demonstrar que Sandoval é incapaz (0,50), pois não pode exprimir sua vontade para a prática dos atos da vida civil (0,30), na forma do Art. 4° Inciso III ou do Art. 1.767, Inciso I, ambos do Código Civil (0,10)",
+        "pontuacao_maxima": 0.9,
+        "faixas_possiveis": [
+          0.0,
+          0.5,
+          0.6,
+          0.8,
+          0.9
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Fundamentos Jurídicos",
+        "descricao": "Juntar o laudo médico (0,30) para atender à exigência do Art. 750 do CPC (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fundamentos Jurídicos",
+        "descricao": "Cabimento da Tutela da Urgência para a nomeação de Curador Provisório (0,30), nos termos do Art. 300 ou do Art. 749, ambos do CPC (0,10), demonstrando os requisitos:",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "8.1",
+        "categoria": "Fundamentos Jurídicos",
+        "descricao": "A probabilidade de direito (0,20), ante a incapacidade de Sandoval.",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "8.2",
+        "categoria": "Fundamentos Jurídicos",
+        "descricao": "O perigo de dano (0,20), pois Sandoval recebe o benefício do INSS e/ou aufere renda com aluguel de um imóvel de sua propriedade (0,10)",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Pedidos",
+        "descricao": "Comprovação de recolhimento de custas ou pedido de recolhimento posterior (0,10)",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Pedidos",
+        "descricao": "Concessão da tutela de urgência para a nomeação de curador provisório (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Pedidos",
+        "descricao": "Citação do curatelado ou interditando ou requerido para comparecer em Juízo com a finalidade da entrevista (0,30), nos termos do Art. 751 do CPC (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Intimação do Ministério Público (0,10), nos termos do Art. 752, parágrafo primeiro ou Art. 178, inciso II, ambos do CPC (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Produção de Provas (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "Procedência do pedido para decretar a interdição ou a curatela com a nomeação de curador (0,40), nos termos do Art. 755, inciso I, do CPC (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Fechamento",
+        "descricao": "Valor da Causa... (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Fechamento",
+        "descricao": "Local..., Data..., Advogado(a)..., OAB nº... (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. A peça deve ser endereçada ao Juízo da ___Vara Cível, Família ou Órfãos e Sucessões da\n0,00/0,10\nComarca da Aracaju, SE (0,10).\n2. Nome e qualificação das partes: Marcelo (autor) (0,10) e Sandoval (réu) (0,10). 0,00/0,10/0,20\nFatos\n3. Exposição dos fatos (0,10). 0,00/0,10\nFundamentos Jurídicos\n4. Competência do Foro do domicílio do réu em Aracaju/SE (0,10), nos termos do Art. 46 do\n0,00/0,10/0,20\nCPC (0,10).\n5. Indicar que Marcelo é parte legítima, irmão do réu, em razão da impossibilidade da mãe\n0,00/0,40/0,50\n(0,40), nos termos do Art. 747 do CPC e/ou do Art. 1.775, §3º, do Código Civil. (0,10).\n6. Demonstrar que Sandoval é incapaz (0,50), pois não pode exprimir sua vontade para a\n0,00/0,50/0,60/\nprática dos atos da vida civil (0,30), na forma do Art. 4° Inciso III ou do Art. 1.767, Inciso I,\n0,80/0,90\nambos do Código Civil (0,10)\n7. Juntar o laudo médico (0,30) para atender à exigência do Art. 750 do CPC (0,10). 0,00/0,30/0,40\n8. Cabimento da Tutela da Urgência para a nomeação de Curador Provisório (0,30), nos\n0,00/0,30/0,40\ntermos do Art. 300 ou do Art. 749, ambos do CPC (0,10), demonstrando os requisitos:\n8.1. A probabilidade de direito (0,20), ante a incapacidade de Sandoval. 0,00/0,20\n8.2. O perigo de dano (0,20), pois Sandoval recebe o benefício do INSS e/ou aufere renda\n0,00/0,20/0,30\ncom aluguel de um imóvel de sua propriedade (0,10)\nPedidos\n9. Comprovação de recolhimento de custas ou pedido de recolhimento posterior (0,10) 0,00/0,10\n10. Concessão da tutela de urgência para a nomeação de curador provisório (0,20). 0,00/0,20\n11. Citação do curatelado ou interditando ou requerido para comparecer em Juízo com a\n0,00/0,30/0,40\nfinalidade da entrevista (0,30), nos termos do Art. 751 do CPC (0,10).\n12. Intimação do Ministério Público (0,10), nos termos do Art. 752, parágrafo primeiro ou\n0,00/0,10/0,20\nArt. 178, inciso II, ambos do CPC (0,10).\n13. Produção de Provas (0,10). 0,00/0,10\n14. Procedência do pedido para decretar a interdição ou a curatela com a nomeação de\n0,00/0,40/0,50\ncurador (0,40), nos termos do Art. 755, inciso I, do CPC (0,10).\nFechamento\n15. Valor da Causa... (0,10). 0,00/0,10\n16. Local..., Data..., Advogado(a)..., OAB nº... (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "João nasceu em 1992. Durante anos, Regina, sua mãe, não revelou a João quem era o pai dele. Em 2015, já em seu leito de morte, Regina contou a João que seu pai era Carlos, falecido em 2010. Em 2017, João ajuizou ação de reconhecimento de paternidade post mortem em face de Joana e Karina, filhas de Carlos. O pedido foi julgado procedente, com trânsito em julgado em 2021. Em 2022, João ajuizou ação de petição de herança contra as suas irmãs, requerendo a obtenção de um terço do acervo hereditário deixado por Carlos. Ao efetuar o juízo de admissibilidade da petição inicial, a Juíza da causa julgou o pedido liminarmente improcedente, fundada na ocorrência de prescrição. Tomando o caso acima em conta, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Ao reconhecer a prescrição da pretensão de João, assiste razão ao Juízo? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A prescrição poderia ter sido reconhecida em sede liminar? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, assiste razão ao Juízo. Isso porque a ação de petição de herança prescreve em dez anos, contados da abertura da sucessão, consoante o Art. 205 do Código Civil, B) Sim, é possível o reconhecimento da prescrição em sede de julgamento liminar de improcedência, conforme o Art. 332, § 1º, do Código de Processo Civil.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim, assiste razão ao Juízo. Isso porque a ação de petição de herança prescreve em dez anos (0,20), contados da abertura da sucessão (0,35), consoante o Art. 205 do Código Civil (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim, é possível o reconhecimento da prescrição em sede de julgamento liminar de improcedência (0,50), conforme o Art. 332, § 1º, do Código de Processo Civil (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim, assiste razão ao Juízo. Isso porque a ação de petição de herança prescreve em\n0,00/0,20/0,30/\ndez anos (0,20), contados da abertura da sucessão (0,35), consoante o Art. 205 do\n0,55/0,65\nCódigo Civil (0,10).\nB. Sim, é possível o reconhecimento da prescrição em sede de julgamento liminar de\n0,00/0,50/0,60\nimprocedência (0,50), conforme o Art. 332, § 1º, do Código de Processo Civil (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Lucas e João, sócios de uma sociedade empresária de importação, resolveram dissolver a sociedade e ajustaram as suas obrigações por meio de acordo extrajudicial. Assim, por instrumento particular, assinado por ambos e duas testemunhas, João comprometeu-se a pagar R$ 300.000,00 (trezentos mil reais) a Lucas em cinco parcelas, e Lucas transferiu as suas quotas da sociedade e um terreno avaliado em R$70.000,00 (setenta mil reais), que seria destinado à construção de um depósito para a sociedade. Ocorre que João pagou apenas a primeira parcela, deixando de adimplir as demais. Diante de tal fato e pretendendo cobrar judicialmente o valor devido, Lucas procurou você, como advogado (a) especializado(a), para orientá-lo e responder aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O negócio jurídico firmado por Lucas e João, por instrumento particular, é válido para a cessão das quotas da sociedade e transferência do terreno? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Lucas pode promover a execução direta do acordo? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) A transação é válida para a cessão das quotas, mas não é válida para a transferência do terreno, pois a transferência dos direitos reais sobre imóveis de valor superior a 30 vezes o maior salário mínimo exige escritura pública, nos termos do Art. 108 do CC. B) Sim. O documento particular assinado pelo devedor e duas testemunhas é título executivo extrajudicial, nos termos do Art. 784, inciso III, do CPC.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "A transação é válida para a cessão das quotas, mas não é válida para a transferência do terreno (0,25), porque a transferência de direitos reais sobre imóveis de valor superior a 30 vezes o maior salário mínimo, exige escritura pública (0,30), nos termos do Art. 108 do CC (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.3,
+            0.4,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. O documento particular assinado pelo devedor e duas testemunhas é título executivo extrajudicial (0,50), nos termos do Art. 784, inciso III, do CPC (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. A transação é válida para a cessão das quotas, mas não é válida para a\ntransferência do terreno (0,25), porque a transferência de direitos reais sobre 0,00/0,25/0,30/\nimóveis de valor superior a 30 vezes o maior salário mínimo, exige escritura pública 0,40/0,55/0,65\n(0,30), nos termos do Art. 108 do CC (0,10).\nB. Sim. O documento particular assinado pelo devedor e duas testemunhas é título\n0,00/0,50/0,60\nexecutivo extrajudicial (0,50), nos termos do Art. 784, inciso III, do CPC (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Durante uma festa de aniversário no salão de festas de um condomínio, Caio, uma criança de 10 anos de idade, ao brincar com uma bola, arremessou-a com força e atingiu uma valiosa escultura de vidro que decorava o ambiente, quebrando-a por completo. A escultura era de propriedade de Lúcia, moradora do condomínio, e estava avaliada em R$ 20.000,00 (vinte mil reais). Marcos e Flávia, pais de Caio, são divorciados, mas exercem a guarda compartilhada e ambos detinham o poder familiar sobre o filho na data do ocorrido. Inconformada com o prejuízo, após tentativas frustradas de acordo, Lúcia ajuizou ação de reparação de danos materiais apenas em face de Marcos, o pai do menino. Regularmente citado, Marcos procurou você, como advogado(a), para a elaboração de sua defesa. Considerando a situação hipotética narrada, responda, de forma fundamentada, aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Marcos, pai de Caio, responde civilmente pelo ato de seu filho absolutamente incapaz?",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "É possível que Marcos utilize de meio processual para que Flávia, mãe de Caio, seja obrigada a integrar o polo passivo da relação processual?",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, o pai de Caio, por ter a guarda e o poder familiar, responde objetivamente pelos danos causados pelo seu filho absolutamente incapaz, com base no Art. 932, inciso I, e no Art. 933, ambos do Código Civil. B) Sim, para tanto deverá utilizar do chamamento ao processo, considerando a guarda compartilhada, os genitores respondem solidariamente, com base no Art. 130, inciso III, do Código de Processo Civil.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim, o pai de Caio, por ter a guarda e o poder familiar, responde objetivamente pelos danos causados pelo seu filho absolutamente incapaz (0,55), com base no Art. 932, inciso I, e no Art. 933, ambos do Código Civil (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim, para tanto deverá utilizar do chamamento ao processo (0,30), considerando a guarda compartilhada, os genitores respondem solidariamente (0,20), com base no Art. 130, inciso III, do Código de Processo Civil (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim, o pai de Caio, por ter a guarda e o poder familiar, responde objetivamente\npelos danos causados pelo seu filho absolutamente incapaz (0,55), com base no Art.\n0,00/0,55/0,65\n932, inciso I, e no Art. 933, ambos do Código Civil (0,10).\nB. Sim, para tanto deverá utilizar do chamamento ao processo (0,30), considerando a\n0,00/0,30/0,40/\nguarda compartilhada, os genitores respondem solidariamente (0,20), com base no\nArt. 130, inciso III, do Código de Processo Civil (0,10). 0,50/0,60",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Em uma rua residencial da cidade do Rio de Janeiro, Antônio é proprietário de um imóvel. Para tornar mais agradável a sua moradia, ele resolveu construir um “puxadinho” com terraço e varanda totalmente dentro do seu terreno, limítrofe com o muro divisório do imóvel de Felipe, seu vizinho de fundos, e de Caio, seu vizinho lateral. A obra realizada no terreno de Antônio, situada a menos de 1,5 metro dos terrenos vizinhos, projetou sombra nos imóveis, que perderam a luz do sol pela manhã. Além disso, a obra também invadiu a privacidade da família de Felipe, pois a construção permitiu a visualização direta do interior da sua casa. Após a notificação extrajudicial sobre os danos que a obra teria causado a Felipe, Antônio informou que estava dentro de sua propriedade e, portanto, não mudaria nada do que fora construído. Passados três meses da conclusão da obra, Felipe ajuizou ação em face de Antônio requerendo a sua imediata demolição. Antônio em contestação alegou que estava no uso regular de seu direito e que Caio, vizinho lateral, não havia sido integrado à lide, estando configurada, portanto, uma nulidade na ação proposta por Felipe. Diante do caso narrado, como advogado(a), responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A ação proposta por Felipe, ajuizada depois de três meses da conclusão da obra, encontra fundamento legal? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "O fato de Caio não figurar no polo passivo da ação caracteriza nulidade, como alegado por Antônio? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, pois é vedada a construção de terraços ou varandas a menos de 1,5 metro do imóvel vizinho, na forma do Art. 1.301 do Código Civil, sendo observado o lapso temporal de ano e dia, a contar da conclusão da construção, para o proprietário exigir o desfazimento da obra irregular, conforme o Art.1302, caput, do Código Civil. B) Não, pois Caio não possui legitimidade passiva, tratando a controvérsia da relação jurídica direta entre Felipe e Antônio, nos termos do Art. 17, do CPC.",
+      "criterios": [
+        {
+          "rotulo": "A1",
+          "categoria": null,
+          "descricao": "Sim, pois é vedada a construção de terraços ou varandas a menos de metro e meio do imóvel vizinho (0,20), na forma do Art. 1.301 do Código Civil (0,10),",
+          "pontuacao_maxima": 0.3,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3
+          ]
+        },
+        {
+          "rotulo": "A2",
+          "categoria": null,
+          "descricao": "O lapso temporal é de ano e dia, a contar da conclusão da construção (0,25), conforme o Art.1302, caput, do Código Civil (0,10).",
+          "pontuacao_maxima": 0.35,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.35
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não, pois Caio não possui legitimidade passiva (0,50), tratando a controvérsia da relação jurídica direta entre Felipe e Antônio, nos termos do Art. 17, do CPC. (0,10)",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA1. Sim, pois é vedada a construção de terraços ou varandas a menos de metro e meio do\n0,00/0,20/0,30\nimóvel vizinho (0,20), na forma do Art. 1.301 do Código Civil (0,10),\nA2. O lapso temporal é de ano e dia, a contar da conclusão da construção (0,25), conforme o\n0,00/0,25/0,35\nArt.1302, caput, do Código Civil (0,10).\nB. Não, pois Caio não possui legitimidade passiva (0,50), tratando a controvérsia da\n0,00/0,50/0,60\nrelação jurídica direta entre Felipe e Antônio, nos termos do Art. 17, do CPC. (0,10)",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

@@ -461,6 +461,22 @@ RESPOSTA_NOISE_PATTERNS = [
     re.compile(r"^Prova\s+Pr[áa]tico[- ][Pp]rofissional\s+Aplicada\s+em\s+\d{2}/\d{2}/\d{4}$", re.IGNORECASE),
     re.compile(r"^Prova\s+Pr[áa]tico[- ][Pp]rofissional\s+P[áa]gina\s*\d+\s*/\s*\d+$", re.IGNORECASE),
     re.compile(r"^Aplicada\s+em\s+\d{2}/\d{2}/\d{4}$", re.IGNORECASE),
+    # Layout visto a partir do 43o Exame: cabecalho/rodape "Padrao de Resposta
+    # da Prova Pratico-Profissional - 43o Exame de Ordem Unificado Pagina N de
+    # M" e a linha "AREA: <area>" repetidos em TODA pagina do PDF (nos exames
+    # anteriores essas linhas so apareciam uma vez, no topo). Sem filtrar isso
+    # aqui, o texto injeta essas linhas NO MEIO de paragrafos e ate' de tabelas
+    # de distribuicao dos pontos sempre que a secao atravessa uma quebra de
+    # pagina. A deteccao da area (AREA_RE, usada so' para o aviso de
+    # divergencia com o nome do arquivo) roda ANTES desse filtro, sobre a
+    # primeira pagina crua (ver extract_resposta), entao filtrar toda
+    # ocorrencia de "AREA:" aqui nao perde essa informacao.
+    re.compile(
+        r"^Padr[ãa]o\s+de\s+Resposta\s+da\s+Prova\s+Pr[áa]tico[- ]?[Pp]rofissional\s*[–\-]\s*"
+        r"\d+[oº]?\s*Exame\s+de\s+Ordem\s+Unificado\s+P[áa]gina\s*\d+\s*(?:de|/)\s*\d+$",
+        re.IGNORECASE,
+    ),
+    re.compile(r"^[ÁA]REA:\s*.+$", re.IGNORECASE),
 ]
 
 AREA_RE = re.compile(r"[ÁA]REA:\s*(.+)", re.IGNORECASE)
@@ -474,26 +490,46 @@ PADRAO_QUESTAO_RE = re.compile(
 )
 ENUNCIADO_HEADING_RE = re.compile(r"^ENUNCIADO$", re.IGNORECASE | re.MULTILINE)
 GABARITO_HEADING_RE = re.compile(r"^GABARITO\s+COMENTADO$", re.IGNORECASE | re.MULTILINE)
-DISTRIB_HEADING_RE = re.compile(r"^DISTRIBUI[ÇC][ÃA]O\s+DOS\s+PONTOS$", re.IGNORECASE | re.MULTILINE)
+# Normalmente a peca/questao tem UM padrao de resposta so', com o titulo
+# exato "DISTRIBUICAO DOS PONTOS". Mas algumas pecas de Direito do Trabalho
+# aceitam DUAS pecas processuais distintas como resposta valida para o mesmo
+# enunciado (ex.: 43o Exame — "Excecao de Pre-Executividade" OU "Agravo de
+# Peticao", cada uma com seu proprio "Gabarito Comentado"/"Distribuicao dos
+# Pontos"), e nesse caso o titulo vem com um sufixo identificando a opcao
+# ("Distribuicao dos Pontos – Excecao de Pre-Executividade"). O sufixo
+# opcional e' capturado no grupo 1 para rotular cada alternativa (ver
+# parse_resposta_section).
+DISTRIB_HEADING_RE = re.compile(
+    r"^DISTRIBUI[ÇC][ÃA]O\s+DOS\s+PONTOS(?:\s*[–\-:]\s*(.+))?$", re.IGNORECASE | re.MULTILINE
+)
 
 # Separador entre os valores da "escada" e' normalmente "/", mas aceita
 # tambem espaco (ver comentario em extract_criterios_from_tables sobre
 # escadas longas que quebram em duas linhas fisicas dentro da celula).
 LADDER_RE = re.compile(r"^\d+,\d+(?:[\s/]+\d+,\d+)+$")
 # Rotulo numerico (peca: "1.", "7.1.") ou por letra (questoes: "A.", "B.",
-# tambem visto como "A ." com espaco antes do ponto em alguns PDFs) no
-# inicio de uma celula da tabela de distribuicao dos pontos. Para letras o
-# ponto final e OBRIGATORIO (nao opcional como no numerico) — "A" sozinho e
-# comum demais como artigo do portugues ("a" prova, "a" indisponibilidade) e
-# geraria falsos positivos se aceitassemos "A " sem ponto nenhum como rotulo;
-# ja o espaco ANTES do ponto ("A .") e seguro de aceitar, pois exige de
+# tambem visto como "A ." com espaco antes do ponto, ou "A1."/"A2." quando o
+# subitem da questao tem mais de uma parte, sem espaco nem ponto entre a
+# letra e o digito) no inicio de uma celula da tabela de distribuicao dos
+# pontos. Para letras o ponto final e OBRIGATORIO (nao opcional como no
+# numerico) — "A" sozinho e comum demais como artigo do portugues ("a"
+# prova, "a" indisponibilidade) e geraria falsos positivos se aceitassemos
+# "A " sem ponto nenhum como rotulo; ja' um digito colado ("A1") ou um
+# espaco ANTES do ponto ("A .") sao seguros de aceitar, pois exigem de
 # qualquer forma um ponto de verdade logo em seguida.
 ITEM_LABEL_RE = re.compile(r"^\s*(\d+(?:\.\d+)?)\.?\s+")
-LETTER_LABEL_RE = re.compile(r"^\s*([A-D])\s*\.\s+")
+LETTER_LABEL_RE = re.compile(r"^\s*([A-D]\d*)\s*\.\s+")
+# Visto a partir do 43o Exame (Direito Civil, peca, itens "5A."/"5B."): duas
+# alternativas do MESMO item numerico, letradas em vez de usar o formato
+# pontuado "5.1"/"5.2". O ponto final aqui e' OBRIGATORIO (nao opcional,
+# diferente do numerico puro em ITEM_LABEL_RE) pela mesma razao da
+# LETTER_LABEL_RE: sem ele, um numero de endereco/apartamento no meio do
+# enunciado (ex.: "5A" de "Rua X, no 5A") poderia ser confundido com rotulo.
+NUM_LETTER_LABEL_RE = re.compile(r"^\s*(\d+[A-D])\.\s+")
 
 
 def match_item_label(text: str) -> Optional[re.Match]:
-    return ITEM_LABEL_RE.match(text) or LETTER_LABEL_RE.match(text)
+    return ITEM_LABEL_RE.match(text) or NUM_LETTER_LABEL_RE.match(text) or LETTER_LABEL_RE.match(text)
 
 
 def extract_resposta_page_texts(pdf_path: Path) -> list:
@@ -578,6 +614,40 @@ def _looks_like_categoria(col_item: str, col_pont_compact: str) -> bool:
     )
 
 
+MISSING_COMMA_TOKEN_RE = re.compile(r"^0\d{2}$")
+PROPER_LADDER_TOKEN_RE = re.compile(r"^\d+,\d+$")
+# Variante do mesmo typo, vista a partir do 43o Exame: a virgula some bem em
+# cima do ponto onde a celula quebra em duas linhas fisicas, entao em vez de
+# grudar os dois digitos (o caso "055" acima) ela separa um "0" isolado do
+# resto (ex.: "0,00/0,20/0,35/\n0/45/0,55/0,65" em vez de
+# "...0,35/0,45/0,55/0,65" — o "0" e o "45" saem como dois tokens distintos,
+# porque o \n vira separador de token igual a "/"). So' funde de volta um "0"
+# isolado com o token de 2 digitos seguinte quando nenhum dos dois ja' faz
+# parte de um numero com virgula (evita mexer em "0,20" ou em algo tipo
+# "Art. 45").
+SPLIT_DECIMAL_RE = re.compile(r"(?<![\d,])0[\s/]+(\d{2})(?![\d,])")
+
+
+def _repair_missing_commas(cell: str) -> str:
+    """Corrige erros de digitacao ja vistos no material oficial: um valor da
+    escada sai sem a virgula, seja colado (ex.: "055" em vez de "0,55" em
+    "0,00/055/0,65") seja partido em dois tokens pela quebra de linha da
+    celula (ver SPLIT_DECIMAL_RE acima) — provavelmente um typo/glitch de
+    extracao do proprio PDF original, ja que os demais valores da mesma
+    celula estao corretos. So mexe quando ha pelo menos um outro token na
+    mesma celula ja no formato certo — assim nao arrisca alterar um numero
+    que nao tem nada a ver com pontuacao."""
+    tokens = re.split(r"([\s/]+)", cell)
+    if not any(PROPER_LADDER_TOKEN_RE.match(t) for t in tokens):
+        return cell
+    cell = SPLIT_DECIMAL_RE.sub(r"0,\1", cell)
+    tokens = re.split(r"([\s/]+)", cell)
+    return "".join(
+        f"{t[0]},{t[1:]}" if MISSING_COMMA_TOKEN_RE.match(t) else t
+        for t in tokens
+    )
+
+
 def extract_criterios_from_tables(pdf, page_indices: list) -> tuple:
     """Extrai os criterios de correcao das tabelas com bordas ("DISTRIBUICAO
     DOS PONTOS") nas paginas indicadas. Devolve (criterios, linhas_nao_reconhecidas).
@@ -632,6 +702,7 @@ def extract_criterios_from_tables(pdf, page_indices: list) -> tuple:
                 cells = [(c or "").replace("\n", " ").strip() for c in row]
                 cells = [re.sub(r"\s+", " ", c) for c in cells]
                 cells = [c for c in cells if c]  # descarta celulas vazias (colunas fantasmas)
+                cells = [_repair_missing_commas(c) for c in cells]
 
                 if any(c.upper() in ("ITEM", "PONTUAÇÃO", "PONTUACAO") for c in cells):
                     continue  # cabecalho da tabela
@@ -662,6 +733,23 @@ def extract_criterios_from_tables(pdf, page_indices: list) -> tuple:
 
                 label_m = match_item_label(col_item)
                 if label_m:
+                    # Visto no 43o Exame (Direito Administrativo, peca, itens
+                    # "2."/"3." sob "Qualificacao das partes"): um item com
+                    # rotulo PROPRIO mas SEM escada de pontuacao na sua
+                    # propria linha, logo depois de um item ainda aberto —
+                    # nesse caso a escada inteira do criterio (ex.: autor +
+                    # todos os reus) ja' esta' na linha do item ANTERIOR, e
+                    # este rotulo novo e' so' a continuacao da MESMA
+                    # descricao (mais uma parte do mesmo criterio combinado),
+                    # nao um item novo e distinto — que ficaria pra sempre
+                    # sem pontuacao propria e cairia em linhas_nao_reconhecidas
+                    # se tratado como novo. So' faz isso quando ha um item
+                    # aberto E esta linha nao trouxe sua propria escada;
+                    # quando a linha TEM escada propria, e' sempre um item
+                    # novo de verdade (comportamento original, inalterado).
+                    if current is not None and faixas is None:
+                        current["desc_parts"].append(col_item[label_m.end():].strip())
+                        continue
                     close_current()
                     current = {
                         "rotulo": label_m.group(1),
@@ -740,6 +828,78 @@ def extract_criterios_fallback_regex(section_distrib_text: str) -> tuple:
     return criterios, unrecognized
 
 
+def parse_resposta_section_multi_gabarito(
+    section_text: str, enun_m: Optional[re.Match], gab_matches: list, dist_matches: list, label: str,
+) -> dict:
+    """Trata secoes com MAIS de um gabarito valido para o mesmo enunciado
+    (visto a partir do 43o Exame: a peca de Direito do Trabalho aceita
+    Excecao de Pre-Executividade OU Agravo de Peticao como resposta correta
+    para o mesmo caso) — cada alternativa tem seu proprio par "Gabarito
+    Comentado" + "Distribuicao dos Pontos" ("Distribuicao dos Pontos –
+    Excecao de Pre-Executividade", depois "Distribuicao dos Pontos – Agravo
+    de Peticao"). Mesclar os criterios das duas alternativas numa unica
+    lista estruturada somaria em dobro o valor da peca (cada alternativa ja
+    vale o total sozinha) e faria a correcao por IA cobrar os dois formatos
+    ao mesmo tempo do aluno. Por isso aqui os criterios estruturados ficam
+    vazios de proposito: gabarito_comentado e criterios_texto_bruto reunem
+    as duas alternativas, cada uma claramente rotulada, e a Edge Function de
+    correcao (que sempre usa criterios_texto_bruto como contexto quando nao
+    ha criterios estruturados — ver supabase/functions/corretor-2fase) decide
+    sozinha, pelo texto do aluno, qual alternativa foi escolhida. O
+    valor_total do item continua vindo do proprio enunciado da prova (nao ha
+    soma de criterios para sobrescreve-lo — ver check_point_sum), o que esta'
+    correto aqui: o valor e' o mesmo nas duas alternativas."""
+    log.info(
+        "Secao '%s': %d gabaritos alternativos detectados (a peca aceita mais de um formato de "
+        "resposta) — criterios estruturados desativados para esta secao; a correcao usara so' o "
+        "texto bruto de cada alternativa.",
+        label, max(len(gab_matches), len(dist_matches)),
+    )
+
+    def block_end(matches: list, idx: int) -> int:
+        return matches[idx + 1].start() if idx + 1 < len(matches) else len(section_text)
+
+    gabarito_blocks = []
+    for i, gm in enumerate(gab_matches):
+        rotulo = None
+        if i < len(dist_matches) and dist_matches[i].group(1):
+            rotulo = re.sub(r"\s+", " ", dist_matches[i].group(1)).strip()
+        # O narrativo do gabarito_i termina no inicio da SUA PROPRIA
+        # distribuicao dos pontos (dist_matches[i]), nao no proximo titulo de
+        # gabarito — senao, na ULTIMA alternativa (que nao tem "proximo
+        # gabarito" pra servir de limite), o narrativo engoliria tambem a
+        # tabela de distribuicao dos pontos inteira ate' o fim da secao.
+        end = dist_matches[i].start() if i < len(dist_matches) else block_end(gab_matches, i)
+        texto = flow_paragraphs(section_text[gm.end():end])
+        gabarito_blocks.append({"rotulo": rotulo or f"Opção {i + 1}", "texto": texto})
+
+    distrib_blocks = []
+    for i, dm in enumerate(dist_matches):
+        rotulo = re.sub(r"\s+", " ", dm.group(1)).strip() if dm.group(1) else f"Opção {i + 1}"
+        texto = re.sub(r"\n{2,}", "\n", section_text[dm.end():block_end(gab_matches, i) if i < len(gab_matches) else block_end(dist_matches, i)]).strip()
+        distrib_blocks.append({"rotulo": rotulo, "texto": texto})
+
+    gabarito_comentado = "\n\n".join(
+        f"[[Opção de resposta: {b['rotulo']}]]\n{b['texto']}" for b in gabarito_blocks if b["texto"]
+    ) or None
+    criterios_texto_bruto = "\n\n".join(
+        f"[[Distribuição dos pontos — Opção: {b['rotulo']}]]\n{b['texto']}" for b in distrib_blocks if b["texto"]
+    ) or None
+
+    enunciado_resposta = None
+    if enun_m:
+        end = gab_matches[0].start() if gab_matches else len(section_text)
+        enunciado_resposta = flow_paragraphs(section_text[enun_m.end():end])
+
+    return {
+        "gabarito_comentado": gabarito_comentado,
+        "enunciado_resposta": enunciado_resposta,
+        "criterios": [],
+        "criterios_texto_bruto": criterios_texto_bruto,
+        "linhas_nao_reconhecidas": [],
+    }
+
+
 def parse_resposta_section(
     pdf, pages: list, tipo: str, numero: Optional[int], page_start: int, page_end: int
 ) -> dict:
@@ -747,11 +907,17 @@ def parse_resposta_section(
     delimitada pelas paginas [page_start, page_end)."""
     section_text = "\n".join(pages[page_start:page_end])
 
-    enun_m = ENUNCIADO_HEADING_RE.search(section_text)
-    gab_m = GABARITO_HEADING_RE.search(section_text)
-    dist_m = DISTRIB_HEADING_RE.search(section_text)
-
     label = f"questao {numero}" if tipo == "questao" else "peca profissional"
+
+    enun_m = ENUNCIADO_HEADING_RE.search(section_text)
+    gab_matches = list(GABARITO_HEADING_RE.finditer(section_text))
+    dist_matches = list(DISTRIB_HEADING_RE.finditer(section_text))
+
+    if len(gab_matches) > 1 or len(dist_matches) > 1:
+        return parse_resposta_section_multi_gabarito(section_text, enun_m, gab_matches, dist_matches, label)
+
+    gab_m = gab_matches[0] if gab_matches else None
+    dist_m = dist_matches[0] if dist_matches else None
 
     gabarito_comentado = None
     if gab_m:
@@ -795,11 +961,16 @@ def parse_resposta_section(
 
 def extract_resposta(pdf_path: Path) -> dict:
     with pdfplumber.open(pdf_path) as pdf:
+        # A area e' lida da primeira pagina CRUA (antes do filtro de ruido),
+        # pois RESPOSTA_NOISE_PATTERNS agora descarta toda linha "AREA: ..."
+        # (ela se repete em toda pagina em exames mais recentes — ver
+        # comentario em RESPOSTA_NOISE_PATTERNS).
+        raw_first_page = "\n".join(extract_page_lines(pdf.pages[0])) if pdf.pages else ""
         pages = extract_resposta_page_texts(pdf_path)
         markers = find_resposta_sections(pages)
 
         area = None
-        area_m = AREA_RE.search("\n".join(pages))
+        area_m = AREA_RE.search(raw_first_page)
         if area_m:
             area = re.sub(r"\s+", " ", area_m.group(1)).strip()
 
@@ -827,6 +998,50 @@ POINT_SUM_TOLERANCE = 0.02
 
 
 MIN_DESCRICAO_CHARS = 20
+
+PARENT_ROTULO_RE = re.compile(r"^\d+$")
+
+
+def drop_redundant_parent_criterios(criterios: list) -> list:
+    """Alguns padroes de resposta oficiais escrevem um criterio "pai" (rotulo
+    "5") por extenso, com a SOMA dos pontos das partes, e logo em seguida
+    quebram o mesmo conteudo em sub-criterios "5.1", "5.2" etc — a MESMA
+    argumentacao, uma vez inteira e outra vez fatiada (ex.: 45o Exame,
+    Direito Administrativo, peca, itens 5 e 6: pai vale 0,80, filhos 5.1
+    (0,50) + 5.2 (0,30) tambem somam 0,80). Manter as duas versoes
+    duplicaria a pontuacao na correcao por IA.
+
+    So' descarta o "pai" quando a soma dos filhos IMEDIATAMENTE seguintes
+    ("N.1", "N.2"...) bate com o valor do proprio pai (dentro da tolerancia)
+    — essa e' a assinatura de que e' uma repeticao do mesmo conteudo, e nao
+    dois criterios genuinamente separados e aditivos. Ja se viu o caso
+    contrario no mesmo exame (45o, Direito Civil, peca, item 8: pai vale
+    0,40, mas os filhos 8.1 (0,20) + 8.2 (0,30) somam 0,50 — valores
+    diferentes, ou seja, sao TRES criterios distintos que devem ser
+    somados, nao um pai redundante)."""
+    result = []
+    i = 0
+    while i < len(criterios):
+        c = criterios[i]
+        rotulo = c.rotulo or ""
+        is_parent_candidate = bool(PARENT_ROTULO_RE.match(rotulo))
+
+        children = []
+        if is_parent_candidate:
+            j = i + 1
+            while j < len(criterios) and (criterios[j].rotulo or "").startswith(rotulo + "."):
+                children.append(criterios[j])
+                j += 1
+
+        if children:
+            parent_max = c.pontuacao_maxima or 0
+            children_sum = round(sum(ch.pontuacao_maxima or 0 for ch in children), 2)
+            if abs(parent_max - children_sum) <= POINT_SUM_TOLERANCE:
+                i += 1  # pai redundante: descarta so' ele, mantem os filhos
+                continue
+        result.append(c)
+        i += 1
+    return result
 
 
 def check_point_sum(item: ItemProva, label: str) -> None:
@@ -882,7 +1097,7 @@ def merge_item(prova_item: Optional[ItemProva], resposta_data: Optional[dict], l
 
     if resposta_data:
         prova_item.gabarito_comentado = resposta_data.get("gabarito_comentado")
-        prova_item.criterios = resposta_data.get("criterios", [])
+        prova_item.criterios = drop_redundant_parent_criterios(resposta_data.get("criterios", []))
         prova_item.criterios_texto_bruto = resposta_data.get("criterios_texto_bruto")
         prova_item.linhas_nao_reconhecidas = resposta_data.get("linhas_nao_reconhecidas", [])
         if not prova_item.enunciado and resposta_data.get("enunciado_resposta"):
