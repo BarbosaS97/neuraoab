@@ -859,7 +859,11 @@ select:focus { outline: none; border-color: var(--primary); }
   border: 2px solid var(--border);
   background: var(--card);
   box-shadow: 0 0 0 4px var(--bg);
+  cursor: pointer;
+  transition: border-color 0.12s ease;
 }
+
+.chat-toggle-avatar:hover { border-color: var(--primary); }
 
 .chat-handle {
   width: 36px;

@@ -6,6 +6,7 @@
 
 const chatPanel = document.getElementById("chatPanel");
 const chatToggle = document.getElementById("chatToggle");
+const chatToggleAvatar = document.getElementById("chatToggleAvatar");
 const chatClose = document.getElementById("chatClose");
 const chatMessagesEl = document.getElementById("chatMessages");
 const chatForm = document.getElementById("chatForm");
@@ -46,6 +47,13 @@ function setChatExpanded(expanded) {
 }
 
 chatToggle.addEventListener("click", () => {
+  setChatExpanded(!chatPanel.classList.contains("expanded"));
+});
+
+// O retrato do Dr. Laureano (acima do botao "IA") e' um alvo de clique
+// obvio pro aluno, mesmo sem ser o controle com o aria-label — abre o chat
+// exatamente como o botao ao lado.
+chatToggleAvatar.addEventListener("click", () => {
   setChatExpanded(!chatPanel.classList.contains("expanded"));
 });
 
