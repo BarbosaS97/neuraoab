@@ -19,7 +19,12 @@ const resetScoreBtn = document.getElementById("resetScore");
 const loadingSplash = document.getElementById("loadingSplash");
 const loadingImage = document.getElementById("loadingImage");
 const loadingMessage = document.getElementById("loadingMessage");
+const loadingFeatures = document.getElementById("loadingFeatures");
 const loadingStartBtn = document.getElementById("loadingStartBtn");
+const sidebarHelpBtn = document.getElementById("sidebarHelpBtn");
+const helpOverlay = document.getElementById("helpOverlay");
+const helpCloseBtn = document.getElementById("helpCloseBtn");
+const helpGotItBtn = document.getElementById("helpGotItBtn");
 
 let allQuestions = [];
 let filtered = [];
@@ -66,6 +71,31 @@ brandLogo.addEventListener("click", (ev) => {
 });
 
 setSidebarExpanded(false);
+
+// -------------------------------------------------------------------- Help
+//
+// O mesmo modal ("Como funciona o NeuraOAB") e' aberto tanto pelo botao
+// "Como funciona?" da tela de carregamento (so aparece na primeira vez,
+// depois de "Comecar") quanto pelo "?" no topo do menu (sempre disponivel,
+// pra quem quiser reler a explicacao depois).
+
+function openHelpModal() {
+  helpOverlay.hidden = false;
+}
+
+function closeHelpModal() {
+  helpOverlay.hidden = true;
+}
+
+sidebarHelpBtn.addEventListener("click", openHelpModal);
+helpCloseBtn.addEventListener("click", closeHelpModal);
+helpGotItBtn.addEventListener("click", closeHelpModal);
+helpOverlay.addEventListener("click", (ev) => {
+  if (ev.target === helpOverlay) closeHelpModal();
+});
+document.addEventListener("keydown", (ev) => {
+  if (ev.key === "Escape" && !helpOverlay.hidden) closeHelpModal();
+});
 
 // ------------------------------------------------------------------ Mode
 //
@@ -244,7 +274,7 @@ function refreshFilterOptions(changedKey) {
 function updateResultDisplay() {
   qlistCountEl.textContent = filtered.length;
   filterCountEl.textContent = raffleMode
-    ? `🎲 ${filtered.length} questão(ões) sorteada(s)`
+    ? `${filtered.length} questão(ões) sorteada(s)`
     : `${filtered.length} questão(ões) encontrada(s)`;
 }
 
@@ -725,17 +755,21 @@ async function fetchAllQuestions() {
 }
 
 // Troca a tela de carregamento de "carregando" pra "pronto pra comecar":
-// para a animacao de pulso, atualiza a mensagem e revela o botao. So'
-// desaparece de fato quando o aluno clica nele (nao sozinha), pra dar
-// tempo de ler a orientacao sobre o menu e o chat.
+// para a animacao de pulso, mostra a lista de funcionalidades (so' texto e
+// icones, nada clicavel ali) e revela o botao "Comecar" — o UNICO controle
+// da tela. So' desaparece de fato quando o aluno clica nele (nao sozinha),
+// pra dar tempo de ver o que o app oferece antes de entrar. A explicacao
+// detalhada (modal "Como funciona") fica disponivel depois, pelo "?" do
+// menu — ver openHelpModal.
 let loadingMode = "loading"; // "loading" | "ready" | "error"
 
 function showLoadingReady() {
   loadingMode = "ready";
   loadingSplash.classList.add("ready");
-  loadingMessage.textContent = "Questões carregadas. Abra o menu no lado esquerdo para configurar os " +
-    "parâmetros e abra o chat com Dr. Laureano do lado direito para tirar dúvidas sobre as questões.";
+  loadingMessage.textContent = `${allQuestions.length} questões carregadas. Veja o que você pode fazer:`;
+  loadingFeatures.hidden = false;
   loadingStartBtn.hidden = false;
+  loadingStartBtn.textContent = "Começar";
   loadingStartBtn.focus();
 }
 
