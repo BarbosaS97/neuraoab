@@ -1368,14 +1368,27 @@ select:focus { outline: none; border-color: var(--primary); }
 
   /* A logo do site (".brand-logo") fica FORA da ".app" (irma anterior de
      ".sidebar"/".chat-panel", nao filha) e sempre em position: fixed no
-     canto superior esquerdo — no desktop isso nunca incomoda, mas com o
-     menu/chat agora em tela cheia no mobile, esse canto e' exatamente onde
-     mora o cabecalho de cada painel (avatar/titulo do Dr. Laureano, ou o
-     brasao "E" do menu), e a logo ficava por cima, sobreposta. Some com
-     ela enquanto qualquer um dos dois estiver expandido. */
-  body:has(.sidebar.expanded) .brand-logo,
+     canto superior esquerdo. Com o CHAT em tela cheia no mobile, esse canto
+     e' exatamente onde mora o avatar/titulo do Dr. Laureano, e a logo ficava
+     por cima, sobreposta — por isso some so' nesse caso. O menu (".sidebar")
+     nao tem esse problema: o canto superior esquerdo dele fica vazio (o "?"
+     + avatar da sessao moram no canto OPOSTO, empurrados pra baixo da alca
+     de fechar — ver ".side-brand" acima), entao a logo continua aparecendo
+     normalmente com o menu aberto. */
   body:has(.chat-panel.expanded) .brand-logo {
     display: none;
+  }
+
+  /* A faixa recolhida do chat (22px + friso gradiente) continua no lugar
+     dela, sticky, na borda direita, mesmo com o MENU expandido — e como ela
+     vem DEPOIS do menu no HTML, um empate de z-index (os dois usam 25) faz
+     essa faixa pintar por CIMA do menu em tela cheia, cortando o canto
+     direito de cada linha (ver captura de tela do bug: os dropdowns
+     terminavam antes da borda real da tela). Um z-index maior aqui garante
+     que o menu aberto sempre fique por cima da faixa do chat, nao o
+     contrario. */
+  .sidebar.expanded {
+    z-index: 26;
   }
 }
 
