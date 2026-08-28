@@ -32,7 +32,12 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
-    overflow: hidden;
+    /* overflow-y: auto (nao "hidden") — em telas baixas (celular deitado),
+       o conteudo agora e' alto o suficiente pra nao caber sempre em 100vh;
+       sem rolagem, o botao INICIAR (o UNICO jeito de sair dessa tela)
+       ficaria cortado e inacessivel. Sem barra visivel quando tudo cabe. */
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .landing {
@@ -68,41 +73,122 @@
     animation: riseIn 0.6s ease both;
   }
 
-  .tagline {
+  /* Duas linhas, uma por fase da OAB — cada uma com seu proprio numero
+     (mesma "bolinha" gradiente ja usada pra 1a/2a Fase dentro do app, ver
+     estudos/style.css .phase-num) pra dar peso visual sem precisar de caixas,
+     bordas ou qualquer elemento a mais nessa tela, que e' de proposito bem
+     enxuta. */
+  .phases {
     position: relative;
     margin: 28px 0 0;
-    font-size: clamp(15px, 2.4vw, 19px);
-    color: var(--text-dim);
-    max-width: 480px;
-    line-height: 1.5;
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
     animation: riseIn 0.6s ease 0.1s both;
   }
 
-  .tagline strong { color: var(--text); font-weight: 600; }
+  .phase-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+  }
 
+  .phase-num {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .phase-line p {
+    margin: 0;
+    font-size: clamp(14px, 2.2vw, 17px);
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .phase-line strong { color: var(--text); font-weight: 600; }
+
+  /* Selo de credibilidade: uma linha fina (nao uma borda inteira, pra
+     continuar leve) separando a proposta de valor do "prova social" —
+     curto de proposito, so' pra reforcar confianca antes do CTA. */
+  .divider {
+    position: relative;
+    width: 100%;
+    max-width: 340px;
+    height: 1px;
+    margin: 26px 0 16px;
+    background: linear-gradient(90deg, transparent, var(--text-dim), transparent);
+    opacity: 0.3;
+    animation: riseIn 0.6s ease 0.15s both;
+  }
+
+  .source-note {
+    position: relative;
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.03em;
+    animation: riseIn 0.6s ease 0.18s both;
+  }
+
+  /* Botao unico da tela: pilula com gradiente da marca, sombra em duas
+     camadas (brilho colorido + sombra de profundidade) e um filete de luz
+     no topo (inset), pra parecer solido/premium em vez de uma cor chapada.
+     A seta desliza no hover — reforca "pra frente"/"comecar" sem precisar
+     de mais texto. */
   .cta {
     position: relative;
-    margin-top: 40px;
+    margin-top: 36px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 16px 56px;
+    gap: 10px;
+    padding: 18px 46px;
     border-radius: 999px;
     background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
     color: #fff;
     font-size: 15px;
     font-weight: 700;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     text-decoration: none;
-    box-shadow: 0 16px 40px -16px rgba(122, 24, 252, 0.65);
+    box-shadow:
+      0 18px 40px -14px rgba(122, 24, 252, 0.6),
+      0 6px 18px -6px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28);
     transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
-    animation: riseIn 0.6s ease 0.2s both;
+    animation: riseIn 0.6s ease 0.24s both;
+  }
+
+  .cta-arrow {
+    transition: transform 0.18s ease;
   }
 
   .cta:hover {
     transform: translateY(-2px);
-    filter: brightness(1.08);
-    box-shadow: 0 20px 46px -14px rgba(122, 24, 252, 0.75);
+    filter: brightness(1.1);
+    box-shadow:
+      0 22px 48px -12px rgba(122, 24, 252, 0.7),
+      0 8px 22px -6px rgba(0, 0, 0, 0.55),
+      inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  }
+
+  .cta:hover .cta-arrow {
+    transform: translateX(4px);
+  }
+
+  .cta:active {
+    transform: translateY(0) scale(0.98);
   }
 
   .cta:focus-visible {
@@ -116,7 +202,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .logo, .tagline, .cta { animation: none; }
+    .logo, .phases, .divider, .source-note, .cta { animation: none; }
   }
 </style>
 </head>
@@ -124,8 +210,26 @@
 
 <div class="landing">
   <img class="logo" src="images/logotipo.png" alt="NeuraOAB">
-  <p class="tagline"><strong>+ 2.000 questões oficiais</strong> e Chat IA embutido</p>
-  <a class="cta" href="estudos/index.html">INICIAR</a>
+  <div class="phases">
+    <div class="phase-line">
+      <span class="phase-num">1</span>
+      <p><strong>+ 2.000 questões oficiais</strong> e Chat IA embutido</p>
+    </div>
+    <div class="phase-line">
+      <span class="phase-num">2</span>
+      <p><strong>Simulado de prática com peça e questões discursivas</strong>, correção em
+        segundos pelos critérios oficiais de cada exame</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <p class="source-note">Baseado em dados 100% oficiais da FGV</p>
+  <a class="cta" href="estudos/index.html">
+    INICIAR
+    <svg class="cta-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="4" y1="12" x2="20" y2="12"></line>
+      <polyline points="13 5 20 12 13 19"></polyline>
+    </svg>
+  </a>
 </div>
 
 </body>
