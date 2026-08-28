@@ -23,7 +23,7 @@
   })();
 </script>
 <link rel="stylesheet" href="style.css?v=21">
-<link rel="stylesheet" href="simulado2fase.css?v=10">
+<link rel="stylesheet" href="simulado2fase.css?v=11">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body class="sim2-body">
@@ -62,7 +62,7 @@
 
   <!-- ------------------------------------------------------------ Picker -->
   <section id="viewPicker" class="sim2-view">
-    <div class="sim2-card sim2-picker-card sim2-narrow">
+    <div class="sim2-card sim2-card-accent sim2-picker-card sim2-narrow">
       <img class="sim2-picker-stamp" src="../images/simulado%20de%20pr%C3%A1tica.png" alt="Simulado de Prática — 2ª Fase">
       <p class="sim2-lede">
         Escolha o exame e a área do Direito. Você vai responder a peça
@@ -103,7 +103,7 @@
       <div id="pickerError" class="sim2-err-box" hidden></div>
     </div>
 
-    <div class="sim2-narrow sim2-how">
+    <div class="sim2-how">
       <h2 class="sim2-how-title">Como funciona</h2>
       <div class="sim2-how-grid">
         <div class="sim2-how-step">
@@ -176,7 +176,7 @@
 
   <!-- --------------------------------------------------------- Corrigindo -->
   <section id="viewCorrigindo" class="sim2-view" hidden>
-    <div class="sim2-card sim2-corrigindo-card sim2-narrow">
+    <div class="sim2-card sim2-card-accent sim2-corrigindo-card sim2-narrow">
       <div class="sim2-spinner" aria-hidden="true"></div>
       <h2>Corrigindo sua prova com IA...</h2>
       <p class="sim2-lede">Isso pode levar até um minuto — a IA está avaliando cada item com base no padrão de resposta oficial.</p>
@@ -187,7 +187,7 @@
   <!-- ---------------------------------------------------------- Resultado -->
   <section id="viewResultado" class="sim2-view" hidden>
     <div class="sim2-narrow">
-      <div class="sim2-card sim2-resultado-header">
+      <div class="sim2-card sim2-card-accent sim2-resultado-header">
         <div class="sim2-nota-total">
           <span class="sim2-nota-num" id="notaTotalNum">0,00</span>
           <span class="sim2-nota-den">/ <span id="notaTotalDen">10,00</span></span>

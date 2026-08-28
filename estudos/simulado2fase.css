@@ -18,6 +18,23 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+/* Brilho ambiente nas cores da marca atras de tudo — mesma ideia da landing
+   page (index.html), so' que sutil o bastante pra funcionar tanto no tema
+   escuro quanto no claro, sem virar uma mancha de cor por cima do conteudo.
+   Fixo (nao rola com a pagina), sempre atras (z-index -1). */
+.sim2-body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(226, 80, 10, 0.10), transparent 40%),
+    radial-gradient(circle at 88% 8%, rgba(10, 107, 253, 0.10), transparent 42%),
+    radial-gradient(circle at 50% 92%, rgba(122, 24, 252, 0.08), transparent 45%);
 }
 
 /* Qualquer elemento escondido via JS (elemento.hidden = true) precisa
@@ -38,11 +55,23 @@
   align-items: center;
   gap: 10px 16px;
   padding: 12px 20px;
-  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   background: var(--bg);
   z-index: 30;
+}
+
+/* Fio com o gradiente da marca embaixo do topbar — mesmo tipo de traco de
+   identidade visual usado nas bordas do menu/chat em estudos/index.html,
+   pra amarrar visualmente as duas paginas do app. */
+.sim2-topbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
 }
 
 .sim2-brand { display: flex; align-items: center; text-decoration: none; }
@@ -158,13 +187,13 @@
 .sim2-main {
   flex: 1;
   width: 100%;
-  max-width: 900px;
+  max-width: 1040px;
   margin: 0 auto;
-  padding: 28px 16px 60px;
+  padding: 20px 16px 48px;
 }
 
 @media (min-width: 640px) {
-  .sim2-main { padding: 40px 24px 80px; }
+  .sim2-main { padding: 26px 24px 60px; }
 }
 
 /* Views que nao precisam da largura toda (picker, corrigindo, resultado)
@@ -176,6 +205,8 @@
 }
 
 .sim2-card {
+  position: relative;
+  overflow: hidden;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -186,6 +217,20 @@
 
 @media (min-width: 600px) {
   .sim2-card { padding: 32px 36px; }
+}
+
+/* Faixa com o gradiente da marca no topo — reservada pros cards de
+   "momento principal" da pagina (escolha do caderno, correcao em
+   andamento, resultado), pra dar presenca visual sem repetir em todo
+   card da interface. */
+.sim2-card-accent::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
 }
 
 @keyframes sim2CardIn {
@@ -210,6 +255,7 @@
   max-width: 280px;
   height: auto;
   margin: 0 auto 18px;
+  filter: drop-shadow(0 0 20px rgba(226, 80, 10, 0.25)) drop-shadow(0 0 26px rgba(10, 107, 253, 0.2));
 }
 
 .sim2-picker-form {
@@ -321,7 +367,7 @@
 /* ---------------------------------------------------------- Como funciona */
 
 .sim2-how {
-  margin-top: 28px;
+  margin-top: 36px;
   padding-bottom: 8px;
 }
 
@@ -345,11 +391,22 @@
   .sim2-how-grid { grid-template-columns: 1fr 1fr; }
 }
 
+@media (min-width: 900px) {
+  .sim2-how-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
 .sim2-how-step {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 18px 20px;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sim2-how-step:hover {
+  transform: translateY(-2px);
+  border-color: var(--border);
+  box-shadow: 0 14px 28px -18px rgba(0, 0, 0, 0.45);
 }
 
 .sim2-how-num {
@@ -364,6 +421,16 @@
   font-size: 12px;
   font-weight: 700;
   margin-bottom: 10px;
+}
+
+/* Cada etapa com uma cor propria da marca, em vez do mesmo degrade repetido
+   4 vezes — reforca a identidade visual e ajuda a distinguir os passos de
+   relance. */
+.sim2-how-step:nth-child(1) .sim2-how-num { background: var(--logo-orange); }
+.sim2-how-step:nth-child(2) .sim2-how-num { background: var(--logo-purple); }
+.sim2-how-step:nth-child(3) .sim2-how-num { background: var(--logo-blue); }
+.sim2-how-step:nth-child(4) .sim2-how-num {
+  background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
 }
 
 .sim2-how-step h3 {
