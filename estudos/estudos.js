@@ -761,10 +761,47 @@ async function fetchAllQuestions() {
 // pra dar tempo de ver o que o app oferece antes de entrar. A explicacao
 // detalhada (modal "Como funciona") fica disponivel depois, pelo "?" do
 // menu — ver openHelpModal.
+//
+// So' na PRIMEIRA vez dentro da mesma aba/sessao: cada navegacao entre
+// "estudos/index.html" (1a Fase) e "simulado2fase.html" (2a Fase) e' uma
+// troca de pagina de verdade (nao SPA), entao o JS reinicia do zero e as
+// questoes precisam ser buscadas de novo a cada ida-e-volta — mas ja' vimos
+// a introducao (mascote, lista de funcionalidades, "Comecar") uma vez, e
+// repeti-la a cada volta da 2a Fase seria cansativo. sessionStorage
+// persiste entre paginas na mesma aba (e some quando a aba/navegador
+// fecha), exatamente o escopo certo aqui — nao e' "lembrar pra sempre",
+// so' "nao repetir dentro desta visita".
+const INTRO_SEEN_KEY = "neuraoab-intro-seen";
+
+function hasSeenIntro() {
+  try {
+    return sessionStorage.getItem(INTRO_SEEN_KEY) === "1";
+  } catch {
+    return false; // sessionStorage indisponivel (ex.: aba anonima) -> mostra a introducao normalmente
+  }
+}
+
+function markIntroSeen() {
+  try {
+    sessionStorage.setItem(INTRO_SEEN_KEY, "1");
+  } catch {
+    // sem persistencia -> a introducao volta a aparecer na proxima pagina, sem quebrar nada
+  }
+}
+
 let loadingMode = "loading"; // "loading" | "ready" | "error"
 
 function showLoadingReady() {
   loadingMode = "ready";
+
+  if (hasSeenIntro()) {
+    // Ja' viu a introducao nesta aba (ex.: voltando da 2a Fase) — pula
+    // direto pra tela de questoes, sem repetir a lista de funcionalidades
+    // nem exigir um clique em "Comecar" de novo.
+    loadingSplash.remove();
+    return;
+  }
+
   loadingSplash.classList.add("ready");
   loadingMessage.textContent = `${allQuestions.length} questões carregadas. Veja o que você pode fazer:`;
   loadingFeatures.hidden = false;
@@ -783,8 +820,12 @@ function showLoadingError(message) {
 }
 
 loadingStartBtn.addEventListener("click", () => {
-  if (loadingMode === "error") location.reload();
-  else loadingSplash.remove();
+  if (loadingMode === "error") {
+    location.reload();
+    return;
+  }
+  markIntroSeen();
+  loadingSplash.remove();
 });
 
 async function init() {

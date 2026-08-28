@@ -136,6 +136,20 @@ a { color: inherit; }
   text-align: left;
 }
 
+/* O atributo HTML "hidden" some por padrao via "[hidden] { display: none }"
+   na folha de estilo do navegador — mas essa regra e' de origem "user
+   agent", que perde pra QUALQUER regra de autor com a mesma especificidade
+   (ver o mesmo comentario, mais completo, em ".raffle-overlay[hidden]" e
+   ".help-overlay[hidden]" mais abaixo). Como ".loading-features" ja define
+   "display: flex" acima, precisa dessa regra extra pra "hidden" continuar
+   escondendo a lista de fato — sem ela, a lista aparecia mesmo antes do
+   carregamento terminar, e pior: como showLoadingReady() so' remove esse
+   atributo explicitamente na primeira vez (ver hasSeenIntro em
+   estudos.js), a lista nunca ficava escondida em visitas seguintes. */
+.loading-features[hidden] {
+  display: none;
+}
+
 .loading-feature {
   display: flex;
   align-items: flex-start;
