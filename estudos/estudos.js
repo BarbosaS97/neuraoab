@@ -28,6 +28,7 @@ let selectedAnswer = null;
 let results = new Map(); // question id -> { letter, correct }
 let correctCount = 0;
 let answeredCount = 0;
+let raffleMode = false; // true quando "filtered" veio de um sorteio, nao dos selects de filtro
 
 // ---------------------------------------------------------------- Sidebar
 //
@@ -69,8 +70,9 @@ setSidebarExpanded(false);
 // ------------------------------------------------------------------ Mode
 //
 // Escopado por ".mode-switch" (nao por todos os ".mode-btn" da pagina de
-// uma vez) — sao dois grupos independentes (Pratica/Simulado e
-// Escuro/Claro), cada um com sua propria selecao unica.
+// uma vez) — sao tres grupos independentes (Pratica/Simulado,
+// Escuro/Claro, e Filtros manuais/Sortear aleatorias), cada um com sua
+// propria selecao unica.
 
 document.querySelectorAll(".mode-switch").forEach(group => {
   const buttons = group.querySelectorAll(".mode-btn");
@@ -80,6 +82,7 @@ document.querySelectorAll(".mode-switch").forEach(group => {
       buttons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       if (btn.dataset.themeBtn) applyTheme(btn.dataset.themeBtn);
+      if (btn.dataset.filterMode) setFilterMode(btn.dataset.filterMode);
     });
   });
 });
@@ -235,12 +238,21 @@ function refreshFilterOptions(changedKey) {
     "Todas", (d, c) => (d === "__none__" ? `(sem disciplina) (${c})` : `${d} (${c})`));
 }
 
+// Mostra a contagem de resultados de forma diferente conforme a origem da
+// lista atual: sorteio (ver startRaffle, mais abaixo) ou os selects normais
+// de filtro — o texto deixa claro qual dos dois esta em vigor.
+function updateResultDisplay() {
+  qlistCountEl.textContent = filtered.length;
+  filterCountEl.textContent = raffleMode
+    ? `🎲 ${filtered.length} questão(ões) sorteada(s)`
+    : `${filtered.length} questão(ões) encontrada(s)`;
+}
+
 function applyFilters() {
   const criteria = getFilterCriteria();
   filtered = allQuestions.filter(q => matchesCriteria(q, criteria, null));
 
-  filterCountEl.textContent = `${filtered.length} questão(ões) encontrada(s)`;
-  qlistCountEl.textContent = filtered.length;
+  updateResultDisplay();
   clearFiltersBtn.hidden = criteria.year === "all" && criteria.exam === "all" && criteria.disc === "all";
   currentIndex = 0;
   selectedAnswer = null;
@@ -249,6 +261,7 @@ function applyFilters() {
 }
 
 function clearFilters() {
+  raffleMode = false;
   fYear.value = "all";
   fExam.value = "all";
   fDisc.value = "all";
@@ -258,12 +271,174 @@ function clearFilters() {
 
 Object.keys(FILTER_SELECTS).forEach(key => {
   FILTER_SELECTS[key].addEventListener("change", () => {
+    // Mexer num filtro normal sempre sai do modo sorteio — evita mostrar um
+    // resultado que nao corresponde nem ao sorteio nem aos selects.
+    raffleMode = false;
     refreshFilterOptions(key);
     applyFilters();
   });
 });
 
 clearFiltersBtn.addEventListener("click", clearFilters);
+
+// -------------------------------------------------------------- Raffle
+//
+// "Sortear questões aleatórias": um segundo modo pro menu de questões,
+// alternado pelo switch "Filtros manuais / Sortear aleatórias" (ver
+// setFilterMode) — nao e' um refinamento do filtro atual, e sim um atalho
+// independente: o aluno so escolhe QUANTAS questões quer e de QUAIS
+// materias, e o sistema monta uma lista aleatoria a partir de TODO o banco
+// (sem respeitar ano/exame, de proposito). Ao clicar "Sortear", essa lista
+// substitui "filtered" e os 3 selects do painel de filtros manuais voltam
+// pra "Todos", pra nao parecer que o resultado bateria com uma combinacao
+// especifica deles quando o aluno voltar pro outro painel.
+
+const filterModePanels = {
+  manual: document.querySelector('.filter-mode-panel[data-panel="manual"]'),
+  raffle: document.querySelector('.filter-mode-panel[data-panel="raffle"]'),
+};
+const raffleConfirmBtn = document.getElementById("raffleConfirmBtn");
+const raffleQtyInput = document.getElementById("raffleQty");
+const raffleAvailableHint = document.getElementById("raffleAvailableHint");
+const raffleDiscList = document.getElementById("raffleDiscList");
+const raffleSelectAllBtn = document.getElementById("raffleSelectAll");
+const raffleSelectNoneBtn = document.getElementById("raffleSelectNone");
+
+// Alterna qual painel aparece no lugar de "Filtros" — chamado pelo listener
+// generico de ".mode-switch" (ver secao Mode, no topo do arquivo) quando um
+// botao com "data-filter-mode" e clicado.
+function setFilterMode(mode) {
+  filterModePanels.manual.hidden = mode !== "manual";
+  filterModePanels.raffle.hidden = mode !== "raffle";
+
+  if (mode === "manual") {
+    // Volta a mostrar a lista conforme os selects (raffleMode=false faz
+    // updateResultDisplay usar o texto normal, nao o de sorteio).
+    raffleMode = false;
+    applyFilters();
+  } else {
+    // Reconstroi a lista de materias sempre que entra no painel — barato
+    // (poucas dezenas de checkboxes) e garante que a contagem de cada uma
+    // reflita o banco atual.
+    buildRaffleDisciplineOptions();
+    updateRaffleAvailability();
+  }
+}
+
+// Embaralhamento Fisher-Yates — cada permutacao igualmente provavel (ao
+// contrario de ordenar por Math.random(), que enviesa o resultado).
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Monta a lista de materias (com contagem) sempre que o painel de sorteio
+// e' aberto (ver setFilterMode) — os checkboxes comecam todos marcados,
+// pra quem so quer "sortear de tudo" nao precisar marcar nada manualmente
+// (so' desmarcar o que NAO quiser).
+function buildRaffleDisciplineOptions() {
+  const counts = buildCounts(allQuestions, q => q.discipline || "__none__");
+  const discs = uniqueSorted(allQuestions.map(q => q.discipline || "__none__"))
+    .sort((a, b) => (a === "__none__" ? 1 : b === "__none__" ? -1 : 0));
+
+  const previouslyChecked = new Set(
+    Array.from(raffleDiscList.querySelectorAll("input:checked")).map(cb => cb.value)
+  );
+  const isFirstBuild = raffleDiscList.children.length === 0;
+
+  raffleDiscList.innerHTML = "";
+  discs.forEach(d => {
+    const label = document.createElement("label");
+    label.className = "raffle-disc-item";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.value = d;
+    checkbox.checked = isFirstBuild ? true : previouslyChecked.has(d);
+    checkbox.addEventListener("change", updateRaffleAvailability);
+
+    const text = document.createElement("span");
+    text.className = "raffle-disc-name";
+    text.textContent = d === "__none__" ? "(sem disciplina)" : d;
+
+    const count = document.createElement("span");
+    count.className = "raffle-disc-count";
+    count.textContent = counts.get(d) || 0;
+
+    label.append(checkbox, text, count);
+    raffleDiscList.appendChild(label);
+  });
+}
+
+function getSelectedRaffleDiscs() {
+  return Array.from(raffleDiscList.querySelectorAll("input:checked")).map(cb => cb.value);
+}
+
+// Atualiza, em tempo real, quantas questões existem pra selecao atual de
+// materias — e trava a quantidade nesse teto, pra o aluno nunca conseguir
+// pedir mais questões do que existem (nada de erro so' depois de clicar
+// "Sortear").
+function updateRaffleAvailability() {
+  const selected = getSelectedRaffleDiscs();
+  const available = selected.length === 0
+    ? 0
+    : allQuestions.filter(q => selected.includes(q.discipline || "__none__")).length;
+
+  raffleAvailableHint.textContent = available === 0
+    ? "Nenhuma questão disponível com essa seleção."
+    : `${available} questão(ões) disponível(eis) com essa seleção.`;
+
+  raffleQtyInput.max = String(Math.max(available, 1));
+  if (available > 0 && Number(raffleQtyInput.value) > available) {
+    raffleQtyInput.value = String(available);
+  }
+  raffleConfirmBtn.disabled = available === 0;
+}
+
+function startRaffle(selectedDiscs, quantity) {
+  raffleMode = true;
+
+  // Volta os 3 selects pra "Todos": o sorteio ignora ano/exame de proposito
+  // (ver comentario no topo da secao), entao deixa-los com um valor
+  // especifico seria enganoso — pareceria que o resultado bate com aquela
+  // combinacao quando o aluno voltar pro painel de filtros manuais, quando
+  // na verdade veio de todo o banco.
+  fYear.value = "all";
+  fExam.value = "all";
+  fDisc.value = "all";
+  refreshFilterOptions(null);
+
+  const pool = allQuestions.filter(q => selectedDiscs.includes(q.discipline || "__none__"));
+  filtered = shuffle(pool).slice(0, quantity);
+
+  currentIndex = 0;
+  selectedAnswer = null;
+  updateResultDisplay();
+  renderList();
+  renderQuestion();
+}
+
+raffleSelectAllBtn.addEventListener("click", () => {
+  raffleDiscList.querySelectorAll("input").forEach(cb => { cb.checked = true; });
+  updateRaffleAvailability();
+});
+raffleSelectNoneBtn.addEventListener("click", () => {
+  raffleDiscList.querySelectorAll("input").forEach(cb => { cb.checked = false; });
+  updateRaffleAvailability();
+});
+
+raffleConfirmBtn.addEventListener("click", () => {
+  const selected = getSelectedRaffleDiscs();
+  const available = Number(raffleQtyInput.max) || 0;
+  if (selected.length === 0 || available === 0) return;
+
+  const quantity = Math.min(Math.max(1, parseInt(raffleQtyInput.value, 10) || 1), available);
+  startRaffle(selected, quantity);
+});
 
 // ------------------------------------------------------------- Question list
 

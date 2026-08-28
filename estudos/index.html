@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=21">
+<link rel="stylesheet" href="style.css?v=23">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
@@ -65,6 +65,14 @@
       </nav>
 
       <section class="side-section">
+        <h2 class="side-title">Questões</h2>
+        <div class="mode-switch filter-mode-switch">
+          <button class="mode-btn active" data-filter-mode="manual" type="button">Filtros manuais</button>
+          <button class="mode-btn" data-filter-mode="raffle" type="button">Sortear aleatórias</button>
+        </div>
+      </section>
+
+      <section class="side-section filter-mode-panel" data-panel="manual">
         <h2 class="side-title">Filtros</h2>
 
         <div class="field">
@@ -84,6 +92,29 @@
 
         <p class="result-count" id="filterCount">Carregando...</p>
         <button type="button" id="clearFilters" class="btn-ghost clear-filters" hidden>Limpar filtros</button>
+      </section>
+
+      <section class="side-section filter-mode-panel" data-panel="raffle" hidden>
+        <h2 class="side-title">Sortear questões aleatórias</h2>
+
+        <div class="field">
+          <label for="raffleQty">Quantidade de questões</label>
+          <input type="number" id="raffleQty" min="1" value="10" inputmode="numeric">
+        </div>
+
+        <div class="raffle-disc-field">
+          <div class="raffle-disc-label-row">
+            <label>Matérias</label>
+            <div class="raffle-disc-quick-actions">
+              <button type="button" id="raffleSelectAll" class="btn-link">Todas</button>
+              <button type="button" id="raffleSelectNone" class="btn-link">Nenhuma</button>
+            </div>
+          </div>
+          <div class="raffle-disc-list" id="raffleDiscList"></div>
+        </div>
+
+        <p class="raffle-hint" id="raffleAvailableHint">0 questão(ões) disponível(eis) com essa seleção.</p>
+        <button type="button" id="raffleConfirmBtn" class="btn-primary raffle-confirm-btn">🎲 Sortear</button>
       </section>
 
       <section class="side-section mode-section">
@@ -161,7 +192,7 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=14"></script>
+<script src="estudos.js?v=16"></script>
 <script src="dr-laureano.js?v=8"></script>
 </body>
 </html>
