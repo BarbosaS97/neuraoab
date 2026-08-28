@@ -311,6 +311,60 @@ a { color: inherit; }
 .side-nav a:hover:not(.soon) { color: var(--text); background: var(--card-hover); }
 .side-nav a.soon { cursor: default; opacity: 0.45; }
 
+/* Links das duas fases da OAB: bem mais evidentes que um item de lista
+   comum (numero em destaque + titulo + descricao curta), pra ficar claro
+   de cara que sao os dois modos principais do app — nao mais um item de
+   navegacao qualquer entre os outros. */
+.phase-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border: 1px solid transparent;
+}
+
+.phase-link.active {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+.phase-link:hover { background: var(--card-hover); }
+
+.phase-num {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.phase-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.35;
+  min-width: 0;
+}
+
+.phase-text b {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.phase-text small {
+  font-size: 11px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .side-title {
   font-size: 11px;
   text-transform: uppercase;

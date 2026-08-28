@@ -1,0 +1,450 @@
+{
+  "exam_number": 46,
+  "phase": 2,
+  "area": "Direito Civil",
+  "source_provas_file": "46º_provas_Direito_Civil.pdf",
+  "source_resposta_file": "46º_resposta_Direito_Civil.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "A sociedade empresária Supermercados Nordeste Ltda., situada em Recife, representada pela sócia Sílvia, solteira, contratou a sociedade empresária Cistel Sistemas Ltda., situada em São Paulo, representada pelo sócio Félix, para a prestação de serviços de tecnologia da informação, com a finalidade de realizar o gerenciamento operacional do seu setor de estoque e de sua organização interna.\n\nPara a execução dos serviços, ficou estabelecido o pagamento de um valor mensal de R$ 15.000,00, com vencimento no quinto dia útil do mês subsequente ao da prestação do serviço, depositado na conta-corrente indicada pela contratada, por um período de um ano.\n\nA Cistel prestava os serviços há seis meses quando o Supermercado Nordeste atrasou o pagamento de três parcelas consecutivas, o que permitiu a resolução contratual, conforme pactuado, pois mesmo notificada, a contratante não justificou, tampouco efetuou os pagamentos devidos.\n\nCom o término antecipado do contrato, a Cistel ajuizou ação de execução de título extrajudicial em face da sociedade Supermercados Nordeste para receber o valor de R$ 50.000,00 relativo aos serviços prestados até a data da resolução, que corresponde às prestações vencidas, atualizadas monetariamente, e a multa contratual pelo atraso no pagamento.\n\nDurante o trâmite da ação de execução de título extrajudicial nº 54321, perante a 2ª Vara Cível da cidade de Recife, o exequente informou ao Juízo que não logrou êxito em localizar patrimônio em nome da pessoa jurídica e, ato contínuo, requereu, nos próprios autos da execução, a desconsideração da personalidade jurídica. Sem instaurar formalmente o incidente de desconsideração da personalidade jurídica e sem determinar a citação de Silvia para manifestação, o Juízo determinou diretamente a penhora de imóvel de sua propriedade, avaliado em R$ 350.000,00, bem como determinou a intimação de Silvia, em 15/7/2024, segunda-feira, da realização de penhora de seu imóvel. Silvia ficou bastante apreensiva ao ser intimada, por se tratar de seu único imóvel, onde mora sozinha.\n\nNa qualidade de advogado(a) de Silvia, elabore a peça processual adequada para a defesa dos interesses da sua cliente.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A peça correta para defender os interesses de Silvia é a Ação de Embargos de Terceiro, pois foi instaurado processo executivo com o objetivo de impugnar a penhora do imóvel, conforme autoriza o Art. 674 do CPC.\n\nA petição deve ser endereçada ao juízo da 2ª Vara Cível de Recife/PE, devendo ser requerida a distribuição por dependência aos autos da Execução nº 54321, na forma do Art. 676 do CPC.\n\nSilvia deverá figurar como autora dos embargos de terceiro e Cistel Sistemas Ltda., como embargada. As partes devem estar devidamente qualificadas. A Cistel é legitimada passiva, pois é quem aproveita do ato constritivo, conforme preceitua o Art. 677, § 4º, do CPC.\n\nDeve ser alegada a tempestividade dos embargos de terceiro, nos termos do Art. 675 do CPC.\n\nSilvia deverá narrar os fatos, justificando a sua legitimidade para ajuizar a ação em razão da sua condição de terceira, cujo bem foi penhorado por força de decisão judicial, na forma do Art. 674 do CPC.\n\nSilvia deve pleitear a desconstituição da penhora, tendo em vista que a penhora de bens de sócio em razão da desconsideração da personalidade jurídica exige a instauração de incidente de desconsideração, em que deve ser comprovado o abuso de personalidade jurídica, caracterizado pelo desvio de finalidade ou confusão patrimonial, requisitos que não se presumem diante da inexistência de patrimônio em nome da pessoa jurídica, a teor do Art. 50, § 1º, do CC.\n\nAlém disso, deve ser frisado que apesar do Art. 1º da Lei nº 8.009/1990 referir-se ao imóvel residencial do casal ou da entidade familiar, a Súmula 364 do STJ estende a impenhorabilidade do bem de família às pessoas solteiras.\n\nDeve ser requerida a juntada da prova sumária da posse ou do domínio e da qualidade de terceira, nos termos do Art. 677 do CPC. Deve ser pleiteada a suspensão da penhora, com a manutenção provisória da posse, na forma do Art. 678, caput, do CPC.\n\nDeve ser requerido o cancelamento da penhora indevida com a manutenção definitiva da posse pela embargante, conforme o Art. 681 do CPC.\n\nSilvia deverá requerer a produção de todas as provas em direito admitidas, bem como a condenação do réu nos ônus de sucumbência.\n\nDeverá ser atribuído o valor de R$ 50.000,00 à causa, pois o valor do imóvel penhorado é superior ao crédito exequendo, sendo assim, este deverá ser o parâmetro para a indicação do valor da causa. Por fim, encerra-se a petição com local, data, assinatura e inscrição na OAB.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Regularidade Formal",
+        "descricao": "A petição inicial deve ser dirigida à 2ª Vara Cível da Comarca de Recife/PE (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Regularidade Formal",
+        "descricao": "Distribuição por dependência à ação de Execução nº 54321 (0,15), na forma do Art. 676 do CPC (0,10).",
+        "pontuacao_maxima": 0.25,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.25
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Regularidade Formal",
+        "descricao": "Nome e qualificação das partes: Sílvia (embargante) (0,10); Cistel Sistemas Ltda. (embargada) (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Regularidade Formal",
+        "descricao": "Tempestividade, nos termos do Art. 675 do CPC (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Fatos e Fundamentos Jurídicos",
+        "descricao": "Síntese dos fatos (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Fatos e Fundamentos Jurídicos",
+        "descricao": "Silvia é parte legítima para propor os embargos por se tratar de terceira (0,15), cujo bem foi penhorado por força de decisão judicial (0,25), nos termos do Art. 674 do CPC (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.25,
+          0.35,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Fatos e Fundamentos Jurídicos",
+        "descricao": "O requerimento de desconsideração da personalidade jurídica incidental é cabível na ação de execução de título extrajudicial (0,25) que, todavia, depende da formação de incidente processual, o que não ocorreu (0,15), a teor do Art. 134 do CPC (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.25,
+          0.35,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fatos e Fundamentos Jurídicos",
+        "descricao": "A penhora de bens de sócio, em razão da desconsideração da personalidade jurídica, exige a comprovação de abuso da personalidade jurídica (0,25), caracterizado pelo desvio de finalidade (0,15) ou confusão patrimonial (0,15), requisitos que não se presumem diante da inexistência de patrimônio em nome da pessoa jurídica (0,20), a teor do Art. 50, § 1º, do CC (0,10).",
+        "pontuacao_maxima": 0.85,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.25,
+          0.3,
+          0.35,
+          0.4,
+          0.45,
+          0.5,
+          0.55,
+          0.6,
+          0.65,
+          0.7,
+          0.75,
+          0.85
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fatos e Fundamentos Jurídicos",
+        "descricao": "Caracterização do imóvel como bem de família (0,25), mesmo tratando-se de uma pessoa solteira (0,15), nos termos do Art. 1º da Lei nº 8.009/1990 ou da Súmula 364 do STJ (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.25,
+          0.35,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fatos e Fundamentos Jurídicos",
+        "descricao": "Prova sumária da posse ou domínio e da qualidade de terceiro (0,30), conforme previsto no Art. 677, caput, do CPC (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Pedidos",
+        "descricao": "Suspensão liminar da penhora (0,25), com a manutenção provisória da posse (0,15), na forma do Art. 678, caput, do CPC (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.25,
+          0.35,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Procedência do pedido com o cancelamento da penhora (0,25), com a manutenção definitiva da autora na posse do bem (0,15), na forma do Art. 681 do CPC (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.25,
+          0.35,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Produção de todas as provas em direito admitidas (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "Condenação do réu nos ônus de sucumbência (0,20) ou condenação do réu no pagamento de custas processuais (0,10) e honorários advocatícios (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Fechamento",
+        "descricao": "Indicação do valor da causa: R$ 50.000,00 (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Fechamento",
+        "descricao": "Local, data, assinatura e inscrição OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nRegularidade Formal\n1. A petição inicial deve ser dirigida à 2ª Vara Cível da Comarca de Recife/PE (0,10). 0,00/0,10\n2. Distribuição por dependência à ação de Execução nº 54321 (0,15), na forma do\n0,00/0,15/0,25\nArt. 676 do CPC (0,10).\n3. Nome e qualificação das partes: Sílvia (embargante) (0,10); Cistel Sistemas\n0,00/0,10/0,20\nLtda. (embargada) (0,10).\n4. Tempestividade, nos termos do Art. 675 do CPC (0,10). 0,00/0,10\nFatos e Fundamentos Jurídicos\n5. Síntese dos fatos (0,10). 0,00/0,10\n6. Silvia é parte legítima para propor os embargos por se tratar de terceira (0,15),\n0,00/0,15/0,25/\ncujo bem foi penhorado por força de decisão judicial (0,25), nos termos do Art. 674\n0,35/0,40/0,50\ndo CPC (0,10).\n7. O requerimento de desconsideração da personalidade jurídica incidental é\n0,00/0,25/0,35/\ncabível na ação de execução de título extrajudicial (0,25) que, todavia, depende da\nformação de incidente processual, o que não ocorreu (0,15), a teor do Art. 134 do\n0,40/0,50\nCPC (0,10).\n8. A penhora de bens de sócio, em razão da desconsideração da personalidade 0,00/0,15/0,25/0,30/0,35/\njurídica, exige a comprovação de abuso da personalidade jurídica (0,25),\ncaracterizado pelo desvio de finalidade (0,15) ou confusão patrimonial (0,15), 0,40/0,45/0,50/0,55/\nrequisitos que não se presumem diante da inexistência de patrimônio em nome da\npessoa jurídica (0,20), a teor do Art. 50, § 1º, do CC (0,10). 0,60/0,65/0,70/0,75/0,85\n9. Caracterização do imóvel como bem de família (0,25), mesmo tratando-se de\numa pessoa solteira (0,15), nos termos do Art. 1º da Lei nº 8.009/1990 ou da Súmula 0,00/0,25/0,35/0,40/0,50\n364 do STJ (0,10).\n10. Prova sumária da posse ou domínio e da qualidade de terceiro (0,30), conforme\n0,00/0,30/0,40\nprevisto no Art. 677, caput, do CPC (0,10).\nPedidos\n11. Suspensão liminar da penhora (0,25), com a manutenção provisória da posse 0,00/0,15/0,25/\n(0,15), na forma do Art. 678, caput, do CPC (0,10). 0,35/0,40/0,50\n12. Procedência do pedido com o cancelamento da penhora (0,25), com a 0,00/0,15/0,25/\nmanutenção definitiva da autora na posse do bem (0,15), na forma do Art. 681 do\nCPC (0,10). 0,35/0,40/0,50\n13. Produção de todas as provas em direito admitidas (0,10). 0,00/0,10\n14. Condenação do réu nos ônus de sucumbência (0,20) ou condenação do réu no\n0,00/0,10/0,20\npagamento de custas processuais (0,10) e honorários advocatícios (0,10).\nFechamento\n15. Indicação do valor da causa: R$ 50.000,00 (0,10). 0,00/0,10\n16. Local, data, assinatura e inscrição OAB (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Joaquim, alguns anos após o falecimento de sua esposa, com quem teve três filhas, Elena, Carla e Júlia, e da finalização dos procedimentos de inventário e partilha dos bens, doou, sem o conhecimento de Elena e Carla, um imóvel para Júlia residir com a filha Paula, neta de Joaquim, avaliado, na época, em 1 milhão de reais.\n\nNa época da doação, o patrimônio total de Joaquim era de 3 milhões de reais e, no contrato de doação, não fora mencionado que a doação seria retirada da parte disponível. Dez anos depois, Joaquim faleceu ab intestato, deixando um patrimônio de 1,5 milhão de reais.\n\nO inventário foi aberto e as irmãs descobriram a doação feita para Júlia. Foi constatado que entre a época da doação e a abertura da sucessão de Joaquim, o valor do bem doado não variou. Diante disso, Elena e Carla entenderam que Júlia não deveria receber nada a título de herança e que, na verdade, ela deveria devolver parte do que havia recebido. Júlia, por outro lado, entendeu que a doação recebida em nada interferia nos seus direitos hereditários. No entanto, para evitar maiores desgastes com as irmãs, decidiu renunciar à herança, acreditando que assim evitaria uma briga com as irmãs e, ao mesmo tempo, protegeria seu imóvel e permitiria que sua filha Paula fosse chamada a suceder em seu lugar.\n\nDiante da controvérsia e na dúvida se a decisão de renunciar à herança era a melhor opção para a concretização dos seus interesses, Júlia contratou você, como advogado(a), para orientá-la, respondendo às questões a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Com a renúncia de Júlia, Paula será chamada a suceder em seu lugar? Indique os efeitos da renúncia na partilha de bens.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "A renúncia pretendida é meio eficaz para afastar do inventário o imóvel recebido por Júlia? Qual procedimento deverá ser adotado por Elena e Carla para que o imóvel seja considerado na partilha? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Com a renúncia de Júlia, Paula não será chamada a suceder representando sua mãe renunciante, nos termos do Art. 1.811 do CC. E, com a renúncia, o quinhão de Júlia será acrescido ao de suas irmãs, pois são herdeiras da mesma classe, nos termos do Art. 1.810 do CC. B) A renúncia não é meio eficaz, pois não eximirá Júlia de conferir os bens recebidos por doação, nos termos do Art. 640 do CPC e/ou do Art. 2.008 do CC. Elena e Carla devem requerer ao Juízo do inventário que determine a colação do valor do bem doado na partilha, nos termos do Art. 641 do CPC.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. Paula não será chamada a suceder representando sua mãe renunciante 1 (0,15), nos termos do Art. 1.811 do CC (0,10).",
+          "pontuacao_maxima": 0.25,
+          "faixas_possiveis": [
+            0.0,
+            0.15,
+            0.25
+          ]
+        },
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "O quinhão de Júlia será acrescido ao de suas irmãs, pois são herdeiras da mesma 2 classe (0,30), nos termos do Art. 1.810 do CC (0,10).",
+          "pontuacao_maxima": 0.4,
+          "faixas_possiveis": [
+            0.0,
+            0.3,
+            0.4
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não, pois a renúncia não exime de levar à colação os bens recebidos por doação 1 (0,20), nos termos do Art. 640 do CPC, e/ou do Art. 2.008 do CC (0,10).",
+          "pontuacao_maxima": 0.3,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Hellen e Carla devem requerer ao juízo do inventário que determine a colação do 2 valor do bem doado na partilha (0,20), nos termos do Art. 641 do CPC (0,10).",
+          "pontuacao_maxima": 0.3,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA . Não. Paula não será chamada a suceder representando sua mãe renunciante\n1 0,00/0,15/0,25\n(0,15), nos termos do Art. 1.811 do CC (0,10).\nA . O quinhão de Júlia será acrescido ao de suas irmãs, pois são herdeiras da mesma\n2 0,00/0,30/0,40\nclasse (0,30), nos termos do Art. 1.810 do CC (0,10).\nB . Não, pois a renúncia não exime de levar à colação os bens recebidos por doação\n1 0,00/0,20/0,30\n(0,20), nos termos do Art. 640 do CPC, e/ou do Art. 2.008 do CC (0,10).\nB . Hellen e Carla devem requerer ao juízo do inventário que determine a colação do\n2 0,00/0,20/0,30\nvalor do bem doado na partilha (0,20), nos termos do Art. 641 do CPC (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Paulo Dirceu de Azevedo Alves, servidor público do Município de Barretos, São Paulo, 23 anos de idade, solteiro, deseja alterar o seu prenome com o objetivo de exclusão do nome Dirceu. Assim, passaria a se chamar Paulo de Azevedo Alves, assemelhando-se à sua mãe, Tereza de Azevedo Alves. Paulo Dirceu argumentou que seu pai, Dirceu de Azevedo Alves, abandonou sua mãe três meses após o nascimento dele, nunca mantendo contato com o filho. Durante toda a adolescência e juventude, quando devia utilizar o nome completo, abreviava a palavra Dirceu ou, simplesmente, a excluía. Diante da situação, Paulo Dirceu de Azevedo Alves procurou você, na qualidade de advogado(a), para orientá-lo sobre os questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O desejo de Paulo Dirceu na alteração do prenome com a exclusão da palavra Dirceu é juridicamente viável? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Para o exercício de seu desejo, deverá, obrigatoriamente, Paulo Dirceu ajuizar ação constitutiva? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. A alteração do prenome é possível, após ter atingido a maioridade civil, devendo Paulo Dirceu requerer pessoal e imotivadamente a mudança de acordo com o Art. 56, caput, da Lei nº 6.015/1973. B) Não. A alteração imotivada de prenome poderá ser feita na via extrajudicial uma única vez, conforme previsão contida no Art. 56, § 1º, da Lei nº 6.015/1973.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. A alteração do prenome é possível, após ter atingido a maioridade civil (0,20), devendo Paulo Dirceu requerer pessoalmente e imotivadamente a mudança (0,35), de acordo com o Art. 56, caput, da Lei nº 6.015/1973 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.35,
+            0.45,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A alteração imotivada de prenome poderá ser feita na via extrajudicial (0,30) uma única vez (0,20), conforme previsão contida no Art. 56, § 1º, da Lei nº 6.015/1973 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. A alteração do prenome é possível, após ter atingido a maioridade civil\n0,0/0,20/0,30/0,35/\n(0,20), devendo Paulo Dirceu requerer pessoalmente e imotivadamente a mudança\n0,45/0,55/0,65\n(0,35), de acordo com o Art. 56, caput, da Lei nº 6.015/1973 (0,10).\nB. Não. A alteração imotivada de prenome poderá ser feita na via extrajudicial (0,30)\n0,00/0,30/0,40/\numa única vez (0,20), conforme previsão contida no Art. 56, § 1º, da Lei nº\n0,50/0,60\n6.015/1973 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Joana, a fim de atender o pedido feito por seu filho, Miguel, ao Papai Noel do shopping que frequenta, adquiriu um videogame na loja Teknológica. Desde a noite de Natal, o aparelho apresentou problemas de uso, tendo sido encaminhado à assistência técnica. Passados 30 dias, a assistência técnica devolveu o videogame , que, para frustração de Miguel, continuava com o defeito. Joana, então, ajuizou ação em face da loja Teknológica, solicitando a substituição do produto por outro similar. Em sua contestação, apresentada eletronicamente às 23 horas do último dia do prazo, a loja não negou a relação de consumo na hipótese, mas sustentou que havia devolvido o produto dentro do prazo legal, o que afastaria a sua responsabilidade. Em réplica, a autora ratificou a responsabilidade da ré e alegou a intempestividade da contestação, pois fora protocolada após às 20 horas. Diante de tais fatos, responda aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A pretensão de Joana merece ser acolhida? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A contestação apresentada deve ser tida como intempestiva? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. Considerando que o vício não foi sanado no prazo máximo de 30 dias, Joana tem direito à substituição do produto por outro da mesma espécie, nos termos do Art. 18, §1º, inciso I, do CDC. B) Não. Tendo em vista que se trata da prática eletrônica de ato processual, a contestação pode ser protocolada tempestivamente até as 24 horas do último dia do prazo, nos termos do Art. 213, caput, do CPC.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. Considerando que o vício não foi sanado no prazo máximo de 30 dias (0,35), Joana tem direito à substituição do produto por outro da mesma espécie (0,20), nos termos do Art. 18, §1º, inciso I, do CDC (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.35,
+            0.45,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. Tendo em vista que se trata da prática eletrônica de ato processual (0,30), a contestação pode ser protocolada tempestivamente até as 24 horas do último dia do prazo (0,20), nos termos do Art. 213, caput, do CPC (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. Considerando que o vício não foi sanado no prazo máximo de 30 dias (0,35),\n0,00/0,20/0,30/0,35/\nJoana tem direito à substituição do produto por outro da mesma espécie (0,20), nos\n0,45/0,55/0,65\ntermos do Art. 18, §1º, inciso I, do CDC (0,10).\nB. Não. Tendo em vista que se trata da prática eletrônica de ato processual (0,30),\n0,00/0,20/0,30/\na contestação pode ser protocolada tempestivamente até as 24 horas do último dia\n0,40/0,50/0,60\ndo prazo (0,20), nos termos do Art. 213, caput, do CPC (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Em virtude do descumprimento do acordo que previa o dever de Antônio de prestar alimentos em favor de sua filha Luna, até que ela terminasse o curso de Direito, esta ajuizou ação de execução em face de seu pai, a fim de obter a satisfação de seu crédito. Diante da inércia do executado em pagar os valores devidos, foi realizada a penhora de seu imóvel, tendo o processo chegado à fase de expropriação. Não tendo Luna interesse em adjudicar o bem, a exequente requereu ao Juízo a alienação por meio de sua própria iniciativa, uma vez que possui muitos seguidores em suas redes sociais, o que facilitaria o encontro de algum interessado. Intimado a se manifestar sobre o requerimento de sua filha, Antônio sustentou a impenhorabilidade do bem constrito, sob a alegação de ser o único bem de sua propriedade, sendo o local de sua residência. Sustentou, ainda, o descabimento da alienação particular na hipótese, pois ainda não havia sido tentada a alienação judicial. Sobre os fatos acima, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É possível a penhora e posterior expropriação do imóvel em questão? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "É cabível a alienação particular do bem em questão? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. Embora o bem penhorado seja bem de família, sua impenhorabilidade não é oponível a Luna, por ser credora de pensão alimentícia, nos termos do Art. 3º, inciso III, da Lei nº 8.009/1990. B) Sim, o exequente pode requerer a alienação por sua própria iniciativa, uma vez que não foi realizada a adjudicação do bem, conforme previsto no Art. 880, caput, do CPC. A alienação judicial só deve ocorrer se não for efetivada a alienação por iniciativa particular (Art. 881, caput, do CPC).",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. Embora o bem penhorado seja bem de família (0,20), sua impenhorabilidade não é oponível à Luna, por ser credora de pensão alimentícia (0,30), nos termos do Art. 3º, inciso III, da Lei nº 8.009/1990 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim, o exequente pode requerer a alienação por sua própria iniciativa, uma vez 1 que não foi realizada a adjudicação do bem (0,25), nos termos do Art. 880, caput, do CPC (0,10).",
+          "pontuacao_maxima": 0.35,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.35
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "A alienação judicial só deve ocorrer se não efetivada a alienação por iniciativa 2 particular (0,20), nos termos do Art. 881, caput, do CPC (0,10).",
+          "pontuacao_maxima": 0.3,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. Embora o bem penhorado seja bem de família (0,20), sua impenhorabilidade\n0,00/0,20/0,30/\nnão é oponível à Luna, por ser credora de pensão alimentícia (0,30), nos termos do\n0,40/0,50/0,60\nArt. 3º, inciso III, da Lei nº 8.009/1990 (0,10).\nB . Sim, o exequente pode requerer a alienação por sua própria iniciativa, uma vez\n1\nque não foi realizada a adjudicação do bem (0,25), nos termos do Art. 880, caput, 0,00/0,25/0,35\ndo CPC (0,10).\nB . A alienação judicial só deve ocorrer se não efetivada a alienação por iniciativa\n2\n0,00/0,20/0,30\nparticular (0,20), nos termos do Art. 881, caput, do CPC (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

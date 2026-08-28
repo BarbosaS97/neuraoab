@@ -1,0 +1,423 @@
+{
+  "exam_number": 46,
+  "phase": 2,
+  "area": "Direito Administrativo",
+  "source_provas_file": "46º_provas_Direito_Administrativo.pdf",
+  "source_resposta_file": "46º_resposta_Direito_Administrativo.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "O Ministério Público ajuizou ação por improbidade em face do ex-prefeito Justino, em decorrência de conduta praticada pelo mencionado agente público, no exercício de suas atribuições em dezembro de 2022, com dolo específico, pormenorizada como de perceber vantagem econômica para intermediar a liberação ou a aplicação de verba pública sob sua gestão, imputando-lhe a conduta prevista no Art. 9º, inciso IX, da Lei nº 8.429/1992, com a redação conferida pela Lei nº 14.230/2021, apresentando o valor estimado do prejuízo ocasionado.\n\nApós o regular recebimento da inicial pelo Juízo da 1ª Vara de Fazenda Pública da Comarca da Capital do Estado Alfa, em caráter incidente, foi pleiteada a indisponibilidade de bens de Justino.\n\nO Juízo, após a oitiva do réu, deferiu a pretensão cautelar e determinou a indisponibilidade de diversos bens de Justino, em montante suficiente para garantir o dobro da quantia atinente ao prejuízo ocasionado, estimada pelo Ministério Público, a fim de garantir a efetividade do ressarcimento ao erário, bem como o pagamento da multa civil que venha a ser aplicada em decorrência de sua conduta.\n\nEm razão disso, Justino buscou a sua assessoria jurídica para adotar as providências cabíveis para a liberação de seus bens, esclarecendo que o Ministério Público não alegou, tampouco demonstrou qualquer indício de dilapidação patrimonial de sua parte ou qualquer conduta que pudesse suscitar perigo de dano irreparável ou de risco ao resultado útil do processo.\n\nJustino informou, ainda, que a determinação judicial, entre outros bens, tornou indisponível a caderneta de poupança no montante de trinta salários mínimos, que costumava utilizar para cobrir eventuais emergências, assim como seu único imóvel, que é bem de família.\n\nConsiderando que a decisão que rejeitou os embargos de declaração da mencionada determinação judicial foi publicada na última sexta-feira e que o processo é eletrônico, redija a peça jurídica pertinente para impugnar a aludida decisão, apresentando os argumentos jurídicos adequados para tanto.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "O examinando deve apresentar recurso de Agravo de Instrumento, com pedido de efeito suspensivo. O Agravo de Instrumento deve ser endereçado ao Tribunal de Justiça do Estado Alfa (Art. 1.016, caput, do CPC). O recurso deve trazer os nomes das partes, sendo recorrente (agravante) Justino e recorrido (agravado) o Ministério Público (Art. 1.016, inciso I, do CPC), além de indicar o nome e o de endereço dos advogados constantes do processo (Art. 1016, inciso IV, do CPC). Preliminarmente, há de ser pontuado o cabimento do Agravo de Instrumento, na forma do Art. 16, §9º, da Lei nº 8.429/1992, com a redação conferida pela Lei nº 14.230/2021, bem como destacada a tempestividade, na forma do Art. 1003, §5º, do CPC e o preparo, além de indicado que o agravante está dispensado de comunicar a interposição do recurso ao Juízo de 1º grau, por se tratar de processo eletrônico, na forma do Art. 1018, §2º, do CPC. Deve ser sustentada a necessidade de concessão de efeito suspensivo ao recurso pelo Desembargador Relator, com fulcro no Art. 1019, inciso I, do CPC (ou diante do preenchimento dos requisitos constantes do Art. 995 do CPC), considerando o dano grave ou de difícil reparação resultante da determinação da indisponibilidade de bens, em razão dos argumentos destacados na fundamentação (periculum in mora e fumus boni juris). No mérito recursal, devem ser suscitados os seguintes argumentos: (i) Ilegalidade/impossibilidade de deferimento da medida de indisponibilidade de bens, na medida em que não houve a demonstração no caso concreto de perigo de dano irreparável ou de risco ao resultado útil do processo, considerando que não há sequer indícios de dilapidação patrimonial pelo agravante; (ii) Na hipótese de ser ultrapassado tal fundamento, deve ser alegado o excesso do montante determinado pelo Juízo, que deve considerar o valor da estimativa do prejuízo realizada pelo Ministério Público (e não o dobro de tal montante) e o fato de que não poderia ser considerado para tanto o valor atinente à multa civil; (iii) Inviabilidade de a indisponibilidade recair sobre a caderneta de poupança no montante de até 40 salários mínimos e sobre o bem de família. Na conclusão da peça processual, deve ser requerido o deferimento do efeito suspensivo pelo Relator, bem como o conhecimento e o provimento do recurso de Agravo de Instrumento pelo órgão julgador para cassar/anular/invalidar a decisão impugnada ou, subsidiariamente, a redução proporcional do montante atinente à indisponibilidade e a liberação dos bens que não poderiam ser atingidos pela medida. Ao fim, deve ser feito o fechamento da peça.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "O recurso deve ser endereçado ao Tribunal de Justiça do Estado Alfa (0,10), segundo o Art. 1.016, caput, do CPC.",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Qualificação",
+        "descricao": "Recorrente (agravante): Justino (0,10);.",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Qualificação",
+        "descricao": "Recorrido (agravado): Ministério Público (0,10)",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Requisitos de admissibilidade",
+        "descricao": "Cabimento do Agravo de Instrumento (0,10), na forma Art. 16, §9º, da Lei nº 8.429/1992, com a redação conferida pela Lei nº 14.230/2021 (OU Art. 1015 do CPC) (0,10),",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Requisitos de admissibilidade",
+        "descricao": "Tempestividade. Prazo de 15 dias (0,10), na forma do Art. 1003, §5, do CPC (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Requisitos de admissibilidade",
+        "descricao": "Preparo ou requerimento da gratuidade de justiça (0,10)",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "7.1",
+        "categoria": "Pedido de efeito suspensivo",
+        "descricao": "Deve ser indicada a necessidade de concessão de efeito suspensivo ao recurso pelo Desembargador Relator (0,10), com fulcro no Art. 1019, inciso I, do CPC (OU Art. 995 do CPC) (0,10),",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "7.2",
+        "categoria": "Pedido de efeito suspensivo",
+        "descricao": "considerando o dano grave ou de difícil reparação decorrente da indisponibilidade dos bens (periculum in mora) (0,10)",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "7.3",
+        "categoria": "Pedido de efeito suspensivo",
+        "descricao": "e da probabilidade de provimento do recurso, em razão dos argumentos destacados na fundamentação (fumus boni juris) (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Mérito recursal",
+        "descricao": "Deve ser alegado que não foram preenchidos os requisitos legais para a decretação da medida de indisponibilidade de bens (0,20), pois não houve demonstração, no caso concreto, na forma do art. 16, §3º, da Lei nº 8.429/1992, com a redação conferida pela Lei nº 14.230/2021 (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "8.1",
+        "categoria": "Mérito recursal",
+        "descricao": "de perigo de dano irreparável ou de risco ao resultado útil do processo (0,30);",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "8.2",
+        "categoria": "Mérito recursal",
+        "descricao": "de indícios de dilapidação patrimonial pelo agravante (0,30).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Mérito recursal",
+        "descricao": "Deve ser alegado o excesso do montante determinado pelo Juízo (0,20), uma vez que a indisponibilidade deve corresponder ao valor da estimativa do prejuízo realizada pelo Ministério Público (0,40), na forma do Art. 16, §6º, da Lei nº 8.429/1992, com a redação conferida pela Lei nº 14.230/2021 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3,
+          0.4,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Mérito recursal",
+        "descricao": "Não é cabível considerar o valor da multa civil para fins de indisponibilidade (0,40), tal como se depreende do Art. 16, §10, da Lei nº 8.429/1992, com a redação conferida pela Lei nº 14.230/2021 (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Mérito recursal",
+        "descricao": "Ilegalidade/inviabilidade de a indisponibilidade recair sobre caderneta de poupança no montante de até 40 salários-mínimos (0,40), diante do Art. 16, §13, da Lei nº 8.429/1992, com a redação conferida pela Lei nº 14.230/2021 (0,10)",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Mérito recursal",
+        "descricao": "Ilegalidade/inviabilidade de a indisponibilidade recair sobre o bem de família (0,40), conforme o Art. 16, §14, da Lei nº 8.429/1992, com a redação conferida pela Lei nº 14.230/2021 ou Art. 1º da Lei 8.009/90 (0,10)",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedido",
+        "descricao": "Deve ser requerido o conhecimento (0,20)",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedido",
+        "descricao": "provimento do recurso (0,10) para fins de cassar/anular/invalidar/reformar a decisão impugnada (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Pedido",
+        "descricao": "Subsidiariamente, a redução do montante atinente à indisponibilidade (0,10). e a liberação/desbloqueio dos bens que não poderiam ser atingidos pela medida (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Fechamento",
+        "descricao": "Local..., Data..., Advogado...e OAB... (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. O recurso deve ser endereçado ao Tribunal de Justiça do Estado Alfa (0,10),\n0,00/0,10\nsegundo o Art. 1.016, caput, do CPC.\nQualificação\n2. Recorrente (agravante): Justino (0,10);. 0,00/0,10\n3. Recorrido (agravado): Ministério Público (0,10) 0,00/0,10\nRequisitos de admissibilidade\n4. Cabimento do Agravo de Instrumento (0,10), na forma Art. 16, §9º, da Lei nº\n8.429/1992, com a redação conferida pela Lei nº 14.230/2021 (OU Art. 1015 do 0,00/0,10/0,20\nCPC) (0,10),\n5. Tempestividade. Prazo de 15 dias (0,10), na forma do Art. 1003, §5, do CPC\n0,00/0,10/0,20\n(0,10).\n6. Preparo ou requerimento da gratuidade de justiça (0,10) 0,00/0,10\nPedido de efeito suspensivo\n7.1. Deve ser indicada a necessidade de concessão de efeito suspensivo ao\nrecurso pelo Desembargador Relator (0,10), com fulcro no Art. 1019, inciso I, do 0,00/0,10/0,20\nCPC (OU Art. 995 do CPC) (0,10),\n7.2. considerando o dano grave ou de difícil reparação decorrente da\n0,00/0,10\nindisponibilidade dos bens (periculum in mora) (0,10)\n7.3. e da probabilidade de provimento do recurso, em razão dos argumentos\n0,00/0,10\ndestacados na fundamentação (fumus boni juris) (0,10).\nMérito recursal\n8. Deve ser alegado que não foram preenchidos os requisitos legais para a\ndecretação da medida de indisponibilidade de bens (0,20), pois não houve\n0,00/0,20/0,30\ndemonstração, no caso concreto, na forma do art. 16, §3º, da Lei nº 8.429/1992,\ncom a redação conferida pela Lei nº 14.230/2021 (0,10).\n8.1. de perigo de dano irreparável ou de risco ao resultado útil do processo (0,30); 0,00/0,30\n8.2. de indícios de dilapidação patrimonial pelo agravante (0,30). 0,00/0,30\n9. Deve ser alegado o excesso do montante determinado pelo Juízo (0,20), uma vez\nque a indisponibilidade deve corresponder ao valor da estimativa do prejuízo 0,00/0,20/0,30/\nrealizada pelo Ministério Público (0,40), na forma do Art. 16, §6º, da Lei nº 0,40/0,60/0,70\n8.429/1992, com a redação conferida pela Lei nº 14.230/2021 (0,10).\n10. Não é cabível considerar o valor da multa civil para fins de indisponibilidade\n(0,40), tal como se depreende do Art. 16, §10, da Lei nº 8.429/1992, com a redação 0,0/0,40/0,50\nconferida pela Lei nº 14.230/2021 (0,10).\n11. Ilegalidade/inviabilidade de a indisponibilidade recair sobre caderneta de\npoupança no montante de até 40 salários-mínimos (0,40), diante do Art. 16, §13, da 0,00/0,40/0,50\nLei nº 8.429/1992, com a redação conferida pela Lei nº 14.230/2021 (0,10)\n12. Ilegalidade/inviabilidade de a indisponibilidade recair sobre o bem de família\n(0,40), conforme o Art. 16, §14, da Lei nº 8.429/1992, com a redação conferida pela 0,00/0,40/0,50\nLei nº 14.230/2021 ou Art. 1º da Lei 8.009/90 (0,10)\nPedido\n13. Deve ser requerido o conhecimento (0,20) 0,00/0,20\n14. provimento do recurso (0,10) para fins de cassar/anular/invalidar/reformar a\n0,00/0,10/0,20\ndecisão impugnada (0,10).\n15. Subsidiariamente, a redução do montante atinente à indisponibilidade (0,10). e\na liberação/desbloqueio dos bens que não poderiam ser atingidos pela medida 0,00/0,10/0,20\n(0,10).\nFechamento\n16. Local..., Data..., Advogado...e OAB... (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Após a publicação do respectivo edital, a sociedade empresária Rancho Fundo ficou interessada em participar de uma licitação, na modalidade concorrência, para a realização de uma grande obra pelo Estado Delta, que seguirá a sequência de fases previstas na Lei nº 14.133/2021, ou seja, o instrumento convocatório não previu a inversão de fases facultada pela lei, sendo certo que seus representantes não têm experiência em tal área. Em razão disso, os dirigentes da mencionada pessoa jurídica procuraram você, na qualidade de advogado(a), para a elaboração de um parecer, com vistas a analisar as peculiaridades do procedimento licitatório, notadamente os aspectos a seguir indicados.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Na situação descrita, a fase de habilitação deve anteceder a fase de julgamento? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "A manifestação da intenção de recorrer imediatamente após o julgamento das propostas tem efeito suspensivo, ou seja, impede o prosseguimento do certame para a fase subsequente até a respectiva apreciação? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. De acordo com a sequência estabelecida na norma em comento, a fase de julgamento antecede a de habilitação, consoante o Art. 17 da Lei nº 14.133/2021. B) Não. A manifestação da intenção de recorrer imediatamente após o julgamento da proposta não tem efeito suspensivo, ou seja, não impede o prosseguimento do certame para a fase subsequente (habilitação), na medida em que a apreciação dos recursos dar-se-á em fase única, consoante o Art. 165, §1º, inciso II, da Lei nº 14.133/2021, ou considerando que o prazo para a apresentação das razões se inicia na data de intimação ou de lavratura da ata de habilitação ou inabilitação (que é a fase subsequente), segundo o Art. 165, §1º, inciso I, da Lei nº 14.133/2021.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. De acordo com a sequência estabelecida na norma em comento, a fase de julgamento antecede à de habilitação (0,50), consoante o Art. 17 da Lei nº 14.133/2021 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. O que efetivamente suspende o certame é a efetiva interposição de recurso (0,55), consoante Art. 168 da Lei 14.133/2021 (0,10) ou Não. A apreciação dos recursos dar-se-á em fase única (0,55), consoante o Art. 165, §1º, inciso II, da Lei nº 14.133/2021 (0,10). ou Não, considerando que o prazo para a apresentação das razões se inicia na data de intimação ou de lavratura da ata de habilitação ou inabilitação (que é a fase subsequente) (0,55), segundo o Art. 165, §1º, inciso I, da Lei nº 14.133/2021 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. De acordo com a sequência estabelecida na norma em comento, a fase de\njulgamento antecede à de habilitação (0,50), consoante o Art. 17 da Lei nº 0,00/0,50/0,60\n14.133/2021 (0,10).\nB. Não. O que efetivamente suspende o certame é a efetiva interposição de recurso (0,55),\nconsoante Art. 168 da Lei 14.133/2021 (0,10)\nou\nNão. A apreciação dos recursos dar-se-á em fase única (0,55), consoante o Art. 165, §1º,\ninciso II, da Lei nº 14.133/2021 (0,10). 0,00/0,55/0,65\nou\nNão, considerando que o prazo para a apresentação das razões se inicia na data de\nintimação ou de lavratura da ata de habilitação ou inabilitação (que é a fase subsequente)\n(0,55), segundo o Art. 165, §1º, inciso I, da Lei nº 14.133/2021 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Durante um simpósio realizado no Estado do Rio de Janeiro para professores dos mais variados países da América do Sul, Frederico, chileno, afirmou, na presença de inúmeros colegas, que a Universidade Federal Alfa publicou o edital de um concurso público, visando ao provimento de três cargos de professor titular, com atrativa remuneração. Disse, inclusive, que, encerrado o estágio probatório, os servidores públicos só poderiam perder o cargo em virtude de sentença judicial transitada em julgado, por força da estabilidade a que fazem jus os servidores públicos no Brasil. Nesse contexto, Antônio, argentino, interessado na oportunidade, resolveu procurar você para, na qualidade de advogado(a), lhe prestar os devidos esclarecimentos jurídicos sobre os questionamentos a seguir, com base na Constituição Federal e na Lei nº 8.112/1990, que versa sobre o regime jurídico dos servidores públicos civis da União.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Antônio, estrangeiro, pode ocupar um cargo público de professor na Universidade Federal Alfa? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "É correta a afirmação de Antônio de que os servidores públicos estáveis só podem perder o cargo público em razão de sentença judicial transitada em julgado? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. As universidades federais podem prover seus cargos com professores estrangeiros, nos termos do Art. 5º, §3º, da Lei nº 8.112/1990 ou do Art. 37, inciso I, da CRFB/88. B) Não. O servidor público estável poderá perder o cargo mediante processo administrativo em que lhe seja assegurada a ampla defesa, nos termos do Art. 41, §1º, inciso II, da Constituição Federal, ou mediante procedimento de avaliação periódica de desempenho, na forma de lei complementar, assegurada a ampla defesa, nos termos do Art. 41, §1º, inciso III, da Constituição Federal, ou no caso de excesso de gastos com despesa de pessoal por parte do ente federativo, nos termos do Art. 169, §4º, ambos da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. As universidades federais podem prover seus cargos com professores estrangeiros (0,50), nos termos do Art. 5º, §3º, da Lei no 8.112/1990 ou Art. 207, § 1º, da CRFB/88 ou do Art. 37, inciso I, da CRFB/88. (0,10)",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. O servidor público estável poderá perder o cargo mediante processo administrativo em que lhe seja assegurada ampla defesa (0,55), nos termos do Art. 41, §1º, inciso II, da CRFB/88 (0,10); ou mediante procedimento de avaliação periódica de desempenho, na forma de lei complementar, assegurada ampla defesa (0,55), nos termos do Art. 41, §1º, inciso III, da Constituição Federal; ou no caso de excesso de gastos com despesa de pessoal por parte do ente federativo (0,55), nos termos do Art. 169, §4º, da CRFB/88. (0,10)",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. As universidades federais podem prover seus cargos com professores\nestrangeiros (0,50), nos termos do Art. 5º, §3º, da Lei no 8.112/1990 ou Art. 207, § 1º, da 0,00/0,50/0,60\nCRFB/88 ou do Art. 37, inciso I, da CRFB/88. (0,10)\nB. Não. O servidor público estável poderá perder o cargo mediante processo\nadministrativo em que lhe seja assegurada ampla defesa (0,55), nos termos do Art. 41,\n§1º, inciso II, da CRFB/88 (0,10);\nou mediante procedimento de avaliação periódica de desempenho, na forma de lei\n0,00/0,55/0,65\ncomplementar, assegurada ampla defesa (0,55), nos termos do Art. 41, §1º, inciso III, da\nConstituição Federal;\nou no caso de excesso de gastos com despesa de pessoal por parte do ente federativo\n(0,55), nos termos do Art. 169, §4º, da CRFB/88. (0,10)",
+      "linhas_nao_reconhecidas": [
+        "mediante procedimento de avaliação periódica de desempenho, na forma de lei complementar, assegurada a",
+        "ampla defesa,"
+      ]
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "José, servidor público federal estável, solicitou às autoridades competentes a marcação do período de 30 dias de férias a que tinha direito. Em seguida, acrescentou um pedido para que, logo após as férias, fosse deferida uma licença por motivo de doença de pessoa da família, porque pretendia acompanhar seu neto, Carlos, que fora diagnosticado com uma grave doença e estava em vias realizar uma cirurgia, necessitando de cuidados especiais. Ele alega ainda que Carlos, apesar de ser maior de idade, já constou de seu assentamento funcional como dependente, na medida em que viveu sob sua guarda. A Administração Pública, no mesmo ato administrativo, deferiu o período de férias, bem como a licença, pelo prazo de 60 dias. Pouco depois, antes do gozo dos respectivos períodos, a Administração verificou que Carlos não mais vivia às expensas de José, motivo pelo qual notificou o servidor quanto à necessidade de anulação de tal ato administrativo. Em razão disso, José buscou a sua assessoria jurídica, a fim de elucidar as dúvidas a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É necessário que Carlos viva às expensas de José para fins de deferimento da licença por motivo de doença em pessoa da família? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Caso se conclua pela invalidade da aludida licença, seria cabível a convalidação do ato administrativo para fins de manter as férias a que José tem direito? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. Para fins de deferimento de licença por motivo de doença na família é necessário que o dependente viva às expensas do servidor, na forma do Art. 83 da Lei nº 8.112/1990. B) Sim. O ato em questão possui objeto plúrimo (férias e licença) e apenas um deles é inválido, de modo que apresenta vício sanável, a viabilizar a convalidação ou conversão daquele que não é eivado de ilegalidade, na forma do Art. 55 da Lei nº 9784/1999.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. Para fins de deferimento de licença por motivo de doença na família é necessário que o dependente viva às expensas do servidor (0,50), na forma do Art. 83 da Lei nº 8.112/1990 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. O ato em questão possui objeto plúrimo (férias e licença) e apenas um deles é inválido, de modo que apresenta vício sanável, a viabilizar a convalidação ou conversão daquele que não é eivado de ilegalidade (0,55), na forma do Art. 55 da Lei nº 9784/1999 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. Para fins de deferimento de licença por motivo de doença na família é necessário\nque o dependente viva às expensas do servidor (0,50), na forma do Art. 83 da Lei nº 0,00/0,50/0,60\n8.112/1990 (0,10).\nB. Sim. O ato em questão possui objeto plúrimo (férias e licença) e apenas um deles é\ninválido, de modo que apresenta vício sanável, a viabilizar a convalidação ou conversão\n0,00/0,55/0,65\ndaquele que não é eivado de ilegalidade (0,55), na forma do Art. 55 da Lei nº 9784/1999\n(0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Após regular procedimento licitatório, a sociedade empresária Alfa celebrou contrato administrativo de concessão de serviços públicos com o Município Beta. Contudo, no curso da execução contratual, a entidade privada constatou diversos descumprimentos contratuais imputados ao poder concedente. Irresignada com a situação apresentada, a sociedade empresária Alfa procurou você para, na qualidade de advogado(a), buscar a devida consultoria jurídica visando à rescisão do contrato administrativo antes celebrado. Diante dessa situação hipotética e com base na Lei no 8.987/1995, que dispõe sobre o regime de concessão e permissão da prestação de serviços públicos, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É juridicamente admissível a extinção do contrato administrativo de concessão, por iniciativa da sociedade empresária Alfa, por meio de processo administrativo? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Diante do interesse manifestado de proceder à rescisão do contrato administrativo, é admissível que a sociedade empresária Alfa proceda à interrupção do serviço público prestado? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. O contrato de concessão poderá ser rescindido por iniciativa da concessionária, no caso de descumprimento das normas contratuais pelo poder concedente, mediante ação judicial especialmente intentada para esse fim, nos termos do Art. 39, caput, da Lei nº 8.987/1995. B) Não. Os serviços prestados pela concessionária não poderão ser interrompidos ou paralisados até a decisão judicial transitada em julgado, conforme preceitua o Art. 39, parágrafo único, da Lei nº 8.987/1995.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não.",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. Só cabe interrupção ou paralisação após decisão judicial transitada em julgado (0,50), conforme preceitua o Art. 39, parágrafo único, da Lei no 8.987/1995 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. Somente mediante ação judicial especialmente intentada para esse fim (0,55),\n0,00/0,55/0,65\nnos termos do Art. 39, caput, da Lei no 8.987/1995 (0,10).\nB. Não. Só cabe interrupção ou paralisação após decisão judicial transitada em julgado\n0,00/0,50/0,60\n(0,50), conforme preceitua o Art. 39, parágrafo único, da Lei no 8.987/1995 (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

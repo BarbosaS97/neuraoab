@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NeuraOAB — Importação de Questões</title>
+<title>NeuraOAB — Importação 2ª Fase</title>
 <link rel="icon" href="../images/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
@@ -135,6 +135,7 @@
   .validation.show { display: block; }
   .validation.ok { background: rgba(53,199,138,.1); border: 1px solid rgba(53,199,138,.35); color: var(--ok); }
   .validation.err { background: rgba(239,87,87,.1); border: 1px solid rgba(239,87,87,.35); color: var(--err); }
+  .validation.warn { background: rgba(232,179,57,.1); border: 1px solid rgba(232,179,57,.35); color: var(--warn); }
   .validation ul { margin: 6px 0 0; padding-left: 18px; }
 
   button {
@@ -181,19 +182,19 @@
   <a href="../index.html" class="brand"><img src="../images/logotipo.png" alt="NeuraOAB"></a>
   <a href="../index.html">Início</a>
   <a href="../estudos/index.html">Estudos</a>
-  <a href="import.html" class="active">Admin (1ª fase)</a>
-  <a href="import2fase.html">Admin (2ª fase)</a>
+  <a href="import.html">Admin (1ª fase)</a>
+  <a href="import2fase.html" class="active">Admin (2ª fase)</a>
 </nav>
 
 <div class="wrap">
-  <h1>NeuraOAB — Importação de Questões</h1>
-  <div class="sub">Upload do JSON gerado pelo extrator Python e importação para o Supabase (tabela <code>oab_questions</code>).</div>
+  <h1>NeuraOAB — Importação 2ª Fase</h1>
+  <div class="sub">Upload do JSON gerado pelo <code>py/extract_oab2.py</code> (peça + 4 questões + gabarito comentado) e importação para o Supabase.</div>
 
   <div class="panel">
     <h2>Banco de dados</h2>
     <div class="counter">
       <div class="num" id="dbCount">—</div>
-      <div class="label">questões cadastradas no banco</div>
+      <div class="label">cadernos da 2ª fase cadastrados (oab2_provas)</div>
     </div>
   </div>
 
@@ -202,16 +203,16 @@
     <div id="dropzone">
       <div class="icon">📄</div>
       <div class="primary">Arraste o arquivo JSON aqui ou clique para selecionar</div>
-      <div class="secondary">Formato esperado: saída do extract_oab.py</div>
+      <div class="secondary">Formato esperado: saída do extract_oab2.py (um arquivo por área)</div>
       <input type="file" id="fileInput" accept="application/json,.json">
     </div>
 
     <div class="file-info" id="fileInfo">
       <div class="row"><span>Arquivo</span><span id="fiName"></span></div>
-      <div class="row"><span>Ano</span><span id="fiYear"></span></div>
       <div class="row"><span>Exame</span><span id="fiExam"></span></div>
-      <div class="row"><span>Tipo de prova</span><span id="fiType"></span></div>
-      <div class="row"><span>Questões no arquivo</span><span id="fiCount"></span></div>
+      <div class="row"><span>Área</span><span id="fiArea"></span></div>
+      <div class="row"><span>Valor total da prova</span><span id="fiValor"></span></div>
+      <div class="row"><span>Critérios extraídos (peça + questões)</span><span id="fiCriterios"></span></div>
     </div>
 
     <div class="validation" id="validation"></div>
@@ -259,7 +260,7 @@ function logLine(message, level = "info") {
 
 async function refreshCount() {
   const { count, error } = await client
-    .from("oab_questions")
+    .from("oab2_provas")
     .select("*", { count: "exact", head: true });
   if (error) {
     dbCountEl.textContent = "erro";
@@ -271,62 +272,87 @@ async function refreshCount() {
 
 function validateStructure(data) {
   const errors = [];
+  const warnings = [];
 
   if (typeof data !== "object" || data === null) {
-    return ["O arquivo não contém um objeto JSON válido."];
+    return { errors: ["O arquivo não contém um objeto JSON válido."], warnings };
   }
-  if (typeof data.year !== "number") errors.push("Campo 'year' ausente ou inválido.");
-  if (typeof data.exam_type !== "string" || !data.exam_type) errors.push("Campo 'exam_type' ausente ou inválido.");
-  if (!Array.isArray(data.questions)) {
-    errors.push("Campo 'questions' ausente ou não é uma lista.");
-    return errors;
-  }
-  if (data.questions.length === 0) {
-    errors.push("A lista 'questions' está vazia.");
-  }
+  if (typeof data.exam_number !== "number") errors.push("Campo 'exam_number' ausente ou inválido.");
+  if (typeof data.area !== "string" || !data.area) errors.push("Campo 'area' ausente ou inválido.");
+  if (typeof data.valor_total_prova !== "number") errors.push("Campo 'valor_total_prova' ausente ou inválido.");
 
-  data.questions.forEach((q, idx) => {
-    const ref = `questions[${idx}]${q && q.number !== undefined ? ` (nº ${q.number})` : ""}`;
-    if (typeof q !== "object" || q === null) {
-      errors.push(`${ref}: não é um objeto.`);
+  function checkItem(item, label) {
+    if (typeof item !== "object" || item === null) {
+      errors.push(`${label}: não é um objeto.`);
       return;
     }
-    if (typeof q.number !== "number") errors.push(`${ref}: campo 'number' ausente ou inválido.`);
-    if (typeof q.statement !== "string" || !q.statement) errors.push(`${ref}: campo 'statement' ausente ou inválido.`);
-    if (!Array.isArray(q.alternatives) || q.alternatives.length === 0) errors.push(`${ref}: campo 'alternatives' ausente ou inválido.`);
-    if (typeof q.correct_answer !== "string" || !q.correct_answer) errors.push(`${ref}: campo 'correct_answer' ausente ou inválido.`);
-  });
+    if (typeof item.enunciado !== "string" || !item.enunciado) errors.push(`${label}: campo 'enunciado' ausente ou vazio.`);
+    if (typeof item.valor_total !== "number") errors.push(`${label}: campo 'valor_total' ausente ou inválido.`);
+    if (!item.gabarito_comentado) warnings.push(`${label}: sem 'gabarito_comentado' (verifique o PDF de resposta).`);
+    if (!Array.isArray(item.criterios) || item.criterios.length === 0) {
+      warnings.push(`${label}: nenhum critério estruturado extraído (só o texto bruto ficará disponível para a correção).`);
+    }
+    if (Array.isArray(item.linhas_nao_reconhecidas) && item.linhas_nao_reconhecidas.length > 0) {
+      warnings.push(`${label}: ${item.linhas_nao_reconhecidas.length} linha(s) da tabela de pontos não reconhecida(s).`);
+    }
+  }
 
-  return errors;
+  if (data.peca) checkItem(data.peca, "Peça profissional"); else errors.push("Campo 'peca' ausente.");
+
+  if (!Array.isArray(data.questoes) || data.questoes.length !== 4) {
+    errors.push("Campo 'questoes' ausente ou não tem exatamente 4 questões.");
+  } else {
+    data.questoes.forEach((q, idx) => {
+      checkItem(q, `Questão ${q?.numero ?? idx + 1}`);
+      if (!Array.isArray(q.subitens) || q.subitens.length === 0) {
+        warnings.push(`Questão ${q?.numero ?? idx + 1}: nenhum subitem (A/B) reconhecido.`);
+      }
+    });
+  }
+
+  return { errors, warnings };
 }
 
-function showValidation(errors) {
-  validationBox.classList.remove("ok", "err", "show");
+function showValidation(errors, warnings) {
+  validationBox.classList.remove("ok", "err", "warn", "show");
   validationBox.innerHTML = "";
 
-  if (errors.length === 0) {
+  if (errors.length === 0 && warnings.length === 0) {
     validationBox.classList.add("ok", "show");
-    validationBox.textContent = "Estrutura do JSON válida.";
+    validationBox.textContent = "Estrutura do JSON válida, sem observações.";
     return true;
   }
 
-  validationBox.classList.add("err", "show");
-  const title = document.createElement("div");
-  title.textContent = `${errors.length} problema(s) encontrado(s):`;
-  const list = document.createElement("ul");
-  errors.slice(0, 20).forEach(e => {
-    const li = document.createElement("li");
-    li.textContent = e;
-    list.appendChild(li);
-  });
-  if (errors.length > 20) {
-    const li = document.createElement("li");
-    li.textContent = `... e mais ${errors.length - 20} problema(s).`;
-    list.appendChild(li);
+  const cls = errors.length > 0 ? "err" : "warn";
+  validationBox.classList.add(cls, "show");
+
+  if (errors.length > 0) {
+    const title = document.createElement("div");
+    title.textContent = `${errors.length} problema(s) impeditivo(s):`;
+    const list = document.createElement("ul");
+    errors.slice(0, 20).forEach(e => {
+      const li = document.createElement("li");
+      li.textContent = e;
+      list.appendChild(li);
+    });
+    validationBox.appendChild(title);
+    validationBox.appendChild(list);
   }
-  validationBox.appendChild(title);
-  validationBox.appendChild(list);
-  return false;
+  if (warnings.length > 0) {
+    const title = document.createElement("div");
+    title.style.marginTop = errors.length > 0 ? "10px" : "0";
+    title.textContent = `${warnings.length} observação(ões) (não impedem a importação):`;
+    const list = document.createElement("ul");
+    warnings.slice(0, 20).forEach(w => {
+      const li = document.createElement("li");
+      li.textContent = w;
+      list.appendChild(li);
+    });
+    validationBox.appendChild(title);
+    validationBox.appendChild(list);
+  }
+
+  return errors.length === 0;
 }
 
 function handleFile(file) {
@@ -341,24 +367,28 @@ function handleFile(file) {
     try {
       data = JSON.parse(reader.result);
     } catch (e) {
-      showValidation([`JSON malformado: ${e.message}`]);
+      showValidation([`JSON malformado: ${e.message}`], []);
       return;
     }
 
-    const errors = validateStructure(data);
-    const valid = showValidation(errors);
+    const { errors, warnings } = validateStructure(data);
+    const valid = showValidation(errors, warnings);
+
+    const totalCriterios = valid
+      ? (data.peca.criterios?.length ?? 0) + data.questoes.reduce((acc, q) => acc + (q.criterios?.length ?? 0), 0)
+      : "—";
 
     document.getElementById("fiName").textContent = file.name;
-    document.getElementById("fiYear").textContent = data.year ?? "—";
     document.getElementById("fiExam").textContent = data.exam_number ? `${data.exam_number}º` : "—";
-    document.getElementById("fiType").textContent = data.exam_type ?? "—";
-    document.getElementById("fiCount").textContent = Array.isArray(data.questions) ? data.questions.length : "—";
+    document.getElementById("fiArea").textContent = data.area ?? "—";
+    document.getElementById("fiValor").textContent = data.valor_total_prova != null ? data.valor_total_prova.toFixed(2) : "—";
+    document.getElementById("fiCriterios").textContent = totalCriterios;
     fileInfo.classList.add("show");
 
     if (valid) {
       parsedData = data;
       importBtn.disabled = false;
-      logLine(`Arquivo "${file.name}" validado com sucesso (${data.questions.length} questões).`, "ok");
+      logLine(`Arquivo "${file.name}" validado com sucesso (${data.area}, ${data.exam_number}º exame).`, "ok");
     } else {
       logLine(`Arquivo "${file.name}" reprovado na validação.`, "err");
     }
@@ -389,60 +419,95 @@ dropzone.addEventListener("drop", e => {
   handleFile(file);
 });
 
+async function importItem(provaId, tipo, numero, ordem, itemData) {
+  const { data: itemRow, error: itemError } = await client
+    .from("oab2_itens")
+    .upsert({
+      prova_id: provaId,
+      tipo,
+      numero,
+      ordem,
+      enunciado: itemData.enunciado,
+      observacao: itemData.observacao ?? null,
+      valor_total: itemData.valor_total,
+      gabarito_comentado: itemData.gabarito_comentado ?? null,
+      criterios_texto_bruto: itemData.criterios_texto_bruto ?? null,
+    }, { onConflict: "prova_id,tipo,numero" })
+    .select("id")
+    .single();
+
+  if (itemError) throw new Error(`item (${tipo} ${numero ?? ""}): ${itemError.message}`);
+  const itemId = itemRow.id;
+
+  // Reimportação: limpa sub-itens e critérios antigos antes de inserir os novos.
+  await client.from("oab2_subitens").delete().eq("item_id", itemId);
+  await client.from("oab2_criterios").delete().eq("item_id", itemId);
+
+  const subitens = (itemData.subitens ?? []).map((s, idx) => ({
+    item_id: itemId,
+    letra: s.letra,
+    enunciado: s.enunciado,
+    valor: s.valor,
+    ordem: idx,
+  }));
+  if (subitens.length > 0) {
+    const { error } = await client.from("oab2_subitens").insert(subitens);
+    if (error) throw new Error(`subitens (${tipo} ${numero ?? ""}): ${error.message}`);
+  }
+
+  const criterios = (itemData.criterios ?? []).map((c, idx) => ({
+    item_id: itemId,
+    rotulo: c.rotulo,
+    categoria: c.categoria,
+    descricao: c.descricao,
+    pontuacao_maxima: c.pontuacao_maxima,
+    faixas_possiveis: c.faixas_possiveis ?? [],
+    ordem: idx,
+  }));
+  if (criterios.length > 0) {
+    const { error } = await client.from("oab2_criterios").insert(criterios);
+    if (error) throw new Error(`critérios (${tipo} ${numero ?? ""}): ${error.message}`);
+  }
+
+  return { itemId, subitensCount: subitens.length, criteriosCount: criterios.length };
+}
+
 importBtn.addEventListener("click", async () => {
   if (!parsedData) return;
   importBtn.disabled = true;
 
-  const { year, exam_type, exam_number, questions } = parsedData;
-  logLine(
-    `Iniciando importação de ${questions.length} questões (ano ${year}, ` +
-    `exame ${exam_number ?? "—"}, tipo ${exam_type})...`,
-    "info"
-  );
-
-  const rows = questions.map(q => ({
-    year,
-    exam_number: q.exam_number ?? exam_number ?? null,
-    exam_type,
-    number: q.number,
-    discipline: q.discipline ?? null,
-    statement: q.statement,
-    alternatives: q.alternatives,
-    correct_answer: q.correct_answer,
-  }));
+  const { exam_number, area, valor_total_prova, source_provas_file, source_resposta_file, peca, questoes } = parsedData;
+  logLine(`Iniciando importação: ${exam_number}º exame — ${area}...`, "info");
 
   try {
-    const { data, error } = await client
-      .from("oab_questions")
-      .upsert(rows, { onConflict: "year,exam_number,exam_type,number", ignoreDuplicates: true })
-      .select("number");
+    const { data: provaRow, error: provaError } = await client
+      .from("oab2_provas")
+      .upsert({
+        exam_number,
+        area,
+        valor_total: valor_total_prova,
+        source_provas_file: source_provas_file ?? null,
+        source_resposta_file: source_resposta_file ?? null,
+      }, { onConflict: "exam_number,area" })
+      .select("id")
+      .single();
 
-    if (error) {
-      if (/no unique or exclusion constraint/i.test(error.message)) {
-        logLine(
-          "Erro na importação: o banco ainda não tem o índice único " +
-          "atualizado (year, exam_number, exam_type, number). Rode de novo " +
-          "o supabase/schema.sql mais recente no SQL Editor do Supabase.",
-          "err"
-        );
-      } else {
-        logLine(`Erro na importação: ${error.message}`, "err");
-      }
-      importBtn.disabled = false;
-      return;
+    if (provaError) throw new Error(`caderno (oab2_provas): ${provaError.message}`);
+    const provaId = provaRow.id;
+    logLine(`Caderno gravado (id ${provaId}).`, "ok");
+
+    const pecaResult = await importItem(provaId, "peca", null, 0, peca);
+    logLine(`Peça profissional importada (${pecaResult.criteriosCount} critérios).`, "ok");
+
+    for (const q of questoes) {
+      const result = await importItem(provaId, "questao", q.numero, q.numero, q);
+      logLine(`Questão ${q.numero} importada (${result.subitensCount} subitens, ${result.criteriosCount} critérios).`, "ok");
     }
 
-    const inserted = data.length;
-    const skipped = rows.length - inserted;
-
-    logLine(`Importação concluída: ${inserted} questão(ões) inserida(s).`, "ok");
-    if (skipped > 0) {
-      logLine(`${skipped} questão(ões) já existiam no banco e foram ignoradas (duplicatas).`, "warn");
-    }
-
+    logLine(`Importação concluída: ${exam_number}º exame — ${area}.`, "ok");
     await refreshCount();
   } catch (e) {
-    logLine(`Erro inesperado: ${e.message}`, "err");
+    logLine(`Erro na importação: ${e.message}`, "err");
   } finally {
     importBtn.disabled = false;
   }

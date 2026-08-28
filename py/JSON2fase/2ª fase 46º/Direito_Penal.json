@@ -1,0 +1,366 @@
+{
+  "exam_number": 46,
+  "phase": 2,
+  "area": "Direito Penal",
+  "source_provas_file": "46º_provas_Direito_Penal.pdf",
+  "source_resposta_file": "46º_resposta_Direito_Penal.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "Jorge foi denunciado como incurso nas penas do crime de milícia privada, previsto no Art. 288-A do CP, sendo acusado de integrar a milícia constituída por Adilson, que domina a região da Zona Leste da cidade de Flores, Estado de Campo Belo.\n\nDe acordo com a inicial acusatória, Adilson constituiu uma milícia privada, fortemente armada, com o intuito de explorar a prática de jogos de azar, contravenção penal prevista no Art. 50 do Decreto-Lei nº 3.688/1941. Assim, os membros da sua milícia teriam funções variadas de segurança, tais como arrecadação e “apontadores”, todas essenciais para a consecução do fim do grupo que é a exploração do jogo ilícito naquela região.\n\nA denúncia relatou que policiais militares, em patrulhamento de rotina na Zona Leste, legitimamente abordaram Jorge e, na abordagem, nada ilícito foi localizado. Contudo, os policiais haviam recebido uma denúncia anônima no sentido de que Jorge era integrante da milícia, razão pela qual passaram a vasculhar o celular dele, sem sua autorização, localizando diversas mensagens para Adilson, a quem Jorge se referia como “chefe”, no aplicativo de troca de mensagens.\n\nPor isso, com base nos dados extraídos do telefone celular de Jorge pelos policiais militares, a denúncia foi oferecida, sem que fosse esclarecida qual a função de Jorge dentro da milícia privada. O rol de testemunhas incluía os policiais militares que participaram da abordagem, soldado Garcia e sargento Andrade.\n\nO Juiz competente da Vara Criminal de Flores recebeu a denúncia e determinou a citação do denunciado.\n\nJorge foi citado no dia 8 de junho de 2026, segunda-feira, sendo certo que todos os dias são úteis em todo o país, exceto sábados e domingos.\n\nJorge apresentou a você, na condição de advogado(a), dez amigos (identificados como “Amigo” 1 a 10) que poderiam abonar o seu caráter.\n\nConsiderando apenas as informações narradas, na condição de advogado(a) de Jorge, redija a peça jurídica cabível, diferente de habeas corpus, considerando que a decisão não padece de vícios de contradição, omissão, obscuridade ou ambiguidade, apresentando todas as teses jurídicas pertinentes. A peça deverá ser datada no último dia do prazo para apresentação.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "De acordo com o exposto na situação apresentada, considerando que o acusado foi citado, deve o examinando apresentar resposta à acusação, com fundamento no Art. 396 ou no Art. 396-A, ambos do CPP, elaborando petição direcionada para o Juízo da Vara Criminal da Comarca de Flores, Estado de Campo Belo.\n\nDeveria ser indicado pelo examinando que o prazo de apresentação da peça é de dez dias, na forma do Art. 396 do CPP.\n\nInicialmente, deve haver a rejeição da denúncia por inépcia da petição inicial, na forma do Art. 395, inciso I, do CPP.\n\nDe fato, nos termos do Art. 41 do CPP, a denúncia deve conter a exposição do fato criminoso. Observa-se que a denúncia não imputa qualquer fato criminoso, qualquer conduta típica atribuível a Jorge, e não esclarece qual a função dele dentro da milícia privada.\n\nIgualmente, não há justa causa para a deflagração da ação penal, pois inexiste qualquer prova lícita de que Jorge efetivamente pertença à milícia privada, pelo que se impõe a rejeição da denúncia, nos termos do Art. 395, inciso III, do CPP. Há de se ressaltar que os dados telemáticos armazenados em aparelho eletrônico somente podem ser acessados se autorizados por ordem judicial, nos termos do Art. 5º, inciso XII, da CRFB/88. Assim, há ilicitude no meio de obtenção da prova, a qual deve ser desentranhada do processo, nos termos do Art. 157 do CPP e/ou Art. 5º, inciso LVI, da CRFB/88.\n\nNo mérito, há atipicidade formal da conduta, diante da inexistência de crime previsto no Código Penal que dê respaldo à formação da milícia privada na forma descrita na inicial. Com efeito, o tipo penal do Art. 288-A exige que a formação da milícia tenha por fim a prática de crimes previstos no Código Penal, mas, como a milícia tinha por escopo a prática de contravenção penal, prevista em lei especial, impõe-se a absolvição sumária do acusado, pois o fato evidentemente não constitui crime.\n\nEm razão de todo o exposto, deve o examinando formular, em conclusão, os pedidos de:\n\n1) Desentranhamento da prova ilícita, nos termos do Art. 157 do CPP e/ou Art. 5º, inciso LVI, da CRFB/88. 2) Rejeição da denúncia por inépcia da petição inicial na forma do Art. 395, inciso I, do CPP. 3) Rejeição da denúncia por ausência de justa causa, na forma do Art. 395, inciso III, do CPP. 4) Absolvição sumária em razão de o fato não constituir infração penal, na forma do Art. 397, inciso III, do CPP.\n\nDeve o examinando apresentar, ainda, o rol de testemunhas, no máximo oito, conforme o Art. 401 do CPP.\n\nA data a ser indicada ao final era o dia 18 de junho de 2026, tendo em vista que a previsão do prazo da resposta à acusação é de dez dias. Como a citação foi em uma segunda-feira, o prazo se encerraria na quinta-feira da semana seguinte.\n\nNo fechamento, deve o examinando indicar local, data, advogado e OAB.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "Vara Criminal da Comarca de Flores/CB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Fundamento legal: Art. 396 ou Art. 396-A, ambos do CPP (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Tempestividade: 10 dias (0,10), na forma do Art. 396 do CPP.",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Fundamentos",
+        "descricao": "Preliminarmente, deve ser arguida a inépcia da denúncia, que não descreve qualquer conduta típica praticada pelo acusado no contexto do delito de milícia privada (0,70), nos termos do Art. 41 do CPP (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Fundamentos",
+        "descricao": "Ilicitude do meio de obtenção da prova (0,45), diante da necessidade de autorização judicial para acesso a dados telemáticos armazenados em dispositivos eletrônicos (0,25), nos termos do Art. 5º, inciso XII, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.25,
+          0.35,
+          0.45,
+          0.55,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Fundamentos",
+        "descricao": "Mérito: atipicidade da conduta (0,45), porque o crime de milícia privada pressupõe a prática de crimes previstos no Código Penal, ao passo que a milícia supostamente existente se destina à prática de contravenção, (ou) prevista em lei especial (0,35).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.35,
+          0.45,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Pedidos",
+        "descricao": "Deve ser requerido o desentranhamento das provas ilícitas (0,35), nos termos do Art. 157 do CPP, ou do Art. 5º, inciso LVI, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.45,
+        "faixas_possiveis": [
+          0.0,
+          0.35,
+          0.45
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Pedidos",
+        "descricao": "Rejeição da denúncia por inépcia da inicial (0,20) nos termos do Art. 395, inciso I, do CPP (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Pedidos",
+        "descricao": "Rejeição da denúncia por ausência de justa causa (0,20), nos termos do Art. 395, inciso III, do CPP (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Pedidos",
+        "descricao": "Absolvição sumária (0,35), em razão de o fato não constituir infração penal (0,15), nos termos do Art. 397, inciso III, do CPP (0,10).",
+        "pontuacao_maxima": 0.6,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.25,
+          0.35,
+          0.45,
+          0.5,
+          0.6
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Prazo e Fechamento",
+        "descricao": "Rol (0,20) de no máximo 08 testemunhas (0,15), na forma do Art. 401 do CPP (0,10).",
+        "pontuacao_maxima": 0.45,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.2,
+          0.25,
+          0.3,
+          0.35,
+          0.45
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Prazo e Fechamento",
+        "descricao": "Data: 18 de junho de 2026 (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Prazo e Fechamento",
+        "descricao": "Local, data, advogado e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "TRIBUIÇÃO DOS PONTOS\nITEM PONTUAÇÃO\nEndereçamento\n1. Vara Criminal da Comarca de Flores/CB (0,10). 0,00/0,10\n2. Fundamento legal: Art. 396 ou Art. 396-A, ambos do CPP (0,10). 0,00/0,10\n3. Tempestividade: 10 dias (0,10), na forma do Art. 396 do CPP. 0,00/0,10\nFundamentos\n4. Preliminarmente, deve ser arguida a inépcia da denúncia, que não descreve\nqualquer conduta típica praticada pelo acusado no contexto do delito de milícia 0,00/0,70/0,80\nprivada (0,70), nos termos do Art. 41 do CPP (0,10).\n5. Ilicitude do meio de obtenção da prova (0,45), diante da necessidade de\n0,00/0,25/0,35/0,45\nautorização judicial para acesso a dados telemáticos armazenados em dispositivos\n0,55/0,70/0,80\neletrônicos (0,25), nos termos do Art. 5º, inciso XII, da CRFB/88 (0,10).\n6. Mérito: atipicidade da conduta (0,45), porque o crime de milícia privada\npressupõe a prática de crimes previstos no Código Penal, ao passo que a milícia\n0,00/0,35/0,45/0,80\nsupostamente existente se destina à prática de contravenção, (ou) prevista em lei\nespecial (0,35).\nPedidos\n7. Deve ser requerido o desentranhamento das provas ilícitas (0,35), nos termos do\n0,00/0,35/0,45\nArt. 157 do CPP, ou do Art. 5º, inciso LVI, da CRFB/88 (0,10).\n8. Rejeição da denúncia por inépcia da inicial (0,20) nos termos do Art. 395, inciso I,\n0,00/0,20/0,30\ndo CPP (0,10).\n9. Rejeição da denúncia por ausência de justa causa (0,20), nos termos do Art. 395,\n0,00/0,20/0,30\ninciso III, do CPP (0,10).\n10. Absolvição sumária (0,35), em razão de o fato não constituir infração penal 0,00/0,15/0,25/0,35/\n(0,15), nos termos do Art. 397, inciso III, do CPP (0,10). 0,45/0,50/0,60\nPrazo e Fechamento\n11. Rol (0,20) de no máximo 08 testemunhas (0,15), na forma do Art. 401 do CPP 0,00/0,15/0,20/0,25/\n(0,10). 0,30/0,35/0,45\n12. Data: 18 de junho de 2026 (0,10). 0,00/0,10\n13. Local, data, advogado e OAB (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Rafael foi denunciado por estupro de vulnerável na modalidade tentada, na forma do Art. 217-A, combinado com o Art. 14, inciso II, ambos do CP, porque, no dia indicado na denúncia, em uma festa, ao ver Fernanda desacordada após grande ingestão de álcool, decidiu com ela praticar conjunção carnal. Para tanto, Rafael adentrou o quarto onde Fernanda estava repousada mas, nesse momento, repensou seu plano, pois também havia consumido bebida alcóolica. Por isso, por estar ligeiramente cansado, mesmo tendo condições físicas de continuar, mudou de ideia e resolveu dormir, sem encostar em Fernanda. O Juiz, ao receber a denúncia, decretou a prisão preventiva de Rafael, de ofício, com base em lei municipal que determina a decretação de prisão pelo Juiz, independentemente de requerimento do Ministério Público, sempre que houver recebimento de denúncia por delitos hediondos. Rafael constituiu você, como advogado(a), para atuar em sua defesa. Assim, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Qual a tese correta de Direito Penal a ser defendida? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Com base na Constituição da República, qual a tese a ser defendida para afastar a aplicação da lei municipal mencionada? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão exige do examinando conhecimentos sobre desistência voluntária e princípios constitucionais do processo penal. A) Em favor de Rafael, deve ser alegada a ocorrência de desistência voluntária, na forma do Art. 15 do CP ou atipicidade da conduta por serem meros atos preparatórios. B) Inconstitucionalidade da lei municipal, pois apenas a União pode legislar sobre Direito Processual Penal, na forma do Art. 22, inciso I, da CRFB/88, ou inconstitucionalidade da lei municipal, por violação aos princípios do devido processo legal, ou presunção de inocência, ou ampla defesa e/ou contraditório, na forma do Art. 5º, inciso LIV, ou LV, ou LVII, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Desistência voluntária (0,55), nos termos do Art. 15 do CP (0,10) ou atipicidade da conduta por serem meros atos preparatórios (0,65).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Inconstitucionalidade da lei municipal, pois apenas a União pode legislar sobre Direito Processual Penal ou por violação aos princípios do devido processo legal ou presunção de inocência, ou ampla defesa ou contraditório (0,50), nos termos do Art. 22, inciso I, ou do Art. 5º, incisos LIV, ou LV, ou LVII, ambos da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Desistência voluntária (0,55), nos termos do Art. 15 do CP (0,10) ou atipicidade\n0,00/0,55/0,65\nda conduta por serem meros atos preparatórios (0,65).\nB. Inconstitucionalidade da lei municipal, pois apenas a União pode legislar sobre\nDireito Processual Penal ou por violação aos princípios do devido processo legal\nou presunção de inocência, ou ampla defesa ou contraditório (0,50), nos termos 0,00/0,50/0,60\ndo Art. 22, inciso I, ou do Art. 5º, incisos LIV, ou LV, ou LVII, ambos da CRFB/88\n(0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Clovis, desejando causar a morte de Fábio, de 50 anos de idade, efetuou diversos disparos de arma de fogo contra seu desafeto. Entretanto, ante o erro de pontaria, Clovis atingiu Yuri, criança de 12 anos, levando-a a óbito. Assim, Clovis foi regularmente preso em flagrante pelo delito e autuado pelo homicídio qualificado em razão da idade da vítima (Art. 121, § 2º, inciso IX, do CP). Levado à audiência de custódia, a autoridade policial indicou concretamente a necessidade de prisão preventiva para a garantia da ordem pública, representando pela conversão da prisão em flagrante, no que foi seguido pelo Ministério Público. Na qualidade de advogado(a) de Clovis, sabendo que seu cliente tem 81 anos de idade, responda às questões a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Por ocasião da audiência de custódia, qual pedido de natureza processual deve ser feito? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Qual a tese correta de Direito Penal a ser sustentada pela defesa? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão exige do examinando conhecimentos sobre prisão domiciliar e erro na execução. A) Deve ser requerida a concessão de prisão domiciliar, nos termos do Art. 318, inciso I, do CPP. B) A ocorrência de erro na execução, devendo Clovis responder como se tivesse atingido a pessoa pretendida, afastando-se a qualificadora, nos termos do Art. 73 do CP.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Deve ser requerida a concessão de prisão domiciliar (0,50), nos termos do Art. 318, inciso I, do CPP (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "A ocorrência de erro na execução (0,35), devendo Clovis responder como se tivesse atingido a pessoa pretendida, afastando-se a qualificadora (0,20), nos termos do Art. 73 do CP (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.35,
+            0.45,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Deve ser requerida a concessão de prisão domiciliar (0,50), nos termos do Art.\n0,00/0,50/0,60\n318, inciso I, do CPP (0,10).\nB. A ocorrência de erro na execução (0,35), devendo Clovis responder como se\n0,00/0,20/0,30/0,35\ntivesse atingido a pessoa pretendida, afastando-se a qualificadora (0,20), nos\n0,45/0,55/0,65\ntermos do Art. 73 do CP (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Luana, primária, cumpria pena após ter sido, definitivamente, condenada a uma pena de quatro anos, em regime semiaberto, pelo delito de tortura. A apenada se evadiu do sistema penitenciário no dia 10/01/2021, depois de cumprir dois anos e um mês da pena. O Juízo, após constatar a fuga, expediu mandado de prisão em desfavor de Luana, o qual foi cumprido em 10/02/2025. Luana foi submetida a regular processo administrativo disciplinar, que concluiu pela prática de falta grave, nos termos do Art. 50, inciso II, da LEP, tendo sido determinada a perda da totalidade dos dias remidos. Na defesa de Luana, responda às questões a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Qual tese correta de Direito Penal deve ser usada a fim de defender a extinção do processo de execução penal? Fundamente.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Qual o fundamento a ser utilizado para impugnar a parte da decisão que impõe a perda dos dias remidos? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão exige do examinando conhecimentos sobre prescrição e execução penal. A) A extinção da punibilidade pela ocorrência de prescrição da pretensão executória, pois o prazo restante da pena é inferior a dois anos, remetendo-se ao prazo prescricional de quatro anos, lapso temporal já decorrido entre a data da fuga e da recaptura, nos termos do Art. 109, inciso V, (ou) o Art. 113, (ou) o Art. 117, inciso V, todos do Código Penal. B) A falta grave apenas permite a revogação de até um terço dos dias remidos, nos termos do Art. 127 da LEP.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "A extinção da punibilidade pela ocorrência de prescrição da pretensão executória (0,35), pois o prazo restante da pena é inferior a dois anos, remetendo-se ao prazo prescricional de 4 anos, lapso temporal já decorrido entre a data da fuga e da recaptura (0,20), nos termos do Art. 109, inciso V, (ou) o Art. 113, (ou) o Art. 117, inciso V, todos do Código Penal (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.35,
+            0.45,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "A falta grave apenas permite a revogação de até 1/3 dos dias remidos (0,50), nos termos do Art. 127 da LEP (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. A extinção da punibilidade pela ocorrência de prescrição da pretensão executória\n(0,35), pois o prazo restante da pena é inferior a dois anos, remetendo-se ao prazo\n0,00/0,20/0,30/0,35/\nprescricional de 4 anos, lapso temporal já decorrido entre a data da fuga e da\n0,45/0,55/0,65\nrecaptura (0,20), nos termos do Art. 109, inciso V, (ou) o Art. 113, (ou) o Art. 117,\ninciso V, todos do Código Penal (0,10).\nB. A falta grave apenas permite a revogação de até 1/3 dos dias remidos (0,50), nos\n0,00/0,50/0,60\ntermos do Art. 127 da LEP (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Oscar, primário e sem antecedentes, foi condenado pelo delito de lesão corporal leve praticado em desfavor de sua esposa, Adriana, a uma pena de dois anos de reclusão, em regime aberto, considerando positivas todas as circunstâncias judiciais. O Juízo não se pronunciou sobre o cabimento ou não de alternativas penais ou benefícios penais. Como advogado(a) de Oscar, responda às questões a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Em face da omissão da sentença, qual a peça processual a ser oposta? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Há algum benefício penal cabível em favor de Oscar? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão exige do examinando conhecimentos sobre sentença e suspensão condicional da pena. A) Devem ser opostos embargos de declaração, nos termos do Art. 382 do CPP. B) Sim. É cabível a suspensão condicional da pena ou sursis penal, nos termos do Art. 77 do Código Penal.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Devem ser opostos embargos de declaração (0,50), nos termos do Art. 382 do CPP (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. É cabível a suspensão condicional da pena ou sursis penal (0,55), nos termos do Art. 77 do Código Penal (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Devem ser opostos embargos de declaração (0,50), nos termos do Art. 382 do\n0,00/0,50/0,60\nCPP (0,10).\nB. Sim. É cabível a suspensão condicional da pena ou sursis penal (0,55), nos\n0,00/0,55/0,65\ntermos do Art. 77 do Código Penal (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

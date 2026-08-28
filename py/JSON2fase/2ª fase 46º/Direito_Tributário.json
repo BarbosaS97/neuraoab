@@ -1,0 +1,381 @@
+{
+  "exam_number": 46,
+  "phase": 2,
+  "area": "Direito Tributário",
+  "source_provas_file": "46º_provas_Direito_Tributário.pdf",
+  "source_resposta_file": "46º_Resposta_Direito_Tributário.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "A sociedade empresária Verde Que Te Quero Ver Ltda., com sede no Município Alfa (comarca de Vara Única), Estado Gama, presta serviços de consultoria ambiental local e de controle e tratamento de efluentes industriais e domésticos em municípios vizinhos.\n\nNo ano de 2026, a sociedade empresária foi autuada pelo Município Alfa por não ter recolhido o Imposto sobre Serviços (ISS) incidente na prestação de serviços de tratamento de efluentes realizado ao longo do ano de 2025 no Município Beta, com o fundamento de que deveria ter pago o referido imposto na municipalidade de sua sede, e não para o Município Beta, tal como a sociedade empresária havia pago.\n\nPor adotar uma política extremamente rigorosa quanto às questões tributárias, além da notificação fiscal de cobrança do imposto, acrescido de juros de mora e de multa punitiva tributária de 300% do valor do imposto devido, o Município Alfa suspendeu o pagamento do contrato de consultoria ambiental vigente entre este e a sociedade empresária, assim como cassou o alvará de funcionamento, interditando o estabelecimento.\n\nAntes mesmo da data de vencimento da cobrança tributária, considerando também a urgência de poder voltar a exercer suas atividades regularmente, a sociedade empresária procurou você, como advogado(a), buscando a tutela judicial de seus direitos e a desconstituição de tal cobrança, que entende indevida.\n\nA sociedade empresária entrega-lhe uma série de contratos e documentos comprobatórios da execução e conclusão dos serviços de tratamento de efluentes no Município Beta, os quais deverão ser usados em Juízo, bem como deverá ser feita a oitiva de testemunhas (seus funcionários e os servidores públicos responsáveis pelo acompanhamento da execução do serviço). Além disso, a sociedade empresária, diante da suspensão do pagamento do contrato de consultoria, encontra-se em sérias dificuldades financeiras, com o seu caixa praticamente zerado.\n\nDiante desse cenário, adote a medida judicial cabível para a tutela dos direitos e interesses de seu cliente, em razão da urgência e da necessidade de produção de prova testemunhal.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A medida judicial cabível é a ação anulatória, dada a sua natureza desconstitutiva, tendo por objetivo desconstituir o lançamento tributário que já está definitivamente constituído reputado ilegal. Não cabe mandado de segurança, pois o enunciado deixa claro que haverá a necessidade de dilação probatória no curso do processo. O objetivo da ação é desconstituir o lançamento referente ao ISS e a multa punitiva, ambos descritos no enunciado, cf. Art. 38 da Lei nº 6.830/1980.\n\nA ação deve ser endereçada à Vara Única da Comarca do Município Alfa, onde está localizada a sede da sociedade empresária e também sede do ente federado que está a fazer a cobrança indevida, sendo de competência da Justiça Estadual por se tratar o ISS de tributo municipal. É autora a sociedade empresária Verde Que Te Quero Ver Ltda. e réu o Município Alfa, ente federado instituidor do tributo ISS e que aplicou a multa tributária, bem como está a impedir o funcionamento das atividades da sociedade empresária.\n\nOs fatos devem ser descritos brevemente nos termos colocados pelo enunciado.\n\nNo mérito, o examinando deve ser capaz de identificar que:\n\n1) O tributo não é devido ao Município Alfa, mas sim ao Município Beta, local onde foi prestado o serviço de tratamento de efluentes, nos termos do Art. 3º, inciso IX, da LC 116/2003, in verbis: “Art. 3º. O serviço considera- se prestado, e o imposto, devido, no local do estabelecimento prestador ou, na falta do estabelecimento, no local do domicílio do prestador, exceto nas hipóteses previstas nos incisos I a XXV, quando o imposto será devido no local: IX – do controle e tratamento do efluente de qualquer natureza e de agentes físicos, químicos e biológicos, no caso dos serviços descritos no subitem 7.12 da lista anexa.” 2) A multa punitiva tributária de 300% sobre o valor devido é confiscatória, violando o Art. 150, inciso IV, da CRFB/88. 3) Não pode a Administração Tributária valer-se da interdição de estabelecimento da sociedade empresária como meio coercitivo indireto para a cobrança de tributo, cf. a Súmula 70 do STF: “É inadmissível a interdição de estabelecimento como meio coercitivo para cobrança de tributo” ou a Súmula 547 do STF: “Não é lícito à autoridade proibir que o contribuinte em débito adquira estampilhas, despache mercadorias nas alfândegas e exerça suas atividades profissionais”.\n\nConsiderando-se que a sociedade empresária está impedida de funcionar e que teve contrato cancelado, colocando- a em situação financeira difícil, que a impedirá inclusive de pagar o tributo, o examinando deve requerer antecipação de tutela (tutela de urgência), demonstrando a existência dos requisitos de fumus boni iuris e periculum in mora, de modo a poder se abster de efetuar qualquer recolhimento desse ISS, suspendendo-se a exigibilidade do crédito tributário, cf. Art. 151, inciso V, do CTN, bem como que ela seja, imediatamente, autorizada a voltar a funcionar.\n\nNos pedidos, deve o examinado requerer aquilo que tipicamente é previsto no CPC para uma ação anulatória tributária, indicando também o pedido de produção de provas, além de respeitar as normas de fechamento da peça.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "Juízo: Vara Única da Comarca do Município Alfa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Autora: Verde Que Te Quero Ver Ltda. (0,10); Réu: Município Alfa (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Cabimento da ação anulatória: o crédito tributário já foi definitivamente constituído pelo lançamento, sendo necessário desconstituir o lançamento por meio de uma ação anulatória (0,30), nos termos do Art. 38 da Lei nº 6.830/1980 (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Fundamentos",
+        "descricao": "O tributo não é devido ao Município Alfa, mas sim ao Município Beta, local onde foi prestado o serviço de tratamento de efluentes (0,60), nos termos do Art. 3º, inciso IX, da LC 116/2003 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Fundamentos",
+        "descricao": "A multa punitiva tributária de 300% sobre o valor devido é confiscatória (0,60), violando o Art. 150, inciso IV, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Fundamentos",
+        "descricao": "Não é possível a interdição de estabelecimento da sociedade empresária como meio coercitivo indireto para cobrança de tributo (0,60), cf. a Súmula 70 ou a Súmula 547, ambas do STF (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Tutela provisória de urgência",
+        "descricao": "Probabilidade do direito (fumus boni iuris) em razão das ilegalidades graves acima indicadas (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Tutela provisória de urgência",
+        "descricao": "Perigo de dano (periculum in mora), em razão de a sociedade empresária estar impedida de funcionar e em situação financeira precária (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Pedidos",
+        "descricao": "Citação do réu (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Pedidos",
+        "descricao": "Seja concedida a tutela provisória de urgência para suspender a exigibilidade do crédito tributário (0,20) e autorizar imediatamente a retomada do funcionamento da sociedade empresária (0,20) com base no Art. 151, inciso V, do CTN ou Art. 300 do CPC (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Pedidos",
+        "descricao": "Seja julgada procedente a ação, para desconstituir o lançamento tributário referente ao ISS (0,20), bem como para permitir definitivamente a continuidade das atividades da sociedade empresária (0,20)",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Opção pela não realização de audiência de conciliação ou de mediação (0,10), nos termos do Art. 319, inciso VII, do CPC (0,10) ou a indicação do não cabimento de conciliação (0,10), nos termos do Art. 334, § 4º, inciso II, do CPC (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Indicação das provas a serem produzidas (0,10), especialmente a testemunhal (0,10)",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "Condenação ao ressarcimento de custas processuais (0,10) e honorários advocatícios (0,10) ou nos ônus da sucumbência (0,20)",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Pedidos",
+        "descricao": "Valor da causa (0,10)",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Fechamento",
+        "descricao": "Data, local, advogado e OAB... (0,10)",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "TRIBUIÇÃO DOS PONTOS\nITEM PONTUAÇÃO\nEndereçamento\n1. Juízo: Vara Única da Comarca do Município Alfa (0,10). 0,00/0,10\n2. Autora: Verde Que Te Quero Ver Ltda. (0,10); Réu: Município Alfa (0,10). 0,00/0,10/0,20\n3. Cabimento da ação anulatória: o crédito tributário já foi definitivamente constituído pelo\nlançamento, sendo necessário desconstituir o lançamento por meio de uma ação 0,00/0,30/0,40\nanulatória (0,30), nos termos do Art. 38 da Lei nº 6.830/1980 (0,10).\nFundamentos\n4. O tributo não é devido ao Município Alfa, mas sim ao Município Beta, local onde foi\nprestado o serviço de tratamento de efluentes (0,60), nos termos do Art. 3º, inciso IX, da 0,00/0,60/0,70\nLC 116/2003 (0,10).\n5. A multa punitiva tributária de 300% sobre o valor devido é confiscatória (0,60), violando\n0,00/0,60/0,70\no Art. 150, inciso IV, da CRFB/88 (0,10).\n6. Não é possível a interdição de estabelecimento da sociedade empresária como meio\ncoercitivo indireto para cobrança de tributo (0,60), cf. a Súmula 70 ou a Súmula 547, 0,00/0,60/0,70\nambas do STF (0,10).\nTutela provisória de urgência\n7. Probabilidade do direito (fumus boni iuris) em razão das ilegalidades graves acima\n0,00/0,20\nindicadas (0,20).\n8. Perigo de dano (periculum in mora), em razão de a sociedade empresária estar\n0,00/0,20\nimpedida de funcionar e em situação financeira precária (0,20).\nPedidos\n9. Citação do réu (0,10). 0,00 / 0,10\n10. Seja concedida a tutela provisória de urgência para suspender a exigibilidade do\ncrédito tributário (0,20) e autorizar imediatamente a retomada do funcionamento da 0,00/0,20/0,30/\nsociedade empresária (0,20) com base no Art. 151, inciso V, do CTN ou Art. 300 do CPC 0,40/0,50\n(0,10).\n11. Seja julgada procedente a ação, para desconstituir o lançamento tributário referente\n0,00/0,20/\nao ISS (0,20), bem como para permitir definitivamente a continuidade das atividades da\n0,40\nsociedade empresária (0,20)\n12. Opção pela não realização de audiência de conciliação ou de mediação (0,10), nos\ntermos do Art. 319, inciso VII, do CPC (0,10) ou a indicação do não cabimento de 0,00/0,10/0,20\nconciliação (0,10), nos termos do Art. 334, § 4º, inciso II, do CPC (0,10).\n13. Indicação das provas a serem produzidas (0,10), especialmente a testemunhal (0,10) 0,00/0,10/0,20\n14. Condenação ao ressarcimento de custas processuais (0,10) e honorários\n0,00/0,10/0,20\nadvocatícios (0,10) ou nos ônus da sucumbência (0,20)\n15. Valor da causa (0,10) 0,00/0,10\nFechamento\n16. Data, local, advogado e OAB... (0,10) 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "José, proprietário de um único imóvel urbano situado no Município Alfa e nele residente com sua família, é citado em ação de execução fiscal cobrando dívida de IPTU desse imóvel, decorrente de uma base de cálculo com a qual não concorda e que gerou, na sua opinião, excesso no valor do tributo. Ao procurar seu advogado, José relatou não possuir nenhum outro imóvel para residir com sua família, perguntando ao advogado se isso não tornaria tal imóvel impenhorável por sua condição de bem de família. Afirmou também que concorda em pagar apenas 50% do valor cobrado, que reputa incontroverso, e que poderia oferecer seu automóvel (cujo valor é superior ao da dívida) como garantia do montante restante, pretendendo questionar a base de cálculo usada para a referida cobrança. Diante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É adequado alegar se tratar de bem de família para fins de impenhorabilidade do imóvel nessa execução fiscal? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "É possível a José pagar parcela da dívida em cobrança judicial que reputa incontroversa e garantir a execução apenas do saldo devedor? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não é adequado. A impenhorabilidade do bem de família não é oponível ao Fisco em execução fiscal, quando movida para cobrança de imposto predial ou territorial devido em função do imóvel familiar, com base no Art. 3º, inciso IV, da Lei nº 8.009/1990. B) Sim, é possível. O executado poderá pagar parcela da dívida, que julgar incontroversa, e garantir a execução do saldo devedor, segundo o Art. 9º, § 6º, da Lei nº 6.830/1980.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A impenhorabilidade do bem de família não é oponível em execução fiscal quando movida para cobrança de imposto predial ou territorial devido em função do imóvel familiar (0,55), conforme o Art. 3º, inciso IV, da Lei nº 8.009/1990 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. O executado poderá pagar a parcela da dívida que julgar incontroversa e garantir a execução do saldo devedor (0,50), conforme o Art. 9º, §6º, da Lei nº 6.830/1980 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A impenhorabilidade do bem de família não é oponível em execução fiscal\nquando movida para cobrança de imposto predial ou territorial devido em função do 0,00/0,55/0,65\nimóvel familiar (0,55), conforme o Art. 3º, inciso IV, da Lei nº 8.009/1990 (0,10).\nB. Sim. O executado poderá pagar a parcela da dívida que julgar incontroversa e garantir\n0,00/0,50/0,60\na execução do saldo devedor (0,50), conforme o Art. 9º, §6º, da Lei nº 6.830/1980 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "José, com outros três amigos, entrou em uma loja de eletrodomésticos a fim de adquirir uma TV para assistir à transmissão da final do campeonato de futebol. Ao tentar realizar a compra da TV, José foi surpreendido ao ver seu nome protestado com base em uma Certidão de Dívida Ativa (CDA) de imposto municipal não pago, cujo débito e cuja inscrição em dívida ativa foram feitos de forma regular. José, indignado e sentindo-se moralmente afetado por ter seu nome “sujo na praça” por uma dívida tributária, procurou você, como advogado(a), para orientá-lo sobre as providências cabíveis, bem como para ajuizar uma ação anulatória do crédito tributário que entende indevido, fazendo, em Juízo, o depósito em dinheiro do montante integral da dívida. Diante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "José faz jus à indenização por danos morais em face do Município, por ter tido seu nome “sujo na praça” em razão do motivo apresentado? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Caso José, antes de ajuizar a ação anulatória e de depositar, em Juízo, o montante integral da dívida em dinheiro, solicite certidão de regularidade fiscal municipal, que tipo de certidão obterá? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não faz jus. O protesto de CDA é previsto como uma das formas legais de cobrança da dívida ativa dos Municípios não paga devidamente, segundo o Art. 1º, parágrafo único, da Lei nº 9.492/1997: Art. 1º Protesto é o ato formal e solene pelo qual se prova a inadimplência e o descumprimento de obrigação originada em títulos e outros documentos de dívida. Parágrafo único. Incluem-se entre os títulos sujeitos a protesto as certidões de dívida ativa da União, dos Estados, do Distrito Federal, dos Municípios e das respectivas autarquias e fundações públicas. B) Obterá uma certidão positiva, pois o crédito tributário está vencido e sem exigibilidade suspensa, conforme o Art. 206 do CTN, contrario sensu: “Art. 206. Tem os mesmos efeitos previstos no artigo anterior a certidão de que conste a existência de créditos não vencidos, em curso de cobrança executiva em que tenha sido efetivada a penhora, ou cuja exigibilidade esteja suspensa”.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. O protesto de CDA é previsto como uma das formas legais de cobrança da dívida ativa dos Municípios não paga devidamente (0,55), segundo o Art. 1º, parágrafo único, da Lei nº 9.492/1997 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Obterá uma certidão positiva (0,50), conforme o Art. 206 do CTN, contrario sensu (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. O protesto de CDA é previsto como uma das formas legais de cobrança da dívida\nativa dos Municípios não paga devidamente (0,55), segundo o Art. 1º, parágrafo único, 0,00/0,55/0,65\nda Lei nº 9.492/1997 (0,10).\nB. Obterá uma certidão positiva (0,50), conforme o Art. 206 do CTN, contrario sensu\n0,00/0,50/0,60\n(0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "A sociedade empresária XYZ Ltda. foi citada em ação de execução fiscal para que, no prazo de cinco dias, pagasse a dívida com juros, multa de mora e encargos indicados na Certidão de Dívida Ativa ou garantisse a execução. A sociedade XYZ Ltda. optou por oferecer um imóvel de sua propriedade em valor muito superior à dívida em cobrança e oferecer embargos do devedor no prazo legal. Logo após a impugnação realizada pela Fazenda aos embargos, a sociedade empresária requereu a substituição da garantia por um depósito integral em dinheiro, a fim de alienar aquele imóvel. A Fazenda contestou o pedido de substituição da garantia alegando que, naquela fase processual, não seria mais possível a substituição da garantia, e que qualquer alienação de bens do devedor poderia ser equiparada à fraude à execução. Diante desse cenário, como advogado(a), responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Seria possível ao executado, naquela fase processual, requerer a substituição da garantia ofertada por depósito em dinheiro? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Está correta a alegação da Fazenda de que qualquer alienação de bens do devedor será considerada fraude à execução? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, seria possível. Em qualquer fase do processo de execução fiscal, deverá ser deferida pelo Juiz, ao executado, a substituição da penhora por depósito em dinheiro, segundo o Art. 15, inciso I, da Lei nº 6.830/1980. B) Não está correta. O enunciado é claro em dizer que, para além do dinheiro que seria depositado em substituição ao imóvel dado em garantia, o valor do imóvel era muito superior à dívida em cobrança. Assim, além da garantia em dinheiro, com a venda do imóvel, o executado ainda teria em seu patrimônio valor remanescente em dinheiro oriundo da venda capaz de responder por toda a dívida. Assim, não se presume fraudulenta a alienação de bens, quando tiverem sido reservados, pelo devedor, bens ou rendas suficientes para o total pagamento da dívida inscrita, conforme o Art. 185, parágrafo único, do CTN.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. Em qualquer fase do processo de execução fiscal é possível a substituição da penhora por depósito em dinheiro (0,50), segundo o Art. 15, inciso I, da Lei nº 6.830/1980 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A alienação de bens não se presume fraudulenta quando tiverem sido reservados, pelo devedor, bens ou rendas suficientes ao total pagamento da dívida inscrita (0,55), conforme o Art. 185, parágrafo único, do CTN (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. Em qualquer fase do processo de execução fiscal é possível a substituição da\npenhora por depósito em dinheiro (0,50), segundo o Art. 15, inciso I, da Lei nº 6.830/1980 0,00/0,50/0,60\n(0,10).\nB. Não. A alienação de bens não se presume fraudulenta quando tiverem sido reservados,\npelo devedor, bens ou rendas suficientes ao total pagamento da dívida inscrita (0,55), 0,00/0,55/0,65\nconforme o Art. 185, parágrafo único, do CTN (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "A produção de ouro extraída no Município Alfa, Estado Beta, foi integralmente adquirida por uma instituição financeira como ativo financeiro, nos termos da previsão legal. A União e o Estado Beta desejam tributar tal operação. A primeira, com o Imposto sobre Operações Financeiras (IOF) incidente sobre o valor de venda, e o segundo, com o Imposto sobre Circulação de Mercadorias (ICMS) sobre o valor de venda do produtor para a instituição financeira. Além disso, o Município Alfa, o Estado Beta e a União pretendem ser beneficiários dos recursos advindos dessa arrecadação. Diante desse cenário, responda, justificadamente, aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Sobre a operação de venda desse ouro deve incidir o IOF ou o ICMS? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Quais os entes federados serão beneficiários dos recursos advindos dessa arrecadação? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) O ouro, quando definido em lei como ativo financeiro, sujeita-se exclusivamente à incidência do IOF, conforme o Art. 153, § 5º, da CRFB/88. B) É assegurada a transferência do montante da arrecadação nos seguintes termos: I – 30% para o Estado Beta; II – 70% para o Município Alfa de origem, segundo o Art. 153, §5º, incisos I e II, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "O ouro, quando definido em lei como ativo financeiro, sujeita-se exclusivamente à incidência do IOF (0,55), conforme o Art. 153, § 5º, da CRFB/88 ou Art. 2º, inciso V, ou Art. 36, ambos do Decreto 6306/2007 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "É assegurada a transferência do montante da arrecadação para o Estado Beta (0,25) e para o Município Alfa de origem (0,25), segundo o Art. 153, § 5º, incisos I e II, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.35,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. O ouro, quando definido em lei como ativo financeiro, sujeita-se exclusivamente à\nincidência do IOF (0,55), conforme o Art. 153, § 5º, da CRFB/88 ou Art. 2º, inciso V, ou 0,00/0,55/0,65\nArt. 36, ambos do Decreto 6306/2007 (0,10).\nB. É assegurada a transferência do montante da arrecadação para o Estado Beta (0,25)\n0,00/0,25/0,35\ne para o Município Alfa de origem (0,25), segundo o Art. 153, § 5º, incisos I e II, da\n0,50/0,60\nCRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

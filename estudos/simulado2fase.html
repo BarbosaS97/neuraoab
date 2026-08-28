@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuraOAB — Simulado 2ª Fase</title>
+<link rel="icon" href="../images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#0d1117">
+<script>
+  // Aplica o tema salvo ANTES do CSS pintar a tela — mesmo truque anti-FOUC
+  // usado em estudos/index.html, e a mesma chave de localStorage, para o
+  // tema escolhido em qualquer uma das duas paginas valer na outra.
+  (function () {
+    try {
+      if (localStorage.getItem("neuraoab-theme") === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="style.css?v=21">
+<link rel="stylesheet" href="simulado2fase.css?v=10">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body class="sim2-body">
+
+<header class="sim2-topbar">
+  <div class="sim2-brand"><img src="../images/logotipo.png" alt="NeuraOAB"></div>
+  <div class="sim2-topbar-title">
+    <span>Simulado — 2ª Fase</span>
+    <span class="sim2-topbar-sub">Correção automática por IA</span>
+  </div>
+
+  <div class="sim2-timer" id="simTimer">
+    <span class="sim2-timer-display" id="timerDisplay">00:00:00</span>
+    <button type="button" id="timerPlayPause" class="sim2-timer-btn" aria-label="Iniciar cronômetro"></button>
+    <button type="button" id="timerReset" class="sim2-timer-btn" aria-label="Zerar cronômetro">
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="1 4 1 10 7 10"></polyline>
+        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+      </svg>
+    </button>
+  </div>
+
+  <nav class="sim2-topbar-nav">
+    <a href="index.html" class="sim2-phase-link">
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Ir para a 1ª Fase
+    </a>
+    <button type="button" id="sim2ThemeToggle" class="sim2-theme-toggle" aria-label="Alternar tema"></button>
+  </nav>
+</header>
+
+<main class="sim2-main">
+
+  <!-- ------------------------------------------------------------ Picker -->
+  <section id="viewPicker" class="sim2-view">
+    <div class="sim2-card sim2-picker-card sim2-narrow">
+      <img class="sim2-picker-stamp" src="../images/simulado%20de%20pr%C3%A1tica.png" alt="Simulado de Prática — 2ª Fase">
+      <p class="sim2-lede">
+        Escolha o exame e a área do Direito. Você vai responder a peça
+        profissional e as 4 questões discursivas, e a IA corrige com base no
+        padrão de resposta oficial da banca, item por item.
+      </p>
+
+      <!-- Skeleton: ocupa o mesmo espaco do formulario real, pra pagina nao
+           "pular" quando os dados chegam do Supabase — soma-se ao conteudo
+           estatico logo abaixo (Como funciona), que aparece de imediato. -->
+      <div id="pickerLoading" class="sim2-skeleton" aria-hidden="true">
+        <div class="sim2-skel-line sim2-skel-label"></div>
+        <div class="sim2-skel-line sim2-skel-select"></div>
+        <div class="sim2-skel-line sim2-skel-label"></div>
+        <div class="sim2-skel-line sim2-skel-select"></div>
+        <div class="sim2-skel-line sim2-skel-btn"></div>
+      </div>
+
+      <div id="pickerForm" class="sim2-picker-form" hidden>
+        <div class="sim2-field">
+          <label for="selExame">Exame</label>
+          <select id="selExame"></select>
+        </div>
+        <div class="sim2-field">
+          <label for="selArea">Área do Direito</label>
+          <select id="selArea"></select>
+        </div>
+
+        <button type="button" id="btnStart" class="sim2-btn-primary">Abrir caderno</button>
+      </div>
+
+      <div id="pickerEmpty" class="sim2-empty" hidden>
+        Nenhum caderno da 2ª fase foi importado ainda. Use o extrator em
+        <code>py/extract_oab2.py</code> e importe o JSON em
+        <a href="../admin/import2fase.html">admin/import2fase.html</a>.
+      </div>
+
+      <div id="pickerError" class="sim2-err-box" hidden></div>
+    </div>
+
+    <div class="sim2-narrow sim2-how">
+      <h2 class="sim2-how-title">Como funciona</h2>
+      <div class="sim2-how-grid">
+        <div class="sim2-how-step">
+          <span class="sim2-how-num">1</span>
+          <h3>Escolha o caderno</h3>
+          <p>Selecione o exame e a área do Direito que quer treinar.</p>
+        </div>
+        <div class="sim2-how-step">
+          <span class="sim2-how-num">2</span>
+          <h3>Responda no seu ritmo</h3>
+          <p>Escreva a peça profissional e as 4 questões discursivas, com a mesma quantidade de linhas da prova oficial. Suas respostas são salvas automaticamente a cada letra digitada.</p>
+        </div>
+        <div class="sim2-how-step">
+          <span class="sim2-how-num">3</span>
+          <h3>Finalize quando terminar</h3>
+          <p>Clique em "Finalizar e corrigir com IA" para enviar as 5 respostas de uma vez.</p>
+        </div>
+        <div class="sim2-how-step">
+          <span class="sim2-how-num">4</span>
+          <h3>Receba a correção</h3>
+          <p>A IA avalia cada item com base no padrão de resposta oficial da banca — nota e feedback item por item.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ----------------------------------------------------------- Caderno -->
+  <section id="viewCaderno" class="sim2-view" hidden>
+    <div class="sim2-caderno-header">
+      <div>
+        <h1 id="cadernoTitulo">—</h1>
+        <p class="sim2-caderno-sub" id="cadernoSub">—</p>
+      </div>
+      <div class="sim2-caderno-header-actions">
+        <button type="button" id="btnReiniciarCaderno" class="sim2-btn-ghost">Recomeçar</button>
+        <button type="button" id="btnSairCaderno" class="sim2-btn-ghost">Trocar caderno</button>
+      </div>
+    </div>
+
+    <div class="sim2-tabs-sticky">
+      <div class="sim2-tabs" id="tabStrip"></div>
+    </div>
+
+    <div class="sim2-item-wrap">
+      <div class="sim2-card sim2-enunciado-card">
+        <div id="itemMeta" class="sim2-item-meta"></div>
+        <div class="sim2-enunciado-label">Enunciado</div>
+        <div id="itemEnunciado" class="sim2-item-enunciado"></div>
+      </div>
+
+      <div class="sim2-answer-sheet" id="answerSheet">
+        <div class="sim2-line-gutter" id="lineGutter"></div>
+        <textarea id="itemResposta" class="sim2-textarea" placeholder="Digite sua resposta para este item..." spellcheck="true"></textarea>
+      </div>
+    </div>
+
+    <div class="sim2-caderno-bottombar">
+      <div class="sim2-bottombar-info">
+        <span id="itemContagem" class="sim2-contagem">0 palavras</span>
+        <span id="itemLinhasInfo" class="sim2-linhas-info"></span>
+        <span id="itemSalvo" class="sim2-salvo">&nbsp;</span>
+      </div>
+      <div class="sim2-caderno-nav">
+        <button type="button" id="btnPrevItem" class="sim2-btn-ghost">Anterior</button>
+        <button type="button" id="btnFinalizar" class="sim2-btn-primary sim2-btn-finalizar">Finalizar e corrigir com IA</button>
+        <button type="button" id="btnNextItem" class="sim2-btn-ghost">Próximo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------- Corrigindo -->
+  <section id="viewCorrigindo" class="sim2-view" hidden>
+    <div class="sim2-card sim2-corrigindo-card sim2-narrow">
+      <div class="sim2-spinner" aria-hidden="true"></div>
+      <h2>Corrigindo sua prova com IA...</h2>
+      <p class="sim2-lede">Isso pode levar até um minuto — a IA está avaliando cada item com base no padrão de resposta oficial.</p>
+      <ul id="corrigindoLista" class="sim2-corrigindo-lista"></ul>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------- Resultado -->
+  <section id="viewResultado" class="sim2-view" hidden>
+    <div class="sim2-narrow">
+      <div class="sim2-card sim2-resultado-header">
+        <div class="sim2-nota-total">
+          <span class="sim2-nota-num" id="notaTotalNum">0,00</span>
+          <span class="sim2-nota-den">/ <span id="notaTotalDen">10,00</span></span>
+        </div>
+        <p class="sim2-resultado-sub" id="resultadoSub">—</p>
+        <button type="button" id="btnNovoSimulado" class="sim2-btn-primary">Novo simulado</button>
+      </div>
+
+      <div id="resultadoItens" class="sim2-resultado-itens"></div>
+    </div>
+  </section>
+
+</main>
+
+<script src="simulado2fase.js?v=4"></script>
+</body>
+</html>

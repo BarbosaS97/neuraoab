@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=20">
+<link rel="stylesheet" href="style.css?v=21">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
@@ -47,7 +47,20 @@
       </div>
 
       <nav class="side-nav">
-        <a href="index.html" class="active">Estudos</a>
+        <a href="index.html" class="phase-link active">
+          <span class="phase-num">1</span>
+          <span class="phase-text">
+            <b>1ª Fase</b>
+            <small>Questões objetivas</small>
+          </span>
+        </a>
+        <a href="simulado2fase.html" class="phase-link">
+          <span class="phase-num">2</span>
+          <span class="phase-text">
+            <b>2ª Fase</b>
+            <small>Simulado com correção por IA</small>
+          </span>
+        </a>
         <a href="#" class="soon" aria-disabled="true" title="Em breve">Estatísticas</a>
       </nav>
 
@@ -148,7 +161,7 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=13"></script>
+<script src="estudos.js?v=14"></script>
 <script src="dr-laureano.js?v=8"></script>
 </body>
 </html>

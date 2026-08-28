@@ -1,0 +1,857 @@
+/* Simulado 2ª fase — layout proprio (sem sidebar de filtros nem chat, que
+   nao fazem sentido nesse fluxo). Reaproveita as variaveis de cor/tema
+   definidas em style.css (--bg, --card, --text, --primary etc.), que ja
+   cobrem claro/escuro. */
+
+:root {
+  /* --sheet-line-height precisa bater com LINE_HEIGHT_PX em
+     simulado2fase.js (o JS calcula a altura da folha em px a partir dele —
+     mantenha os dois valores sincronizados se for ajustar). */
+  --sheet-line-height: 32px;
+  --sheet-font-size: 17px;
+  /* Preenchida via JS (altura real do topbar), com um valor de fallback
+     aqui pra a pagina nao "pular" antes do JS rodar. */
+  --topbar-h: 58px;
+}
+
+.sim2-body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Qualquer elemento escondido via JS (elemento.hidden = true) precisa
+   continuar escondido mesmo quando alguma regra deste arquivo tambem
+   define "display" pra ele (ex.: ".sim2-picker-form { display: flex }")
+   — sem isso, essa regra de autor (mesmo com especificidade mais baixa)
+   vence a regra padrao do navegador "[hidden] { display: none }" (que e'
+   de user-agent, perde pra QUALQUER regra de autor na mesma importancia,
+   independente de especificidade). Uma unica regra global aqui evita ter
+   que lembrar de repetir esse override pra cada elemento novo. */
+[hidden] { display: none !important; }
+
+/* ------------------------------------------------------------- Topbar */
+
+.sim2-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 30;
+}
+
+.sim2-brand { display: flex; align-items: center; text-decoration: none; }
+.sim2-brand img { height: 34px; width: auto; display: block; }
+
+.sim2-topbar-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.sim2-topbar-sub { font-size: 11px; font-weight: 400; color: var(--text-dim); }
+
+.sim2-topbar-nav {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sim2-topbar-nav a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 7px;
+}
+
+.sim2-topbar-nav a:hover { color: var(--text); background: var(--card-hover); }
+
+/* Link de volta pra 1ª fase: texto + icone + fundo/borda proprios, bem mais
+   evidente que um link de texto solto no meio do topbar. Seletor
+   ".sim2-topbar-nav a.sim2-phase-link" (nao so' ".sim2-phase-link") de
+   proposito: precisa ter especificidade MAIOR que ".sim2-topbar-nav a" ali
+   em cima, senao aquela regra (que pinta o texto de --text-dim) vence e o
+   texto fica escuro em cima do fundo roxo — ilegivel. */
+.sim2-topbar-nav a.sim2-phase-link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #fff;
+  background: var(--primary);
+  border: 1px solid transparent;
+  padding: 7px 14px;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+.sim2-topbar-nav a.sim2-phase-link:hover { color: #fff; filter: brightness(1.1); transform: translateY(-1px); }
+
+.sim2-theme-toggle {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sim2-theme-toggle:hover { border-color: var(--primary); }
+
+/* Cronometro de prova — persiste em localStorage (ver TIMER_KEY em
+   simulado2fase.js), entao sobrevive a reload/troca de aba. Fica no topbar,
+   visivel em todas as views (nao so' no caderno), pois e' um cronometro de
+   sessao de estudo, nao vinculado a uma tentativa especifica. */
+.sim2-timer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 6px 5px 14px;
+}
+
+.sim2-timer-display {
+  font-variant-numeric: tabular-nums;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  min-width: 62px;
+}
+
+.sim2-timer-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: none;
+  background: var(--card-hover);
+  color: var(--text-dim);
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.sim2-timer-btn:hover { background: var(--primary-dim); color: var(--text); }
+
+#timerPlayPause.running { background: var(--primary); color: #fff; }
+
+/* --------------------------------------------------------------- Main */
+
+.sim2-main {
+  flex: 1;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 28px 16px 60px;
+}
+
+@media (min-width: 640px) {
+  .sim2-main { padding: 40px 24px 80px; }
+}
+
+/* Views que nao precisam da largura toda (picker, corrigindo, resultado)
+   ficam centralizadas numa coluna de leitura confortavel — so' o caderno
+   usa a largura cheia de .sim2-main. */
+.sim2-narrow {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.sim2-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 24px 48px -28px rgba(0, 0, 0, 0.6);
+  padding: 24px;
+  animation: sim2CardIn 0.28s ease;
+}
+
+@media (min-width: 600px) {
+  .sim2-card { padding: 32px 36px; }
+}
+
+@keyframes sim2CardIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.sim2-lede {
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 8px 0 24px;
+}
+
+.sim2-card h1 { margin: 0; font-size: 22px; }
+
+/* -------------------------------------------------------------- Picker */
+
+.sim2-picker-stamp {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  margin: 0 auto 18px;
+}
+
+.sim2-picker-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Skeleton do formulario: mesmo espaco/proporcoes dos campos reais, pra
+   pagina nao "pular" de altura quando os dados chegam do Supabase — o
+   conteudo estatico (h1/lede acima, "Como funciona" abaixo) ja aparece de
+   imediato de qualquer forma, entao so' o miolo do formulario pisca. */
+.sim2-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sim2-skel-line {
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--card-hover) 25%, var(--border) 37%, var(--card-hover) 63%);
+  background-size: 400% 100%;
+  animation: sim2Shimmer 1.4s ease infinite;
+}
+
+.sim2-skel-label { height: 11px; width: 70px; margin-top: 6px; }
+.sim2-skel-select { height: 40px; }
+.sim2-skel-btn { height: 44px; margin-top: 10px; }
+
+@keyframes sim2Shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sim2-skel-line { animation: none; }
+}
+
+.sim2-field label {
+  display: block;
+  font-size: 12.5px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+
+.sim2-field select {
+  width: 100%;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 12px;
+  font-size: 14px;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-dim) 50%), linear-gradient(135deg, var(--text-dim) 50%, transparent 50%);
+  background-position: calc(100% - 18px) center, calc(100% - 13px) center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+
+.sim2-field select:focus { outline: none; border-color: var(--primary); }
+
+.sim2-notice {
+  background: var(--primary-dim);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  border-radius: 9px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.sim2-link-btn {
+  display: block;
+  margin-top: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--primary);
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.sim2-empty {
+  color: var(--text-dim);
+  font-size: 14px;
+  padding: 20px 0;
+}
+
+.sim2-empty code {
+  background: var(--card-hover);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 12.5px;
+}
+
+.sim2-empty a { color: var(--primary); }
+
+.sim2-err-box {
+  color: var(--error);
+  background: var(--error-dim);
+  border: 1px solid rgba(218, 54, 51, 0.4);
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 13px;
+}
+
+/* ---------------------------------------------------------- Como funciona */
+
+.sim2-how {
+  margin-top: 28px;
+  padding-bottom: 8px;
+}
+
+.sim2-how-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  text-align: center;
+  margin: 0 0 18px;
+}
+
+.sim2-how-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 560px) {
+  .sim2-how-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.sim2-how-step {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+
+.sim2-how-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.sim2-how-step h3 {
+  font-size: 14px;
+  margin: 0 0 6px;
+  color: var(--text);
+}
+
+.sim2-how-step p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+/* ------------------------------------------------------------- Buttons */
+
+.sim2-btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sim2-btn-primary:hover:not(:disabled) {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px -10px rgba(139, 92, 246, 0.6);
+}
+
+.sim2-btn-primary:disabled {
+  background: var(--card-hover);
+  color: var(--text-dim);
+  cursor: not-allowed;
+}
+
+.sim2-btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: 9px;
+  padding: 11px 18px;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+
+.sim2-btn-ghost:hover:not(:disabled) { color: var(--text); border-color: var(--primary); }
+.sim2-btn-ghost:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ------------------------------------------------------------- Caderno */
+
+.sim2-caderno-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.sim2-caderno-header h1 { font-size: 19px; margin: 0 0 4px; }
+.sim2-caderno-sub { margin: 0; color: var(--text-dim); font-size: 13px; }
+
+.sim2-caderno-header-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+/* Fixa logo abaixo do topbar (que tambem e' sticky) — assim o aluno sempre
+   consegue trocar de item sem ter que rolar de volta ao topo, mesmo depois
+   de rolar bem fundo numa folha de 150 linhas. */
+.sim2-tabs-sticky {
+  position: sticky;
+  top: var(--topbar-h, 58px);
+  z-index: 20;
+  background: var(--bg);
+  padding: 10px 0;
+  margin: 0 -4px 16px;
+}
+
+.sim2-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 4px;
+}
+
+.sim2-tab {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: 999px;
+  padding: 8px 15px;
+  font-size: 12.5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  transition: border-color 0.12s ease, color 0.12s ease, background 0.12s ease;
+}
+
+.sim2-tab:hover { color: var(--text); border-color: var(--primary); }
+
+.sim2-tab.active {
+  background: var(--primary-dim);
+  border-color: rgba(139, 92, 246, 0.45);
+  color: var(--text);
+}
+
+.sim2-tab .sim2-tab-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.sim2-tab.filled .sim2-tab-dot { background: var(--success); }
+
+/* Coluna unica: enunciado em cima (bem legivel, largura confortavel de
+   leitura), folha de resposta embaixo — quem rola pra ver tudo e' a
+   PAGINA inteira. */
+.sim2-item-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sim2-enunciado-card { padding: 22px 24px; }
+
+@media (min-width: 600px) {
+  .sim2-enunciado-card { padding: 28px 32px; }
+}
+
+.sim2-item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.sim2-item-meta .badge {
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--card-hover);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+
+.sim2-item-meta .badge.valor {
+  background: var(--primary-dim);
+  color: var(--primary);
+  border-color: rgba(139, 92, 246, 0.35);
+}
+
+.sim2-enunciado-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.sim2-item-enunciado {
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+.sim2-enunciado-p {
+  margin: 0 0 14px;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+.sim2-enunciado-p:last-of-type { margin-bottom: 0; }
+
+.sim2-item-enunciado .sim2-subitem {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 8px 8px 0;
+}
+
+.sim2-item-enunciado .sim2-subitem b { color: var(--primary); }
+
+.sim2-item-enunciado .sim2-obs {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-dim);
+}
+
+/* Folha de texto definitivo: simula o caderno pautado e numerado que o
+   aluno recebe na prova real — MESMA contagem de linhas oficial (150 para a
+   peca, 30 por questao, ver TOTAL_LINHAS em simulado2fase.js), com régua de
+   numeração à esquerda. A folha tem a altura EXATA do total de linhas (sem
+   scroll interno) — quem rola pra ve-la inteira e' a PAGINA, nao uma caixa
+   pequena por dentro. Se o aluno escrever alem do numero oficial de linhas,
+   a folha cresce (nunca corta texto) e as linhas extras ficam marcadas em
+   ".extra", visualmente diferentes da pauta oficial. */
+
+.sim2-answer-sheet {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 20px 40px -30px rgba(0, 0, 0, 0.6);
+}
+
+.sim2-line-gutter {
+  flex-shrink: 0;
+  width: 46px;
+  user-select: none;
+  background: var(--card-hover);
+  border-right: 1px solid var(--border);
+  border-radius: 10px 0 0 10px;
+}
+
+.sim2-line-gutter span {
+  display: block;
+  height: var(--sheet-line-height);
+  line-height: var(--sheet-line-height);
+  text-align: right;
+  padding-right: 9px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+}
+
+.sim2-line-gutter span.extra { color: var(--error); }
+
+.sim2-textarea {
+  flex: 1;
+  min-width: 0;
+  display: block;
+  background-color: transparent;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--sheet-line-height) - 1px),
+    var(--border) calc(var(--sheet-line-height) - 1px),
+    var(--border) var(--sheet-line-height)
+  );
+  color: var(--text);
+  border: none;
+  border-radius: 0 10px 10px 0;
+  padding: 0 16px 0 12px;
+  font-size: var(--sheet-font-size);
+  line-height: var(--sheet-line-height);
+  font-family: inherit;
+  resize: none;
+  overflow: hidden;
+}
+
+.sim2-textarea:focus { outline: none; }
+.sim2-answer-sheet:focus-within { border-color: var(--primary); }
+
+/* Barra de acoes fixa no rodape da viewport (nao no fim do documento) —
+   com uma folha de ate 150 linhas, sem isso o aluno teria que rolar tudo de
+   volta so' pra trocar de item ou finalizar. */
+.sim2-caderno-bottombar {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 10px 4px;
+  margin: 20px -4px 0;
+  box-shadow: 0 -12px 24px -20px rgba(0, 0, 0, 0.5);
+}
+
+.sim2-bottombar-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.sim2-linhas-info.over-limit { color: var(--error); }
+
+.sim2-salvo { text-align: right; }
+
+.sim2-caderno-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.sim2-btn-finalizar { order: 2; flex: 1; max-width: 340px; }
+
+@media (max-width: 560px) {
+  .sim2-caderno-nav { flex-wrap: wrap; }
+  .sim2-btn-finalizar { order: 0; max-width: none; width: 100%; }
+  .sim2-bottombar-info { flex-wrap: wrap; }
+}
+
+/* ---------------------------------------------------------- Corrigindo */
+
+.sim2-corrigindo-card {
+  text-align: center;
+  max-width: 480px;
+  margin: 40px auto;
+}
+
+.sim2-spinner {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  margin: 0 auto 20px;
+  animation: sim2Spin 0.8s linear infinite;
+}
+
+@keyframes sim2Spin { to { transform: rotate(360deg); } }
+
+.sim2-corrigindo-card h2 { font-size: 17px; margin: 0 0 8px; }
+
+.sim2-corrigindo-lista {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.sim2-corrigindo-lista li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+}
+
+.sim2-corrigindo-lista li.done { color: var(--success); border-color: rgba(46, 160, 67, 0.35); }
+.sim2-corrigindo-lista li.error { color: var(--error); border-color: rgba(218, 54, 51, 0.35); }
+
+/* ----------------------------------------------------------- Resultado */
+
+.sim2-resultado-header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.sim2-nota-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+}
+
+.sim2-nota-num {
+  font-size: 48px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.sim2-nota-den { font-size: 18px; color: var(--text-dim); }
+
+.sim2-resultado-sub {
+  color: var(--text-dim);
+  font-size: 13.5px;
+  margin: 8px 0 22px;
+}
+
+.sim2-resultado-itens {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sim2-resultado-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.sim2-resultado-item-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+}
+
+.sim2-resultado-item-head:hover { background: var(--card-hover); }
+
+.sim2-resultado-item-nota {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.sim2-resultado-item-nota .den { font-weight: 400; color: var(--text-dim); }
+
+.sim2-resultado-item-body {
+  padding: 0 20px 20px;
+  display: none;
+}
+
+.sim2-resultado-item.open .sim2-resultado-item-body { display: block; }
+
+.sim2-resultado-item.open .sim2-resultado-item-head { border-bottom: 1px solid var(--border); }
+
+.sim2-feedback-geral {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text);
+  margin: 14px 0 16px;
+  white-space: pre-wrap;
+}
+
+.sim2-criterio {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+  font-size: 12.5px;
+}
+
+.sim2-criterio:first-of-type { border-top: none; }
+
+.sim2-criterio-desc { color: var(--text-dim); line-height: 1.55; flex: 1; }
+.sim2-criterio-desc .justificativa { color: var(--text); display: block; margin-top: 3px; }
+
+.sim2-criterio-nota {
+  flex-shrink: 0;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sim2-criterio-nota.zero { color: var(--error); }
+.sim2-criterio-nota.full { color: var(--success); }
+
+.sim2-resposta-toggle {
+  margin-top: 14px;
+  font-size: 12px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.sim2-resposta-aluno {
+  margin-top: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: var(--text-dim);
+  display: none;
+}
+
+.sim2-resposta-aluno.show { display: block; }

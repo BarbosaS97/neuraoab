@@ -53,6 +53,17 @@ sidebarToggle.addEventListener("click", () => {
   setSidebarExpanded(!sidebar.classList.contains("expanded"));
 });
 
+// A logo fica bem perto da alca de abrir o menu quando ele esta recolhido —
+// clicando ali, o usuario pode achar que vai expandir o menu e, em vez
+// disso, ser levado pra landing page sem querer. Com o menu recolhido, o
+// clique na logo nao faz nada; expandido, funciona normalmente como link
+// pra landing page (nao ha mais essa ambiguidade de proposito).
+brandLogo.addEventListener("click", (ev) => {
+  if (!sidebar.classList.contains("expanded")) {
+    ev.preventDefault();
+  }
+});
+
 setSidebarExpanded(false);
 
 // ------------------------------------------------------------------ Mode

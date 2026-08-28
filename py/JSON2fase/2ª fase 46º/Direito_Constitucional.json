@@ -1,0 +1,402 @@
+{
+  "exam_number": 46,
+  "phase": 2,
+  "area": "Direito Constitucional",
+  "source_provas_file": "46º_provas_Direito_Constitucional.pdf",
+  "source_resposta_file": "46º_resposta_Direito_Constitucional.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "O Governador do Estado Alfa, no qual estão sediados diversos municípios com elevado potencial turístico, decidiu adotar medidas para aumentar o nível de eficiência dos operadores do setor, públicos e privados. Sensível a esse objetivo, o secretário de turismo informou que constatara que os órgãos públicos não vinham aplicando a Lei estadual nº XX, editada em 1984, diploma normativo que estabeleceu algumas medidas com elevado potencial de aprimorar a qualidade dos serviços de transportes oferecidos na esfera dos municípios localizados nos distintos quadrantes do território estadual.\n\nDe acordo com o Art. 1º da Lei estadual nº XX/84, as pessoas jurídicas que explorem o serviço de transporte coletivo de passageiros, no interior do território de qualquer Município, deveriam observar os detalhados padrões de estilização dos veículos elencados nesse preceito. O Art. 2º estabelecia regras detalhadas para os contratos a serem celebrados entre os distintos operadores do setor de turismo, em relação ao serviço que iriam prestar, de modo a detalhar prestações e individualizar responsabilidades. O Art. 3º, por sua vez, estabelecia as regras a serem observadas, pelo Estado Alfa ou pelos municípios nele sediados, para a desapropriação das áreas com elevado potencial turístico.\n\nAo tomar conhecimento do teor da Lei estadual nº XX/84, o Governador do Estado Alfa questionou o Secretário de Turismo a respeito de sua eficácia e conformidade constitucional, sendo-lhe respondido que não constava, nos arquivos da Assembleia Legislativa, qualquer informação a respeito de sua revogação expressa, além de sua inconstitucionalidade não ter sido declarada por qualquer órgão do Poder Judiciário, apesar de existirem leis de outros entes federativos disciplinando as temáticas tratadas nesse diploma normativo. Como a Lei estadual nº XX, embora estivesse em vigor, não vinha sendo aplicada, foi deliberado que seria promovida uma campanha educativa pelos órgãos estaduais e, ao final de dois meses, seria exigida a sua observância, o que foi devidamente comunicado aos seus potenciais destinatários.\n\nEsse estado de coisas gerou grande preocupação em alguns prefeitos de municípios sediados no território de Alfa, os quais ressaltaram o risco de que pudesse surgir inúmeros conflitos com as normas que vinham sendo aplicadas, com prejuízos para a higidez das relações econômicas e a autonomia dos Municípios, além de a Lei estadual nº XX/84 aumentar em demasia as despesas dos seus destinatários, o que, ao invés de aprimorar, poderia diminuir a qualidade das atividades oferecidas ao turista.\n\nEsses prefeitos levaram os fatos ao conhecimento do Partido Político Delta, ao qual estavam filiados e que tinha representação tanto na Câmara dos Deputados como no Senado Federal. O Partido Delta contratou seus serviços como advogado(a) e solicitou o ajuizamento da ação constitucional cabível para que o referido diploma normativo fosse submetido ao controle concentrado de constitucionalidade, tendo como paradigma de confronto a Constituição da República.\n\nRedija a peça processual adequada, conforme solicitação do Partido Político Delta.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A peça adequada é a petição inicial da arguição de descumprimento de preceito fundamental. A petição deve ser endereçada ao Ministro Presidente do Supremo Tribunal Federal, órgão jurisdicional competente para processar e julgar a referida ação, conforme o Art. 102, § 1º, da CRFB/88 c/c o Art. 1º da Lei nº 9.882/1999.\n\nA ação deve ser proposta pelo Partido Político Delta. A legitimidade do Partido decorre do disposto no Art. 103, inciso VIII, da CRFB/88, c/c o Art. 2º, inciso I, da Lei nº 9.882/1999.\n\nDevem ser indicados o Governador do Estado e a Assembleia Legislativa do Estado Alfa, responsáveis pela edição da Lei estadual nº XX, de 1984, do Estado Alfa.\n\nDeve ser informado o teor da Lei estadual nº XX/1984, do Estado Alfa.\n\nDeve ser justificado o cabimento da ADPF, pois a Lei nº XX, do Estado Alfa, descumpre preceitos fundamentais da CRFB/88, conforme previsto no Art. 102, § 1º, da CRFB/88 c/c. o Art. 3º, inciso I, da Lei nº 9.882/1999.\n\nDeve ser demonstrado o cumprimento do requisito da subsidiariedade, previsto no Art. 4º, § 1º, da Lei nº 9.882/1999, já que a Lei estadual nº XX/1984, do Estado Alfa, por ser anterior à Constituição da República, pode ser impugnada via ADPF, nos termos do Art. 1º, parágrafo único, inciso I, da Lei nº 9.882/1999, mas não pode sê-lo via ação direta de inconstitucionalidade.\n\nO examinando deve informar e demonstrar, justificadamente, os preceitos fundamentais da CRFB/1988 que não se harmonizam com a Lei nº XX, do Estado Alfa, quais sejam:\n\n(i) o Art. 1º não se ajusta à competência privativa do Município para legislar sobre assuntos de interesse local, nos termos do Art. 30, inciso I, da CRFB/88, ou o Art. 1º afronta a norma editada, e que vinha sendo aplicada, com base na competência privativa do Município para legislar sobre assuntos de interesse local, nos termos do Art. 30, inciso V, da CRFB/88; (ii) o Art. 2º não se ajusta à competência privativa da União para legislar sobre direito civil, nos termos do Art. 22, inciso I, da CRFB/88; (iii) o Art. 3º não se ajusta à competência privativa da União para legislar sobre desapropriação, conforme dispõe o Art. 22, inciso II, da CRFB/88, ou o Art. 3º afronta a norma editada, e que vinha sendo aplicada, com base na competência privativa da União para legislar sobre desapropriação, nos termos do Art. 22, inciso II, ou Art. 182, § 4º, inciso III, ambos da CRFB/88; (iv) a Lei estadual nº XX/1984 afronta a autonomia política da União e dos Municípios, nos termos do Art. 18, caput, da CRFB/88 ou a Lei estadual nº XX/1984 afronta a livre iniciativa, nos termos do Art. 1º, IV ou Art. 170, caput, da CRFB/88.\n\nDeve ser formulado pedido de medida liminar, com fundamento no Art. 5º da Lei 9.882/1999, com o objetivo específico de suspender a eficácia da Lei estadual nº XX/1984, do Estado Alfa, até o julgamento de mérito. O fumus boni iuris está presente em razão dos preceitos fundamentais violados. O periculum in mora, por sua vez, decorre do risco de surgirem inúmeros conflitos normativos com as normas que vinham sendo aplicadas, com prejuízos para a higidez das relações econômicas e a autonomia dos Municípios, além de a Lei estadual nº XX/1984 aumentar em demasia as despesas dos seus destinatários, o que, ao invés de aprimorar, poderia diminuir a qualidade das atividades oferecidas ao turista.\n\nO pedido principal deve ser o reconhecimento da incompatibilidade da Lei estadual nº XX/1984 do Estado Alfa com a CRFB/88 ou da não recepção da Lei estadual nº XX/1984 do Estado Alfa pela CRFB/88.\n\nPor fim, deve haver o fechamento da petição com data e OAB.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "A petição deve ser endereçada ao Ministro Presidente do Supremo Tribunal Federal (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Autor: a ação deve ser proposta pelo Partido Político Delta (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Legitimidade ativa: decorre do disposto no Art. 103, inciso VIII (0,10), c/c o Art. 2º, inciso I, da Lei nº 9.882/99 (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Endereçamento",
+        "descricao": "Devem ser indicados o Governador do Estado (0,10) e a Assembleia Legislativa de Alfa (0,10), como responsáveis pela edição da Lei estadual nº XX/1984 (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Endereçamento",
+        "descricao": "Deve ser informado o teor da Lei estadual nº XX/1884, do Estado Alfa, nos termos do Art. 3º, inciso II, da Lei nº 9.882/1999 (0,30).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Endereçamento",
+        "descricao": "Cabimento da ADPF: os atos questionados descumpriram preceitos fundamentais da CRFB/88 (0,20), conforme previsto no Art. 102, § 1º, da CRFB/88 c/c o Art. 3º, inciso I, da Lei nº 9.882/1999 (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Endereçamento",
+        "descricao": "Deve ser demonstrado o cumprimento do requisito da subsidiariedade (0,30), previsto no Art. 4º, § 1º, da Lei nº 9.882/1999 (0,10), pois a Lei estadual nº XX/1984, do Estado Alfa, por ser anterior à Constituição (0,10) não pode ser impugnada via ação direta de inconstitucionalidade (0,10).",
+        "pontuacao_maxima": 0.6,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "O Art. 1º não se ajusta à competência privativa do Município para legislar sobre assuntos de interesse local (0,40), nos termos do Art. 30, inciso I, da CRFB/88 (0,10), Ou o Art. 1º afronta a norma editada, e que vinha sendo aplicada, com base na competência privativa do Município para legislar sobre assuntos de interesse local (0,40), nos termos do Art. 30, inciso V, da CRFB/88 (0,10);",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "O Art. 2º não se ajusta à competência privativa da União para legislar sobre direito civil (0,40), nos termos do Art. 22, inciso I, da CRFB/88 (0,10);",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "O Art. 3º não se ajusta à competência privativa da União para legislar sobre desapropriação (0,40), conforme dispõe o Art. 22, inciso II, da CRFB/88 (0,10), Ou o Art. 3º afronta a norma editada, e que vinha sendo aplicada, com base na competência privativa da União para legislar sobre desapropriação (0,40), nos termos do Art. 22, inciso II, ou Art. 182, § 4º, inciso III, ambos da CRFB/88 (0,10);",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "A Lei estadual nº XX/1984 afronta a autonomia política da União e dos Municípios (0,20), nos termos do Art. 18, caput, da CRFB/88 (0,10) ou a Lei estadual nº XX/1984 afronta a livre iniciativa (0,20), nos termos do Art. 1º, IV ou Art. 170, caput, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Fundamentos da liminar",
+        "descricao": "O sinal de bom direito (0,10) decorre dos próprios fundamentos de mérito (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Fundamentos da liminar",
+        "descricao": "O risco na demora (0,10) decorre do risco de surgirem inúmeros conflitos normativos com as normas que vinham sendo aplicadas, com prejuízos para a higidez das relações econômicas e a autonomia dos Municípios, (0,10) além de a Lei estadual nº XX/1984 aumentar em demasia as despesas dos seus destinatários (0,10), o que, ao invés de aprimorar, poderia diminuir a qualidade das atividades oferecidas ao turista (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "Pedido de medida liminar (0,10), com fundamento no Art. 5º da Lei nº 9.882/1999 (0,10), com o objetivo específico de suspender a eficácia da Lei estadual nº XX/1984, do Estado Alfa, até o julgamento de mérito (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Pedidos",
+        "descricao": "O pedido principal deve ser o reconhecimento da incompatibilidade da Lei nº estadual nº XX/84, do Estado Alfa, com a CRFB/88 (0,30) ou da não recepção da Lei estadual nº XX/1984, do Estado Alfa, pela CRFB/88 (0,30).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Fechamento",
+        "descricao": "Local, data, advogado e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA peça adequada é a petição inicial da arguição de descumprimento de preceito\nfundamental.\nEndereçamento\n1. A petição deve ser endereçada ao Ministro Presidente do Supremo Tribunal Federal (0,10). 0,00/0,10\n2. Autor: a ação deve ser proposta pelo Partido Político Delta (0,10). 0,00/0,10\n3. Legitimidade ativa: decorre do disposto no Art. 103, inciso VIII (0,10), c/c o Art. 2º, inciso\n0,00/0,10/0,20\nI, da Lei nº 9.882/99 (0,10).\n4. Devem ser indicados o Governador do Estado (0,10) e a Assembleia Legislativa de Alfa\n0,00/0,10/0,20/0,30\n(0,10), como responsáveis pela edição da Lei estadual nº XX/1984 (0,10).\n5. Deve ser informado o teor da Lei estadual nº XX/1884, do Estado Alfa, nos termos do Art.\n0,00/0,30\n3º, inciso II, da Lei nº 9.882/1999 (0,30).\n6. Cabimento da ADPF: os atos questionados descumpriram preceitos fundamentais da\n0,00/0,10/0,20/0,30\nCRFB/88 (0,20), conforme previsto no Art. 102, § 1º, da CRFB/88 c/c o Art. 3º, inciso I, da Lei\nnº 9.882/1999 (0,10).\n7. Deve ser demonstrado o cumprimento do requisito da subsidiariedade (0,30), previsto no\nArt. 4º, § 1º, da Lei nº 9.882/1999 (0,10), pois a Lei estadual nº XX/1984, do Estado Alfa, por 0,00/0,10/0,20/0,30/\nser anterior à Constituição (0,10) não pode ser impugnada via ação direta de 0,40/0,50/0,60\ninconstitucionalidade (0,10).\nFundamentos de mérito\nO(A) examinando(a) deve informar e demonstrar, justificadamente, os preceitos\nfundamentais da CRFB/88 que não se harmonizam com a Lei estadual nº XX/1984, do\nEstado Alfa, quais sejam:\n8. O Art. 1º não se ajusta à competência privativa do Município para legislar sobre assuntos\nde interesse local (0,40), nos termos do Art. 30, inciso I, da CRFB/88 (0,10),\nOu\n0,00/0,40/0,50\no Art. 1º afronta a norma editada, e que vinha sendo aplicada, com base na competência\nprivativa do Município para legislar sobre assuntos de interesse local (0,40), nos termos do\nArt. 30, inciso V, da CRFB/88 (0,10);\n9. O Art. 2º não se ajusta à competência privativa da União para legislar sobre direito civil\n0,00/0,40/0,50\n(0,40), nos termos do Art. 22, inciso I, da CRFB/88 (0,10);\n10. O Art. 3º não se ajusta à competência privativa da União para legislar sobre\ndesapropriação (0,40), conforme dispõe o Art. 22, inciso II, da CRFB/88 (0,10),\nOu\n0,00/0,40/0,50\no Art. 3º afronta a norma editada, e que vinha sendo aplicada, com base na competência\nprivativa da União para legislar sobre desapropriação (0,40), nos termos do Art. 22, inciso II,\nou Art. 182, § 4º, inciso III, ambos da CRFB/88 (0,10);\n11. A Lei estadual nº XX/1984 afronta a autonomia política da União e dos Municípios (0,20),\nnos termos do Art. 18, caput, da CRFB/88 (0,10)\nou 0,00/0,20/0,30\na Lei estadual nº XX/1984 afronta a livre iniciativa (0,20), nos termos do Art. 1º, IV ou Art. 170,\ncaput, da CRFB/88 (0,10).\nFundamentos da liminar\n12. O sinal de bom direito (0,10) decorre dos próprios fundamentos de mérito (0,10). 0,00/0,10/0,20\n13. O risco na demora (0,10) decorre do risco de surgirem inúmeros conflitos normativos 0,00/0,10/0,20/\ncom as normas que vinham sendo aplicadas, com prejuízos para a higidez das relações 0,30/0,40\neconômicas e a autonomia dos Municípios, (0,10) além de a Lei estadual nº XX/1984\naumentar em demasia as despesas dos seus destinatários (0,10), o que, ao invés de\naprimorar, poderia diminuir a qualidade das atividades oferecidas ao turista (0,10).\nPedidos\n14. Pedido de medida liminar (0,10), com fundamento no Art. 5º da Lei nº 9.882/1999\n(0,10), com o objetivo específico de suspender a eficácia da Lei estadual nº XX/1984, do 0,00/0,10/0,20/0,30\nEstado Alfa, até o julgamento de mérito (0,10).\n15. O pedido principal deve ser o reconhecimento da incompatibilidade da Lei nº estadual\nnº XX/84, do Estado Alfa, com a CRFB/88 (0,30) ou da não recepção da Lei estadual nº 0,00/0,30\nXX/1984, do Estado Alfa, pela CRFB/88 (0,30).\nFechamento\n16. Local, data, advogado e OAB (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": [
+      "A peça adequada é a petição inicial da arguição de descumprimento de preceito",
+      "fundamental.",
+      "O(A) examinando(a) deve informar e demonstrar, justificadamente, os preceitos",
+      "fundamentais da CRFB/88 que não se harmonizam com a Lei estadual nº XX/1984, do",
+      "Estado Alfa, quais sejam:"
+    ]
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "João, titular de uma sociedade empresária individual de transporte de cargas, localizada no Município Alfa, tomou conhecimento, por intermédio de diversos colegas de profissão, todos pessoalmente cientificados, de que o Secretário de Transporte do Município Beta, com base na competência de ordenação da circulação nas vias terrestres do Município, estabelecida na Lei municipal X, decidiu vedar que caminhões de transporte oriundos de outros Municípios estacionassem em via pública durante o horário de expediente comercial, o que dificultaria a realização de entregas.\n\nO objetivo da medida, conforme descrito em cada decisão individual, era o de conferir preferência aos transportadores locais. Como João precisaria realizar uma entrega no Município Beta dentro de cinco dias, ocasião em que provavelmente seria cientificado da decisão e proibido de estacionar o seu caminhão em via pública, durante o horário de expediente comercial, contratou os seus serviços como advogado(a) e formulou os questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O Município Beta tem competência para editar a Lei municipal X? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "O Secretário de Transporte do Município Beta pode proibir que o caminhão de João seja estacionado na via pública pelos motivos descritos na decisão? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, pois se trata de interesse local, nos termos do Art. 30, inciso I, da CRFB/88. B) Não, pois cria preferências entre brasileiros, o que é vedado pelo Art. 19, inciso III, da CRFB/88, ou não, pois afronta a igualdade, assegurada no Art. 5º, caput, da CRFB/88, ou não, pois afronta a impessoalidade, assegurada no Art. 37, caput, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim, pois se trata de interesse local (0,50), nos termos do Art. 30, inciso I, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não, pois cria preferências entre brasileiros, o que é vedado (0,55), nos termos do Art. 19, inciso III, da CRFB/88 (0,10); ou Não, pois afronta a igualdade (0,55), assegurada no Art. 5º, caput, ou no Art. 37, caput, ambos da CRFB/88. (0,10); ou Não, pois afronta a impessoalidade (0,55), assegurada no Art. 37, caput, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA. Sim, pois se trata de interesse local (0,50), nos termos do Art. 30, inciso I, da CRFB/88 (0,10). 0,00/0,50/0,60\nB. Não, pois cria preferências entre brasileiros, o que é vedado (0,55), nos termos do Art. 19, inciso\nIII, da CRFB/88 (0,10); ou Não, pois afronta a igualdade (0,55), assegurada no Art. 5º, caput, ou no\n0,00/0,55/0,65\nArt. 37, caput, ambos da CRFB/88. (0,10); ou Não, pois afronta a impessoalidade (0,55), assegurada\nno Art. 37, caput, da CRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Após muitos debates com a área técnica do governo, o Presidente da República apresentou projeto de lei ordinária criando dez cargos públicos de provimento efetivo de denominação XX, a serem alocados em determinada estrutura do Poder Executivo federal. No âmbito do Congresso Nacional, após a realização de inúmeras audiências públicas, decidiu-se que a referida estrutura seria melhor atendida com a criação de vinte cargos. Por tal razão, foi apresentada, com esse objeto, emenda parlamentar ao projeto de lei ordinária, que veio a ser aprovada. Ato contínuo, o projeto foi vetado pelo Chefe do Poder Executivo. O veto, no entanto, não foi mantido pelo Congresso Nacional, o que levou o Presidente do Senado a decidir pela imediata promulgação da Lei ordinária nº X, que foi publicada no diário oficial do dia imediato. Sobre a hipótese, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O aumento para vinte cargos públicos, ao invés dos dez cargos propostos pelo Presidente da República, poderia ser realizado via emenda parlamentar? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Após a não manutenção do veto, pelo Congresso Nacional, foi regularmente observado o processo legislativo? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Como a criação de cargos públicos no Poder Executivo federal é de iniciativa privativa do Presidente da República, nos termos do Art. 61, § 1º, inciso II, alínea a, da CRFB/88. B) Não. O projeto deveria ter sido enviado para a promulgação do Presidente da República, nos termos do Art. 66, § 4º, ou § 5º, ou § 7º, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não, pois a criação de cargos públicos no âmbito do Poder Executivo federal é de 1 iniciativa privativa do Presidente da República (0,55), nos termos do Art. 61, § 1º, inciso II, alínea a, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. O projeto deveria ter sido enviado para a promulgação do Presidente da República (0,50), nos termos do Art. 66, § 4º, ou § 5º, ou § 7º, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA . Não, pois a criação de cargos públicos no âmbito do Poder Executivo federal é de\n1\niniciativa privativa do Presidente da República (0,55), nos termos do Art. 61, § 1º, inciso II, 0,00/0,55/0,65\nalínea a, da CRFB/88 (0,10).\nB. Não. O projeto deveria ter sido enviado para a promulgação do Presidente da República\n0,00/0,50/0,60\n(0,50), nos termos do Art. 66, § 4º, ou § 5º, ou § 7º, da CRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Carlo nasceu em Paris, na França, sendo filho de Leon, francês nato, e de Anete, italiana naturalizada brasileira, que se encontrava a serviço de uma empresa multinacional italiana. Por ocasião do seu nascimento, os pais de Carlo deixaram de fazer o seu registro na repartição brasileira competente. Carlo, atualmente com trinta anos de idade, nunca veio ao Brasil e não tem, nem mesmo, a capacidade de ler e escrever em língua portuguesa. No dia 23 de agosto de 2023, Carlo decidiu fixar residência no território da República Federativa do Brasil e, valendo-se de permissivo constitucional, optou pela nacionalidade brasileira, obtendo o deferimento do seu pedido pela Justiça Federal no decorrer desse mesmo ano. Em janeiro de 2024, o governo do país Alfa decidiu pedir a extradição de Carlo por um crime contra a pessoa humana que ele teria alegadamente praticado em fevereiro de 2023. Na condição de advogado(a) de Carlo, responda aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Qual é o órgão jurisdicional competente para apreciar o pedido de extradição formulado pelo governo do país Alfa? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "O pedido de extradição de Carlo deve ser acolhido? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) O Supremo Tribunal Federal, nos termos do Art. 102, inciso I, alínea g, da CRFB/88. B) Não. Como Carlo é brasileiro nato, nos termos do Art. 12, inciso I, alínea c, da CRFB/88, não é possível sua extradição, conforme dispõe o Art. 5º, inciso LI, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "O Supremo Tribunal Federal (0,50), nos termos do Art. 102, inciso I, alínea g, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. Como Carlo é brasileiro nato (0,25), nos termos do Art. 12, inciso I, alínea c, da CRFB/88 (0,10), não é possível a sua extradição (0,20), conforme dispõe o Art. 5º, inciso LI, da CRFB/88 ou Art. 82, inciso I, da Lei nº 13.445/17 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.25,
+            0.3,
+            0.35,
+            0.45,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA. O Supremo Tribunal Federal (0,50), nos termos do Art. 102, inciso I, alínea g, da CRFB/88\n0,00/0,50/0,60\n(0,10).\nB. Não. Como Carlo é brasileiro nato (0,25), nos termos do Art. 12, inciso I, alínea c, da\n0,00/0,20/0,25/0,30/\nCRFB/88 (0,10), não é possível a sua extradição (0,20), conforme dispõe o Art. 5º, inciso\n0,35/0,45/0,55/0,65\nLI, da CRFB/88 ou Art. 82, inciso I, da Lei nº 13.445/17 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Com a finalidade de uniformizar certas práticas e criar uma simbologia que unisse a população em prol da realização de objetivos comuns, a Constituição do Estado Alfa foi reformada para criar dois símbolos para as estruturas estatais de poder, sendo um para as estruturas do Estado Alfa e outra para os Municípios situados no território do Estado Alfa, ficando extintos todos os símbolos preexistentes e sendo vedada a criação de outros. Após a reforma da Constituição Estadual, o Município Beta editou uma lei criando símbolos próprios. Por tal razão, o diretório estadual do Partido Político Sigma procurou você, como advogado(a), e formulou os questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A Constituição do Estado Alfa pode dispor sobre os símbolos municipais? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "De acordo com a Constituição Federal, o Tribunal de Justiça do Estado pode realizar o controle concentrado de constitucionalidade da lei do Município Beta? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Compete aos Municípios ter os próprios símbolos, nos termos do Art. 13, §2º, da CRFB/88, sendo assunto de interesse local, nos termos do Art. 30, inciso I, da CRFB/88, ou sendo inerente à sua autonomia política, conforme dispõe o Art. 18, caput, da CRFB/88. B) Sim. O controle de constitucionalidade pode ser realizado tendo por base a Constituição Estadual, nos termos do Art. 125, §2º, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. Compete aos Municípios ter os próprios símbolos (0,20), nos termos do Art. 13, §2º, da CRFB/88 (0,10), sendo assunto de interesse local (0,20), nos termos do Art. 30, inciso I, da CRFB/88 (0,10), ou sendo inerente à sua autonomia política (0,20), conforme dispõe o Art. 18, caput, da CRFB/1988. (0,10)",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. O controle de constitucionalidade pode ser realizado tendo por base a Constituição estadual, (0,55) nos termos do Art. 125, §2º, da CRFB/88. (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.3,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA. Não. Compete aos Municípios ter os próprios símbolos (0,20), nos termos do Art. 13, §2º,\nda CRFB/88 (0,10), sendo assunto de interesse local (0,20), nos termos do Art. 30, inciso I, da 0,00/0,20/0,30/\nCRFB/88 (0,10), ou sendo inerente à sua autonomia política (0,20), conforme dispõe o Art. 18, 0,40/0,50/0,60\ncaput, da CRFB/1988. (0,10)\nB. Sim. O controle de constitucionalidade pode ser realizado tendo por base a Constituição\n0,00/0,30/0,55/0,65\nestadual, (0,55) nos termos do Art. 125, §2º, da CRFB/88. (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}
