@@ -725,9 +725,7 @@ function updateSessionUI() {
 // Botão "Sair" na barra lateral — mesmo efeito do "Sair" dentro do popover
 // da sessão (sessionLogoutBtn), só que num lugar mais visível/direto pra
 // quem já está logado, em vez de precisar abrir o popover pra encontrar.
-logoutBtn.addEventListener("click", async () => {
-  await client.auth.signOut();
-});
+logoutBtn.addEventListener("click", () => handleSessionLogout());
 
 sessionAvatarBtn.addEventListener("click", (ev) => {
   ev.stopPropagation();
@@ -771,10 +769,23 @@ sessionPassword.addEventListener("keydown", (ev) => {
   if (ev.key === "Enter") handleSessionLogin();
 });
 
-sessionLogoutBtn.addEventListener("click", async () => {
-  await client.auth.signOut();
+sessionLogoutBtn.addEventListener("click", () => handleSessionLogout());
+
+// Faz o signOut de fato e força o estado visual a refletir "deslogado" na
+// hora — antes disso, a UI só mudava se o evento onAuthStateChange do
+// Supabase chegasse a disparar; quando ele falhava (sessão já expirada,
+// rede instável, etc.) o clique parecia não fazer nada.
+async function handleSessionLogout() {
+  currentSession = null;
+  updateSessionUI();
   sessionPopover.hidden = true;
-});
+  try {
+    await client.auth.signOut();
+  } catch (err) {
+    console.error("Erro ao encerrar sessão:", err);
+  }
+  window.location.reload();
+}
 
 client.auth.onAuthStateChange((_event, session) => {
   currentSession = session;
