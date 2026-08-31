@@ -712,6 +712,16 @@ tbody tr:last-child td { border-bottom: none; }
 
 .item-enunciado-sub { color: var(--text); font-weight: 500; }
 
+/* Botão "Ver correção do Neura" — terceiro toggle, mesmo estilo discreto
+   do de enunciado (o destaque fica só no de resposta, de propósito). */
+.correcao-toggle-btn {
+  margin-top: 12px;
+  padding: 8px 16px;
+  font-size: 12.5px;
+}
+
+.item-correcao-box { margin-top: 10px; }
+
 /* "Camada 2": observações jurídicas/formais que não afetam a nota — fundo
    tintado, sem barra de pontuação, pra não parecer perda de ponto. */
 .alertas-juridicos {

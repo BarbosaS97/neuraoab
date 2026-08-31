@@ -200,11 +200,68 @@ function buildEnunciadoToggle(item) {
   return wrap;
 }
 
-// Detalhe de UM item (peça ou questão) — enunciado, resposta do aluno,
-// nota, feedback geral, critérios e alertas jurídicos. Enunciado e
-// resposta vêm ANTES da avaliação da IA de propósito: o professor confere
-// primeiro do que se trata a pergunta e o que o aluno respondeu, pra só
-// depois julgar se a correção da IA faz sentido — não o contrário. Cada
+// Botão "Ver correção do Neura" — reúne o que a IA decidiu (feedback
+// geral, critério a critério, e observações adicionais que não afetam a
+// nota) atrás de um terceiro toggle, minimizado por padrão igual aos
+// outros dois. Devolve null se não há nada corrigido ainda pra mostrar.
+function buildCorrecaoToggle(r) {
+  const hasFeedback = !!r.feedback_geral;
+  const hasCriterios = Array.isArray(r.feedback_criterios) && r.feedback_criterios.length > 0;
+  const hasAlertas = Array.isArray(r.alertas_juridicos) && r.alertas_juridicos.length > 0;
+  if (!hasFeedback && !hasCriterios && !hasAlertas) return null;
+
+  const wrap = document.createElement("div");
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "btn-ghost correcao-toggle-btn";
+  btn.textContent = "Ver correção do Neura";
+
+  const box = document.createElement("div");
+  box.className = "item-correcao-box";
+  box.hidden = true;
+
+  if (hasFeedback) {
+    const feedback = document.createElement("p");
+    feedback.className = "criterio-just";
+    feedback.textContent = r.feedback_geral;
+    box.appendChild(feedback);
+  }
+
+  const criteriosEl = renderCriterios(r.feedback_criterios);
+  if (criteriosEl) box.appendChild(criteriosEl);
+
+  // "Camada 2": observações jurídicas/formais que não afetam a nota (ver
+  // alertas_juridicos em supabase/functions/corretor-2fase/index.ts) —
+  // separadas visualmente dos critérios oficiais.
+  if (hasAlertas) {
+    const alertasBox = document.createElement("div");
+    alertasBox.className = "alertas-juridicos";
+    const alertasTitulo = document.createElement("div");
+    alertasTitulo.className = "alertas-juridicos-titulo";
+    alertasTitulo.textContent = "Observações adicionais (não afetam a nota)";
+    alertasBox.appendChild(alertasTitulo);
+    r.alertas_juridicos.forEach((texto) => {
+      const p = document.createElement("p");
+      p.className = "alertas-juridicos-item";
+      p.textContent = texto;
+      alertasBox.appendChild(p);
+    });
+    box.appendChild(alertasBox);
+  }
+
+  btn.addEventListener("click", () => {
+    box.hidden = !box.hidden;
+    btn.textContent = box.hidden ? "Ver correção do Neura" : "Ocultar correção do Neura";
+  });
+  wrap.append(btn, box);
+  return wrap;
+}
+
+// Detalhe de UM item (peça ou questão) — três botões independentes
+// (enunciado / resposta do aluno / correção do Neura), todos minimizados
+// por padrão. Nessa ordem de propósito: o professor confere primeiro do
+// que se trata a pergunta e o que o aluno respondeu, pra só depois abrir a
+// correção da IA e julgar se ela faz sentido — não o contrário. Cada
 // tentativa monta um painel desses por item e alterna qual fica visível
 // pelas abas (ver loadFase2).
 function buildItemPanel(r) {
@@ -226,34 +283,8 @@ function buildItemPanel(r) {
 
   panel.appendChild(buildRespostaToggle(r.texto_resposta));
 
-  if (r.feedback_geral) {
-    const feedback = document.createElement("p");
-    feedback.className = "criterio-just";
-    feedback.textContent = r.feedback_geral;
-    panel.appendChild(feedback);
-  }
-
-  const criteriosEl = renderCriterios(r.feedback_criterios);
-  if (criteriosEl) panel.appendChild(criteriosEl);
-
-  // "Camada 2": observações jurídicas/formais que não afetam a nota (ver
-  // alertas_juridicos em supabase/functions/corretor-2fase/index.ts) —
-  // separadas visualmente dos critérios oficiais.
-  if (Array.isArray(r.alertas_juridicos) && r.alertas_juridicos.length > 0) {
-    const alertasBox = document.createElement("div");
-    alertasBox.className = "alertas-juridicos";
-    const alertasTitulo = document.createElement("div");
-    alertasTitulo.className = "alertas-juridicos-titulo";
-    alertasTitulo.textContent = "Observações adicionais (não afetam a nota)";
-    alertasBox.appendChild(alertasTitulo);
-    r.alertas_juridicos.forEach((texto) => {
-      const p = document.createElement("p");
-      p.className = "alertas-juridicos-item";
-      p.textContent = texto;
-      alertasBox.appendChild(p);
-    });
-    panel.appendChild(alertasBox);
-  }
+  const correcaoEl = buildCorrecaoToggle(r);
+  if (correcaoEl) panel.appendChild(correcaoEl);
 
   return panel;
 }
