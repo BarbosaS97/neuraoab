@@ -159,9 +159,14 @@ function buildSystemPrompt(item: ItemContext): string {
     criteriosTexto,
     "",
     "REGRAS DE CORREÇÃO, MUITO IMPORTANTES:",
-    "- Avalie a resposta do aluno critério por critério, na mesma ordem e com os mesmos rótulos da",
-    "  distribuição dos pontos oficial. Para cada critério, atribua a pontuação obtida dentre as",
-    "  pontuações possíveis indicadas (quando informadas) — nunca invente um valor fora dessa faixa.",
+    "- O array \"criterios\" da resposta deve ter EXATAMENTE um item pra cada critério da distribuição de",
+    "  pontos oficial acima, NUNCA mais nem menos — mesma quantidade, mesma ordem, mesmo \"rotulo\" EXATO",
+    "  (ex.: se o rótulo oficial é \"A\", devolva \"rotulo\": \"A\", nunca \"A. Conclusão...\" ou algo mais longo).",
+    "  Mesmo que um critério tenha várias partes internas (conclusão, fundamentação, dispositivo), avalie",
+    "  todas elas e devolva UM ÚNICO pontuacao_obtida pra aquele critério — nunca separe em vários itens",
+    "  do array. Para cada critério, atribua a pontuação obtida dentre as pontuações possíveis indicadas",
+    "  (quando informadas) — o valor tem que ser exatamente um daqueles números, nunca um valor fora dessa",
+    "  lista nem uma soma parcial inventada por você.",
     "  Quando as pontuações possíveis não estiverem explícitas, use seu julgamento entre 0 e a pontuação",
     "  máxima do critério, de forma proporcional ao quanto o aluno atendeu ao critério.",
     "- Para cada critério, avalie separadamente quatro dimensões antes de decidir a nota: (1) a CONCLUSÃO",
@@ -176,7 +181,14 @@ function buildSystemPrompt(item: ItemContext): string {
     "  súmula, a perda de pontos fica restrita ESTRITAMENTE ao critério específico do espelho que pontua",
     "  essa indicação (quando ele existir) — nunca trate \"não citou o artigo\" como se fosse \"não",
     "  fundamentou\", e nunca deixe essa ausência contaminar a nota de outros critérios (conclusão,",
-    "  fundamentação) que o aluno atendeu de fato.",
+    "  fundamentação) que o aluno atendeu de fato. IMPORTANTE: restringir a perda ao critério específico do",
+    "  dispositivo NÃO significa ignorar essa perda — se as pontuações possíveis distinguem \"conteúdo\" de",
+    "  \"conteúdo + dispositivo\" (ex.: [0, 0.50, 0.60], em que 0.50 é só o conteúdo e 0.60 inclui o",
+    "  dispositivo), e o aluno não citou o dispositivo, o valor correto é o intermediário (0.50), NUNCA o",
+    "  mais alto (0.60) só porque o conteúdo estava certo. Antes de decidir o número final de cada critério,",
+    "  releia a sua própria justificativa: se nela você escreveu que algo específico faltou (o dispositivo,",
+    "  por exemplo), o pontuacao_obtida TEM que refletir essa perda pontual — nunca a pontuação máxima do",
+    "  critério. Justificativa e nota têm que ser sempre consistentes entre si.",
     "- Quando o espelho exigir um instituto jurídico ESPECÍFICO (ex.: denunciação da lide, embargos de",
     "  declaração, agravo de instrumento) e o aluno usar um instituto DIFERENTE, mesmo que da mesma",
     "  categoria geral (ex.: outra modalidade de intervenção de terceiros, outro recurso cabível em tese),",
@@ -229,36 +241,152 @@ function clamp(n: number, min: number, max: number): number {
   return Math.min(Math.max(n, min), max);
 }
 
+// Detecta, na propria justificativa da IA, uma admissao de que o
+// dispositivo/artigo/sumula nao foi citado pelo aluno — usado como rede de
+// seguranca contra a IA dar a faixa mais alta mesmo reconhecendo essa
+// falta (ver uso logo abaixo, dentro de validateAndNormalize). Cobre voz
+// ativa ("não citou"), passiva ("não foi indicado") e subjuntivo ("não
+// tenha citado") — ate' 2 palavras de folga entre "não" e o verbo, pra
+// pegar auxiliares tipo "foi"/"tenha"/"teria" sem precisar listar cada
+// conjugacao possivel.
+const NAO_CITOU_DISPOSITIVO_RE =
+  /(não|nao)\s+(?:\w+\s+){0,2}?(citou|citado|citados|indicou|indicado|indicados|mencionou|mencionado|mencionados|apontou|apontado|apontados|constou|fez\s+men[cç][aã]o)[^.]{0,80}(dispositivo|artigo|art\.|s[uú]mula|preceito legal)/i;
+
+// Chave de agrupamento a partir de um rotulo devolvido pela IA: pega o
+// primeiro "token" antes de um ponto ou espaço. Cobre tanto o caso normal
+// ("A" -> "A") quanto o caso em que a IA (apesar da instrucao) fatia um
+// criterio oficial em varias linhas ("A. Conclusao..." e "A. Indicacao..."
+// ambos viram "A") — usado pra remontar isso num unico criterio depois.
+function extractGroupKey(rotulo: string): string {
+  const token = rotulo.trim().split(/[.\s]/)[0] || rotulo.trim();
+  return token.toUpperCase();
+}
+
+// Maior valor da lista de pontuacoes possiveis que nao ultrapassa "value" —
+// NUNCA arredonda pra cima. Existe pra neutralizar dois jeitos da IA
+// inflar nota apesar das instrucoes do prompt: (a) devolver um numero fora
+// da lista oficial (ex.: 0.55 quando so' 0/0.5/0.6 sao validos), ou (b)
+// fatiar um criterio em partes cuja soma nao corresponde a nenhum degrau
+// real do espelho (ex.: 0.20 quando os degraus sao 0/0.3/0.4/0.5/0.6).
+function snapToFaixa(value: number, faixas: number[] | null | undefined): number {
+  if (!faixas || faixas.length === 0) return value;
+  const sorted = [...faixas].sort((a, b) => a - b);
+  let best = sorted[0];
+  for (const f of sorted) {
+    if (f <= value + 0.001) best = f;
+    else break;
+  }
+  return best;
+}
+
 function validateAndNormalize(raw: unknown, item: ItemContext): CorrectionResult | null {
   if (!raw || typeof raw !== "object") return null;
   const obj = raw as Record<string, unknown>;
   const rawCriterios = Array.isArray(obj.criterios) ? obj.criterios : [];
   const valorTotal = item.valor_total ?? 0;
+  const officialCriterios = item.criterios ?? [];
 
-  const criterios: CriterioResultado[] = rawCriterios
+  interface RawNorm {
+    key: string;
+    obtida: number;
+    maxima: number | null;
+    justificativa: string;
+    anulado: boolean;
+  }
+
+  const rawNorm: RawNorm[] = rawCriterios
     .filter((c) => c && typeof c === "object")
     .map((c, i) => {
       const cc = c as Record<string, unknown>;
+      const rotuloBruto = typeof cc.rotulo === "string" && cc.rotulo ? cc.rotulo : String(i + 1);
       const maxima = typeof cc.pontuacao_maxima === "number" ? cc.pontuacao_maxima : null;
       const anulado = cc.anulado === true;
       let obtida = typeof cc.pontuacao_obtida === "number" ? cc.pontuacao_obtida : 0;
-      // Critério anulado: pontuação máxima concedida SEMPRE, nunca confiando
-      // no valor que a IA eventualmente devolver — mesma prática da própria
-      // banca (item anulado pontua todo mundo, não é avaliado pelo conteúdo
-      // da resposta). Ver instrução no prompt, buildSystemPrompt acima.
-      if (anulado && maxima != null) {
-        obtida = maxima;
-      } else if (maxima != null) {
-        obtida = clamp(obtida, 0, maxima);
-      }
+      if (maxima != null) obtida = clamp(obtida, 0, maxima);
       return {
-        rotulo: typeof cc.rotulo === "string" && cc.rotulo ? cc.rotulo : String(i + 1),
-        pontuacao_maxima: maxima,
-        pontuacao_obtida: round2(obtida),
+        key: extractGroupKey(rotuloBruto),
+        obtida,
+        maxima,
         justificativa: typeof cc.justificativa === "string" ? cc.justificativa : "",
         anulado,
       };
     });
+
+  // Agrupa por rotulo oficial (ver extractGroupKey) — cobre o caso normal
+  // (1 pra 1) e o caso em que a IA fatiou um criterio oficial em varias
+  // linhas apesar da instrucao pra nao fazer isso.
+  const groups = new Map<string, RawNorm[]>();
+  rawNorm.forEach((r) => {
+    groups.set(r.key, [...(groups.get(r.key) ?? []), r]);
+  });
+
+  // A fonte de verdade pra rotulo/pontuacao_maxima/faixas_possiveis de cada
+  // criterio e' SEMPRE item.criterios (o que veio do banco, oab2_criterios)
+  // — nunca o que a IA devolveu, que pode estar fatiado ou com maxima
+  // errada. Se o item nao tiver criterios estruturados (fallback pra
+  // criterios_texto_bruto), usa os grupos da propria IA como estao.
+  const baseParaCriterios: Criterio[] = officialCriterios.length > 0
+    ? officialCriterios
+    : Array.from(groups.keys()).map((key): Criterio => ({ rotulo: key }));
+
+  // Peças com muitos critérios numerados (ex.: 17 itens "1".."16" + "7.1")
+  // mostraram, na prática, a IA trocando o rotulo por uma descrição própria
+  // ("Endereçamento: petição endereçada..." em vez de "1") mesmo mantendo
+  // ORDEM e QUANTIDADE corretas — o casamento por chave falha pra quase
+  // todos os critérios oficiais nesse caso, mesmo com os dados certos ali
+  // do lado. Quando isso é detectado (maioria dos critérios oficiais sem
+  // nenhum grupo casado, mas a IA devolveu uma quantidade de itens
+  // parecida), casa por POSIÇÃO em vez de por nome — a ordem se mostrou
+  // mais confiável que o rotulo nesse cenário.
+  const oficiaisSemMatch = officialCriterios.filter((oc) => !groups.has(extractGroupKey(oc.rotulo ?? ""))).length;
+  const usaCasamentoPosicional = officialCriterios.length > 0 &&
+    rawNorm.length > 0 &&
+    oficiaisSemMatch > officialCriterios.length / 2;
+
+  const criterios: CriterioResultado[] = baseParaCriterios.map((oc, i) => {
+    const rotuloOficial = oc.rotulo ?? String(i + 1);
+    const key = extractGroupKey(rotuloOficial);
+    const group = usaCasamentoPosicional
+      ? (rawNorm[i] ? [rawNorm[i]] : [])
+      : (groups.get(key) ?? []);
+    const maxima = oc.pontuacao_maxima ?? group[0]?.maxima ?? null;
+    // Critério anulado: pontuação máxima concedida SEMPRE, nunca confiando
+    // no valor que a IA eventualmente devolver — mesma prática da própria
+    // banca (item anulado pontua todo mundo, não é avaliado pelo conteúdo
+    // da resposta). Ver instrução no prompt, buildSystemPrompt acima.
+    const anulado = group.some((g) => g.anulado);
+    const somaGrupo = group.reduce((acc, g) => acc + g.obtida, 0);
+    const justificativa = group.length > 0
+      ? group.map((g) => g.justificativa).filter(Boolean).join(" ")
+      : "Critério não avaliado pela IA.";
+    let obtida = anulado && maxima != null
+      ? maxima
+      : snapToFaixa(clamp(somaGrupo, 0, maxima ?? somaGrupo), oc.faixas_possiveis);
+    // Rede de seguranca pra um caso especifico testado e reproduzido varias
+    // vezes: mesmo com instrucao explicita no prompt (+ exemplo numerico),
+    // a IA as vezes reconhece na propria justificativa que o dispositivo/
+    // artigo nao foi citado mas ainda assim escolhe o degrau mais alto da
+    // faixa (que inclui esse ponto) — inconsistencia entre texto e numero.
+    // Se a justificativa admite isso e o valor bate com o maior degrau,
+    // rebaixa pro segundo maior degrau disponivel (nunca pra zero: o resto
+    // do conteudo pode estar certo, so' o dispositivo que faltou).
+    if (!anulado && oc.faixas_possiveis && oc.faixas_possiveis.length >= 2) {
+      const sortedFaixas = [...oc.faixas_possiveis].sort((a, b) => a - b);
+      const maiorFaixa = sortedFaixas[sortedFaixas.length - 1];
+      const segundaMaiorFaixa = sortedFaixas[sortedFaixas.length - 2];
+      const admiteFaltaDispositivo = NAO_CITOU_DISPOSITIVO_RE.test(justificativa);
+      if (admiteFaltaDispositivo && Math.abs(obtida - maiorFaixa) < 0.001) {
+        obtida = segundaMaiorFaixa;
+      }
+    }
+    return {
+      rotulo: rotuloOficial,
+      pontuacao_maxima: maxima,
+      pontuacao_obtida: round2(obtida),
+      justificativa,
+      anulado,
+    };
+  });
 
   // A nota final e' sempre RECALCULADA a partir da soma dos criterios (nunca
   // confiamos no nota_total que o modelo eventualmente reportar), e limitada

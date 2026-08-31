@@ -36,11 +36,17 @@ function getStudentId() {
 }
 
 async function loadStudentHeader(studentId) {
-  // "turmas(nome)" — embed via FK profiles.turma_id -> turmas.id — só pro
-  // breadcrumb; se o aluno não tiver turma, student.turmas vem null.
+  // "turmas!turma_id(nome)" — embed via FK profiles.turma_id -> turmas.id,
+  // só pro breadcrumb (se o aluno não tiver turma, student.turmas vem
+  // null). O hint "!turma_id" é OBRIGATÓRIO aqui: profiles e turmas têm
+  // DUAS relações (profiles.turma_id -> turmas.id E turmas.professor_id ->
+  // profiles.id), então "turmas(nome)" sem hint é ambíguo pro PostgREST —
+  // ele responde com erro HTTP 300, que quebra o tratamento de erro do
+  // supabase-js sem mensagem nenhuma (é isso que travava a tela em
+  // "Carregando..." pra sempre, sem erro visível no console nem na tela).
   const { data: student, error } = await client
     .from("profiles")
-    .select("id, nome, email, ativo, created_at, turma_id, turmas(nome)")
+    .select("id, nome, email, ativo, created_at, turma_id, turmas!turma_id(nome)")
     .eq("id", studentId)
     .maybeSingle();
 
@@ -260,4 +266,14 @@ async function init() {
   await Promise.all([loadFase1Summary(studentId), loadFase2(studentId)]);
 }
 
-init();
+// Rede de segurança: se qualquer coisa aqui lançar uma exceção inesperada
+// (ex.: o mesmo tipo de erro de embed ambíguo do Supabase que causou a
+// tela travada em "Carregando..." pra sempre, sem mensagem nenhuma), pelo
+// menos mostra um erro visível em vez de ficar travado silenciosamente.
+init().catch((err) => {
+  console.error("Falha ao carregar detalhes do aluno:", err);
+  const nameEl = document.getElementById("studentName");
+  const metaEl = document.getElementById("studentMeta");
+  if (nameEl) nameEl.textContent = "Não foi possível carregar este aluno";
+  if (metaEl) metaEl.textContent = `Ocorreu um erro inesperado: ${err.message || err}`;
+});
