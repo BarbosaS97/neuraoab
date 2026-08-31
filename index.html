@@ -13,9 +13,12 @@
 <style>
   :root {
     --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
     --text: #f0f6fc;
     --text-dim: #8b949e;
     --primary: #8b5cf6;
+    --error: #da3633;
     --logo-orange: #e2500a;
     --logo-purple: #7a18fc;
     --logo-blue: #0a6bfd;
@@ -34,7 +37,7 @@
     color: var(--text);
     /* overflow-y: auto (nao "hidden") — em telas baixas (celular deitado),
        o conteudo agora e' alto o suficiente pra nao caber sempre em 100vh;
-       sem rolagem, o botao INICIAR (o UNICO jeito de sair dessa tela)
+       sem rolagem, o botao LOGIN (o UNICO jeito de sair dessa tela)
        ficaria cortado e inacessivel. Sem barra visivel quando tudo cabe. */
     overflow-y: auto;
     overflow-x: hidden;
@@ -155,13 +158,16 @@
     justify-content: center;
     gap: 10px;
     padding: 18px 46px;
+    border: none;
     border-radius: 999px;
     background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
     color: #fff;
     font-size: 15px;
     font-weight: 700;
     letter-spacing: 0.08em;
+    font-family: inherit;
     text-decoration: none;
+    cursor: pointer;
     box-shadow:
       0 18px 40px -14px rgba(122, 24, 252, 0.6),
       0 6px 18px -6px rgba(0, 0, 0, 0.5),
@@ -204,6 +210,161 @@
   @media (prefers-reduced-motion: reduce) {
     .logo, .phases, .divider, .source-note, .cta { animation: none; }
   }
+
+  /* ------------------------------------------------------- Login modal */
+
+  .login-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .login-overlay[hidden] { display: none; }
+
+  .login-modal {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 28px;
+    box-shadow: 0 30px 70px -24px rgba(0, 0, 0, 0.7);
+  }
+
+  .login-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-modal-close:hover { color: var(--text); border-color: var(--primary); }
+
+  .login-modal-title {
+    margin: 0 0 4px;
+    font-size: 19px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .login-modal-sub {
+    margin: 0 0 22px;
+    font-size: 13.5px;
+    color: var(--text-dim);
+    text-align: center;
+  }
+
+  .role-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .role-choice {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    color: var(--text);
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .role-choice:hover { border-color: var(--primary); transform: translateY(-1px); }
+  .role-choice strong { font-size: 15px; }
+  .role-choice span { font-size: 12.5px; color: var(--text-dim); }
+
+  .login-back {
+    display: inline-block;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 18px;
+    font-family: inherit;
+  }
+
+  .login-back:hover { color: var(--text); }
+
+  .login-field { margin-bottom: 16px; }
+
+  .login-field label {
+    display: block;
+    font-size: 12.5px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  .login-field input {
+    width: 100%;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 11px 13px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+  .login-field input:focus { outline: none; border-color: var(--primary); }
+
+  .login-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 0;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: filter 0.15s ease;
+  }
+
+  .login-submit:hover:not(:disabled) { filter: brightness(1.1); }
+  .login-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .login-error {
+    margin: 14px 0 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    background: rgba(218, 54, 51, 0.12);
+    border: 1px solid rgba(218, 54, 51, 0.35);
+    color: var(--error);
+    display: none;
+  }
+
+  .login-error.show { display: block; }
 </style>
 </head>
 <body>
@@ -223,14 +384,174 @@
   </div>
   <div class="divider"></div>
   <p class="source-note">Baseado em dados 100% oficiais da FGV</p>
-  <a class="cta" href="estudos/index.html">
-    INICIAR
+  <button class="cta" id="loginBtn" type="button">
+    LOGIN
     <svg class="cta-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
       <line x1="4" y1="12" x2="20" y2="12"></line>
       <polyline points="13 5 20 12 13 19"></polyline>
     </svg>
-  </a>
+  </button>
 </div>
 
+<!-- Modal de login em duas etapas: escolha do perfil (aluno/professor) ->
+     formulário de credenciais. O papel escolhido só define o TÍTULO
+     mostrado; quem decide pra onde a pessoa é mandada depois de logar é o
+     role de verdade em profiles/roles (ver getRoleName/ROLE_DESTINATIONS
+     abaixo) — assim, se alguém clicar na aba errada por engano, ainda cai
+     no lugar certo em vez de travar num erro. -->
+<div class="login-overlay" id="loginOverlay" hidden>
+  <div class="login-modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle">
+    <button type="button" class="login-modal-close" id="loginModalClose" aria-label="Fechar">&times;</button>
+
+    <div id="roleStep">
+      <h2 class="login-modal-title" id="loginModalTitle">Entrar</h2>
+      <p class="login-modal-sub">Você é...</p>
+      <div class="role-choices">
+        <button type="button" class="role-choice" data-role="aluno">
+          <strong>Aluno</strong>
+          <span>Fui convidado por um professor</span>
+        </button>
+        <button type="button" class="role-choice" data-role="professor">
+          <strong>Professor</strong>
+          <span>Tenho uma conta no Portal do Professor</span>
+        </button>
+      </div>
+    </div>
+
+    <form id="credsForm" hidden novalidate>
+      <button type="button" class="login-back" id="loginBackBtn">&larr; Voltar</button>
+      <h2 class="login-modal-title" id="credsTitle">Entrar</h2>
+      <p class="login-modal-sub">Use o e-mail e senha da sua conta</p>
+      <div class="login-field">
+        <label for="loginEmail">E-mail</label>
+        <input type="email" id="loginEmail" autocomplete="username" required>
+      </div>
+      <div class="login-field">
+        <label for="loginPassword">Senha</label>
+        <input type="password" id="loginPassword" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="login-submit" id="loginSubmitBtn">Entrar</button>
+      <p class="login-error" id="loginErrorMsg"></p>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+  // Mesma anon key publica de sempre (ver estudos/estudos.js, portal-mestre/
+  // js/config.js etc.) — quem decide pra onde a pessoa vai depois de logar
+  // e' a checagem de role abaixo, nao essa chave.
+  const SUPABASE_URL = "https://lgcphxncteqpbntnlzhe.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnY3BoeG5jdGVxcGJudG5semhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc3NzI5NTIsImV4cCI6MjEwMzM0ODk1Mn0.gQltbgj-OPpDEPuyOSonM3G8h1ppwwez0Dwi3SOdx98";
+  const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // Pra onde cada role vai depois de logar. Sessão do Supabase Auth fica no
+  // localStorage do domínio (mesma origem pra landing/estudos/portal-mestre/
+  // professor-portal), então a sessão criada aqui já "aparece" logada assim
+  // que a próxima página carrega — não precisa passar token por querystring.
+  const ROLE_DESTINATIONS = {
+    admin: "portal-mestre/dashboard.html",
+    professor: "professor-portal/dashboard.html",
+    aluno: "estudos/index.html",
+  };
+
+  const loginBtn = document.getElementById("loginBtn");
+  const loginOverlay = document.getElementById("loginOverlay");
+  const loginModalClose = document.getElementById("loginModalClose");
+  const roleStep = document.getElementById("roleStep");
+  const credsForm = document.getElementById("credsForm");
+  const credsTitle = document.getElementById("credsTitle");
+  const loginBackBtn = document.getElementById("loginBackBtn");
+  const loginEmail = document.getElementById("loginEmail");
+  const loginPassword = document.getElementById("loginPassword");
+  const loginSubmitBtn = document.getElementById("loginSubmitBtn");
+  const loginErrorMsg = document.getElementById("loginErrorMsg");
+
+  function showRoleStep() {
+    roleStep.hidden = false;
+    credsForm.hidden = true;
+    loginErrorMsg.className = "login-error";
+  }
+
+  function openLogin() {
+    showRoleStep();
+    credsForm.reset();
+    loginOverlay.hidden = false;
+  }
+
+  function closeLogin() {
+    loginOverlay.hidden = true;
+  }
+
+  loginBtn.addEventListener("click", openLogin);
+  loginModalClose.addEventListener("click", closeLogin);
+  loginOverlay.addEventListener("click", (ev) => {
+    if (ev.target === loginOverlay) closeLogin();
+  });
+  document.addEventListener("keydown", (ev) => {
+    if (ev.key === "Escape" && !loginOverlay.hidden) closeLogin();
+  });
+
+  document.querySelectorAll(".role-choice").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      credsTitle.textContent = btn.dataset.role === "professor" ? "Entrar como professor" : "Entrar como aluno";
+      roleStep.hidden = true;
+      credsForm.hidden = false;
+      loginEmail.focus();
+    });
+  });
+
+  loginBackBtn.addEventListener("click", showRoleStep);
+
+  function showLoginError(text) {
+    loginErrorMsg.textContent = text;
+    loginErrorMsg.className = "login-error show";
+  }
+
+  // Mesmo padrão de checkIsAdmin/checkIsProfessor (portal-mestre/js/auth.js,
+  // professor-portal/js/auth.js) — devolve o nome do role de verdade em vez
+  // de confiar em qual aba a pessoa escolheu no passo anterior.
+  async function getRoleName(userId) {
+    const { data: profile } = await client.from("profiles").select("role_id").eq("id", userId).maybeSingle();
+    if (!profile?.role_id) return null;
+    const { data: role } = await client.from("roles").select("name").eq("id", profile.role_id).maybeSingle();
+    return role?.name ?? null;
+  }
+
+  credsForm.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    loginErrorMsg.className = "login-error";
+
+    const email = loginEmail.value.trim();
+    const password = loginPassword.value;
+    if (!email || !password) {
+      showLoginError("Preencha e-mail e senha.");
+      return;
+    }
+
+    loginSubmitBtn.disabled = true;
+    loginSubmitBtn.textContent = "Entrando...";
+
+    const { data, error } = await client.auth.signInWithPassword({ email, password });
+    if (error || !data?.user) {
+      loginSubmitBtn.disabled = false;
+      loginSubmitBtn.textContent = "Entrar";
+      showLoginError("E-mail ou senha inválidos.");
+      return;
+    }
+
+    const roleName = await getRoleName(data.user.id);
+    const destination = ROLE_DESTINATIONS[roleName];
+    if (!destination) {
+      await client.auth.signOut();
+      loginSubmitBtn.disabled = false;
+      loginSubmitBtn.textContent = "Entrar";
+      showLoginError("Essa conta não tem acesso configurado.");
+      return;
+    }
+
+    window.location.href = destination;
+  });
+</script>
 </body>
 </html>
