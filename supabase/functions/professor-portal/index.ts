@@ -138,11 +138,13 @@ const MAX_BULK_INVITES = 150;
 interface StudentInput {
   email: string;
   nome?: string;
+  turma_id?: string;
 }
 interface CreateStudentPayload {
   action: "create-student";
   email: string;
   nome?: string;
+  turma_id?: string;
 }
 interface BulkInviteStudentsPayload {
   action: "bulk-invite-students";
@@ -210,6 +212,22 @@ async function inviteStudent(
   const email = input.email?.trim();
   if (!email) return { email: input.email ?? "", ok: false, error: "E-mail vazio." };
 
+  // Confia so' num turma_id que realmente pertence a este professor — nunca
+  // no valor cru vindo do cliente (mesmo cuidado de requireProfessor
+  // acima). Convite sem turma (turma_id ausente) continua valido: o aluno
+  // so' cai em "Sem turma".
+  let turmaId: string | null = null;
+  if (input.turma_id) {
+    const { data: turma } = await adminClient
+      .from("turmas")
+      .select("id")
+      .eq("id", input.turma_id)
+      .eq("professor_id", professorId)
+      .maybeSingle();
+    if (!turma) return { email, ok: false, error: "Turma inválida." };
+    turmaId = turma.id;
+  }
+
   const { data: linkData, error: linkError } = await adminClient.auth.admin.generateLink({
     type: "invite",
     email,
@@ -223,6 +241,7 @@ async function inviteStudent(
     id: linkData.user.id,
     role_id: alunoRoleId,
     professor_id: professorId,
+    turma_id: turmaId,
     nome: input.nome?.trim() || null,
     email,
   });
@@ -278,7 +297,11 @@ Deno.serve(async (req: Request) => {
 
     if (body.action === "create-student") {
       if (!body.email) return jsonResponse({ error: "'email' é obrigatório." }, 400);
-      const result = await inviteStudent(professorId, alunoRoleId, { email: body.email, nome: body.nome });
+      const result = await inviteStudent(professorId, alunoRoleId, {
+        email: body.email,
+        nome: body.nome,
+        turma_id: body.turma_id,
+      });
       if (!result.ok) return jsonResponse({ error: result.error }, 400);
       return jsonResponse(result);
     }

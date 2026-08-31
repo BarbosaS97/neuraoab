@@ -1,45 +1,28 @@
-// NeuraOAB — Portal do Professor — dashboard: estatísticas + convite em
-// lote + CRUD simples de alunos.
+// NeuraOAB — Portal do Professor — detalhe de uma turma (ou o pseudo-id
+// "none", que representa "Sem turma"): lista de alunos, convite em lote
+// escopado a esta turma, edição (nome + mover de turma) e exclusão (soft).
 //
-// "Convidar" e "excluir" passam pela Edge Function professor-portal
-// (client.functions.invoke já manda o token da sessão atual no header
-// Authorization automaticamente — mesmo padrão de portal-mestre/js/
-// admin.js). "Editar" (só o nome) é um UPDATE direto em profiles,
-// protegido pela policy de RLS "profiles_update_professor" — não precisa
-// da service_role pra isso. RLS também é quem garante que este professor só
-// enxerga/edita os PRÓPRIOS alunos (profiles.professor_id = auth.uid()),
-// não precisa filtrar isso de novo no cliente.
+// RLS de profiles/turmas (supabase/schema_turmas.sql, schema_professor_
+// portal.sql) já garante que este professor só vê/edita os PRÓPRIOS alunos
+// e turmas — as queries abaixo nem precisam filtrar por professor_id de
+// novo, mas fazem isso mesmo assim como reforço (mesmo padrão adotado em
+// professor-portal/js/students.js originalmente).
 
+const TURMA_ID = new URLSearchParams(window.location.search).get("id");
+const IS_UNASSIGNED = TURMA_ID === "none";
+
+let currentProfessorId = null;
 let alunoRoleId = null;
 let studentsCache = [];
-let currentProfessorId = null;
+let turmasCache = []; // todas as turmas do professor, pro seletor do modal de editar
 
-const statTotalEl = document.getElementById("statTotalAlunos");
-const statAtivosEl = document.getElementById("statAlunosAtivos");
+const turmaTitleEl = document.getElementById("turmaTitle");
+const turmaSubtitleEl = document.getElementById("turmaSubtitle");
+const renameTurmaBtn = document.getElementById("renameTurmaBtn");
+const statAlunosEl = document.getElementById("statAlunos");
+const statAcertoFase1El = document.getElementById("statAcertoFase1");
+const statNotaFase2El = document.getElementById("statNotaFase2");
 const tableBodyEl = document.getElementById("studentsTableBody");
-
-// ------------------------------------------------------------- Convite modal
-
-const inviteModal = document.getElementById("inviteModal");
-const inviteModalMsg = document.getElementById("inviteModalMsg");
-const inviteForm = document.getElementById("inviteForm");
-const inviteTextarea = document.getElementById("inviteTextarea");
-const inviteFormFields = document.getElementById("inviteFormFields");
-const inviteFormFooter = document.getElementById("inviteFormFooter");
-const inviteResultEl = document.getElementById("inviteResult");
-const inviteResultHint = document.getElementById("inviteResultHint");
-const inviteResultBody = document.getElementById("inviteResultBody");
-const inviteResultFooter = document.getElementById("inviteResultFooter");
-const inviteModalSaveBtn = document.getElementById("inviteModalSave");
-
-// ---------------------------------------------------------------- Edit modal
-
-const editModal = document.getElementById("editModal");
-const editModalMsg = document.getElementById("editModalMsg");
-const editForm = document.getElementById("editForm");
-const edId = document.getElementById("edId");
-const edNome = document.getElementById("edNome");
-const editModalSaveBtn = document.getElementById("editModalSave");
 
 function fmtDate(iso) {
   if (!iso) return "—";
@@ -54,35 +37,54 @@ function showMsg(el, text, kind) {
   el.textContent = text;
   el.className = `modal-msg show ${kind}`;
 }
-
 function clearMsg(el) {
   el.className = "modal-msg";
   el.textContent = "";
 }
 
-// ------------------------------------------------------------ Estatísticas
+async function callProfessorPortal(payload) {
+  const { data, error } = await client.functions.invoke("professor-portal", { body: payload });
+  if (error) {
+    let detail = error.message;
+    try {
+      const body = await error.context?.json?.();
+      if (body?.error) detail = body.error;
+    } catch {
+      // mantém a mensagem genérica
+    }
+    throw new Error(detail);
+  }
+  if (data?.error) throw new Error(data.error);
+  return data;
+}
 
-async function loadStats() {
-  if (!alunoRoleId) return;
+// ------------------------------------------------------------------ Cabeçalho
 
-  // Filtro por professor_id explícito aqui, mesmo já sendo garantido pela
-  // policy de RLS "profiles_select_professor" — não custa nada e deixa a
-  // intenção clara na própria query, sem depender só do banco pra isolar
-  // os alunos de outro professor.
-  const { count: totalCount } = await client
-    .from("profiles")
-    .select("id", { count: "exact", head: true })
-    .eq("role_id", alunoRoleId)
-    .eq("professor_id", currentProfessorId);
-  statTotalEl.textContent = totalCount ?? "—";
+async function loadTurmaHeader() {
+  if (IS_UNASSIGNED) {
+    turmaTitleEl.textContent = "Sem turma";
+    turmaSubtitleEl.textContent = "Alunos que ainda não foram organizados em nenhuma turma.";
+    renameTurmaBtn.hidden = true;
+    return true;
+  }
 
-  const { count: ativosCount } = await client
-    .from("profiles")
-    .select("id", { count: "exact", head: true })
-    .eq("role_id", alunoRoleId)
-    .eq("professor_id", currentProfessorId)
-    .eq("ativo", true);
-  statAtivosEl.textContent = ativosCount ?? "—";
+  const { data: turma, error } = await client
+    .from("turmas")
+    .select("id, nome")
+    .eq("id", TURMA_ID)
+    .maybeSingle();
+
+  if (error || !turma) {
+    turmaTitleEl.textContent = "Turma não encontrada";
+    turmaSubtitleEl.textContent = "Esta turma não existe ou não é sua.";
+    renameTurmaBtn.hidden = true;
+    return false;
+  }
+
+  turmaTitleEl.textContent = turma.nome;
+  turmaSubtitleEl.textContent = "";
+  renameTurmaBtn.hidden = false;
+  return true;
 }
 
 // -------------------------------------------------------------- Listagem
@@ -95,7 +97,7 @@ function renderStudents() {
     tr.className = "empty-row";
     const td = document.createElement("td");
     td.colSpan = 5;
-    td.textContent = "Nenhum aluno cadastrado ainda.";
+    td.textContent = "Nenhum aluno aqui ainda.";
     tr.appendChild(td);
     tableBodyEl.appendChild(tr);
     return;
@@ -157,51 +159,79 @@ function renderStudents() {
 
 async function loadStudents() {
   if (!alunoRoleId) return;
-  const { data, error } = await client
+  let query = client
     .from("profiles")
-    .select("id, nome, email, ativo, created_at")
+    .select("id, nome, email, ativo, created_at, turma_id")
     .eq("role_id", alunoRoleId)
-    .eq("professor_id", currentProfessorId)
-    .order("created_at", { ascending: false });
+    .eq("professor_id", currentProfessorId);
 
-  if (error) {
-    console.error("Falha ao carregar alunos:", error);
-    studentsCache = [];
-  } else {
-    studentsCache = data || [];
-  }
+  query = IS_UNASSIGNED ? query.is("turma_id", null) : query.eq("turma_id", TURMA_ID);
+
+  const { data, error } = await query.order("created_at", { ascending: false });
+  studentsCache = error ? [] : data || [];
+  statAlunosEl.textContent = studentsCache.length;
   renderStudents();
 }
 
-async function refreshAll() {
-  await Promise.all([loadStats(), loadStudents()]);
+async function loadTurmasForSelect() {
+  const { data } = await client
+    .from("turmas")
+    .select("id, nome")
+    .eq("professor_id", currentProfessorId)
+    .order("nome", { ascending: true });
+  turmasCache = data || [];
 }
 
-async function callProfessorPortal(payload) {
-  const { data, error } = await client.functions.invoke("professor-portal", { body: payload });
-  if (error) {
-    let detail = error.message;
-    try {
-      const body = await error.context?.json?.();
-      if (body?.error) detail = body.error;
-    } catch {
-      // mantém a mensagem genérica
-    }
-    throw new Error(detail);
+async function loadQuickStats() {
+  const ids = studentsCache.map((s) => s.id);
+  if (ids.length === 0) {
+    statAcertoFase1El.textContent = "—";
+    statNotaFase2El.textContent = "—";
+    return;
   }
-  if (data?.error) throw new Error(data.error);
-  return data;
+
+  const { data: respostas1 } = await client.from("oab_respostas").select("correct").in("user_id", ids);
+  if (respostas1 && respostas1.length > 0) {
+    const acertos = respostas1.filter((r) => r.correct).length;
+    statAcertoFase1El.textContent = `${Math.round((acertos / respostas1.length) * 100)}%`;
+  } else {
+    statAcertoFase1El.textContent = "—";
+  }
+
+  const { data: tentativas } = await client
+    .from("oab2_tentativas")
+    .select("nota_total")
+    .in("user_id", ids)
+    .eq("status", "corrigida");
+  if (tentativas && tentativas.length > 0) {
+    const soma = tentativas.reduce((acc, t) => acc + (Number(t.nota_total) || 0), 0);
+    statNotaFase2El.textContent = (soma / tentativas.length).toFixed(2).replace(".", ",");
+  } else {
+    statNotaFase2El.textContent = "—";
+  }
+}
+
+async function refreshAll() {
+  await loadStudents();
+  await loadQuickStats();
 }
 
 // ------------------------------------------------------------ Convite modal
 
+const inviteModal = document.getElementById("inviteModal");
+const inviteModalMsg = document.getElementById("inviteModalMsg");
+const inviteForm = document.getElementById("inviteForm");
+const inviteTextarea = document.getElementById("inviteTextarea");
+const inviteFormFields = document.getElementById("inviteFormFields");
+const inviteFormFooter = document.getElementById("inviteFormFooter");
+const inviteResultEl = document.getElementById("inviteResult");
+const inviteResultHint = document.getElementById("inviteResultHint");
+const inviteResultBody = document.getElementById("inviteResultBody");
+const inviteResultFooter = document.getElementById("inviteResultFooter");
+const inviteModalSaveBtn = document.getElementById("inviteModalSave");
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Aceita "email" ou "email, nome" por linha — o "cadastro em lote" pedido
-// é exatamente isto: colar várias linhas de uma vez. Duplicatas (mesmo
-// e-mail em mais de uma linha) são silenciosamente ignoradas na segunda
-// ocorrência; e-mails com formato inválido viram um erro por linha, sem
-// travar o parse das linhas válidas.
 function parseInviteInput(text) {
   const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
   const seen = new Set();
@@ -220,7 +250,7 @@ function parseInviteInput(text) {
     const key = email.toLowerCase();
     if (seen.has(key)) continue;
     seen.add(key);
-    students.push({ email, nome });
+    students.push(IS_UNASSIGNED ? { email, nome } : { email, nome, turma_id: TURMA_ID });
   }
 
   return { students, parseErrors };
@@ -240,7 +270,6 @@ function openInviteModal() {
   inviteModal.hidden = false;
   inviteTextarea.focus();
 }
-
 function closeInviteModal() {
   inviteModal.hidden = true;
 }
@@ -327,15 +356,34 @@ inviteModal.addEventListener("click", (ev) => {
 
 // --------------------------------------------------------------- Edit modal
 
+const editModal = document.getElementById("editModal");
+const editModalMsg = document.getElementById("editModalMsg");
+const editForm = document.getElementById("editForm");
+const edId = document.getElementById("edId");
+const edNome = document.getElementById("edNome");
+const edTurma = document.getElementById("edTurma");
+const editModalSaveBtn = document.getElementById("editModalSave");
+
+function populateTurmaSelect(selectedTurmaId) {
+  edTurma.innerHTML = '<option value="">Sem turma</option>';
+  turmasCache.forEach((t) => {
+    const opt = document.createElement("option");
+    opt.value = t.id;
+    opt.textContent = t.nome;
+    edTurma.appendChild(opt);
+  });
+  edTurma.value = selectedTurmaId || "";
+}
+
 function openEditModal(student) {
   editForm.reset();
   edId.value = student.id;
   edNome.value = student.nome || "";
+  populateTurmaSelect(student.turma_id);
   clearMsg(editModalMsg);
   editModal.hidden = false;
   edNome.focus();
 }
-
 function closeEditModal() {
   editModal.hidden = true;
 }
@@ -354,7 +402,7 @@ editForm.addEventListener("submit", async (ev) => {
   try {
     const { error } = await client
       .from("profiles")
-      .update({ nome: edNome.value.trim() })
+      .update({ nome: edNome.value.trim(), turma_id: edTurma.value || null })
       .eq("id", edId.value);
     if (error) throw new Error(error.message);
 
@@ -384,33 +432,80 @@ async function deleteStudent(student) {
   }
 }
 
+// ------------------------------------------------------------- Renomear turma
+
+const renameModal = document.getElementById("renameModal");
+const renameModalMsg = document.getElementById("renameModalMsg");
+const renameForm = document.getElementById("renameForm");
+const renameNome = document.getElementById("renameNome");
+const renameModalSaveBtn = document.getElementById("renameModalSave");
+
+function openRenameModal() {
+  renameForm.reset();
+  renameNome.value = turmaTitleEl.textContent;
+  clearMsg(renameModalMsg);
+  renameModal.hidden = false;
+  renameNome.focus();
+}
+function closeRenameModal() {
+  renameModal.hidden = true;
+}
+
+renameTurmaBtn.addEventListener("click", openRenameModal);
+document.getElementById("renameModalClose").addEventListener("click", closeRenameModal);
+document.getElementById("renameModalCancel").addEventListener("click", closeRenameModal);
+renameModal.addEventListener("click", (ev) => {
+  if (ev.target === renameModal) closeRenameModal();
+});
+
+renameForm.addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  clearMsg(renameModalMsg);
+  renameModalSaveBtn.disabled = true;
+
+  try {
+    const { error } = await client.from("turmas").update({ nome: renameNome.value.trim() }).eq("id", TURMA_ID);
+    if (error) throw new Error(error.message);
+    turmaTitleEl.textContent = renameNome.value.trim();
+    closeRenameModal();
+  } catch (err) {
+    showMsg(renameModalMsg, err.message || "Ocorreu um erro inesperado.", "err");
+  } finally {
+    renameModalSaveBtn.disabled = false;
+  }
+});
+
 document.addEventListener("keydown", (ev) => {
   if (ev.key !== "Escape") return;
   if (!inviteModal.hidden) closeInviteModal();
   if (!editModal.hidden) closeEditModal();
+  if (!renameModal.hidden) closeRenameModal();
 });
 
 // -------------------------------------------------------------------- Init
 
 async function init() {
+  if (!TURMA_ID) {
+    turmaTitleEl.textContent = "Turma não encontrada";
+    return;
+  }
+
   const user = await requireProfessorSession();
-  if (!user) return; // requireProfessorSession já redirecionou pro login
+  if (!user) return;
   currentProfessorId = user.id;
 
   const { data: role } = await client.from("roles").select("id").eq("name", "aluno").maybeSingle();
   alunoRoleId = role?.id ?? null;
-
   if (!alunoRoleId) {
-    tableBodyEl.innerHTML = "";
-    const tr = document.createElement("tr");
-    const td = document.createElement("td");
-    td.colSpan = 5;
-    td.textContent = "Papel \"aluno\" não encontrado — rode supabase/schema_portal_mestre.sql.";
-    tr.appendChild(td);
-    tableBodyEl.appendChild(tr);
+    turmaTitleEl.textContent = 'Papel "aluno" não encontrado';
+    turmaSubtitleEl.textContent = "Rode supabase/schema_portal_mestre.sql.";
     return;
   }
 
+  const ok = await loadTurmaHeader();
+  if (!ok) return;
+
+  await loadTurmasForSelect();
   await refreshAll();
 }
 

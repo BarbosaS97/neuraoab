@@ -38,7 +38,7 @@ function getStudentId() {
 async function loadStudentHeader(studentId) {
   const { data: student, error } = await client
     .from("profiles")
-    .select("id, nome, email, ativo, created_at")
+    .select("id, nome, email, ativo, created_at, turma_id")
     .eq("id", studentId)
     .maybeSingle();
 
@@ -53,6 +53,14 @@ async function loadStudentHeader(studentId) {
   const statusLabel = student.ativo ? "Ativo" : "Inativo";
   document.getElementById("studentMeta").textContent =
     `${student.email || "—"} · Cadastrado em ${fmtDate(student.created_at)} · ${statusLabel}`;
+
+  // Volta pra turma de onde o aluno veio (ou "Sem turma") em vez de sempre
+  // pra lista geral — mantém a navegação consistente com o resto do
+  // portal, que agora organiza tudo por turma.
+  const backLink = document.getElementById("backLink");
+  backLink.href = `turma.html?id=${encodeURIComponent(student.turma_id || "none")}`;
+  backLink.textContent = "← Voltar pra turma";
+
   return student;
 }
 

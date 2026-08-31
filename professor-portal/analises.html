@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aluno — Portal do Professor — NeuraOAB</title>
+<title>Análises — Portal do Professor — NeuraOAB</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="../images/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
@@ -22,11 +22,11 @@
       <span>Portal do Professor</span>
     </div>
     <nav class="sidebar-nav">
-      <a href="dashboard.html" class="active">
+      <a href="dashboard.html">
         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
         Turmas
       </a>
-      <a href="analises.html">
+      <a href="analises.html" class="active">
         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
         Análises
       </a>
@@ -39,32 +39,56 @@
 
   <div class="main">
     <div class="main-inner">
-      <a href="dashboard.html" class="back-link" id="backLink">&larr; Voltar</a>
-
-      <div class="panel" id="studentHeaderPanel">
-        <div class="panel-header">
-          <h2 id="studentName">Carregando...</h2>
+      <div class="page-header">
+        <div>
+          <h1>Análises</h1>
+          <p>Comparação de desempenho entre as suas turmas.</p>
         </div>
-        <p class="field-hint" id="studentMeta"></p>
       </div>
 
       <div class="stats-row">
         <div class="stat-card">
-          <div class="num" id="statFase1">—</div>
-          <div class="label">Acertos na 1ª fase</div>
+          <div class="num" id="statTotalAlunos">—</div>
+          <div class="label">Alunos no total</div>
         </div>
         <div class="stat-card">
-          <div class="num" id="statFase2">—</div>
-          <div class="label">Cadernos da 2ª fase respondidos</div>
+          <div class="num" id="statMediaFase1">—</div>
+          <div class="label">% acerto geral — 1ª fase</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" id="statMediaFase2">—</div>
+          <div class="label">Nota média geral — 2ª fase</div>
         </div>
       </div>
 
       <div class="panel">
         <div class="panel-header">
-          <h2>2ª fase — peças e questões discursivas</h2>
+          <h2>% de acerto na 1ª fase, por turma</h2>
         </div>
-        <div id="fase2List">
+        <div id="turmasBars">
           <p class="field-hint">Carregando...</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Comparativo completo</h2>
+        </div>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Turma</th>
+                <th>Alunos</th>
+                <th>% acerto 1ª fase</th>
+                <th>Nota média 2ª fase</th>
+                <th>Tentativas corrigidas</th>
+              </tr>
+            </thead>
+            <tbody id="analisesTableBody">
+              <tr class="empty-row"><td colspan="5">Carregando...</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -73,7 +97,7 @@
 
 <script src="js/config.js"></script>
 <script src="js/auth.js"></script>
-<script src="js/aluno-detail.js"></script>
+<script src="js/analises.js"></script>
 <script src="js/theme.js"></script>
 </body>
 </html>

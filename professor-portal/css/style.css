@@ -1,7 +1,8 @@
-/* NeuraOAB — Portal do Professor. Cópia de portal-mestre/css/style.css
-   (mesma paleta dark/azul de destaque, mesma família visual das páginas
-   administrativas) + estilos extras pro convite em lote (textarea,
-   tabela de resultado por linha) que o Portal Mestre não precisa. */
+/* NeuraOAB — Portal do Professor. Shell com sidebar fixa (Turmas/Análises)
+   + tema claro/escuro (mesmo mecanismo de estudos/style.css: atributo
+   data-theme em <html>, alternado por js/theme.js). As cores de marca
+   (--accent/--ok/--err/--warn) continuam as mesmas nos dois temas — só
+   fundo/texto/borda mudam, igual ao padrão já usado em estudos/. */
 
 :root {
   --bg: #0f1420;
@@ -14,6 +15,14 @@
   --ok: #35c78a;
   --err: #ef5757;
   --warn: #e8b339;
+}
+
+:root[data-theme="light"] {
+  --bg: #f6f8fa;
+  --panel: #ffffff;
+  --panel-border: #d8dee8;
+  --text: #1f2328;
+  --text-dim: #5c6470;
 }
 
 * { box-sizing: border-box; }
@@ -154,24 +163,124 @@ input, textarea {
 
 .login-error.show { display: block; }
 
-/* ---------------------------------------------------------- Dashboard */
+/* --------------------------------------------------------- Shell / sidebar */
 
-.topbar {
+.app-shell {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 24px;
-  border-bottom: 1px solid var(--panel-border);
+  min-height: 100vh;
 }
 
-.topbar-brand {
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--panel);
+  border-right: 1px solid var(--panel-border);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 16px;
+}
+
+.sidebar-brand {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 0 6px 18px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--panel-border);
 }
 
-.topbar-brand img { height: 30px; width: auto; }
-.topbar-brand span { font-size: 13px; color: var(--text-dim); }
+.sidebar-brand img { height: 28px; width: auto; }
+.sidebar-brand span { font-size: 13px; color: var(--text-dim); font-weight: 600; }
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-nav a svg { flex-shrink: 0; }
+.sidebar-nav a:hover { background: var(--bg); color: var(--text); }
+.sidebar-nav a.active { background: var(--bg); color: var(--text); box-shadow: inset 3px 0 0 var(--accent); }
+
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 16px;
+  margin-top: 16px;
+  border-top: 1px solid var(--panel-border);
+}
+
+.theme-toggle-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--panel-border);
+  background: transparent;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.theme-toggle-btn:hover { color: var(--text); border-color: var(--accent); }
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+.main-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 28px 60px;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.page-header h1 { margin: 0; font-size: 20px; font-weight: 700; }
+.page-header p { margin: 4px 0 0; font-size: 13px; color: var(--text-dim); }
+
+@media (max-width: 720px) {
+  .app-shell { flex-direction: column; }
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 16px;
+    border-right: none;
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .sidebar-brand { border-bottom: none; padding: 0; margin: 0 auto 0 0; }
+  .sidebar-nav { flex-direction: row; flex: none; }
+  .sidebar-footer { border-top: none; padding: 0; margin: 0 0 0 8px; }
+  .main-inner { padding: 20px 16px 48px; }
+}
+
+/* -------------------------------------------------------------- Botões */
 
 .btn-ghost {
   background: transparent;
@@ -185,11 +294,20 @@ input, textarea {
 
 .btn-ghost:hover { color: var(--text); border-color: var(--accent); }
 
-.wrap {
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 32px 16px 60px;
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.15s ease;
 }
+
+.btn-accent:hover { background: var(--accent-hover); }
+
+/* ---------------------------------------------------------- Cards / stats */
 
 .stats-row {
   display: grid;
@@ -242,18 +360,81 @@ input, textarea {
   margin: 0;
 }
 
-.btn-accent {
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 7px;
-  padding: 9px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  transition: background 0.15s ease;
+/* ------------------------------------------------------------- Turmas */
+
+.turmas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
 }
 
-.btn-accent:hover { background: var(--accent-hover); }
+.turma-card {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.turma-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.turma-card.turma-card-unassigned { border-style: dashed; }
+
+.turma-card h3 {
+  margin: 0;
+  padding-right: 56px;
+  font-size: 15.5px;
+  font-weight: 600;
+}
+
+.turma-card .turma-stats {
+  display: flex;
+  gap: 18px;
+}
+
+.turma-card .turma-stats strong {
+  display: block;
+  font-size: 17px;
+  color: var(--text);
+}
+
+.turma-card .turma-stats span {
+  font-size: 11.5px;
+  color: var(--text-dim);
+}
+
+.turma-card-actions {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 6px;
+  z-index: 1;
+}
+
+.turma-card-actions button {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  border: 1px solid var(--panel-border);
+  background: var(--bg);
+  color: var(--text-dim);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.turma-card-actions button:hover { color: var(--text); border-color: var(--accent); }
+.turma-card-actions button.danger:hover { color: var(--err); border-color: var(--err); }
+
+/* ------------------------------------------------------------- Tabela */
 
 table {
   width: 100%;
@@ -291,6 +472,9 @@ tbody tr:last-child td { border-bottom: none; }
 
 .badge.ativo { background: rgba(53, 199, 138, 0.12); color: var(--ok); }
 .badge.inativo { background: rgba(239, 87, 87, 0.12); color: var(--err); }
+.badge.ok { background: rgba(53, 199, 138, 0.12); color: var(--ok); }
+.badge.err { background: rgba(239, 87, 87, 0.12); color: var(--err); }
+.badge.warn { background: rgba(232, 179, 57, 0.14); color: var(--warn); }
 
 .row-actions {
   display: flex;
@@ -319,19 +503,42 @@ tbody tr:last-child td { border-bottom: none; }
   padding: 24px 10px;
 }
 
-/* Tabela de resultado do convite em lote (um e-mail por linha, ok/erro) —
-   reaproveita a tipografia de "table" acima, só ajusta o resultado por
-   linha (badge.ok inexistente em portal-mestre, adicionado aqui). */
-.badge.ok { background: rgba(53, 199, 138, 0.12); color: var(--ok); }
-.badge.err { background: rgba(239, 87, 87, 0.12); color: var(--err); }
-.badge.warn { background: rgba(232, 179, 57, 0.14); color: var(--warn); }
-
 .bulk-results-wrap {
   max-height: 260px;
   overflow-y: auto;
   border: 1px solid var(--panel-border);
   border-radius: 8px;
 }
+
+/* ---------------------------------------------------------------- Barras */
+/* Comparação simples entre turmas em analises.html — sem lib de gráfico. */
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 60px;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 13px;
+}
+
+.bar-row + .bar-row { border-top: 1px solid var(--panel-border); }
+
+.bar-track {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+.bar-row .bar-value { text-align: right; color: var(--text-dim); font-size: 12.5px; }
 
 /* ------------------------------------------------------- Detalhe do aluno */
 

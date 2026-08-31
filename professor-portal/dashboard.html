@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portal do Professor — NeuraOAB</title>
+<title>Turmas — Portal do Professor — NeuraOAB</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="../images/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
@@ -15,120 +15,78 @@
 </head>
 <body>
 
-<div class="topbar">
-  <div class="topbar-brand">
-    <img src="../images/logotipo.png" alt="NeuraOAB">
-    <span>Portal do Professor</span>
-  </div>
-  <button type="button" class="btn-ghost" id="logoutBtn">Sair</button>
-</div>
-
-<div class="wrap">
-  <div class="stats-row">
-    <div class="stat-card">
-      <div class="num" id="statTotalAlunos">—</div>
-      <div class="label">Alunos cadastrados</div>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="../images/logotipo.png" alt="NeuraOAB">
+      <span>Portal do Professor</span>
     </div>
-    <div class="stat-card">
-      <div class="num" id="statAlunosAtivos">—</div>
-      <div class="label">Alunos ativos</div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="active">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        Turmas
+      </a>
+      <a href="analises.html">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        Análises
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Alternar tema"></button>
+      <button type="button" class="btn-ghost" id="logoutBtn" style="flex: 1;">Sair</button>
     </div>
-  </div>
+  </aside>
 
-  <div class="panel">
-    <div class="panel-header">
-      <h2>Alunos</h2>
-      <button type="button" class="btn-accent" id="newStudentsBtn">Convidar aluno(s)</button>
-    </div>
-
-    <div style="overflow-x: auto;">
-      <table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>E-mail</th>
-            <th>Cadastrado em</th>
-            <th>Status</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="studentsTableBody">
-          <tr class="empty-row"><td colspan="5">Carregando...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<!-- Convite (individual ou em lote): mesmo formulário serve pra 1 ou pra
-     várias linhas — "cadastro em lote fácil" era o pedido explícito, então
-     em vez de duas telas separadas (uma pra 1, outra pra várias), um só
-     textarea cobre os dois casos. -->
-<div class="modal-overlay" id="inviteModal" hidden>
-  <div class="modal modal-wide" role="dialog" aria-modal="true" aria-labelledby="inviteModalTitle">
-    <div class="modal-header">
-      <h2 id="inviteModalTitle">Convidar aluno(s)</h2>
-      <button type="button" id="inviteModalClose" class="modal-close" aria-label="Fechar">&times;</button>
-    </div>
-
-    <form id="inviteForm">
-      <div class="modal-body">
-        <p class="modal-msg" id="inviteModalMsg"></p>
-
-        <div id="inviteFormFields">
-          <p class="field-hint">Um aluno por linha: <code>e-mail</code> ou <code>e-mail, nome</code> (nome é opcional). O convite é enviado por e-mail automaticamente pra cada um.</p>
-          <div class="field">
-            <label for="inviteTextarea">Alunos</label>
-            <textarea id="inviteTextarea" placeholder="maria@exemplo.com, Maria Silva&#10;joao@exemplo.com"></textarea>
-          </div>
+  <div class="main">
+    <div class="main-inner">
+      <div class="page-header">
+        <div>
+          <h1>Turmas</h1>
+          <p>Organize seus alunos por turma pra acompanhar o progresso de cada grupo separadamente.</p>
         </div>
+        <button type="button" class="btn-accent" id="newTurmaBtn">Nova turma</button>
+      </div>
 
-        <div id="inviteResult" hidden>
-          <p class="field-hint" id="inviteResultHint"></p>
-          <div class="bulk-results-wrap">
-            <table>
-              <thead><tr><th>E-mail</th><th>Resultado</th></tr></thead>
-              <tbody id="inviteResultBody"></tbody>
-            </table>
-          </div>
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="num" id="statTotalAlunos">—</div>
+          <div class="label">Alunos cadastrados</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" id="statAlunosAtivos">—</div>
+          <div class="label">Alunos ativos</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" id="statTotalTurmas">—</div>
+          <div class="label">Turmas criadas</div>
         </div>
       </div>
 
-      <div class="modal-footer" id="inviteFormFooter">
-        <button type="button" class="btn-ghost" id="inviteModalCancel">Cancelar</button>
-        <button type="submit" class="btn-accent" id="inviteModalSave">Enviar convites</button>
+      <div id="turmasGrid" class="turmas-grid">
+        <p class="field-hint">Carregando...</p>
       </div>
-      <div class="modal-footer" id="inviteResultFooter" hidden>
-        <button type="button" class="btn-accent" id="inviteResultDone">Concluído</button>
-      </div>
-    </form>
+    </div>
   </div>
 </div>
 
-<!-- Edição simples: só o nome (corrigir grafia etc.) — status ativo/inativo
-     é controlado só por "Excluir" na linha (soft delete via Edge Function),
-     nunca daqui, porque o gatilho protect_profile_privileged_fields trava
-     "ativo" pra qualquer UPDATE que não venha da service_role (ver
-     supabase/schema_professor_portal.sql). -->
-<div class="modal-overlay" id="editModal" hidden>
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+<div class="modal-overlay" id="turmaModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="turmaModalTitle">
     <div class="modal-header">
-      <h2 id="editModalTitle">Editar aluno</h2>
-      <button type="button" id="editModalClose" class="modal-close" aria-label="Fechar">&times;</button>
+      <h2 id="turmaModalTitle">Nova turma</h2>
+      <button type="button" id="turmaModalClose" class="modal-close" aria-label="Fechar">&times;</button>
     </div>
-
-    <form id="editForm">
+    <form id="turmaForm">
       <div class="modal-body">
-        <p class="modal-msg" id="editModalMsg"></p>
-        <input type="hidden" id="edId">
+        <p class="modal-msg" id="turmaModalMsg"></p>
+        <input type="hidden" id="tuId">
         <div class="field">
-          <label for="edNome">Nome completo</label>
-          <input type="text" id="edNome">
+          <label for="tuNome">Nome da turma</label>
+          <input type="text" id="tuNome" required placeholder="Ex.: Intensivo Dezembro 2026">
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-ghost" id="editModalCancel">Cancelar</button>
-        <button type="submit" class="btn-accent" id="editModalSave">Salvar alterações</button>
+        <button type="button" class="btn-ghost" id="turmaModalCancel">Cancelar</button>
+        <button type="submit" class="btn-accent" id="turmaModalSave">Criar turma</button>
       </div>
     </form>
   </div>
@@ -136,6 +94,7 @@
 
 <script src="js/config.js"></script>
 <script src="js/auth.js"></script>
-<script src="js/students.js"></script>
+<script src="js/turmas.js"></script>
+<script src="js/theme.js"></script>
 </body>
 </html>

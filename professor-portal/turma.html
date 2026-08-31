@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turma — Portal do Professor — NeuraOAB</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180.png">
+<meta name="theme-color" content="#0f1420">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="../images/logotipo.png" alt="NeuraOAB">
+      <span>Portal do Professor</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="active">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        Turmas
+      </a>
+      <a href="analises.html">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        Análises
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Alternar tema"></button>
+      <button type="button" class="btn-ghost" id="logoutBtn" style="flex: 1;">Sair</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="main-inner">
+      <a href="dashboard.html" class="back-link">&larr; Voltar pra Turmas</a>
+
+      <div class="page-header">
+        <div>
+          <h1 id="turmaTitle">Carregando...</h1>
+          <p id="turmaSubtitle"></p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button type="button" class="btn-ghost" id="renameTurmaBtn" hidden>Renomear</button>
+          <button type="button" class="btn-accent" id="newStudentsBtn">Convidar aluno(s)</button>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="num" id="statAlunos">—</div>
+          <div class="label">Alunos</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" id="statAcertoFase1">—</div>
+          <div class="label">% acerto na 1ª fase</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" id="statNotaFase2">—</div>
+          <div class="label">Nota média na 2ª fase</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Alunos</h2>
+        </div>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Cadastrado em</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="studentsTableBody">
+              <tr class="empty-row"><td colspan="5">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Convite (individual ou em lote), sempre gravando a turma desta página. -->
+<div class="modal-overlay" id="inviteModal" hidden>
+  <div class="modal modal-wide" role="dialog" aria-modal="true" aria-labelledby="inviteModalTitle">
+    <div class="modal-header">
+      <h2 id="inviteModalTitle">Convidar aluno(s)</h2>
+      <button type="button" id="inviteModalClose" class="modal-close" aria-label="Fechar">&times;</button>
+    </div>
+
+    <form id="inviteForm">
+      <div class="modal-body">
+        <p class="modal-msg" id="inviteModalMsg"></p>
+
+        <div id="inviteFormFields">
+          <p class="field-hint">Um aluno por linha: <code>e-mail</code> ou <code>e-mail, nome</code> (nome é opcional). O convite é enviado por e-mail automaticamente pra cada um.</p>
+          <div class="field">
+            <label for="inviteTextarea">Alunos</label>
+            <textarea id="inviteTextarea" placeholder="maria@exemplo.com, Maria Silva&#10;joao@exemplo.com"></textarea>
+          </div>
+        </div>
+
+        <div id="inviteResult" hidden>
+          <p class="field-hint" id="inviteResultHint"></p>
+          <div class="bulk-results-wrap">
+            <table>
+              <thead><tr><th>E-mail</th><th>Resultado</th></tr></thead>
+              <tbody id="inviteResultBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer" id="inviteFormFooter">
+        <button type="button" class="btn-ghost" id="inviteModalCancel">Cancelar</button>
+        <button type="submit" class="btn-accent" id="inviteModalSave">Enviar convites</button>
+      </div>
+      <div class="modal-footer" id="inviteResultFooter" hidden>
+        <button type="button" class="btn-accent" id="inviteResultDone">Concluído</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edição: nome + turma (mover o aluno pra outra turma ou "Sem turma"). -->
+<div class="modal-overlay" id="editModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div class="modal-header">
+      <h2 id="editModalTitle">Editar aluno</h2>
+      <button type="button" id="editModalClose" class="modal-close" aria-label="Fechar">&times;</button>
+    </div>
+
+    <form id="editForm">
+      <div class="modal-body">
+        <p class="modal-msg" id="editModalMsg"></p>
+        <input type="hidden" id="edId">
+        <div class="field">
+          <label for="edNome">Nome completo</label>
+          <input type="text" id="edNome">
+        </div>
+        <div class="field">
+          <label for="edTurma">Turma</label>
+          <select id="edTurma">
+            <option value="">Sem turma</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-ghost" id="editModalCancel">Cancelar</button>
+        <button type="submit" class="btn-accent" id="editModalSave">Salvar alterações</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Renomear turma (não aparece em "Sem turma", que não é uma turma de verdade). -->
+<div class="modal-overlay" id="renameModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="renameModalTitle">
+    <div class="modal-header">
+      <h2 id="renameModalTitle">Renomear turma</h2>
+      <button type="button" id="renameModalClose" class="modal-close" aria-label="Fechar">&times;</button>
+    </div>
+    <form id="renameForm">
+      <div class="modal-body">
+        <p class="modal-msg" id="renameModalMsg"></p>
+        <div class="field">
+          <label for="renameNome">Nome da turma</label>
+          <input type="text" id="renameNome" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-ghost" id="renameModalCancel">Cancelar</button>
+        <button type="submit" class="btn-accent" id="renameModalSave">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/turma.js"></script>
+<script src="js/theme.js"></script>
+</body>
+</html>
