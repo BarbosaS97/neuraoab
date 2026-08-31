@@ -594,14 +594,60 @@ tbody tr:last-child td { border-bottom: none; }
   line-height: 1.5;
 }
 
+/* Cada simulado é um <details> — bloco compacto, só expande no clique
+   (ver js/aluno-detail.js). Nada de conteúdo pesado sem o professor pedir. */
 .tentativa-card {
   border: 1px solid var(--panel-border);
   border-radius: 8px;
-  padding: 16px;
   margin-bottom: 14px;
+  overflow: hidden;
 }
 
 .tentativa-card:last-child { margin-bottom: 0; }
+
+.tentativa-card > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  transition: background 0.15s ease;
+}
+
+.tentativa-card > summary::-webkit-details-marker { display: none; }
+.tentativa-card > summary:hover { background: var(--bg); }
+.tentativa-card[open] > summary { border-bottom: 1px solid var(--panel-border); }
+
+.tentativa-summary-title { font-size: 14px; font-weight: 600; }
+.tentativa-summary-date { font-size: 12px; color: var(--text-dim); }
+.tentativa-summary-nota { font-size: 14px; font-weight: 700; margin-left: auto; }
+
+.tentativa-body { padding: 16px; }
+
+/* Abas pra escolher peça/questão dentro do simulado expandido — só o item
+   selecionado fica visível, em vez dos 5 itens empilhados de uma vez. */
+.item-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.item-tab {
+  background: var(--bg);
+  border: 1px solid var(--panel-border);
+  color: var(--text-dim);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12.5px;
+  font-weight: 500;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.item-tab:hover { color: var(--text); border-color: var(--accent); }
+.item-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
 
 .tentativa-head {
   display: flex;
@@ -622,7 +668,6 @@ tbody tr:last-child td { border-bottom: none; }
   background: var(--bg);
   border-radius: 8px;
   padding: 14px;
-  margin-top: 10px;
 }
 
 .item-answer .item-answer-text {
@@ -630,8 +675,42 @@ tbody tr:last-child td { border-bottom: none; }
   font-size: 13px;
   line-height: 1.6;
   color: var(--text-dim);
-  margin: 8px 0;
+  margin: 10px 0 0;
 }
+
+/* Botão "Ver resposta do aluno" — pedido explícito pra ficar mais
+   destacado do que um link de texto discreto. */
+.resposta-toggle-btn {
+  margin-top: 12px;
+  padding: 8px 16px;
+  font-size: 12.5px;
+}
+
+/* Botão "Ver enunciado" — mais discreto que o de resposta (.btn-ghost em
+   vez de .btn-accent): é contexto de apoio pra revisar a correção, não o
+   conteúdo principal. */
+.enunciado-toggle-btn {
+  padding: 8px 16px;
+  font-size: 12.5px;
+}
+
+.item-enunciado-text {
+  margin-top: 10px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+
+.item-enunciado-text p { margin: 0 0 8px; white-space: pre-wrap; }
+.item-enunciado-text p:last-child { margin-bottom: 0; }
+
+.item-enunciado-obs { font-style: italic; }
+
+.item-enunciado-sub { color: var(--text); font-weight: 500; }
 
 /* "Camada 2": observações jurídicas/formais que não afetam a nota — fundo
    tintado, sem barra de pontuação, pra não parecer perda de ponto. */
