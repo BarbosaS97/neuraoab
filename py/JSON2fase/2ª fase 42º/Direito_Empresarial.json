@@ -1,0 +1,532 @@
+{
+  "exam_number": 42,
+  "phase": 2,
+  "area": "Direito Empresarial",
+  "source_provas_file": "42º_provas_Direito_Empresarial.pdf",
+  "source_resposta_file": "42º_resposta_Direito_Empresarial.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "A companhia fechada Comercial e Exportadora Três Pontas S.A., cujo objeto é a exportação de café de alta qualidade, passa por grave crise financeira em razão da pandemia de 2020 e de 2021, além dos efeitos de forte geada na região sul de Minas Gerais, em 2022, que afetou as plantações de café, diminuindo sensivelmente a safra, sobretudo em cafés de alta qualidade. A sociedade foi regularmente constituída em 1970 e tem sua sede e seu único estabelecimento em Caxambu, MG.\n\nO balanço patrimonial do ano de 2020 já acusava um prejuízo líquido de R$ 2.000.000,00 (dois milhões de reais), que aumentou para R$ 6.000.000,00 (seis milhões de reais) e para R$ 14.000.000,00 (catorze milhões de reais). Atualmente, o valor total do passivo que precisa ser renegociado e novado é de R$ 17.000.000,00 (dezessete milhões de reais). Existem demandas trabalhistas provenientes de rescisões de contratos de trabalho que comprometem o fluxo de caixa, e a sociedade está há cinco meses sem Certidão Negativa de Débito (CND) por não ter condição de renová-la.\n\nAs receitas da companhia vinham crescendo e seu fluxo de caixa era positivo até o primeiro semestre de 2020. A partir de então, o volume de receita com as exportações caiu mais de 80%, mas vinha se recuperando lentamente. Todavia, com a geada de 2022, voltou a cair. A receita atual é apenas de 45% do que era em 2019.\n\nMesmo com cortes no número de empregados, redução salarial, férias coletivas e alienação de um imóvel para obter recursos para pagar credores, a situação está longe de se normalizar. O acionista controlador investiu R$ 2.000.000,00 (dois milhões de reais) no segundo semestre de 2022, mas esse valor é de longa recuperação, pois depende da atividade da sociedade. Contudo, existe perspectiva de melhora a médio prazo em razão da alta do preço da commodity no mercado internacional e da volta de alguns clientes internacionais da União Europeia.\n\nVocê, como advogado(a), é procurado(a) pelo Diretor-Presidente e representante legal, Dr. Caldas Botelho, que lhe pede o ajuizamento de medida para superar a crise por que passa a devedora, permitindo seu saneamento e, sobretudo, afastar a possibilidade de decretação de falência.\n\nA sociedade já sofreu dois pedidos de falência, que puderam ser afastados com depósito elisivo, mas não se sabe até quando ela terá êxito em casos futuros.\n\nO Dr. Caldas Botelho informou também que a companhia já aprovou a medida em Assembleia Geral extraordinária, conforme documento que lhe entregou.\n\nConsiderando que a Comarca de Caxambu, MG, é de vara única, elabore a peça processual adequada.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A peça processual adequada é a petição inicial ou requerimento de recuperação judicial, que tem seu fundamento no Art. 48, caput, da Lei nº 11.101/2005.\n\nNa elaboração da peça, o examinando deverá observar, no que couber, o conteúdo do Art. 319 do CPC (requisitos da petição inicial) por força do Art. 189 da Lei nº 11.101/2005. Ademais, os requisitos formais do Art. 48 da Lei nº 11.101/2005 devem ser apontados no decorrer da peça, com referência expressa à exposição de motivos, prevista no Art. 51, inciso I, da Lei nº 11.101/2005, e os outros documentos exigidos nos incisos II a XI desse artigo, que devem ser todos nominados de per si.\n\nA correta instrução da petição inicial da ação de recuperação judicial é condição para o deferimento do seu processamento, nos termos do Art. 52, caput, da Lei nº 11.101/2005. A simples menção genérica a “documentos em anexo” ou aos incisos do Art. 51 da Lei nº 11.101/2005 não confere pontuação.\n\nA estrutura a ser observada na peça é a seguinte:\n\nI- Endereçamento: Ao Juízo da Comarca de Vara Única de Caxambu, MG, com base nas informações do enunciado e no Art. 3º da Lei nº 11.101/2005.\n\nII- Qualificação da requerente: Comercial e Exportadora Três Pontas S.A., representada pelo seu Diretor-Presidente Sr. Caldas Botelho etc.\n\nIII- Fundamentos jurídicos: A petição deverá adotar como fundamentos jurídicos os requisitos subjetivos e objetivos do Art. 48, caput, da Lei nº 11.101/2005, além de indicar que já houve a aprovação do pedido pela Assembleia Geral da companhia. a) a devedora é uma sociedade empresária que exerce suas atividades regularmente há mais de dois anos (ou desde 1970), podendo requerer recuperação judicial de acordo com o Art. 48, caput, da Lei nº 11.101/2005; b) a sociedade não está falida; c) a sociedade não obteve concessão de recuperação judicial há menos de cinco anos (ou nunca requereu tal medida); d) nem o acionista controlador nem qualquer dos administradores foram condenados pelos crimes previstos na Lei nº 11.101/2005; e) houve aprovação prévia do pedido de recuperação judicial pela Assembleia Geral de acionistas, em cumprimento ao Art. 122, inciso IX, da Lei nº 6.404/1976.\n\nIV- Exposição das causas concretas da situação patrimonial da sociedade e das razões da crise econômico-financeira, por exigência do Art. 51, inciso I, da Lei nº 11.101/2005.\n\nV- Menção aos demais documentos a serem anexados à petição inicial, exigidos no Art. 51 da Lei nº 11.101/2005 e à ata da Assembleia Geral que aprovou a medida, de forma expressa e individualizada, a saber: a) demonstrações contábeis relativas aos três últimos exercícios sociais e as levantadas para instruir o pedido; b) relação nominal completa de todos os credores; c) relação integral dos empregados; d) Certidão da Junta Comercial comprovando a regularidade e o tempo de exercício da empresa; e) estatuto social atualizado; f) atas de nomeação dos atuais administradores; g) relação dos bens particulares do sócio controlador e dos administradores; h) extratos atualizados das contas bancárias da sociedade e de suas aplicações financeiras; i) Certidão do Cartório de Protestos da Comarca de Caxambu, MG; j) relação das ações judiciais em que a sociedade é parte; k) relatório detalhado do passivo fiscal; l) relação de bens e direitos integrantes do ativo não circulante; m) ata da Assembleia Geral que aprovou o pedido de recuperação judicial. VI- Pedidos: a) deferimento do processamento da recuperação judicial, com base no caput do Art. 52 da Lei nº 11.101/2005 (o simples pedido de procedência não pontua); b) nomeação do administrador judicial; c) dispensa da apresentação de certidões negativas para que o devedor exerça suas atividades, nos termos do Art. 52, inciso II, da Lei nº 11.101/2005; d) suspensão das execuções em face da devedora, nos termos do Art. 52, inciso III, da Lei nº 11.101/2005; e) publicação do edital do processamento e da relação de credores, nos termos do Art. 52, § 1º, da Lei nº 11.101/2005; f) concessão da recuperação judicial.\n\nVII- Valor da causa (Art. 51, § 5º, da Lei nº 11.101/2005): R$ 17.000.000,00 (dezessete milhões de reais).\n\nVIII- Fechamento da peça: Local ou Município..., Data..., Advogado..., OAB...",
+    "criterios": [
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "I. Endereçamento\nAo Juízo de Vara Única da Comarca de Caxambu/MG (0,10)",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "II. Qualificação da Requerente:\nComercial e Exportadora Três Pontas S.A., representada por seu Diretor-Presidente Caldas Botelho",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "etc. (0,10).\nIII. Fundamentos Jurídicos\na) a devedora é uma sociedade empresária que exerce suas atividades regulamente há mais de dois\nanos (ou desde 1970), podendo requerer recuperação judicial (0,30), de acordo com o Art. 48, caput,",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "da Lei nº 11.101/2005 (0,10);\nb) a sociedade não está falida (0,30);",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "c) a sociedade não obteve, há menos de 5 anos, concessão de recuperação judicial (0,30);",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "d) nenhum administrador ou acionista controlador foi condenado por qualquer dos crimes previstos",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "na Lei nº 11.101/2005 (0,30);\ne) houve aprovação prévia do pedido de recuperação judicial pela assembleia-geral de acionistas",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "(0,30), em cumprimento ao Art. 122, inciso IX, da Lei nº 6.404/1976 (0,10).\nIV. Exposição das causas concretas da situação patrimonial da sociedade e das razões da crise",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "econômico-financeira (0,10), com fundamento no Art. 51, inciso I, da Lei nº 11.101/2005 (0,10).\nV. Menção expressa e individualizada aos documentos a serem anexados à petição inicial\na) demonstrações contábeis relativas aos três últimos exercícios sociais e as levantadas para instruir o",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "pedido (0,10);\nb) relação nominal completa de todos os credores (0,10);",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "c) relação integral dos empregados (0,10);",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "d) Certidão da Junta Comercial comprovando a regularidade e o tempo de exercício da sociedade",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "empresária (0,10);\ne) estatuto social atualizado (0,10);",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "f) atas de nomeação dos atuais administradores (0,10);",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "g) relação dos bens particulares do sócio controlador e dos administradores (0,10);",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "h) extratos atualizados das contas bancárias da sociedade e de suas aplicações financeiras (0,10);",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "i) Certidão do Cartório de Protestos da Comarca de Caxambu, MG (0,10);",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "j) relação das ações judiciais em que a sociedade é parte (0,10);",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "k) relatório detalhado do passivo fiscal (0,10);",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "l) relação de bens e direitos integrantes do ativo não circulante (0,10);",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "m) ata da Assembleia Geral que aprovou o pedido de recuperação judicial (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "VI. Dos Pedidos\na) deferimento do processamento da recuperação judicial (0,20), com base no Art. 52, caput, da Lei",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "nº 11.101/2005 (0,10);\nb) nomeação do administrador judicial (0,20);",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "c) dispensa da apresentação de Certidões Negativas para que o devedor exerça suas atividades (0,20);",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "d) suspensão das ações e execuções em face do devedor (0,20);",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "e) publicação do edital do processamento e da relação de credores (0,20);",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "f) concessão da recuperação judicial (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "VII. Valor da causa\nR$ 17.000.000,00 (dezessete milhões de reais) (0,10), segundo o Art. 51, § 5º, da Lei nº 11.101/2005",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "(0,10).\nVIII. Fechamento\nLocal ou Município..., Data..., Advogado..., OAB... (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nI. Endereçamento\nAo Juízo de Vara Única da Comarca de Caxambu/MG (0,10) 0,00/0,10\nII. Qualificação da Requerente:\nComercial e Exportadora Três Pontas S.A., representada por seu Diretor-Presidente Caldas Botelho\n0,00/0,10\netc. (0,10).\nIII. Fundamentos Jurídicos\na) a devedora é uma sociedade empresária que exerce suas atividades regulamente há mais de dois\nanos (ou desde 1970), podendo requerer recuperação judicial (0,30), de acordo com o Art. 48, caput, 0,00/0,30/0,40\nda Lei nº 11.101/2005 (0,10);\nb) a sociedade não está falida (0,30); 0,00/0,30\nc) a sociedade não obteve, há menos de 5 anos, concessão de recuperação judicial (0,30); 0,00/0,30\nd) nenhum administrador ou acionista controlador foi condenado por qualquer dos crimes previstos\n0,00/0,30\nna Lei nº 11.101/2005 (0,30);\ne) houve aprovação prévia do pedido de recuperação judicial pela assembleia-geral de acionistas\n0,00/0,30/0,40\n(0,30), em cumprimento ao Art. 122, inciso IX, da Lei nº 6.404/1976 (0,10).\nIV. Exposição das causas concretas da situação patrimonial da sociedade e das razões da crise\n0,00/0,10/0,20\neconômico-financeira (0,10), com fundamento no Art. 51, inciso I, da Lei nº 11.101/2005 (0,10).\nV. Menção expressa e individualizada aos documentos a serem anexados à petição inicial\na) demonstrações contábeis relativas aos três últimos exercícios sociais e as levantadas para instruir o\n0,00/0,10\npedido (0,10);\nb) relação nominal completa de todos os credores (0,10); 0,00/0,10\nc) relação integral dos empregados (0,10); 0,00/0,10\nd) Certidão da Junta Comercial comprovando a regularidade e o tempo de exercício da sociedade\n0,00/0,10\nempresária (0,10);\ne) estatuto social atualizado (0,10); 0,00/0,10\nf) atas de nomeação dos atuais administradores (0,10); 0,00/0,10\ng) relação dos bens particulares do sócio controlador e dos administradores (0,10); 0,00/0,10\nh) extratos atualizados das contas bancárias da sociedade e de suas aplicações financeiras (0,10); 0,00/0,10\ni) Certidão do Cartório de Protestos da Comarca de Caxambu, MG (0,10); 0,00/0,10\nj) relação das ações judiciais em que a sociedade é parte (0,10); 0,00/0,10\nk) relatório detalhado do passivo fiscal (0,10); 0,00/0,10\nl) relação de bens e direitos integrantes do ativo não circulante (0,10); 0,00/0,10\nm) ata da Assembleia Geral que aprovou o pedido de recuperação judicial (0,10). 0,00/0,10\nVI. Dos Pedidos\na) deferimento do processamento da recuperação judicial (0,20), com base no Art. 52, caput, da Lei\n0,00/0,20/0,30\nnº 11.101/2005 (0,10);\nb) nomeação do administrador judicial (0,20); 0,00/0,20\nc) dispensa da apresentação de Certidões Negativas para que o devedor exerça suas atividades (0,20); 0,00/0,20\nd) suspensão das ações e execuções em face do devedor (0,20); 0,00/0,20\ne) publicação do edital do processamento e da relação de credores (0,20); 0,00/0,20\nf) concessão da recuperação judicial (0,20). 0,00/0,20\nVII. Valor da causa\nR$ 17.000.000,00 (dezessete milhões de reais) (0,10), segundo o Art. 51, § 5º, da Lei nº 11.101/2005\n0,00/0,20\n(0,10).\nVIII. Fechamento\nLocal ou Município..., Data..., Advogado..., OAB... (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Os sócios da sociedade limitada Adelândia Bar e Restaurante Ltda. deliberaram por unanimidade a alienação do único estabelecimento, situado na cidade de Trindade, GO. Após a alienação, que foi feita sem qualquer notificação prévia aos credores ou sem qualquer pagamento a eles, não restaram no patrimônio da pessoa jurídica bens suficientes para solver o seu passivo. Diante da situação narrada, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Qual medida prevista na legislação empresarial poderá ser tomada por qualquer dos credores da sociedade empresária diante da alienação do estabelecimento? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Qual o efeito da deliberação dos sócios no tocante à aprovação da alienação do estabelecimento sobre a responsabilidade de cada um na sociedade? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão tem por objetivo verificar os conhecimentos do(a) examinando(a) sobre as consequências da alienação de estabelecimento de sociedade limitada, autorizada por deliberação dos sócios, em infração à lei, isto é, sem a notificação ou pagamento prévio aos credores. O Art. 1.145 do CC determina que “se ao alienante (no caso a sociedade Adelândia Bar e Restaurante Ltda.) não restarem bens suficientes para solver o seu passivo, a eficácia da alienação do estabelecimento depende do pagamento de todos os credores, ou do consentimento destes, de modo expresso ou tácito, em trinta dias a partir de sua notificação.” O ato praticado pela sociedade é considerado “ato de falência” e qualquer credor pode requerer a decretação de sua falência. Por se tratar de deliberação infringente da lei – autorizou a alienação sem a notificação/pagamento prévio aos credores – os sócios respondem ilimitadamente perante os credores, como prevê o Art. 1.080 do CC. A) A alienação (ou transferência) do estabelecimento sem o consentimento de todos os credores e sem ficar a sociedade com bens suficientes para solver o seu passivo autoriza qualquer credor a requerer a decretação da falência da sociedade, com base no Art. 94, inciso III, alínea c, da Lei nº 11.101/05, OU o credor que se sentir prejudicado poderá pleitear a anulação do negócio jurídico, com fundamento no Art. 159 do CC. B) Por se tratar de deliberação infringente da lei, torna-se ilimitada a responsabilidade dos sócios perante os credores, de acordo com o Art. 1.080 caput do CC. x",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "A alienação (ou transferência) do estabelecimento, sem o consentimento de todos os credores e sem ficar a sociedade com bens suficientes para solver o seu passivo, autoriza qualquer credor a requerer a decretação da falência da sociedade (0,50), com base no Art. 94, inciso III, alínea c, da Lei nº 11.101/05 (0,10) OU o credor que se sentir prejudicado poderá pleitear a anulação do negócio jurídico (0,50) , com base no Art. 159 do CC (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Por se tratar de deliberação infringente da lei, torna-se ilimitada a responsabilidade dos sócios 2 perante os credores (0,55), de acordo com o Art. 1.080 caput do CC (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. A alienação (ou transferência) do estabelecimento, sem o consentimento de todos os credores\ne sem ficar a sociedade com bens suficientes para solver o seu passivo, autoriza qualquer credor a\nrequerer a decretação da falência da sociedade (0,50), com base no Art. 94, inciso III, alínea c, da 0,00/0,50/0,60\nLei nº 11.101/05 (0,10) OU o credor que se sentir prejudicado poderá pleitear a anulação do\nnegócio jurídico (0,50), com base no Art. 159 do CC (0,10).\nB . Por se tratar de deliberação infringente da lei, torna-se ilimitada a responsabilidade dos sócios\n2 0,00/0,55/0,65\nperante os credores (0,55), de acordo com o Art. 1.080 caput do CC (0,10).",
+      "linhas_nao_reconhecidas": [
+        "se ao alienante (no caso a sociedade",
+        "não restarem bens suficientes para solver o seu passivo, a eficácia da alienação do",
+        "estabelecimento depende do pagamento de todos os credores, ou do consentimento destes, de modo expresso ou tácito,",
+        "em trinta dias a partir de sua notificação.” O ato praticado pela sociedade é considerado “ato de falência” e qualquer",
+        "credor pode requerer a decretação de sua falência. Por se tratar de deliberação infringente da lei – autorizou a alienação",
+        "sem a notificação/pagamento prévio aos credores – os sócios respondem ilimitadamente perante os credores, como",
+        "prevê o Art. 1.080 do CC.",
+        "A) A alienação (ou transferência) do estabelecimento sem o consentimento de todos os credores e sem ficar a sociedade",
+        "com bens suficientes para solver o seu passivo autoriza qualquer credor a requerer a decretação da falência da",
+        "sociedade, com base no Art. 94, inciso III, alínea c, da Lei nº 11.101/05, OU o credor que se sentir prejudicado poderá",
+        "pleitear a anulação do negócio jurídico, com fundamento no Art. 159 do CC."
+      ]
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "O empresário individual Ubiratã pretendia vender três carros executivos de sua frota e, para tanto, contratou dois corretores com o fito de mediar a venda, ambos sem cláusula de exclusividade. O primeiro corretor foi atuante na transmissão das propostas ao cliente e o segundo prestou todos os esclarecimentos acerca da segurança do negócio. Por questões pessoais, a venda mediada pelos corretores não se concretizou diante da desistência de Ubiratã na véspera do dia marcado para a assinatura do contrato. Com base nos fatos narrados e nas disposições sobre o contrato de corretagem, excluída a possibilidade de arrependimento do cliente, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Ubiratã deve comissão aos dois corretores? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Caso o negócio pretendido por Ubiratã e mediado pelos corretores se concluísse, qual seria a regra para o pagamento da comissão? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão tem por objetivo aferir se o(a) examinando(a) é capaz de identificar a regra legal quanto á repartição equânime da comissão em caso de pluralidade de corretores. Também se espera que o(a) examinando(a) esteja apto(a) a reconhecer que o contrato de corretagem traz para o corretor uma obrigação de resultado – obter para o cliente a concretização do negócio – sob pena de não auferir a comissão em caso de desistência antes de sua concretização. Este é o entendimento consolidado da jurisprudência do STJ e, conforme previsto no item 3.5.12 do Edital, “as questões da prova prático-profissional poderão ser formuladas de modo que, necessariamente, a resposta reflita a jurisprudência pacificada dos Tribunais Superiores.”\n\nConforme reiteradas decisões do STJ, “Esta Corte Superior de Justiça tem entendimento consolidado em sua jurisprudência no sentido que o contrato de corretagem não impõe simples obrigação de meio, mas de resultado, de maneira que é exigível o pagamento da comissão quando a aproximação resulta na efetiva contratação” (trecho da ementa do AgInt no AREsp 1992038/SP, Quarta Turma, Relator Ministro Luis Felipe Salomão, Data do Julgamento 23/05/2022, Data da Publicação/Fonte DJe 27/05/2022). No mesmo sentido, foi afirmado no julgamento do AgRg no AREsp n. 514.317/SP (Relator Ministro Raul Araújo, Quarta Turma, julgado em 25/8/2015, DJe 16/9/2015) que o \"contrato de corretagem não impõe simples obrigação de meio, mas de resultado, de maneira que somente é cabível a comissão de corretagem quando o corretor efetua a aproximação entre comprador e vendedor, resultando na efetiva venda do imóvel\".\n\nA) Não. Como a desistência do negócio por parte de Ubiratã ocorreu antes do dia marcado para a assinatura do contrato, não se verificou o resultado previsto, ou seja, a venda dos veículos, de acordo com o Art. 725 do Código Civil.\n\nB) Se o negócio pretendido se concluísse com a intermediação dos dois corretores, a comissão seria paga a ambos em partes iguais, de acordo com o Art. 728 do Código Civil.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. Como a desistência do negócio por parte de Ubiratã ocorreu antes do dia marcado para a assinatura do contrato, não ser verificou o resultado previsto, ou seja, a venda dos veículos (0,55), de acordo com o Art. 725 do Código Civil (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Se o negócio pretendido se concluísse com a intermediação dos dois corretores, a remuneração/comissão seria paga a ambos em partes iguais (0,50), de acordo com o Art. 728 do Código Civil (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. Como a desistência do negócio por parte de Ubiratã ocorreu antes do dia marcado para\na assinatura do contrato, não ser verificou o resultado previsto, ou seja, a venda dos veículos 0,00/0,55/0,65\n(0,55), de acordo com o Art. 725 do Código Civil (0,10).\nB. Se o negócio pretendido se concluísse com a intermediação dos dois corretores, a\nremuneração/comissão seria paga a ambos em partes iguais (0,50), de acordo com o Art. 728 0,00/0,50/0,60\ndo Código Civil (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "As sociedades empresárias do tipo limitada Madeireira Saquarema Ltda. e Construtora Maricá Ltda. pretendem se unir para formar sociedade nova, com a extinção de ambas após a conclusão da operação. Sobre a hipótese apresentada, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Qual o órgão competente para decidir sobre a operação e qual o quórum para que ela seja aprovada em cada sociedade? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Sendo apresentados os laudos de avaliação dos peritos nomeados para a avaliação do patrimônio de cada sociedade, como deverão proceder os administradores? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão descreve pelo seu enunciado que as duas sociedades limitadas pretendem se fundir para formar uma sociedade nova. O(A) examinando(a) deve ser capaz de reconhecer que tal operação deve ser decidida pela Assembleia dos sócios de cada sociedade envolvida e o quórum para a aprovação é de mais da metade do capital social. Também se espera que o examinando, no item B, responda que os administradores convocarão reunião ou Assembleia dos sócios para tomar conhecimento dos laudos de avaliação do patrimônio de cada sociedade, decidindo sobre a constituição definitiva da nova sociedade. A) A operação de fusão deve ser submetida à Assembleia dos sócios de cada sociedade e o quórum para a sua aprovação é de mais da metade do capital social, com fundamento no Art. 1.071, inciso VI, E no Art. 1.076, inciso II, ambos do Código Civil. B) Os administradores convocarão Assembleia dos sócios para tomar conhecimento dos laudos de avaliação, decidindo sobre a constituição definitiva da nova sociedade, com fundamento no Art. 1.120, § 2º, do Código Civil.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": "Código Civil.",
+          "descricao": "A operação de fusão deve ser submetida à Assembleia dos sócios de cada sociedade (0,20), com fundamento no Art. 1.071, inciso VI (0,10), e o quórum para sua aprovação é de mais da metade do capital social (0,25) com fundamento no Art. 1.076, inciso II, ambos do Código Civil (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.25,
+            0.3,
+            0.35,
+            0.45,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": "Código Civil.",
+          "descricao": "Os administradores convocarão Assembleia dos sócios para tomar conhecimento dos laudos de avaliação, decidindo sobre a constituição definitiva da nova sociedade (0,50), com fundamento no Art. 1.120, § 2º, do Código Civil (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. A operação de fusão deve ser submetida à Assembleia dos sócios de cada sociedade\n(0,20), com fundamento no Art. 1.071, inciso VI (0,10), e o quórum para sua aprovação é de 0,00/0,20/0,25/0,30/\nmais da metade do capital social (0,25) com fundamento no Art. 1.076, inciso II, ambos do 0,35/0,45/0,55/0,65\nCódigo Civil (0,10).\nB. Os administradores convocarão Assembleia dos sócios para tomar conhecimento dos\nlaudos de avaliação, decidindo sobre a constituição definitiva da nova sociedade (0,50), com 0,00/0,50/0,60\nfundamento no Art. 1.120, § 2º, do Código Civil (0,10).",
+      "linhas_nao_reconhecidas": [
+        "A questão descreve pelo seu enunciado que as duas sociedades limitadas pretendem se fundir para formar uma",
+        "sociedade nova. O(A) examinando(a) deve ser capaz de reconhecer que tal operação deve ser decidida pela",
+        "Assembleia dos sócios de cada sociedade envolvida e o quórum para a aprovação é de mais da metade do capital",
+        "social.",
+        "Também se espera que o examinando, no item B, responda que os administradores convocarão reunião ou",
+        "Assembleia dos sócios para tomar conhecimento dos laudos de avaliação do patrimônio de cada sociedade, decidindo",
+        "sobre a constituição definitiva da nova sociedade.",
+        "A) A operação de fusão deve ser submetida à Assembleia dos sócios de cada sociedade e o quórum para a sua aprovação",
+        "é de mais da metade do capital social, com fundamento no Art. 1.071, inciso VI, E no Art. 1.076, inciso II, ambos do"
+      ]
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Floresta de Azevedo, sócia da sociedade Floricultura Sorriso Ltda., propôs ação pelo procedimento comum para anular deliberação social que aprovou a alteração do contrato para extinguir as filiais da sociedade em Cuiabá, MT e Porto Velho, RO. A autora alega vício de instalação da Assembleia em primeira convocação, porque os trabalhos iniciaram-se com a presença de sócios titulares de quotas correspondente a dois terços do capital social, inferior segundo ela, ao exigido por lei, e a deliberação foi tomada pelo mesmo percentual. Ademais, a autora comprovou que o voto decisivo para a aprovação da matéria foi proferido por Jaciara, com 18 anos, prima do sócio Félix do Araguaia, na condição de mandatária ad hoc e que não é sócia. Sobre o caso apresentado, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A instalação da assembleia foi regular por ter atingido o quórum legal?",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "O voto proferido por Jaciara, na condição de mandatária do sócio Félix do Araguaia, tem alguma irregularidade?",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão tem por objetivo verificar o conhecimento do(a) examinando(a) sobre dois aspectos importantes das deliberações na sociedade limitada. O primeiro diz respeito ao quórum de instalação, que é de, no mínimo, três quartos do capital social em primeira convocação (Art. 1.074, caput, do Código Civil). O segundo se relaciona à representação do sócio na Assembleia, que é restrita a outro sócio ou à advogado (Art. 1.074, § 1º, do Código Civil). A) Não. O quórum de instalação da Assembleia, em primeira convocação, é de titulares de, no mínimo,3/4 (três quartos) do capital social, não tendo sido atingido com a presença de sócios representando 2/3 (dois terços) do capital social, com fundamento no Art. 1.074, caput, do Código Civil. B) Sim. Jaciara não é advogada nem sócia e não pode, na condição de mandatária ad hoc, representar sócio na Assembleia, de acordo com o Art. 1.074, § 1º, do Código Civil.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. O quórum de instalação da Assembleia, em primeira convocação, é de titulares de, no mínimo, três quartos do capital social, não tendo sido atingido com a presença de sócios representando dois terços do capital social (0,50), com fundamento no A rt. 1.074, caput, do Código Civil (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. Jaciara não é advogada nem sócia e não pode, na condição de mandatária ad hoc, representar sócio na Assembleia (0,55) , de acordo com o Art. 1.074, § 1º, do Código Civil (0,10) .",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. O quórum de instalação da Assembleia, em primeira convocação, é de titulares de, no\nmínimo, três quartos do capital social, não tendo sido atingido com a presença de sócios\n0,00/0,50/0,60\nrepresentando dois terços do capital social (0,50), com fundamento no Art. 1.074, caput, do\nCódigo Civil (0,10).\nB. Sim. Jaciara não é advogada nem sócia e não pode, na condição de mandatária ad hoc,\n0,00/0,55/0,65\nrepresentar sócio na Assembleia (0,55), de acordo com o Art. 1.074, § 1º, do Código Civil (0,10).",
+      "linhas_nao_reconhecidas": [
+        "de titulares de, no mínimo,3/4 (três quartos)",
+        "do capital social, não tendo sido atingido com a presença de sócios representando 2/3 (dois terços) do capital social,",
+        "com fundamento no"
+      ]
+    }
+  ],
+  "valor_total_prova": 10.0
+}

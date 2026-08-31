@@ -87,18 +87,35 @@ function stripMarkdown(text) {
 // So' rola para o fim automaticamente se o usuario ja' estava perto do fim
 // (deixa ele rolar livremente pra cima pra reler algo, mesmo com o Dr.
 // Laureano ainda "falando" — a rolagem automatica nao briga com isso).
+//
+// "stickToBottom" (nao um "isNearBottom()" recalculado bem em cima de cada
+// atualizacao) e' o que faz isso funcionar de verdade: durante o efeito de
+// "digitando", o texto cresce a ~40 caracteres/segundo, uma checagem por
+// quadro — se a decisao de rolar dependesse so' de reler a posicao atual
+// bem no instante de cada letra nova, um scroll leve (uma rodinha de mouse
+// suave, ou o comeco de um arrasto de dedo no mobile) nunca teria chance de
+// "grudar": antes do gesto passar dos 48px de limiar, o proximo quadro ja'
+// forcava a rolagem de volta pro fundo, cancelando o gesto no meio. Aqui a
+// flag so' muda quando o PROPRIO usuario rola (evento "scroll" real do
+// navegador), entao um arrasto ou uma rodinha leve desliga a rolagem
+// automatica de vez, sem disputa — ela so' volta a seguir o fundo se o
+// usuario mesmo rolar de volta pra perto dele.
 const AUTO_SCROLL_THRESHOLD = 48;
+let stickToBottom = true;
 
 function isNearBottom() {
   return chatMessagesEl.scrollHeight - chatMessagesEl.scrollTop - chatMessagesEl.clientHeight < AUTO_SCROLL_THRESHOLD;
 }
 
+chatMessagesEl.addEventListener("scroll", () => {
+  stickToBottom = isNearBottom();
+});
+
 function appendMessageBubble(role) {
-  const wasNearBottom = isNearBottom();
   const div = document.createElement("div");
   div.className = "chat-msg " + role;
   chatMessagesEl.appendChild(div);
-  if (wasNearBottom) chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+  if (stickToBottom) chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
   return div;
 }
 
@@ -130,9 +147,8 @@ function typeIntoBubble(el, text) {
       if (advance > 0) {
         carry -= advance;
         shown = Math.min(text.length, shown + advance);
-        const wasNearBottom = isNearBottom();
         el.textContent = text.slice(0, shown);
-        if (wasNearBottom) chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+        if (stickToBottom) chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
       }
 
       if (shown < text.length) {
@@ -147,12 +163,11 @@ function typeIntoBubble(el, text) {
 }
 
 function appendInterruptedNote() {
-  const wasNearBottom = isNearBottom();
   const note = document.createElement("div");
   note.className = "chat-interrupted-note";
   note.textContent = "Resposta interrompida.";
   chatMessagesEl.appendChild(note);
-  if (wasNearBottom) chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+  if (stickToBottom) chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
 }
 
 async function sayAsLaureano(text) {
@@ -202,7 +217,7 @@ function showSuggestions() {
     wrap.appendChild(chip);
   });
   chatMessagesEl.appendChild(wrap);
-  chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+  if (stickToBottom) chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
   suggestionsEl = wrap;
 }
 
@@ -220,6 +235,7 @@ async function resetChatForQuestion(question) {
   chatMessagesEl.innerHTML = "";
   suggestionsEl = null;
   stopRequested = false;
+  stickToBottom = true; // chat novo/vazio — volta a seguir o fundo por padrao
   sending = false; // abandona qualquer resposta pendente da questao anterior
   setSendButtonMode("send");
   updateInputAvailability();
@@ -275,6 +291,11 @@ async function sendChatMessage(text) {
   clearSuggestions();
   updateInputAvailability();
   setSendButtonMode("stop");
+
+  // Mandar uma pergunta nova e' um sinal claro de que o aluno quer ver o
+  // que vem a seguir — volta a seguir o fundo mesmo se ele tivesse rolado
+  // pra cima antes (mesmo comportamento de qualquer chat comum).
+  stickToBottom = true;
 
   chatHistory.push({ role: "user", content: text });
   appendMessageBubble("user").textContent = text;

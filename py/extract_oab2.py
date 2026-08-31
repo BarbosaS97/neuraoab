@@ -195,9 +195,25 @@ def normalize_key(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
+AMERICAN_DECIMAL_RE = re.compile(r"^\d+\.\d{2}$")
+
+
 def to_float_br(text: str) -> Optional[float]:
-    """Converte um numero no formato brasileiro ("5,00") para float."""
-    text = text.strip().replace(".", "").replace(",", ".")
+    """Converte um numero no formato brasileiro ("5,00") para float. Tambem
+    aceita, como excecao segura, o formato americano com ponto decimal
+    ("5.00") sem nenhuma virgula — ja visto por typo em pelo menos um PDF
+    oficial (ex.: 42o Exame, Direito Empresarial, "(Valor: 5.00)" em vez de
+    "(Valor: 5,00)"). So' trata o ponto como decimal (em vez de milhar)
+    quando o texto tem EXATAMENTE 2 casas apos ele e nenhuma virgula — nunca
+    ambiguo aqui, ja que nenhum valor de pontuacao da OAB chega perto de
+    milhares."""
+    text = text.strip()
+    if "," not in text and AMERICAN_DECIMAL_RE.match(text):
+        try:
+            return round(float(text), 2)
+        except ValueError:
+            return None
+    text = text.replace(".", "").replace(",", ".")
     try:
         return round(float(text), 2)
     except ValueError:
@@ -1011,14 +1027,24 @@ def drop_redundant_parent_criterios(criterios: list) -> list:
     (0,50) + 5.2 (0,30) tambem somam 0,80). Manter as duas versoes
     duplicaria a pontuacao na correcao por IA.
 
-    So' descarta o "pai" quando a soma dos filhos IMEDIATAMENTE seguintes
-    ("N.1", "N.2"...) bate com o valor do proprio pai (dentro da tolerancia)
-    — essa e' a assinatura de que e' uma repeticao do mesmo conteudo, e nao
-    dois criterios genuinamente separados e aditivos. Ja se viu o caso
-    contrario no mesmo exame (45o, Direito Civil, peca, item 8: pai vale
-    0,40, mas os filhos 8.1 (0,20) + 8.2 (0,30) somam 0,50 — valores
-    diferentes, ou seja, sao TRES criterios distintos que devem ser
-    somados, nao um pai redundante)."""
+    So' descarta o "pai" quando ha' PELO MENOS DOIS filhos imediatamente
+    seguintes ("N.1", "N.2"...) cuja soma bate com o valor do proprio pai
+    (dentro da tolerancia) — essa combinacao (2+ filhos E mesma soma) e' a
+    assinatura de que e' uma repeticao do mesmo conteudo fatiado, e nao
+    criterios genuinamente separados. Ja se viu o caso contrario no mesmo
+    exame (45o, Direito Civil, peca, item 8: pai vale 0,40, mas os filhos
+    8.1 (0,20) + 8.2 (0,30) somam 0,50 — valores diferentes, TRES criterios
+    distintos que devem ser somados, nao um pai redundante).
+
+    Exigir 2+ filhos evita outro falso positivo real, visto no 42o Exame,
+    Direito Administrativo: item "1" (endereçar a peca ao juizo a quo) e seu
+    UNICO "filho" "1.1" (endereçar as razoes ao tribunal ad quem) sao dois
+    REQUISITOS DIFERENTES de uma peca recursal — coincidem em valor (0,10
+    cada) so' porque cada exigencia isolada vale o mesmo, nao porque um
+    repete o outro. Com um so' filho, a numeracao "N.1" e' comum demais
+    para servir de sub-item genuino (endereçamento em duas partes, ou um
+    "1.1" que e' na real proximo requisito autonomo) para arriscar apagar
+    conteudo — so' o padrao de 2+ filhos e' especifico o bastante."""
     result = []
     i = 0
     while i < len(criterios):
@@ -1033,7 +1059,7 @@ def drop_redundant_parent_criterios(criterios: list) -> list:
                 children.append(criterios[j])
                 j += 1
 
-        if children:
+        if len(children) >= 2:
             parent_max = c.pontuacao_maxima or 0
             children_sum = round(sum(ch.pontuacao_maxima or 0 for ch in children), 2)
             if abs(parent_max - children_sum) <= POINT_SUM_TOLERANCE:

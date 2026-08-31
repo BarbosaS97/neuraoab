@@ -1,0 +1,387 @@
+{
+  "exam_number": 42,
+  "phase": 2,
+  "area": "Direito Tributário",
+  "source_provas_file": "42º_provas_Direito_Tributário.pdf",
+  "source_resposta_file": "42º_resposta_Direito_Tributário.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "A sociedade empresária ABC Ltda., com estabelecimento no Município X (sede de comarca de Vara Única), especializada em reciclagem de lixo, foi contratada para prestar serviços de remoção, tratamento e reciclagem de lixo no Município Y, local onde recolheu o Imposto sobre Serviços (ISS) devido naquela operação.\n\nMeses após, recebeu uma notificação de débito da Secretaria de Fazenda do Município X cobrando o ISS daquele serviço prestado no Município Y, sob a alegação de possuir estabelecimento fixo em seu território. Na notificação, foi aplicada uma multa de 150% do valor do imposto cobrado e a sociedade empresária foi advertida de que, caso não pagasse a dívida no prazo de 30 (trinta) dias, teria o seu estabelecimento interditado.\n\nA sociedade empresária o(a) contratou, como advogado(a), para defender seus interesses e promover a medida judicial cabível, tendo urgência sobretudo em razão da ameaça de interdição do estabelecimento. Por se tratar de serviço de reciclagem de lixo, a sociedade empresária precisará comprovar o exato local em que o realizou, devendo juntar fotos e requerer prova pericial.\n\nDiante dos fatos expostos, redija a medida judicial cabível para que seu cliente não tenha que pagar tal tributo e respectiva multa, nem tenha seu estabelecimento interditado, ciente de que será necessária dilação probatória.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A medida judicial cabível é a ação anulatória, dada a sua natureza desconstitutiva, tendo por objetivo desconstituir lançamento tributário que já está definitivamente constituído reputado ilegal ou irregular pelo contribuinte. Não cabe mandado de segurança, pois o enunciado deixa claro que haverá necessidade de dilação probatória no curso do processo. O objetivo da ação é desconstituir o lançamento referente ao ISS descrito no enunciado, conforme o Art. 38 da Lei nº 6.830/1980.\n\nA ação deve ser endereçada à Vara Única da Comarca do Município X, ente federado que lavrou o auto de infração e também onde tem sede a empresa, sendo de competência da Justiça Estadual por se tratar de tributo municipal (ISS).\n\nA autora é a ABC Ltda., enquanto o réu é o Município X, ente federado que está a cobrar indevidamente o tributo.\n\nOs fatos devem ser descritos brevemente nos termos colocados pelo enunciado.\n\nNo mérito, o examinando deve ser capaz de identificar que:\n\n1) O ISS é devido ao Município Y, local da efetiva prestação do serviço de remoção, tratamento e reciclagem de lixo, por expressa exceção prevista no Art. 3º, inciso VI, da LC 116/2003: Art. 3º. “O serviço considera- se prestado, e o imposto, devido, no local do estabelecimento prestador ou, na falta do estabelecimento, no local do domicílio do prestador, exceto nas hipóteses previstas nos incisos I a XXV, quando o imposto será devido no local: VI – da execução da varrição, coleta, remoção, incineração, tratamento, reciclagem, separação e destinação final de lixo, rejeitos e outros resíduos quaisquer, no caso dos serviços descritos no subitem 7.09 da lista anexa.” 2) A multa de 150%, que ultrapassa o próprio valor do imposto cobrado, ostenta natureza confiscatória, em violação ao Art. 150, inciso IV, da CRFB/88: Art. 150. “Sem prejuízo de outras garantias asseguradas ao contribuinte, é vedado à União, aos Estados, ao Distrito Federal e aos Municípios: IV - utilizar tributo com efeito de confisco.” 3) A ameaça de interdição do estabelecimento constitui sanção política e meio coercitivo indireto ilegal de cobrança de tributos, por impedir o livre exercício da atividade econômica da empresa, conforme a Súmula 70 do STF: “É inadmissível a interdição de estabelecimento como meio coercitivo para cobrança de tributo” ou Súmula 547 do STF: Não é lícito à autoridade proibir que o contribuinte em débito adquira estampilhas, despache mercadorias nas alfândegas e exerça suas atividades profissionais. Considerando-se que a sociedade empresária está em vias de ter seu estabelecimento interditado caso não pague a ilegal dívida e respectiva multa, o examinando deve requerer antecipação de tutela (tutela de urgência), demonstrando a existência dos requisitos de fumus boni iuris e periculum in mora, de modo a poder se abster de efetuar qualquer recolhimento a título deste imposto e multa sem que tenha seu estabelecimento interditado, suspendendo-se a exigibilidade do crédito tributário, conforme o Art. 151, inciso V, do CTN.\n\nNos pedidos, deve o examinado requerer aquilo que tipicamente é previsto no CPC para uma ação anulatória tributária, indicando também o pedido de produção de provas, sobretudo a pericial, além de respeitar as normas de fechamento da peça.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "Juízo: Vara Única da Comarca do Município X (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Autora: ABC Ltda. (0,10); réu: Município X (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Cabimento da ação anulatória: o crédito tributário já foi definitivamente constituído pelo lançamento, tendo inclusive sido o débito notificado ao contribuinte, sendo necessário desconstituir o lançamento por meio de uma ação anulatória (0,40), nos termos do Art. 38 da Lei nº 6.830/1980 (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Endereçamento",
+        "descricao": "Breve descrição dos fatos (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Fundamentos",
+        "descricao": "O ISS é devido ao Município Y, local da efetiva prestação do serviço de remoção, tratamento e reciclagem de lixo (0,60), por expressa exceção prevista no Art. 3º, inciso VI, da LC 116/2003 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Fundamentos",
+        "descricao": "A multa de 150%, que ultrapassa o próprio valor do imposto cobrado, ostenta natureza confiscatória (0,60), em violação ao Art. 150, inciso IV, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Fundamentos",
+        "descricao": "A ameaça de interdição do estabelecimento constitui sanção política e meio coercitivo indireto ilegal de cobrança de tributos, por impedir o livre exercício da atividade econômica da empresa (0,60), nos termos da Súmula 70 ou da Súmula 547, ambas do STF (0,10). atividade econômica da empresa (0,60), nos termos da Súmula 70 ambas do STF",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Tutela provisória de urgência",
+        "descricao": "Probabilidade do direito (fumus boni iuris) (0,25).",
+        "pontuacao_maxima": 0.25,
+        "faixas_possiveis": [
+          0.0,
+          0.25
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Tutela provisória de urgência",
+        "descricao": "Perigo de dano ou risco ao resultado útil do processo (periculum in mora), em razão de que a empresa está em vias de ter seu estabelecimento interditado (0,25).",
+        "pontuacao_maxima": 0.25,
+        "faixas_possiveis": [
+          0.0,
+          0.25
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Pedidos",
+        "descricao": "Citação do réu (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Pedidos",
+        "descricao": "Seja concedida a tutela provisória de urgência, suspendendo-se a interdição do estabelecimento (0,10) e a exigibilidade do crédito tributário (0,10) com base no Art. 151, inciso V, do CTN (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Seja julgada procedente a ação, para desconstituir o lançamento tributário referente ao imposto e sua respectiva multa (0,40).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Opção pela não realização de audiência de conciliação ou de mediação (0,10), nos termos do Art. 319, inciso VII, do CPC (0,10) ou indicação do não cabimento de conciliação (0,10), nos termos do Art. 334, § 4º, inciso II, do CPC (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "Indicação das provas a serem produzidas (0,10), sobretudo a prova pericial (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Pedidos",
+        "descricao": "Condenação ao ressarcimento de custas e honorários advocatícios (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Fechamento",
+        "descricao": "Valor da causa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "17",
+        "categoria": "Fechamento",
+        "descricao": "Data, local, advogado e OAB... (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. Juízo: Vara Única da Comarca do Município X (0,10). 0,00/0,10\n2. Autora: ABC Ltda. (0,10); réu: Município X (0,10). 0,00/0,10/0,20\n3. Cabimento da ação anulatória: o crédito tributário já foi definitivamente\nconstituído pelo lançamento, tendo inclusive sido o débito notificado ao\n0,00/0,40/0,50\ncontribuinte, sendo necessário desconstituir o lançamento por meio de uma ação\nanulatória (0,40), nos termos do Art. 38 da Lei nº 6.830/1980 (0,10).\n4. Breve descrição dos fatos (0,10). 0,00/0,10\nFundamentos\n5. O ISS é devido ao Município Y, local da efetiva prestação do serviço de remoção,\ntratamento e reciclagem de lixo (0,60), por expressa exceção prevista no Art. 3º, 0,00/0,60/0,70\ninciso VI, da LC 116/2003 (0,10).\n6. A multa de 150%, que ultrapassa o próprio valor do imposto cobrado, ostenta\n0,00/0,60/0,70\nnatureza confiscatória (0,60), em violação ao Art. 150, inciso IV, da CRFB/88 (0,10).\n7. A ameaça de interdição do estabelecimento constitui sanção política e meio\ncoercitivo indireto ilegal de cobrança de tributos, por impedir o livre exercício da\n0,00/0,60/0,70\natividade econômica da empresa (0,60), nos termos da Súmula 70 ou da Súmula 547,\nambas do STF (0,10).\nTutela provisória de urgência\n8. Probabilidade do direito (fumus boni iuris) (0,25). 0,00/0,25\n9. Perigo de dano ou risco ao resultado útil do processo (periculum in mora), em razão\n0,00/0,25\nde que a empresa está em vias de ter seu estabelecimento interditado (0,25).\nPedidos\n10. Citação do réu (0,10). 0,00/0,10\n11. Seja concedida a tutela provisória de urgência, suspendendo-se a interdição do\n0,00/0,10/\nestabelecimento (0,10) e a exigibilidade do crédito tributário (0,10) com base no Art.\n0,20/0,30\n151, inciso V, do CTN (0,10).\n12. Seja julgada procedente a ação, para desconstituir o lançamento tributário\n0,00/0,40\nreferente ao imposto e sua respectiva multa (0,40).\n13. Opção pela não realização de audiência de conciliação ou de mediação (0,10), nos\ntermos do Art. 319, inciso VII, do CPC (0,10) ou indicação do não cabimento de 0,00/0,10/0,20\nconciliação (0,10), nos termos do Art. 334, § 4º, inciso II, do CPC (0,10).\n14. Indicação das provas a serem produzidas (0,10), sobretudo a prova pericial (0,10). 0,00/0,10/0,20\n15. Condenação ao ressarcimento de custas e honorários advocatícios (0,10). 0,00/0,10\nFechamento\n16. Valor da causa (0,10). 0,00/0,10\n17. Data, local, advogado e OAB... (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "José Silva, inconformado com o fato de ter pago, nos últimos dois anos, taxa municipal de combate a incêndios que reputa indevida, protocoliza pedido administrativo de restituição do indébito tributário junto ao Fisco municipal. Contudo, a decisão final na esfera administrativo-tributária lhe é desfavorável, de modo que José decide contratar você, como advogado(a), requerendo que entre com ação anulatória da decisão administrativa que denegou a restituição. Diante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Qual o prazo prescricional para propositura dessa ação anulatória da decisão administrativa que denegou a restituição? Fundamente.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Tem razão José em sua insurgência contra o pagamento dessa taxa municipal de combate de incêndios? Justifique, indicando o fundamento legal.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar sua resposta. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) A ação anulatória da decisão administrativa que denegar a restituição do indébito tributário prescreve em dois anos, cf. o Art. 169, caput, do CTN. B) Sim, tem razão. O combate a incêndios é feito pelo Corpo de Bombeiros, um órgão estadual, não tendo o município competência para instituir taxa sobre atividade realizada por outro ente federado fora do âmbito das atribuições municipais, conforme o Art. 145, inciso II, da CRFB/88 ou o Art. 77, caput, Art. 77, caput, ou Art. 80, ambos do CTN. No mesmo sentido: STF. RE 643.247 (repercussão geral), Rel. Min. Marco Aurélio, Pleno, julg. 24/05/2017 . e/ou Sim, tem razão. O combate a incêndios é serviço público que não está dotado de especificidade e divisibilidade, razão pela qual não pode ser remunerado mediante a espécie tributária “taxa”, conforme o Art. 145, inciso II, da CRFB/88 ou Art. 77, caput, do CTN. No mesmo sentido: STF. ADI 2.908, Rel. Min. Cármen Lúcia, Pleno, julg. 11/10/2019: “A taxa anual de segurança contra incêndio tem como fato gerador a prestação de atividade essencial geral e indivisível pelo corpo de bombeiros, sendo de utilidade genérica, devendo ser custeada pela receita dos impostos.” No mesmo sentido: STF. ADI 4.411, Rel. Min. Marco Aurélio, Pleno, julg. 18/08/2020.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "A ação anulatória da decisão administrativa que denegar a restituição do indébito tributário prescreve em dois anos (0,50), conforme o Art. 169, caput, do CTN (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. O combate a incêndios é feito pelo Corpo de Bombeiros, um órgão estadual, não tendo o município competência para instituir taxa sobre atividade realizada por outro ente federado fora do âmbito das atribuições municipais (0,55), segundo o Art. 145, inciso II, da CRFB/88 ou Art. 77, caput, ou Art. 80, ambos do CTN (0,10). ou Sim. O combate a incêndio é serviço público que não está dotado de especificidade e divisibilidade, razão pela qual não pode ser remunerado mediante a espécie tributária “taxa” (0,55), segundo o Art. 145, inciso II, da CRFB/88 ou o Art. 77, caput, do CTN (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. A ação anulatória da decisão administrativa que denegar a restituição do indébito\n0,00/0,50/0,60\ntributário prescreve em dois anos (0,50), conforme o Art. 169, caput, do CTN (0,10).\nB. Sim. O combate a incêndios é feito pelo Corpo de Bombeiros, um órgão estadual, não\ntendo o município competência para instituir taxa sobre atividade realizada por outro ente\nfederado fora do âmbito das atribuições municipais (0,55), segundo o Art. 145, inciso II, da\nCRFB/88 ou Art. 77, caput, ou Art. 80, ambos do CTN (0,10).\n0,00/0,55/0,65\nou\nSim. O combate a incêndio é serviço público que não está dotado de especificidade e\ndivisibilidade, razão pela qual não pode ser remunerado mediante a espécie tributária\n“taxa” (0,55), segundo o Art. 145, inciso II, da CRFB/88 ou o Art. 77, caput, do CTN (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Lei Ordinária Municipal nº XXX, de 1º de outubro de 2022, alterou todas as alíquotas do Imposto sobre Serviços (ISS) previstas na Lei Complementar Municipal nº YYY/2015, majorando-as de 2% para 5%. A Barbearia Júpiter Ltda. foi autuada em janeiro de 2023, por diferenças nos valores recolhidos de Imposto sobre Serviços (ISS) dos anos de 2019 a 2021, pela aplicação da nova alíquota de 5%, tendo o auditor fiscal consignado expressamente que teria adotado as alíquotas da nova lei, uma vez que seria a norma vigente no momento da lavratura do auto de infração, inclusive citando o brocardo latino “tempus regit actum”. Inconformada com essa cobrança, a barbearia contrata você, como advogado(a), para defender seus interesses. Diante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O auditor fiscal agiu corretamente ao aplicar a alíquota majorada, prevista na nova lei, na lavratura do auto de infração, cobrando a diferença do Imposto sobre Serviços (ISS)? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A nova lei ordinária municipal poderia alterar tal alíquota de ISS para 5%? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. O auditor fiscal não agiu corretamente, pois o lançamento reporta-se à data da ocorrência do fato gerador da obrigação e rege-se pela lei então vigente, ainda que posteriormente modificada ou revogada, segundo o Art. 144 ou Art. 105 ambos do CTN, ou o Art. 150, inciso III, alínea a, da CRFB/88. B) Sim, pois a nova lei ordinária municipal observou a alíquota máxima de ISS de 5%, prevista no Art. 8º, inciso II, da LC nº 116/2003.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não, pois o lançamento reporta-se à data da ocorrência do fato gerador da obrigação e rege-se pela lei então vigente, ainda que posteriormente modificada ou revogada (0,55), com base no Art. 144 ou Art. 105 ambos do CTN, ou no Art. 150, inciso III, alínea a, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim, pois a nova lei ordinária municipal observou a alíquota máxima de ISS de 5% (0,50), prevista no Art. 8º, inciso II, da LC nº 116/2003 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não, pois o lançamento reporta-se à data da ocorrência do fato gerador da obrigação\ne rege-se pela lei então vigente, ainda que posteriormente modificada ou revogada\n0,00/0,55/0,65\n(0,55), com base no Art. 144 ou Art. 105 ambos do CTN, ou no Art. 150, inciso III, alínea\na, da CRFB/88 (0,10).\nB. Sim, pois a nova lei ordinária municipal observou a alíquota máxima de ISS de 5%\n0,00/0,50/0,60\n(0,50), prevista no Art. 8º, inciso II, da LC nº 116/2003 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "O Estado Alfa editou uma nova lei sobre IPVA, alterando as alíquotas originalmente estabelecidas desse tributo, de maneira a fixar duas alíquotas diferenciadas (4% e 2%) em razão do uso do automóvel como carro de passeio e como táxi, respectivamente. A mesma lei estabeleceu também uma alíquota majorada de 10% em relação àquela incidente sobre os automóveis nacionais, caso o automóvel seja importado. Diante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É válida a adoção de alíquotas diferenciadas de IPVA em razão do uso do automóvel como carro de passeio e como táxi? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "É válida a alíquota diferenciada para automóveis importados? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. A adoção de alíquotas diferenciadas em função do uso do automóvel como carro de passeio e como táxi é válida, pois o IPVA é tributo autorizado a ter alíquotas diferenciadas em função do tipo e da utilização do automóvel, cf. Art. 155, § 6º, inciso II, da CRFB/88. B) Não é válida. É vedado aos Estados estabelecer diferença tributária entre bens e serviços, de qualquer natureza, em razão de sua procedência ou destino, conforme o Art. 152 da CRFB/88. Assim, o simples fato de o veículo ser de procedência estrangeira não autoriza tal diferenciação na alíquota tributária de IPVA.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. O IPVA é tributo autorizado a ter alíquotas diferenciadas em função do tipo e da utilização do automóvel (0,50), cf. Art. 155, § 6º, inciso II, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. É vedado aos Estados estabelecer diferença tributária entre bens e serviços, de qualquer natureza, em razão de sua procedência ou destino (0,55), conforme o Art. 152 da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. O IPVA é tributo autorizado a ter alíquotas diferenciadas em função do tipo e da\n0,00/0,50/0,60\nutilização do automóvel (0,50), cf. Art. 155, § 6º, inciso II, da CRFB/88 (0,10).\nB. Não. É vedado aos Estados estabelecer diferença tributária entre bens e serviços, de\nqualquer natureza, em razão de sua procedência ou destino (0,55), conforme o Art. 152 0,00/0,55/0,65\nda CRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Um projeto de lei estadual de iniciativa do Tribunal de Justiça do Estado Alfa pretende alterar a divisão das comarcas judiciais nesse ente federado. Além dessa alteração, em um de seus artigos, foi prevista a instituição de uma nova isenção da taxa judiciária. Foi apresentada a estimativa do impacto financeiro e orçamentário referente à concessão da nova isenção.\n\nNo momento em que cabia ao Governador sancionar o projeto de lei, na parte referente à isenção, houve veto, sob dois argumentos: i) a lei isentiva tributária estava mesclada com tema de organização judiciária; ii) foi violada a reserva de iniciativa para leis em matéria tributária, que seria do Chefe do Executivo, por aplicação do princípio da simetria quanto ao Presidente da República, conforme o Art. 61, §1º, inciso II, alínea b, da CRFB/88.\n\nDiante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Tem razão o Governador em seu argumento de que não poderia haver mescla de lei isentiva tributária com tema de organização judiciária? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Tem razão o Governador em seu argumento de que foi violada a reserva de iniciativa em matéria tributária, que seria do Chefe do Executivo por aplicação do princípio da simetria quanto ao Presidente da República? Justifique",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar sua resposta. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. Para a concessão da isenção tributária sobre a taxa judiciária, deve-se seguir o princípio da legalidade específica previsto no Art. 150, § 6º, da CRFB/88, in verbis: § 6º Qualquer subsídio ou isenção, redução de base de cálculo, concessão de crédito presumido, anistia ou remissão, relativos a impostos, taxas ou contribuições, só poderá ser concedido mediante lei específica, federal, estadual ou municipal, que regule exclusivamente as matérias acima enumeradas ou o correspondente tributo ou contribuição, sem prejuízo do disposto no Art. 155, § 2º, inciso XII, alínea g. Portanto, seria necessária uma lei específica que regulasse exclusivamente a isenção ou o correspondente tributo (taxa judiciária). O uso de uma lei que altera a divisão das comarcas e que também trata da isenção de um tributo viola o Art. 150, § 6º, da CRFB/88. B) Não. Não existe reserva de iniciativa para leis em matéria tributária ao chefe do Executivo. O Presidente da República, conforme o Art. 61, §1º, inciso II, alínea b, da CRFB/88, detém reserva de iniciativa para leis em matéria tributária apenas em relação aos Territórios Federais.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. É necessária uma lei específica para regular exclusivamente tal isenção ou o correspondente tributo (taxa judiciária). O uso de uma lei que trata ao mesmo tempo de organização judicial e de isenção tributária (0,50) viola o Art. 150, §6º, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. Não existe reserva de iniciativa para leis em matéria tributária ao chefe do Executivo (0,35). O Presidente da República, conforme o Art. 61, §1º, inciso II, alínea b, da CRFB/88, detém reserva de iniciativa para leis em matéria tributária apenas em relação aos Territórios Federais (0,30).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.3,
+            0.35,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. É necessária uma lei específica para regular exclusivamente tal isenção ou o\ncorrespondente tributo (taxa judiciária). O uso de uma lei que trata ao mesmo tempo de 0,00/0,50/0,60\norganização judicial e de isenção tributária (0,50) viola o Art. 150, §6º, da CRFB/88 (0,10).\nB. Não. Não existe reserva de iniciativa para leis em matéria tributária ao chefe do\nExecutivo (0,35). O Presidente da República, conforme o Art. 61, §1º, inciso II, alínea b, da 0,00/0,30/0,35\nCRFB/88, detém reserva de iniciativa para leis em matéria tributária apenas em relação 0,65\naos Territórios Federais (0,30).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

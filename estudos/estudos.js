@@ -25,6 +25,16 @@ const sidebarHelpBtn = document.getElementById("sidebarHelpBtn");
 const helpOverlay = document.getElementById("helpOverlay");
 const helpCloseBtn = document.getElementById("helpCloseBtn");
 const helpGotItBtn = document.getElementById("helpGotItBtn");
+const sessionAvatarBtn = document.getElementById("sessionAvatarBtn");
+const sessionPopover = document.getElementById("sessionPopover");
+const sessionLoginForm = document.getElementById("sessionLoginForm");
+const sessionLoggedInfo = document.getElementById("sessionLoggedInfo");
+const sessionEmail = document.getElementById("sessionEmail");
+const sessionPassword = document.getElementById("sessionPassword");
+const sessionLoginBtn = document.getElementById("sessionLoginBtn");
+const sessionLoginMsg = document.getElementById("sessionLoginMsg");
+const sessionUserLabel = document.getElementById("sessionUserLabel");
+const sessionLogoutBtn = document.getElementById("sessionLogoutBtn");
 
 let allQuestions = [];
 let filtered = [];
@@ -691,6 +701,90 @@ function revealAnswer(altButtons, correctLetter, wrongLetter, feedbackEl) {
     : "Correto!";
 }
 
+// ------------------------------------------------------ Sessão do aluno
+//
+// Totalmente opcional — só existe pra quem recebeu um convite de professor
+// (ver professor-portal/). Sem login, currentSession fica null pra sempre e
+// nada muda em relação ao comportamento anônimo de sempre: nenhuma consulta
+// extra, nenhuma gravação, nenhum efeito colateral. Logado, cada resposta
+// de 1ª fase passa a ser gravada em oab_respostas (ver handleAnswer abaixo)
+// pra aparecer no Portal do Professor.
+
+let currentSession = null;
+
+function updateSessionUI() {
+  if (currentSession?.user) {
+    const label = currentSession.user.user_metadata?.nome || currentSession.user.email || "?";
+    sessionAvatarBtn.textContent = label.trim().charAt(0).toUpperCase() || "?";
+    sessionAvatarBtn.title = `Logado como ${currentSession.user.email}`;
+    sessionLoginForm.hidden = true;
+    sessionLoggedInfo.hidden = false;
+    sessionUserLabel.textContent = currentSession.user.email;
+  } else {
+    sessionAvatarBtn.textContent = "E";
+    sessionAvatarBtn.title = "Entrar";
+    sessionLoginForm.hidden = false;
+    sessionLoggedInfo.hidden = true;
+  }
+}
+
+sessionAvatarBtn.addEventListener("click", (ev) => {
+  ev.stopPropagation();
+  sessionPopover.hidden = !sessionPopover.hidden;
+});
+
+sessionPopover.addEventListener("click", (ev) => ev.stopPropagation());
+
+document.addEventListener("click", () => {
+  sessionPopover.hidden = true;
+});
+
+function showSessionLoginMsg(text) {
+  sessionLoginMsg.textContent = text;
+  sessionLoginMsg.className = "session-popover-msg show";
+}
+
+async function handleSessionLogin() {
+  const email = sessionEmail.value.trim();
+  const password = sessionPassword.value;
+  if (!email || !password) {
+    showSessionLoginMsg("Preencha e-mail e senha.");
+    return;
+  }
+
+  sessionLoginBtn.disabled = true;
+  const { error } = await client.auth.signInWithPassword({ email, password });
+  sessionLoginBtn.disabled = false;
+
+  if (error) {
+    showSessionLoginMsg("E-mail ou senha inválidos.");
+    return;
+  }
+  sessionPassword.value = "";
+  sessionLoginMsg.className = "session-popover-msg";
+  sessionPopover.hidden = true;
+}
+
+sessionLoginBtn.addEventListener("click", handleSessionLogin);
+sessionPassword.addEventListener("keydown", (ev) => {
+  if (ev.key === "Enter") handleSessionLogin();
+});
+
+sessionLogoutBtn.addEventListener("click", async () => {
+  await client.auth.signOut();
+  sessionPopover.hidden = true;
+});
+
+client.auth.onAuthStateChange((_event, session) => {
+  currentSession = session;
+  updateSessionUI();
+});
+
+client.auth.getSession().then(({ data }) => {
+  currentSession = data.session;
+  updateSessionUI();
+});
+
 function handleAnswer(q, letter, correctLetter, altButtons, feedbackEl) {
   if (selectedAnswer !== null) return;
   selectedAnswer = letter;
@@ -704,6 +798,21 @@ function handleAnswer(q, letter, correctLetter, altButtons, feedbackEl) {
     if (isCorrect) correctCount++;
     updateScoreUI();
     renderList();
+
+    // Só grava quando logado (aluno convidado por um professor) — fire-
+    // and-forget, nunca bloqueia nem altera o feedback já mostrado acima;
+    // uma falha aqui (rede, RLS etc.) não deve incomodar quem só está
+    // estudando. Ver oab_respostas em supabase/schema_professor_portal.sql.
+    if (currentSession?.user) {
+      client.from("oab_respostas").insert({
+        user_id: currentSession.user.id,
+        question_id: q.id,
+        letter,
+        correct: isCorrect,
+      }).then(({ error }) => {
+        if (error) console.error("Falha ao registrar resposta:", error.message);
+      });
+    }
   }
 }
 

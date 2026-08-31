@@ -1,0 +1,453 @@
+{
+  "exam_number": 42,
+  "phase": 2,
+  "area": "Direito Civil",
+  "source_provas_file": "42º_provas_Direito_Civil.pdf",
+  "source_resposta_file": "42º_resposta_Direito_Civil.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "Elvira Freitas, aposentada, com 82 anos de idade, residente e domiciliada em Belo Horizonte, MG, celebrou contrato de empréstimo consignado com o Banco XYZ S.A., em uma agência localizada no bairro de Lourdes, na capital mineira, sendo informada de que os valores das prestações seriam descontados diretamente em seu benefício previdenciário. Posteriormente, tentou celebrar contrato de mútuo com outra instituição financeira, mas o crédito foi negado devido a um débito relativo ao contrato de cartão de crédito consignado, utilizado na função saque, com o Banco XYZ S.A.\n\nNesse momento, teve ciência de que, além do contrato de empréstimo consignado, houve a celebração do contrato de cartão de crédito com juros acima do primeiro contrato. Realmente, havia sacado quantia pecuniária, contudo acreditava ser fruto do empréstimo consignado. Inconformada, Elvira ingressou em Juízo contra o Banco XYZ S.A., sustentando que o requerido agiu de forma arbitrária e abusiva ao realizar a contratação de cartão de crédito consignado sem antes lhe esclarecer todos os pontos do contrato. Ela alegou a necessidade da revisão do contrato de crédito, com conversão do negócio jurídico para a modalidade de empréstimo consignado comum com juros menores. Além disso, sustentou sua condição de idosa e se tratar de um contrato de adesão, sendo a interpretação em seu favor.\n\nNo despacho da exordial, foram negados os benefícios da justiça gratuita à autora, não tendo sido oposto agravo de instrumento. Em contestação, o Banco alegou a validade do contrato e sua boa-fé subjetiva, visto que não teve a intenção de causar dano ao consumidor e sim, aumentar a linha de crédito. A sentença proferida pelo juízo de uma Vara Cível da Comarca de Belo Horizonte julgou improcedente o pedido da autora com o argumento da celebração válida do contrato e da falta de comprovação de dolo ou culpa da ré, condenando a autora à litigância de má-fé pelo Art. 80, inciso III, do CPC, visto que a intenção da autora era não pagar o valor total devido.\n\nNo que tange à alegação do contrato de adesão, o douto Juízo compreendeu a validade dos termos e da adesão da consumidora. Por conseguinte, a autora foi condenada ao pagamento dos ônus de sucumbência, sendo os honorários sucumbenciais fixados em 10% do valor da causa e multa de 5% do valor da causa devido à litigância de má-fé.\n\nA sentença foi publicada na segunda-feira, dia 14 de outubro de 2024, sendo certo que não possui omissão, obscuridade ou contradição.\n\nConsiderando apenas as informações expostas, elabore, na qualidade de advogado(a) de Elvira, a peça processual cabível para a defesa dos interesses de sua cliente, que leve o tema à instância superior, indicando seus requisitos e fundamentos, nos termos da legislação vigente. A peça processual deverá ser datada no último dia do prazo para a apresentação. Desconsidere a existência de feriados nacionais ou locais.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A peça processual cabível é o recurso de apelação (Art. 1.009 do CPC), interposto no prazo de 15 dias úteis, ou seja, 04/11/2024. O examinando deverá interpor o recurso em petição dirigida ao Juízo de primeiro grau (Art. 1.010 do CPC), da XX Vara Cível da Comarca de Belo Horizonte, contendo o nome e a qualificação das partes, além de requerer a intimação para a apresentação de contrarrazões e a remessa ao Tribunal de Justiça de Minas Gerais, independentemente do Juízo de admissibilidade. Nas razões recursais, deverá indicar os fatos ocorridos, bem como fundamentar juridicamente seu pleito.\n\nNa peça, deverá ser requerida a prioridade na tramitação do recurso pelo fato de a apelante ter 82 anos de idade.\n\nA recorrente deve alegar a inviabilidade da condenação em litigância de má-fé, pois o objetivo era o cumprimento apenas da obrigação, de forma revisada, sendo inadequada a aplicação do Art. 80, inciso III, do CPC e, por conseguinte, dos efeitos pecuniários – multa e honorários advocatícios sucumbenciais – contidos no Art. 81 do CPC.\n\nDeve invocar, ainda, a recorrente: i) Violação ao Dever de Informação conforme estabelecido no Art. 6º, inciso III, ou Art. 54-D, inciso I, ambos do CDC.\n\nii) Violação à Boa-Fé Objetiva, conforme estabelecido no Art. 51, inciso IV, ou no Art. 4º, inciso III, ambos do CDC, ou no Art. 113 ou no Art. 422, ambos do Código Civil.\n\niii) Consideração de ser a consumidora ou mutuária pessoa idosa, aplicando-se o disposto no Art. 2º da Lei nº 10.741/2003.\n\niv) Alegação de ser contrato de adesão, devendo ser adotada a interpretação mais favorável ao aderente/consumidor, nos termos do Art. 47 do CDC ou do Art. 423 do CC.\n\nv) Não ocorrência da Litigância de Má-Fé, não se aplicando o Art. 80, inciso III, do CPC.\n\nPor fim, deve ser pedida a reforma da sentença de mérito, procedendo ao encerramento da peça.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "A apelação deve ser dirigida ao Juízo de Direito da XX Vara Cível da Comarca de Belo Horizonte (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Dirigir as razões ao Tribunal de Justiça de Minas Gerais (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Partes",
+        "descricao": "Nome e qualificação de Elvira (apelante) (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Partes",
+        "descricao": "Nome e qualificação do Banco XYZ (apelado) (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Tempestividade",
+        "descricao": "Interposição no prazo de 15 dias úteis (0,10), na forma do Art. 1.003, § 5º, do CPC (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Formalidades",
+        "descricao": "Preparo (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Formalidades",
+        "descricao": "Intimação do apelado para a oferta de contrarrazões (0,20), na forma do Art. 1010, § 1º, do CPC (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Formalidades",
+        "descricao": "Prioridade na tramitação do recurso pelo fato da apelante ter 82 anos de idade (0,20), na forma do Art. 1.048, inciso I, do CPC, ou do Art. 3º, §2º, da Lei nº 10.741/2003 (0,10) na forma do Art. 1.048, inciso I, do CPC, ou do Art. 3 º, §2º, da Lei nº 10.741/2003 (0,10)",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Formalidades",
+        "descricao": "Exposição dos fatos (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fundamentação",
+        "descricao": "Violação ao Dever de Informação (0,30) conforme estabelecido no Art. 6º, inciso III, ou Art. 54-D, inciso I, ambos do CDC (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Fundamentação",
+        "descricao": "Violação à Boa-Fé Objetiva (0,30), (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Fundamentação",
+        "descricao": "Consideração de ser a consumidora ou mutuária pessoa idosa (0,40), disposto no Art. 2º da Lei nº 10.741/2003 (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Fundamentação",
+        "descricao": "Alegação de ser contrato de adesão (0,30), devendo ser adotada a i favorável ao aderente/consumidor (0,20) do CC (0,10).",
+        "pontuacao_maxima": 0.6,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Fundamentação",
+        "descricao": "Não ocorrência da Litigância de Má-Fé (0,30), não se aplicando o Art. CPC (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Pedidos",
+        "descricao": "Pedido de Conhecimento do Recurso (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Pedidos",
+        "descricao": "Pedido de provimento do recurso para reforma da sentença (0,20), para revisão do contrato de cartão de crédito consignado para empréstimo consignado (0,30)",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "17",
+        "categoria": "Pedidos",
+        "descricao": "Revogação ou reforma da condenação por Litigância de Má-fé (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "18",
+        "categoria": "Pedidos",
+        "descricao": "Condenação do recorrido do ônus de sucumbência ou ao pagamento das custas e dos honorários advocatícios (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "19",
+        "categoria": "Fechamento",
+        "descricao": "Local, data (04/11/2024), assinatura e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. A apelação deve ser dirigida ao Juízo de Direito da XX Vara Cível da Comarca de Belo\n0,00/0,10\nHorizonte (0,10).\n2. Dirigir as razões ao Tribunal de Justiça de Minas Gerais (0,10). 0,00/0,10\nPartes\n3. Nome e qualificação de Elvira (apelante) (0,10). 0,00/0,10\n4. Nome e qualificação do Banco XYZ (apelado) (0,10). 0,00/0,10\nTempestividade\n5. Interposição no prazo de 15 dias úteis (0,10), na forma do Art. 1.003, § 5º, do CPC (0,10). 0,00/0,10/0,20\nFormalidades\n6. Preparo (0,20). 0,00/0,20\n7. Intimação do apelado para a oferta de contrarrazões (0,20), na forma do Art. 1010, § 1º,\n0,00/0,20/0,30\ndo CPC (0,10).\n8. Prioridade na tramitação do recurso pelo fato da apelante ter 82 anos de idade (0,20),\n0,00/0,20/0,30\nna forma do Art. 1.048, inciso I, do CPC, ou do Art. 3º, §2º, da Lei nº 10.741/2003 (0,10)\n9. Exposição dos fatos (0,10). 0,00/0,10\nFundamentação\n10. Violação ao Dever de Informação (0,30) conforme estabelecido no Art. 6º, inciso III,\n0,00/0,30/0,40\nou Art. 54-D, inciso I, ambos do CDC (0,10).\n11. Violação à Boa-Fé Objetiva (0,30), conforme estabelecido no Art. 51, inciso IV, ou\nno Art. 4º, inciso III, ambos do CDC, ou no Art. 113 ou no Art. 422, ambos do Código Civil 0,00/0,30/0,40\n(0,10).\n12. Consideração de ser a consumidora ou mutuária pessoa idosa (0,40), aplicando-se o\n0,00/0,40/0,50\ndisposto no Art. 2º da Lei nº 10.741/2003 (0,10).\n13. Alegação de ser contrato de adesão (0,30), devendo ser adotada a interpretação mais\n0,00/0,20/0,30/\nfavorável ao aderente/consumidor (0,20), nos termos do Art. 47 do CDC ou do Art. 423\n0,40/0,50/0,60\ndo CC (0,10).\n14. Não ocorrência da Litigância de Má-Fé (0,30), não se aplicando o Art. 80, inciso III, do\n0,00/0,30/0,40\nCPC (0,10).\nPedidos\n15. Pedido de Conhecimento do Recurso (0,20). 0,00/0,20\n16. Pedido de provimento do recurso para reforma da sentença (0,20), para revisão do\n0,00/0,20/0,30/0,50\ncontrato de cartão de crédito consignado para empréstimo consignado (0,30)\n17. Revogação ou reforma da condenação por Litigância de Má-fé (0,20). 0,00/0,20\n18. Condenação do recorrido do ônus de sucumbência ou ao pagamento das custas e dos\n0,00/0,20\nhonorários advocatícios (0,20).\nFechamento\n19. Local, data (04/11/2024), assinatura e OAB (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Amanda e Cristiano são pais de Ravi, hoje com dois anos de idade. Desde que engravidou, Amanda é responsável por todos os gastos e todos os cuidados referentes à criança, não tendo Cristiano, com quem Amanda somente se relacionou por uma noite, após uma festa, demonstrado qualquer interesse em exercer a paternidade ou arcar com as despesas do filho. Cristiano, inclusive, nunca contou à própria família sobre Ravi.\n\nOcorre que, há um mês, Amanda, profissional liberal, sofreu um acidente, ficando impossibilitada para o trabalho por período indeterminado, razão pela qual teme pela subsistência do filho. Ao procurar Cristiano para conversar a respeito do pagamento de uma pensão para Ravi, este negou qualquer ajuda, pelo fato de ter começado um curso superior, motivo pelo qual parou de trabalhar. Amanda sabe, contudo, que os pais de Cristiano têm excelentes condições financeiras.\n\nSobre o caso narrado, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Os pais de Cristiano podem ser obrigados a prestar alimentos a Ravi? Indique a natureza da eventual obrigação dos avós.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Amanda, sabendo que Cristiano se negará a prestar alimentos em favor de Ravi, pode promover ação diretamente em face dos avós? Indique como deve ser formulado o pedido.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Os avós podem ser obrigados a prestar alimentos aos netos, de forma subsidiária (Art. 1.698 do CC), uma vez demonstrado que Cristiano, ascendente mais próximo (Art. 1.696 do CC ou Súmula 596 do STJ), não tem condições de prestá-los (Súmula 596 do STJ). B) Não, pois como não houve ação de alimentos contra Cristiano, e a obrigação dos avós é subsidiária, deve a ação ser ajuizada em face do pai, com pedido subsidiário direcionado aos avós (Art. 1.698 do CC ou da Súmula 596 do STJ).",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. Os avós podem ser obrigados a prestar alimentos aos netos (0,25), de forma subsidiária (0,30), uma vez demonstrado que Cristiano, ascendente mais próximo, não tem condições de prestá-los (Art. 1.698 do CC ou Súmula 596 do STJ) (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A ação deve ser ajuizada em face de Cristiano e dos avós (0,20), com pedido de fixação de alimentos formulado contra o pai e, subsidiariamente, contra os avós (0,30), nos termos do Art. 1.698 do CC ou da Súmula 596 do STJ (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. Os avós podem ser obrigados a prestar alimentos aos netos (0,25), de forma\n0,00/0,25/0,30/0,35/\nsubsidiária (0,30), uma vez demonstrado que Cristiano, ascendente mais próximo,\n0,40/0,55/0,65\nnão tem condições de prestá-los (Art. 1.698 do CC ou Súmula 596 do STJ) (0,10).\nB. Não. A ação deve ser ajuizada em face de Cristiano e dos avós (0,20), com pedido\n0,00/0,20/0,30/\nde fixação de alimentos formulado contra o pai e, subsidiariamente, contra os avós\n0,40/0,50/0,60\n(0,30), nos termos do Art. 1.698 do CC ou da Súmula 596 do STJ (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Rodrigo Carvalho e Patrícia Almeida vivem em união estável desde 2005 quando, inclusive, registraram sua união no registro civil de pessoas naturais. Não tiveram filhos em comum, mas as duas filhas de Patrícia vivem com o casal e Rodrigo sempre exerceu a função paterna. Este ano, no contexto da celebração de 20 anos de união, Rodrigo pretende alterar o seu sobrenome com a inclusão do patronímico “Almeida”, a fim de ostentar o mesmo sobrenome de Patrícia e das filhas já maiores de idade. Pretende realizar essa alteração em segredo e presentear a companheira com a cópia da certidão com o novo nome. Diante disso, contrata você, como advogado(a) especializado(a), a fim de ser instruído sobre a viabilidade do seu desejo e, se for o caso, sobre como proceder.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Rodrigo poderá incluir o sobrenome de Patrícia sem o consentimento dela? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Como Rodrigo deverá proceder para, da forma mais célere, satisfazer o seu interesse, bem como os eventuais requisitos e o prazo para o exercício da alteração pretendida? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, nos termos do Art. 57 da Lei de Registros Públicos (Lei nº 6.015/1973), como a união de Rodrigo e Patrícia está devidamente registrada no registro civil das pessoas naturais, Rodrigo poderá requerer a inclusão do sobrenome de Patrícia, durante a constância da união estável (Art. 57, § 2º, da Lei nº 6.015/1973). B) Rodrigo deverá requerer, pessoalmente, a qualquer tempo, durante a união estável, a alteração perante o oficial de registro civil, independentemente de motivação ou autorização judicial, nos termos do Art. 57, § 2º, da Lei nº 6.015/1973.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim, porque está na constância da união estável (0,25), devidamente registrada no registro civil das pessoas naturais (0,30), nos termos do Art. 57, § 2º, da Lei nº 6.015/1973 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B1",
+          "categoria": null,
+          "descricao": "Rodrigo deverá requerer, pessoalmente, a qualquer tempo, durante a união estável (0,15), a alteração perante o oficial de registro civil (0,20)",
+          "pontuacao_maxima": 0.35,
+          "faixas_possiveis": [
+            0.0,
+            0.15,
+            0.2,
+            0.35
+          ]
+        },
+        {
+          "rotulo": "B2",
+          "categoria": null,
+          "descricao": "independentemente de autorização judicial ou motivação (0,15), nos termos do Art. 57, § 2º, da Lei nº 6.015/1973 (0,10).",
+          "pontuacao_maxima": 0.25,
+          "faixas_possiveis": [
+            0.0,
+            0.1,
+            0.15,
+            0.25
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nA. Sim, porque está na constância da união estável (0,25), devidamente registrada\n0,00/0,25/0,30/0,35/\nno registro civil das pessoas naturais (0,30), nos termos do Art. 57, § 2º, da Lei nº\n0,40/0,55/0,65\n6.015/1973 (0,10).\nB1. Rodrigo deverá requerer, pessoalmente, a qualquer tempo, durante a união\n0,00/0,15/0,20/0,35\nestável (0,15), a alteração perante o oficial de registro civil (0,20)\nB2. independentemente de autorização judicial ou motivação (0,15), nos termos do\n0,00/0,10/0,15/0,25\nArt. 57, § 2º, da Lei nº 6.015/1973 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Wanessa e Camilla são filhas maiores e capazes de José, falecido há cerca de um mês. Após o falecimento do pai, as irmãs entraram em litígio, pois Camilla descobriu que em vida José doou um terreno para Wanessa construir sua casa, porém esta entende que o terreno não deve integrar o inventário do pai, já que compõe apenas a parte disponível do patrimônio, apesar de não constar tal informação do contrato de doação lavrado em instrumento público. A respeito desse caso, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Assiste razão à pretensão de Wanessa? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Supondo que, no inventário judicial, Wanessa foi nomeada inventariante, deixando de incluir o terreno na relação de bens apresentada em primeiras declarações, o que pode ser feito por Camilla? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não, pois como o doador não determinou expressamente que a doação saísse da parte disponível, na forma do Art. 2.005 do CC, Wanessa é obrigada, para igualar as legítimas, a conferir o valor das doações que dele em vida recebeu, sob pena de sonegação, na forma do Art. 2.002 do CC. B) Diante da ausência de informação quanto ao bem doado em vida, Camilla poderá requerer a remoção da inventariante, na forma do Art. 622, inciso VI, do CPC.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não, pois como o doador não determinou expressamente que a doação saísse da parte disponível (0,15), na forma do Art. 2.005 do CC (0,10), Wanessa é obrigada , para igualar as legítimas, a conferir o valor das doações que dele em vida recebeu, sob pena de sonegação (0,25), na forma do Art. 2.002 do CC (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.15,
+            0.25,
+            0.35,
+            0.4,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Diante da ausência de informação quanto ao bem doado em vida, Camilla poderá requerer a remoção da inventariante (0,55), na forma do Art. 622, inciso VI, do CPC (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não, pois como o doador não determinou expressamente que a doação saísse da parte\ndisponível (0,15), na forma do Art. 2.005 do CC (0,10), Wanessa é obrigada, para igualar 0,00/0,15/0,25/0,35/\nas legítimas, a conferir o valor das doações que dele em vida recebeu, sob pena de 0,40/0,50/0,60\nsonegação (0,25), na forma do Art. 2.002 do CC (0,10).\nB. Diante da ausência de informação quanto ao bem doado em vida, Camilla poderá\n0,0/0,55/0,65\nrequerer a remoção da inventariante (0,55), na forma do Art. 622, inciso VI, do CPC (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Maria Clara Boal, residente e domiciliada na comarca de Valença do Piauí, PI, adquiriu um automóvel novo marca XYZ, fabricado pela sociedade empresária Autocarros S.A., na concessionária Pluft Automóveis Piauienses Ltda. Dez dias após a compra, trafegando normalmente e na velocidade adequada, Maria Clara perdeu o controle do veículo, causando um grave acidente, que levou a perda da mobilidade das pernas. Uma minuciosa perícia técnica revelou que o acidente foi causado por um defeito de fábrica no veículo, em razão do qual a roda traseira esquerda se desprendeu completamente devido à quebra do seu cubo. Inconformada e perplexa, Maria Clara promoveu ação de perdas e danos em face da concessionária Pluft Automóveis Piauienses Ltda. Diante da situação hipotética, na qualidade de advogado(a) da ré, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A concessionária responde direta e civilmente pelos danos sofridos por Maria Clara? Justifique sua resposta, indicando a natureza da responsabilidade da concessionária e sua qualificação na relação com Maria Clara.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Qual a providência, com o respectivo instrumento processual, que deverá ser utilizada pela ré em sua defesa visando à sua exclusão na relação processual sem a condenação nas despesas processuais? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. A concessionária é a comerciante do produto e sua responsabilidade pelo fato do produto é subsidiária e objetiva, por força do Art. 13 do Código de Defesa do Consumidor. B) A concessionária Pluft Automóveis Piauienses Ltda. deverá alegar, na contestação, a ilegitimidade passiva por meio de preliminar, conforme previsto no Art. 337, inciso XI, do CPC indicando o sujeito passivo da relação jurídica, nos termos do Art. 339 do CPC.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A concessionária é a comerciante do produto (0,20) e sua responsabilidade pelo fato do produto é subsidiária e objetiva (0,35), por força do Art. 13 do Código de Defesa do Consumidor (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.35,
+            0.45,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B1",
+          "categoria": null,
+          "descricao": "Alegar, na contestação, a ilegitimidade passiva por meio de preliminar (0,20), conforme previsto no Art. 337, inciso XI, do CPC (0,10).",
+          "pontuacao_maxima": 0.3,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3
+          ]
+        },
+        {
+          "rotulo": "B2",
+          "categoria": null,
+          "descricao": "Indicar o sujeito passivo da relação jurídica, que vem a ser a Autocarros S.A. (0,20), nos termos do Art. 339 do CPC (0,10).",
+          "pontuacao_maxima": 0.3,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A concessionária é a comerciante do produto (0,20) e sua\n0,00/0,20/0,30/0,35/\nresponsabilidade pelo fato do produto é subsidiária e objetiva (0,35), por força\n0,45/0,55/0,65\ndo Art. 13 do Código de Defesa do Consumidor (0,10).\nB1. Alegar, na contestação, a ilegitimidade passiva por meio de preliminar\n0,00/0,20/0,30\n(0,20), conforme previsto no Art. 337, inciso XI, do CPC (0,10).\nB2. Indicar o sujeito passivo da relação jurídica, que vem a ser a Autocarros S.A.\n0,00/0,20/0,30\n(0,20), nos termos do Art. 339 do CPC (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

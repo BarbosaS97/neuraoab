@@ -1,0 +1,366 @@
+{
+  "exam_number": 42,
+  "phase": 2,
+  "area": "Direito do Trabalho",
+  "source_provas_file": "42º_provas_Direito_do_Trabalho.pdf",
+  "source_resposta_file": "42º_resposta_Direito_do_Trabalho.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "O condomínio do Edifício Residencial Solar do Império, localizado em rua segura, que conta com vigilância terceirizada especializada, necessitando contratar um novo vigia noturno, firmou, em 2024, contrato de experiência de 90 dias com Rafael Patrocínio. O horário estabelecido no contrato era para trabalhar das 22 às 5 horas, com uma hora de intervalo. O edifício dispõe de um pequeno aposento no andar térreo que é utilizado pelos funcionários para alimentação e descanso. Juntamente com o contrato de trabalho, o Condomínio e Rafael firmaram acordo individual de compensação e prorrogação de jornada estabelecendo que, caso houvesse necessidade de prorrogação da jornada até as 6 horas, em decorrência de atraso do porteiro que rendia Rafael, esta hora trabalhada seria compensada no dia seguinte, quando Rafael assumiria o trabalho a partir das 23 horas, trabalhando normalmente até as 5 horas do dia seguinte. O salário estipulado era de R$ 2.000,00, acrescido de 20% de adicional noturno. O Condomínio dispõe de registro de ponto eletrônico biométrico, e todos os funcionários registram o início e o fim da jornada, o mesmo ocorrendo em relação ao intervalo. Após o primeiro mês de trabalho, Rafael apresentou atestado médico por lombalgia, ficando afastado do trabalho por 14 dias. Depois desse período, retornou ao trabalho. Ao final do prazo do contrato de experiência, o Condomínio comunicou a Rafael que o contrato seria encerrado no último dia, ocasião em que seriam pagos a Rafael o saldo do salário, férias proporcionais e 13º salário proporcional, ambos na fração de 3/12, bem como fornecida guia do FGTS com os depósitos respectivos dos 90 dias trabalhados. Dias depois da rescisão, o Condomínio foi surpreendido com a citação de uma reclamação trabalhista, distribuída para a 100ª Vara do Trabalho de Goiânia/GO, sob o número 1234-56.2024.5.18.100, na qual Rafael pleiteia indenização do intervalo intrajornada, alegando que não o usufruiu; pagamento pelas horas extras trabalhadas até as 6 horas, enquanto aguardava a rendição pelo porteiro diurno, aduzindo que o acordo de compensação de jornada é inválido por ser individual; pagamento de adicional de periculosidade em virtude da sua função de vigia patrimonial exposto à violência, como assaltos a moradores e roubos de apartamentos; diferença de adicional noturno, aduzindo que deveria ser de 25%, e, para isso, anexou a convenção coletiva do sindicato dos empregados em empresas de vigilância e a do sindicato das empresas de vigilância do município de Goiânia. Pleiteia, ainda, reintegração ao emprego, alegando estabilidade por doença ocupacional e, subsidiariamente, requer o pagamento da multa de 40% sobre o FGTS e o fornecimento de guias de seguro-desemprego ou de indenização substitutiva. Por fim, pleiteia indenização por danos morais pela não contratação por prazo indeterminado, além de honorários de advogado na proporção de 20% sobre o valor da condenação. O Condomínio recebeu a citação há um dia e contratou você, como advogado(a), para defender seus interesses. Diante disso, de acordo com a legislação trabalhista em vigor e observado o entendimento jurisprudencial consolidado do TST, elabore a peça prático-profissional na defesa dos interesses do seu cliente.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação. Nos casos em que a lei exigir liquidação de valores, o examinando deverá representá-los somente pela expressão “R$”, admitindo-se que o escritório possui setor próprio ou contratado especificamente para tal fim.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "Deverá ser apresentada uma contestação em nome do Condomínio do Edifício Residencial Solar do Império, na reclamação trabalhista movida por Rafael Patrocínio, endereçada a 100ª Vara do Trabalho de Goiânia/GO, com fundamento no Art. 847 da CLT.\n\nDeverá ser alegada a improcedência do pedido de pagamento de horas extras porque é válido o acordo individual de compensação de jornada, nos termos do Art. 59, § 6º, da CLT ou Súmula 85, I, TST.\n\nDeverá ser alegada a improcedência de indenização por supressão de intervalo, pois há registro nos controles de ponto que demonstram o gozo do intervalo, na forma do Art. 71 da CLT.\n\nDeverá ser sustentada a improcedência do pedido de diferença de adicional noturno, pois a norma coletiva juntada não é da categoria do autor (o autor não é vigilante) e a norma coletiva não se aplica ao condomínio porque não se enquadra na atividade econômica representativa patronal, sendo o adicional de 20%, conforme o Art. 73 e o Art. 511, ambos da CLT.\n\nDeverá ser contestado o pedido de adicional de periculosidade, pois o autor não se ativava em função de vigilância pessoal ou patrimonial, sendo apenas vigia, ou seja, porteiro noturno. Tudo com fundamento no Art. 193, inciso II, da CLT.\n\nDeverá ser contestado o pedido de estabilidade e reintegração no emprego, pois não houve doença ocupacional na forma do Art. 118 da Lei nº 8213/91 ou da Súmula 378, inciso II, do TST, tendo o empregado ficado afastado do emprego por apenas 14 dias, não tendo recebido benefício previdenciário acidentário.\n\nDeverá ser contestado o pedido subsidiário de indenização de 40% do FGTS porque não houve dispensa imotivada, mas sim término do contrato de experiência, conforme Arts. 18, § 1º, da Lei 8.036/90 ou 9º § 1º do Decreto 99.684/90.\n\nDeverá ser contestado o pedido subsidiário de indenização do seguro desemprego porque não houve dispensa imotivada, mas sim término do contrato de experiência, conforme Arts. Art. 2º, I ou 3º da Lei nº 7.998/90.\n\nDeverá ser rechaçado o pedido de indenização por danos morais por não haver ato de violação de direito da personalidade ou qualquer ato ilícito praticado pela ré, conforme Arts. 186 ou 927, ambos do CC, ou Arts. 223-B ou 223-C, ambos da CLT ou, ainda, que não há vedação/proibição à contratação por experiência/prazo determinado, conforme art. 443, § 2°, \"c\" da CLT.\n\nDeverá ser requerida a improcedência do pedido de honorários por não haver sucumbência ou porque o pedido de 20% supera o limite legal, segundo o Art. 791-A da CLT.\n\nDeverá ser pleiteada a condenação em honorários advocatícios.\n\nDeverá ser requerida a improcedência de todos os pedidos.\n\nDeverá ser indicado requerimento de produção de provas.\n\nIndicação de local, data e advogado.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Estrutura",
+        "descricao": "Peça no formato de contestação endereçada à 100ª VT/GO (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Estrutura",
+        "descricao": "Indicação da reclamada (0,10) e do reclamante (0,10). Art. 847 da CLT (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Horas extras",
+        "descricao": "Improcedência porque é válido o acordo individual (0,50), segundo o Art. 59 § 6º da CLT ou Súmula 85, I, TST (0,10).",
+        "pontuacao_maxima": 0.6,
+        "faixas_possiveis": [
+          0.0,
+          0.5,
+          0.6
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Intervalo",
+        "descricao": "Improcedência porque desfrutado (0,40). Art. 71 da CLT (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Adicional noturno",
+        "descricao": "Improcedência porque a norma coletiva não é da categoria do autor (0,40). Art. 73 ou Art. 511, ambos da CLT (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Adicional de Periculosidade",
+        "descricao": "Improcedência porque o autor não exercia a função de vigilante ou não estava exposto a risco (0,50). Art. 193, II, da CLT (0,10).",
+        "pontuacao_maxima": 0.6,
+        "faixas_possiveis": [
+          0.0,
+          0.5,
+          0.6
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Estabilidade e reintegração",
+        "descricao": "Improcedência por não haver afastamento previdenciário acidentário ou não ter recebido benefício acidentário ou não ser doença relativa ao trabalho (0,40). Art. 118 da Lei 8.213/91 ou a Súmula 378, II, do TST (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Indenização FGTS",
+        "descricao": "Improcedência por não ter ocorrido dispensa imotivada ou no término de contrato a termo (0,30). Indicação Art. 18, § 1º, da Lei 8.036/90 ou Art. 9º § 1º do Decreto 99.684/90. (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Seguro desemprego",
+        "descricao": "Improcedência por não ter ocorrido dispensa imotivada ou no término de contrato a termo (0,30). Indicação Arts. 2º, I ou 3º da Lei 7.998/90 (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Danos morais",
+        "descricao": "Improcedência por não haver ato de violação de direito da personalidade ou ato ilícito praticado pela ré (0,30). Arts. 186 ou 927, ambos do CC ou Art. 223-B ou C, da CLT (0,10). OU Não há vedação/proibição à contratação por experiência/prazo determinado (0,30). Indicação art. 443, § 2°, \"c\" da CLT (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Honorários advocatícios para o autor",
+        "descricao": "Improcedência por não haver sucumbência ou porque o pedido supera o limite legal (0,20). Art. 791-A da CLT (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Honorários sucumbenciais para o réu",
+        "descricao": "Requerimento de honorários advocatícios (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Requerimento finais",
+        "descricao": "Requerimento de improcedência dos pedidos (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Requerimento finais",
+        "descricao": "Requerimento de produção de provas (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Requerimento finais",
+        "descricao": "Local, data, advogado e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEstrutura\n1. Peça no formato de contestação endereçada à 100ª VT/GO (0,10). 0,00/0,10\n2. Indicação da reclamada (0,10) e do reclamante (0,10). Art. 847 da CLT (0,10). 0,00/0,10/0,20/0,30\nHoras extras\n3. Improcedência porque é válido o acordo individual (0,50), segundo o Art. 59 § 6º da CLT ou\n0,00/0,50/0,60\nSúmula 85, I, TST (0,10).\nIntervalo\n4. Improcedência porque desfrutado (0,40). Art. 71 da CLT (0,10). 0,00/0,40/0,50\nAdicional noturno\n5. Improcedência porque a norma coletiva não é da categoria do autor (0,40). Art. 73 ou Art.\n0,00/0,40/0,50\n511, ambos da CLT (0,10).\nAdicional de Periculosidade\n6. Improcedência porque o autor não exercia a função de vigilante ou não estava exposto a\n0,00/0,50/0,60\nrisco (0,50). Art. 193, II, da CLT (0,10).\nEstabilidade e reintegração\n7. Improcedência por não haver afastamento previdenciário acidentário ou não ter recebido\nbenefício acidentário ou não ser doença relativa ao trabalho (0,40). Art. 118 da Lei 8.213/91 0,00/0,40/0,50\nou a Súmula 378, II, do TST (0,10).\nIndenização FGTS\n8. Improcedência por não ter ocorrido dispensa imotivada ou no término de contrato a termo\n0,00/0,30/0,40\n(0,30). Indicação Art. 18, § 1º, da Lei 8.036/90 ou Art. 9º § 1º do Decreto 99.684/90. (0,10).\nSeguro desemprego\n9. Improcedência por não ter ocorrido dispensa imotivada ou no término de contrato a termo\n0,00/0,30/0,40\n(0,30). Indicação Arts. 2º, I ou 3º da Lei 7.998/90 (0,10).\nDanos morais\n10. Improcedência por não haver ato de violação de direito da personalidade ou ato ilícito\npraticado pela ré (0,30). Arts. 186 ou 927, ambos do CC ou Art. 223-B ou C, da CLT (0,10).\nOU 0,00/0,30/0,40\nNão há vedação/proibição à contratação por experiência/prazo determinado (0,30).\nIndicação art. 443, § 2°, \"c\" da CLT (0,10).\nHonorários advocatícios para o autor\n11. Improcedência por não haver sucumbência ou porque o pedido supera o limite legal\n0,00/0,20/0,30\n(0,20). Art. 791-A da CLT (0,10).\nHonorários sucumbenciais para o réu\n12. Requerimento de honorários advocatícios (0,10). 0,00/0,10\nRequerimento finais\n13. Requerimento de improcedência dos pedidos (0,10). 0,00/0,10\n14. Requerimento de produção de provas (0,10). 0,00/0,10\n15. Local, data, advogado e OAB (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Seu cliente, pessoa física, foi sócio de um posto de gasolina na cidade de Novo Hamburgo/RS em 2010. Retirou-se da sociedade em 2018, com a devida averbação do contrato social na Junta Comercial. Posteriormente, foi residir em Belo Horizonte/MG em imóvel próprio, de quarto e sala, com a esposa e o filho menor, não possuindo qualquer outro bem. Ele recebe apenas o benefício previdenciário de aposentadoria do INSS, no valor de R$ 2.500,00 (dois mil e quinhentos reais).\n\nO posto de gasolina encerrou as atividades em 2022 em decorrência de crise financeira. Em fevereiro de 2023, foi ajuizada ação trabalhista pelo único empregado remanescente, que fora contratado em 2020, processo esse que atualmente está em fase de execução definitiva, já tendo ocorrido o IDPJ, sem sucesso em relação aos sócios atuais.\n\nOcorre que seu cliente teve o imóvel de sua residência penhorado na data de 11/09/2023, em sede de carta precatória executória, em que todos os atos, inclusive o de localização e penhora do bem, foram praticados.\n\nDiante disso, considerando os dados do enunciado, a jurisprudência consolidada do TST e as leis em vigor, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Em relação à competência territorial para discutir a penhora no imóvel do seu cliente, onde você deverá ajuizar os embargos de terceiro? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Além da retirada da sociedade regular muito antes da contratação do exequente e do ajuizamento da ação, especificamente em relação ao bem penhorado, que tese jurídica deverá ser sustentada para o não cabimento da penhora? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) No Juízo deprecado ou no juízo de Belo Horizonte/MG, na forma da Súmula 419 do TST ou do Art. 676, parágrafo único, do CPC. B) Deverá ser alegado bem de família, nos termos do Art. 1º ou Art. 5º, caput, ambos da Lei nº 8.009/90.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "No Juízo deprecado ou no juízo de Belo Horizonte/MG (0,55), na forma da Súmula 419 do TST ou do Art. 676, parágrafo único, do CPC (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Deverá ser alegado bem de família (0,50), nos termos do Art. 1º ou Art. 5º, ambos da Lei nº 8.009/90 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. No Juízo deprecado ou no juízo de Belo Horizonte/MG (0,55), na forma da Súmula 419 do TST\n0,00/0,55/0,65\nou do Art. 676, parágrafo único, do CPC (0,10).\nB. Deverá ser alegado bem de família (0,50), nos termos do Art. 1º ou Art. 5º, ambos da Lei nº\n0,00/0,50/0,60\n8.009/90 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Rafael Pereira trabalhava há um ano na sociedade empresária Mão de Obra Qualificada Ltda. Ocorre que a empregadora não pagou os salários dos últimos quatro meses de alguns funcionários, dentre eles Rafael, que o(a) procurou como advogado(a). Rafael lhe disse que gostaria de deixar o emprego imediatamente a fim de buscar outro, em razão de estar passando por dificuldades financeiras, mas não queria pedir demissão. Diante desse fato, você ajuizou reclamação trabalhista com pedido de rescisão indireta. No dia da audiência, a sociedade empresária quitou os salários em atraso, integralmente. Assim, o juiz julgou seu pedido improcedente. Você recorreu ao Tribunal Regional do Trabalho, que manteve a decisão de primeira instância. Você ainda pretende reverter essa decisão, da qual foi notificado há um dia.\n\nDiante disso, de acordo com o enunciado e com o entendimento jurisprudencial consolidado do TST, além da legislação trabalhista em vigor, como advogado(a) de Rafael responda às indagações a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Qual a tese jurídica que você, em virtude da defesa da ré, deverá sustentar para o deferimento da rescisão indireta? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Qual a medida jurídica processual você deverá apresentar a fim de reverter a mais recente decisão do processo que manteve a decisão de improcedência do seu pedido? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Deverá ser alegado que a quitação dos salários atrasados em audiência não elide a mora salarial, conforme a Súmula 13 do TST. B) Deverá ser interposto recurso de revista, por contrariedade à súmula do TST, com fundamento no Art. 896, alínea a, da CLT.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "A quitação dos salários em atraso em audiência não elide a mora salarial (0,55).\n0/",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": "Indicação da Súmula 13 do TST (0,10).",
+          "descricao": "Interpor recurso de revista (0,50). Indicação do Art. 896, alínea a, da CLT (0,10). 0/",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. A quitação dos salários em atraso em audiência não elide a mora salarial (0,55).\n0/0,55/0,65\nIndicação da Súmula 13 do TST (0,10).\nB. Interpor recurso de revista (0,50). Indicação do Art. 896, alínea a, da CLT (0,10). 0/0,50/0,60",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Uma sociedade empresária que explora a atividade de metalurgia tem 150 empregados e mantém a cota mínima de pessoas com deficiência (PcD). Ocorre que, no mês de outubro de 2024, a sociedade empresária dispensou uma pessoa com deficiência sem justa causa e uma outra pessoa com deficiência pediu demissão porque conseguiu emprego em condições mais vantajosas. Considerando esses fatos e a legislação de regência, responda às indagações a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É válida a extinção contratual da pessoa dispensada sem justa causa? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Para o cumprimento da cota, que outra situação jurídica permite considerar a pessoa na cota legal de PcD? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) O candidato deverá responder que a dispensa sem justa causa é inválida, porque somente poderia ocorrer após a contratação de outro trabalhador com deficiência ou de condição semelhante ou reabilitado, conforme os Arts. 93, § 1º, da Lei nº 8.213/1991 ou Art. 36, § 1º, do decreto nº 3.298/99. B) O candidato deverá responder que a pessoa reabilitada também pode ser considerada na cota, conforme o Art. 93 caput ou § 1º da Lei nº 8.213/1991 ou pessoa em condições semelhantes, conforme Art. 36, § 1º, do decreto nº 3.298/99.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A dispensa somente poderia ocorrer após a contratação de outro trabalhador com deficiência ou de condição semelhante ou reabilitado (0,55). Indicação do Art. 93, § 1º, da Lei 8.213/91 ou Art. 36, § 1º, do decreto nº 3.298/99 (0,10)",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Pessoa reabilitada (0,50). Indicação do Art. 93 caput ou § 1º da Lei 8.213/91 (0,10) ou Pessoa em condições semelhantes (0,50). Indicação do Art. 36, § 1º, do decreto nº 3.298/99 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A dispensa somente poderia ocorrer após a contratação de outro trabalhador\ncom deficiência ou de condição semelhante ou reabilitado (0,55). Indicação do Art. 93, 0,00/0,55/0,65\n§ 1º, da Lei 8.213/91 ou Art. 36, § 1º, do decreto nº 3.298/99 (0,10)\nB. Pessoa reabilitada (0,50). Indicação do Art. 93 caput ou § 1º da Lei 8.213/91 (0,10)\nou\n0,00/0,50/0,60\nPessoa em condições semelhantes (0,50). Indicação do Art. 36, § 1º, do decreto\nnº 3.298/99 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Uma sociedade empresária de grande porte dedica-se à venda de todo tipo de material de construção, possuindo o que denominam mega lojas, nas quais o cliente pode comprar tudo para construir e reformar em um único lugar. Em uma de suas unidades a sociedade empresária verificou, por meio da supervisão, que o empregado José utilizou a sua rede social para afirmar categoricamente, sem provas, que todos os materiais vendidos na empresa eram de segunda e terceira categorias, sendo muitos deles falsificados. Recomendou a quem desse atenção às suas denúncias que não comprasse material no local. Na mesma unidade a supervisão detectou que outros três empregados (Jorge, Pedro e Filomena) abriram, sem conhecimento do empregador, uma pequena loja de tintas em local próximo. Nas oportunidades em que os clientes buscavam a compra de tinta, esses empregados entregavam- lhes um cartão com o telefone e o endereço da loja que abriram, recomendando fortemente que o cliente fosse lá fazer a compra porque era mais barato. Considerando a legislação de regência e que esses fatos estão devidamente documentados, responda às indagações a seguir, na condição de advogado(a) da sociedade empresária.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Que recomendação jurídica específica e detalhada você daria em relação ao contrato de trabalho de José? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Que recomendação jurídica específica e detalhada você daria em relação aos contratos de trabalho de Jorge, Pedro e Filomena? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) O candidato deverá sugerir a dispensa por justa causa em razão de ato lesivo da honra ou da boa fama praticadas contra o empregador, fazendo a associação correta da hipótese ao normativo respectivo, Art. 482, alínea k, da CLT. Poderá alegar, ainda, a violação do direito de imagem, segundo o Art. 223-D da CLT ou Art. 5º, V ou X, da CRFB/88. B) O candidato deverá sugerir a dispensa por justa causa em razão da negociação habitual por conta própria sem permissão do empregador, ou quando constituir ato de concorrência desleal à empresa para a qual trabalham os empregados, na forma do Art. 482, alínea c, da CLT.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Dispensa por justa causa em razão de ato lesivo da honra ou da boa fama praticadas contra o empregador (0,55). Indicação do Art. 482, alínea k, da CLT (0,10). ou Há violação do direito de imagem (0,55). Indicação do Art. 223-D, da CLT ou Art. 5º, V ou X, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Dispensa por justa causa em razão de negociação habitual por conta própria sem permissão do empregador ou por ato de concorrência desleal (0,50). Indicação do Art. 482, alínea c, da CLT (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Dispensa por justa causa em razão de ato lesivo da honra ou da boa fama praticadas\ncontra o empregador (0,55). Indicação do Art. 482, alínea k, da CLT (0,10).\nou 0,00/0,55/0,65\nHá violação do direito de imagem (0,55). Indicação do Art. 223-D, da CLT ou Art. 5º, V\nou X, da CRFB/88 (0,10).\nB. Dispensa por justa causa em razão de negociação habitual por conta própria sem\npermissão do empregador ou por ato de concorrência desleal (0,50). Indicação do Art. 0,00/0,50/0,60\n482, alínea c, da CLT (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

@@ -1,0 +1,393 @@
+{
+  "exam_number": 42,
+  "phase": 2,
+  "area": "Direito Penal",
+  "source_provas_file": "42º_provas_Direito_Penal.pdf",
+  "source_resposta_file": "42º_resposta_Direito_Penal.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "Policiais militares receberam uma denúncia anônima, em 10/10/2023, indicando que Diogo seria o responsável pela distribuição de drogas na região conhecida como “Fazendinha”, na cidade de Flores, Estado de Campo Belo. Por isso, dirigiram- se à residência de Diogo e, sem pedir consentimento de qualquer morador, ingressaram no imóvel.\n\nNo local, a guarnição logrou localizar, em um envelope escondido em um armário, cerca de R$ 100.000,00 (cem mil reais) em espécie, não tendo sido localizado nenhum vestígio de drogas ou outros elementos ilícitos que sequer ligassem Diogo à atividade de tráfico de drogas ou a qualquer outro ilícito penal.\n\nCom base nos fatos estritamente descritos acima, Diogo foi denunciado pelo Ministério Público como incurso nas penas do crime de lavagem de dinheiro, na modalidade “ocultar” valores em espécie, na forma do Art. 1º, caput, da Lei nº 9.613/1998. O Ministério Público deixou de oferecer acordo de não persecução penal porque, de acordo com a versão acusatória, Diogo seria reincidente, tendo a acusação arrolado, como testemunhas, os dois policiais militares que participaram da ação, Soldado Fernando e Sargento Fábio.\n\nA folha de antecedentes criminais de Diogo foi juntada aos autos, constando apenas uma condenação por lesão corporal resultante de violência doméstica e familiar contra a mulher, cuja pena foi extinta, pelo cumprimento, em 2017.\n\nO Juízo da Vara Criminal da Comarca de Flores, Estado de Campo Belo, não obstante a ausência de descrição de delito antecedente, recebeu a denúncia e ordenou a citação de Diogo.\n\nDiogo foi citado no dia 27 de janeiro de 2025, segunda-feira, sendo o dia seguinte útil em todo o país, bem como todos os dias da semana seguinte, exceto sábado e domingo.\n\nConsiderando apenas as informações narradas, na condição de advogado(a) de Diogo, redija a peça jurídica cabível, diferente de habeas corpus e considerando que a decisão não padece de vícios de obscuridade, ambiguidade, contradição ou omissão, apresentando todas as teses jurídicas pertinentes. A peça deverá ser datada no último dia do prazo para apresentação.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "De acordo com o exposto na situação apresentada, considerando que o acusado foi citado, deve o(a) examinando(a) apresentar resposta à acusação, com fundamento no Art. 396 ou no Art. 396-A, ambos do CPP, elaborando petição direcionada para o Juízo da Vara Criminal da Comarca de Flores, Estado de Campo Belo.\n\nO capítulo de tempestividade deve indicar que o prazo de apresentação da peça é de dez dias.\n\nInicialmente, deveria ser requerido o reconhecimento da ilicitude da prova produzida a partir da busca domiciliar realizada com base exclusivamente em denúncia anônima e sem mandado judicial, em violação à inviolabilidade de domicílio, na forma do Art. 5º, inciso XI ou LVI, da CRFB/88 ou Art. 241 ou 245 do CPP. As provas ilícitas devem ser desentranhadas do processo, nos termos do Art. 157 do CPP, ensejando a rejeição da denúncia, por ausência de justa causa, na forma do Art. 395, inciso III, do CPP.\n\nAdemais, deve ser notada a inépcia da denúncia, que deixou de descrever a exposição do fato criminoso, com todas as suas circunstâncias, principalmente, a infração penal antecedente, nos termos do Art. 41 do CPP ou Art. 2º, § 1º, da Lei nº 9.613/98.\n\nAinda em preliminar, deveria ser requerida a remessa dos autos ao órgão superior do Ministério Público, na forma do Art. 28-A, § 14, do CPP. De fato, Diogo não é reincidente, nos termos do Art. 64, inciso I, do CP, pois já decorreu o período depurador (prazo de cinco anos desde a extinção da pena). Assim, são insubsistentes os fundamentos utilizados pelo Ministério Público, sendo plenamente cabível a oferta de acordo de não persecução penal.\n\nPor fim, é o caso de se postular a absolvição sumária de Diogo, por atipicidade da conduta, não constituindo o fato infração penal, na forma do Art. 397, inciso III, do CPP. Com efeito, o tipo penal de lavagem de dinheiro somente se configura se houver infração penal antecedente que dê origem aos recursos ocultados, a qual não foi identificada nem sequer descrita pelo Ministério Público, de forma a se concluir pela inexistência de fato típico. De fato, possuir dinheiro em espécie escondido em um móvel de sua residência não constitui nenhuma conduta ilícita.\n\nEm razão de todo o exposto, deve o(a) examinando(a) formular, em conclusão, os pedidos de: 1) Rejeição da denúncia por inépcia da inicial, com base no Art. 395, inciso I, do CPP; 2) Rejeição da denúncia por ausência de justa causa, com base no Art. 395, inciso III, do CPP; 3) Remessa dos autos ao Procurador-Geral de Justiça, nos termos do Art. 28-A, § 14, do CPP; 4) Absolvição sumária, nos termos do Art. 397, inciso III, do CPP. Ainda, deve o(a) examinando(a) apresentar rol de testemunhas.\n\nO prazo, a ser indicado ao final, era o dia 6 de fevereiro de 2025, tendo em vista que a previsão do prazo da resposta à acusação é de dez dias. Como a citação foi em uma segunda-feira, o prazo se encerraria na quinta-feira da semana seguinte.\n\nNo fechamento, deve o examinando indicar local, data, advogado e OAB.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "A peça deve ser encaminhada à Vara Criminal da Comarca de Flores/CB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Fundamento legal: Art. 396 ou Art. 396-A, ambos do CPP (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Tempestividade: 10 dias, na forma do Art. 396 do CPP (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Fundamentos",
+        "descricao": "Preliminar: ilicitude do meio de obtenção da prova (0,40), tendo em vista ter sido obtida por meio ilícito, já que uma denúncia anônima é insuficiente para caracterizar a fundada suspeita de existência de flagrante delito, não autorizando o ingresso em domicílio (0,25), conforme trata o Art. 5º, inciso XI ou LVI, da CRFB/88 ou Art. 157, ou 241 ou 245, do CPP (0,10).",
+        "pontuacao_maxima": 0.75,
+        "faixas_possiveis": [
+          0.0,
+          0.25,
+          0.35,
+          0.4,
+          0.5,
+          0.65,
+          0.75
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Fundamentos",
+        "descricao": "Ante a nulidade da prova que embasou a denúncia, é imperioso reconhecer a ausência de justa causa (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Fundamentos",
+        "descricao": "Inépcia da denúncia pois deixou de descrever todas as circunstâncias elementares do crime de lavagem de dinheiro, notadamente, a infração penal antecedente (0,35), nos termos do Art. 41 do CPP ou Art. 2º, § 1º, da Lei nº 9.613/98 (0,10).",
+        "pontuacao_maxima": 0.45,
+        "faixas_possiveis": [
+          0.0,
+          0.35,
+          0.45
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Fundamentos",
+        "descricao": "Os motivos apontados pelo Ministério Público para recusar a oferta de ANPP não são subsistentes (ou é cabível o Acordo de Não Persecução Penal)(0,15).",
+        "pontuacao_maxima": 0.15,
+        "faixas_possiveis": [
+          0.0,
+          0.15
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fundamentos",
+        "descricao": "Diogo é tecnicamente primário (0,40), diante do transcurso do período depurador entre o término da pena anterior e a data do novo fato (0,25), nos termos do Art. 64, inciso I, do CP (0,10).",
+        "pontuacao_maxima": 0.75,
+        "faixas_possiveis": [
+          0.0,
+          0.25,
+          0.35,
+          0.4,
+          0.5,
+          0.65,
+          0.75
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fundamentos",
+        "descricao": "O delito de lavagem de dinheiro somente se tipifica se os recursos ocultados forem provenientes de outra infração penal (0,30), de forma que a conduta narrada na denúncia é atípica (0,40), não constituindo o fato infração penal (0,15).",
+        "pontuacao_maxima": 0.85,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.3,
+          0.4,
+          0.45,
+          0.55,
+          0.7,
+          0.85
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Pedidos",
+        "descricao": "Rejeição da denúncia por inépcia (e/ou) por ausência de justa causa (0,25), na forma do Art. 395, inciso I, do CPP (0,10) e inciso III (0,10).",
+        "pontuacao_maxima": 0.45,
+        "faixas_possiveis": [
+          0.0,
+          0.25,
+          0.35,
+          0.45
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Pedidos",
+        "descricao": "Remessa dos autos ao órgão superior do Ministério Público (0,20), na forma do Art. 28- A, § 14, do CPP (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Absolvição sumária (0,30), nos termos do Art. 397, inciso III, do CPP (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Prazo e Fechamento",
+        "descricao": "Rol de testemunhas (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Prazo e Fechamento",
+        "descricao": "Data: 6 de fevereiro de 2025 (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Prazo e Fechamento",
+        "descricao": "Local, data, advogado e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. A peça deve ser encaminhada à Vara Criminal da Comarca de Flores/CB (0,10). 0,00/0,10\n2. Fundamento legal: Art. 396 ou Art. 396-A, ambos do CPP (0,10). 0,00/0,10\n3. Tempestividade: 10 dias, na forma do Art. 396 do CPP (0,10). 0,00/0,10\nFundamentos\n4. Preliminar: ilicitude do meio de obtenção da prova (0,40), tendo em vista ter sido obtida\npor meio ilícito, já que uma denúncia anônima é insuficiente para caracterizar a fundada\n0,00/0,25/0,35/0,40\nsuspeita de existência de flagrante delito, não autorizando o ingresso em domicílio (0,25),\n0,50/0,65/0,75\nconforme trata o Art. 5º, inciso XI ou LVI, da CRFB/88 ou Art. 157, ou 241 ou 245, do CPP\n(0,10).\n5. Ante a nulidade da prova que embasou a denúncia, é imperioso reconhecer a ausência\n0,00/0,20\nde justa causa (0,20).\n6. Inépcia da denúncia pois deixou de descrever todas as circunstâncias elementares do\ncrime de lavagem de dinheiro, notadamente, a infração penal antecedente (0,35), nos 0,00/0,35/0,45\ntermos do Art. 41 do CPP ou Art. 2º, § 1º, da Lei nº 9.613/98 (0,10).\n7. Os motivos apontados pelo Ministério Público para recusar a oferta de ANPP não são\n0,00/0,15\nsubsistentes (ou é cabível o Acordo de Não Persecução Penal)(0,15).\n8. Diogo é tecnicamente primário (0,40), diante do transcurso do período depurador entre\n0,00/0,25/0,35/0,40\no término da pena anterior e a data do novo fato (0,25), nos termos do Art. 64, inciso I, do\n0,50/0,65/0,75\nCP (0,10).\n9. O delito de lavagem de dinheiro somente se tipifica se os recursos ocultados forem\n0,00/0,15/0,30/0,40\nprovenientes de outra infração penal (0,30), de forma que a conduta narrada na denúncia\n0,45/0,55/0,70/0,85\né atípica (0,40), não constituindo o fato infração penal (0,15).\nPedidos\n10. Rejeição da denúncia por inépcia (e/ou) por ausência de justa causa (0,25), na forma do\n0,00/0,25/0,35/0,45\nArt. 395, inciso I, do CPP (0,10) e inciso III (0,10).\n11. Remessa dos autos ao órgão superior do Ministério Público (0,20), na forma do Art. 28-\n0,00/0,20/0,30\nA, § 14, do CPP (0,10).\n12. Absolvição sumária (0,30), nos termos do Art. 397, inciso III, do CPP (0,10). 0,00/0,30/0,40\nPrazo e Fechamento\n13. Rol de testemunhas (0,20). 0,00/0,20\n14. Data: 6 de fevereiro de 2025 (0,10). 0,00/0,10\n15. Local, data, advogado e OAB (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Frederico, policial, caminha à paisana quando vê um cachorro feroz avançar na direção de crianças que brincavam na rua. Frederico, imediatamente, sacou sua arma e a apontou na direção do cachorro, com o intuito de impedir o ataque.\n\nJonas, que estava na janela de sua residência, mantém sob sua guarda arma de fogo legalmente registrada, ante sua autorização de posse, e tem visão parcial da situação. Ele vê apenas um homem (Frederico) apontando uma arma na direção das crianças que brincavam na rua, sem perceber a aproximação do cachorro raivoso. Assim, Jonas, acreditando que Frederico representava uma ameaça à integridade física das crianças, violando o dever de diligência e cuidado que deveria adotar em situações como a apresentada, imediatamente efetua disparo de arma de fogo contra Frederico, que cai, sem vida, após ser atingido pelo projétil da arma de fogo de Jonas. Com isso, o cachorro prosseguiu o ataque às crianças, fato que, isoladamente, levou uma delas a óbito.\n\nComprovados os fatos tais como aqui relatados, Jonas é denunciado por duplo homicídio doloso, sendo-lhe imputadas as mortes de Frederico e da criança. Como advogado(a) de Jonas, responda às questões a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Qual a tese de Direito Penal a ser sustentada em relação à imputação de homicídio contra Frederico? Fundamente.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Qual a tese de Direito Penal a ser sustentada em relação à imputação de homicídio contra a criança? Fundamente.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão exige do(a) examinando(a) conhecimentos sobre teoria do delito, mais precisamente, erro de tipo permissivo e relação de causalidade. A) Jonas não deve responder pelo homicídio doloso de Frederico, pois agiu em erro de tipo permissivo vencível ou inescusável, isto é, Jonas atirou em Frederico acreditando estar agindo em legítima defesa de terceiros (legítima defesa putativa ou descriminante putativa). Por isso, Jonas deve responder por homicídio culposo, na forma do Art. 20, § 1º, do Código Penal. B) Não há nexo de causalidade entre o atuar de Jonas e a morte da criança. A criança faleceu em decorrência de circunstância totalmente independente da conduta de Jonas, não podendo este, de acordo com a teoria da causalidade adequada, adotada pelo Art. 13 do Código Penal, ser responsabilizado pelo ataque do cachorro às crianças.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Jonas agiu em erro de tipo permissivo ou em legítima defesa putativa ou descriminante putativa (0,40), o que impõe a desclassificação da imputação para o delito de homicídio culposo, (ou) por se tratar de erro inescusável ou vencível (0,15), na forma do Art. 20, § 1º, do CP (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.15,
+            0.25,
+            0.4,
+            0.5,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "De acordo com a teoria da causalidade adequada, não há nexo de causalidade entre o falecimento da criança e a conduta de Jonas, pois a mor. te da criança decorreu de circunstância independente (0,50), nos termos do Art. 13 do CP (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Jonas agiu em erro de tipo permissivo ou em legítima defesa putativa ou descriminante\nputativa (0,40), o que impõe a desclassificação da imputação para o delito de homicídio 0,00/0,15/0,25/0,40/\nculposo, (ou) por se tratar de erro inescusável ou vencível (0,15), na forma do Art. 20, § 0,50/0,55/0,65\n1º, do CP (0,10).\nB. De acordo com a teoria da causalidade adequada, não há nexo de causalidade entre o\nfalecimento da criança e a conduta de Jonas, pois a mor. te da criança decorreu de 0,00/0,50/0,60\ncircunstância independente (0,50), nos termos do Art. 13 do CP (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Rui, 20 anos, inconformado com o término do relacionamento com Vânia, também com 20 anos, divulgou fotos da ex-companheira nua. Em razão disso, foi denunciado e, depois do regular processamento da ação penal, foi condenado, nos termos do Art. 218-C, § 1º, do CP, à pena de um ano e quatro meses de reclusão, substituída por duas restritivas de direitos, consistentes em prestação pecuniária e multa. O Ministério Público foi intimado da condenação, não tendo apresentado o recurso cabível no prazo legal. Vânia e seu(ua) advogado(a) foram intimados da sentença, porém, até o momento, Vânia não havia se habilitado como assistente de acusação, ainda que não concorde com as penas substitutivas aplicadas. Como advogado(a) de Vânia, responda às questões a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Qual a tese de Direito Penal a ser sustentada para a reforma da sentença condenatória? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Qual o recurso a ser interposto pela vítima e qual o prazo de interposição? Justifique, identificando o início da contagem do prazo.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão exige do(a) examinando(a) conhecimentos sobre a Lei nº 11.340/2006 e sobre recursos em processo penal. A) Em relação ao Direito Penal aplicável, era essencial que o(a) examinando(a) identificasse que há, entre Rui e Vânia, uma relação íntima de afeto, ainda que já encerrada, o que atrai a incidência da lei de violência doméstica e familiar contra a mulher, de forma a ser inviável a aplicação isolada de pena pecuniária, nos termos do Art. 17 da Lei nº 11.340/2006. B) Apelação supletiva, no prazo de 15 (quinze) dias após o transcurso do prazo recursal do MP, nos termos do Art. 598 do CPP ou Súmula 448, do STF.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Inviabilidade de aplicação isolada de pena pecuniária no âmbito da Lei de Violência Doméstica e Familiar contra a Mulher (0,50), nos termos do Art. 17 da Lei nº 11.340/2006 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Apelação supletiva (0,20), nos termos do Art. 598 do CPP ou Súmula 448, do STF (0,10). 1",
+          "pontuacao_maxima": 0.3,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "No prazo de 15 dias (0,15) após o transcurso do prazo recursal do MP (0,20). 2",
+          "pontuacao_maxima": 0.35,
+          "faixas_possiveis": [
+            0.0,
+            0.15,
+            0.2,
+            0.35
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Inviabilidade de aplicação isolada de pena pecuniária no âmbito da Lei de Violência\nDoméstica e Familiar contra a Mulher (0,50), nos termos do Art. 17 da Lei nº 11.340/2006 0,00/0,50/0,60\n(0,10).\nB . Apelação supletiva (0,20), nos termos do Art. 598 do CPP ou Súmula 448, do STF (0,10). 0,00/0,20/0,30\n1\nB . No prazo de 15 dias (0,15) após o transcurso do prazo recursal do MP (0,20). 0,00/0,15/0,20/0,35\n2",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Douglas foi denunciado pela prática do delito de trânsito de participação em corrida do tipo “racha” (Art. 308 da Lei nº 9.503/1997 – CTB) e por falsa identidade (Art. 307 do CP). A denúncia foi recebida no dia 10/02/2020. Em razão da pandemia do Coronavírus-19, os autos ficaram paralisados aguardando a retomada da pauta de audiências presenciais do Juízo, o que somente aconteceu em 2022. Assim, em 10/10/2023, Douglas foi condenado como incurso nas penas do Art. 308 do CTB e absolvido em relação ao delito do Art. 307 do Código Penal, por falta de provas.\n\nApenas o Ministério Público interpôs tempestiva apelação, postulando a condenação de Douglas pelo delito de falsa identidade. Por maioria, o Tribunal de Justiça denegou o recurso de apelação, mantendo na íntegra a sentença recorrida, o que motivou a oposição de embargos infringentes por parte do Ministério Público.\n\nComo advogado(a) de Douglas, você foi intimado, no dia 10/09/2024, para apresentar suas contrarrazões. Assim, com base nos dados do enunciado, responda às questões a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Qual a tese de extinção da punibilidade que, neste momento, pode ser deduzida por Douglas? Fundamente, identificando sobre qual fato recai.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Indique a tese processual que deve ser arguida em face do recurso oposto pelo MP. Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão exige do(a) examinando(a) conhecimentos sobre prescrição e recursos. A) Item anulado. B) O recurso de embargos infringentes é inadmissível, porquanto exclusivo em favor da defesa, nos termos do Art. 609, parágrafo único, do CPP.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Item anulado.",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "O recurso de embargos infringentes é inadmissível, porquanto exclusivo em favor da defesa (0,55), nos termos do Art. 609, parágrafo único, do CPP (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Item anulado. 0,00/0,60\nB. O recurso de embargos infringentes é inadmissível, porquanto exclusivo em favor da\n0,00/0,55/0,65\ndefesa (0,55), nos termos do Art. 609, parágrafo único, do CPP (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Thiago cumpria pena em regime semiaberto quando preencheu os requisitos objetivos para progredir ao regime aberto, tendo formulado o requerimento respectivo. O Juiz, ao apreciar o pedido, condicionou a efetiva progressão à existência de vaga em casa de albergado, que, no momento, encontrava-se lotada, devendo o condenado aguardar na unidade de semiaberto. Thiago interpôs agravo em execução, de forma que o Juiz reconsiderou a decisão anterior e permitiu que Thiago cumprisse o restante da pena em albergue domiciliar, desde que se comprometesse à prestação de serviços à comunidade como condição especial do regime aberto, na forma do Art. 113 da LEP. Como advogado(a) de Thiago, responda às questões a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A inexistência de vaga no regime mais brando pode impedir a progressão de regime? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "É cabível a imposição de prestação de serviços à comunidade como condição especial do regime aberto? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão exige do examinando conhecimentos sobre execução penal. A) Não. A falta de estabelecimento penal adequado não autoriza a manutenção do condenado em regime prisional mais gravoso, nos termos da Súmula Vinculante 56. B) Não. É inadmissível a fixação de pena substitutiva como condição especial ao regime aberto, nos termos do enunciado 493 da Súmula da Jurisprudência do Superior Tribunal de Justiça.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A falta de estabelecimento penal adequado não autoriza a manutenção do condenado em regime prisional mais gravoso (0,55), nos termos da Súmula Vinculante 56 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. É inadmissível a fixação de pena substitutiva como condição especial ao regime aberto (0,50), nos termos do enunciado 493 da Súmula da Jurisprudência do Superior Tribunal de Justiça (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A falta de estabelecimento penal adequado não autoriza a manutenção do\ncondenado em regime prisional mais gravoso (0,55), nos termos da Súmula Vinculante 56 0,00/0,55/0,65\n(0,10).\nB. Não. É inadmissível a fixação de pena substitutiva como condição especial ao regime aberto\n(0,50), nos termos do enunciado 493 da Súmula da Jurisprudência do Superior Tribunal de 0,00/0,50/0,60\nJustiça (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

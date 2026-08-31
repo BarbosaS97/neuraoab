@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aluno — Portal do Professor — NeuraOAB</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180.png">
+<meta name="theme-color" content="#0f1420">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <img src="../images/logotipo.png" alt="NeuraOAB">
+    <span>Portal do Professor</span>
+  </div>
+  <button type="button" class="btn-ghost" id="logoutBtn">Sair</button>
+</div>
+
+<div class="wrap">
+  <a href="dashboard.html" class="back-link">&larr; Voltar pra lista de alunos</a>
+
+  <div class="panel" id="studentHeaderPanel">
+    <div class="panel-header">
+      <h2 id="studentName">Carregando...</h2>
+    </div>
+    <p class="field-hint" id="studentMeta"></p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="num" id="statFase1">—</div>
+      <div class="label">Acertos na 1ª fase</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="statFase2">—</div>
+      <div class="label">Cadernos da 2ª fase respondidos</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <h2>2ª fase — peças e questões discursivas</h2>
+    </div>
+    <div id="fase2List">
+      <p class="field-hint">Carregando...</p>
+    </div>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/aluno-detail.js"></script>
+</body>
+</html>

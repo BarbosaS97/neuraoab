@@ -54,6 +54,25 @@
       </svg>
       Ir para a 1ª Fase
     </a>
+    <!-- Login opcional (aluno convidado por um professor) — mesmo padrão
+         de estudos/index.html, ver comentário lá. -->
+    <div class="session-wrap">
+      <button type="button" id="sessionAvatarBtn" class="avatar" title="Entrar">E</button>
+      <div class="session-popover" id="sessionPopover" hidden>
+        <div id="sessionLoginForm">
+          <p class="session-popover-title">Entrar</p>
+          <p class="session-popover-hint">Recebeu um convite do seu professor? Entre pra suas respostas contarem pra ele.</p>
+          <input type="email" id="sessionEmail" placeholder="E-mail" autocomplete="username">
+          <input type="password" id="sessionPassword" placeholder="Senha" autocomplete="current-password">
+          <button type="button" id="sessionLoginBtn" class="session-popover-btn">Entrar</button>
+          <p class="session-popover-msg" id="sessionLoginMsg"></p>
+        </div>
+        <div id="sessionLoggedInfo" hidden>
+          <p class="session-popover-title" id="sessionUserLabel"></p>
+          <button type="button" id="sessionLogoutBtn" class="session-popover-btn">Sair</button>
+        </div>
+      </div>
+    </div>
     <button type="button" id="sim2ThemeToggle" class="sim2-theme-toggle" aria-label="Alternar tema"></button>
   </nav>
 </header>

@@ -78,6 +78,26 @@ interface CorrectionResult {
 
 const MAX_RESPOSTA_CHARS = 12000;
 
+// Mesma logica de defesa do dr-laureano (ver comentario la): esta funcao so'
+// exige a anon key, publica no HTML, entao um "item" forjado com textos
+// gigantes poderia forcar chamadas caras na API da DeepSeek. Os tamanhos
+// abaixo sao generosos o bastante pra qualquer peca/questao real (mesmo as
+// mais longas ja extraidas das provas oficiais) — so' travam abuso.
+const MAX_ENUNCIADO_CHARS = 10000;
+const MAX_GABARITO_CHARS = 12000;
+const MAX_CRITERIOS_BRUTO_CHARS = 12000;
+const MAX_OBSERVACAO_CHARS = 1000;
+const MAX_SUBITEM_CHARS = 3000;
+const MAX_SUBITENS = 20;
+const MAX_CRITERIO_TEXTO_CHARS = 1500;
+const MAX_CRITERIO_LABEL_CHARS = 100;
+const MAX_CRITERIOS = 60;
+
+function cap(value: unknown, max: number): string {
+  const s = typeof value === "string" ? value : "";
+  return s.length > max ? s.slice(0, max) : s;
+}
+
 function round2(n: number): number {
   return Math.round((n + Number.EPSILON) * 100) / 100;
 }
@@ -85,14 +105,16 @@ function round2(n: number): number {
 function formatCriterios(criterios: Criterio[] | undefined): string {
   if (!criterios || criterios.length === 0) return "";
   return criterios
+    .slice(0, MAX_CRITERIOS)
     .map((c, i) => {
-      const rotulo = c.rotulo ?? String(i + 1);
-      const categoria = c.categoria ? `[${c.categoria}] ` : "";
+      const rotulo = cap(c.rotulo, MAX_CRITERIO_LABEL_CHARS) || String(i + 1);
+      const categoriaTexto = cap(c.categoria, MAX_CRITERIO_LABEL_CHARS);
+      const categoria = categoriaTexto ? `[${categoriaTexto}] ` : "";
       const max = c.pontuacao_maxima != null ? ` (máx. ${c.pontuacao_maxima.toFixed(2)} pontos)` : "";
       const faixas = c.faixas_possiveis && c.faixas_possiveis.length
         ? ` — pontuações possíveis: ${c.faixas_possiveis.map((f) => f.toFixed(2)).join("/")}`
         : "";
-      return `${rotulo}. ${categoria}${c.descricao ?? ""}${max}${faixas}`;
+      return `${rotulo}. ${categoria}${cap(c.descricao, MAX_CRITERIO_TEXTO_CHARS)}${max}${faixas}`;
     })
     .join("\n");
 }
@@ -102,11 +124,12 @@ function buildSystemPrompt(item: ItemContext): string {
   const valorTotal = item.valor_total ?? 0;
 
   const subitensTexto = (item.subitens ?? [])
-    .map((s) => `${s.letra}) ${s.enunciado ?? ""}${s.valor != null ? ` (Valor: ${s.valor.toFixed(2)})` : ""}`)
+    .slice(0, MAX_SUBITENS)
+    .map((s) => `${s.letra}) ${cap(s.enunciado, MAX_SUBITEM_CHARS)}${s.valor != null ? ` (Valor: ${s.valor.toFixed(2)})` : ""}`)
     .join("\n");
 
   const criteriosEstruturados = formatCriterios(item.criterios);
-  const criteriosTexto = criteriosEstruturados || item.criterios_texto_bruto || "(critérios não disponíveis)";
+  const criteriosTexto = criteriosEstruturados || cap(item.criterios_texto_bruto, MAX_CRITERIOS_BRUTO_CHARS) || "(critérios não disponíveis)";
 
   return [
     "Você é um examinador oficial da banca da FGV, corrigindo a 2ª fase do Exame de Ordem (OAB) com o rigor",
@@ -115,12 +138,12 @@ function buildSystemPrompt(item: ItemContext): string {
     `caderno: a ${tipo}, no valor total de ${valorTotal.toFixed(2)} pontos.`,
     "",
     "ENUNCIADO:",
-    item.enunciado ?? "",
+    cap(item.enunciado, MAX_ENUNCIADO_CHARS),
     subitensTexto ? "\nITENS:\n" + subitensTexto : "",
-    item.observacao ? `\nOBSERVAÇÃO DO ENUNCIADO: ${item.observacao}` : "",
+    item.observacao ? `\nOBSERVAÇÃO DO ENUNCIADO: ${cap(item.observacao, MAX_OBSERVACAO_CHARS)}` : "",
     "",
     "GABARITO COMENTADO (padrão de resposta oficial):",
-    item.gabarito_comentado ?? "(não disponível)",
+    cap(item.gabarito_comentado, MAX_GABARITO_CHARS) || "(não disponível)",
     "",
     "DISTRIBUIÇÃO DOS PONTOS (critérios oficiais de correção, item a item):",
     criteriosTexto,

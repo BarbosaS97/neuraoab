@@ -1,0 +1,9 @@
+# Ambiente virtual Python e cache de bytecode (py/) — nao deve ser versionado:
+# infla o clone, muda por maquina e nao tem nada de codigo do projeto em si.
+py/.venv/
+__pycache__/
+*.pyc
+
+# Segredos/config local — nunca comitar.
+.env
+.env.*

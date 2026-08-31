@@ -161,7 +161,29 @@
     <div class="sidebar-scroll">
       <div class="side-brand">
         <button type="button" id="sidebarHelpBtn" class="sidebar-help-btn" aria-label="Como funciona o NeuraOAB" title="Ajuda">?</button>
-        <div class="avatar" title="Sua sessão de estudo">E</div>
+        <!-- Login opcional: só existe pra quem recebeu convite de um
+             professor (ver professor-portal/) — sem login, o app continua
+             funcionando exatamente como sempre funcionou (anônimo, sem
+             gravar nada). Logado, as respostas passam a ser atribuídas ao
+             aluno de verdade (ver estudos.js) e aparecem no Portal do
+             Professor. -->
+        <div class="session-wrap">
+          <button type="button" id="sessionAvatarBtn" class="avatar" title="Entrar">E</button>
+          <div class="session-popover" id="sessionPopover" hidden>
+            <div id="sessionLoginForm">
+              <p class="session-popover-title">Entrar</p>
+              <p class="session-popover-hint">Recebeu um convite do seu professor? Entre pra suas respostas contarem pra ele.</p>
+              <input type="email" id="sessionEmail" placeholder="E-mail" autocomplete="username">
+              <input type="password" id="sessionPassword" placeholder="Senha" autocomplete="current-password">
+              <button type="button" id="sessionLoginBtn" class="session-popover-btn">Entrar</button>
+              <p class="session-popover-msg" id="sessionLoginMsg"></p>
+            </div>
+            <div id="sessionLoggedInfo" hidden>
+              <p class="session-popover-title" id="sessionUserLabel"></p>
+              <button type="button" id="sessionLogoutBtn" class="session-popover-btn">Sair</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <nav class="side-nav">
@@ -303,6 +325,6 @@
 </div>
 
 <script src="estudos.js?v=19"></script>
-<script src="dr-laureano.js?v=9"></script>
+<script src="dr-laureano.js?v=10"></script>
 </body>
 </html>

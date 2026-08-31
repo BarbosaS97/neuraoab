@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bem-vindo — NeuraOAB</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180.png">
+<meta name="theme-color" content="#0f1420">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<style>
+  :root {
+    --bg: #0f1420;
+    --panel: #161d2e;
+    --panel-border: #262f45;
+    --text: #e6e9f0;
+    --text-dim: #8b93a7;
+    --accent: #4f7cff;
+    --accent-hover: #6b91ff;
+    --err: #ef5757;
+    --ok: #35c78a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  .screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    width: 100%;
+    max-width: 380px;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 14px;
+    padding: 32px 28px;
+    box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.6);
+  }
+  .logo { display: block; height: 46px; width: auto; margin: 0 auto 22px; }
+  h1 { margin: 0 0 4px; font-size: 18px; font-weight: 600; text-align: center; }
+  .sub { margin: 0 0 22px; font-size: 13px; color: var(--text-dim); text-align: center; line-height: 1.5; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 12.5px; color: var(--text-dim); margin-bottom: 6px; }
+  .field input {
+    width: 100%;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--panel-border);
+    border-radius: 7px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  .field input:focus { outline: none; border-color: var(--accent); }
+  button {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 0;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 6px;
+    font-family: inherit;
+  }
+  button:hover:not(:disabled) { background: var(--accent-hover); }
+  button:disabled { background: #33394a; color: #767c8c; cursor: not-allowed; }
+  .msg { margin: 16px 0 0; padding: 10px 12px; border-radius: 7px; font-size: 13px; display: none; }
+  .msg.show { display: block; }
+  .msg.err { background: rgba(239, 87, 87, 0.1); border: 1px solid rgba(239, 87, 87, 0.35); color: var(--err); }
+  .msg.ok { background: rgba(53, 199, 138, 0.1); border: 1px solid rgba(53, 199, 138, 0.35); color: var(--ok); }
+</style>
+</head>
+<body>
+
+<div class="screen">
+  <div class="card">
+    <img src="../images/logotipo.png" alt="NeuraOAB" class="logo">
+    <h1>Bem-vindo(a) ao NeuraOAB</h1>
+    <p class="sub" id="statusMsg">Confirmando seu convite...</p>
+
+    <form id="setupForm" hidden novalidate>
+      <div class="field">
+        <label for="nome">Nome completo</label>
+        <input type="text" id="nome" required>
+      </div>
+      <div class="field">
+        <label for="password">Crie uma senha</label>
+        <input type="password" id="password" required minlength="8" autocomplete="new-password">
+      </div>
+      <div class="field">
+        <label for="password2">Confirme a senha</label>
+        <input type="password" id="password2" required minlength="8" autocomplete="new-password">
+      </div>
+      <button type="submit" id="submitBtn">Concluir cadastro</button>
+    </form>
+
+    <p class="msg" id="formMsg"></p>
+  </div>
+</div>
+
+<script>
+  // Mesma anon key publica de sempre (ver estudos/estudos.js) — quem
+  // protege essa pagina e' o proprio link de convite (um token de uso
+  // unico gerado pela Edge Function professor-portal), nao a anon key.
+  // Mecanica de Auth identica a professor/definir-senha.html — a unica
+  // diferenca deste arquivo e' a copia (aluno, nao professor) e o destino
+  // apos concluir (redireciona pra estudos/index.html, em vez de so'
+  // mostrar uma mensagem estatica) — o aluno ja tem uma sessao valida
+  // (client.auth.updateUser ja' fez login), nao faz sentido pedir pra ele
+  // clicar em mais alguma coisa pra continuar.
+  const SUPABASE_URL = "https://lgcphxncteqpbntnlzhe.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnY3BoeG5jdGVxcGJudG5semhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc3NzI5NTIsImV4cCI6MjEwMzM0ODk1Mn0.gQltbgj-OPpDEPuyOSonM3G8h1ppwwez0Dwi3SOdx98";
+  const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const statusMsg = document.getElementById("statusMsg");
+  const form = document.getElementById("setupForm");
+  const formMsg = document.getElementById("formMsg");
+  const submitBtn = document.getElementById("submitBtn");
+
+  let sessionUser = null;
+
+  function showReady(user) {
+    if (sessionUser) return; // ja mostrado
+    sessionUser = user;
+    statusMsg.textContent = `Convite confirmado para ${user.email}. Defina seus dados abaixo pra concluir o cadastro.`;
+    form.hidden = false;
+  }
+
+  client.auth.onAuthStateChange((_event, session) => {
+    if (session?.user) showReady(session.user);
+  });
+
+  setTimeout(async () => {
+    if (sessionUser) return;
+    const { data: { session } } = await client.auth.getSession();
+    if (session?.user) {
+      showReady(session.user);
+    } else {
+      statusMsg.textContent = "Link inválido ou expirado. Peça um novo convite ao seu professor.";
+    }
+  }, 1500);
+
+  function showFormMsg(text, kind) {
+    formMsg.textContent = text;
+    formMsg.className = `msg show ${kind}`;
+  }
+
+  form.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    formMsg.className = "msg";
+
+    const nome = document.getElementById("nome").value.trim();
+    const password = document.getElementById("password").value;
+    const password2 = document.getElementById("password2").value;
+
+    if (password !== password2) {
+      showFormMsg("As senhas não coincidem.", "err");
+      return;
+    }
+    if (password.length < 8) {
+      showFormMsg("A senha precisa ter pelo menos 8 caracteres.", "err");
+      return;
+    }
+
+    submitBtn.disabled = true;
+
+    const { error: authError } = await client.auth.updateUser({ password });
+    if (authError) {
+      showFormMsg(authError.message, "err");
+      submitBtn.disabled = false;
+      return;
+    }
+
+    const { error: profileError } = await client
+      .from("profiles")
+      .update({ nome })
+      .eq("id", sessionUser.id);
+    if (profileError) {
+      showFormMsg(`Senha definida, mas houve um erro ao salvar o nome: ${profileError.message}`, "err");
+      submitBtn.disabled = false;
+      return;
+    }
+
+    form.hidden = true;
+    statusMsg.hidden = true;
+    showFormMsg("Tudo certo! Redirecionando para o NeuraOAB...", "ok");
+    setTimeout(() => {
+      window.location.replace("index.html");
+    }, 1500);
+  });
+</script>
+</body>
+</html>

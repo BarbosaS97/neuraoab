@@ -401,7 +401,82 @@ a { color: inherit; }
   font-size: 12px;
   font-weight: 600;
   flex-shrink: 0;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
+
+/* Popover de login opcional (aluno convidado por um professor) — ancorado
+   no avatar da sessão, mesma família visual do resto da sidebar (--card/
+   --border/--text). */
+.session-wrap {
+  position: relative;
+}
+
+.session-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 220px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.5);
+  z-index: 20;
+}
+
+.session-popover[hidden] { display: none; }
+
+.session-popover-title {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.session-popover-hint {
+  margin: 0 0 10px;
+  font-size: 11.5px;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+
+.session-popover input {
+  width: 100%;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 7px 9px;
+  font-size: 12.5px;
+  font-family: inherit;
+  margin-bottom: 8px;
+}
+
+.session-popover input:focus { outline: none; border-color: var(--primary); }
+
+.session-popover-btn {
+  width: 100%;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.session-popover-msg {
+  margin: 8px 0 0;
+  font-size: 11.5px;
+  color: var(--error);
+  display: none;
+}
+
+.session-popover-msg.show { display: block; }
 
 .side-nav {
   display: flex;

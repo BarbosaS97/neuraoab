@@ -1,0 +1,388 @@
+{
+  "exam_number": 42,
+  "phase": 2,
+  "area": "Direito Constitucional",
+  "source_provas_file": "42º_provas_Direito_Constitucional.pdf",
+  "source_resposta_file": "42º_resposta_Direito_Constitucional.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "João atuou como advogado de Maria em uma ação de reparação de danos ajuizada em face do Estado Alfa. Após longa tramitação processual, a sentença de mérito que condenou o referido ente federativo a indenizar Maria pelos danos materiais e morais que sofrera transitou em julgado. A mesma sentença condenou o Estado Alfa nos ônus da sucumbência, o que incluía o dever de pagar honorários advocatícios a João, que foram fixados em 20% do valor da condenação.\n\nApós a adoção dos atos processuais necessários, o Juízo da Vara de Fazenda Pública da Comarca Beta, a requerimento de João de destaque dos honorários advocatícios, requisitou, do Presidente do Tribunal de Justiça do Estado Alfa, a expedição de precatório, visando ao recebimento do valor correspondente à condenação ao pagamento dos referidos honorários, observado o caráter alimentar do débito. O Presidente, no entanto, não reconheceu o caráter alimentar do valor a ser recebido por João, com o argumento de que a condenação sofrida pelo Estado Alfa deveria ser compreendida em sua integralidade, não de modo separado, considerando a parte atribuída a João e a parte atribuída à Maria, sendo que, esta última, não tinha caráter alimentar.\n\nAo ser cientificado da decisão do Presidente do Tribunal de Justiça do Estado Alfa, João apresentou as irresignações administrativas cabíveis, usando como argumento o caráter alimentício dos honorários advocatícios, os quais deveriam ser concebidos em sua individualidade, tese que fora, inclusive, encampada por súmula vinculante. As irresignações, no entanto, foram indeferidas, tendo o Presidente adotado a tese de que, como o débito do Estado Alfa para com Maria não tinha natureza alimentícia, o débito para com João, por ter natureza acessória, também não teria, não podendo ser inserido na ordem de preferência dessa espécie de débito. Deveria ser observada, portanto, a ordem cronológica geral de apresentação dos precatórios.\n\nJoão, passados 150 dias da publicação da última decisão do Presidente do Tribunal de Justiça do Estado Alfa, decidiu ingressar com medida judicial para que a formação do precatório que o beneficiaria tivesse o seu curso regular.\n\nÀ luz desse quadro, redija a peça processual mais adequada aos objetivos de João.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A peça processual a ser apresentada é a reclamação (Art. 103-A, § 3º, da CRFB/88 ou Art. 988, inciso III e § 4º, do Código de Processo Civil ou Art. 7º da Lei nº 11.417/2006).\n\nO processamento e o julgamento da reclamação são de competência do Supremo Tribunal Federal, na forma do Art. 103-A, § 3º, da CRFB/88 ou do Art. 7º, caput, da Lei nº 11.417/2006. A reclamação é dirigida ao Ministro Presidente do Supremo Tribunal Federal (Art. 988, § 2º, do CPC).\n\nA reclamação será proposta por João (dispõe o Art. 988, caput, do CPC que “caberá reclamação da parte interessada ou do Ministério Público”). O polo passivo será composto pelo Presidente do Tribunal de Justiça do Estado Alfa, autor do ato.\n\nDeve ser ressaltado que a reclamação é cabível em razão do esgotamento das vias administrativas, pois o Presidente do Tribunal de Justiça é a maior autoridade administrativa do Poder Judiciário estadual, incidindo o disposto no Art. 7º, § 1º, da Lei nº 11.417/2006.\n\nQuanto ao mérito, deve ser afirmado que:\n\n(i) a decisão do Presidente do Tribunal de Justiça afronta a Súmula Vinculante 47 do STF, segundo a qual “os honorários advocatícios incluídos na condenação ou destacados do montante principal devido ao credor consubstanciam verba de natureza alimentar cuja satisfação ocorrerá com a expedição de precatório ou requisição de pequeno valor, observada ordem especial restrita aos créditos dessa natureza.”\n\nComo a decisão do Presidente do Tribunal de Justiça afronta a Súmula Vinculante (Art. 311, inciso II, do CPC) deve ser requerida, em caráter liminar, a tutela de evidência, nos termos do Art. 311, parágrafo único, do Código de Processo Civil, para a cassação do ato administrativo do Presidente do Tribunal com o correlato reconhecimento da preferência ostentada pelos débitos de natureza alimentícia, nos termos do Art. 100, § 1º, da CRFB/88. A tutela, ademais, independe de demonstração de perigo de dano ou de risco ao resultado útil do processo (Art. 311, caput, do CPC).\n\nDeverá ser formulado pedido de confirmação da liminar, tornando-a definitiva, com a cassação do ato.\n\nA reclamação deve ser instruída com prova documental.\n\nDeve ser indicado o valor da causa.\n\nA petição ainda contará com o fechamento, com data, local, assinatura e OAB.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "A reclamação deve ser endereçada ao Ministro Presidente do Supremo Tribunal Federal (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Partes",
+        "descricao": "Autor: João (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Partes",
+        "descricao": "Legitimação ativa: é o interessado (0,10). nos termos do Art. 988, caput, do CPC (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Partes",
+        "descricao": "Polo passivo: Presidente do Tribunal de Justiça do Estado Alfa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Partes",
+        "descricao": "Legitimidade passiva: autor do ato (0,10), nos termos do Art. 988, caput, do CPC. (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Cabimento",
+        "descricao": "A reclamação é cabível (0,30), nos termos do Art. 103-A, § 3º, da CRFB/88 ou do Art. 988, inciso III, do CPC ou do Art. 7º, § 1º, da Lei nº 11.417/2006 (0,10), considerando o exaurimento da instância administrativa, pois o Presidente do Tribunal de Justiça é a maior autoridade administrativa do Poder Judiciário estadual (0,30).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Mérito",
+        "descricao": "A decisão do Presidente do Tribunal de Justiça afrontou a Súmula Vinculante nº 47 do STF (0,70).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Pedido",
+        "descricao": "Como a decisão do Presidente do Tribunal de Justiça afronta a Súmula Vinculante (0,20) (Art. 311, inciso II, do CPC), (0,10) deve ser requerida, em caráter liminar (0,20), a tutela de evidência, (0,20) nos termos do Art. 311, parágrafo único, do CPC (0,10),",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "8.1",
+        "categoria": "Pedido",
+        "descricao": "para a cassação do ato administrativo do Presidente do Tribunal (0,30) com o correlato reconhecimento da preferência ostentada pelos débitos de natureza alimentícia (0,30), nos termos do Art. 100, § 1º, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "8.2",
+        "categoria": "Pedido",
+        "descricao": "O deferimento da tutela de evidência independe de demonstração de perigo de dano (0,20) ou de risco ao resultado útil do processo (0,20), segundo o Art. 311, caput, do CPC (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Pedido",
+        "descricao": "A procedência do pedido, com a confirmação da liminar, tornando-a definitiva (0,30), com a cassação do ato. (0,30)",
+        "pontuacao_maxima": 0.6,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.6
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fechamento",
+        "descricao": "Juntada da prova documental (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Fechamento",
+        "descricao": "Dá-se à causa, o valor de ... (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Fechamento",
+        "descricao": "Data, local, assinatura e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. A reclamação deve ser endereçada ao Ministro Presidente do Supremo Tribunal Federal (0,10). 0,00/0,10\nPartes\n2. Autor: João (0,10). 0,00/0,10\n3. Legitimação ativa: é o interessado (0,10). nos termos do Art. 988, caput, do CPC (0,10). 0,00/0,10/0,20\n4. Polo passivo: Presidente do Tribunal de Justiça do Estado Alfa (0,10). 0,00/0,10\n5. Legitimidade passiva: autor do ato (0,10), nos termos do Art. 988, caput, do CPC. (0,10). 0,00/0,10/0,20\nCabimento\n6. A reclamação é cabível (0,30), nos termos do Art. 103-A, § 3º, da CRFB/88 ou do Art. 988, inciso\nIII, do CPC ou do Art. 7º, § 1º, da Lei nº 11.417/2006 (0,10), considerando o exaurimento da 0,00/0,30/0,40/\ninstância administrativa, pois o Presidente do Tribunal de Justiça é a maior autoridade 0,50/0,60/0,70\nadministrativa do Poder Judiciário estadual (0,30).\nMérito\n7. A decisão do Presidente do Tribunal de Justiça afrontou a Súmula Vinculante nº 47 do STF\n0,00/0,70\n(0,70).\nPedido\n8. Como a decisão do Presidente do Tribunal de Justiça afronta a Súmula Vinculante (0,20) (Art. 0,00/0,20/0,30/\n311, inciso II, do CPC), (0,10) deve ser requerida, em caráter liminar (0,20), a tutela de evidência, 0,40/0,50/0,60/\n(0,20) nos termos do Art. 311, parágrafo único, do CPC (0,10), 0,70/0,80\n8.1. para a cassação do ato administrativo do Presidente do Tribunal (0,30) com o correlato\n0,00/0,30/0,40/\nreconhecimento da preferência ostentada pelos débitos de natureza alimentícia (0,30), nos\n0,60/0,70\ntermos do Art. 100, § 1º, da CRFB/88 (0,10).\n8.2. O deferimento da tutela de evidência independe de demonstração de perigo de dano (0,20) 0,00/0,20/0,30/\nou de risco ao resultado útil do processo (0,20), segundo o Art. 311, caput, do CPC (0,10). 0,40/0,50\n9. A procedência do pedido, com a confirmação da liminar, tornando-a definitiva (0,30), com a\n0,00/0,30/0,60\ncassação do ato. (0,30)\nFechamento\n10. Juntada da prova documental (0,10). 0,00/0,10\n11. Dá-se à causa, o valor de ... (0,10). 0,00/0,10\n12. Data, local, assinatura e OAB (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Inúmeros escritores do gênero literatura de cordel atuavam no Centro Cultural do Município Alfa, tendo a sua produção literária grande influência no elevado número de turistas que diariamente circulavam pelo local. Após uma atuação contínua por quase trinta anos, foram surpreendidos com uma Portaria do Secretário Municipal de Turismo, que ressaltava a natureza pública do espaço ocupado e vedava que as narrativas abordassem temas direcionados a crianças, pois, ao seu ver, essa camada da população não deveria ter contato com uma abordagem excessivamente lúdica, que se mostrava incompatível com as disrupturas tecnológicas e com os desafios que enfrentariam na fase adulta.\n\nJoão, escritor cordelista, se dirigiu ao Prefeito Municipal e solicitou a revogação da portaria sob o argumento de que seria dissonante da Constituição da República, tendo o Chefe do Poder Executivo exarado despacho dispondo sobre necessidade de ser recolhida a taxa de expediente para a análise da referida solicitação, conforme dispõe a Lei Municipal nº X.\n\nJoão contratou seus serviços como advogado(a) e formulou os questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O conteúdo da Portaria do Secretário Municipal de Turismo se ajusta aos balizamentos oferecidos por direitos e garantias constitucionais? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A condicionante estabelecida pela Lei Municipal nº X, invocada pelo Prefeito Municipal, está em harmonia com a Constituição da República? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": null,
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. É livre a expressão da atividade intelectual ou artística, vedada a censura, nos termos do Art. 5º, inciso IX, da CRFB/88 ou do Art. 220, § 2º, da CRFB/88. B) Não. É assegurado o direito de petição contra ilegalidade, independentemente do pagamento de taxas, nos termos do Art. 5º, inciso XXXIV, alínea a, da CRFB/1988.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. É livre a expressão da atividade intelectual ou artística (0,25), vedada a censura (0,30), nos termos do Art. 5º, inciso IX, da CRFB/88 ou do Art. 220, § 2º, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. É assegurado o direito de petição contra ilegalidade, independentemente do pagamento de taxas (0,50), nos termos do Art. 5º, inciso XXXIV, alínea a, da CRFB/1988 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. É livre a expressão da atividade intelectual ou artística (0,25), vedada a\n0,00/0,25/0,30/0,35/\ncensura (0,30), nos termos do Art. 5º, inciso IX, da CRFB/88 ou do Art. 220, § 2º, da\n0,40/0,55/0,65\nCRFB/88 (0,10).\nB. Não. É assegurado o direito de petição contra ilegalidade, independentemente\ndo pagamento de taxas (0,50), nos termos do Art. 5º, inciso XXXIV, alínea a, da 0,00/0,50/0,60\nCRFB/1988 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "As cooperativas de garimpeiros em atuação no plano estadual comemoraram a Emenda Constitucional nº XX, que assegurou, nos termos da lei, o direito dessas pessoas jurídicas de terem tratamento específico e mais célere nos processos administrativos que tenham, por objeto, a autorização ou a concessão para pesquisa e lavra dos recursos e das jazidas de minerais garimpáveis. Apesar de a Emenda ter sido promulgada há uma década, as maiorias ocasionais, capitaneadas por interesses diversos, sempre obstavam a aprovação da lei que detalharia como o direito seria fruído. Em razão desse quadro, a Cooperativa de Garimpeiros Alfa, procurou você, como advogado(a), formulando os questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Considerando os termos da narrativa e o fato de a Cooperativa não estar podendo exercer o direito que lhe foi assegurado pela ordem constitucional, há alguma ação constitucional passível de ser ajuizada para a qual ela tenha legitimidade? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A situação descrita na narrativa pode vir a ser objeto do controle concentrado de constitucionalidade, a ser deflagrado por algum legitimado? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. A ação cabível é o mandado de injunção, pois a omissão na edição da norma regulamentadora tornou inviável o exercício do Direito Constitucional, nos termos do Art. 5º, inciso LXXI, da CRFB/88 ou do Art. 2º, caput, da Lei nº 13.300/2016. A Cooperativa, por sua vez, tem legitimidade para ajuizá-lo, conforme dispõe o Art 5º, inciso LXXI, da CRFB/88 ou o Art. 3º da Lei nº 13.300/2016. B) Sim. É possível o ajuizamento da ação direta de inconstitucionalidade por omissão, pois há omissão de medida para sanear a omissão inconstitucional do legislador, conforme dispõe o Art. 103, § 2º, da CRFB/88 ou o Art. 12-B, inciso I, da Lei nº 9.868/1999.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. A ação cabível é o mandado de injunção (0,20), pois a omissão na edição da 1 norma regulamentadora tornou inviável o exercício do Direito Constitucional (0,10), nos termos do Art. 5º, inciso LXXI, da CRFB/88, ou do Art. 2º, caput, da Lei nº 13.300/2016 (0,10).",
+          "pontuacao_maxima": 0.4,
+          "faixas_possiveis": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ]
+        },
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "A Cooperativa, por sua vez, tem legitimidade para ajuizá-lo (0,15), conforme dispõe 2 o Art. 3º da Lei nº 13.300/2016 (0,10).",
+          "pontuacao_maxima": 0.25,
+          "faixas_possiveis": [
+            0.0,
+            0.15,
+            0.25
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. É possível o ajuizamento da ação direta de inconstitucionalidade por omissão (0,30), pois há omissão de medida para sanear a omissão inconstitucional do legislador (0,20), conforme dispõe o Art. 103, § 2º, da CRFB/88 ou o Art. 12-B, inciso I, da Lei nº 9.868/1999 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA . Sim. A ação cabível é o mandado de injunção (0,20), pois a omissão na edição da\n1\nnorma regulamentadora tornou inviável o exercício do Direito Constitucional (0,10), 0,00/0,10/0,20/\nnos termos do Art. 5º, inciso LXXI, da CRFB/88, ou do Art. 2º, caput, da Lei nº 0,30/0,40\n13.300/2016 (0,10).\nA . A Cooperativa, por sua vez, tem legitimidade para ajuizá-lo (0,15), conforme dispõe\n2 0,00/0,15/0,25\no Art. 3º da Lei nº 13.300/2016 (0,10).\nB. Sim. É possível o ajuizamento da ação direta de inconstitucionalidade por\nomissão (0,30), pois há omissão de medida para sanear a omissão inconstitucional do 0,00/0,20/0,30/\nlegislador (0,20), conforme dispõe o Art. 103, § 2º, da CRFB/88 ou o Art. 12-B, inciso I, 0,40/0,50/ 0,60\nda Lei nº 9.868/1999 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "O Rio Verde atravessa o território dos Estados Alfa, Beta e Gama, conhecidos por sua grande produção agrícola. Em cumprimento de promessa de campanha, o Poder Executivo de Beta iniciou a instalação de um porto em seu território, para agilizar o escoamento da referida produção pelo Rio Verde. Com isso, desejava reduzir os custos desses produtos para o consumidor final, pois o transporte por via terrestre os onerava em demasia. Ao tomar conhecimento do início da referida construção, um partido de oposição ao Governador de Beta, consultou você, como advogado(a), formulando os questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O Poder Executivo de Beta, ao explorar o porto, está exercendo uma competência administrativa que lhe é própria? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Caso a União deseje se insurgir contra a iniciativa do Poder Executivo de Beta, qual será o órgão jurisdicional competente para processar e julgar a causa? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Trata-se de competência da União, nos termos do Art. 21, inciso XII, alínea f, da CRFB/88. B) O Supremo Tribunal Federal, nos termos no Art. 102, inciso I, alínea f, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. Trata-se de competência da União (0,55), nos termos do Art. 21, inciso XII, alínea f, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "O Supremo Tribunal Federal (0,50), nos termos no Art. 102, inciso I, alínea f, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. Trata-se de competência da União (0,55), nos termos do Art. 21, inciso XII, alínea\n0,00/0,55/0,65\nf, da CRFB/88 (0,10).\nB. O Supremo Tribunal Federal (0,50), nos termos no Art. 102, inciso I, alínea f, da\n0,00/0,50/0,60\nCRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "O Município Alfa, embora tivesse superado as metas de arrecadação e apresentasse disponibilidade orçamentária e financeira, deixou de pagar, por três anos seguidos, a dívida pública com exigibilidade superior a doze meses, dívida esta que fora contraída para assegurar a continuidade dos serviços públicos. À luz desse quadro, os maiores credores do Município Alfa passaram a propagar a necessidade de ser decretada a intervenção nesse ente federativo, o que, ao seu ver, se daria na modalidade de intervenção espontânea. Sobre a hipótese apresentada, responda aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É cabível a decretação da intervenção? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Cabe à autoridade competente agir de ofício na análise do cabimento da intervenção? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. O não pagamento da dívida fundada (dívida pública com exigibilidade superior a doze meses), sem que haja motivo de força maior, permite a decretação da intervenção no Município, nos termos do Art. 35, inciso I, da CRFB/88. B) Sim. O Governador do Estado pode decretar a intervenção de ofício (Art. 84, inciso X, c/c o Art. 25, caput, ambos da CRFB/88), não havendo exigência constitucional de provocação.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. O não pagamento da dívida fundada (dívida pública com exigibilidade superior a doze meses), sem que haja motivo de força maior, permite a decretação da intervenção no Município (0,55), nos termos do Art. 35, inciso I, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim, o Governador do Estado pode decretar a intervenção de ofício (0,25) (Art. 84, inciso X, c/c o Art. 25, caput, ambos da CRFB/88) (0,10), não havendo exigência constitucional de provocação (0,25).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.35,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. O não pagamento da dívida fundada (dívida pública com exigibilidade superior a\ndoze meses), sem que haja motivo de força maior, permite a decretação da intervenção 0,00/0,55/0,65\nno Município (0,55), nos termos do Art. 35, inciso I, da CRFB/88 (0,10).\nB. Sim, o Governador do Estado pode decretar a intervenção de ofício (0,25) (Art. 84,\n0,00/0,25/0,35/\ninciso X, c/c o Art. 25, caput, ambos da CRFB/88) (0,10), não havendo exigência\n0,50/ 0,60\nconstitucional de provocação (0,25).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

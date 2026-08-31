@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Mestre — NeuraOAB</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180.png">
+<meta name="theme-color" content="#0f1420">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <img src="../images/logotipo.png" alt="NeuraOAB">
+    <span>Portal Mestre</span>
+  </div>
+  <button type="button" class="btn-ghost" id="logoutBtn">Sair</button>
+</div>
+
+<div class="wrap">
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="num" id="statTotalProfessores">—</div>
+      <div class="label">Professores cadastrados</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="statProfessoresAtivos">—</div>
+      <div class="label">Professores ativos</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <h2>Professores</h2>
+      <button type="button" class="btn-accent" id="newProfessorBtn">Novo professor</button>
+    </div>
+
+    <div style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Cursinho</th>
+            <th>Cadastrado em</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="professorsTableBody">
+          <tr class="empty-row"><td colspan="6">Carregando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="professorModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="professorModalTitle">
+    <div class="modal-header">
+      <h2 id="professorModalTitle">Novo professor</h2>
+      <button type="button" id="professorModalClose" class="modal-close" aria-label="Fechar">&times;</button>
+    </div>
+
+    <form id="professorForm">
+      <div class="modal-body">
+        <p class="modal-msg" id="professorModalMsg"></p>
+
+        <input type="hidden" id="pfId">
+
+        <!-- Resultado do convite: some no lugar do formulário depois de
+             criar um professor com sucesso (ver showInviteResult em
+             js/admin.js). O e-mail já é disparado automaticamente via
+             Resend pela Edge Function; o link fica aqui como reforço ou
+             fallback (o texto de pfInviteHint muda conforme o envio deu
+             certo ou não). -->
+        <div id="pfInviteResult" hidden>
+          <p class="field-hint" id="pfInviteHint">Convite gerado.</p>
+          <div class="field-inline-btn">
+            <input type="text" id="pfInviteLink" readonly>
+            <button type="button" id="pfCopyInviteLink">Copiar</button>
+          </div>
+        </div>
+
+        <div id="pfFormFields">
+          <div class="field" id="pfNomeWrap">
+            <label for="pfNome">Nome completo</label>
+            <input type="text" id="pfNome">
+          </div>
+
+          <div class="field" id="pfEmailWrap">
+            <label for="pfEmail">E-mail (será o login)</label>
+            <input type="email" id="pfEmail" autocomplete="off">
+          </div>
+
+          <div class="field" id="pfPasswordSection">
+            <label id="pfPasswordLabel" for="pfPassword">Redefinir senha (opcional)</label>
+            <div class="field-inline-btn">
+              <input type="text" id="pfPassword" autocomplete="new-password" placeholder="Deixe em branco pra manter a atual">
+              <button type="button" id="pfGeneratePassword">Gerar</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="pfCursinho">Cursinho (opcional)</label>
+            <input type="text" id="pfCursinho">
+          </div>
+
+          <div class="field">
+            <label for="pfTelefone">Telefone (opcional)</label>
+            <input type="text" id="pfTelefone">
+          </div>
+
+          <div class="field" id="pfAtivoWrap" hidden>
+            <label class="field-check">
+              <input type="checkbox" id="pfAtivo" checked>
+              Professor ativo
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer" id="pfFormFooter">
+        <button type="button" class="btn-ghost" id="professorModalCancel">Cancelar</button>
+        <button type="submit" class="btn-accent" id="professorModalSave">Cadastrar professor</button>
+      </div>
+      <div class="modal-footer" id="pfInviteFooter" hidden>
+        <button type="button" class="btn-accent" id="pfInviteDone">Concluído</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal do Professor — NeuraOAB</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180.png">
+<meta name="theme-color" content="#0f1420">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <img src="../images/logotipo.png" alt="NeuraOAB">
+    <span>Portal do Professor</span>
+  </div>
+  <button type="button" class="btn-ghost" id="logoutBtn">Sair</button>
+</div>
+
+<div class="wrap">
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="num" id="statTotalAlunos">—</div>
+      <div class="label">Alunos cadastrados</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="statAlunosAtivos">—</div>
+      <div class="label">Alunos ativos</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <h2>Alunos</h2>
+      <button type="button" class="btn-accent" id="newStudentsBtn">Convidar aluno(s)</button>
+    </div>
+
+    <div style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Cadastrado em</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="studentsTableBody">
+          <tr class="empty-row"><td colspan="5">Carregando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Convite (individual ou em lote): mesmo formulário serve pra 1 ou pra
+     várias linhas — "cadastro em lote fácil" era o pedido explícito, então
+     em vez de duas telas separadas (uma pra 1, outra pra várias), um só
+     textarea cobre os dois casos. -->
+<div class="modal-overlay" id="inviteModal" hidden>
+  <div class="modal modal-wide" role="dialog" aria-modal="true" aria-labelledby="inviteModalTitle">
+    <div class="modal-header">
+      <h2 id="inviteModalTitle">Convidar aluno(s)</h2>
+      <button type="button" id="inviteModalClose" class="modal-close" aria-label="Fechar">&times;</button>
+    </div>
+
+    <form id="inviteForm">
+      <div class="modal-body">
+        <p class="modal-msg" id="inviteModalMsg"></p>
+
+        <div id="inviteFormFields">
+          <p class="field-hint">Um aluno por linha: <code>e-mail</code> ou <code>e-mail, nome</code> (nome é opcional). O convite é enviado por e-mail automaticamente pra cada um.</p>
+          <div class="field">
+            <label for="inviteTextarea">Alunos</label>
+            <textarea id="inviteTextarea" placeholder="maria@exemplo.com, Maria Silva&#10;joao@exemplo.com"></textarea>
+          </div>
+        </div>
+
+        <div id="inviteResult" hidden>
+          <p class="field-hint" id="inviteResultHint"></p>
+          <div class="bulk-results-wrap">
+            <table>
+              <thead><tr><th>E-mail</th><th>Resultado</th></tr></thead>
+              <tbody id="inviteResultBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer" id="inviteFormFooter">
+        <button type="button" class="btn-ghost" id="inviteModalCancel">Cancelar</button>
+        <button type="submit" class="btn-accent" id="inviteModalSave">Enviar convites</button>
+      </div>
+      <div class="modal-footer" id="inviteResultFooter" hidden>
+        <button type="button" class="btn-accent" id="inviteResultDone">Concluído</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edição simples: só o nome (corrigir grafia etc.) — status ativo/inativo
+     é controlado só por "Excluir" na linha (soft delete via Edge Function),
+     nunca daqui, porque o gatilho protect_profile_privileged_fields trava
+     "ativo" pra qualquer UPDATE que não venha da service_role (ver
+     supabase/schema_professor_portal.sql). -->
+<div class="modal-overlay" id="editModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div class="modal-header">
+      <h2 id="editModalTitle">Editar aluno</h2>
+      <button type="button" id="editModalClose" class="modal-close" aria-label="Fechar">&times;</button>
+    </div>
+
+    <form id="editForm">
+      <div class="modal-body">
+        <p class="modal-msg" id="editModalMsg"></p>
+        <input type="hidden" id="edId">
+        <div class="field">
+          <label for="edNome">Nome completo</label>
+          <input type="text" id="edNome">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-ghost" id="editModalCancel">Cancelar</button>
+        <button type="submit" class="btn-accent" id="editModalSave">Salvar alterações</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/students.js"></script>
+</body>
+</html>

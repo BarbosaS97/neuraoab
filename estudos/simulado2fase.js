@@ -4,12 +4,16 @@
 // questões discursivas -> "Finalizar" dispara uma correção por IA por item
 // (Edge Function corretor-2fase) -> nota + feedback item a item.
 //
-// Sem sistema de login no site inteiro (so' a anon key do Supabase, como em
-// estudos/estudos.js e admin/import.html) — por isso identificamos o aluno
-// por um UUID anonimo gerado no primeiro acesso e guardado no localStorage
-// (ALUNO_ID_KEY). Isso nao protege as respostas de um aluno contra outro que
-// tenha a anon key (ver nota grande em supabase/schema_fase2.sql); e' so'
-// uma identidade de conveniencia para retomar o progresso no mesmo navegador.
+// Sem login (so' a anon key do Supabase) continua sendo o modo padrao do
+// site inteiro — por isso identificamos o aluno por um UUID anonimo gerado
+// no primeiro acesso e guardado no localStorage (ALUNO_ID_KEY). Isso nao
+// protege as respostas de um aluno contra outro que tenha a anon key (ver
+// nota grande em supabase/schema_fase2.sql); e' so' uma identidade de
+// conveniencia para retomar o progresso no mesmo navegador. Login (opcional,
+// ver currentSession abaixo) so' existe pra quem foi convidado por um
+// professor (ver professor-portal/) — quando logado, a tentativa tambem
+// grava user_id, alem do aluno_id anonimo, pra aparecer no Portal do
+// Professor (ver supabase/schema_professor_portal.sql).
 
 const SUPABASE_URL = "https://lgcphxncteqpbntnlzhe.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnY3BoeG5jdGVxcGJudG5semhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc3NzI5NTIsImV4cCI6MjEwMzM0ODk1Mn0.gQltbgj-OPpDEPuyOSonM3G8h1ppwwez0Dwi3SOdx98";
@@ -125,7 +129,101 @@ const els = {
   timerDisplay: document.getElementById("timerDisplay"),
   timerPlayPause: document.getElementById("timerPlayPause"),
   timerReset: document.getElementById("timerReset"),
+
+  sessionAvatarBtn: document.getElementById("sessionAvatarBtn"),
+  sessionPopover: document.getElementById("sessionPopover"),
+  sessionLoginForm: document.getElementById("sessionLoginForm"),
+  sessionLoggedInfo: document.getElementById("sessionLoggedInfo"),
+  sessionEmail: document.getElementById("sessionEmail"),
+  sessionPassword: document.getElementById("sessionPassword"),
+  sessionLoginBtn: document.getElementById("sessionLoginBtn"),
+  sessionLoginMsg: document.getElementById("sessionLoginMsg"),
+  sessionUserLabel: document.getElementById("sessionUserLabel"),
+  sessionLogoutBtn: document.getElementById("sessionLogoutBtn"),
 };
+
+// ------------------------------------------------------ Sessão do aluno
+//
+// Mesmo mecanismo opcional de estudos/estudos.js (ver comentário lá) — sem
+// login, currentSession fica null pra sempre e o simulado funciona
+// exatamente como antes (só aluno_id anônimo). Logado, a tentativa criada
+// em findOrCreateTentativa (abaixo) também grava user_id, pra aparecer no
+// Portal do Professor.
+
+let currentSession = null;
+
+function updateSessionUI() {
+  if (currentSession?.user) {
+    const label = currentSession.user.user_metadata?.nome || currentSession.user.email || "?";
+    els.sessionAvatarBtn.textContent = label.trim().charAt(0).toUpperCase() || "?";
+    els.sessionAvatarBtn.title = `Logado como ${currentSession.user.email}`;
+    els.sessionLoginForm.hidden = true;
+    els.sessionLoggedInfo.hidden = false;
+    els.sessionUserLabel.textContent = currentSession.user.email;
+  } else {
+    els.sessionAvatarBtn.textContent = "E";
+    els.sessionAvatarBtn.title = "Entrar";
+    els.sessionLoginForm.hidden = false;
+    els.sessionLoggedInfo.hidden = true;
+  }
+}
+
+els.sessionAvatarBtn.addEventListener("click", (ev) => {
+  ev.stopPropagation();
+  els.sessionPopover.hidden = !els.sessionPopover.hidden;
+});
+
+els.sessionPopover.addEventListener("click", (ev) => ev.stopPropagation());
+
+document.addEventListener("click", () => {
+  els.sessionPopover.hidden = true;
+});
+
+function showSessionLoginMsg(text) {
+  els.sessionLoginMsg.textContent = text;
+  els.sessionLoginMsg.className = "session-popover-msg show";
+}
+
+async function handleSessionLogin() {
+  const email = els.sessionEmail.value.trim();
+  const password = els.sessionPassword.value;
+  if (!email || !password) {
+    showSessionLoginMsg("Preencha e-mail e senha.");
+    return;
+  }
+
+  els.sessionLoginBtn.disabled = true;
+  const { error } = await client.auth.signInWithPassword({ email, password });
+  els.sessionLoginBtn.disabled = false;
+
+  if (error) {
+    showSessionLoginMsg("E-mail ou senha inválidos.");
+    return;
+  }
+  els.sessionPassword.value = "";
+  els.sessionLoginMsg.className = "session-popover-msg";
+  els.sessionPopover.hidden = true;
+}
+
+els.sessionLoginBtn.addEventListener("click", handleSessionLogin);
+els.sessionPassword.addEventListener("keydown", (ev) => {
+  if (ev.key === "Enter") handleSessionLogin();
+});
+
+els.sessionLogoutBtn.addEventListener("click", async () => {
+  await client.auth.signOut();
+  els.sessionPopover.hidden = true;
+});
+
+client.auth.onAuthStateChange((_event, session) => {
+  currentSession = session;
+  updateSessionUI();
+});
+
+client.auth.getSession().then(({ data }) => {
+  currentSession = data.session;
+  updateSessionUI();
+});
 
 function showView(name) {
   ["viewPicker", "viewCaderno", "viewCorrigindo", "viewResultado"].forEach(v => {
@@ -384,9 +482,32 @@ async function findOrCreateTentativa(provaId) {
     safeRemoveItem(ptrKey);
   }
 
+  // Segundo caminho de retomada, só pra quem está logado: o ponteiro acima
+  // é por navegador (localStorage), então trocar de dispositivo/navegador
+  // logado perderia a tentativa em andamento sem isso — busca por
+  // user_id+prova_id+status em vez de confiar só no ponteiro local.
+  if (currentSession?.user) {
+    const { data } = await client
+      .from("oab2_tentativas")
+      .select("*")
+      .eq("user_id", currentSession.user.id)
+      .eq("prova_id", provaId)
+      .eq("status", "em_andamento")
+      .maybeSingle();
+    if (data) {
+      safeSetItem(ptrKey, data.id);
+      return data;
+    }
+  }
+
   const { data, error } = await client
     .from("oab2_tentativas")
-    .insert({ aluno_id: ALUNO_ID, prova_id: provaId, status: "em_andamento" })
+    .insert({
+      aluno_id: ALUNO_ID,
+      user_id: currentSession?.user?.id ?? null,
+      prova_id: provaId,
+      status: "em_andamento",
+    })
     .select("*")
     .single();
   if (error) throw error;

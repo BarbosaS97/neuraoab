@@ -1,0 +1,387 @@
+{
+  "exam_number": 42,
+  "phase": 2,
+  "area": "Direito Administrativo",
+  "source_provas_file": "42º_provas_Direito_Administrativo.pdf",
+  "source_resposta_file": "42º_resposta_Direito_Administrativo.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "Em janeiro de 2024, o Estado Alfa, em situação de perigo público iminente, relacionada à ausência de equipamentos necessários ao regular funcionamento da rede hospitalar do referido ente federativo, requisitou ao hospital particular Vida Nova Ltda., a entrega de diversos bens móveis, recém adquiridos pela entidade e que seriam, em breve, instalados, em substituição aos aparelhos antigos.\n\nO hospital privado foi informado de que uma crise sanitária em curso nos Estados Unidos da América, país produtor dos bens requisitados, fez com que as exportações para a República Federativa do Brasil fossem suspensas por prazo indeterminado, ensejando a redução drástica dos estoques públicos.\n\nDois meses depois, com a situação controlada, o Poder Público devolveu os equipamentos requisitados ao hospital Vida Nova Ltda., em funcionamento, mas com avarias relevantes, as quais foram devidamente constatadas. Dessa forma, após consultar a sua assessoria jurídica, a entidade privada ajuizou uma Ação Indenizatória em face do Estado Alfa, com o objetivo precípuo de ser ressarcida pelos prejuízos suportados. O processo transcorreu sem qualquer vício perante a 10ª Vara de Fazenda Pública da Capital do Estado Alfa. Finda a instrução processual, o Juízo julgou improcedente o pedido formulado pela parte autora, sob os seguintes fundamentos: i) a requisição é fruto de construção doutrinária, sem amparo constitucional e legal; ii) a demandante não era obrigada a entregar os equipamentos requisitados à demandada, fazendo-o por liberalidade, pois a requisição tem natureza jurídica de mera solicitação, sem qualquer vinculação, não sendo possível ao Poder Público exigir a entrega dos bens sob a alegação de ser necessária a tutela do interesse público primário; iii) somente seria cabível indenização em caso de desapropriação ou se os equipamentos não mais estivessem funcionando, o que não ocorreu no caso posto; iv) a fixação de indenização em benefício da parte autora ensejaria o seu enriquecimento sem causa.\n\nOs embargos de declaração opostos em face do provimento jurisdicional foram conhecidos e, no mérito, desprovidos, em decisão publicada na última sexta-feira.\n\nLogo após a publicação, o hospital Vida Nova Ltda. procurou a sua assessoria jurídica visando à impugnação do provimento jurisdicional prolatado.\n\nDiante das circunstâncias narradas, redija a peça cabível, mediante a apresentação de todos os fundamentos jurídicos pertinentes para a defesa dos interesses do hospital Vida Nova Ltda.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "O(a) examinando(a) deve apresentar recurso de apelação, com fulcro no Art. 1.009, caput, do CPC.\n\nA peça deve ser endereçada ao Juízo da 10ª Vara de Fazenda Pública da Comarca da capital do Estado Alfa, com as razões recursais dirigidas ao Tribunal, que as apreciará.\n\nNo recurso, devem constar os nomes das partes: o Hospital Vida Nova Ltda. é o apelante (recorrente) e o Estado Alfa é o apelado (recorrido).\n\nPreliminarmente, devem ser apontados os requisitos para a admissibilidade recursal: o cabimento, a tempestividade e o preparo do recurso ou o pedido de gratuidade de justiça.\n\nA fundamentação deve conter os seguintes argumentos:\n\n- A requisição administrativa não é uma mera construção doutrinária, sendo expressamente prevista no ordenamento jurídico, para a satisfação do interesse público primário em situação de iminente perigo público, conforme o Art. 5º, inciso XXV, da CRFB/88 ou o Art. 1.228, § 3º, do CCB ou o Art. 15, inciso XIII, da Lei 8.080/90.\n\n- A parte autora era obrigada a entregar os equipamentos que foram requisitados pelo Estado Alfa, não se tratando de liberalidade por parte do apelante.\n\n- A requisição administrativa é modalidade de intervenção do Estado na propriedade e, portanto, não caracterizando mera solicitação, porque presentes os requisitos constitucionais/legais que justificam a intervenção.\n\n- A indenização é juridicamente cabível, considerando que os bens móveis foram devolvidos pelo Estado Alfa à parte autora com avarias relevantes, sendo certo que a ordem jurídica pátria assegura indenização posterior à requisição administrativa, em caso de dano, nos termos do Art. 5º, inciso XXV, ou do Art. 37, §6º, ambos da CRFB/88.\n\n- Não há que se falar em enriquecimento sem causa da parte autora, desde que a indenização seja fixada levando em consideração o dano efetivamente suportado pelo hospital Vida Nova Ltda., sem qualquer acréscimo ou decréscimo, nos termos do Art. 884 ou 944, ambos do Código Civil.\n\nAo final, deve ser formulado pedido de conhecimento e provimento do recurso, visando à reforma da sentença para que seja fixada indenização pelos prejuízos materiais suportados pela parte autora, com a condenação do apelado ao pagamento de ônus de sucumbência.\n\nFechamento da peça, com a indicação de local, data, assinatura do advogado e inscrição na OAB.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "A peça deve ser endereçada ao Juízo da 10ª Vara de Fazenda Pública da Comarca da Capital do Estado Alfa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "1.1",
+        "categoria": "Endereçamento",
+        "descricao": "As razões devem ser dirigidas ao Tribunal de Justiça (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Qualificação das partes",
+        "descricao": "Apelante (recorrente): Hospital Vida Nova Ltda. (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Qualificação das partes",
+        "descricao": "Apelado (recorrido): Estado Alfa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Requisitos de admissibilidade recursal",
+        "descricao": "Cabimento do recurso: Art. 1.009, caput, do Código de Processo Civil (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Requisitos de admissibilidade recursal",
+        "descricao": "Recolhimento do preparo ou requerimento de gratuidade de justiça (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Requisitos de admissibilidade recursal",
+        "descricao": "Tempestividade (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Fundamentação",
+        "descricao": "A requisição administrativa não é uma mera construção doutrinária, sendo expressamente prevista no ordenamento jurídico (0,40), para a satisfação do interesse público primário em situação de iminente perigo público (0,20), conforme o Art. 5º, inciso XXV, da CRFB/88 ou o Art. 1.228, § 3º, do CCB ou o Art. 15, inciso XIII, da Lei 8.080/90. (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fundamentação",
+        "descricao": "A parte autora era obrigada a entregar os equipamentos que foram requisitados pelo Estado Alfa (0,40), não se tratando de liberalidade por parte do apelante (0,30).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fundamentação",
+        "descricao": "A requisição administrativa é modalidade de intervenção do Estado na propriedade e, portanto, não caracterizando mera solicitação (0,40), porque presentes os requisitos constitucionais/legais que justificam a intervenção (0,30).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fundamentação",
+        "descricao": "A indenização é juridicamente cabível, considerando que os bens móveis foram devolvidos pelo Estado Alfa à parte autora com avarias relevantes (0,30), sendo certo que a ordem jurídica assegura indenização posterior à requisição administrativa, em caso de dano (0,40), nos termos do Art. 5º, inciso XXV, ou do Art. 37, §6º, ambos da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Fundamentação",
+        "descricao": "Não há que se falar em enriquecimento sem causa da parte autora, desde que a indenização seja fixada levando em consideração o dano efetivamente suportado pelo hospital Nova Vida Ltda., sem qualquer acréscimo ou decréscimo (0,60), nos termos do Art. 884 ou 944, ambos do Código Civil (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Conhecimento e provimento do recurso (0,20), visando à reforma da sentença (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Fixar indenização pelos prejuízos materiais suportados pela parte autora (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "Condenação do apelado ao pagamento de ônus de sucumbência (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Fechamento",
+        "descricao": "Local, data, advogado e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. A peça deve ser endereçada ao Juízo da 10ª Vara de Fazenda Pública da Comarca da Capital do\n0,00/0,10\nEstado Alfa (0,10).\n1.1 As razões devem ser dirigidas ao Tribunal de Justiça (0,10). 0,00/0,10\nQualificação das partes\n2. Apelante (recorrente): Hospital Vida Nova Ltda. (0,10). 0,00/0,10\n3. Apelado (recorrido): Estado Alfa (0,10). 0,00/0,10\nRequisitos de admissibilidade recursal\n4. Cabimento do recurso: Art. 1.009, caput, do Código de Processo Civil (0,10). 0,00/0,10\n5. Recolhimento do preparo ou requerimento de gratuidade de justiça (0,10). 0,00/0,10\n6. Tempestividade (0,10). 0,00/0,10\nFundamentação\n7. A requisição administrativa não é uma mera construção doutrinária, sendo expressamente prevista\nno ordenamento jurídico (0,40), para a satisfação do interesse público primário em situação de 0,00/0,40/0,50/\niminente perigo público (0,20), conforme o Art. 5º, inciso XXV, da CRFB/88 ou o Art. 1.228, § 3º, do 0,60/0,70\nCCB ou o Art. 15, inciso XIII, da Lei 8.080/90. (0,10).\n8. A parte autora era obrigada a entregar os equipamentos que foram requisitados pelo Estado Alfa\n0,00/0,30/0,40/0,70\n(0,40), não se tratando de liberalidade por parte do apelante (0,30).\n9. A requisição administrativa é modalidade de intervenção do Estado na propriedade e, portanto, não\ncaracterizando mera solicitação (0,40), porque presentes os requisitos constitucionais/legais que 0,00/0,30/0,40/0,70\njustificam a intervenção (0,30).\n10. A indenização é juridicamente cabível, considerando que os bens móveis foram devolvidos pelo\nEstado Alfa à parte autora com avarias relevantes (0,30), sendo certo que a ordem jurídica assegura 0,00/0,30/0,40/\nindenização posterior à requisição administrativa, em caso de dano (0,40), nos termos do Art. 5º, 0,70/0,80\ninciso XXV, ou do Art. 37, §6º, ambos da CRFB/88 (0,10).\n11. Não há que se falar em enriquecimento sem causa da parte autora, desde que a indenização seja\nfixada levando em consideração o dano efetivamente suportado pelo hospital Nova Vida Ltda., sem 0,00/0,60/0,70\nqualquer acréscimo ou decréscimo (0,60), nos termos do Art. 884 ou 944, ambos do Código Civil (0,10).\nPedidos\n12. Conhecimento e provimento do recurso (0,20), visando à reforma da sentença (0,10). 0,00/0,10/0,20/0,30\n13. Fixar indenização pelos prejuízos materiais suportados pela parte autora (0,20). 0,00/0,20\n14. Condenação do apelado ao pagamento de ônus de sucumbência (0,10). 0,00/0,10\nFechamento\n15. Local, data, advogado e OAB (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Idalmo, servidor público federal estável, foi demitido, após o devido processo administrativo, em decorrência da prática de conduta que a um só tempo caracteriza infração administrativa e crime contra a Administração Pública. Cerca de oito anos após a sua demissão, sobreveio o trânsito em julgado de acórdão que confirmou a absolvição de Idalmo por ausência de provas na esfera penal, o que ele acredita ser fato novo suscetível de justificar sua inocência ou a inadequação da penalidade a ele aplicada. Em razão disso, Idalmo procura você, como advogado(a), para esclarecer as dúvidas a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Existe prazo para a formulação do pedido de revisão almejado por Idalmo? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "A mencionada sentença penal absolutória superveniente deve, necessariamente, afastar a responsabilização na esfera administrativa, ou seja, a demissão de Idalmo? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. A revisão do processo disciplinar pode ser pleiteada a qualquer tempo, quando se aduzirem fatos novos ou circunstâncias suscetíveis de justificar a inocência do punido ou a inadequação da penalidade aplicada, nos termos do Art. 174 da Lei nº 8.112/1990.\n\nB) Não. A decisão penal absolutória por ausência de provas não afasta a responsabilização na esfera administrativa, pois tal repercussão fica restrita às hipóteses em que as decisões penais absolutórias reconheçam a inexistência do fato ou neguem a autoria do delito, consoante o Art. 126 da Lei nº 8.112/1990.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": "Gabarito Comentado",
+          "descricao": "Não. A revisão do processo disciplinar pode ser pleiteada a qualquer tempo, quando se aduzirem fatos novos ou circunstâncias suscetíveis de justificar a inocência do punido ou a inadequação da penalidade aplicada (0,50), nos termos do Art. 174 da Lei nº 8.112/1990 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": "Gabarito Comentado",
+          "descricao": "Não. A decisão penal absolutória por ausência de provas não afasta a responsabilização na esfera administrativa, pois tal repercussão fica restrita às hipóteses em que as decisões penais absolutórias reconheçam a inexistência do fato ou neguem a autoria do delito (0,55), consoante o Art. 126 da Lei nº 8.112/1990 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A revisão do processo disciplinar pode ser pleiteada a qualquer tempo, quando se\naduzirem fatos novos ou circunstâncias suscetíveis de justificar a inocência do punido ou a 0,00/0,50/0,60\ninadequação da penalidade aplicada (0,50), nos termos do Art. 174 da Lei nº 8.112/1990 (0,10).\nB. Não. A decisão penal absolutória por ausência de provas não afasta a responsabilização na\nesfera administrativa, pois tal repercussão fica restrita às hipóteses em que as decisões penais\n0,00/0,55/0,65\nabsolutórias reconheçam a inexistência do fato ou neguem a autoria do delito (0,55), consoante\no Art. 126 da Lei nº 8.112/1990 (0,10).",
+      "linhas_nao_reconhecidas": [
+        "A) Não. A revisão do processo disciplinar pode ser pleiteada a qualquer tempo, quando se aduzirem fatos novos ou",
+        "circunstâncias suscetíveis de justificar a inocência do punido ou a inadequação da penalidade aplicada, nos termos",
+        "do Art. 174 da Lei nº 8.112/1990.",
+        "B) Não. A decisão penal absolutória por ausência de provas não afasta a responsabilização na esfera administrativa,",
+        "pois tal repercussão fica restrita às hipóteses em que as decisões penais absolutórias reconheçam a inexistência do",
+        "ato ou neguem a autoria do delito, consoante o Art. 126 da Lei nº 8.112/1990."
+      ]
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Carlos consentiu expressamente com o tratamento de seus dados pessoais por determinado órgão público, para atender a uma finalidade específica, sendo certo que ele não tornou tais informações manifestamente públicas. Ao tomar conhecimento de que o mencionado órgão público pretendia compartilhar seus dados com outro controlador, Carlos, preocupado com o fato, quer revogar o consentimento anteriormente outorgado. Diante dessa situação hipotética, responda como advogado(a), aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É necessário o consentimento específico de Carlos para que seja possível o compartilhamento dos dados tratados com outro controlador? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Carlos pode revogar o consentimento validamente outorgado? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. O controlador que obteve o consentimento para o tratamento de dados para a finalidade específica deve obter consentimento específico para fins de compartilhamento dos dados do titular, na forma do Art. 7º, § 5º, da Lei nº 13.709/2018 (Lei Geral de Proteção de Dados Pessoais – LGPD). B) Sim. O consentimento pode ser revogado a qualquer momento, mediante manifestação expressa do titular, tal como se depreende do Art. 8º, § 5º, ou Art. 15, inciso III, ou o Art. 18, inciso IX (direitos do titular), todos da Lei nº 13.709/2018 (Lei Geral de Proteção de Dados Pessoais – LGPD).",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. O controlador que obteve o consentimento para o tratamento de dados para finalidade específica deve obter consentimento específico para fins de compartilhamento dos dados do titular (0,50), na forma do Art. 7º, § 5º, da Lei nº 13.709/2018 (Lei Geral de Proteção de Dados Pessoais – LGPD) (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. O consentimento pode ser revogado a qualquer momento, mediante manifestação expressa do titular (0,55), tal como se depreende do Art. 8º, § 5º, ou Art. 15, inciso III, ou o Art. 18, inciso IX (direitos do titular), todos da Lei nº 13.709/2018 (Lei Geral de Proteção de Dados Pessoais – LGPD) (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. O controlador que obteve o consentimento para o tratamento de dados para finalidade\nespecífica deve obter consentimento específico para fins de compartilhamento dos dados do\n0,00/0,50/0,60\ntitular (0,50), na forma do Art. 7º, § 5º, da Lei nº 13.709/2018 (Lei Geral de Proteção de Dados\nPessoais – LGPD) (0,10).\nB. Sim. O consentimento pode ser revogado a qualquer momento, mediante manifestação\nexpressa do titular (0,55), tal como se depreende do Art. 8º, § 5º, ou Art. 15, inciso III, ou o Art. 18,\n0,00/0,55/0,65\ninciso IX (direitos do titular), todos da Lei nº 13.709/2018 (Lei Geral de Proteção de Dados Pessoais\n– LGPD) (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "No início de 2024, com vistas a aprimorar o atendimento ao público de determinado órgão administrativo, o Município Beta realizou uma pesquisa que apontou o bem imóvel pertencente à sociedade empresária Sortuda, como aquele cujas características de instalação e localização tornam necessária sua escolha, para melhor atender ao interesse da coletividade. Em razão disso, o Município passou a analisar a possiblidade de compra ou de locação de tal bem.\n\nAo tomar conhecimento dos mencionados fatos, os representantes da sociedade Sortuda procuram sua assessoria jurídica para esclarecer as dúvidas a seguir apontadas, à luz da nova Lei de Licitações e Contratos.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É possível a contratação direta para a aquisição ou locação do bem em questão? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "O Município em questão deve realizar estudo técnico preliminar que considere os custos e os benefícios de cada uma das opções para a indicação da alternativa mais vantajosa entre a aquisição ou a locação do aludido bem? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. A compra/aquisição ou locação de bem cujas características de instalações e de localização tornam necessária sua escolha é hipótese de inexigibilidade de licitação, nos termos do Art. 74, inciso V, da Lei nº 14.133/2021. B) Sim. Nas situações em que há a possibilidade de compra/aquisição ou de locação de bens, o estudo técnico preliminar deverá considerar os custos e os benefícios de cada opção, com indicação da alternativa mais vantajosa para a Administração, nos termos do Art. 44 da Lei nº 14.133/2021.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. A compra/aquisição ou locação de bem cujas características de instalações e de localização tornam necessária sua escolha é hipótese de inexigibilidade de licitação (0,55), nos termos do Art. 74, inciso V, da Lei nº 14.133/2021 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. Nas situações em que há a possibilidade de compra/aquisição ou de locação de bens, o estudo técnico preliminar deverá considerar os custos e os benefícios de cada opção, com indicação da alternativa mais vantajosa para a Administração (0,50), nos termos do Art. 44 da Lei nº 14.133/2021 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. A compra/aquisição ou locação de bem cujas características de instalações e de localização\ntornam necessária sua escolha é hipótese de inexigibilidade de licitação (0,55), nos termos do Art.\n0,00/0,55/0,65\n74, inciso V, da Lei nº 14.133/2021 (0,10).\nB. Sim. Nas situações em que há a possibilidade de compra/aquisição ou de locação de bens, o\nestudo técnico preliminar deverá considerar os custos e os benefícios de cada opção, com\nindicação da alternativa mais vantajosa para a Administração (0,50), nos termos do Art. 44 da Lei 0,00/0,50/0,60\nnº 14.133/2021 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "O Município Alfa publicou decreto devidamente assinado pelo Prefeito, declarando determinada área de utilidade pública e que, nessa área, a Administração pretende construir escolas públicas, em observância às formalidades legais. No local abrangido pelo referido decreto, encontra-se um imóvel de propriedade de João, por ele utilizado para fins profissionais.\n\nConstatada a impossibilidade de acordo, o Município Alfa ingressou com uma ação de desapropriação em detrimento de João, o qual, prontamente, entrou em contato com você para, na qualidade de advogado(a), orientá- lo, afirmando que a medida seria extremamente injusta e prejudicial à sua profissão, pois a comunidade local o conhece e valoriza o seu trabalho na região. Disse, ainda, que, no dia anterior, agentes públicos municipais ingressaram na área do seu imóvel, com o argumento de que realizariam inspeções, o que lhe desagradou sobremaneira.\n\nDiante dessa situação hipotética, com base na legislação que dispõe sobre a desapropriação por utilidade pública, responda aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Os agentes públicos do Município Alfa podem ingressar na área do imóvel de João antes da efetivação da desapropriação? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "As alegações de injustiça da desapropriação e de prejuízo profissional levantadas por João, podem, validamente, ser suscitadas na contestação à ação proposta pelo Município Alfa? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. Como houve a declaração de utilidade pública, por meio de Decreto assinado pelo Prefeito do Município Alfa, ficam as autoridades administrativas do expropriante, ou seus representantes, autorizados a ingressar nas áreas compreendidas na declaração, inclusive para realizar inspeções e levantamentos de campo, podendo recorrer, em caso de resistência, ao auxílio de força policial, nos termos do Art. 7º, caput, do Decreto-Lei nº 3.365/1941.\n\nB) Não. A contestação só poderá versar sobre vício do processo judicial ou impugnação do preço. Dessa forma, qualquer outra questão deverá ser decidida por ação direta, na forma do Art. 20 do Decreto-Lei nº 3.365/1941.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. Como houve a declaração de utilidade pública, por meio de Decreto assinado pelo Prefeito do Município Alfa, ficam as autoridades administrativas do expropriante, ou seus representantes, autorizados a ingressar nas áreas compreendidas na declaração, inclusive para realizar inspeções e levantamentos de campo, podendo recorrer, em caso de resistência, ao auxílio de força policial (0,55), nos termos do Art. 7º, caput, do Decreto-Lei nº 3.365/1941. (0,10)",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A contestação só poderá versar sobre vício do processo judicial ou impugnação do preço. Desta forma, qualquer outra questão deverá ser decidida por ação direta (0,50), na forma do Art. do Decreto-Lei nº 3.365/1941. (0,10)",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. Como houve a declaração de utilidade pública, por meio de Decreto assinado pelo\nPrefeito do Município Alfa, ficam as autoridades administrativas do expropriante, ou seus\nrepresentantes, autorizados a ingressar nas áreas compreendidas na declaração, inclusive para 0,00/0,55/0,65\nrealizar inspeções e levantamentos de campo, podendo recorrer, em caso de resistência, ao\nauxílio de força policial (0,55), nos termos do Art. 7º, caput, do Decreto-Lei nº 3.365/1941. (0,10)\nB. Não. A contestação só poderá versar sobre vício do processo judicial ou impugnação do preço.\nDesta forma, qualquer outra questão deverá ser decidida por ação direta (0,50), na forma do Art. 0,00/0,50/0,60\n20 do Decreto-Lei nº 3.365/1941. (0,10)",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}
