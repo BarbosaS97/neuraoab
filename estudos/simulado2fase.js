@@ -834,11 +834,19 @@ async function correctItem(item, idx) {
       nota: data.nota_total,
       feedback_geral: data.feedback_geral,
       feedback_criterios: data.criterios || [],
+      alertas_juridicos: data.alertas_juridicos || [],
       corrected_at: new Date().toISOString(),
     }, { onConflict: "tentativa_id,item_id" });
 
     setCorrigindoStatus(idx, "done", `${fmtValor(data.nota_total)} / ${fmtValor(item.valor_total)}`);
-    return { item, ok: true, nota: data.nota_total, feedback_geral: data.feedback_geral, criterios: data.criterios || [] };
+    return {
+      item,
+      ok: true,
+      nota: data.nota_total,
+      feedback_geral: data.feedback_geral,
+      criterios: data.criterios || [],
+      alertas_juridicos: data.alertas_juridicos || [],
+    };
   } catch (err) {
     setCorrigindoStatus(idx, "error");
     // Este catch NUNCA pode deixar escapar uma excecao: correctItem() e
@@ -853,9 +861,17 @@ async function correctItem(item, idx) {
         nota: 0,
         feedback_geral: "Não foi possível corrigir este item automaticamente. Tente novamente mais tarde.",
         feedback_criterios: [],
+        alertas_juridicos: [],
       }, { onConflict: "tentativa_id,item_id" });
     } catch { /* ja' esta' marcado como erro na tela; segue sem essa gravacao */ }
-    return { item, ok: false, nota: 0, feedback_geral: "Falha ao corrigir este item: " + err.message, criterios: [] };
+    return {
+      item,
+      ok: false,
+      nota: 0,
+      feedback_geral: "Falha ao corrigir este item: " + err.message,
+      criterios: [],
+      alertas_juridicos: [],
+    };
   }
 }
 
@@ -967,13 +983,41 @@ function renderResultado(notaTotal, resultados) {
       just.textContent = c.justificativa || "";
       desc.appendChild(just);
 
+      // Critério anulado pela Coordenação do Exame: pontuação máxima já foi
+      // concedida (ver corretor-2fase/index.ts), mas mostrar isso como uma
+      // nota "cheia" comum confundiria com um acerto normal — um rótulo
+      // deixa claro que não teve avaliação de conteúdo nenhuma aqui.
       const nota = document.createElement("div");
-      nota.className = "sim2-criterio-nota " + notaClass(c.pontuacao_obtida, c.pontuacao_maxima);
-      nota.textContent = `${fmtValor(c.pontuacao_obtida)} / ${fmtValor(c.pontuacao_maxima)}`;
+      if (c.anulado) {
+        nota.className = "sim2-criterio-nota anulado";
+        nota.textContent = "Anulado";
+      } else {
+        nota.className = "sim2-criterio-nota " + notaClass(c.pontuacao_obtida, c.pontuacao_maxima);
+        nota.textContent = `${fmtValor(c.pontuacao_obtida)} / ${fmtValor(c.pontuacao_maxima)}`;
+      }
 
       row.append(desc, nota);
       body.appendChild(row);
     });
+
+    // "Camada 2": observações jurídicas/formais que NÃO afetam a nota (ver
+    // corretor-2fase/index.ts, campo alertas_juridicos) — separadas
+    // visualmente dos critérios oficiais pra não parecer que tiraram ponto.
+    if (r.alertas_juridicos && r.alertas_juridicos.length > 0) {
+      const alertasBox = document.createElement("div");
+      alertasBox.className = "sim2-alertas";
+      const alertasTitulo = document.createElement("div");
+      alertasTitulo.className = "sim2-alertas-titulo";
+      alertasTitulo.textContent = "Observações adicionais (não afetam a nota)";
+      alertasBox.appendChild(alertasTitulo);
+      r.alertas_juridicos.forEach(texto => {
+        const p = document.createElement("p");
+        p.className = "sim2-alerta-item";
+        p.textContent = texto;
+        alertasBox.appendChild(p);
+      });
+      body.appendChild(alertasBox);
+    }
 
     const toggleResposta = document.createElement("button");
     toggleResposta.type = "button";

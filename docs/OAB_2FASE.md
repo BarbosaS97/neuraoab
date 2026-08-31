@@ -221,9 +221,10 @@ Resposta:
   "nota_total": 0.85,
   "criterios": [
     { "rotulo": "A", "pontuacao_maxima": 0.60, "pontuacao_obtida": 0.50,
-      "justificativa": "Identificou corretamente a resposta, mas não citou o artigo de lei." },
-    { "rotulo": "B", "pontuacao_maxima": 0.65, "pontuacao_obtida": 0.35,
-      "justificativa": "..." }
+      "justificativa": "Identificou corretamente a resposta, mas não citou o artigo de lei.",
+      "anulado": false },
+    { "rotulo": "B", "pontuacao_maxima": 0.65, "pontuacao_obtida": 0.65,
+      "justificativa": "Item anulado pela Coordenação do Exame.", "anulado": true }
   ],
   "feedback_geral": "Texto corrido explicando o desempenho do aluno neste item..."
 }
@@ -232,7 +233,16 @@ Resposta:
 A `nota_total` devolvida é sempre a soma dos `pontuacao_obtida` (a função
 recalcula no servidor — nunca confia na soma que a IA eventualmente
 reportar) e nunca ultrapassa `valor_total`. Resposta em branco é zerada sem
-chamar a IA.
+chamar a IA, exceto um critério com `anulado: true` (detectado pela própria
+função quando "anulad..." aparece na `descricao` do critério oficial).
+
+Critério anulado (`anulado: true`) sempre recebe `pontuacao_obtida` igual a
+`pontuacao_maxima` — mesma prática da banca real: item anulado pontua todo
+mundo, não é avaliado pelo conteúdo da resposta. `validateAndNormalize` força
+isso no servidor mesmo que a IA devolva outro valor. O frontend (ver
+`estudos/simulado2fase.js` e `professor-portal/js/aluno-detail.js`) mostra um
+rótulo "Anulado" no lugar da fração pontuacao_obtida/pontuacao_maxima, pra não
+parecer um acerto normal.
 
 O frontend é responsável por gravar o resultado em `oab2_respostas` e, depois
 de corrigir os 5 itens, somar as notas em `oab2_tentativas.nota_total` e

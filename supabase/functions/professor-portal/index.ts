@@ -1,12 +1,13 @@
 // supabase/functions/professor-portal/index.ts
 //
-// Backend do Portal do Professor: convite (individual e em lote), exclusão
-// "soft" de aluno. Mesmo motivo de portal-admin usar a service_role key
-// (criar conta de auth por convite exige a API administrativa do Supabase
-// Auth, que a anon key não alcança) — mas aqui o alvo é sempre um ALUNO do
-// professor que chamou, nunca outro professor ou admin, e nunca um aluno de
-// outro professor (ver requireProfessor + o filtro professor_id em cada
-// ação abaixo).
+// Backend do Portal do Professor: convite (individual e em lote), excluir/
+// restaurar aluno (caixa "Excluídos", ver requireOwnStudent) e ativar/
+// desativar (pausa reversível, sem remover da turma). Mesmo motivo de
+// portal-admin usar a service_role key (criar conta de auth por convite
+// exige a API administrativa do Supabase Auth, que a anon key não alcança)
+// — mas aqui o alvo é sempre um ALUNO do professor que chamou, nunca outro
+// professor ou admin, e nunca um aluno de outro professor (ver
+// requireProfessor + requireOwnStudent).
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
@@ -154,7 +155,20 @@ interface DeleteStudentPayload {
   action: "delete-student";
   id: string;
 }
-type RequestBody = CreateStudentPayload | BulkInviteStudentsPayload | DeleteStudentPayload;
+interface RestoreStudentPayload {
+  action: "restore-student";
+  id: string;
+}
+interface SetActiveStudentPayload {
+  action: "deactivate-student" | "activate-student";
+  id: string;
+}
+type RequestBody =
+  | CreateStudentPayload
+  | BulkInviteStudentsPayload
+  | DeleteStudentPayload
+  | RestoreStudentPayload
+  | SetActiveStudentPayload;
 
 // Mesmo padrão de requireAdmin (portal-admin/index.ts), mas aceita role
 // "professor" (quem vai gerenciar os próprios alunos) OU "admin" (acesso
@@ -188,6 +202,15 @@ async function requireProfessor(req: Request): Promise<string | null> {
 async function getRoleId(name: string): Promise<string | null> {
   const { data } = await adminClient.from("roles").select("id").eq("name", name).maybeSingle();
   return data?.id ?? null;
+}
+
+// Confirma que o "id" alvo é realmente um aluno DESTE professor antes de
+// deixar qualquer ação (excluir/restaurar/ativar/desativar) mexer nele —
+// nunca confia num id vindo cru do cliente. Usado por todas as ações de
+// aluno abaixo.
+async function requireOwnStudent(id: string, professorId: string): Promise<boolean> {
+  const { data } = await adminClient.from("profiles").select("professor_id").eq("id", id).maybeSingle();
+  return !!data && data.professor_id === professorId;
 }
 
 interface InviteResult {
@@ -327,29 +350,56 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ results });
   }
 
-  if (body.action === "delete-student") {
+  // Quatro ações de aluno, todas com o mesmo formato {id} e a mesma checagem
+  // de dono (requireOwnStudent) — nenhuma usa auth.admin.deleteUser: um
+  // aluno pode ter tentativas/respostas gravadas (oab2_tentativas/
+  // oab_respostas) que o professor ainda quer consultar depois, então a
+  // conta de auth nunca é apagada de verdade, só marcada. O gatilho
+  // protect_profile_privileged_fields permite esses UPDATEs porque a
+  // chamada usa a service_role key (ver comentário sobre
+  // auth.role() = 'service_role' em supabase/schema_alunos_exclusao.sql).
+  if (
+    body.action === "delete-student" ||
+    body.action === "restore-student" ||
+    body.action === "deactivate-student" ||
+    body.action === "activate-student"
+  ) {
     const { id } = body;
     if (!id) return jsonResponse({ error: "'id' é obrigatório." }, 400);
-
-    // Só desativa (soft) um aluno que seja realmente DESTE professor — nunca
-    // confia num id qualquer vindo do cliente sem checar o dono.
-    const { data: targetProfile } = await adminClient
-      .from("profiles")
-      .select("professor_id")
-      .eq("id", id)
-      .maybeSingle();
-    if (!targetProfile || targetProfile.professor_id !== professorId) {
+    if (!(await requireOwnStudent(id, professorId))) {
       return jsonResponse({ error: "Aluno não encontrado." }, 404);
     }
 
-    // "Soft delete": só desativa o login (ativo=false), nunca
-    // auth.admin.deleteUser — um aluno pode ter tentativas/respostas
-    // gravadas (oab2_tentativas/oab_respostas) que o professor ainda quer
-    // consultar depois. O gatilho protect_profile_privileged_fields
-    // permite esse UPDATE porque a chamada usa a service_role key (ver
-    // comentário sobre auth.role() = 'service_role' em
-    // supabase/schema_professor_portal.sql).
-    const { error } = await adminClient.from("profiles").update({ ativo: false }).eq("id", id);
+    // "Excluir": sai da lista/turma, some das estatísticas, vai pra caixa
+    // "Excluídos" — também desativa o login (ativo=false) de quebra, pra
+    // excluído significar removido de verdade, não só escondido da lista.
+    if (body.action === "delete-student") {
+      const { error } = await adminClient
+        .from("profiles")
+        .update({ excluido_em: new Date().toISOString(), ativo: false })
+        .eq("id", id);
+      if (error) return jsonResponse({ error: error.message }, 400);
+      return jsonResponse({ ok: true });
+    }
+
+    // "Restaurar": desfaz a exclusão por completo — volta a aparecer na
+    // turma/estatísticas e reativa o login.
+    if (body.action === "restore-student") {
+      const { error } = await adminClient
+        .from("profiles")
+        .update({ excluido_em: null, ativo: true })
+        .eq("id", id);
+      if (error) return jsonResponse({ error: error.message }, 400);
+      return jsonResponse({ ok: true });
+    }
+
+    // "Inativar"/"Reativar": só pausa/retoma o login, sem tirar o aluno da
+    // turma nem das estatísticas — reversível a qualquer momento,
+    // diferente de excluir.
+    const { error } = await adminClient
+      .from("profiles")
+      .update({ ativo: body.action === "activate-student" })
+      .eq("id", id);
     if (error) return jsonResponse({ error: error.message }, 400);
     return jsonResponse({ ok: true });
   }

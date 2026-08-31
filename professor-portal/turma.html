@@ -39,11 +39,15 @@
 
   <div class="main">
     <div class="main-inner">
-      <a href="dashboard.html" class="back-link">&larr; Voltar pra Turmas</a>
+      <nav class="breadcrumb">
+        <a href="dashboard.html">Turmas</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current" id="turmaTitle">Carregando...</span>
+      </nav>
 
       <div class="page-header">
         <div>
-          <h1 id="turmaTitle">Carregando...</h1>
+          <h1 id="turmaHeading">Carregando...</h1>
           <p id="turmaSubtitle"></p>
         </div>
         <div style="display: flex; gap: 10px;">
@@ -76,6 +80,7 @@
             <thead>
               <tr>
                 <th>Nome</th>
+                <th>Turma</th>
                 <th>E-mail</th>
                 <th>Cadastrado em</th>
                 <th>Status</th>
@@ -83,11 +88,36 @@
               </tr>
             </thead>
             <tbody id="studentsTableBody">
-              <tr class="empty-row"><td colspan="5">Carregando...</td></tr>
+              <tr class="empty-row"><td colspan="6">Carregando...</td></tr>
             </tbody>
           </table>
         </div>
       </div>
+
+      <!-- Caixa de excluídos: fechada por padrão (details/summary nativo,
+           mesmo recurso já usado em js/aluno-detail.js pra "ver resposta
+           do aluno") — alunos aqui não contam em NENHUMA estatística
+           (Turmas, Análises, stats desta turma) até serem restaurados. -->
+      <details class="panel" id="excludedPanel" style="margin-top: 20px;">
+        <summary style="cursor: pointer; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-dim);">
+          Excluídos (<span id="excludedCount">0</span>)
+        </summary>
+        <div style="overflow-x: auto; margin-top: 16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Excluído em</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="excludedTableBody">
+              <tr class="empty-row"><td colspan="4">Nenhum aluno excluído.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
     </div>
   </div>
 </div>
@@ -134,7 +164,8 @@
   </div>
 </div>
 
-<!-- Edição: nome + turma (mover o aluno pra outra turma ou "Sem turma"). -->
+<!-- Edição: só o nome (corrigir grafia etc.) — mover de turma é feito pelo
+     seletor inline na tabela, não por aqui. -->
 <div class="modal-overlay" id="editModal" hidden>
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
     <div class="modal-header">
@@ -150,12 +181,7 @@
           <label for="edNome">Nome completo</label>
           <input type="text" id="edNome">
         </div>
-        <div class="field">
-          <label for="edTurma">Turma</label>
-          <select id="edTurma">
-            <option value="">Sem turma</option>
-          </select>
-        </div>
+        <p class="field-hint">Pra mover o aluno de turma, use o seletor "Turma" direto na tabela.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn-ghost" id="editModalCancel">Cancelar</button>

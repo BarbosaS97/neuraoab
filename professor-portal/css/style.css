@@ -540,16 +540,37 @@ tbody tr:last-child td { border-bottom: none; }
 
 .bar-row .bar-value { text-align: right; color: var(--text-dim); font-size: 12.5px; }
 
-/* ------------------------------------------------------- Detalhe do aluno */
+/* ------------------------------------------------------------- Breadcrumb */
 
-.back-link {
-  display: inline-block;
-  margin-bottom: 16px;
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 18px;
   font-size: 13px;
   color: var(--text-dim);
 }
 
-.back-link:hover { color: var(--text); }
+.breadcrumb a { text-decoration: none; }
+.breadcrumb a:hover { color: var(--text); }
+.breadcrumb .breadcrumb-sep { opacity: 0.5; }
+.breadcrumb .breadcrumb-current { color: var(--text); font-weight: 600; }
+
+/* Seletor de turma inline na tabela de alunos — mesma altura/visual de
+   .field input, mas compacto o bastante pra caber numa célula de tabela. */
+.turma-select {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 12.5px;
+  max-width: 160px;
+}
+
+.turma-select:focus { outline: none; border-color: var(--accent); }
+
+/* ------------------------------------------------------- Detalhe do aluno */
 
 .criterio-item {
   padding: 10px 0;
@@ -595,6 +616,7 @@ tbody tr:last-child td { border-bottom: none; }
 
 .zero { color: var(--err); font-weight: 600; }
 .full { color: var(--ok); font-weight: 600; }
+.anulado { color: var(--accent); font-style: italic; font-weight: 600; }
 
 .item-answer {
   background: var(--bg);
@@ -610,6 +632,33 @@ tbody tr:last-child td { border-bottom: none; }
   color: var(--text-dim);
   margin: 8px 0;
 }
+
+/* "Camada 2": observações jurídicas/formais que não afetam a nota — fundo
+   tintado, sem barra de pontuação, pra não parecer perda de ponto. */
+.alertas-juridicos {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: rgba(79, 124, 255, 0.08);
+}
+
+.alertas-juridicos-titulo {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.alertas-juridicos-item {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-dim);
+}
+
+.alertas-juridicos-item + .alertas-juridicos-item { margin-top: 6px; }
 
 /* ------------------------------------------------------------- Modal */
 

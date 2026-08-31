@@ -1,12 +1,16 @@
 // NeuraOAB — Portal do Professor — detalhe de uma turma (ou o pseudo-id
 // "none", que representa "Sem turma"): lista de alunos, convite em lote
-// escopado a esta turma, edição (nome + mover de turma) e exclusão (soft).
+// escopado a esta turma, mover de turma (seletor inline na própria tabela
+// — cobre tanto trocar de turma quanto incluir um aluno de "Sem turma"
+// numa turma), editar nome, inativar/reativar (pausa reversível de login,
+// sem sair da lista/estatísticas) e excluir/restaurar (sai da lista/
+// estatísticas de vez, vai pra caixa "Excluídos" — ver
+// supabase/schema_alunos_exclusao.sql).
 //
 // RLS de profiles/turmas (supabase/schema_turmas.sql, schema_professor_
 // portal.sql) já garante que este professor só vê/edita os PRÓPRIOS alunos
 // e turmas — as queries abaixo nem precisam filtrar por professor_id de
-// novo, mas fazem isso mesmo assim como reforço (mesmo padrão adotado em
-// professor-portal/js/students.js originalmente).
+// novo, mas fazem isso mesmo assim como reforço.
 
 const TURMA_ID = new URLSearchParams(window.location.search).get("id");
 const IS_UNASSIGNED = TURMA_ID === "none";
@@ -14,10 +18,17 @@ const IS_UNASSIGNED = TURMA_ID === "none";
 let currentProfessorId = null;
 let alunoRoleId = null;
 let studentsCache = [];
-let turmasCache = []; // todas as turmas do professor, pro seletor do modal de editar
+let excludedCache = [];
+let turmasCache = []; // todas as turmas do professor, pro seletor inline de cada linha da tabela
 
-const turmaTitleEl = document.getElementById("turmaTitle");
+const turmaTitleEl = document.getElementById("turmaTitle"); // breadcrumb (nome curto)
+const turmaHeadingEl = document.getElementById("turmaHeading"); // h1 grande
 const turmaSubtitleEl = document.getElementById("turmaSubtitle");
+
+function setTurmaName(text) {
+  turmaTitleEl.textContent = text;
+  turmaHeadingEl.textContent = text;
+}
 const renameTurmaBtn = document.getElementById("renameTurmaBtn");
 const statAlunosEl = document.getElementById("statAlunos");
 const statAcertoFase1El = document.getElementById("statAcertoFase1");
@@ -62,8 +73,9 @@ async function callProfessorPortal(payload) {
 
 async function loadTurmaHeader() {
   if (IS_UNASSIGNED) {
-    turmaTitleEl.textContent = "Sem turma";
-    turmaSubtitleEl.textContent = "Alunos que ainda não foram organizados em nenhuma turma.";
+    setTurmaName("Sem turma");
+    turmaSubtitleEl.textContent =
+      "Alunos que ainda não foram organizados em nenhuma turma — use o seletor \"Turma\" na tabela pra incluí-los numa.";
     renameTurmaBtn.hidden = true;
     return true;
   }
@@ -75,13 +87,13 @@ async function loadTurmaHeader() {
     .maybeSingle();
 
   if (error || !turma) {
-    turmaTitleEl.textContent = "Turma não encontrada";
+    setTurmaName("Turma não encontrada");
     turmaSubtitleEl.textContent = "Esta turma não existe ou não é sua.";
     renameTurmaBtn.hidden = true;
     return false;
   }
 
-  turmaTitleEl.textContent = turma.nome;
+  setTurmaName(turma.nome);
   turmaSubtitleEl.textContent = "";
   renameTurmaBtn.hidden = false;
   return true;
@@ -96,7 +108,7 @@ function renderStudents() {
     const tr = document.createElement("tr");
     tr.className = "empty-row";
     const td = document.createElement("td");
-    td.colSpan = 5;
+    td.colSpan = 6;
     td.textContent = "Nenhum aluno aqui ainda.";
     tr.appendChild(td);
     tableBodyEl.appendChild(tr);
@@ -116,6 +128,27 @@ function renderStudents() {
       nomeTd.appendChild(pending);
     }
     tr.appendChild(nomeTd);
+
+    // Seletor de turma inline: move o aluno na hora, sem precisar abrir o
+    // modal de editar — cobre tanto "trocar de turma" quanto "incluir um
+    // aluno de 'Sem turma' numa turma", que é exatamente a mesma ação.
+    const turmaTd = document.createElement("td");
+    const turmaSelect = document.createElement("select");
+    turmaSelect.className = "turma-select";
+    const semTurmaOpt = document.createElement("option");
+    semTurmaOpt.value = "";
+    semTurmaOpt.textContent = "Sem turma";
+    turmaSelect.appendChild(semTurmaOpt);
+    turmasCache.forEach((t) => {
+      const opt = document.createElement("option");
+      opt.value = t.id;
+      opt.textContent = t.nome;
+      turmaSelect.appendChild(opt);
+    });
+    turmaSelect.value = s.turma_id || "";
+    turmaSelect.addEventListener("change", () => moveStudentToTurma(s, turmaSelect.value));
+    turmaTd.appendChild(turmaSelect);
+    tr.appendChild(turmaTd);
 
     [s.email || "—", fmtDate(s.created_at)].forEach((text) => {
       const td = document.createElement("td");
@@ -143,13 +176,20 @@ function renderStudents() {
     editBtn.textContent = "Editar";
     editBtn.addEventListener("click", () => openEditModal(s));
 
+    // Inativar/Reativar: pausa reversível de login, sem tirar o aluno da
+    // turma nem das estatísticas — diferente de "Excluir" logo abaixo.
+    const toggleActiveBtn = document.createElement("button");
+    toggleActiveBtn.type = "button";
+    toggleActiveBtn.textContent = s.ativo ? "Inativar" : "Reativar";
+    toggleActiveBtn.addEventListener("click", () => toggleActive(s));
+
     const deleteBtn = document.createElement("button");
     deleteBtn.type = "button";
     deleteBtn.className = "danger";
     deleteBtn.textContent = "Excluir";
     deleteBtn.addEventListener("click", () => deleteStudent(s));
 
-    actions.append(detailsLink, editBtn, deleteBtn);
+    actions.append(detailsLink, editBtn, toggleActiveBtn, deleteBtn);
     actionsTd.appendChild(actions);
     tr.appendChild(actionsTd);
 
@@ -157,13 +197,63 @@ function renderStudents() {
   });
 }
 
+function renderExcluded() {
+  const excludedTableBody = document.getElementById("excludedTableBody");
+  const excludedCount = document.getElementById("excludedCount");
+  excludedCount.textContent = excludedCache.length;
+  excludedTableBody.innerHTML = "";
+
+  if (excludedCache.length === 0) {
+    const tr = document.createElement("tr");
+    tr.className = "empty-row";
+    const td = document.createElement("td");
+    td.colSpan = 4;
+    td.textContent = "Nenhum aluno excluído.";
+    tr.appendChild(td);
+    excludedTableBody.appendChild(tr);
+    return;
+  }
+
+  excludedCache.forEach((s) => {
+    const tr = document.createElement("tr");
+    [s.nome || "(convite pendente)", s.email || "—", fmtDate(s.excluido_em)].forEach((text) => {
+      const td = document.createElement("td");
+      td.textContent = text;
+      tr.appendChild(td);
+    });
+
+    const actionsTd = document.createElement("td");
+    const actions = document.createElement("div");
+    actions.className = "row-actions";
+
+    const detailsLink = document.createElement("a");
+    detailsLink.href = `aluno.html?id=${encodeURIComponent(s.id)}`;
+    detailsLink.textContent = "Ver detalhes";
+
+    const restoreBtn = document.createElement("button");
+    restoreBtn.type = "button";
+    restoreBtn.textContent = "Restaurar";
+    restoreBtn.addEventListener("click", () => restoreStudent(s));
+
+    actions.append(detailsLink, restoreBtn);
+    actionsTd.appendChild(actions);
+    tr.appendChild(actionsTd);
+
+    excludedTableBody.appendChild(tr);
+  });
+}
+
+// Excluído (excluido_em preenchido) some da lista principal e de TODA
+// estatística (aqui, em Turmas e em Análises) — só volta a contar depois
+// de restaurado. Ver supabase/schema_alunos_exclusao.sql.
 async function loadStudents() {
   if (!alunoRoleId) return;
   let query = client
     .from("profiles")
     .select("id, nome, email, ativo, created_at, turma_id")
     .eq("role_id", alunoRoleId)
-    .eq("professor_id", currentProfessorId);
+    .eq("professor_id", currentProfessorId)
+    .is("excluido_em", null);
 
   query = IS_UNASSIGNED ? query.is("turma_id", null) : query.eq("turma_id", TURMA_ID);
 
@@ -171,6 +261,22 @@ async function loadStudents() {
   studentsCache = error ? [] : data || [];
   statAlunosEl.textContent = studentsCache.length;
   renderStudents();
+}
+
+async function loadExcluded() {
+  if (!alunoRoleId) return;
+  let query = client
+    .from("profiles")
+    .select("id, nome, email, excluido_em, turma_id")
+    .eq("role_id", alunoRoleId)
+    .eq("professor_id", currentProfessorId)
+    .not("excluido_em", "is", null);
+
+  query = IS_UNASSIGNED ? query.is("turma_id", null) : query.eq("turma_id", TURMA_ID);
+
+  const { data, error } = await query.order("excluido_em", { ascending: false });
+  excludedCache = error ? [] : data || [];
+  renderExcluded();
 }
 
 async function loadTurmasForSelect() {
@@ -212,7 +318,7 @@ async function loadQuickStats() {
 }
 
 async function refreshAll() {
-  await loadStudents();
+  await Promise.all([loadStudents(), loadExcluded()]);
   await loadQuickStats();
 }
 
@@ -361,28 +467,32 @@ const editModalMsg = document.getElementById("editModalMsg");
 const editForm = document.getElementById("editForm");
 const edId = document.getElementById("edId");
 const edNome = document.getElementById("edNome");
-const edTurma = document.getElementById("edTurma");
 const editModalSaveBtn = document.getElementById("editModalSave");
-
-function populateTurmaSelect(selectedTurmaId) {
-  edTurma.innerHTML = '<option value="">Sem turma</option>';
-  turmasCache.forEach((t) => {
-    const opt = document.createElement("option");
-    opt.value = t.id;
-    opt.textContent = t.nome;
-    edTurma.appendChild(opt);
-  });
-  edTurma.value = selectedTurmaId || "";
-}
 
 function openEditModal(student) {
   editForm.reset();
   edId.value = student.id;
   edNome.value = student.nome || "";
-  populateTurmaSelect(student.turma_id);
   clearMsg(editModalMsg);
   editModal.hidden = false;
   edNome.focus();
+}
+
+// Mover de turma é feito pelo seletor inline na tabela (ver renderStudents),
+// não pelo modal de editar — um clique, sem confirmação (fácil de desfazer
+// escolhendo a turma de volta).
+async function moveStudentToTurma(student, newTurmaId) {
+  try {
+    const { error } = await client
+      .from("profiles")
+      .update({ turma_id: newTurmaId || null })
+      .eq("id", student.id);
+    if (error) throw new Error(error.message);
+    await refreshAll();
+  } catch (err) {
+    window.alert(`Não foi possível mover o aluno: ${err.message}`);
+    await refreshAll(); // desfaz a seleção visual, volta pro estado real
+  }
 }
 function closeEditModal() {
   editModal.hidden = true;
@@ -402,7 +512,7 @@ editForm.addEventListener("submit", async (ev) => {
   try {
     const { error } = await client
       .from("profiles")
-      .update({ nome: edNome.value.trim(), turma_id: edTurma.value || null })
+      .update({ nome: edNome.value.trim() })
       .eq("id", edId.value);
     if (error) throw new Error(error.message);
 
@@ -420,7 +530,8 @@ editForm.addEventListener("submit", async (ev) => {
 async function deleteStudent(student) {
   const label = student.nome || student.email || "este aluno";
   const confirmed = window.confirm(
-    `Desativar ${label}? O login dele para de funcionar imediatamente, mas o histórico de respostas é mantido.`,
+    `Excluir ${label}? Ele sai desta lista e para de contar nas estatísticas — o login também é desativado. ` +
+      `Nada é apagado: ele fica na caixa "Excluídos" e pode ser restaurado quando quiser.`,
   );
   if (!confirmed) return;
 
@@ -428,7 +539,35 @@ async function deleteStudent(student) {
     await callProfessorPortal({ action: "delete-student", id: student.id });
     await refreshAll();
   } catch (err) {
-    window.alert(`Não foi possível desativar: ${err.message}`);
+    window.alert(`Não foi possível excluir: ${err.message}`);
+  }
+}
+
+async function restoreStudent(student) {
+  const label = student.nome || student.email || "este aluno";
+  const confirmed = window.confirm(`Restaurar ${label}? Ele volta a aparecer na turma e a contar nas estatísticas.`);
+  if (!confirmed) return;
+
+  try {
+    await callProfessorPortal({ action: "restore-student", id: student.id });
+    await refreshAll();
+  } catch (err) {
+    window.alert(`Não foi possível restaurar: ${err.message}`);
+  }
+}
+
+// Inativar/Reativar: só pausa/retoma o login — o aluno continua na turma e
+// nas estatísticas, diferente de excluir. Sem confirmação (reversível a
+// qualquer momento, um clique).
+async function toggleActive(student) {
+  try {
+    await callProfessorPortal({
+      action: student.ativo ? "deactivate-student" : "activate-student",
+      id: student.id,
+    });
+    await refreshAll();
+  } catch (err) {
+    window.alert(`Não foi possível atualizar o status: ${err.message}`);
   }
 }
 
@@ -466,7 +605,9 @@ renameForm.addEventListener("submit", async (ev) => {
   try {
     const { error } = await client.from("turmas").update({ nome: renameNome.value.trim() }).eq("id", TURMA_ID);
     if (error) throw new Error(error.message);
-    turmaTitleEl.textContent = renameNome.value.trim();
+    setTurmaName(renameNome.value.trim());
+    await loadTurmasForSelect(); // atualiza o nome também nos seletores de turma da tabela
+    renderStudents();
     closeRenameModal();
   } catch (err) {
     showMsg(renameModalMsg, err.message || "Ocorreu um erro inesperado.", "err");
@@ -486,7 +627,7 @@ document.addEventListener("keydown", (ev) => {
 
 async function init() {
   if (!TURMA_ID) {
-    turmaTitleEl.textContent = "Turma não encontrada";
+    setTurmaName("Turma não encontrada");
     return;
   }
 
@@ -497,7 +638,7 @@ async function init() {
   const { data: role } = await client.from("roles").select("id").eq("name", "aluno").maybeSingle();
   alunoRoleId = role?.id ?? null;
   if (!alunoRoleId) {
-    turmaTitleEl.textContent = 'Papel "aluno" não encontrado';
+    setTurmaName('Papel "aluno" não encontrado');
     turmaSubtitleEl.textContent = "Rode supabase/schema_portal_mestre.sql.";
     return;
   }

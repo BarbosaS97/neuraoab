@@ -36,9 +36,11 @@ function getStudentId() {
 }
 
 async function loadStudentHeader(studentId) {
+  // "turmas(nome)" — embed via FK profiles.turma_id -> turmas.id — só pro
+  // breadcrumb; se o aluno não tiver turma, student.turmas vem null.
   const { data: student, error } = await client
     .from("profiles")
-    .select("id, nome, email, ativo, created_at, turma_id")
+    .select("id, nome, email, ativo, created_at, turma_id, turmas(nome)")
     .eq("id", studentId)
     .maybeSingle();
 
@@ -54,12 +56,14 @@ async function loadStudentHeader(studentId) {
   document.getElementById("studentMeta").textContent =
     `${student.email || "—"} · Cadastrado em ${fmtDate(student.created_at)} · ${statusLabel}`;
 
-  // Volta pra turma de onde o aluno veio (ou "Sem turma") em vez de sempre
-  // pra lista geral — mantém a navegação consistente com o resto do
-  // portal, que agora organiza tudo por turma.
-  const backLink = document.getElementById("backLink");
-  backLink.href = `turma.html?id=${encodeURIComponent(student.turma_id || "none")}`;
-  backLink.textContent = "← Voltar pra turma";
+  // Breadcrumb volta pra turma de onde o aluno veio (ou "Sem turma") em vez
+  // de sempre pra lista geral — mantém a navegação consistente com o resto
+  // do portal, que agora organiza tudo por turma.
+  const turmaHref = `turma.html?id=${encodeURIComponent(student.turma_id || "none")}`;
+  const breadcrumbTurma = document.getElementById("breadcrumbTurma");
+  breadcrumbTurma.href = turmaHref;
+  breadcrumbTurma.textContent = student.turmas?.nome || "Sem turma";
+  document.getElementById("breadcrumbAluno").textContent = student.nome || "(convite pendente)";
 
   return student;
 }
@@ -91,9 +95,17 @@ function renderCriterios(criterios) {
     head.className = "criterio-head";
     const label = document.createElement("span");
     label.textContent = c.rotulo ? `Critério ${c.rotulo}` : "Critério";
+    // Critério anulado pela Coordenação do Exame: pontuação máxima já foi
+    // concedida (ver supabase/functions/corretor-2fase/index.ts), mas exibir
+    // como uma nota "cheia" comum confundiria com um acerto normal.
     const nota = document.createElement("span");
-    nota.className = notaClass(c.pontuacao_obtida, c.pontuacao_maxima);
-    nota.textContent = `${fmtValor(c.pontuacao_obtida)} / ${fmtValor(c.pontuacao_maxima)}`;
+    if (c.anulado) {
+      nota.className = "anulado";
+      nota.textContent = "Anulado";
+    } else {
+      nota.className = notaClass(c.pontuacao_obtida, c.pontuacao_maxima);
+      nota.textContent = `${fmtValor(c.pontuacao_obtida)} / ${fmtValor(c.pontuacao_maxima)}`;
+    }
     head.append(label, nota);
     item.appendChild(head);
 
@@ -163,7 +175,7 @@ async function loadFase2(studentId) {
 
     const { data: respostas } = await client
       .from("oab2_respostas")
-      .select("id, texto_resposta, nota, feedback_geral, feedback_criterios, oab2_itens(tipo, numero, ordem, valor_total)")
+      .select("id, texto_resposta, nota, feedback_geral, feedback_criterios, alertas_juridicos, oab2_itens(tipo, numero, ordem, valor_total)")
       .eq("tentativa_id", tentativa.id)
       .order("id");
 
@@ -192,6 +204,25 @@ async function loadFase2(studentId) {
 
         const criteriosEl = renderCriterios(r.feedback_criterios);
         if (criteriosEl) answer.appendChild(criteriosEl);
+
+        // "Camada 2": observações jurídicas/formais que não afetam a nota
+        // (ver alertas_juridicos em supabase/functions/corretor-2fase/
+        // index.ts) — separadas visualmente dos critérios oficiais.
+        if (Array.isArray(r.alertas_juridicos) && r.alertas_juridicos.length > 0) {
+          const alertasBox = document.createElement("div");
+          alertasBox.className = "alertas-juridicos";
+          const alertasTitulo = document.createElement("div");
+          alertasTitulo.className = "alertas-juridicos-titulo";
+          alertasTitulo.textContent = "Observações adicionais (não afetam a nota)";
+          alertasBox.appendChild(alertasTitulo);
+          r.alertas_juridicos.forEach((texto) => {
+            const p = document.createElement("p");
+            p.className = "alertas-juridicos-item";
+            p.textContent = texto;
+            alertasBox.appendChild(p);
+          });
+          answer.appendChild(alertasBox);
+        }
 
         const textoWrap = document.createElement("details");
         const summary = document.createElement("summary");

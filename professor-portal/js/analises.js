@@ -83,11 +83,14 @@ async function loadData() {
     .eq("professor_id", currentProfessorId)
     .order("nome", { ascending: true });
 
+  // excluido_em IS NULL: aluno excluído não conta em nenhuma análise, mesma
+  // regra de js/turma.js e js/turmas.js (supabase/schema_alunos_exclusao.sql).
   const { data: students } = await client
     .from("profiles")
     .select("id, turma_id")
     .eq("role_id", alunoRoleId)
-    .eq("professor_id", currentProfessorId);
+    .eq("professor_id", currentProfessorId)
+    .is("excluido_em", null);
 
   const allStudents = students || [];
   const groups = (turmas || []).map((t) => ({

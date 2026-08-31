@@ -203,13 +203,17 @@ async function loadTurmas() {
   turmasCache = error ? [] : data || [];
 }
 
+// excluido_em IS NULL de propósito: aluno excluído não conta em NENHUMA
+// estatística (aqui, na turma, ou em Análises) — ver
+// supabase/schema_alunos_exclusao.sql.
 async function loadStudents() {
   if (!alunoRoleId) return;
   const { data, error } = await client
     .from("profiles")
     .select("id, nome, ativo, turma_id")
     .eq("role_id", alunoRoleId)
-    .eq("professor_id", currentProfessorId);
+    .eq("professor_id", currentProfessorId)
+    .is("excluido_em", null);
   studentsCache = error ? [] : data || [];
 }
 

@@ -896,6 +896,35 @@
 
 .sim2-criterio-nota.zero { color: var(--error); }
 .sim2-criterio-nota.full { color: var(--success); }
+.sim2-criterio-nota.anulado { color: var(--secondary); font-style: italic; }
+
+/* "Camada 2": observações jurídicas/formais que a IA aponta mas que não
+   afetam a nota — visualmente separadas dos critérios oficiais (fundo
+   tintado, sem a barra de nota do lado) pra não parecer perda de ponto. */
+.sim2-alertas {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--primary-dim);
+}
+
+.sim2-alertas-titulo {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--secondary);
+  margin-bottom: 6px;
+}
+
+.sim2-alerta-item {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-dim);
+}
+
+.sim2-alerta-item + .sim2-alerta-item { margin-top: 6px; }
 
 .sim2-resposta-toggle {
   margin-top: 14px;
