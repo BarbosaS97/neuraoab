@@ -15,7 +15,7 @@ const fExam = document.getElementById("fExam");
 const fDisc = document.getElementById("fDisc");
 const clearFiltersBtn = document.getElementById("clearFilters");
 const scoreText = document.getElementById("scoreText");
-const resetScoreBtn = document.getElementById("resetScore");
+const logoutBtn = document.getElementById("logoutBtn");
 const loadingSplash = document.getElementById("loadingSplash");
 const loadingImage = document.getElementById("loadingImage");
 const loadingMessage = document.getElementById("loadingMessage");
@@ -159,14 +159,6 @@ function applyTheme(theme) {
 function updateScoreUI() {
   scoreText.textContent = `${correctCount} / ${answeredCount}`;
 }
-
-resetScoreBtn.addEventListener("click", () => {
-  results = new Map();
-  correctCount = 0;
-  answeredCount = 0;
-  updateScoreUI();
-  renderList();
-});
 
 // --------------------------------------------------------------- Filters
 //
@@ -720,13 +712,22 @@ function updateSessionUI() {
     sessionLoginForm.hidden = true;
     sessionLoggedInfo.hidden = false;
     sessionUserLabel.textContent = currentSession.user.email;
+    logoutBtn.hidden = false;
   } else {
     sessionAvatarBtn.textContent = "E";
     sessionAvatarBtn.title = "Entrar";
     sessionLoginForm.hidden = false;
     sessionLoggedInfo.hidden = true;
+    logoutBtn.hidden = true;
   }
 }
+
+// Botão "Sair" na barra lateral — mesmo efeito do "Sair" dentro do popover
+// da sessão (sessionLogoutBtn), só que num lugar mais visível/direto pra
+// quem já está logado, em vez de precisar abrir o popover pra encontrar.
+logoutBtn.addEventListener("click", async () => {
+  await client.auth.signOut();
+});
 
 sessionAvatarBtn.addEventListener("click", (ev) => {
   ev.stopPropagation();

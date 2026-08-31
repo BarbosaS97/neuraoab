@@ -137,8 +137,8 @@
         </span>
         <div>
           <b>Acompanhe seu desempenho</b>
-          <p>O placar de acertos da sessão fica no fim do menu. Quando quiser recomeçar do zero,
-            use "Reiniciar sessão".</p>
+          <p>O placar de acertos da sessão fica no fim do menu, e recomeça sozinho a cada
+            visita.</p>
         </div>
       </div>
     </div>
@@ -278,7 +278,10 @@
           <span class="score-label">Acertos nesta sessão</span>
           <b id="scoreText">0 / 0</b>
         </div>
-        <button id="resetScore" class="btn-ghost" type="button">Reiniciar sessão</button>
+        <!-- Só aparece pra quem está logado (aluno convidado por um
+             professor, ver session-wrap em .side-brand) — sem login não há
+             sessão nenhuma pra encerrar. -->
+        <button id="logoutBtn" class="btn-ghost" type="button" hidden>Sair</button>
       </section>
     </div>
     </div>
