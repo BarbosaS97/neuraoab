@@ -784,7 +784,7 @@ async function handleSessionLogout() {
   } catch (err) {
     console.error("Erro ao encerrar sessão:", err);
   }
-  window.location.reload();
+  window.location.href = "../index.html";
 }
 
 client.auth.onAuthStateChange((_event, session) => {
