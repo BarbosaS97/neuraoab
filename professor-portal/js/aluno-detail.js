@@ -35,6 +35,29 @@ function getStudentId() {
   return new URLSearchParams(window.location.search).get("id");
 }
 
+// Seta que gira 180° quando o bloco abre — mesmo ícone usado no <details>
+// dos simulados (ver CSS), só que aqui dentro de um <button> comum, pra
+// deixar claro em TODOS os pontos de expandir/recolher da tela que dá pra
+// clicar e o que vai acontecer, sem precisar adivinhar pelo texto sozinho.
+const CHEVRON_SVG = '<svg class="toggle-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+
+// Monta um <button> de toggle com ícone + rótulo (que muda conforme aberto/
+// fechado) — usado pelos três botões de item (enunciado/resposta/correção).
+function createToggleButton(className, closedLabel, openLabel) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = className;
+  const label = document.createElement("span");
+  label.textContent = closedLabel;
+  btn.innerHTML = CHEVRON_SVG;
+  btn.appendChild(label);
+  function setOpen(isOpen) {
+    btn.classList.toggle("is-open", isOpen);
+    label.textContent = isOpen ? openLabel : closedLabel;
+  }
+  return { btn, setOpen };
+}
+
 async function loadStudentHeader(studentId) {
   // "turmas!turma_id(nome)" — embed via FK profiles.turma_id -> turmas.id,
   // só pro breadcrumb (se o aluno não tiver turma, student.turmas vem
@@ -137,17 +160,14 @@ function itemLabel(item) {
 // <details>/<summary> nativo estilizado como texto.
 function buildRespostaToggle(texto) {
   const wrap = document.createElement("div");
-  const btn = document.createElement("button");
-  btn.type = "button";
-  btn.className = "btn-accent resposta-toggle-btn";
-  btn.textContent = "Ver resposta do aluno";
+  const { btn, setOpen } = createToggleButton("btn-accent resposta-toggle-btn", "Ver resposta do aluno", "Ocultar resposta do aluno");
   const box = document.createElement("p");
   box.className = "item-answer-text";
   box.hidden = true;
   box.textContent = texto || "(sem resposta)";
   btn.addEventListener("click", () => {
     box.hidden = !box.hidden;
-    btn.textContent = box.hidden ? "Ver resposta do aluno" : "Ocultar resposta do aluno";
+    setOpen(!box.hidden);
   });
   wrap.append(btn, box);
   return wrap;
@@ -162,10 +182,7 @@ function buildEnunciadoToggle(item) {
   if (!item || !item.enunciado) return null;
 
   const wrap = document.createElement("div");
-  const btn = document.createElement("button");
-  btn.type = "button";
-  btn.className = "btn-ghost enunciado-toggle-btn";
-  btn.textContent = "Ver enunciado";
+  const { btn, setOpen } = createToggleButton("btn-ghost enunciado-toggle-btn", "Ver enunciado", "Ocultar enunciado");
 
   const box = document.createElement("div");
   box.className = "item-enunciado-text";
@@ -194,7 +211,7 @@ function buildEnunciadoToggle(item) {
 
   btn.addEventListener("click", () => {
     box.hidden = !box.hidden;
-    btn.textContent = box.hidden ? "Ver enunciado" : "Ocultar enunciado";
+    setOpen(!box.hidden);
   });
   wrap.append(btn, box);
   return wrap;
@@ -211,10 +228,7 @@ function buildCorrecaoToggle(r) {
   if (!hasFeedback && !hasCriterios && !hasAlertas) return null;
 
   const wrap = document.createElement("div");
-  const btn = document.createElement("button");
-  btn.type = "button";
-  btn.className = "btn-ghost correcao-toggle-btn";
-  btn.textContent = "Ver correção do Neura";
+  const { btn, setOpen } = createToggleButton("btn-ghost correcao-toggle-btn", "Ver correção do Neura", "Ocultar correção do Neura");
 
   const box = document.createElement("div");
   box.className = "item-correcao-box";
@@ -251,7 +265,7 @@ function buildCorrecaoToggle(r) {
 
   btn.addEventListener("click", () => {
     box.hidden = !box.hidden;
-    btn.textContent = box.hidden ? "Ver correção do Neura" : "Ocultar correção do Neura";
+    setOpen(!box.hidden);
   });
   wrap.append(btn, box);
   return wrap;
@@ -342,7 +356,10 @@ async function loadFase2(studentId) {
       ? `${fmtValor(tentativa.nota_total)} / ${fmtValor(valorMax)}`
       : "—";
 
-    summary.append(titleSpan, statusBadge, dateSpan, notaSpan);
+    const chevron = document.createElement("span");
+    chevron.innerHTML = CHEVRON_SVG;
+
+    summary.append(titleSpan, statusBadge, dateSpan, notaSpan, chevron);
     card.appendChild(summary);
 
     const body = document.createElement("div");

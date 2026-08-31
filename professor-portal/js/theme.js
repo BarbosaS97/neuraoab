@@ -34,9 +34,16 @@ function safeSetItem(key, value) {
 
 const themeToggleBtn = document.getElementById("themeToggleBtn");
 
+// Ícone + rótulo de texto (não só o ícone) — pra ficar óbvio, sem precisar
+// adivinhar, o que esse botão faz e qual tema está ativo agora.
 function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
-  if (themeToggleBtn) themeToggleBtn.innerHTML = theme === "light" ? SUN_ICON : MOON_ICON;
+  if (themeToggleBtn) {
+    const icon = theme === "light" ? SUN_ICON : MOON_ICON;
+    const label = theme === "light" ? "Tema claro" : "Tema escuro";
+    themeToggleBtn.innerHTML = `${icon}<span>${label}</span>`;
+    themeToggleBtn.setAttribute("aria-label", `Alternar tema (atual: ${label.toLowerCase()})`);
+  }
   safeSetItem(THEME_STORAGE_KEY, theme);
 }
 

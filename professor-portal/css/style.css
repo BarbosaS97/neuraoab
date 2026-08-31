@@ -225,21 +225,26 @@ input, textarea {
   border-top: 1px solid var(--panel-border);
 }
 
+/* Botão de tema com rótulo de texto (não só ícone) — pra ficar óbvio o que
+   é e o que ele mostra, em vez de um quadrado de ícone discreto demais. */
 .theme-toggle-btn {
-  width: 34px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   height: 34px;
+  padding: 0 12px;
   border-radius: 8px;
   border: 1px solid var(--panel-border);
   background: transparent;
   color: var(--text-dim);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 12.5px;
+  font-weight: 500;
   flex-shrink: 0;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 
 .theme-toggle-btn:hover { color: var(--text); border-color: var(--accent); }
+.theme-toggle-btn svg { flex-shrink: 0; }
 
 .main {
   flex: 1;
@@ -624,6 +629,36 @@ tbody tr:last-child td { border-bottom: none; }
 .tentativa-summary-date { font-size: 12px; color: var(--text-dim); }
 .tentativa-summary-nota { font-size: 14px; font-weight: 700; margin-left: auto; }
 
+/* Seta que gira ao abrir — deixa claro que o bloco expande/recolhe, sem
+   precisar adivinhar (o <summary> nativo escondeu o marcador padrão do
+   navegador, então precisa de um indicador próprio). Mesma lógica pro
+   painel "Excluídos" de turma.html (.panel-summary). */
+.tentativa-card > summary .toggle-chevron,
+.panel-summary .toggle-chevron {
+  flex-shrink: 0;
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+}
+
+.tentativa-card[open] > summary .toggle-chevron,
+details[open] > .panel-summary .toggle-chevron {
+  transform: rotate(180deg);
+}
+
+.panel-summary {
+  cursor: pointer;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+}
+
+.panel-summary::-webkit-details-marker { display: none; }
+
 .tentativa-body { padding: 16px; }
 
 /* Abas pra escolher peça/questão dentro do simulado expandido — só o item
@@ -676,6 +711,32 @@ tbody tr:last-child td { border-bottom: none; }
   line-height: 1.6;
   color: var(--text-dim);
   margin: 10px 0 0;
+}
+
+/* Os três botões de toggle (enunciado/resposta/correção) usam o mesmo
+   padrão: ícone de seta + rótulo, seta gira 180° quando aberto — mesma
+   lógica visual do <details> acima, só que aplicada num <button> comum
+   (esses três não usam <details> porque cada um precisa controlar sua
+   própria caixa sem depender de marcação nativa). */
+.resposta-toggle-btn,
+.enunciado-toggle-btn,
+.correcao-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.resposta-toggle-btn .toggle-chevron,
+.enunciado-toggle-btn .toggle-chevron,
+.correcao-toggle-btn .toggle-chevron {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.resposta-toggle-btn.is-open .toggle-chevron,
+.enunciado-toggle-btn.is-open .toggle-chevron,
+.correcao-toggle-btn.is-open .toggle-chevron {
+  transform: rotate(180deg);
 }
 
 /* Botão "Ver resposta do aluno" — pedido explícito pra ficar mais
