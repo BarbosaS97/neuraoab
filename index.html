@@ -229,11 +229,11 @@
   .login-modal {
     position: relative;
     width: 100%;
-    max-width: 380px;
+    max-width: 360px;
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 32px 28px;
+    padding: 26px 24px;
     box-shadow: 0 30px 70px -24px rgba(0, 0, 0, 0.7);
   }
 
@@ -258,67 +258,96 @@
   .login-modal-close:hover { color: var(--text); border-color: var(--primary); }
 
   .login-modal-title {
-    margin: 0 0 4px;
-    font-size: 19px;
+    margin: 0 0 3px;
+    font-size: 18px;
     font-weight: 700;
     text-align: center;
   }
 
   .login-modal-sub {
-    margin: 0 0 22px;
-    font-size: 13.5px;
+    margin: 0 0 18px;
+    font-size: 13px;
     color: var(--text-dim);
     text-align: center;
   }
 
+  /* Duas opções lado a lado (não empilhadas) — mais compacto, e o ícone
+     substitui o que antes só o texto explicava. */
   .role-choices {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
   }
 
   .role-choice {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 3px;
+    align-items: center;
+    gap: 8px;
     width: 100%;
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 16px 18px;
+    padding: 18px 10px 14px;
     color: var(--text);
     font-family: inherit;
     cursor: pointer;
-    text-align: left;
-    transition: border-color 0.15s ease, transform 0.15s ease;
+    text-align: center;
+    transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
   }
 
-  .role-choice:hover { border-color: var(--primary); transform: translateY(-1px); }
-  .role-choice strong { font-size: 15px; }
-  .role-choice span { font-size: 12.5px; color: var(--text-dim); }
+  .role-choice-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--text-dim);
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+
+  .role-choice:hover { border-color: var(--primary); transform: translateY(-2px); }
+  .role-choice:hover .role-choice-icon { color: var(--primary); }
+  .role-choice strong { font-size: 13.5px; font-weight: 600; }
+  .role-choice span { font-size: 11px; color: var(--text-dim); line-height: 1.4; }
 
   .login-back {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     background: none;
     border: none;
     color: var(--text-dim);
-    font-size: 13px;
+    font-size: 12.5px;
     cursor: pointer;
     padding: 0;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
     font-family: inherit;
   }
 
   .login-back:hover { color: var(--text); }
 
-  .login-field { margin-bottom: 16px; }
+  .login-field { margin-bottom: 14px; }
 
   .login-field label {
     display: block;
-    font-size: 12.5px;
+    font-size: 12px;
     color: var(--text-dim);
-    margin-bottom: 6px;
+    margin-bottom: 5px;
+  }
+
+  /* Campo com ícone à esquerda (e, na senha, o botão de mostrar/ocultar à
+     direita) — visual mais moderno que um input liso. */
+  .input-wrap { position: relative; display: flex; align-items: center; }
+
+  .input-wrap .input-icon {
+    position: absolute;
+    left: 12px;
+    color: var(--text-dim);
+    pointer-events: none;
+    display: flex;
   }
 
   .login-field input {
@@ -327,12 +356,31 @@
     color: var(--text);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 11px 13px;
-    font-size: 14px;
+    padding: 10px 13px 10px 36px;
+    font-size: 13.5px;
     font-family: inherit;
   }
 
+  .login-field input#loginPassword { padding-right: 38px; }
+
   .login-field input:focus { outline: none; border-color: var(--primary); }
+
+  .input-wrap .input-toggle {
+    position: absolute;
+    right: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    color: var(--text-dim);
+    cursor: pointer;
+  }
+
+  .input-wrap .input-toggle:hover { color: var(--text); }
 
   .login-submit {
     width: 100%;
@@ -340,13 +388,13 @@
     color: #fff;
     border: none;
     border-radius: 10px;
-    padding: 13px 0;
-    font-size: 14px;
+    padding: 12px 0;
+    font-size: 13.5px;
     font-weight: 700;
     letter-spacing: 0.04em;
     font-family: inherit;
     cursor: pointer;
-    margin-top: 6px;
+    margin-top: 4px;
     transition: filter 0.15s ease;
   }
 
@@ -354,10 +402,10 @@
   .login-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 
   .login-error {
-    margin: 14px 0 0;
-    padding: 10px 12px;
+    margin: 12px 0 0;
+    padding: 9px 12px;
     border-radius: 8px;
-    font-size: 13px;
+    font-size: 12.5px;
     background: rgba(218, 54, 51, 0.12);
     border: 1px solid rgba(218, 54, 51, 0.35);
     color: var(--error);
@@ -408,27 +456,49 @@
       <p class="login-modal-sub">Você é...</p>
       <div class="role-choices">
         <button type="button" class="role-choice" data-role="aluno">
+          <span class="role-choice-icon">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </span>
           <strong>Aluno</strong>
-          <span>Fui convidado por um professor</span>
+          <span>Convidado por um professor</span>
         </button>
         <button type="button" class="role-choice" data-role="professor">
+          <span class="role-choice-icon">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+          </span>
           <strong>Professor</strong>
-          <span>Tenho uma conta no Portal do Professor</span>
+          <span>Conta no Portal do Professor</span>
         </button>
       </div>
     </div>
 
     <form id="credsForm" hidden novalidate>
-      <button type="button" class="login-back" id="loginBackBtn">&larr; Voltar</button>
+      <button type="button" class="login-back" id="loginBackBtn">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Voltar
+      </button>
       <h2 class="login-modal-title" id="credsTitle">Entrar</h2>
       <p class="login-modal-sub">Use o e-mail e senha da sua conta</p>
       <div class="login-field">
         <label for="loginEmail">E-mail</label>
-        <input type="email" id="loginEmail" autocomplete="username" required>
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M2 6l10 7 10-7"></path></svg>
+          </span>
+          <input type="email" id="loginEmail" autocomplete="username" required>
+        </div>
       </div>
       <div class="login-field">
         <label for="loginPassword">Senha</label>
-        <input type="password" id="loginPassword" autocomplete="current-password" required>
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+          </span>
+          <input type="password" id="loginPassword" autocomplete="current-password" required>
+          <button type="button" class="input-toggle" id="togglePasswordBtn" aria-label="Mostrar senha">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          </button>
+        </div>
       </div>
       <button type="submit" class="login-submit" id="loginSubmitBtn">Entrar</button>
       <p class="login-error" id="loginErrorMsg"></p>
@@ -464,8 +534,19 @@
   const loginBackBtn = document.getElementById("loginBackBtn");
   const loginEmail = document.getElementById("loginEmail");
   const loginPassword = document.getElementById("loginPassword");
+  const togglePasswordBtn = document.getElementById("togglePasswordBtn");
   const loginSubmitBtn = document.getElementById("loginSubmitBtn");
   const loginErrorMsg = document.getElementById("loginErrorMsg");
+
+  const EYE_ICON = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+  const EYE_OFF_ICON = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+
+  togglePasswordBtn.addEventListener("click", () => {
+    const showing = loginPassword.type === "text";
+    loginPassword.type = showing ? "password" : "text";
+    togglePasswordBtn.innerHTML = showing ? EYE_ICON : EYE_OFF_ICON;
+    togglePasswordBtn.setAttribute("aria-label", showing ? "Mostrar senha" : "Ocultar senha");
+  });
 
   function showRoleStep() {
     roleStep.hidden = false;
@@ -476,6 +557,8 @@
   function openLogin() {
     showRoleStep();
     credsForm.reset();
+    togglePasswordBtn.innerHTML = EYE_ICON;
+    loginPassword.type = "password";
     loginOverlay.hidden = false;
   }
 
