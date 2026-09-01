@@ -20,6 +20,7 @@ let alunoRoleId = null;
 let studentsCache = [];
 let excludedCache = [];
 let turmasCache = []; // todas as turmas do professor, pro seletor inline de cada linha da tabela
+let studentsLoadError = null; // distingue "sem alunos" de "falha ao carregar" na tabela (ver renderStudents)
 
 const turmaTitleEl = document.getElementById("turmaTitle"); // breadcrumb (nome curto)
 const turmaHeadingEl = document.getElementById("turmaHeading"); // h1 grande
@@ -30,6 +31,7 @@ function setTurmaName(text) {
   turmaHeadingEl.textContent = text;
 }
 const renameTurmaBtn = document.getElementById("renameTurmaBtn");
+const deleteTurmaBtn = document.getElementById("deleteTurmaBtn");
 const statAlunosEl = document.getElementById("statAlunos");
 const statAcertoFase1El = document.getElementById("statAcertoFase1");
 const statNotaFase2El = document.getElementById("statNotaFase2");
@@ -77,6 +79,7 @@ async function loadTurmaHeader() {
     turmaSubtitleEl.textContent =
       "Alunos que ainda não foram organizados em nenhuma turma — use o seletor \"Turma\" na tabela pra incluí-los numa.";
     renameTurmaBtn.hidden = true;
+    deleteTurmaBtn.hidden = true; // "Sem turma" é um agrupamento, não uma turma de verdade — nada pra excluir
     return true;
   }
 
@@ -90,19 +93,57 @@ async function loadTurmaHeader() {
     setTurmaName("Turma não encontrada");
     turmaSubtitleEl.textContent = "Esta turma não existe ou não é sua.";
     renameTurmaBtn.hidden = true;
+    deleteTurmaBtn.hidden = true;
     return false;
   }
 
   setTurmaName(turma.nome);
   turmaSubtitleEl.textContent = "";
   renameTurmaBtn.hidden = false;
+  deleteTurmaBtn.hidden = false;
   return true;
 }
+
+// Antes só dava pra excluir uma turma pela grade em dashboard.html — quem já
+// estava dentro da turma tinha que voltar pra lista geral só pra isso.
+// Mesma ação (delete direto, RLS já restringe ao professor dono — ver
+// supabase/schema_turmas.sql), só que redireciona pro dashboard depois,
+// porque a página atual deixa de existir.
+async function deleteTurma() {
+  const confirmed = window.confirm(
+    `Excluir a turma "${turmaTitleEl.textContent}"? Os alunos dela não são apagados — voltam pra "Sem turma".`,
+  );
+  if (!confirmed) return;
+
+  deleteTurmaBtn.disabled = true;
+  try {
+    const { error } = await client.from("turmas").delete().eq("id", TURMA_ID);
+    if (error) throw new Error(error.message);
+    window.location.href = "dashboard.html";
+  } catch (err) {
+    window.alert(`Não foi possível excluir: ${err.message}`);
+    deleteTurmaBtn.disabled = false;
+  }
+}
+
+deleteTurmaBtn.addEventListener("click", deleteTurma);
 
 // -------------------------------------------------------------- Listagem
 
 function renderStudents() {
   tableBodyEl.innerHTML = "";
+
+  if (studentsLoadError) {
+    const tr = document.createElement("tr");
+    tr.className = "empty-row";
+    const td = document.createElement("td");
+    td.colSpan = 6;
+    td.className = "field-hint warn";
+    td.textContent = `Não foi possível carregar os alunos: ${studentsLoadError}`;
+    tr.appendChild(td);
+    tableBodyEl.appendChild(tr);
+    return;
+  }
 
   if (studentsCache.length === 0) {
     const tr = document.createElement("tr");
@@ -176,6 +217,19 @@ function renderStudents() {
     editBtn.textContent = "Editar";
     editBtn.addEventListener("click", () => openEditModal(s));
 
+    // Só pra convite pendente (nome ainda null): o e-mail original pode ter
+    // se perdido/expirado, e sem isso não havia como recuperar — convidar
+    // de novo pelo mesmo e-mail esbarra em "já cadastrado" (ver
+    // inviteStudent na Edge Function), porque a conta já existe desde o
+    // primeiro convite.
+    let resendBtn = null;
+    if (!s.nome) {
+      resendBtn = document.createElement("button");
+      resendBtn.type = "button";
+      resendBtn.textContent = "Reenviar convite";
+      resendBtn.addEventListener("click", () => resendInvite(s, resendBtn));
+    }
+
     // Inativar/Reativar: pausa reversível de login, sem tirar o aluno da
     // turma nem das estatísticas — diferente de "Excluir" logo abaixo.
     const toggleActiveBtn = document.createElement("button");
@@ -189,7 +243,9 @@ function renderStudents() {
     deleteBtn.textContent = "Excluir";
     deleteBtn.addEventListener("click", () => deleteStudent(s));
 
-    actions.append(detailsLink, editBtn, toggleActiveBtn, deleteBtn);
+    actions.append(detailsLink, editBtn);
+    if (resendBtn) actions.append(resendBtn);
+    actions.append(toggleActiveBtn, deleteBtn);
     actionsTd.appendChild(actions);
     tr.appendChild(actionsTd);
 
@@ -258,8 +314,10 @@ async function loadStudents() {
   query = IS_UNASSIGNED ? query.is("turma_id", null) : query.eq("turma_id", TURMA_ID);
 
   const { data, error } = await query.order("created_at", { ascending: false });
+  if (error) console.error("Falha ao carregar alunos:", error);
+  studentsLoadError = error ? error.message : null;
   studentsCache = error ? [] : data || [];
-  statAlunosEl.textContent = studentsCache.length;
+  statAlunosEl.textContent = studentsLoadError ? "—" : studentsCache.length;
   renderStudents();
 }
 
@@ -275,19 +333,25 @@ async function loadExcluded() {
   query = IS_UNASSIGNED ? query.is("turma_id", null) : query.eq("turma_id", TURMA_ID);
 
   const { data, error } = await query.order("excluido_em", { ascending: false });
+  if (error) console.error("Falha ao carregar excluídos:", error);
   excludedCache = error ? [] : data || [];
   renderExcluded();
 }
 
 async function loadTurmasForSelect() {
-  const { data } = await client
+  const { data, error } = await client
     .from("turmas")
     .select("id, nome")
     .eq("professor_id", currentProfessorId)
     .order("nome", { ascending: true });
+  if (error) console.error("Falha ao carregar turmas:", error);
   turmasCache = data || [];
 }
 
+// fetchAllRows (js/config.js) pagina de 1000 em 1000 — sem isso, uma turma
+// com muitas respostas/tentativas acumuladas ao longo do tempo podia
+// estourar o limite padrão do PostgREST e mostrar um % de acerto/nota
+// média calculado sobre um subconjunto arbitrário, sem nenhum aviso.
 async function loadQuickStats() {
   const ids = studentsCache.map((s) => s.id);
   if (ids.length === 0) {
@@ -296,20 +360,31 @@ async function loadQuickStats() {
     return;
   }
 
-  const { data: respostas1 } = await client.from("oab_respostas").select("correct").in("user_id", ids);
-  if (respostas1 && respostas1.length > 0) {
+  const { data: respostas1, error: err1 } = await fetchAllRows((from, to) =>
+    client.from("oab_respostas").select("correct").in("user_id", ids).range(from, to),
+  );
+  if (err1) {
+    console.error("Falha ao carregar estatísticas da 1ª fase:", err1);
+    statAcertoFase1El.textContent = "—";
+  } else if (respostas1 && respostas1.length > 0) {
     const acertos = respostas1.filter((r) => r.correct).length;
     statAcertoFase1El.textContent = `${Math.round((acertos / respostas1.length) * 100)}%`;
   } else {
     statAcertoFase1El.textContent = "—";
   }
 
-  const { data: tentativas } = await client
-    .from("oab2_tentativas")
-    .select("nota_total")
-    .in("user_id", ids)
-    .eq("status", "corrigida");
-  if (tentativas && tentativas.length > 0) {
+  const { data: tentativas, error: err2 } = await fetchAllRows((from, to) =>
+    client
+      .from("oab2_tentativas")
+      .select("nota_total")
+      .in("user_id", ids)
+      .eq("status", "corrigida")
+      .range(from, to),
+  );
+  if (err2) {
+    console.error("Falha ao carregar estatísticas da 2ª fase:", err2);
+    statNotaFase2El.textContent = "—";
+  } else if (tentativas && tentativas.length > 0) {
     const soma = tentativas.reduce((acc, t) => acc + (Number(t.nota_total) || 0), 0);
     statNotaFase2El.textContent = (soma / tentativas.length).toFixed(2).replace(".", ",");
   } else {
@@ -525,6 +600,26 @@ editForm.addEventListener("submit", async (ev) => {
   }
 });
 
+// --------------------------------------------------------- Reenviar convite
+
+async function resendInvite(student, btn) {
+  btn.disabled = true;
+  const originalText = btn.textContent;
+  btn.textContent = "Enviando...";
+  try {
+    await callProfessorPortal({ action: "resend-invite", id: student.id });
+    btn.textContent = "Convite reenviado!";
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }, 2500);
+  } catch (err) {
+    window.alert(`Não foi possível reenviar o convite: ${err.message}`);
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
+}
+
 // ------------------------------------------------------------------ Excluir
 
 async function deleteStudent(student) {
@@ -626,14 +721,19 @@ document.addEventListener("keydown", (ev) => {
 // -------------------------------------------------------------------- Init
 
 async function init() {
+  // Checa a sessão ANTES de qualquer outra coisa, mesmo se a URL não tiver
+  // "?id=" válido — sem isso, um visitante sem sessão que abrisse
+  // turma.html sem parâmetro nunca passava pela guarda de autenticação
+  // (inconsistente com dashboard.html/aluno.html/analises.html, que sempre
+  // checam primeiro).
+  const user = await requireProfessorSession();
+  if (!user) return;
+  currentProfessorId = user.id;
+
   if (!TURMA_ID) {
     setTurmaName("Turma não encontrada");
     return;
   }
-
-  const user = await requireProfessorSession();
-  if (!user) return;
-  currentProfessorId = user.id;
 
   const { data: role } = await client.from("roles").select("id").eq("name", "aluno").maybeSingle();
   alunoRoleId = role?.id ?? null;

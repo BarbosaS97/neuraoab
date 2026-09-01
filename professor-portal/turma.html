@@ -22,7 +22,7 @@
       <span>Portal do Professor</span>
     </div>
     <nav class="sidebar-nav">
-      <a href="dashboard.html" class="active">
+      <a href="dashboard.html">
         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
         Turmas
       </a>
@@ -51,6 +51,7 @@
           <p id="turmaSubtitle"></p>
         </div>
         <div style="display: flex; gap: 10px;">
+          <button type="button" class="btn-ghost danger" id="deleteTurmaBtn" hidden>Excluir turma</button>
           <button type="button" class="btn-ghost" id="renameTurmaBtn" hidden>Renomear</button>
           <button type="button" class="btn-accent" id="newStudentsBtn">Convidar aluno(s)</button>
         </div>
@@ -82,7 +83,7 @@
                 <th>Nome</th>
                 <th>Turma</th>
                 <th>E-mail</th>
-                <th>Cadastrado em</th>
+                <th>Convidado em</th>
                 <th>Status</th>
                 <th>Ações</th>
               </tr>

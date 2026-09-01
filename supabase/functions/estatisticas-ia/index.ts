@@ -10,6 +10,8 @@
 //
 // Secret necessario, ja configurado no projeto Supabase: API_DEEPSEEK_KEY
 
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
 const DEEPSEEK_URL = "https://api.deepseek.com/chat/completions";
 const DEEPSEEK_MODEL = "deepseek-chat";
 
@@ -26,6 +28,31 @@ function jsonResponse(body: unknown, status = 200): Response {
   });
 }
 
+// Antes esta funcao so' exigia a anon key (comentario original acima) —
+// qualquer um com a anon key (ja' publica no HTML) podia chamar direto e
+// forcar chamadas pagas na API da DeepSeek, sem limite nenhum por usuario.
+// Os dois chamadores de verdade (estudos/estudos.js, ja' logado por
+// requireAuth; professor-portal/js/aluno-detail.js, ja' logado por
+// requireProfessorSession) sempre tem uma sessao valida quando chamam —
+// o supabase-js anexa o JWT dela automaticamente em
+// client.functions.invoke(...), entao exigir "qualquer usuario autenticado"
+// aqui nao quebra nenhum dos dois e fecha a chamada direta so' com a anon
+// key. Nao precisa ser professor/admin (aluno analisando a propria
+// estatistica tambem e' uso legitimo) — so' precisa ser alguem logado.
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
+const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
+const authClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: { autoRefreshToken: false, persistSession: false },
+});
+
+async function requireAuthenticatedUser(req: Request): Promise<boolean> {
+  const authHeader = req.headers.get("Authorization") ?? "";
+  const jwt = authHeader.replace(/^Bearer\s+/i, "").trim();
+  if (!jwt) return false;
+  const { data, error } = await authClient.auth.getUser(jwt);
+  return !error && !!data?.user;
+}
+
 interface SubjectStat {
   discipline: string;
   total: number;
@@ -37,11 +64,12 @@ interface StatsPayload {
   bySubject: SubjectStat[];
 }
 
-// Limites defensivos: esta funcao so' exige a anon key (igual dr-laureano),
-// entao nada garante que quem chama e' de fato o front-end mandando dados
-// reais — um script poderia forjar um payload gigante pra forcar chamadas
-// caras e repetidas na API da DeepSeek. Nenhum aluno real chega perto
-// desses tamanhos (o app tem umas poucas dezenas de materias no banco todo).
+// Limites defensivos: mesmo exigindo login agora (requireAuthenticatedUser
+// acima), nada garante que quem chama e' de fato o front-end mandando dados
+// reais — qualquer usuario logado ainda poderia forjar um payload gigante
+// pra forcar chamadas caras e repetidas na API da DeepSeek. Nenhum aluno
+// real chega perto desses tamanhos (o app tem umas poucas dezenas de
+// materias no banco todo).
 const MAX_SUBJECTS = 60;
 const MAX_DISCIPLINE_CHARS = 120;
 const MAX_COUNT = 100000;
@@ -185,6 +213,10 @@ Deno.serve(async (req: Request) => {
   }
   if (req.method !== "POST") {
     return jsonResponse({ error: "Método não permitido." }, 405);
+  }
+
+  if (!(await requireAuthenticatedUser(req))) {
+    return jsonResponse({ error: "É preciso estar logado para gerar essa análise." }, 401);
   }
 
   let body: unknown;

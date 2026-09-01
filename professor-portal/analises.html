@@ -26,7 +26,7 @@
         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
         Turmas
       </a>
-      <a href="analises.html" class="active">
+      <a href="analises.html">
         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
         Análises
       </a>
@@ -43,6 +43,12 @@
         <div>
           <h1>Análises</h1>
           <p>Comparação de desempenho entre as suas turmas.</p>
+        </div>
+        <div class="period-switch" id="analisesPeriodSwitch">
+          <button class="period-btn" data-period="today" type="button">Hoje</button>
+          <button class="period-btn" data-period="7d" type="button">7 dias</button>
+          <button class="period-btn" data-period="30d" type="button">30 dias</button>
+          <button class="period-btn active" data-period="all" type="button">Sempre</button>
         </div>
       </div>
 

@@ -12,6 +12,7 @@ let currentProfessorId = null;
 let alunoRoleId = null;
 let studentsCache = [];
 let turmasCache = [];
+let loadError = null; // distingue "nenhuma turma" de "falha ao carregar" na grade (ver renderTurmasGrid)
 
 const statTotalAlunosEl = document.getElementById("statTotalAlunos");
 const statAlunosAtivosEl = document.getElementById("statAlunosAtivos");
@@ -181,6 +182,14 @@ function buildUnassignedCard(students) {
 function renderTurmasGrid() {
   turmasGridEl.innerHTML = "";
 
+  if (loadError) {
+    const msg = document.createElement("p");
+    msg.className = "field-hint warn";
+    msg.textContent = `Não foi possível carregar suas turmas: ${loadError}`;
+    turmasGridEl.appendChild(msg);
+    return;
+  }
+
   turmasCache.forEach((turma) => {
     const students = studentsCache.filter((s) => s.turma_id === turma.id);
     turmasGridEl.appendChild(buildTurmaCard(turma, students));
@@ -200,6 +209,10 @@ async function loadTurmas() {
     .select("id, nome, created_at")
     .eq("professor_id", currentProfessorId)
     .order("created_at", { ascending: true });
+  if (error) {
+    console.error("Falha ao carregar turmas:", error);
+    loadError = error.message;
+  }
   turmasCache = error ? [] : data || [];
 }
 
@@ -214,6 +227,10 @@ async function loadStudents() {
     .eq("role_id", alunoRoleId)
     .eq("professor_id", currentProfessorId)
     .is("excluido_em", null);
+  if (error) {
+    console.error("Falha ao carregar alunos:", error);
+    loadError = error.message;
+  }
   studentsCache = error ? [] : data || [];
 }
 
@@ -224,6 +241,7 @@ function renderStats() {
 }
 
 async function refreshAll() {
+  loadError = null; // reseta antes de recarregar, senão um erro antigo já corrigido continuaria exibido
   await Promise.all([loadTurmas(), loadStudents()]);
   renderStats();
   renderTurmasGrid();

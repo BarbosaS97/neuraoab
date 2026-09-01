@@ -298,6 +298,7 @@ input, textarea {
 }
 
 .btn-ghost:hover { color: var(--text); border-color: var(--accent); }
+.btn-ghost.danger:hover { color: var(--err); border-color: var(--err); }
 
 .btn-accent {
   background: var(--accent);

@@ -163,12 +163,17 @@ interface SetActiveStudentPayload {
   action: "deactivate-student" | "activate-student";
   id: string;
 }
+interface ResendInvitePayload {
+  action: "resend-invite";
+  id: string;
+}
 type RequestBody =
   | CreateStudentPayload
   | BulkInviteStudentsPayload
   | DeleteStudentPayload
   | RestoreStudentPayload
-  | SetActiveStudentPayload;
+  | SetActiveStudentPayload
+  | ResendInvitePayload;
 
 // Mesmo padrão de requireAdmin (portal-admin/index.ts), mas aceita role
 // "professor" (quem vai gerenciar os próprios alunos) OU "admin" (acesso
@@ -257,7 +262,15 @@ async function inviteStudent(
     options: { redirectTo: STUDENT_INVITE_REDIRECT_URL },
   });
   if (linkError || !linkData?.user) {
-    return { email, ok: false, error: linkError?.message || "Falha ao gerar o convite." };
+    // Mensagem mais util pro caso mais comum de falha aqui: e-mail que ja'
+    // tem conta (convite anterior, ou aluno de outro professor/duplicado).
+    // "Reenviar convite" (ver resendInvite abaixo) e' o caminho certo pra
+    // recuperar um convite pendente perdido, nao convidar de novo do zero.
+    const alreadyRegistered = /already|cadastrad|registered/i.test(linkError?.message || "");
+    const error = alreadyRegistered
+      ? "Este e-mail já foi convidado antes. Se o aluno perdeu o convite, use \"Reenviar convite\" na lista em vez de convidar de novo."
+      : linkError?.message || "Falha ao gerar o convite.";
+    return { email, ok: false, error };
   }
 
   const { error: profileError } = await adminClient.from("profiles").insert({
@@ -287,6 +300,51 @@ async function inviteStudent(
     emailSent: emailResult.ok,
     error: emailResult.ok ? undefined : emailResult.error,
   };
+}
+
+// Reenvia o convite de um aluno pendente (nome ainda null, nunca aceitou) —
+// sem isso, um convite perdido/expirado ficava sem recuperação: o aluno já
+// tem linha em auth.users (criada no primeiro convite, ver inviteStudent),
+// então convidar de novo pelo mesmo fluxo esbarra em "e-mail já cadastrado"
+// (ver mensagem em inviteStudent acima). Usa generateLink tipo "recovery"
+// em vez de "invite" de propósito: "recovery" é o tipo documentado do
+// Supabase Auth pra gerar um link válido pra uma conta que JÁ existe
+// (confirmada ou não), enquanto "invite" é pra CRIAR uma conta nova — usar
+// "invite" de novo aqui é o que devolve o erro de "já cadastrado". O link
+// de recovery autentica o aluno e leva pra a mesma
+// estudos/aceitar-convite.html, que só chama auth.updateUser({password}),
+// então o fluxo do lado do aluno é idêntico ao de um convite normal.
+async function resendInvite(id: string, professorId: string): Promise<{ ok: boolean; error?: string }> {
+  const { data: student } = await adminClient
+    .from("profiles")
+    .select("email, nome, professor_id")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (!student || student.professor_id !== professorId) {
+    return { ok: false, error: "Aluno não encontrado." };
+  }
+  if (student.nome) {
+    return { ok: false, error: "Este aluno já aceitou o convite — não é preciso reenviar." };
+  }
+  if (!student.email) {
+    return { ok: false, error: "Este aluno não tem e-mail cadastrado." };
+  }
+
+  const { data: linkData, error: linkError } = await adminClient.auth.admin.generateLink({
+    type: "recovery",
+    email: student.email,
+    options: { redirectTo: STUDENT_INVITE_REDIRECT_URL },
+  });
+  if (linkError || !linkData?.properties?.action_link) {
+    return { ok: false, error: linkError?.message || "Falha ao gerar o novo convite." };
+  }
+
+  const emailResult = await sendInviteEmail(student.email, linkData.properties.action_link, STUDENT_INVITE_EMAIL_COPY);
+  if (!emailResult.ok) {
+    return { ok: false, error: `Não foi possível enviar o e-mail: ${emailResult.error}` };
+  }
+  return { ok: true };
 }
 
 Deno.serve(async (req: Request) => {
@@ -348,6 +406,14 @@ Deno.serve(async (req: Request) => {
     }
 
     return jsonResponse({ results });
+  }
+
+  if (body.action === "resend-invite") {
+    const { id } = body;
+    if (!id) return jsonResponse({ error: "'id' é obrigatório." }, 400);
+    const result = await resendInvite(id, professorId);
+    if (!result.ok) return jsonResponse({ error: result.error }, 400);
+    return jsonResponse(result);
   }
 
   // Quatro ações de aluno, todas com o mesmo formato {id} e a mesma checagem

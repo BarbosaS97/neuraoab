@@ -83,7 +83,7 @@ async function loadStudentHeader(studentId) {
   document.getElementById("studentName").textContent = student.nome || "(convite pendente)";
   const statusLabel = student.ativo ? "Ativo" : "Inativo";
   document.getElementById("studentMeta").textContent =
-    `${student.email || "—"} · Cadastrado em ${fmtDate(student.created_at)} · ${statusLabel}`;
+    `${student.email || "—"} · Convidado em ${fmtDate(student.created_at)} · ${statusLabel}`;
 
   // Breadcrumb volta pra turma de onde o aluno veio (ou "Sem turma") em vez
   // de sempre pra lista geral — mantém a navegação consistente com o resto
@@ -106,26 +106,18 @@ async function loadStudentHeader(studentId) {
 // respostas de qualquer aluno vinculado a ele (profiles.professor_id =
 // auth.uid()) — sem precisar de nenhuma policy nova.
 
-const FASE1_PAGE_SIZE = 1000;
-
 // So' id+discipline (nao o enunciado inteiro) — o suficiente pra' cruzar
 // com oab_respostas.question_id e agrupar por materia; "oab_questions" e'
 // publicamente legivel (policy "oab_questions_select_anon", ver
 // supabase/schema.sql), entao nao precisa de nenhum tratamento especial
-// de permissao aqui.
+// de permissao aqui. fetchAllRows (js/config.js) pagina — o banco de
+// questoes ja' passa de 1000 linhas somando todos os exames.
 async function fetchDisciplineById() {
+  const { data } = await fetchAllRows((from, to) =>
+    client.from("oab_questions").select("id, discipline").range(from, to),
+  );
   const map = new Map();
-  let from = 0;
-  while (true) {
-    const { data, error } = await client
-      .from("oab_questions")
-      .select("id, discipline")
-      .range(from, from + FASE1_PAGE_SIZE - 1);
-    if (error || !data || data.length === 0) break;
-    data.forEach((q) => map.set(q.id, q.discipline || "Sem disciplina"));
-    if (data.length < FASE1_PAGE_SIZE) break;
-    from += FASE1_PAGE_SIZE;
-  }
+  (data || []).forEach((q) => map.set(q.id, q.discipline || "Sem disciplina"));
   return map;
 }
 
@@ -249,10 +241,13 @@ async function loadFase1Summary(studentId) {
   const statEl = document.getElementById("statFase1");
   const detailEl = document.getElementById("fase1Detail");
 
-  const { data: answers, error } = await client
-    .from("oab_respostas")
-    .select("question_id, correct, answered_at")
-    .eq("user_id", studentId);
+  const { data: answers, error } = await fetchAllRows((from, to) =>
+    client
+      .from("oab_respostas")
+      .select("question_id, correct, answered_at")
+      .eq("user_id", studentId)
+      .range(from, to),
+  );
 
   if (error) {
     statEl.textContent = "—";
