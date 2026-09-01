@@ -19,8 +19,7 @@
   --logo-blue: #0a6bfd;
   --logo-gradient: linear-gradient(180deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
   --radius: 10px;
-  --sidebar-w: 260px;
-  --sidebar-collapsed-w: 13px;
+  --topbar-h: 63px;
   --chat-w: 420px;
   --chat-collapsed-w: 22px;
   /* Fundo do chat: a mesma base escura do resto do app, com um leve
@@ -55,6 +54,13 @@
 html, body {
   margin: 0;
   padding: 0;
+  /* Defensivo: nada na pagina deveria exigir rolagem horizontal — mas um
+     elemento posicionado (ex.: .chat-toggle-group, ver comentario la')
+     pode acabar extrapolando por alguns pixels em certas larguras de tela.
+     overflow-x aqui garante que isso vire um corte silencioso em vez de
+     uma barra de rolagem horizontal falsa (a pagina "sobra" mas nao tem
+     nada de fato pra mostrar rolando). */
+  overflow-x: hidden;
 }
 
 body {
@@ -84,12 +90,12 @@ a { color: inherit; }
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 24px;
-  gap: 22px;
+  padding: 20px;
+  gap: 14px;
 }
 
 .loading-image {
-  width: min(200px, 45vw);
+  width: min(120px, 32vw);
   height: auto;
   animation: loadingPulse 1.7s ease-in-out infinite;
   transition: width 0.25s ease;
@@ -99,7 +105,7 @@ a { color: inherit; }
   animation: none;
   /* Uma vez "pronto", a mascote cede espaco pros blocos de funcionalidades
      e vira so um selo pequeno no topo, nao mais o foco central da tela. */
-  width: min(84px, 22vw);
+  width: min(56px, 16vw);
 }
 
 @keyframes loadingPulse {
@@ -110,14 +116,14 @@ a { color: inherit; }
 .loading-message {
   margin: 0;
   color: var(--text-dim);
-  font-size: 15px;
-  line-height: 1.65;
-  max-width: 440px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  max-width: 380px;
 }
 
 .loading-splash.ready .loading-message {
   color: var(--text);
-  font-size: 17px;
+  font-size: 14.5px;
   font-weight: 600;
 }
 
@@ -132,20 +138,15 @@ a { color: inherit; }
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 460px;
+  max-width: 400px;
   text-align: left;
 }
 
 /* O atributo HTML "hidden" some por padrao via "[hidden] { display: none }"
    na folha de estilo do navegador — mas essa regra e' de origem "user
-   agent", que perde pra QUALQUER regra de autor com a mesma especificidade
-   (ver o mesmo comentario, mais completo, em ".raffle-overlay[hidden]" e
-   ".help-overlay[hidden]" mais abaixo). Como ".loading-features" ja define
-   "display: flex" acima, precisa dessa regra extra pra "hidden" continuar
-   escondendo a lista de fato — sem ela, a lista aparecia mesmo antes do
-   carregamento terminar, e pior: como showLoadingReady() so' remove esse
-   atributo explicitamente na primeira vez (ver hasSeenIntro em
-   estudos.js), a lista nunca ficava escondida em visitas seguintes. */
+   agent", que perde pra QUALQUER regra de autor com a mesma especificidade.
+   Como ".loading-features" ja define "display: flex" acima, precisa dessa
+   regra extra pra "hidden" continuar escondendo a lista de fato. */
 .loading-features[hidden] {
   display: none;
 }
@@ -153,8 +154,8 @@ a { color: inherit; }
 .loading-feature {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-  padding: 14px 2px;
+  gap: 11px;
+  padding: 9px 2px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -164,9 +165,9 @@ a { color: inherit; }
 
 .loading-feature-icon {
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
   background: var(--card);
   border: 1px solid var(--border);
   color: var(--primary);
@@ -178,19 +179,19 @@ a { color: inherit; }
 .loading-feature-text {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding-top: 2px;
+  gap: 1px;
+  padding-top: 1px;
 }
 
 .loading-feature-text b {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text);
 }
 
 .loading-feature-text span {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-dim);
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .loading-start-btn {
@@ -198,8 +199,8 @@ a { color: inherit; }
   color: #fff;
   border: none;
   border-radius: 999px;
-  padding: 14px 48px;
-  font-size: 14px;
+  padding: 11px 38px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.05em;
   cursor: pointer;
@@ -224,170 +225,249 @@ a { color: inherit; }
 
 /* ------------------------------------------------------------------ App */
 /*
-  Sem barra superior: toda a navegacao (logo, links, avatar) mora dentro da
-  propria barra lateral, que ocupa a tela inteira de cima a baixo (top: 0,
-  height: 100vh) — sem nenhum elemento acima empurrando-a para baixo, ela
-  fica de fato encostada nas bordas da tela.
+  Sem barra lateral: a navegacao mora numa barra SUPERIOR fina e fixa
+  (.topbar), sempre visivel, com um botao de menu (≡) que abre um painel
+  overlay (.menu-panel) por cima do conteudo — ao contrario da antiga
+  .sidebar, esse painel NAO empurra o layout (position: fixed), entao nao
+  precisa de nenhuma logica especial de "recolhido/expandido" reagindo no
+  resto da pagina.
 */
 
-.app {
-  display: flex;
-  align-items: stretch;
-}
-
-.sidebar {
-  width: var(--sidebar-collapsed-w);
-  flex-shrink: 0;
+.topbar {
   position: sticky;
   top: 0;
-  height: 100vh;
-  z-index: 25;
+  z-index: 40;
+  height: var(--topbar-h);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px;
   background: var(--bg);
-  transition: width 0.22s ease;
+  border-bottom: 1px solid var(--border);
 }
 
-/* Traco de identidade visual (cores do logotipo) na borda da barra,
-   substituindo a faixa que antes ficava no topo. */
-.sidebar::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 3px;
-  background: var(--logo-gradient);
+.topbar-left,
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
 }
 
-.sidebar.expanded { width: var(--sidebar-w); }
-
-/* Alca flutuante para expandir/recolher: fica sobreposta a borda da barra
-   (metade dentro, metade fora), entao nao exige que a faixa recolhida seja
-   larga o suficiente para caber um botao dentro dela. Icone fixo de tres
-   tracos (menu classico), sem trocar de forma ao abrir/fechar. */
-.sidebar-handle {
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  transform: translate(-50%, -50%);
-  width: 30px;
-  height: 64px;
-  border-radius: 12px;
+.menu-btn {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   background: var(--card);
   border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 4px;
   cursor: pointer;
-  z-index: 30;
   padding: 0;
   transition: border-color 0.12s ease;
 }
 
-.sidebar-handle:hover { border-color: var(--primary); }
-.sidebar-handle:hover .bar { background: var(--text); }
+.menu-btn:hover { border-color: var(--primary); }
+.menu-btn:hover .bar { background: var(--text); }
 
-.sidebar-handle .bar {
+.menu-btn .bar {
   width: 16px;
   height: 2px;
   background: var(--text-dim);
   border-radius: 1px;
+  transition: background 0.12s ease;
 }
 
-/* O recorte (overflow: hidden) fica AQUI, num wrapper interno — nao no
-   .sidebar em si — para nao cortar a .sidebar-handle, que fica de proposito
-   pra fora da faixa (metade dentro, metade fora). Esse wrapper sempre
-   acompanha a largura atual do .sidebar (100%), entao continua escondendo
-   o conteudo largo demais quando a faixa esta recolhida. */
-.sidebar-clip {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Largura sempre igual a do menu aberto. A opacidade some com o conteudo
-   assim que o recolhimento comeca, para nao deixar pedacos de texto
-   cortado a mostra durante a transicao — o menu recolhido deve parecer
-   so uma linha fina, nao um painel truncado. */
-.sidebar-scroll {
-  width: var(--sidebar-w);
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  padding: 20px 16px 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-  opacity: 0;
-  transition: opacity 0.12s ease;
-}
-
-.sidebar.expanded .sidebar-scroll {
-  opacity: 1;
-  transition: opacity 0.18s ease 0.08s;
-}
-
-/* justify-content: flex-end (nao space-between): a ".brand-logo" e' um
-   elemento FIXO e independente (fora da .sidebar, sempre no canto superior
-   esquerdo da TELA — ver comentario acima de ".brand-logo") que ocupa
-   exatamente essa mesma faixa esquerda quando o menu esta expandido. Um
-   filho aqui alinhado a esquerda ficaria embaixo dela, com a logo roubando
-   os cliques. Por isso o botao de ajuda entra ao lado do avatar, os dois
-   agrupados a direita, longe dessa zona. */
-.side-brand {
+.topbar-logo {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
+  text-decoration: none;
+  min-width: 0;
 }
 
-.sidebar-help-btn {
-  width: 24px;
-  height: 24px;
+.topbar-logo img {
+  height: 32px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 0 6px rgba(226, 80, 10, 0.2)) drop-shadow(0 0 8px rgba(10, 107, 253, 0.2));
+}
+
+.icon-btn {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: transparent;
   color: var(--text-dim);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   cursor: pointer;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
   transition: color 0.12s ease, border-color 0.12s ease;
 }
 
-.sidebar-help-btn:hover { color: var(--text); border-color: var(--primary); }
+.icon-btn:hover { color: var(--text); border-color: var(--primary); }
 
-/* Logo fica FORA da barra lateral (nao e' filho do .sidebar, que recorta
-   seu conteudo via overflow: hidden quando recolhido) — assim ela fica
-   sempre visivel por inteiro, recolhido ou expandido, nao sendo cortada
-   pela faixa fina. Cresce um pouco junto quando o menu expande. */
-.brand-logo {
-  position: fixed;
-  top: 14px;
-  left: 16px;
-  z-index: 35;
+/* Acesso destacado a' outra fase — sempre visivel no topo, nunca escondido
+   dentro do menu (o aluno troca de fase com um so' clique, de qualquer
+   tela). Em estudos/index.html aponta pra 2a Fase; em simulado2fase.html
+   (ver sim2-phase-link em simulado2fase.html) o equivalente aponta de
+   volta pra 1a. */
+.phase-switch-btn {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
+  gap: 8px;
   text-decoration: none;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 16px 6px 6px;
+  font-size: 12.5px;
+  font-weight: 600;
   white-space: nowrap;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.brand-logo img {
-  height: 42px;
-  width: auto;
-  display: block;
-  filter: drop-shadow(0 0 8px rgba(226, 80, 10, 0.25)) drop-shadow(0 0 10px rgba(10, 107, 253, 0.25));
-  transition: height 0.22s ease;
+.phase-switch-btn:hover {
+  border-color: var(--primary);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px -10px rgba(139, 92, 246, 0.5);
 }
 
-.brand-logo.expanded img { height: 54px; }
+.phase-switch-num {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------- Menu (≡) */
+/*
+  Painel overlay ancorado no canto superior esquerdo — backdrop escurece o
+  resto da tela, clicar fora ou Escape fecha (ver JS em estudos.js), mesmo
+  padrao do .help-overlay mais abaixo.
+*/
+
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.menu-backdrop[hidden] { display: none; }
+
+.menu-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 51;
+  width: min(320px, 88vw);
+  height: 100dvh;
+  background: var(--card);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 18px 18px 26px;
+  overflow-y: auto;
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.6);
+  animation: menuPanelIn 0.18s ease;
+}
+
+.menu-panel[hidden] { display: none; }
+
+@keyframes menuPanelIn {
+  from { opacity: 0; transform: translateX(-14px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.menu-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-panel-head span {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
+
+.menu-section-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin: 0 0 12px;
+}
+
+.menu-item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-item-btn {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 9px;
+  padding: 11px 12px;
+  font-size: 13.5px;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.menu-item-btn:hover:not(:disabled) { border-color: var(--primary); background: var(--card-hover); }
+.menu-item-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.menu-user-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.menu-user-row .avatar { width: 34px; height: 34px; font-size: 13px; cursor: default; }
+
+.menu-user-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
 
 .avatar {
   width: 28px;
@@ -406,9 +486,82 @@ a { color: inherit; }
   font-family: inherit;
 }
 
-/* Popover de login opcional (aluno convidado por um professor) — ancorado
-   no avatar da sessão, mesma família visual do resto da sidebar (--card/
-   --border/--text). */
+.mode-switch {
+  display: flex;
+  gap: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.mode-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 12.5px;
+  padding: 7px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.mode-btn.active { background: var(--primary); color: #fff; }
+
+.btn-ghost {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 12px;
+  padding: 8px 0;
+  border-radius: 7px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.btn-ghost:hover { color: var(--text); border-color: var(--primary); }
+
+.btn-primary {
+  width: 100%;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 0;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: filter 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px -8px rgba(139, 92, 246, 0.6);
+}
+
+.btn-primary:disabled {
+  background: var(--card-hover);
+  color: var(--text-dim);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ------------------------------------- Popover de login (simulado2fase.html) */
+/*
+  estudos/index.html moveu o login pra dentro do .menu-panel (ver secao
+  "Menu (≡)" acima) — mas simulado2fase.html ainda usa o popover ancorado
+  no avatar (".session-wrap"/".session-popover", ver topbar daquela pagina)
+  e nao tem CSS proprio pra isso em simulado2fase.css, dependendo 100% do
+  que este arquivo compartilhado (style.css) define. Mantido aqui de
+  proposito pra nao quebrar aquela pagina, que nao faz parte desta
+  reformulacao.
+*/
+
 .session-wrap {
   position: relative;
 }
@@ -478,263 +631,449 @@ a { color: inherit; }
 
 .session-popover-msg.show { display: block; }
 
-.side-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.side-nav a {
-  color: var(--text-dim);
-  text-decoration: none;
-  font-size: 13px;
-  padding: 8px 10px;
-  border-radius: 7px;
-}
-
-.side-nav a.active { color: var(--text); background: var(--card); }
-.side-nav a:hover:not(.soon) { color: var(--text); background: var(--card-hover); }
-.side-nav a.soon { cursor: default; opacity: 0.45; }
-
-/* Links das duas fases da OAB: bem mais evidentes que um item de lista
-   comum (numero em destaque + titulo + descricao curta), pra ficar claro
-   de cara que sao os dois modos principais do app — nao mais um item de
-   navegacao qualquer entre os outros. */
-.phase-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 10px;
-  border: 1px solid transparent;
-}
-
-.phase-link.active {
-  background: var(--card);
-  border-color: var(--border);
-}
-
-.phase-link:hover { background: var(--card-hover); }
-
-.phase-num {
-  flex-shrink: 0;
-  width: 26px;
-  height: 26px;
-  border-radius: 999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.phase-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.35;
-  min-width: 0;
-}
-
-.phase-text b {
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.phase-text small {
-  font-size: 11px;
-  color: var(--text-dim);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.side-title {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-dim);
-  margin: 0 0 12px;
-}
-
-.field { margin-bottom: 12px; }
-.field:last-of-type { margin-bottom: 0; }
-
-.field label {
-  display: block;
-  font-size: 12px;
-  color: var(--text-dim);
-  margin-bottom: 5px;
-}
-
-select {
-  width: 100%;
-  background: var(--card);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  padding: 8px 10px;
-  font-size: 13.5px;
-  appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, var(--text-dim) 50%), linear-gradient(135deg, var(--text-dim) 50%, transparent 50%);
-  background-position: calc(100% - 16px) center, calc(100% - 11px) center;
-  background-size: 5px 5px, 5px 5px;
-  background-repeat: no-repeat;
-}
-
-select:focus { outline: none; border-color: var(--primary); }
-
-.result-count {
-  margin: 12px 0 0;
-  font-size: 12px;
-  color: var(--text-dim);
-}
-
-.clear-filters {
-  margin-top: 10px;
-  font-size: 12px;
-  color: var(--primary);
-  border-color: rgba(139, 92, 246, 0.35);
-}
-
-.clear-filters:hover { border-color: var(--primary); color: var(--text); }
-
-.mode-switch {
-  display: flex;
-  gap: 6px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 3px;
-}
-
-.mode-btn {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: var(--text-dim);
-  font-size: 12.5px;
-  padding: 7px 0;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.mode-btn.active { background: var(--primary); color: #fff; }
-.mode-btn:disabled { cursor: not-allowed; opacity: 0.5; }
-.mode-btn:disabled.active { background: var(--primary); }
-
-.qlist-section { display: flex; flex-direction: column; min-height: 0; }
-
-.qlist-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-
-.qlist-header .side-title { margin: 0; }
-
-.qlist-count {
-  font-size: 11px;
-  color: var(--text-dim);
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 2px 8px;
-}
-
-.qlist {
-  max-height: 320px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.qitem {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  text-align: left;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 7px;
-  padding: 7px 8px;
-  font-size: 12.5px;
-  color: var(--text-dim);
-  cursor: pointer;
-}
-
-.qitem:hover { background: var(--card-hover); color: var(--text); }
-
-.qitem.active {
-  background: var(--primary-dim);
-  border-color: rgba(139, 92, 246, 0.4);
-  color: var(--text);
-}
-
-.qitem .num {
-  font-variant-numeric: tabular-nums;
-  color: var(--text-dim);
-}
-
-.qitem.active .num { color: var(--primary); }
-
-.qitem .status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  flex-shrink: 0;
-  background: transparent;
-}
-
-.qitem .status-dot.correct { background: var(--success); }
-.qitem .status-dot.wrong { background: var(--error); }
-
-.score-section {
-  border-top: 1px solid var(--border);
-  padding-top: 16px;
-}
-
-.score-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-  margin-bottom: 10px;
-}
-
-.score-label { color: var(--text-dim); }
-
-.btn-ghost {
-  width: 100%;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-  font-size: 12px;
-  padding: 8px 0;
-  border-radius: 7px;
-  cursor: pointer;
-}
-
-.btn-ghost:hover { color: var(--text); border-color: var(--primary); }
-
 /* -------------------------------------------------------------- Content */
+
+.app {
+  display: flex;
+  align-items: stretch;
+}
 
 .content {
   flex: 1;
   min-width: 0;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--topbar-h));
   display: flex;
   flex-direction: column;
-  padding: 20px 16px 60px;
+  padding: 22px 16px 60px;
 }
 
 @media (min-width: 900px) {
-  .content { padding: 28px 32px 60px; }
+  .content { padding: 32px 40px 60px; }
 }
+
+/* ------------------------------------------------------- Telas de escolha */
+/*
+  Tela 1 (exames) e Tela 2 (materias): mesma estrutura de grade de cards
+  selecionaveis (varios ao mesmo tempo) + rodape com contagem e botao de
+  avancar, que so' habilita com pelo menos 1 card marcado (ver JS).
+*/
+
+.pick-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 1120px;
+  width: 100%;
+  margin: 0 auto;
+  animation: questionCardIn 0.28s ease;
+}
+
+.pick-screen[hidden] { display: none; }
+
+.pick-screen-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pick-screen-head h1 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.pick-screen-hint {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 13.5px;
+}
+
+.btn-back {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: 999px;
+  padding: 7px 15px 7px 10px;
+  font-size: 12.5px;
+  font-family: inherit;
+  cursor: pointer;
+  margin-bottom: 2px;
+  transition: color 0.12s ease, border-color 0.12s ease;
+}
+
+.btn-back:hover { color: var(--text); border-color: var(--primary); }
+
+.pick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.pick-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  text-align: left;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 34px 16px 16px;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--text);
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.pick-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px -16px rgba(139, 92, 246, 0.55);
+}
+
+.pick-card:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.pick-card-check {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.pick-card-check::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 10px;
+  height: 6px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg);
+  opacity: 0;
+}
+
+.pick-card.selected {
+  border-color: var(--primary);
+  background: var(--primary-dim);
+  box-shadow: 0 12px 26px -18px rgba(139, 92, 246, 0.6);
+}
+
+.pick-card.selected .pick-card-check { background: var(--primary); border-color: var(--primary); }
+.pick-card.selected .pick-card-check::after { opacity: 1; }
+
+.pick-card-title { font-size: 15px; font-weight: 700; line-height: 1.3; }
+.pick-card-sub { font-size: 11.5px; color: var(--text-dim); }
+
+.pick-card-count {
+  margin-top: 3px;
+  font-size: 11px;
+  color: var(--text-dim);
+  background: var(--card-hover);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.pick-card.selected .pick-card-count { color: var(--primary); border-color: rgba(139, 92, 246, 0.35); }
+
+.pick-footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 16px 2px 4px;
+  margin-top: 4px;
+}
+
+.pick-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.pick-footer-count { font-size: 12.5px; color: var(--text-dim); }
+
+.select-all-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--primary);
+  font-size: 12.5px;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.select-all-btn:hover { color: var(--text); }
+
+.pick-cta { width: auto; padding: 11px 32px; }
+
+/* ------------------------------------------------------------ Tela de estudo */
+
+.study-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.study-screen[hidden] { display: none; }
+
+.study-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.study-score {
+  font-size: 12.5px;
+  color: var(--text-dim);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 7px 15px;
+  white-space: nowrap;
+}
+
+.study-score b { color: var(--text); }
+
+/* ------------------------------------------------------------ Estatísticas */
+
+.stats-period-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 720px;
+  margin-bottom: 4px;
+}
+
+.stats-period-label {
+  font-size: 12px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+.stats-period-switch {
+  flex: 1;
+  max-width: 380px;
+}
+
+#statsBody {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 720px;
+}
+
+.stats-loading, .stats-empty, .stats-error {
+  color: var(--text-dim);
+  font-size: 13.5px;
+  padding: 30px 0;
+}
+
+.stats-overall {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 22px;
+}
+
+.stats-overall-pct {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.stats-overall-label {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.stats-overall-label b { color: var(--text); }
+
+.stats-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+
+.stats-subjects {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stats-subject-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(90px, 160px) 80px;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 14px;
+}
+
+.stats-subject-name {
+  font-size: 13px;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stats-subject-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--card-hover);
+  overflow: hidden;
+}
+
+.stats-subject-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--primary);
+}
+
+.stats-subject-bar-fill.low { background: var(--error); }
+.stats-subject-bar-fill.high { background: var(--success); }
+
+.stats-subject-frac {
+  font-size: 12px;
+  color: var(--text-dim);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.stats-ai-intro {
+  margin: 0 0 12px;
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+
+.stats-ai-btn { width: auto; padding: 10px 24px; }
+
+.stats-ai-loading {
+  margin-top: 12px;
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+
+.stats-ai-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.stats-ai-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  border-left: 3px solid var(--border);
+}
+
+.stats-ai-card h3 {
+  margin: 0 0 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.stats-ai-card p {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--text-dim);
+  line-height: 1.55;
+}
+
+.stats-ai-card.weak { border-left-color: var(--error); }
+.stats-ai-card.focus { border-left-color: var(--primary); }
+.stats-ai-card.strong { border-left-color: var(--success); }
+
+.stats-ai-error {
+  margin-top: 12px;
+  font-size: 12.5px;
+  color: var(--error);
+}
+
+.stats-ai-refresh {
+  margin-top: 12px;
+  display: inline-block;
+}
+
+.stats-reset-section {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+
+.stats-reset-btn { width: auto; padding: 10px 24px; }
+
+.stats-reset-warning {
+  margin: 0 0 12px;
+  font-size: 12.5px;
+  color: var(--error);
+  line-height: 1.5;
+  max-width: 480px;
+}
+
+.stats-reset-confirm-row {
+  display: flex;
+  gap: 10px;
+}
+
+.stats-reset-confirm-row .btn-ghost,
+.stats-reset-confirm-row .btn-danger {
+  width: auto;
+  padding: 9px 22px;
+}
+
+.btn-danger {
+  background: var(--error);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+.btn-danger:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-1px); }
+.btn-danger:disabled { opacity: 0.6; cursor: not-allowed; }
 
 .question-card {
   background: var(--card);
@@ -742,7 +1081,7 @@ select:focus { outline: none; border-color: var(--primary); }
   border-radius: 16px;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 24px 48px -28px rgba(0, 0, 0, 0.6);
   padding: 20px;
-  max-width: 760px;
+  max-width: 880px;
   width: 100%;
   /* margin vertical "auto" centraliza o card quando ha' espaco de sobra
      (perguntas curtas) e cai graciosamente para o topo quando o conteudo
@@ -758,7 +1097,7 @@ select:focus { outline: none; border-color: var(--primary); }
 }
 
 @media (min-width: 600px) {
-  .question-card { padding: 32px 36px; }
+  .question-card { padding: 34px 42px; }
 }
 
 .meta {
@@ -981,18 +1320,20 @@ select:focus { outline: none; border-color: var(--primary); }
 
 /* ---------------------------------------------------------- Chat lateral */
 /*
-  Espelha a barra de filtros (esquerda): faixa fina encostada na borda
-  direita da tela, com uma alca flutuante para expandir/recolher, e o
-  conteudo (chat) num wrapper de largura fixa que so aparece quando
-  expandido — mesma estrategia usada na .sidebar, ver comentarios la.
+  Faixa fina encostada na borda direita da tela, com uma alca flutuante
+  para expandir/recolher, e o conteudo (chat) num wrapper de largura fixa
+  que so aparece quando expandido.
 */
 
 .chat-panel {
   width: var(--chat-collapsed-w);
   flex-shrink: 0;
   position: sticky;
-  top: 0;
-  height: 100vh;
+  /* Encostado embaixo da topbar (tambem sticky, z-index maior) — nao em
+     top: 0, senao a altura de 100vh estouraria o viewport visivel e as
+     duas faixas sticky brigariam pelo mesmo topo ao rolar a pagina. */
+  top: var(--topbar-h);
+  height: calc(100vh - var(--topbar-h));
   z-index: 25;
   background: var(--chat-bg);
   transition: width 0.22s ease;
@@ -1010,14 +1351,21 @@ select:focus { outline: none; border-color: var(--primary); }
 
 .chat-panel.expanded { width: var(--chat-w); }
 
-/* Retrato do Dr. Laureano em cima do botao "IA" — mesma ideia da alca do
-   menu esquerdo (metade pra fora da faixa), so' que agrupando os dois
-   elementos numa coluna em vez de um botao sozinho. */
+/* Retrato do Dr. Laureano em cima do botao "IA" — parcialmente pra fora da
+   faixa recolhida, os dois elementos agrupados numa coluna. O deslocamento
+   horizontal e' metade da largura da PROPRIA FAIXA (--chat-collapsed-w),
+   nao metade da largura do grupo (60px, o avatar) — se fosse relativo ao
+   proprio grupo, o avatar (bem mais largo que a faixa de 22px) empurraria
+   o conjunto pra alem da borda direita da tela (bug real: ver "right:
+   100%; transform: translate(50%, ...)" que causava um scroll horizontal
+   fantasma de uns 8px, sem nada de fato pra mostrar rolando). Assim o
+   grupo fica sempre contido dentro da largura da faixa + o que sobra pra
+   esquerda, nunca ultrapassando a borda direita da viewport. */
 .chat-toggle-group {
   position: absolute;
   top: 50%;
   right: 100%;
-  transform: translate(50%, -50%);
+  transform: translate(calc(var(--chat-collapsed-w) / 2), -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1079,10 +1427,7 @@ select:focus { outline: none; border-color: var(--primary); }
 
 /* Posicionamento absoluto (em vez de height: 100% encadeado por varios
    niveis de flex) para garantir, sem ambiguidade, que essa caixa preenche
-   exatamente a altura do .chat-clip — se a altura ficar indefinida em
-   algum nivel da cadeia flex, e' isso que faz o overflow "vazar" pro
-   .chat-clip (que so' esconde, nao rola) em vez de rolar aqui dentro,
-   que era a causa da barra de rolagem sumida. */
+   exatamente a altura do .chat-clip. */
 .chat-scroll {
   position: absolute;
   top: 0;
@@ -1160,30 +1505,30 @@ select:focus { outline: none; border-color: var(--primary); }
 .chat-subtitle { font-size: 11.5px; color: var(--text-dim); }
 
 /* Barra de rolagem discreta e no tema do sistema, para qualquer area
-   scrollavel do app (chat, menu de filtros, lista de questoes) — em vez da
-   barra padrao do navegador, que destoa do resto do visual escuro. */
+   scrollavel do app (chat, menu, grade de cards) — em vez da barra padrao
+   do navegador, que destoa do resto do visual escuro. */
 .chat-messages,
-.sidebar-scroll,
-.qlist {
+.menu-panel,
+.pick-grid {
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
 }
 
 .chat-messages::-webkit-scrollbar,
-.sidebar-scroll::-webkit-scrollbar,
-.qlist::-webkit-scrollbar {
+.menu-panel::-webkit-scrollbar,
+.pick-grid::-webkit-scrollbar {
   width: 8px;
 }
 
 .chat-messages::-webkit-scrollbar-track,
-.sidebar-scroll::-webkit-scrollbar-track,
-.qlist::-webkit-scrollbar-track {
+.menu-panel::-webkit-scrollbar-track,
+.pick-grid::-webkit-scrollbar-track {
   background: transparent;
 }
 
 .chat-messages::-webkit-scrollbar-thumb,
-.sidebar-scroll::-webkit-scrollbar-thumb,
-.qlist::-webkit-scrollbar-thumb {
+.menu-panel::-webkit-scrollbar-thumb,
+.pick-grid::-webkit-scrollbar-thumb {
   background-color: var(--border);
   border-radius: 999px;
   border: 2px solid transparent;
@@ -1191,8 +1536,8 @@ select:focus { outline: none; border-color: var(--primary); }
 }
 
 .chat-messages::-webkit-scrollbar-thumb:hover,
-.sidebar-scroll::-webkit-scrollbar-thumb:hover,
-.qlist::-webkit-scrollbar-thumb:hover {
+.menu-panel::-webkit-scrollbar-thumb:hover,
+.pick-grid::-webkit-scrollbar-thumb:hover {
   background-color: var(--primary);
   background-clip: padding-box;
 }
@@ -1207,15 +1552,9 @@ select:focus { outline: none; border-color: var(--primary); }
   gap: 10px;
 }
 
-/* Ancora as mensagens embaixo quando ha' pouco conteudo (em vez do vao
-   vazio estranho entre a ultima bolha e o campo de digitar), sem usar
-   "justify-content: flex-end" — combinado com "overflow-y: auto" isso tem
-   um bug conhecido no Chromium: o navegador simplesmente NAO conta o
-   conteudo que "vaza" pra cima no scrollHeight, entao a barra de rolagem
-   nunca aparece e da' pra "perder" mensagens sem como rolar ate' elas.
-   "margin-top: auto" num spacer (pseudo-elemento, sempre o primeiro
-   filho) empurra o conteudo pra baixo do mesmo jeito quando sobra espaco,
-   mas sem esse bug quando o conteudo excede a altura disponivel. */
+/* Ancora as mensagens embaixo quando ha' pouco conteudo, sem usar
+   "justify-content: flex-end" (bug conhecido no Chromium com overflow-y:
+   auto, onde o conteudo que "vaza" pra cima nao conta no scrollHeight). */
 .chat-messages::before {
   content: "";
   margin-top: auto;
@@ -1345,86 +1684,35 @@ select:focus { outline: none; border-color: var(--primary); }
 
 /* --------------------------------------------------- Menu e chat no mobile */
 /*
-  Em telas estreitas nao ha' largura de sobra para o menu lateral (260px) ou
-  o chat do Dr. Laureano (420px) crescerem DENTRO do layout flex de sempre
-  sem espremer o .content contra a borda — abaixo do ponto de corte, os dois
-  passam a se comportar como um painel overlay em tela cheia (position:
-  fixed, cobrindo o viewport inteiro) em vez de dividir espaco com o
-  conteudo. Como cada um ja' e' controlado por uma unica classe ".expanded"
-  (ver JS em estudos.js/dr-laureano.js), basta sobrescrever essa mesma
-  classe aqui: nenhuma mudanca de HTML/JS e' necessaria. Os botoes de abrir
-  e fechar tambem crescem para um alvo de toque confortavel (~44px).
-
-  Este bloco fica DE PROPOSITO no fim do arquivo: ".sidebar.expanded" e
-  ".chat-panel.expanded" (regras normais, la' em cima) tem a MESMA
-  especificidade que as regras aqui dentro (duas classes cada), entao em
-  caso de empate quem vem DEPOIS no arquivo e' que vale — nao quem "parece"
-  mais especifico por estar dentro de @media. Colar esse bloco no meio do
-  arquivo (antes das regras normais de chat, por exemplo) faz a regra de
-  desktop vencer o empate mesmo dentro da media query mobile.
+  Em telas estreitas o chat do Dr. Laureano passa a se comportar como um
+  painel overlay em tela cheia (position: fixed, cobrindo o viewport
+  inteiro) em vez de dividir espaco com o conteudo — ja' controlado pela
+  mesma classe ".expanded" (ver JS em dr-laureano.js), so' sobrescrita
+  aqui. O menu (.menu-panel) ja' e' um overlay em qualquer largura (ver
+  regras acima), so' precisa ocupar a tela toda no mobile.
 */
 @media (max-width: 680px) {
-  .sidebar.expanded,
+  .menu-panel {
+    width: 100%;
+  }
+
   .chat-panel.expanded {
     position: fixed;
     inset: 0;
     width: 100%;
     height: 100dvh;
-  }
-
-  .sidebar.expanded .sidebar-scroll {
-    width: 100%;
+    /* Precisa vencer o z-index da .topbar (40, sticky) — senao a faixa
+       superior (logo/menu/ajuda) fica visivel por cima do cabecalho do
+       chat em tela cheia, escondendo o avatar/titulo/botao de fechar. */
+    z-index: 45;
   }
 
   .chat-panel.expanded .chat-scroll {
     width: 100%;
   }
 
-  /* Alca de abrir/fechar o menu: mesma logica de sempre (um so' botao
-     alterna os dois estados), so' maior para tocar com facilidade. */
-  .sidebar-handle {
-    width: 42px;
-    height: 76px;
-  }
-
-  .sidebar-handle .bar { width: 18px; }
-
-  /* Expandido em tela cheia, a alca NAO pode continuar em "left: 100%"
-     (metade dentro, metade fora da borda direita do menu): como o menu
-     agora tem a largura da tela toda, essa borda direita passa a ser a
-     borda direita da PROPRIA TELA — exatamente onde mora, sempre, a faixa
-     recolhida + retrato flutuante do chat do Dr. Laureano (que continua
-     visivel, sticky, do lado direito). As duas alcas colidiam ali, uma por
-     cima da outra. Aqui o botao de fechar o menu vira um botao de canto
-     (estilo "X" de menu mobile), no topo, longe da faixa do chat.*/
-  .sidebar.expanded .sidebar-handle {
-    top: 16px;
-    left: auto;
-    right: 16px;
-    transform: none;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-  }
-
-  /* Mesma familia de colisao: ".side-brand" (botao de ajuda "?" + avatar da
-     sessao) e' o primeiro item do conteudo rolavel, alinhado a direita — no
-     desktop isso fica longe da alca (que mora na borda direita, na ALTURA
-     do meio da tela). Aqui, com a alca virando um botao de canto (regra
-     acima), os dois passam a ocupar exatamente o mesmo canto superior
-     direito. Um espaco no topo empurra ".side-brand" pra baixo da alca. */
-  .side-brand {
-    margin-top: 40px;
-  }
-
-  /* E, por garantia (mesmo com a alca reposicionada acima), some com o
-     retrato+botao do chat enquanto o menu mobile estiver aberto — os dois
-     paineis em tela cheia nao fazem sentido abertos ao mesmo tempo, e sem
-     isso o avatar do Dr. Laureano ficaria flutuando por cima do menu. */
-  .sidebar.expanded ~ .chat-panel .chat-toggle-group {
-    opacity: 0;
-    pointer-events: none;
-  }
+  .phase-switch-btn span:last-child { display: none; }
+  .phase-switch-btn { padding: 6px; }
 
   /* Botao "IA" de abrir o chat (visivel so' com o chat fechado) e retrato
      do Dr. Laureano acima dele, ambos maiores para o toque. */
@@ -1439,9 +1727,7 @@ select:focus { outline: none; border-color: var(--primary); }
     height: 56px;
   }
 
-  /* X de fechar o chat expandido: era 26x26px (menor que o alvo de toque
-     recomendado de ~44px) — aqui e' o botao de "minimizar" que o usuario
-     efetivamente usa no mobile, entao precisa ser facil de acertar. */
+  /* X de fechar o chat expandido: alvo de toque maior (~44px). */
   .chat-close {
     width: 44px;
     height: 44px;
@@ -1455,164 +1741,17 @@ select:focus { outline: none; border-color: var(--primary); }
     font-size: 16px;
   }
 
-  /* A logo do site (".brand-logo") fica FORA da ".app" (irma anterior de
-     ".sidebar"/".chat-panel", nao filha) e sempre em position: fixed no
-     canto superior esquerdo. Com o CHAT em tela cheia no mobile, esse canto
-     e' exatamente onde mora o avatar/titulo do Dr. Laureano, e a logo ficava
-     por cima, sobreposta — por isso some so' nesse caso. O menu (".sidebar")
-     nao tem esse problema: o canto superior esquerdo dele fica vazio (o "?"
-     + avatar da sessao moram no canto OPOSTO, empurrados pra baixo da alca
-     de fechar — ver ".side-brand" acima), entao a logo continua aparecendo
-     normalmente com o menu aberto. */
-  body:has(.chat-panel.expanded) .brand-logo {
-    display: none;
+  .pick-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
-
-  /* A faixa recolhida do chat (22px + friso gradiente) continua no lugar
-     dela, sticky, na borda direita, mesmo com o MENU expandido — e como ela
-     vem DEPOIS do menu no HTML, um empate de z-index (os dois usam 25) faz
-     essa faixa pintar por CIMA do menu em tela cheia, cortando o canto
-     direito de cada linha (ver captura de tela do bug: os dropdowns
-     terminavam antes da borda real da tela). Um z-index maior aqui garante
-     que o menu aberto sempre fique por cima da faixa do chat, nao o
-     contrario. */
-  .sidebar.expanded {
-    z-index: 26;
-  }
-}
-
-/* --------------------------------------------------- Sortear questões */
-/*
-  O painel de sorteio ("filter-mode-panel[data-panel='raffle']") ocupa o
-  mesmo lugar do painel de filtros manuais dentro do menu — os dois nunca
-  ficam visiveis ao mesmo tempo (ver setFilterMode em estudos.js), entao nao
-  precisam de layout proprio de posicionamento, so' o estilo dos campos.
-*/
-
-.field input[type="number"] {
-  width: 100%;
-  background: var(--card);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  padding: 8px 10px;
-  font-size: 13.5px;
-  font-family: inherit;
-}
-
-.field input[type="number"]:focus { outline: none; border-color: var(--primary); }
-
-.raffle-disc-field { margin-top: 12px; }
-
-.raffle-disc-label-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.raffle-disc-label-row label {
-  font-size: 12px;
-  color: var(--text-dim);
-}
-
-.raffle-disc-quick-actions { display: flex; gap: 10px; }
-
-.raffle-disc-quick-actions .btn-link {
-  background: none;
-  border: none;
-  padding: 0;
-  color: var(--primary);
-  font-size: 11.5px;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.raffle-disc-quick-actions .btn-link:hover { color: var(--text); }
-
-.raffle-disc-list {
-  max-height: 220px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  padding: 6px;
-}
-
-.raffle-disc-item {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 8px;
-  border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-.raffle-disc-item:hover { background: var(--card-hover); }
-
-.raffle-disc-item input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--primary);
-  flex-shrink: 0;
-  cursor: pointer;
-}
-
-.raffle-disc-name { flex: 1; min-width: 0; }
-
-.raffle-disc-count {
-  font-size: 11px;
-  color: var(--text-dim);
-  background: var(--bg);
-  border-radius: 999px;
-  padding: 1px 8px;
-  flex-shrink: 0;
-}
-
-.raffle-hint {
-  margin: 12px 0 0;
-  font-size: 12px;
-  color: var(--text-dim);
-}
-
-.btn-primary {
-  width: 100%;
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  border-radius: 7px;
-  padding: 10px 0;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: filter 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.raffle-confirm-btn { margin-top: 14px; }
-
-.btn-primary:hover:not(:disabled) {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px -8px rgba(139, 92, 246, 0.6);
-}
-
-.btn-primary:disabled {
-  background: var(--card-hover);
-  color: var(--text-dim);
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
 }
 
 /* --------------------------------------------------------- Modal de ajuda */
 /*
-  Aberto tanto pelo "Como funciona?" da tela de carregamento quanto pelo "?"
-  no topo do menu (ver openHelpModal em estudos.js) — mesmo modal, dois
-  pontos de entrada. z-index maior que a propria tela de carregamento
-  (200) e que sidebar/chat expandidos (25) pra sempre ficar por cima.
+  Aberto pelo "Como funciona?" da tela de carregamento e pelo "?" no topo
+  (ver openHelpModal em estudos.js). O mesmo par de classes (.help-overlay/
+  .help-modal) tambem da' a base visual do modal "Meu Perfil" (ver
+  .profile-modal mais abaixo) — dois modais, mesma familia de estilo.
 */
 
 .help-overlay {
@@ -1626,11 +1765,9 @@ select:focus { outline: none; border-color: var(--primary); }
   padding: 20px;
 }
 
-/* Ver comentario identico em ".raffle-overlay[hidden]" mais acima: uma
-   regra de autor com "display: flex" sempre vence "[hidden] { display:
-   none }" da folha padrao do navegador, mesmo com especificidade igual —
-   entao precisa dessa sobrescrita explicita pra "hidden" continuar
-   escondendo o modal de fato. */
+/* Ver comentario em ".loading-features[hidden]" mais acima: uma regra de
+   autor com "display: flex" sempre vence "[hidden] { display: none }" da
+   folha padrao do navegador, mesmo com especificidade igual. */
 .help-overlay[hidden] {
   display: none;
 }
@@ -1734,3 +1871,44 @@ select:focus { outline: none; border-color: var(--primary); }
   border-top: 1px solid var(--border);
   flex-shrink: 0;
 }
+
+/* -------------------------------------------------------- Modal de perfil */
+/*
+  Reaproveita .help-overlay/.help-modal (mesmo comportamento de abrir/
+  fechar/animar) — so' o conteudo do corpo muda: campos de formulario com
+  os dados de cadastro do aluno (tabela "profiles", ver estudos.js).
+*/
+
+.profile-modal .field { margin-bottom: 14px; }
+.profile-modal .field:last-of-type { margin-bottom: 0; }
+
+.profile-modal .field label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 5px;
+}
+
+.profile-modal .field input {
+  width: 100%;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 11px;
+  font-size: 13.5px;
+  font-family: inherit;
+}
+
+.profile-modal .field input:focus { outline: none; border-color: var(--primary); }
+.profile-modal .field input:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.profile-msg {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--error);
+  display: none;
+}
+
+.profile-msg.show { display: block; }
+.profile-msg.ok { color: var(--success); }

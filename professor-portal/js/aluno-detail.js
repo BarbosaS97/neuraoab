@@ -97,20 +97,248 @@ async function loadStudentHeader(studentId) {
   return student;
 }
 
-async function loadFase1Summary(studentId) {
-  const { data, error } = await client
-    .from("oab_respostas")
-    .select("correct")
-    .eq("user_id", studentId);
+// ----------------------------------------------- Estatísticas — 1ª fase
+//
+// Mesma logica de estudos/estudos.js (loadAndRenderStats/renderStats) —
+// aqui pro PROFESSOR ver a estatistica completa de UM aluno especifico
+// (nao a dele mesmo). RLS ja' cobre isso: "oab_respostas_select" (ver
+// supabase/schema_professor_portal.sql) libera o professor ler as
+// respostas de qualquer aluno vinculado a ele (profiles.professor_id =
+// auth.uid()) — sem precisar de nenhuma policy nova.
 
-  const statEl = document.getElementById("statFase1");
+const FASE1_PAGE_SIZE = 1000;
+
+// So' id+discipline (nao o enunciado inteiro) — o suficiente pra' cruzar
+// com oab_respostas.question_id e agrupar por materia; "oab_questions" e'
+// publicamente legivel (policy "oab_questions_select_anon", ver
+// supabase/schema.sql), entao nao precisa de nenhum tratamento especial
+// de permissao aqui.
+async function fetchDisciplineById() {
+  const map = new Map();
+  let from = 0;
+  while (true) {
+    const { data, error } = await client
+      .from("oab_questions")
+      .select("id, discipline")
+      .range(from, from + FASE1_PAGE_SIZE - 1);
+    if (error || !data || data.length === 0) break;
+    data.forEach((q) => map.set(q.id, q.discipline || "Sem disciplina"));
+    if (data.length < FASE1_PAGE_SIZE) break;
+    from += FASE1_PAGE_SIZE;
+  }
+  return map;
+}
+
+function pctOf(correct, total) {
+  return total === 0 ? 0 : Math.round((correct / total) * 100);
+}
+
+function buildFase1SubjectRow({ discipline, total, correct }) {
+  const row = document.createElement("div");
+  row.className = "fase1-subject-row";
+
+  const name = document.createElement("div");
+  name.className = "fase1-subject-name";
+  name.textContent = discipline;
+  row.appendChild(name);
+
+  const pct = pctOf(correct, total);
+  const bar = document.createElement("div");
+  bar.className = "fase1-subject-bar";
+  const fill = document.createElement("div");
+  fill.className = "fase1-subject-bar-fill" + (pct < 50 ? " low" : pct >= 75 ? " high" : "");
+  fill.style.width = `${pct}%`;
+  bar.appendChild(fill);
+  row.appendChild(bar);
+
+  const frac = document.createElement("div");
+  frac.className = "fase1-subject-frac";
+  frac.textContent = `${correct}/${total} (${pct}%)`;
+  row.appendChild(frac);
+
+  return row;
+}
+
+// Mesma Edge Function usada em estudos/estudos.js (requestStatsAnalysis) —
+// ela so' recebe estatisticas ja' agregadas e devolve uma analise textual,
+// sem tocar no banco nem checar quem esta' chamando, entao reusar daqui
+// (com os dados do ALUNO, nao do professor) funciona sem nenhuma mudanca
+// no backend.
+async function requestFase1Analysis(stats, container) {
+  const loading = document.createElement("p");
+  loading.className = "fase1-ai-loading";
+  loading.textContent = "Analisando o desempenho do aluno...";
+  container.appendChild(loading);
+
+  const { data, error } = await client.functions.invoke("estatisticas-ia", { body: stats });
+  loading.remove();
+
   if (error || !data) {
-    statEl.textContent = "—";
+    const errEl = document.createElement("p");
+    errEl.className = "fase1-ai-error";
+    errEl.textContent = "Não foi possível gerar a análise agora.";
+    container.appendChild(errEl);
     return;
   }
-  const total = data.length;
-  const acertos = data.filter((r) => r.correct).length;
-  statEl.textContent = total === 0 ? "Nenhuma resposta ainda" : `${acertos} / ${total}`;
+
+  const cards = document.createElement("div");
+  cards.className = "fase1-ai-cards";
+  [
+    { key: "pontosFracos", cls: "weak", title: "Pontos fracos" },
+    { key: "precisaEstudar", cls: "focus", title: "Precisa estudar mais" },
+    { key: "pontosFortes", cls: "strong", title: "Pontos fortes" },
+  ].forEach(({ key, cls, title }) => {
+    const card = document.createElement("div");
+    card.className = `fase1-ai-card ${cls}`;
+    const h3 = document.createElement("h3");
+    h3.textContent = title;
+    card.appendChild(h3);
+    const p = document.createElement("p");
+    p.textContent = data[key] || "Ainda não há dados suficientes para essa análise.";
+    card.appendChild(p);
+    cards.appendChild(card);
+  });
+  container.appendChild(cards);
+}
+
+// Busca UMA vez todo o historico de respostas do aluno e guarda aqui —
+// trocar o filtro de periodo (ver fase1Period / initFase1PeriodSwitch) so'
+// refiltra esse cache em memoria e re-renderiza, sem nova consulta.
+let fase1AnswersCache = null;
+let fase1DisciplineById = null;
+let fase1Period = "all"; // "today" | "7d" | "30d" | "all"
+
+// Mesmo corte de datas usado em estudos/estudos.js (cutoffForPeriod) —
+// "Hoje" usa meia-noite local, nao "24h atras".
+function cutoffForPeriod(period) {
+  const now = new Date();
+  if (period === "today") {
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
+  }
+  if (period === "7d") {
+    return new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString();
+  }
+  if (period === "30d") {
+    return new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString();
+  }
+  return null;
+}
+
+function filterAnswersByPeriod(answers, period) {
+  const cutoff = cutoffForPeriod(period);
+  if (!cutoff) return answers;
+  return answers.filter((a) => a.answered_at >= cutoff);
+}
+
+function initFase1PeriodSwitch() {
+  const switchEl = document.getElementById("fase1PeriodSwitch");
+  if (!switchEl) return;
+  const buttons = switchEl.querySelectorAll(".period-btn");
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (fase1AnswersCache === null) return; // ainda carregando — nada pra filtrar
+      buttons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      fase1Period = btn.dataset.period;
+      renderFase1Filtered();
+    });
+  });
+}
+
+async function loadFase1Summary(studentId) {
+  const statEl = document.getElementById("statFase1");
+  const detailEl = document.getElementById("fase1Detail");
+
+  const { data: answers, error } = await client
+    .from("oab_respostas")
+    .select("question_id, correct, answered_at")
+    .eq("user_id", studentId);
+
+  if (error) {
+    statEl.textContent = "—";
+    detailEl.innerHTML = "";
+    const errEl = document.createElement("p");
+    errEl.className = "field-hint warn";
+    errEl.textContent = `Erro ao carregar estatísticas: ${error.message}`;
+    detailEl.appendChild(errEl);
+    return;
+  }
+
+  fase1AnswersCache = answers || [];
+
+  // "Acertos na 1ª fase" (statFase1, o card resumido do topo) sempre
+  // mostra o total GERAL — o filtro de periodo abaixo afeta so' o painel
+  // detalhado (breakdown por matéria + análise por IA).
+  const totalAll = fase1AnswersCache.length;
+  const acertosAll = fase1AnswersCache.filter((r) => r.correct).length;
+  statEl.textContent = totalAll === 0 ? "Nenhuma resposta ainda" : `${acertosAll} / ${totalAll}`;
+
+  if (totalAll > 0) fase1DisciplineById = await fetchDisciplineById();
+
+  renderFase1Filtered();
+}
+
+function renderFase1Filtered() {
+  const detailEl = document.getElementById("fase1Detail");
+  const answers = filterAnswersByPeriod(fase1AnswersCache || [], fase1Period);
+
+  detailEl.innerHTML = "";
+
+  if (answers.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "field-hint";
+    empty.textContent = fase1Period === "all"
+      ? "Este aluno ainda não respondeu nenhuma questão da 1ª fase."
+      : "Nenhuma questão respondida nesse período.";
+    detailEl.appendChild(empty);
+    return;
+  }
+
+  const bySubject = new Map();
+  let total = 0;
+  let correct = 0;
+  answers.forEach((a) => {
+    const disc = fase1DisciplineById?.get(a.question_id) || "Sem disciplina";
+    total++;
+    if (a.correct) correct++;
+    const s = bySubject.get(disc) || { total: 0, correct: 0 };
+    s.total++;
+    if (a.correct) s.correct++;
+    bySubject.set(disc, s);
+  });
+
+  const bySubjectList = Array.from(bySubject.entries())
+    .map(([discipline, s]) => ({ discipline, total: s.total, correct: s.correct }))
+    .sort((a, b) => b.total - a.total);
+
+  const overall = document.createElement("div");
+  overall.className = "fase1-overall";
+  const pctEl = document.createElement("div");
+  pctEl.className = "fase1-overall-pct";
+  pctEl.textContent = `${pctOf(correct, total)}%`;
+  overall.appendChild(pctEl);
+  const labelEl = document.createElement("div");
+  labelEl.className = "fase1-overall-label";
+  const b = document.createElement("b");
+  b.textContent = `${correct} de ${total}`;
+  labelEl.append(b, " questões respondidas corretamente, no total.");
+  overall.appendChild(labelEl);
+  detailEl.appendChild(overall);
+
+  const subjectsList = document.createElement("div");
+  subjectsList.className = "fase1-subjects";
+  bySubjectList.forEach((s) => subjectsList.appendChild(buildFase1SubjectRow(s)));
+  detailEl.appendChild(subjectsList);
+
+  const aiTitle = document.createElement("h3");
+  aiTitle.className = "fase1-ai-title";
+  aiTitle.textContent = "Análise por IA";
+  detailEl.appendChild(aiTitle);
+
+  const aiContainer = document.createElement("div");
+  detailEl.appendChild(aiContainer);
+
+  requestFase1Analysis({ overall: { total, correct }, bySubject: bySubjectList }, aiContainer);
 }
 
 function renderCriterios(criterios) {
@@ -429,6 +657,7 @@ async function init() {
   const student = await loadStudentHeader(studentId);
   if (!student) return;
 
+  initFase1PeriodSwitch();
   await Promise.all([loadFase1Summary(studentId), loadFase2(studentId)]);
 }
 

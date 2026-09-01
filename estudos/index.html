@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=28">
+<link rel="stylesheet" href="style.css?v=33">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
@@ -33,20 +33,11 @@
   <ul class="loading-features" id="loadingFeatures" hidden>
     <li class="loading-feature">
       <span class="loading-feature-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="4 4 20 4 14 12.5 14 19 10 21 10 12.5 4 4"></polygon></svg>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
       </span>
       <span class="loading-feature-text">
-        <b>Filtros manuais (1ª Fase)</b>
-        <span>Escolha ano, exame e disciplina para focar no que precisa.</span>
-      </span>
-    </li>
-    <li class="loading-feature">
-      <span class="loading-feature-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"></rect><circle cx="8" cy="8" r="1" fill="currentColor" stroke="none"></circle><circle cx="16" cy="8" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle><circle cx="8" cy="16" r="1" fill="currentColor" stroke="none"></circle><circle cx="16" cy="16" r="1" fill="currentColor" stroke="none"></circle></svg>
-      </span>
-      <span class="loading-feature-text">
-        <b>Sorteio aleatório (1ª Fase)</b>
-        <span>Monte um simulado escolhendo a quantidade e as matérias.</span>
+        <b>Escolha por cards</b>
+        <span>Selecione o exame e a matéria que quer estudar, num fluxo simples e visual.</span>
       </span>
     </li>
     <li class="loading-feature">
@@ -92,12 +83,22 @@
     <div class="help-modal-body">
       <div class="help-step">
         <span class="help-step-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="4 4 20 4 14 12.5 14 19 10 21 10 12.5 4 4"></polygon></svg>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
         </span>
         <div>
-          <b>Escolha como estudar na 1ª Fase</b>
-          <p>No menu à esquerda, use os <b>Filtros manuais</b> (ano, exame, disciplina) ou o
-            <b>Sorteio aleatório</b> (escolha a quantidade e as matérias e deixe o sistema montar a lista).</p>
+          <b>Escolha o exame</b>
+          <p>Na primeira tela, selecione um ou mais exames (46º, 45º...) e toque em
+            <b>Ver matérias</b>.</p>
+        </div>
+      </div>
+      <div class="help-step">
+        <span class="help-step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        </span>
+        <div>
+          <b>Escolha a matéria</b>
+          <p>Selecione uma ou mais matérias (Penal, Civil, Trabalho...) e toque em
+            <b>Estudar</b> pra começar.</p>
         </div>
       </div>
       <div class="help-step">
@@ -126,9 +127,9 @@
         </span>
         <div>
           <b>Pratique a 2ª Fase também</b>
-          <p>No menu, vá em "2ª Fase" pra treinar a peça profissional e as 4 questões
-            discursivas de cada área, com correção e feedback item a item gerados por IA,
-            seguindo o padrão oficial da banca.</p>
+          <p>Use o botão "2ª Fase" no topo da tela pra treinar a peça profissional e as 4
+            questões discursivas de cada área, com correção e feedback item a item gerados por
+            IA, seguindo o padrão oficial da banca.</p>
         </div>
       </div>
       <div class="help-step">
@@ -137,8 +138,8 @@
         </span>
         <div>
           <b>Acompanhe seu desempenho</b>
-          <p>O placar de acertos da sessão fica no fim do menu, e recomeça sozinho a cada
-            visita.</p>
+          <p>O placar de acertos da sessão fica no topo da tela de estudo, e recomeça sozinho a
+            cada visita.</p>
         </div>
       </div>
     </div>
@@ -149,148 +150,161 @@
   </div>
 </div>
 
-<a href="../index.html" class="brand-logo" id="brandLogo"><img src="../images/logotipo.png" alt="NeuraOAB"></a>
+<div class="help-overlay" id="profileOverlay" hidden>
+  <div class="help-modal profile-modal" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
+    <div class="help-modal-header">
+      <h2 id="profileTitle">Meu Perfil</h2>
+      <button type="button" id="profileCloseBtn" class="help-modal-close" aria-label="Fechar">&times;</button>
+    </div>
 
-<div class="app">
-  <aside class="sidebar" id="sidebar">
-    <button id="sidebarToggle" class="sidebar-handle" aria-label="Expandir menu" aria-expanded="false">
+    <div class="help-modal-body">
+      <div class="field">
+        <label for="profNome">Nome</label>
+        <input type="text" id="profNome" placeholder="Seu nome completo">
+      </div>
+      <div class="field">
+        <label for="profEmail">E-mail</label>
+        <input type="text" id="profEmail" disabled>
+      </div>
+      <div class="field">
+        <label for="profCursinho">Cursinho (definido pelo seu professor)</label>
+        <input type="text" id="profCursinho" disabled>
+      </div>
+      <div class="field">
+        <label for="profTelefone">Telefone</label>
+        <input type="text" id="profTelefone" placeholder="(opcional)">
+      </div>
+      <p class="profile-msg" id="profileMsg"></p>
+    </div>
+
+    <div class="help-modal-footer">
+      <button type="button" id="profileSaveBtn" class="btn-primary">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <button type="button" id="menuBtn" class="menu-btn" aria-label="Abrir menu" aria-expanded="false">
       <span class="bar"></span><span class="bar"></span><span class="bar"></span>
     </button>
+    <a href="../index.html" class="topbar-logo"><img src="../images/logotipo.png" alt="NeuraOAB"></a>
+  </div>
+  <div class="topbar-right">
+    <button type="button" id="helpBtn" class="icon-btn" aria-label="Como funciona o NeuraOAB" title="Ajuda">?</button>
+    <a href="simulado2fase.html" class="phase-switch-btn">
+      <span class="phase-switch-num">2</span><span>2ª Fase</span>
+    </a>
+  </div>
+</header>
 
-    <div class="sidebar-clip">
-    <div class="sidebar-scroll">
-      <div class="side-brand">
-        <button type="button" id="sidebarHelpBtn" class="sidebar-help-btn" aria-label="Como funciona o NeuraOAB" title="Ajuda">?</button>
-        <!-- Login opcional: só existe pra quem recebeu convite de um
-             professor (ver professor-portal/) — sem login, o app continua
-             funcionando exatamente como sempre funcionou (anônimo, sem
-             gravar nada). Logado, as respostas passam a ser atribuídas ao
-             aluno de verdade (ver estudos.js) e aparecem no Portal do
-             Professor. -->
-        <div class="session-wrap">
-          <button type="button" id="sessionAvatarBtn" class="avatar" title="Entrar">E</button>
-          <div class="session-popover" id="sessionPopover" hidden>
-            <div id="sessionLoginForm">
-              <p class="session-popover-title">Entrar</p>
-              <p class="session-popover-hint">Recebeu um convite do seu professor? Entre pra suas respostas contarem pra ele.</p>
-              <input type="email" id="sessionEmail" placeholder="E-mail" autocomplete="username">
-              <input type="password" id="sessionPassword" placeholder="Senha" autocomplete="current-password">
-              <button type="button" id="sessionLoginBtn" class="session-popover-btn">Entrar</button>
-              <p class="session-popover-msg" id="sessionLoginMsg"></p>
-            </div>
-            <div id="sessionLoggedInfo" hidden>
-              <p class="session-popover-title" id="sessionUserLabel"></p>
-              <button type="button" id="sessionLogoutBtn" class="session-popover-btn">Sair</button>
-            </div>
-          </div>
+<div class="menu-backdrop" id="menuBackdrop" hidden></div>
+<div class="menu-panel" id="menuPanel" hidden role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="menu-panel-head">
+    <span>Menu</span>
+    <button type="button" id="menuCloseBtn" class="icon-btn" aria-label="Fechar menu">&times;</button>
+  </div>
+
+  <section>
+    <h2 class="menu-section-title">Configurações</h2>
+    <div class="mode-switch">
+      <button class="mode-btn active" data-theme-btn="dark" type="button">Escuro</button>
+      <button class="mode-btn" data-theme-btn="light" type="button">Claro</button>
+    </div>
+  </section>
+
+  <section class="menu-item-list">
+    <button type="button" id="menuProfileBtn" class="menu-item-btn">Meu Perfil</button>
+    <button type="button" id="menuStatsBtn" class="menu-item-btn">Estatísticas</button>
+  </section>
+
+  <!-- Acesso a' area do aluno exige login (ver requireAuth em estudos.js) —
+       so' chega ate' aqui quem ja' tem uma sessao valida, entao esta secao
+       nunca precisa de um estado "deslogado" alternativo. -->
+  <section id="menuLoggedInfo">
+    <h2 class="menu-section-title">Conta</h2>
+    <div class="menu-user-row">
+      <span class="avatar" id="menuAvatar">?</span>
+      <span class="menu-user-name" id="menuUserLabel"></span>
+    </div>
+    <button type="button" id="sessionLogoutBtn" class="btn-ghost">Sair</button>
+  </section>
+</div>
+
+<div class="app">
+  <main class="content">
+
+    <!-- ------------------------------------------------------- Tela 1 -->
+    <section class="pick-screen" id="screenExams">
+      <div class="pick-screen-head">
+        <h1>Escolha o exame</h1>
+        <p class="pick-screen-hint">Selecione um ou mais exames para estudar.</p>
+      </div>
+      <div class="pick-grid" id="examGrid"></div>
+      <div class="pick-footer">
+        <div class="pick-footer-left">
+          <button type="button" id="examSelectAllBtn" class="select-all-btn">Selecionar todos</button>
+          <span class="pick-footer-count" id="examSelCount">0 selecionado(s)</span>
+        </div>
+        <button type="button" id="toSubjectsBtn" class="btn-primary pick-cta" disabled>Ver matérias</button>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------- Tela 2 -->
+    <section class="pick-screen" id="screenSubjects" hidden>
+      <div class="pick-screen-head">
+        <button type="button" class="btn-back" id="backToExamsBtn">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Voltar
+        </button>
+        <h1>Escolha a matéria</h1>
+        <p class="pick-screen-hint">Selecione uma ou mais matérias para estudar.</p>
+      </div>
+      <div class="pick-grid" id="subjectGrid"></div>
+      <div class="pick-footer">
+        <div class="pick-footer-left">
+          <button type="button" id="subjectSelectAllBtn" class="select-all-btn">Selecionar todos</button>
+          <span class="pick-footer-count" id="subjectSelCount">0 selecionado(s)</span>
+        </div>
+        <button type="button" id="toStudyBtn" class="btn-primary pick-cta" disabled>Estudar</button>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------- Tela 3 -->
+    <section class="study-screen" id="screenStudy" hidden>
+      <div class="study-topbar">
+        <button type="button" class="btn-back" id="backToSubjectsBtn">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Voltar
+        </button>
+        <span class="study-score">Acertos: <b id="scoreText">0 / 0</b></span>
+      </div>
+      <div id="viewer" class="question-card">
+        <div class="loading">Carregando questões do banco...</div>
+      </div>
+    </section>
+
+    <!-- --------------------------------------------------- Estatísticas -->
+    <section class="pick-screen" id="screenStats" hidden>
+      <div class="pick-screen-head">
+        <button type="button" class="btn-back" id="backFromStatsBtn">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Voltar
+        </button>
+        <h1>Estatísticas</h1>
+        <p class="pick-screen-hint">Seu desempenho na 1ª fase.</p>
+      </div>
+      <div class="stats-period-row">
+        <span class="stats-period-label">Período</span>
+        <div class="mode-switch stats-period-switch" id="statsPeriodSwitch">
+          <button class="mode-btn" data-period="today" type="button">Hoje</button>
+          <button class="mode-btn" data-period="7d" type="button">7 dias</button>
+          <button class="mode-btn" data-period="30d" type="button">30 dias</button>
+          <button class="mode-btn active" data-period="all" type="button">Sempre</button>
         </div>
       </div>
-
-      <nav class="side-nav">
-        <a href="index.html" class="phase-link active">
-          <span class="phase-num">1</span>
-          <span class="phase-text">
-            <b>1ª Fase</b>
-            <small>Questões objetivas</small>
-          </span>
-        </a>
-        <a href="simulado2fase.html" class="phase-link">
-          <span class="phase-num">2</span>
-          <span class="phase-text">
-            <b>2ª Fase</b>
-            <small>Simulado com correção por IA</small>
-          </span>
-        </a>
-        <a href="#" class="soon" aria-disabled="true" title="Em breve">Estatísticas</a>
-      </nav>
-
-      <section class="side-section">
-        <h2 class="side-title">Questões</h2>
-        <div class="mode-switch filter-mode-switch">
-          <button class="mode-btn active" data-filter-mode="manual" type="button">Filtros manuais</button>
-          <button class="mode-btn" data-filter-mode="raffle" type="button">Sortear aleatórias</button>
-        </div>
-      </section>
-
-      <section class="side-section filter-mode-panel" data-panel="manual">
-        <h2 class="side-title">Filtros</h2>
-
-        <div class="field">
-          <label for="fYear">Ano</label>
-          <select id="fYear"><option value="all">Todos</option></select>
-        </div>
-
-        <div class="field">
-          <label for="fExam">Exame</label>
-          <select id="fExam"><option value="all">Todos</option></select>
-        </div>
-
-        <div class="field">
-          <label for="fDisc">Disciplina</label>
-          <select id="fDisc"><option value="all">Todas</option></select>
-        </div>
-
-        <p class="result-count" id="filterCount">Carregando...</p>
-        <button type="button" id="clearFilters" class="btn-ghost clear-filters" hidden>Limpar filtros</button>
-      </section>
-
-      <section class="side-section filter-mode-panel" data-panel="raffle" hidden>
-        <h2 class="side-title">Sortear questões aleatórias</h2>
-
-        <div class="field">
-          <label for="raffleQty">Quantidade de questões</label>
-          <input type="number" id="raffleQty" min="1" value="10" inputmode="numeric">
-        </div>
-
-        <div class="raffle-disc-field">
-          <div class="raffle-disc-label-row">
-            <label>Matérias</label>
-            <div class="raffle-disc-quick-actions">
-              <button type="button" id="raffleSelectAll" class="btn-link">Todas</button>
-              <button type="button" id="raffleSelectNone" class="btn-link">Nenhuma</button>
-            </div>
-          </div>
-          <div class="raffle-disc-list" id="raffleDiscList"></div>
-        </div>
-
-        <p class="raffle-hint" id="raffleAvailableHint">0 questão(ões) disponível(eis) com essa seleção.</p>
-        <button type="button" id="raffleConfirmBtn" class="btn-primary raffle-confirm-btn">Sortear</button>
-      </section>
-
-      <section class="side-section theme-section">
-        <h2 class="side-title">Tema</h2>
-        <div class="mode-switch">
-          <button class="mode-btn active" data-theme-btn="dark" type="button">Escuro</button>
-          <button class="mode-btn" data-theme-btn="light" type="button">Claro</button>
-        </div>
-      </section>
-
-      <section class="side-section qlist-section">
-        <div class="qlist-header">
-          <h2 class="side-title">Selecionar Questões</h2>
-          <span class="qlist-count" id="qlistCount">0</span>
-        </div>
-        <div id="qlist" class="qlist"></div>
-      </section>
-
-      <section class="side-section score-section">
-        <div class="score-row">
-          <span class="score-label">Acertos nesta sessão</span>
-          <b id="scoreText">0 / 0</b>
-        </div>
-        <!-- Só aparece pra quem está logado (aluno convidado por um
-             professor, ver session-wrap em .side-brand) — sem login não há
-             sessão nenhuma pra encerrar. -->
-        <button id="logoutBtn" class="btn-ghost" type="button" hidden>Sair</button>
-      </section>
-    </div>
-    </div>
-  </aside>
-
-  <main class="content">
-    <div id="viewer" class="question-card">
-      <div class="loading">Carregando questões do banco...</div>
-    </div>
+      <div id="statsBody"></div>
+    </section>
   </main>
 
   <aside class="chat-panel" id="chatPanel">
@@ -327,7 +341,7 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=19"></script>
+<script src="estudos.js?v=24"></script>
 <script src="dr-laureano.js?v=10"></script>
 </body>
 </html>

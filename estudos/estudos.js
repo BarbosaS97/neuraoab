@@ -3,38 +3,53 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const sidebar = document.getElementById("sidebar");
-const sidebarToggle = document.getElementById("sidebarToggle");
-const brandLogo = document.getElementById("brandLogo");
 const viewer = document.getElementById("viewer");
-const qlistEl = document.getElementById("qlist");
-const qlistCountEl = document.getElementById("qlistCount");
-const filterCountEl = document.getElementById("filterCount");
-const fYear = document.getElementById("fYear");
-const fExam = document.getElementById("fExam");
-const fDisc = document.getElementById("fDisc");
-const clearFiltersBtn = document.getElementById("clearFilters");
 const scoreText = document.getElementById("scoreText");
-const logoutBtn = document.getElementById("logoutBtn");
 const loadingSplash = document.getElementById("loadingSplash");
 const loadingImage = document.getElementById("loadingImage");
 const loadingMessage = document.getElementById("loadingMessage");
 const loadingFeatures = document.getElementById("loadingFeatures");
 const loadingStartBtn = document.getElementById("loadingStartBtn");
-const sidebarHelpBtn = document.getElementById("sidebarHelpBtn");
+const helpBtn = document.getElementById("helpBtn");
 const helpOverlay = document.getElementById("helpOverlay");
 const helpCloseBtn = document.getElementById("helpCloseBtn");
 const helpGotItBtn = document.getElementById("helpGotItBtn");
-const sessionAvatarBtn = document.getElementById("sessionAvatarBtn");
-const sessionPopover = document.getElementById("sessionPopover");
-const sessionLoginForm = document.getElementById("sessionLoginForm");
-const sessionLoggedInfo = document.getElementById("sessionLoggedInfo");
-const sessionEmail = document.getElementById("sessionEmail");
-const sessionPassword = document.getElementById("sessionPassword");
-const sessionLoginBtn = document.getElementById("sessionLoginBtn");
-const sessionLoginMsg = document.getElementById("sessionLoginMsg");
-const sessionUserLabel = document.getElementById("sessionUserLabel");
+
+const menuBtn = document.getElementById("menuBtn");
+const menuCloseBtn = document.getElementById("menuCloseBtn");
+const menuBackdrop = document.getElementById("menuBackdrop");
+const menuPanel = document.getElementById("menuPanel");
+const menuProfileBtn = document.getElementById("menuProfileBtn");
+const menuStatsBtn = document.getElementById("menuStatsBtn");
+const menuAvatar = document.getElementById("menuAvatar");
+const menuUserLabel = document.getElementById("menuUserLabel");
 const sessionLogoutBtn = document.getElementById("sessionLogoutBtn");
+
+const profileOverlay = document.getElementById("profileOverlay");
+const profileCloseBtn = document.getElementById("profileCloseBtn");
+const profNome = document.getElementById("profNome");
+const profEmail = document.getElementById("profEmail");
+const profCursinho = document.getElementById("profCursinho");
+const profTelefone = document.getElementById("profTelefone");
+const profileMsg = document.getElementById("profileMsg");
+const profileSaveBtn = document.getElementById("profileSaveBtn");
+
+const screenExams = document.getElementById("screenExams");
+const screenSubjects = document.getElementById("screenSubjects");
+const screenStudy = document.getElementById("screenStudy");
+const screenStats = document.getElementById("screenStats");
+const statsBody = document.getElementById("statsBody");
+const backFromStatsBtn = document.getElementById("backFromStatsBtn");
+const examGrid = document.getElementById("examGrid");
+const subjectGrid = document.getElementById("subjectGrid");
+const examSelCount = document.getElementById("examSelCount");
+const subjectSelCount = document.getElementById("subjectSelCount");
+const examSelectAllBtn = document.getElementById("examSelectAllBtn");
+const subjectSelectAllBtn = document.getElementById("subjectSelectAllBtn");
+const toSubjectsBtn = document.getElementById("toSubjectsBtn");
+const toStudyBtn = document.getElementById("toStudyBtn");
+const backToExamsBtn = document.getElementById("backToExamsBtn");
+const backToSubjectsBtn = document.getElementById("backToSubjectsBtn");
 
 let allQuestions = [];
 let filtered = [];
@@ -43,51 +58,34 @@ let selectedAnswer = null;
 let results = new Map(); // question id -> { letter, correct }
 let correctCount = 0;
 let answeredCount = 0;
-let raffleMode = false; // true quando "filtered" veio de um sorteio, nao dos selects de filtro
 
-// ---------------------------------------------------------------- Sidebar
+let selectedExams = new Set(); // chaves de exam_number (ou "__none__")
+let selectedSubjects = new Set(); // disciplinas (ou "__none__")
+let examPool = []; // allQuestions filtrado pelos exames selecionados
+
+// ------------------------------------------------------------------- Menu
 //
-// O menu comeca sempre recolhido (so a faixa fina encostada na borda
-// esquerda, com a alca pequena para abrir) e so expande quando o usuario
-// clica na alca — tanto no mobile quanto no desktop. Como o layout usa
-// flexbox normal (sem position: fixed), o conteudo principal e "empurrado"
-// automaticamente quando a largura do menu muda, sem precisar de JS
-// adicional para isso.
+// Painel overlay (nao empurra o layout, ao contrario da antiga barra
+// lateral) — abre por cima do conteudo, fecha clicando fora, no X ou com
+// Escape.
 
-function setSidebarExpanded(expanded) {
-  sidebar.classList.toggle("expanded", expanded);
-  brandLogo.classList.toggle("expanded", expanded);
-  sidebarToggle.setAttribute("aria-expanded", String(expanded));
-  sidebarToggle.setAttribute("aria-label", expanded ? "Recolher menu" : "Expandir menu");
-  // Impede foco/tab em campos que estao visualmente cortados quando recolhido.
-  const scrollArea = sidebar.querySelector(".sidebar-scroll");
-  if (expanded) scrollArea.removeAttribute("inert");
-  else scrollArea.setAttribute("inert", "");
+function openMenu() {
+  menuBackdrop.hidden = false;
+  menuPanel.hidden = false;
+  menuBtn.setAttribute("aria-expanded", "true");
 }
 
-sidebarToggle.addEventListener("click", () => {
-  setSidebarExpanded(!sidebar.classList.contains("expanded"));
-});
+function closeMenu() {
+  menuBackdrop.hidden = true;
+  menuPanel.hidden = true;
+  menuBtn.setAttribute("aria-expanded", "false");
+}
 
-// A logo fica bem perto da alca de abrir o menu quando ele esta recolhido —
-// clicando ali, o usuario pode achar que vai expandir o menu e, em vez
-// disso, ser levado pra landing page sem querer. Com o menu recolhido, o
-// clique na logo nao faz nada; expandido, funciona normalmente como link
-// pra landing page (nao ha mais essa ambiguidade de proposito).
-brandLogo.addEventListener("click", (ev) => {
-  if (!sidebar.classList.contains("expanded")) {
-    ev.preventDefault();
-  }
-});
-
-setSidebarExpanded(false);
+menuBtn.addEventListener("click", openMenu);
+menuCloseBtn.addEventListener("click", closeMenu);
+menuBackdrop.addEventListener("click", closeMenu);
 
 // -------------------------------------------------------------------- Help
-//
-// O mesmo modal ("Como funciona o NeuraOAB") e' aberto tanto pelo botao
-// "Como funciona?" da tela de carregamento (so aparece na primeira vez,
-// depois de "Comecar") quanto pelo "?" no topo do menu (sempre disponivel,
-// pra quem quiser reler a explicacao depois).
 
 function openHelpModal() {
   helpOverlay.hidden = false;
@@ -97,22 +95,24 @@ function closeHelpModal() {
   helpOverlay.hidden = true;
 }
 
-sidebarHelpBtn.addEventListener("click", openHelpModal);
+helpBtn.addEventListener("click", openHelpModal);
 helpCloseBtn.addEventListener("click", closeHelpModal);
 helpGotItBtn.addEventListener("click", closeHelpModal);
 helpOverlay.addEventListener("click", (ev) => {
   if (ev.target === helpOverlay) closeHelpModal();
 });
+
 document.addEventListener("keydown", (ev) => {
-  if (ev.key === "Escape" && !helpOverlay.hidden) closeHelpModal();
+  if (ev.key !== "Escape") return;
+  if (!helpOverlay.hidden) closeHelpModal();
+  else if (!profileOverlay.hidden) closeProfileModal();
+  else if (!menuPanel.hidden) closeMenu();
 });
 
 // ------------------------------------------------------------------ Mode
 //
-// Escopado por ".mode-switch" (nao por todos os ".mode-btn" da pagina de
-// uma vez) — sao tres grupos independentes (Pratica/Simulado,
-// Escuro/Claro, e Filtros manuais/Sortear aleatorias), cada um com sua
-// propria selecao unica.
+// Escopado por ".mode-switch" — hoje so' um grupo (tema), mas mantido
+// generico pra qualquer outro switch parecido que venha a existir no menu.
 
 document.querySelectorAll(".mode-switch").forEach(group => {
   const buttons = group.querySelectorAll(".mode-btn");
@@ -122,7 +122,7 @@ document.querySelectorAll(".mode-switch").forEach(group => {
       buttons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       if (btn.dataset.themeBtn) applyTheme(btn.dataset.themeBtn);
-      if (btn.dataset.filterMode) setFilterMode(btn.dataset.filterMode);
+      if (btn.dataset.period) setStatsPeriod(btn.dataset.period);
     });
   });
 });
@@ -160,34 +160,31 @@ function updateScoreUI() {
   scoreText.textContent = `${correctCount} / ${answeredCount}`;
 }
 
-// --------------------------------------------------------------- Filters
+// ------------------------------------------------------------- Telas
 //
-// Os 4 filtros sao mutuamente dependentes (nao so' Ano -> Exame): mudar
-// qualquer um deles recalcula as opcoes disponiveis nos OUTROS 3 com base
-// no que sobra depois da combinacao atual — assim nunca da' pra escolher
-// uma combinacao impossivel (ex.: um exame que nao existe naquele ano) sem
-// perceber, e cada opcao mostra quantas questoes ela de fato tem.
+// Fluxo linear: Tela 1 (exames) -> Tela 2 (materias, dentro dos exames
+// escolhidos) -> Tela 3 (estudo, dentro dos exames+materias escolhidos).
+// Sem menu lateral: so' um dos 3 <section> fica visivel por vez.
+
+function showScreen(name) {
+  screenExams.hidden = name !== "exams";
+  screenSubjects.hidden = name !== "subjects";
+  screenStudy.hidden = name !== "study";
+  screenStats.hidden = name !== "stats";
+}
+
+// Tela atual ANTES de abrir Estatisticas (pelo menu, acessivel de qualquer
+// uma das outras 3) — pra "Voltar" de la' devolver o aluno pra onde ele
+// estava, em vez de sempre cair na tela de exames.
+function currentScreenName() {
+  if (!screenStudy.hidden) return "study";
+  if (!screenSubjects.hidden) return "subjects";
+  if (!screenStats.hidden) return "stats";
+  return "exams";
+}
 
 function uniqueSorted(arr) {
   return [...new Set(arr)].sort((a, b) => (a > b ? 1 : a < b ? -1 : 0));
-}
-
-function getFilterCriteria() {
-  return {
-    year: fYear.value,
-    exam: fExam.value,
-    disc: fDisc.value,
-  };
-}
-
-// `excludeKey` deixa de fora um dos 3 criterios — usado para calcular, para
-// cada select, quais opcoes fazem sentido dada a combinacao dos OUTROS 2
-// (nao faria sentido o proprio filtro se restringir com base nele mesmo).
-function matchesCriteria(q, criteria, excludeKey) {
-  if (excludeKey !== "year" && criteria.year !== "all" && String(q.year) !== criteria.year) return false;
-  if (excludeKey !== "exam" && criteria.exam !== "all" && String(q.exam_number ?? "__none__") !== criteria.exam) return false;
-  if (excludeKey !== "disc" && criteria.disc !== "all" && (q.discipline || "__none__") !== criteria.disc) return false;
-  return true;
 }
 
 function buildCounts(rows, keyFn) {
@@ -199,308 +196,198 @@ function buildCounts(rows, keyFn) {
   return counts;
 }
 
-// Reconstroi um <select>: opcao "Todos" (com o total), depois uma opcao por
-// chave valida com sua contagem. Preserva a selecao atual quando a chave
-// ainda esta disponivel; caso contrario, volta para "Todos".
-function rebuildSelect(selectEl, keys, counts, totalCount, allLabel, formatLabel) {
-  const previous = selectEl.value;
-  selectEl.innerHTML = "";
-  selectEl.appendChild(new Option(`${allLabel} (${totalCount})`, "all"));
+// Cria um <button class="pick-card"> selecionavel (toggle), com o check
+// visual controlado so' por CSS (.selected) a partir da classe aplicada
+// aqui — sem nenhum <input> escondido, o proprio botao e' o alvo do clique.
+function buildPickCard({ title, sub, count, selected, onToggle }) {
+  const card = document.createElement("button");
+  card.type = "button";
+  card.className = "pick-card" + (selected ? " selected" : "");
+
+  const check = document.createElement("span");
+  check.className = "pick-card-check";
+  check.setAttribute("aria-hidden", "true");
+  card.appendChild(check);
+
+  const titleEl = document.createElement("span");
+  titleEl.className = "pick-card-title";
+  titleEl.textContent = title;
+  card.appendChild(titleEl);
+
+  if (sub) {
+    const subEl = document.createElement("span");
+    subEl.className = "pick-card-sub";
+    subEl.textContent = sub;
+    card.appendChild(subEl);
+  }
+
+  const countEl = document.createElement("span");
+  countEl.className = "pick-card-count";
+  countEl.textContent = `${count} questão(ões)`;
+  card.appendChild(countEl);
+
+  card.setAttribute("aria-pressed", String(selected));
+  card.addEventListener("click", () => onToggle(card));
+
+  return card;
+}
+
+// ------------------------------------------------------------- Tela 1
+
+function examKey(q) {
+  return q.exam_number != null ? String(q.exam_number) : "__none__";
+}
+
+function renderExamGrid() {
+  const counts = buildCounts(allQuestions, examKey);
+  const yearByExam = new Map();
+  allQuestions.forEach(q => {
+    const key = examKey(q);
+    if (!yearByExam.has(key)) yearByExam.set(key, q.year);
+  });
+
+  const keys = uniqueSorted(allQuestions.map(examKey))
+    .sort((a, b) => (a === "__none__" ? 1 : b === "__none__" ? -1 : Number(b) - Number(a)));
+
+  examGrid.innerHTML = "";
   keys.forEach(key => {
-    selectEl.appendChild(new Option(formatLabel(key, counts.get(key) || 0), key));
+    const title = key === "__none__" ? "Sem exame" : `${key}º Exame`;
+    const year = yearByExam.get(key);
+    const card = buildPickCard({
+      title,
+      sub: year ? `Ano ${year}` : null,
+      count: counts.get(key) || 0,
+      selected: selectedExams.has(key),
+      onToggle: (cardEl) => {
+        if (selectedExams.has(key)) selectedExams.delete(key);
+        else selectedExams.add(key);
+        cardEl.classList.toggle("selected", selectedExams.has(key));
+        cardEl.setAttribute("aria-pressed", String(selectedExams.has(key)));
+        updateExamFooter();
+      },
+    });
+    examGrid.appendChild(card);
   });
-  selectEl.value = keys.some(k => String(k) === previous) ? previous : "all";
+
+  updateExamFooter();
 }
 
-const FILTER_SELECTS = { year: fYear, exam: fExam, disc: fDisc };
-
-// Quando o usuario muda um filtro (changedKey) para um valor que, combinado
-// com os OUTROS 2 ja' selecionados, nao tem nenhuma questao, alguem tem que
-// ceder. A escolha que o usuario acabou de fazer e' sempre a que vale —
-// entao so' os outros campos sao candidatos a voltar para "Todos", nunca o
-// changedKey. Cada outro campo e' testado par-a-par contra o changedKey
-// (ignorando o demais), pra nao ficar preso a uma combinacao desatualizada:
-// se aquele par sozinho ja' nao existe, esse campo cede.
-function settleFilterConflicts(changedKey) {
-  if (!changedKey) return;
-
-  const criteria = getFilterCriteria();
-  const changedValue = criteria[changedKey];
-  if (changedValue === "all") return;
-
-  Object.keys(FILTER_SELECTS).forEach(key => {
-    if (key === changedKey) return;
-    const el = FILTER_SELECTS[key];
-    if (el.value === "all") return;
-
-    const pair = { year: "all", exam: "all", disc: "all" };
-    pair[changedKey] = changedValue;
-    pair[key] = criteria[key];
-
-    const stillCompatible = allQuestions.some(q => matchesCriteria(q, pair, null));
-    if (!stillCompatible) el.value = "all";
-  });
+function allExamKeys() {
+  return uniqueSorted(allQuestions.map(examKey));
 }
 
-// Recalcula as opcoes (e contagens) dos 3 selects com base na combinacao
-// atual dos outros — assim nunca da' pra escolher, sem perceber, uma
-// combinacao que não existe (ex.: um exame que nao teve questao daquela
-// disciplina). `changedKey` (o filtro que o usuario acabou de mexer, se for
-// o caso) e' protegido de ser resetado — ver settleFilterConflicts.
-function refreshFilterOptions(changedKey) {
-  settleFilterConflicts(changedKey);
+function updateExamFooter() {
+  examSelCount.textContent = `${selectedExams.size} selecionado(s)`;
+  toSubjectsBtn.disabled = selectedExams.size === 0;
 
-  const criteria = getFilterCriteria();
-
-  const rowsForYear = allQuestions.filter(q => matchesCriteria(q, criteria, "year"));
-  const years = uniqueSorted(rowsForYear.map(q => q.year)).sort((a, b) => b - a);
-  rebuildSelect(fYear, years, buildCounts(rowsForYear, q => q.year), rowsForYear.length,
-    "Todos", (y, c) => `${y} (${c})`);
-
-  const rowsForExam = allQuestions.filter(q => matchesCriteria(q, criteria, "exam"));
-  const exams = uniqueSorted(rowsForExam.map(q => q.exam_number ?? "__none__"))
-    .sort((a, b) => (a === "__none__" ? 1 : b === "__none__" ? -1 : b - a));
-  rebuildSelect(fExam, exams, buildCounts(rowsForExam, q => q.exam_number ?? "__none__"), rowsForExam.length,
-    "Todos", (e, c) => (e === "__none__" ? `(sem exame) (${c})` : `${e}º Exame (${c})`));
-
-  const rowsForDisc = allQuestions.filter(q => matchesCriteria(q, criteria, "disc"));
-  const discs = uniqueSorted(rowsForDisc.map(q => q.discipline || "__none__"))
-    .sort((a, b) => (a === "__none__" ? 1 : b === "__none__" ? -1 : 0));
-  rebuildSelect(fDisc, discs, buildCounts(rowsForDisc, q => q.discipline || "__none__"), rowsForDisc.length,
-    "Todas", (d, c) => (d === "__none__" ? `(sem disciplina) (${c})` : `${d} (${c})`));
+  const keys = allExamKeys();
+  examSelectAllBtn.textContent = keys.length > 0 && keys.every(k => selectedExams.has(k))
+    ? "Desmarcar todos"
+    : "Selecionar todos";
 }
 
-// Mostra a contagem de resultados de forma diferente conforme a origem da
-// lista atual: sorteio (ver startRaffle, mais abaixo) ou os selects normais
-// de filtro — o texto deixa claro qual dos dois esta em vigor.
-function updateResultDisplay() {
-  qlistCountEl.textContent = filtered.length;
-  filterCountEl.textContent = raffleMode
-    ? `${filtered.length} questão(ões) sorteada(s)`
-    : `${filtered.length} questão(ões) encontrada(s)`;
-}
-
-function applyFilters() {
-  const criteria = getFilterCriteria();
-  filtered = allQuestions.filter(q => matchesCriteria(q, criteria, null));
-
-  updateResultDisplay();
-  clearFiltersBtn.hidden = criteria.year === "all" && criteria.exam === "all" && criteria.disc === "all";
-  currentIndex = 0;
-  selectedAnswer = null;
-  renderList();
-  renderQuestion();
-}
-
-function clearFilters() {
-  raffleMode = false;
-  fYear.value = "all";
-  fExam.value = "all";
-  fDisc.value = "all";
-  refreshFilterOptions(null);
-  applyFilters();
-}
-
-Object.keys(FILTER_SELECTS).forEach(key => {
-  FILTER_SELECTS[key].addEventListener("change", () => {
-    // Mexer num filtro normal sempre sai do modo sorteio — evita mostrar um
-    // resultado que nao corresponde nem ao sorteio nem aos selects.
-    raffleMode = false;
-    refreshFilterOptions(key);
-    applyFilters();
-  });
+// Alterna entre marcar TODOS os exames visiveis e limpar a selecao inteira
+// — um so' botao faz as duas coisas (ver texto trocado em updateExamFooter),
+// em vez de dois botoes separados (uma "Selecionar todos" e outra "Nenhum").
+examSelectAllBtn.addEventListener("click", () => {
+  const keys = allExamKeys();
+  const allSelected = keys.length > 0 && keys.every(k => selectedExams.has(k));
+  if (allSelected) selectedExams.clear();
+  else keys.forEach(k => selectedExams.add(k));
+  renderExamGrid();
 });
 
-clearFiltersBtn.addEventListener("click", clearFilters);
+toSubjectsBtn.addEventListener("click", () => {
+  if (selectedExams.size === 0) return;
+  examPool = allQuestions.filter(q => selectedExams.has(examKey(q)));
+  selectedSubjects.clear();
+  renderSubjectGrid();
+  showScreen("subjects");
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+});
 
-// -------------------------------------------------------------- Raffle
-//
-// "Sortear questões aleatórias": um segundo modo pro menu de questões,
-// alternado pelo switch "Filtros manuais / Sortear aleatórias" (ver
-// setFilterMode) — nao e' um refinamento do filtro atual, e sim um atalho
-// independente: o aluno so escolhe QUANTAS questões quer e de QUAIS
-// materias, e o sistema monta uma lista aleatoria a partir de TODO o banco
-// (sem respeitar ano/exame, de proposito). Ao clicar "Sortear", essa lista
-// substitui "filtered" e os 3 selects do painel de filtros manuais voltam
-// pra "Todos", pra nao parecer que o resultado bateria com uma combinacao
-// especifica deles quando o aluno voltar pro outro painel.
+// ------------------------------------------------------------- Tela 2
 
-const filterModePanels = {
-  manual: document.querySelector('.filter-mode-panel[data-panel="manual"]'),
-  raffle: document.querySelector('.filter-mode-panel[data-panel="raffle"]'),
-};
-const raffleConfirmBtn = document.getElementById("raffleConfirmBtn");
-const raffleQtyInput = document.getElementById("raffleQty");
-const raffleAvailableHint = document.getElementById("raffleAvailableHint");
-const raffleDiscList = document.getElementById("raffleDiscList");
-const raffleSelectAllBtn = document.getElementById("raffleSelectAll");
-const raffleSelectNoneBtn = document.getElementById("raffleSelectNone");
-
-// Alterna qual painel aparece no lugar de "Filtros" — chamado pelo listener
-// generico de ".mode-switch" (ver secao Mode, no topo do arquivo) quando um
-// botao com "data-filter-mode" e clicado.
-function setFilterMode(mode) {
-  filterModePanels.manual.hidden = mode !== "manual";
-  filterModePanels.raffle.hidden = mode !== "raffle";
-
-  if (mode === "manual") {
-    // Volta a mostrar a lista conforme os selects (raffleMode=false faz
-    // updateResultDisplay usar o texto normal, nao o de sorteio).
-    raffleMode = false;
-    applyFilters();
-  } else {
-    // Reconstroi a lista de materias sempre que entra no painel — barato
-    // (poucas dezenas de checkboxes) e garante que a contagem de cada uma
-    // reflita o banco atual.
-    buildRaffleDisciplineOptions();
-    updateRaffleAvailability();
-  }
+function subjectKey(q) {
+  return q.discipline || "__none__";
 }
 
-// Embaralhamento Fisher-Yates — cada permutacao igualmente provavel (ao
-// contrario de ordenar por Math.random(), que enviesa o resultado).
-function shuffle(arr) {
-  const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-// Monta a lista de materias (com contagem) sempre que o painel de sorteio
-// e' aberto (ver setFilterMode) — os checkboxes comecam todos marcados,
-// pra quem so quer "sortear de tudo" nao precisar marcar nada manualmente
-// (so' desmarcar o que NAO quiser).
-function buildRaffleDisciplineOptions() {
-  const counts = buildCounts(allQuestions, q => q.discipline || "__none__");
-  const discs = uniqueSorted(allQuestions.map(q => q.discipline || "__none__"))
+function renderSubjectGrid() {
+  const counts = buildCounts(examPool, subjectKey);
+  const keys = uniqueSorted(examPool.map(subjectKey))
     .sort((a, b) => (a === "__none__" ? 1 : b === "__none__" ? -1 : 0));
 
-  const previouslyChecked = new Set(
-    Array.from(raffleDiscList.querySelectorAll("input:checked")).map(cb => cb.value)
-  );
-  const isFirstBuild = raffleDiscList.children.length === 0;
+  subjectGrid.innerHTML = "";
 
-  raffleDiscList.innerHTML = "";
-  discs.forEach(d => {
-    const label = document.createElement("label");
-    label.className = "raffle-disc-item";
-
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.value = d;
-    checkbox.checked = isFirstBuild ? true : previouslyChecked.has(d);
-    checkbox.addEventListener("change", updateRaffleAvailability);
-
-    const text = document.createElement("span");
-    text.className = "raffle-disc-name";
-    text.textContent = d === "__none__" ? "(sem disciplina)" : d;
-
-    const count = document.createElement("span");
-    count.className = "raffle-disc-count";
-    count.textContent = counts.get(d) || 0;
-
-    label.append(checkbox, text, count);
-    raffleDiscList.appendChild(label);
-  });
-}
-
-function getSelectedRaffleDiscs() {
-  return Array.from(raffleDiscList.querySelectorAll("input:checked")).map(cb => cb.value);
-}
-
-// Atualiza, em tempo real, quantas questões existem pra selecao atual de
-// materias — e trava a quantidade nesse teto, pra o aluno nunca conseguir
-// pedir mais questões do que existem (nada de erro so' depois de clicar
-// "Sortear").
-function updateRaffleAvailability() {
-  const selected = getSelectedRaffleDiscs();
-  const available = selected.length === 0
-    ? 0
-    : allQuestions.filter(q => selected.includes(q.discipline || "__none__")).length;
-
-  raffleAvailableHint.textContent = available === 0
-    ? "Nenhuma questão disponível com essa seleção."
-    : `${available} questão(ões) disponível(eis) com essa seleção.`;
-
-  raffleQtyInput.max = String(Math.max(available, 1));
-  if (available > 0 && Number(raffleQtyInput.value) > available) {
-    raffleQtyInput.value = String(available);
+  if (keys.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "pick-empty";
+    empty.textContent = "Nenhuma matéria encontrada para os exames selecionados.";
+    subjectGrid.appendChild(empty);
   }
-  raffleConfirmBtn.disabled = available === 0;
+
+  keys.forEach(key => {
+    const title = key === "__none__" ? "Sem disciplina" : key;
+    const card = buildPickCard({
+      title,
+      sub: null,
+      count: counts.get(key) || 0,
+      selected: selectedSubjects.has(key),
+      onToggle: (cardEl) => {
+        if (selectedSubjects.has(key)) selectedSubjects.delete(key);
+        else selectedSubjects.add(key);
+        cardEl.classList.toggle("selected", selectedSubjects.has(key));
+        cardEl.setAttribute("aria-pressed", String(selectedSubjects.has(key)));
+        updateSubjectFooter();
+      },
+    });
+    subjectGrid.appendChild(card);
+  });
+
+  updateSubjectFooter();
 }
 
-function startRaffle(selectedDiscs, quantity) {
-  raffleMode = true;
+function allSubjectKeys() {
+  return uniqueSorted(examPool.map(subjectKey));
+}
 
-  // Volta os 3 selects pra "Todos": o sorteio ignora ano/exame de proposito
-  // (ver comentario no topo da secao), entao deixa-los com um valor
-  // especifico seria enganoso — pareceria que o resultado bate com aquela
-  // combinacao quando o aluno voltar pro painel de filtros manuais, quando
-  // na verdade veio de todo o banco.
-  fYear.value = "all";
-  fExam.value = "all";
-  fDisc.value = "all";
-  refreshFilterOptions(null);
+function updateSubjectFooter() {
+  subjectSelCount.textContent = `${selectedSubjects.size} selecionado(s)`;
+  toStudyBtn.disabled = selectedSubjects.size === 0;
 
-  const pool = allQuestions.filter(q => selectedDiscs.includes(q.discipline || "__none__"));
-  filtered = shuffle(pool).slice(0, quantity);
+  const keys = allSubjectKeys();
+  subjectSelectAllBtn.textContent = keys.length > 0 && keys.every(k => selectedSubjects.has(k))
+    ? "Desmarcar todos"
+    : "Selecionar todos";
+}
 
+subjectSelectAllBtn.addEventListener("click", () => {
+  const keys = allSubjectKeys();
+  const allSelected = keys.length > 0 && keys.every(k => selectedSubjects.has(k));
+  if (allSelected) selectedSubjects.clear();
+  else keys.forEach(k => selectedSubjects.add(k));
+  renderSubjectGrid();
+});
+
+backToExamsBtn.addEventListener("click", () => {
+  showScreen("exams");
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+});
+
+toStudyBtn.addEventListener("click", () => {
+  if (selectedSubjects.size === 0) return;
+  filtered = examPool.filter(q => selectedSubjects.has(subjectKey(q)));
   currentIndex = 0;
   selectedAnswer = null;
-  updateResultDisplay();
-  renderList();
+  showScreen("study");
   renderQuestion();
-}
-
-raffleSelectAllBtn.addEventListener("click", () => {
-  raffleDiscList.querySelectorAll("input").forEach(cb => { cb.checked = true; });
-  updateRaffleAvailability();
-});
-raffleSelectNoneBtn.addEventListener("click", () => {
-  raffleDiscList.querySelectorAll("input").forEach(cb => { cb.checked = false; });
-  updateRaffleAvailability();
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
 });
 
-raffleConfirmBtn.addEventListener("click", () => {
-  const selected = getSelectedRaffleDiscs();
-  const available = Number(raffleQtyInput.max) || 0;
-  if (selected.length === 0 || available === 0) return;
-
-  const quantity = Math.min(Math.max(1, parseInt(raffleQtyInput.value, 10) || 1), available);
-  startRaffle(selected, quantity);
+backToSubjectsBtn.addEventListener("click", () => {
+  showScreen("subjects");
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
 });
-
-// ------------------------------------------------------------- Question list
-
-function renderList() {
-  qlistEl.innerHTML = "";
-  filtered.forEach((q, idx) => {
-    const btn = document.createElement("button");
-    btn.className = "qitem" + (idx === currentIndex ? " active" : "");
-    btn.type = "button";
-
-    const dot = document.createElement("span");
-    const outcome = results.get(q.id);
-    dot.className = "status-dot" + (outcome ? (outcome.correct ? " correct" : " wrong") : "");
-
-    const num = document.createElement("span");
-    num.className = "num";
-    num.textContent = `#${q.number}`;
-
-    btn.append(dot, num);
-    btn.addEventListener("click", () => goToIndex(idx));
-    qlistEl.appendChild(btn);
-  });
-}
-
-function goToIndex(idx) {
-  currentIndex = idx;
-  selectedAnswer = null;
-  renderList();
-  renderQuestion();
-}
 
 // ---------------------------------------------------------------- Question
 
@@ -566,6 +453,12 @@ function buildNavButtons() {
 
   navButtons.append(prevBtn, pos, nextBtn);
   return navButtons;
+}
+
+function goToIndex(idx) {
+  currentIndex = idx;
+  selectedAnswer = null;
+  renderQuestion();
 }
 
 // Preenche `body` com enunciado + alternativas de uma questao ja com os
@@ -644,13 +537,13 @@ function renderQuestion() {
     viewer.innerHTML = "";
     const empty = document.createElement("div");
     empty.className = "empty";
-    empty.append("Nenhuma questão encontrada para os filtros selecionados. ");
-    const clearLink = document.createElement("button");
-    clearLink.type = "button";
-    clearLink.className = "btn-link";
-    clearLink.textContent = "Limpar filtros";
-    clearLink.addEventListener("click", clearFilters);
-    empty.appendChild(clearLink);
+    empty.append("Nenhuma questão encontrada para a seleção atual. ");
+    const backLink = document.createElement("button");
+    backLink.type = "button";
+    backLink.className = "btn-link";
+    backLink.textContent = "Voltar";
+    backLink.addEventListener("click", () => showScreen("subjects"));
+    empty.appendChild(backLink);
     viewer.appendChild(empty);
     document.dispatchEvent(new CustomEvent("question:changed", { detail: null }));
     return;
@@ -695,90 +588,44 @@ function revealAnswer(altButtons, correctLetter, wrongLetter, feedbackEl) {
 
 // ------------------------------------------------------ Sessão do aluno
 //
-// Totalmente opcional — só existe pra quem recebeu um convite de professor
-// (ver professor-portal/). Sem login, currentSession fica null pra sempre e
-// nada muda em relação ao comportamento anônimo de sempre: nenhuma consulta
-// extra, nenhuma gravação, nenhum efeito colateral. Logado, cada resposta
-// de 1ª fase passa a ser gravada em oab_respostas (ver handleAnswer abaixo)
-// pra aparecer no Portal do Professor.
+// A area do aluno agora EXIGE login — so' se chega aqui com uma conta de
+// verdade (convidada por um professor, ver estudos/aceitar-convite.html) ja'
+// autenticada pela landing page (ver index.html, ROLE_DESTINATIONS). Ver
+// requireAuth() logo abaixo, chamado antes de qualquer outra coisa em
+// init(). Cada resposta de 1ª fase e' gravada em oab_respostas (ver
+// handleAnswer abaixo) pra aparecer no Portal do Professor, e "Meu Perfil"
+// (ver mais abaixo) mostra/edita os dados de cadastro (tabela "profiles").
 
 let currentSession = null;
 
 function updateSessionUI() {
-  if (currentSession?.user) {
-    const label = currentSession.user.user_metadata?.nome || currentSession.user.email || "?";
-    sessionAvatarBtn.textContent = label.trim().charAt(0).toUpperCase() || "?";
-    sessionAvatarBtn.title = `Logado como ${currentSession.user.email}`;
-    sessionLoginForm.hidden = true;
-    sessionLoggedInfo.hidden = false;
-    sessionUserLabel.textContent = currentSession.user.email;
-    logoutBtn.hidden = false;
-  } else {
-    sessionAvatarBtn.textContent = "E";
-    sessionAvatarBtn.title = "Entrar";
-    sessionLoginForm.hidden = false;
-    sessionLoggedInfo.hidden = true;
-    logoutBtn.hidden = true;
-  }
+  if (!currentSession?.user) return;
+  const label = currentSession.user.user_metadata?.nome || currentSession.user.email || "?";
+  menuAvatar.textContent = label.trim().charAt(0).toUpperCase() || "?";
+  menuUserLabel.textContent = label;
 }
 
-// Botão "Sair" na barra lateral — mesmo efeito do "Sair" dentro do popover
-// da sessão (sessionLogoutBtn), só que num lugar mais visível/direto pra
-// quem já está logado, em vez de precisar abrir o popover pra encontrar.
-logoutBtn.addEventListener("click", () => handleSessionLogout());
-
-sessionAvatarBtn.addEventListener("click", (ev) => {
-  ev.stopPropagation();
-  sessionPopover.hidden = !sessionPopover.hidden;
-});
-
-sessionPopover.addEventListener("click", (ev) => ev.stopPropagation());
-
-document.addEventListener("click", () => {
-  sessionPopover.hidden = true;
-});
-
-function showSessionLoginMsg(text) {
-  sessionLoginMsg.textContent = text;
-  sessionLoginMsg.className = "session-popover-msg show";
-}
-
-async function handleSessionLogin() {
-  const email = sessionEmail.value.trim();
-  const password = sessionPassword.value;
-  if (!email || !password) {
-    showSessionLoginMsg("Preencha e-mail e senha.");
-    return;
+// Confere autenticacao ANTES de mostrar qualquer coisa da area do aluno.
+// Sem sessao valida, manda de volta pra' landing page (onde fica o login de
+// verdade) em vez de liberar o uso anonimo de antes.
+async function requireAuth() {
+  const { data } = await client.auth.getSession();
+  if (!data.session?.user) {
+    window.location.replace("../index.html");
+    return null;
   }
-
-  sessionLoginBtn.disabled = true;
-  const { error } = await client.auth.signInWithPassword({ email, password });
-  sessionLoginBtn.disabled = false;
-
-  if (error) {
-    showSessionLoginMsg("E-mail ou senha inválidos.");
-    return;
-  }
-  sessionPassword.value = "";
-  sessionLoginMsg.className = "session-popover-msg";
-  sessionPopover.hidden = true;
+  return data.session;
 }
-
-sessionLoginBtn.addEventListener("click", handleSessionLogin);
-sessionPassword.addEventListener("keydown", (ev) => {
-  if (ev.key === "Enter") handleSessionLogin();
-});
 
 sessionLogoutBtn.addEventListener("click", () => handleSessionLogout());
 
-// Faz o signOut de fato e força o estado visual a refletir "deslogado" na
-// hora — antes disso, a UI só mudava se o evento onAuthStateChange do
-// Supabase chegasse a disparar; quando ele falhava (sessão já expirada,
-// rede instável, etc.) o clique parecia não fazer nada.
+// Faz o signOut de fato e redireciona na hora — antes disso, a UI só mudava
+// se o evento onAuthStateChange do Supabase chegasse a disparar; quando ele
+// falhava (sessão já expirada, rede instável, etc.) o clique parecia não
+// fazer nada.
 async function handleSessionLogout() {
   currentSession = null;
-  updateSessionUI();
-  sessionPopover.hidden = true;
+  closeMenu();
   try {
     await client.auth.signOut();
   } catch (err) {
@@ -787,14 +634,14 @@ async function handleSessionLogout() {
   window.location.href = "../index.html";
 }
 
+// Se a sessao cair enquanto o aluno esta' navegando (token expirado, logout
+// em outra aba etc.), manda de volta pra' landing page em vez de deixar a
+// pagina "meio logada" — o resto do JS (handleAnswer, Meu Perfil) assume
+// currentSession sempre presente.
 client.auth.onAuthStateChange((_event, session) => {
   currentSession = session;
-  updateSessionUI();
-});
-
-client.auth.getSession().then(({ data }) => {
-  currentSession = data.session;
-  updateSessionUI();
+  if (session?.user) updateSessionUI();
+  else window.location.replace("../index.html");
 });
 
 function handleAnswer(q, letter, correctLetter, altButtons, feedbackEl) {
@@ -809,7 +656,6 @@ function handleAnswer(q, letter, correctLetter, altButtons, feedbackEl) {
     answeredCount++;
     if (isCorrect) correctCount++;
     updateScoreUI();
-    renderList();
 
     // Só grava quando logado (aluno convidado por um professor) — fire-
     // and-forget, nunca bloqueia nem altera o feedback já mostrado acima;
@@ -828,10 +674,482 @@ function handleAnswer(q, letter, correctLetter, altButtons, feedbackEl) {
   }
 }
 
+// -------------------------------------------------------------- Meu Perfil
+//
+// Pega os dados ja preenchidos no cadastro (tabela "profiles" — nome,
+// email, cursinho, telefone; ver estudos/aceitar-convite.html e
+// supabase/schema_portal_mestre.sql) e permite editar a propria linha
+// (RLS "profiles_update_self" libera qualquer autenticado a editar so' a
+// propria, ver schema_portal_mestre.sql — role_id/ativo/professor_id
+// continuam travados por um gatilho, mas nome/email/cursinho/telefone nao).
+
+function openProfileModal() {
+  if (!currentSession?.user) return;
+  closeMenu();
+  profileMsg.className = "profile-msg";
+  profileOverlay.hidden = false;
+  loadProfile();
+}
+
+function closeProfileModal() {
+  profileOverlay.hidden = true;
+}
+
+menuProfileBtn.addEventListener("click", openProfileModal);
+profileCloseBtn.addEventListener("click", closeProfileModal);
+profileOverlay.addEventListener("click", (ev) => {
+  if (ev.target === profileOverlay) closeProfileModal();
+});
+
+function showProfileMsg(text, ok) {
+  profileMsg.textContent = text;
+  profileMsg.className = "profile-msg show" + (ok ? " ok" : "");
+}
+
+async function loadProfile() {
+  const user = currentSession.user;
+  profEmail.value = user.email || "";
+  profNome.value = "";
+  profCursinho.value = "";
+  profTelefone.value = "";
+  profileSaveBtn.disabled = true;
+
+  const { data, error } = await client
+    .from("profiles")
+    .select("nome, email, telefone, professor_id")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (error) {
+    profileSaveBtn.disabled = false;
+    showProfileMsg(`Erro ao carregar perfil: ${error.message}`, false);
+    return;
+  }
+
+  profNome.value = data?.nome || "";
+  profEmail.value = data?.email || user.email || "";
+  profTelefone.value = data?.telefone || "";
+  profileSaveBtn.disabled = false;
+
+  // "Cursinho" nao e' um campo do proprio aluno — e' o nome do cursinho
+  // cadastrado no PROFESSOR que o convidou (profiles.professor_id), definido
+  // pelo admin no Portal Mestre (ver portal-mestre/js/admin.js). Precisa da
+  // policy "profiles_select_own_professor" (ver
+  // supabase/schema_aluno_ve_professor.sql) pra' essa segunda consulta nao
+  // voltar vazia por causa do RLS.
+  profCursinho.value = "Carregando...";
+  if (!data?.professor_id) {
+    profCursinho.value = "Não informado";
+    return;
+  }
+  const { data: prof, error: profError } = await client
+    .from("profiles")
+    .select("cursinho")
+    .eq("id", data.professor_id)
+    .maybeSingle();
+  profCursinho.value = profError ? "Não foi possível carregar" : (prof?.cursinho || "Não informado");
+}
+
+profileSaveBtn.addEventListener("click", async () => {
+  if (!currentSession?.user) return;
+
+  profileSaveBtn.disabled = true;
+  const { error } = await client
+    .from("profiles")
+    .update({
+      nome: profNome.value.trim(),
+      telefone: profTelefone.value.trim(),
+    })
+    .eq("id", currentSession.user.id);
+  profileSaveBtn.disabled = false;
+
+  if (error) {
+    showProfileMsg(`Erro ao salvar: ${error.message}`, false);
+    return;
+  }
+  showProfileMsg("Perfil atualizado!", true);
+});
+
+// --------------------------------------------------------- Estatísticas
+//
+// Ao contrario do placar da sessao atual (scoreText, so' conta o que foi
+// respondido NESTA visita), aqui e' o HISTORICO COMPLETO do aluno — busca
+// todas as respostas ja' registradas em oab_respostas (RLS garante que so'
+// as do proprio aluno voltam, ver policy "oab_respostas_select" em
+// supabase/schema_professor_portal.sql) e cruza com allQuestions (ja' em
+// memoria, ver init()) pra' saber a disciplina de cada uma.
+
+// Tela onde o aluno estava ANTES de abrir Estatisticas pelo menu (acessivel
+// de qualquer uma das outras 3) — "Voltar" devolve pra' la', em vez de
+// sempre cair na tela de exames.
+let screenBeforeStats = "exams";
+
+// Busca UMA vez todo o historico (ver loadAndRenderStats) e guarda aqui —
+// trocar o filtro de periodo (ver statsPeriod) so' refiltra esse cache em
+// memoria e re-renderiza, sem nova consulta ao banco a cada clique.
+let statsAnswersCache = null;
+let statsPeriod = "all"; // "today" | "7d" | "30d" | "all"
+
+menuStatsBtn.addEventListener("click", () => {
+  screenBeforeStats = currentScreenName();
+  closeMenu();
+  showScreen("stats");
+  loadAndRenderStats();
+});
+
+backFromStatsBtn.addEventListener("click", () => {
+  showScreen(screenBeforeStats);
+});
+
+function pctOf(correct, total) {
+  return total === 0 ? 0 : Math.round((correct / total) * 100);
+}
+
+// Ponto de corte (ISO) pra' cada opcao do filtro — null significa "sem
+// corte" (todo o historico). "Hoje" usa meia-noite local, nao "24h atras",
+// pra' bater com a expectativa intuitiva de "o que respondi hoje".
+function cutoffForPeriod(period) {
+  const now = new Date();
+  if (period === "today") {
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
+  }
+  if (period === "7d") {
+    return new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString();
+  }
+  if (period === "30d") {
+    return new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString();
+  }
+  return null;
+}
+
+function filterAnswersByPeriod(answers, period) {
+  const cutoff = cutoffForPeriod(period);
+  if (!cutoff) return answers;
+  return answers.filter(a => a.answered_at >= cutoff);
+}
+
+// Chamado pelo listener generico de ".mode-switch" (ver secao Mode, no topo
+// do arquivo) quando um botao com "data-period" e' clicado.
+function setStatsPeriod(period) {
+  statsPeriod = period;
+  if (statsAnswersCache === null) return; // ainda carregando o historico — nada pra filtrar ainda
+  renderFilteredStats();
+}
+
+function renderStatsLoading() {
+  statsBody.innerHTML = "";
+  const p = document.createElement("p");
+  p.className = "stats-loading";
+  p.textContent = "Carregando suas estatísticas...";
+  statsBody.appendChild(p);
+}
+
+function renderStatsError(message) {
+  statsBody.innerHTML = "";
+  const p = document.createElement("p");
+  p.className = "stats-error";
+  p.textContent = message;
+  statsBody.appendChild(p);
+}
+
+function renderStatsEmpty() {
+  statsBody.innerHTML = "";
+  const p = document.createElement("p");
+  p.className = "stats-empty";
+  p.textContent = statsPeriod === "all"
+    ? "Você ainda não respondeu nenhuma questão. Vá estudar para começar a acompanhar seu desempenho aqui."
+    : "Nenhuma questão respondida nesse período. Tente outro período no filtro acima.";
+  statsBody.appendChild(p);
+}
+
+async function loadAndRenderStats() {
+  renderStatsLoading();
+
+  const { data, error } = await client
+    .from("oab_respostas")
+    .select("question_id, correct, answered_at")
+    .eq("user_id", currentSession.user.id);
+
+  if (error) {
+    statsAnswersCache = null;
+    renderStatsError(`Erro ao carregar estatísticas: ${error.message}`);
+    return;
+  }
+
+  statsAnswersCache = data || [];
+  renderFilteredStats();
+}
+
+function renderFilteredStats() {
+  const answers = filterAnswersByPeriod(statsAnswersCache || [], statsPeriod);
+
+  if (answers.length === 0) {
+    renderStatsEmpty();
+    return;
+  }
+
+  const byId = new Map(allQuestions.map(q => [q.id, q]));
+  let total = 0;
+  let correct = 0;
+  const bySubject = new Map(); // discipline -> { total, correct }
+
+  answers.forEach(a => {
+    const q = byId.get(a.question_id);
+    const disc = q?.discipline || "Sem disciplina";
+    total++;
+    if (a.correct) correct++;
+    const s = bySubject.get(disc) || { total: 0, correct: 0 };
+    s.total++;
+    if (a.correct) s.correct++;
+    bySubject.set(disc, s);
+  });
+
+  const bySubjectList = Array.from(bySubject.entries())
+    .map(([discipline, s]) => ({ discipline, total: s.total, correct: s.correct }))
+    .sort((a, b) => b.total - a.total);
+
+  renderStats({ overall: { total, correct }, bySubject: bySubjectList });
+}
+
+function buildStatsSubjectRow({ discipline, total, correct }) {
+  const row = document.createElement("div");
+  row.className = "stats-subject-row";
+
+  const name = document.createElement("div");
+  name.className = "stats-subject-name";
+  name.textContent = discipline;
+  row.appendChild(name);
+
+  const pct = pctOf(correct, total);
+  const bar = document.createElement("div");
+  bar.className = "stats-subject-bar";
+  const fill = document.createElement("div");
+  fill.className = "stats-subject-bar-fill" + (pct < 50 ? " low" : pct >= 75 ? " high" : "");
+  fill.style.width = `${pct}%`;
+  bar.appendChild(fill);
+  row.appendChild(bar);
+
+  const frac = document.createElement("div");
+  frac.className = "stats-subject-frac";
+  frac.textContent = `${correct}/${total} (${pct}%)`;
+  row.appendChild(frac);
+
+  return row;
+}
+
+function renderStats(stats) {
+  statsBody.innerHTML = "";
+
+  const overall = document.createElement("div");
+  overall.className = "stats-overall";
+  const pctEl = document.createElement("div");
+  pctEl.className = "stats-overall-pct";
+  pctEl.textContent = `${pctOf(stats.overall.correct, stats.overall.total)}%`;
+  overall.appendChild(pctEl);
+  const labelEl = document.createElement("div");
+  labelEl.className = "stats-overall-label";
+  const b = document.createElement("b");
+  b.textContent = `${stats.overall.correct} de ${stats.overall.total}`;
+  labelEl.append(b, " questões respondidas corretamente, no total.");
+  overall.appendChild(labelEl);
+  statsBody.appendChild(overall);
+
+  const subjectsSection = document.createElement("div");
+  const subjectsTitle = document.createElement("h2");
+  subjectsTitle.className = "stats-section-title";
+  subjectsTitle.textContent = "Desempenho por matéria";
+  subjectsSection.appendChild(subjectsTitle);
+  const subjectsList = document.createElement("div");
+  subjectsList.className = "stats-subjects";
+  stats.bySubject.forEach(s => subjectsList.appendChild(buildStatsSubjectRow(s)));
+  subjectsSection.appendChild(subjectsList);
+  statsBody.appendChild(subjectsSection);
+
+  const aiSection = document.createElement("div");
+  const aiTitle = document.createElement("h2");
+  aiTitle.className = "stats-section-title";
+  aiTitle.textContent = "Análise por IA";
+  aiSection.appendChild(aiTitle);
+  statsBody.appendChild(aiSection);
+
+  // Roda automaticamente ao entrar na tela (nao precisa mais pedir com um
+  // clique) — o link "Atualizar analise" (ver appendStatsAiRefreshLink)
+  // continua disponivel depois, caso o aluno responda mais questoes e
+  // volte aqui na mesma visita sem recarregar a pagina.
+  requestStatsAnalysis(stats, aiSection);
+
+  statsBody.appendChild(buildStatsResetSection());
+}
+
+function appendStatsAiRefreshLink(stats, aiSection, label) {
+  const link = document.createElement("button");
+  link.type = "button";
+  link.className = "select-all-btn stats-ai-refresh";
+  link.textContent = label;
+  link.addEventListener("click", () => requestStatsAnalysis(stats, aiSection));
+  aiSection.appendChild(link);
+}
+
+// Chama a Edge Function "estatisticas-ia" (mesmo padrao de dr-laureano, ver
+// supabase/functions/estatisticas-ia/index.ts) com os dados JA' agregados
+// (nenhuma resposta individual e' enviada, so' totais por materia) — a IA
+// devolve 3 campos (pontosFracos/precisaEstudar/pontosFortes), cada um null
+// quando ainda nao ha' dados suficientes pra aquela analise especifica.
+async function requestStatsAnalysis(stats, aiSection) {
+  aiSection.querySelectorAll(".stats-ai-loading, .stats-ai-error, .stats-ai-cards, .stats-ai-refresh")
+    .forEach(el => el.remove());
+
+  const loading = document.createElement("p");
+  loading.className = "stats-ai-loading";
+  loading.textContent = "Analisando seu desempenho...";
+  aiSection.appendChild(loading);
+
+  const { data, error } = await client.functions.invoke("estatisticas-ia", { body: stats });
+
+  loading.remove();
+
+  if (error || !data) {
+    const errEl = document.createElement("p");
+    errEl.className = "stats-ai-error";
+    errEl.textContent = "Não foi possível gerar a análise agora. Tente novamente em instantes.";
+    aiSection.appendChild(errEl);
+    appendStatsAiRefreshLink(stats, aiSection, "Tentar novamente");
+    return;
+  }
+
+  const cards = document.createElement("div");
+  cards.className = "stats-ai-cards";
+
+  [
+    { key: "pontosFracos", cls: "weak", title: "Pontos fracos" },
+    { key: "precisaEstudar", cls: "focus", title: "Precisa estudar mais" },
+    { key: "pontosFortes", cls: "strong", title: "Pontos fortes" },
+  ].forEach(({ key, cls, title }) => {
+    const card = document.createElement("div");
+    card.className = `stats-ai-card ${cls}`;
+    const h3 = document.createElement("h3");
+    h3.textContent = title;
+    card.appendChild(h3);
+    const p = document.createElement("p");
+    p.textContent = data[key] || "Ainda não há dados suficientes para essa análise — continue respondendo questões.";
+    card.appendChild(p);
+    cards.appendChild(card);
+  });
+
+  aiSection.appendChild(cards);
+  appendStatsAiRefreshLink(stats, aiSection, "Atualizar análise");
+}
+
+// ------------------------------------------------- Zerar estatísticas
+//
+// Apaga TODO o historico de respostas do aluno (oab_respostas) — precisa da
+// policy "oab_respostas_delete_self" (ver
+// supabase/schema_aluno_zera_respostas.sql), que nao existia ate' agora
+// (oab_respostas foi criada de proposito so' com SELECT/INSERT). Fluxo em
+// dois passos (botao inicial -> aviso + confirmar/cancelar) pra' nao deixar
+// uma acao destrutiva a um clique de distancia.
+function buildStatsResetSection() {
+  const section = document.createElement("div");
+  section.className = "stats-reset-section";
+
+  const title = document.createElement("h2");
+  title.className = "stats-section-title";
+  title.textContent = "Zerar estatísticas";
+  section.appendChild(title);
+
+  const intro = document.createElement("p");
+  intro.className = "stats-ai-intro";
+  intro.textContent = "Apaga todo o seu histórico de respostas da 1ª fase (acertos e erros). Essa ação não pode ser desfeita.";
+  section.appendChild(intro);
+
+  const actionWrap = document.createElement("div");
+  section.appendChild(actionWrap);
+
+  function showInitial() {
+    actionWrap.innerHTML = "";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn-danger stats-reset-btn";
+    btn.textContent = "Zerar estatísticas";
+    btn.addEventListener("click", showConfirm);
+    actionWrap.appendChild(btn);
+  }
+
+  function showConfirm() {
+    actionWrap.innerHTML = "";
+
+    const warn = document.createElement("p");
+    warn.className = "stats-reset-warning";
+    warn.textContent = "Tem certeza? Todas as suas respostas registradas serão apagadas permanentemente.";
+    actionWrap.appendChild(warn);
+
+    const row = document.createElement("div");
+    row.className = "stats-reset-confirm-row";
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.type = "button";
+    cancelBtn.className = "btn-ghost";
+    cancelBtn.textContent = "Cancelar";
+    cancelBtn.addEventListener("click", showInitial);
+
+    const confirmBtn = document.createElement("button");
+    confirmBtn.type = "button";
+    confirmBtn.className = "btn-danger";
+    confirmBtn.textContent = "Confirmar";
+    confirmBtn.addEventListener("click", () => doResetStats(actionWrap, confirmBtn, cancelBtn));
+
+    row.append(cancelBtn, confirmBtn);
+    actionWrap.appendChild(row);
+  }
+
+  async function doResetStats(wrap, confirmBtn, cancelBtn) {
+    confirmBtn.disabled = true;
+    cancelBtn.disabled = true;
+    confirmBtn.textContent = "Apagando...";
+
+    const { error } = await client
+      .from("oab_respostas")
+      .delete()
+      .eq("user_id", currentSession.user.id);
+
+    if (error) {
+      wrap.innerHTML = "";
+      const errEl = document.createElement("p");
+      errEl.className = "stats-ai-error";
+      errEl.textContent = `Erro ao zerar estatísticas: ${error.message}`;
+      wrap.appendChild(errEl);
+      return;
+    }
+
+    // Tambem limpa o placar da sessao atual e as respostas ja' reveladas —
+    // senao uma questao respondida NESTA visita continuaria mostrando o
+    // resultado antigo mesmo com o registro apagado do banco.
+    results.clear();
+    correctCount = 0;
+    answeredCount = 0;
+    updateScoreUI();
+
+    // Zerou TUDO — o cache local e o filtro de periodo tambem voltam ao
+    // estado inicial ("Sempre"), senao um filtro estreito (ex.: "Hoje")
+    // continuaria escondendo o fato de que o historico inteiro sumiu.
+    statsAnswersCache = [];
+    statsPeriod = "all";
+    document.querySelectorAll("#statsPeriodSwitch .mode-btn").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.period === "all");
+    });
+
+    renderStatsEmpty();
+  }
+
+  showInitial();
+  return section;
+}
+
 // -------------------------------------------------------------- Keyboard
 
 document.addEventListener("keydown", (ev) => {
-  if (ev.target.tagName === "SELECT") return;
+  if (ev.target.tagName === "INPUT" || ev.target.tagName === "TEXTAREA") return;
+  if (screenStudy.hidden) return;
   if (filtered.length === 0) return;
   if (ev.key === "ArrowRight" && currentIndex < filtered.length - 1) goToIndex(currentIndex + 1);
   if (ev.key === "ArrowLeft" && currentIndex > 0) goToIndex(currentIndex - 1);
@@ -881,7 +1199,7 @@ async function fetchAllQuestions() {
 // da tela. So' desaparece de fato quando o aluno clica nele (nao sozinha),
 // pra dar tempo de ver o que o app oferece antes de entrar. A explicacao
 // detalhada (modal "Como funciona") fica disponivel depois, pelo "?" do
-// menu — ver openHelpModal.
+// topo — ver openHelpModal.
 //
 // So' na PRIMEIRA vez dentro da mesma aba/sessao: cada navegacao entre
 // "estudos/index.html" (1a Fase) e "simulado2fase.html" (2a Fase) e' uma
@@ -917,8 +1235,8 @@ function showLoadingReady() {
 
   if (hasSeenIntro()) {
     // Ja' viu a introducao nesta aba (ex.: voltando da 2a Fase) — pula
-    // direto pra tela de questoes, sem repetir a lista de funcionalidades
-    // nem exigir um clique em "Comecar" de novo.
+    // direto pra tela de escolha de exame, sem repetir a lista de
+    // funcionalidades nem exigir um clique em "Comecar" de novo.
     loadingSplash.remove();
     return;
   }
@@ -950,12 +1268,17 @@ loadingStartBtn.addEventListener("click", () => {
 });
 
 async function init() {
+  const session = await requireAuth();
+  if (!session) return; // requireAuth ja' redirecionou pra' landing page
+
+  currentSession = session;
+  updateSessionUI();
+
   let data;
   try {
     data = await fetchAllQuestions();
   } catch (error) {
     showLoadingError(`Erro ao carregar questões: ${error.message}`);
-    filterCountEl.textContent = "Erro ao carregar.";
     return;
   }
 
@@ -963,12 +1286,11 @@ async function init() {
 
   if (allQuestions.length === 0) {
     showLoadingError("Nenhuma questão no banco ainda. Importe um JSON na aba Admin.");
-    filterCountEl.textContent = "0 questão(ões) encontrada(s)";
     return;
   }
 
-  refreshFilterOptions(null);
-  applyFilters();
+  renderExamGrid();
+  showScreen("exams");
   showLoadingReady();
 }
 
