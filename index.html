@@ -10,6 +10,11 @@
 <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0d1117">
+<!-- Cloudflare Turnstile — protecao anti-bot do formulario de login (ver
+     renderTurnstile no <script> no fim do body). "onload=onloadTurnstile"
+     chama essa funcao global assim que o script termina de carregar (ele e'
+     async), que e' o sinal usado pra so' entao renderizar o widget. -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstile" async defer></script>
 <style>
   :root {
     --bg: #0d1117;
@@ -389,6 +394,13 @@
   }
 
   .input-wrap .input-toggle:hover { color: var(--text); }
+
+  .turnstile-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 4px 0 14px;
+    min-height: 65px;
+  }
 
   .login-submit {
     width: 100%;
@@ -1514,7 +1526,14 @@
           </button>
         </div>
       </div>
-      <button type="submit" class="login-submit" id="loginSubmitBtn">Entrar</button>
+      <!-- Widget do Cloudflare Turnstile — renderizado via JS (turnstile.render,
+           ver <script> abaixo) so' quando esta etapa fica visivel, nunca
+           enquanto o modal esta' escondido (widget nao renderiza direito
+           dentro de um container display:none). O botao "Entrar" comeca
+           desabilitado e so' libera quando o callback de sucesso do widget
+           roda (ver renderTurnstile). -->
+      <div class="turnstile-wrap" id="turnstileContainer"></div>
+      <button type="submit" class="login-submit" id="loginSubmitBtn" disabled>Entrar</button>
       <p class="login-error" id="loginErrorMsg"></p>
     </form>
   </div>
@@ -1528,6 +1547,11 @@
   const SUPABASE_URL = "https://lgcphxncteqpbntnlzhe.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnY3BoeG5jdGVxcGJudG5semhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc3NzI5NTIsImV4cCI6MjEwMzM0ODk1Mn0.gQltbgj-OPpDEPuyOSonM3G8h1ppwwez0Dwi3SOdx98";
   const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // Site Key do Cloudflare Turnstile (publica por natureza, igual a' anon
+  // key acima — quem garante a validacao de verdade e' a Secret Key, usada
+  // so' no servidor pela Edge Function "validate-turnstile", nunca aqui).
+  const TURNSTILE_SITE_KEY = "0x4AAAAAAEkJRZBH73El7vyN";
 
   // Pra onde cada role vai depois de logar. Sessão do Supabase Auth fica no
   // localStorage do domínio (mesma origem pra landing/estudos/portal-mestre/
@@ -1551,6 +1575,7 @@
   const togglePasswordBtn = document.getElementById("togglePasswordBtn");
   const loginSubmitBtn = document.getElementById("loginSubmitBtn");
   const loginErrorMsg = document.getElementById("loginErrorMsg");
+  const turnstileContainer = document.getElementById("turnstileContainer");
 
   const EYE_ICON = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
   const EYE_OFF_ICON = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
@@ -1561,6 +1586,74 @@
     togglePasswordBtn.innerHTML = showing ? EYE_ICON : EYE_OFF_ICON;
     togglePasswordBtn.setAttribute("aria-label", showing ? "Mostrar senha" : "Ocultar senha");
   });
+
+  // -------------------------------------------------------- Cloudflare Turnstile
+  //
+  // O botao "Entrar" (ver HTML de #loginSubmitBtn) comeca desabilitado e so'
+  // e' liberado pelo callback de sucesso do widget — nunca por este script
+  // "decidir" que esta' tudo bem, so' o proprio Turnstile decide isso.
+  // widgetId fica null ate' o primeiro render(); depois disso, reaproveita
+  // o MESMO widget via turnstile.reset() (chamar render() de novo no mesmo
+  // container criaria um segundo widget by-product).
+  let turnstileWidgetId = null;
+  let turnstileToken = null;
+
+  function onTurnstileSuccess(token) {
+    turnstileToken = token;
+    loginSubmitBtn.disabled = false;
+  }
+
+  function onTurnstileExpire() {
+    turnstileToken = null;
+    loginSubmitBtn.disabled = true;
+  }
+
+  function onTurnstileError() {
+    turnstileToken = null;
+    loginSubmitBtn.disabled = true;
+  }
+
+  // Zera o token atual e pede um desafio novo no MESMO widget (nunca cria
+  // um segundo) — usado tanto pra "limpar e recomecar" (fechar o modal,
+  // voltar um passo) quanto depois de QUALQUER tentativa de submit (o
+  // token so' serve uma vez, sucesso ou erro).
+  function resetTurnstile() {
+    turnstileToken = null;
+    loginSubmitBtn.disabled = true;
+    if (turnstileWidgetId !== null && typeof turnstile !== "undefined") {
+      turnstile.reset(turnstileWidgetId);
+    }
+  }
+
+  // Chamado quando a etapa de credenciais fica visivel (nunca enquanto o
+  // modal esta' escondido — o widget nao renderiza direito dentro de um
+  // container "display: none"). Se o script do Turnstile ainda nao
+  // terminou de carregar (e' async), nao faz nada aqui: onloadTurnstile
+  // (definida mais abaixo, chamada pelo proprio script ao carregar) cobre
+  // esse caso renderizando assim que ele estiver pronto.
+  function renderTurnstile() {
+    if (typeof turnstile === "undefined") return;
+    if (turnstileWidgetId !== null) {
+      resetTurnstile();
+      return;
+    }
+    turnstileToken = null;
+    loginSubmitBtn.disabled = true;
+    turnstileWidgetId = turnstile.render(turnstileContainer, {
+      sitekey: TURNSTILE_SITE_KEY,
+      theme: "dark",
+      callback: onTurnstileSuccess,
+      "expired-callback": onTurnstileExpire,
+      "error-callback": onTurnstileError,
+    });
+  }
+
+  // Chamada pelo proprio <script src="...api.js?onload=onloadTurnstile">
+  // (ver <head>) assim que termina de carregar — cobre o caso (raro) de o
+  // aluno chegar na etapa de credenciais antes do script terminar.
+  window.onloadTurnstile = function () {
+    if (!credsForm.hidden) renderTurnstile();
+  };
 
   function showRoleStep() {
     roleStep.hidden = false;
@@ -1578,6 +1671,10 @@
 
   function closeLogin() {
     loginOverlay.hidden = true;
+    // Invalida o desafio resolvido (se houver) assim que o aluno desiste do
+    // login — um token parado ali so' aumenta a janela em que ele poderia
+    // expirar ou ser mal aproveitado numa proxima abertura do modal.
+    resetTurnstile();
   }
 
   loginBtn.addEventListener("click", openLogin);
@@ -1595,6 +1692,7 @@
       roleStep.hidden = true;
       credsForm.hidden = false;
       loginEmail.focus();
+      renderTurnstile();
     });
   });
 
@@ -1625,13 +1723,37 @@
       showLoginError("Preencha e-mail e senha.");
       return;
     }
+    if (!turnstileToken) {
+      showLoginError("Aguarde a verificação de segurança terminar.");
+      return;
+    }
 
+    // O token so' serve UMA vez — guarda antes de resetar (reset ja' zera
+    // turnstileToken e dispara um novo desafio em segundo plano, pra uma
+    // proxima tentativa, se precisar, nao esbarrar num token ja usado).
+    const tokenToValidate = turnstileToken;
     loginSubmitBtn.disabled = true;
+    loginSubmitBtn.textContent = "Verificando...";
+    resetTurnstile();
+
+    // Antes de QUALQUER tentativa de login de verdade: confirma com a
+    // Edge Function (que fala com a API do Cloudflare usando a Secret Key,
+    // nunca exposta aqui) que quem preencheu o formulario passou no
+    // Turnstile. So' prossegue pro Supabase Auth se isso vier true.
+    const { data: verify, error: verifyError } = await client.functions.invoke("validate-turnstile", {
+      body: { token: tokenToValidate },
+    });
+
+    if (verifyError || !verify?.success) {
+      loginSubmitBtn.textContent = "Entrar";
+      showLoginError("Não foi possível confirmar a verificação de segurança. Tente novamente.");
+      return;
+    }
+
     loginSubmitBtn.textContent = "Entrando...";
 
     const { data, error } = await client.auth.signInWithPassword({ email, password });
     if (error || !data?.user) {
-      loginSubmitBtn.disabled = false;
       loginSubmitBtn.textContent = "Entrar";
       showLoginError("E-mail ou senha inválidos.");
       return;
@@ -1641,7 +1763,6 @@
     const destination = ROLE_DESTINATIONS[roleName];
     if (!destination) {
       await client.auth.signOut();
-      loginSubmitBtn.disabled = false;
       loginSubmitBtn.textContent = "Entrar";
       showLoginError("Essa conta não tem acesso configurado.");
       return;
