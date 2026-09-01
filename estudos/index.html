@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=36">
+<link rel="stylesheet" href="style.css?v=37">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
@@ -236,18 +236,110 @@
   <main class="content">
 
     <!-- ------------------------------------------------------- Tela 1 -->
-    <section class="pick-screen" id="screenExams">
+    <section class="pick-screen dashboard-screen" id="screenExams">
       <div class="pick-screen-head">
-        <h1>Escolha o exame</h1>
-        <p class="pick-screen-hint">Selecione um ou mais exames para estudar.</p>
+        <h1>Escolha sua prova</h1>
+        <p class="pick-screen-hint">Pratique com exames oficiais e acompanhe sua evolução.</p>
       </div>
-      <div class="pick-grid" id="examGrid"></div>
-      <div class="pick-footer">
-        <div class="pick-footer-left">
-          <button type="button" id="examSelectAllBtn" class="select-all-btn">Selecionar todos</button>
-          <span class="pick-footer-count" id="examSelCount">0 selecionado(s)</span>
+
+      <div class="dashboard-layout">
+        <div class="dashboard-main">
+          <!-- Dica gerada por IA (Edge Function recomendacao-dashboard, ver
+               loadDashboardTip em estudos.js) — some por completo se a IA
+               falhar ou ainda não houver exame pra recomendar, em vez de
+               mostrar um card quebrado. -->
+          <div class="laureano-tip-card" id="laureanoTip" hidden>
+            <img src="../images/Dr.%20Laureano.png" alt="Dr. Laureano" class="laureano-tip-avatar">
+            <div class="laureano-tip-body">
+              <span class="laureano-tip-title">Dr. Laureano recomenda</span>
+              <p class="laureano-tip-text" id="laureanoTipText"></p>
+              <button type="button" class="laureano-tip-btn" id="laureanoTipBtn" hidden>
+                Ver dica completa
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="exam-filter-row">
+            <div class="exam-filter-tabs" id="examFilterTabs">
+              <button type="button" class="exam-filter-tab active" data-filter="todos">Todos os exames</button>
+              <button type="button" class="exam-filter-tab" data-filter="recentes">Mais recentes</button>
+              <button type="button" class="exam-filter-tab" data-filter="antigos">Mais antigos</button>
+              <button type="button" class="exam-filter-tab" data-filter="realizados">Já realizados</button>
+            </div>
+            <span class="exam-count-badge" id="examCountBadge">0 provas disponíveis</span>
+          </div>
+
+          <div class="pick-grid exam-grid" id="examGrid"></div>
+          <button type="button" class="show-more-btn" id="examShowMoreBtn" hidden>
+            Mostrar mais provas
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+
+          <div class="pick-footer">
+            <div class="pick-footer-left">
+              <button type="button" id="examSelectAllBtn" class="select-all-btn">Selecionar todos</button>
+              <span class="pick-footer-count" id="examSelCount">0 selecionado(s)</span>
+            </div>
+            <button type="button" id="toSubjectsBtn" class="btn-primary pick-cta" disabled>Ver matérias</button>
+          </div>
         </div>
-        <button type="button" id="toSubjectsBtn" class="btn-primary pick-cta" disabled>Ver matérias</button>
+
+        <aside class="dashboard-side">
+          <div class="side-panel progress-panel" id="progressPanel">
+            <div class="side-panel-title">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+              Seu progresso
+            </div>
+            <div class="progress-ring-row">
+              <div class="progress-ring-wrap" id="progressRingWrap"></div>
+              <div class="progress-ring-text">
+                <span class="progress-ring-pct" id="progressRingPct">—</span>
+                <span class="progress-ring-label">Aproveitamento geral</span>
+              </div>
+            </div>
+            <div class="progress-stats" id="progressStats">
+              <div class="progress-stat">
+                <span class="progress-stat-num" id="progressTotalNum">0</span>
+                <span class="progress-stat-label">Questões respondidas</span>
+              </div>
+              <div class="progress-stat">
+                <span class="progress-stat-num ok" id="progressAcertosNum">0</span>
+                <span class="progress-stat-label">Acertos</span>
+              </div>
+              <div class="progress-stat">
+                <span class="progress-stat-num err" id="progressErrosNum">0</span>
+                <span class="progress-stat-label">Erros</span>
+              </div>
+            </div>
+            <button type="button" class="side-panel-cta" id="progressCtaBtn">
+              Ver desempenho completo
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+          </div>
+
+          <div class="side-panel last-activity-panel" id="lastActivityPanel" hidden>
+            <div class="side-panel-title">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Última atividade
+            </div>
+            <div class="last-activity-head">
+              <span class="last-activity-exam" id="lastActivityExam">—</span>
+              <span class="badge" id="lastActivityBadge">—</span>
+            </div>
+            <div class="last-activity-row">
+              <div class="progress-ring-wrap small" id="lastActivityRingWrap"></div>
+              <div class="last-activity-text">
+                <span id="lastActivityPctText">—</span>
+                <span class="last-activity-date" id="lastActivityDate">—</span>
+              </div>
+            </div>
+            <button type="button" class="side-panel-cta" id="lastActivityReviewBtn" hidden>
+              Revisar erros
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+          </div>
+        </aside>
       </div>
     </section>
 
@@ -342,7 +434,7 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=24"></script>
+<script src="estudos.js?v=25"></script>
 <script src="dr-laureano.js?v=10"></script>
 </body>
 </html>

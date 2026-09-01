@@ -944,6 +944,354 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 
 .pick-cta { width: auto; padding: 11px 32px; }
 
+/* ------------------------------------------------------- Dashboard (Tela 1) */
+/*
+  Layout em duas colunas: grade de exames (seleção múltipla, igual sempre
+  existiu) + barra lateral nova de acompanhamento (progresso, última
+  atividade). Empilha em coluna única abaixo de 980px.
+*/
+
+.dashboard-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+}
+
+.dashboard-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dashboard-side {
+  flex-shrink: 0;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* Acompanha a rolagem da coluna principal sem sair da viewport — a mesma
+     ideia do .pick-footer sticky, só que fixado no topo em vez do rodapé. */
+  position: sticky;
+  top: calc(var(--topbar-h) + 16px);
+}
+
+@media (max-width: 980px) {
+  .dashboard-layout { flex-direction: column; }
+  .dashboard-side { width: 100%; position: static; }
+}
+
+/* ---------------------------------------------- Card "Dr. Laureano recomenda" */
+
+.laureano-tip-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  animation: pickCardIn 0.32s ease both;
+}
+
+/* Regra de autor com "display" sempre vence "[hidden] { display: none }" do
+   navegador (mesma pegadinha de .pick-screen[hidden]/.help-overlay[hidden]
+   mais abaixo neste arquivo) — sem isso o card apareceria vazio antes da
+   IA responder, e continuaria visível mesmo que loadDashboardTip() nunca
+   tivesse dado nenhuma dica. */
+.laureano-tip-card[hidden] { display: none; }
+
+.laureano-tip-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid var(--logo-purple-dim);
+}
+
+.laureano-tip-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+
+.laureano-tip-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--logo-purple);
+}
+
+.laureano-tip-text { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--text); }
+
+.laureano-tip-btn {
+  align-self: flex-start;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--primary);
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.laureano-tip-btn:hover { color: var(--text); }
+.laureano-tip-btn[hidden] { display: none; }
+
+/* ------------------------------------------------------------ Abas de filtro */
+
+.exam-filter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.exam-filter-tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  flex-wrap: wrap;
+}
+
+.exam-filter-tab {
+  background: none;
+  border: none;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-dim);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.exam-filter-tab:hover { color: var(--text); background: var(--card-hover); }
+
+.exam-filter-tab.active {
+  color: #fff;
+  background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+}
+
+.exam-count-badge {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+  background: var(--card-hover);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------- Cards de exame + hero */
+
+.exam-card { padding-left: 42px; } /* espaço reservado pra estrela — mantém as colunas alinhadas mesmo em "Sem exame", que não tem estrela */
+
+.pick-card-favorite {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s ease, transform 0.15s ease, background 0.15s ease;
+}
+
+.pick-card-favorite:hover { color: var(--accent); background: var(--card-hover); transform: scale(1.1); }
+.pick-card-favorite.active { color: #f5b400; }
+
+/* Card em destaque (exame mais recente) — ocupa a largura inteira da
+   grade, com o atalho "Começar simulado" que pula direto pra Tela 3 sem
+   mexer na seleção múltipla dos outros cards. */
+.exam-hero {
+  grid-column: 1 / -1;
+  padding: 26px 30px 24px 48px;
+  gap: 6px;
+  background: linear-gradient(135deg, var(--accent-dim), var(--card) 65%);
+}
+
+.exam-hero-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 999px;
+  padding: 4px 10px;
+  margin-bottom: 6px;
+}
+
+.exam-hero-number {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.exam-hero-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.exam-hero-status { font-size: 13px; color: var(--text-dim); }
+
+.exam-hero-cta {
+  width: auto;
+  margin-top: 10px;
+  padding: 11px 26px;
+}
+
+@media (min-width: 720px) {
+  .exam-hero { flex-direction: row; flex-wrap: wrap; align-items: center; padding: 22px 32px; }
+  .exam-hero-badge { position: absolute; top: 16px; left: 48px; margin-bottom: 0; }
+  .exam-hero-number { margin-right: 4px; }
+  .exam-hero-status { flex-basis: 100%; }
+  .exam-hero-cta { margin-top: 0; margin-left: auto; }
+}
+
+/* Destaque temporário no card recomendado pelo Dr. Laureano quando o aluno
+   clica em "Ver dica completa" (ver highlightExamCard em estudos.js). */
+@keyframes examCardPulse {
+  0%, 100% { box-shadow: 0 14px 30px -16px var(--accent-glow); }
+  50% { box-shadow: 0 0 0 4px var(--accent-glow); }
+}
+.exam-card-highlight {
+  animation: examCardPulse 0.7s ease 3;
+  border-color: var(--accent) !important;
+}
+
+.show-more-btn {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 9px 20px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-dim);
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.show-more-btn:hover { color: var(--text); border-color: var(--primary); }
+.show-more-btn[hidden] { display: none; }
+
+/* -------------------------------------------------- Barra lateral (painéis) */
+
+.side-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: pickCardIn 0.32s ease both;
+}
+
+.side-panel[hidden] { display: none; }
+
+.side-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.side-panel-title svg { color: var(--primary); flex-shrink: 0; }
+
+.side-panel-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--card-hover);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 9px 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.side-panel-cta[hidden] { display: none; }
+
+.side-panel-cta:hover { border-color: var(--primary); color: var(--primary); }
+
+.progress-ring-row { display: flex; align-items: center; gap: 16px; }
+
+.progress-ring-svg { display: block; }
+.progress-ring-track { stroke: var(--border); }
+.progress-ring-fill {
+  stroke: var(--primary);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.6s ease;
+}
+
+.progress-ring-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.progress-ring-pct { font-size: 24px; font-weight: 800; color: var(--text); }
+.progress-ring-label { font-size: 11.5px; color: var(--text-dim); }
+
+.progress-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border);
+}
+
+.progress-stat { display: flex; flex-direction: column; gap: 2px; }
+.progress-stat-num { font-size: 16px; font-weight: 700; color: var(--text); }
+.progress-stat-num.ok { color: var(--success); }
+.progress-stat-num.err { color: var(--error); }
+.progress-stat-label { font-size: 10.5px; color: var(--text-dim); line-height: 1.3; }
+
+.last-activity-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.last-activity-exam { font-size: 14px; font-weight: 700; }
+
+.badge-done { background: var(--success-dim); color: var(--success); border-color: rgba(46, 160, 67, 0.35); }
+.badge-progress { background: var(--primary-dim); color: var(--primary); border-color: rgba(139, 92, 246, 0.35); }
+
+.last-activity-row { display: flex; align-items: center; gap: 12px; }
+.progress-ring-wrap.small .progress-ring-track,
+.progress-ring-wrap.small .progress-ring-fill { stroke-width: 5; }
+
+.last-activity-text { display: flex; flex-direction: column; gap: 2px; font-size: 12.5px; }
+.last-activity-date { color: var(--text-dim); font-size: 11.5px; }
+
 /* ------------------------------------------------------------ Tela de estudo */
 
 .study-screen {

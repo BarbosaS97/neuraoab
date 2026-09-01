@@ -51,6 +51,27 @@ const toStudyBtn = document.getElementById("toStudyBtn");
 const backToExamsBtn = document.getElementById("backToExamsBtn");
 const backToSubjectsBtn = document.getElementById("backToSubjectsBtn");
 
+// Dashboard da 1ª fase (Tela 1) — ver seção "Tela 1" mais abaixo.
+const laureanoTip = document.getElementById("laureanoTip");
+const laureanoTipText = document.getElementById("laureanoTipText");
+const laureanoTipBtn = document.getElementById("laureanoTipBtn");
+const examFilterTabsEl = document.getElementById("examFilterTabs");
+const examCountBadge = document.getElementById("examCountBadge");
+const examShowMoreBtn = document.getElementById("examShowMoreBtn");
+const progressRingWrap = document.getElementById("progressRingWrap");
+const progressRingPct = document.getElementById("progressRingPct");
+const progressTotalNum = document.getElementById("progressTotalNum");
+const progressAcertosNum = document.getElementById("progressAcertosNum");
+const progressErrosNum = document.getElementById("progressErrosNum");
+const progressCtaBtn = document.getElementById("progressCtaBtn");
+const lastActivityPanel = document.getElementById("lastActivityPanel");
+const lastActivityExam = document.getElementById("lastActivityExam");
+const lastActivityBadge = document.getElementById("lastActivityBadge");
+const lastActivityRingWrap = document.getElementById("lastActivityRingWrap");
+const lastActivityPctText = document.getElementById("lastActivityPctText");
+const lastActivityDate = document.getElementById("lastActivityDate");
+const lastActivityReviewBtn = document.getElementById("lastActivityReviewBtn");
+
 let allQuestions = [];
 let filtered = [];
 let currentIndex = 0;
@@ -233,41 +254,368 @@ function buildPickCard({ title, sub, count, selected, onToggle }) {
 }
 
 // ------------------------------------------------------------- Tela 1
+//
+// Dashboard da 1ª fase: grade de exames com seleção múltipla (igual sempre
+// existiu — checkboxes, "Selecionar todos", "Ver matérias", ver
+// updateExamFooter/toSubjectsBtn) + camada nova de acompanhamento (progresso
+// por exame, favoritos, recomendação do Dr. Laureano) que só ACRESCENTA
+// atalhos, sem mudar esse fluxo original.
 
 function examKey(q) {
   return q.exam_number != null ? String(q.exam_number) : "__none__";
 }
 
-function renderExamGrid() {
-  const counts = buildCounts(allQuestions, examKey);
-  const yearByExam = new Map();
+// Metadados (ano, total de questões) por exame — derivado só de
+// allQuestions, sem rede, mesma fonte que counts já usava.
+function examMetaMap() {
+  const meta = new Map();
   allQuestions.forEach(q => {
     const key = examKey(q);
-    if (!yearByExam.has(key)) yearByExam.set(key, q.year);
+    if (!meta.has(key)) meta.set(key, { year: q.year, count: 0 });
+    meta.get(key).count++;
+  });
+  return meta;
+}
+
+// Progresso do aluno por exame, a partir de statsAnswersCache (já carregado
+// no init(), ver hoisting da busca de oab_respostas). Uma questão pode ter
+// mais de uma linha em oab_respostas (o aluno pode praticar de novo) —
+// aqui conta-se por QUESTÃO DISTINTA respondida (não por linha bruta), com
+// o acerto da tentativa MAIS RECENTE de cada uma, pra "X/Y respondidas"
+// nunca passar de Y nem "misturar" um erro antigo já corrigido depois.
+// (O painel "Seu progresso" é diferente: reaproveita a MESMA agregação
+// poolada que a tela de Estatísticas sempre usou, ver renderSidePanels.)
+function computeExamStats() {
+  const byId = new Map(allQuestions.map(q => [q.id, q]));
+  const groups = new Map(); // examKey -> Map(question_id -> {correct, answered_at})
+
+  (statsAnswersCache || []).forEach(a => {
+    const q = byId.get(a.question_id);
+    if (!q) return;
+    const key = examKey(q);
+    let g = groups.get(key);
+    if (!g) { g = new Map(); groups.set(key, g); }
+    const prev = g.get(a.question_id);
+    if (!prev || a.answered_at > prev.answered_at) {
+      g.set(a.question_id, { correct: a.correct, answered_at: a.answered_at });
+    }
   });
 
-  const keys = uniqueSorted(allQuestions.map(examKey))
-    .sort((a, b) => (a === "__none__" ? 1 : b === "__none__" ? -1 : Number(b) - Number(a)));
+  const result = new Map();
+  groups.forEach((g, key) => {
+    const entries = [...g.values()];
+    const answered = entries.length;
+    const correct = entries.filter(e => e.correct).length;
+    const lastAnsweredAt = entries.reduce((max, e) => (e.answered_at > max ? e.answered_at : max), "");
+    result.set(key, { answered, correct, lastAnsweredAt });
+  });
+  return result;
+}
+
+// "Hoje"/"Ontem"/"Há N dias" pra' data relativa de última atividade — sem
+// hora exata (o app não mede tempo de sessão na 1ª fase, só o timestamp de
+// cada resposta gravada).
+function fmtRelativeDate(iso) {
+  if (!iso) return "—";
+  const date = new Date(iso);
+  const startOfDay = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const diffDays = Math.round((startOfDay(new Date()) - startOfDay(date)) / 86400000);
+  if (diffDays <= 0) return "Hoje";
+  if (diffDays === 1) return "Ontem";
+  if (diffDays < 30) return `Há ${diffDays} dias`;
+  return date.toLocaleDateString("pt-BR");
+}
+
+const STAR_ICON = `<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+  <polygon points="12 2.5 15.09 8.76 22 9.77 17 14.64 18.18 21.52 12 18.27 5.82 21.52 7 14.64 2 9.77 8.91 8.76"></polygon>
+</svg>`;
+
+// Anel de progresso em SVG puro (sem lib) — usado no card em destaque e nos
+// dois paineis da barra lateral. stroke-dashoffset calculado aqui a partir
+// do %; a cor do preenchimento fica pra CSS (.progress-ring-fill).
+function buildProgressRingSVG(pct, size = 84, stroke = 8) {
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  const clamped = Math.max(0, Math.min(100, pct));
+  const offset = c * (1 - clamped / 100);
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" class="progress-ring-svg">
+    <circle class="progress-ring-track" cx="${size / 2}" cy="${size / 2}" r="${r}" stroke-width="${stroke}" fill="none"></circle>
+    <circle class="progress-ring-fill" cx="${size / 2}" cy="${size / 2}" r="${r}" stroke-width="${stroke}" fill="none"
+      stroke-dasharray="${c}" stroke-dashoffset="${offset}"
+      transform="rotate(-90 ${size / 2} ${size / 2})"></circle>
+  </svg>`;
+}
+
+// ------------------------------------------------------- Favoritos (estrela)
+
+let favoritedExams = new Set(); // chaves de examKey (nunca "__none__")
+
+async function loadFavoritos() {
+  if (!currentSession?.user) return;
+  const { data, error } = await client
+    .from("oab_favoritos")
+    .select("exam_number")
+    .eq("user_id", currentSession.user.id);
+  if (error) {
+    console.error("Falha ao carregar favoritos:", error.message);
+    return;
+  }
+  favoritedExams = new Set((data || []).map(r => String(r.exam_number)));
+}
+
+async function toggleFavorito(key, btn) {
+  if (!currentSession?.user || key === "__none__") return;
+  const isFav = favoritedExams.has(key);
+  btn.disabled = true;
+  try {
+    if (isFav) {
+      const { error } = await client
+        .from("oab_favoritos")
+        .delete()
+        .eq("user_id", currentSession.user.id)
+        .eq("exam_number", Number(key));
+      if (error) throw error;
+      favoritedExams.delete(key);
+    } else {
+      const { error } = await client
+        .from("oab_favoritos")
+        .insert({ user_id: currentSession.user.id, exam_number: Number(key) });
+      if (error) throw error;
+      favoritedExams.add(key);
+    }
+    btn.classList.toggle("active", favoritedExams.has(key));
+    btn.setAttribute("aria-label", favoritedExams.has(key) ? "Remover dos favoritos" : "Favoritar");
+  } catch (err) {
+    console.error("Falha ao favoritar:", err.message);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// ---------------------------------------------------------- Cards de exame
+
+// Separado de buildPickCard (que continua servindo só a Tela 2, intocado):
+// mesma base de botão selecionável (.pick-card/.pick-card-check/selected),
+// mais estrela de favorito e — só no card em destaque (hero) — o atalho
+// "Começar simulado".
+function buildExamCard({ key, year, count, stat, hero, selected, onToggle }) {
+  const card = document.createElement("button");
+  card.type = "button";
+  card.className = "pick-card exam-card" + (hero ? " exam-hero" : "") + (selected ? " selected" : "");
+  card.dataset.examKey = key;
+
+  if (key !== "__none__") {
+    const favBtn = document.createElement("button");
+    favBtn.type = "button";
+    const isFav = favoritedExams.has(key);
+    favBtn.className = "pick-card-favorite" + (isFav ? " active" : "");
+    favBtn.innerHTML = STAR_ICON;
+    favBtn.setAttribute("aria-label", isFav ? "Remover dos favoritos" : "Favoritar");
+    favBtn.addEventListener("click", ev => {
+      ev.stopPropagation();
+      toggleFavorito(key, favBtn);
+    });
+    card.appendChild(favBtn);
+  }
+
+  const check = document.createElement("span");
+  check.className = "pick-card-check";
+  check.setAttribute("aria-hidden", "true");
+  card.appendChild(check);
+
+  const answered = stat?.answered || 0;
+  const started = answered > 0;
+
+  if (hero) {
+    const badge = document.createElement("span");
+    badge.className = "exam-hero-badge";
+    badge.textContent = "MAIS RECENTE";
+    card.appendChild(badge);
+
+    const numEl = document.createElement("span");
+    numEl.className = "exam-hero-number";
+    numEl.textContent = key === "__none__" ? "—" : `${key}º`;
+    card.appendChild(numEl);
+
+    const labelEl = document.createElement("span");
+    labelEl.className = "exam-hero-label";
+    labelEl.textContent = "Exame da OAB";
+    card.appendChild(labelEl);
+
+    const statusEl = document.createElement("span");
+    statusEl.className = "exam-hero-status";
+    statusEl.textContent = started ? `Você já respondeu ${answered} de ${count} questões.` : "Ainda não realizado.";
+    card.appendChild(statusEl);
+  } else {
+    const titleEl = document.createElement("span");
+    titleEl.className = "pick-card-title";
+    titleEl.textContent = key === "__none__" ? "Sem exame" : `${key}º Exame`;
+    card.appendChild(titleEl);
+  }
+
+  if (year) {
+    const subEl = document.createElement("span");
+    subEl.className = "pick-card-sub";
+    subEl.textContent = `Ano ${year}`;
+    card.appendChild(subEl);
+  }
+
+  const countEl = document.createElement("span");
+  countEl.className = "pick-card-count";
+  countEl.textContent = started
+    ? `${answered}/${count} respondidas (${pctOf(stat.correct, answered)}%)`
+    : `${count} questão(ões)`;
+  card.appendChild(countEl);
+
+  if (hero) {
+    const startBtn = document.createElement("button");
+    startBtn.type = "button";
+    startBtn.className = "btn-primary exam-hero-cta";
+    startBtn.textContent = "Começar simulado";
+    startBtn.addEventListener("click", ev => {
+      ev.stopPropagation();
+      startSimulado(key);
+    });
+    card.appendChild(startBtn);
+  }
+
+  card.setAttribute("aria-pressed", String(selected));
+  card.addEventListener("click", () => onToggle(card));
+
+  return card;
+}
+
+// -------------------------------------------------- Atalho "Começar simulado"
+
+// Faz de uma vez só o que o fluxo manual faz em 2 passos (Ver matérias ->
+// selecionar todas -> Estudar): seleciona só este exame, TODAS as matérias
+// dele, e já abre a Tela 3. Reaproveita exatamente as mesmas variáveis/telas
+// de toSubjectsBtn/toStudyBtn (linhas acima) — nenhuma lógica nova de
+// filtragem.
+function startSimulado(key) {
+  selectedExams = new Set([key]);
+  examPool = allQuestions.filter(q => examKey(q) === key);
+  selectedSubjects = new Set(allSubjectKeys());
+  filtered = examPool;
+  currentIndex = 0;
+  selectedAnswer = null;
+  showScreen("study");
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+}
+
+// Mesma ideia do atalho acima, mas só com as questões que o aluno já
+// respondeu ERRADO nesse exame (usado pelo botão "Revisar erros" do painel
+// "Última atividade") — quando não sobra nenhuma questão errada nesse
+// exame, cai no simulado completo dele mesmo.
+function reviewMistakes(key) {
+  const stats = computeExamStats().get(key);
+  const byId = new Map(allQuestions.map(q => [q.id, q]));
+  const wrongIds = new Set(
+    (statsAnswersCache || [])
+      .filter(a => !a.correct && byId.has(a.question_id) && examKey(byId.get(a.question_id)) === key)
+      .map(a => a.question_id),
+  );
+  if (!stats || wrongIds.size === 0) {
+    startSimulado(key);
+    return;
+  }
+  selectedExams = new Set([key]);
+  examPool = allQuestions.filter(q => examKey(q) === key);
+  selectedSubjects = new Set(allSubjectKeys());
+  filtered = examPool.filter(q => wrongIds.has(q.id));
+  currentIndex = 0;
+  selectedAnswer = null;
+  showScreen("study");
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+}
+
+// --------------------------------------------------- Abas de filtro + grade
+
+let examFilterTab = "todos"; // "todos" | "recentes" | "antigos" | "realizados"
+let examsVisibleCount = 12; // "Mostrar mais provas" soma mais 12 por clique
+
+function filteredSortedExamKeys() {
+  const stats = computeExamStats();
+  let keys = allExamKeys();
+
+  if (examFilterTab === "realizados") {
+    keys = keys.filter(k => (stats.get(k)?.answered || 0) > 0);
+  }
+
+  const sorted = [...keys].sort((a, b) => (a === "__none__" ? 1 : b === "__none__" ? -1 : Number(b) - Number(a)));
+  if (examFilterTab === "antigos") sorted.reverse();
+  return sorted;
+}
+
+examFilterTabsEl.querySelectorAll(".exam-filter-tab").forEach(btn => {
+  btn.addEventListener("click", () => {
+    if (btn.classList.contains("active")) return;
+    examFilterTabsEl.querySelectorAll(".exam-filter-tab").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    examFilterTab = btn.dataset.filter;
+    examsVisibleCount = 12;
+    renderExamGrid();
+  });
+});
+
+examShowMoreBtn.addEventListener("click", () => {
+  examsVisibleCount += 12;
+  renderExamGrid();
+});
+
+function renderExamGrid() {
+  const counts = buildCounts(allQuestions, examKey);
+  const meta = examMetaMap();
+  const stats = computeExamStats();
+  const keys = filteredSortedExamKeys();
+
+  examCountBadge.textContent = `${keys.filter(k => k !== "__none__").length} prova(s) disponíveis`;
+
+  // O card em destaque só faz sentido quando a ordenação da aba realmente
+  // começa pelo exame mais recente (Todos/Mais recentes) — em "Mais
+  // antigos"/"Já realizados" a grade inteira vira cards normais.
+  const heroEligible = (examFilterTab === "todos" || examFilterTab === "recentes") && keys[0] && keys[0] !== "__none__";
+  const heroKey = heroEligible ? keys[0] : null;
+  const restKeys = heroKey ? keys.slice(1) : keys;
+  const visibleRest = restKeys.slice(0, examsVisibleCount);
 
   examGrid.innerHTML = "";
-  keys.forEach(key => {
-    const title = key === "__none__" ? "Sem exame" : `${key}º Exame`;
-    const year = yearByExam.get(key);
-    const card = buildPickCard({
-      title,
-      sub: year ? `Ano ${year}` : null,
+
+  function toggleSelection(key, cardEl) {
+    if (selectedExams.has(key)) selectedExams.delete(key);
+    else selectedExams.add(key);
+    cardEl.classList.toggle("selected", selectedExams.has(key));
+    cardEl.setAttribute("aria-pressed", String(selectedExams.has(key)));
+    updateExamFooter();
+  }
+
+  if (heroKey) {
+    examGrid.appendChild(buildExamCard({
+      key: heroKey,
+      year: meta.get(heroKey)?.year,
+      count: counts.get(heroKey) || 0,
+      stat: stats.get(heroKey),
+      hero: true,
+      selected: selectedExams.has(heroKey),
+      onToggle: cardEl => toggleSelection(heroKey, cardEl),
+    }));
+  }
+
+  visibleRest.forEach(key => {
+    examGrid.appendChild(buildExamCard({
+      key,
+      year: meta.get(key)?.year,
       count: counts.get(key) || 0,
+      stat: stats.get(key),
+      hero: false,
       selected: selectedExams.has(key),
-      onToggle: (cardEl) => {
-        if (selectedExams.has(key)) selectedExams.delete(key);
-        else selectedExams.add(key);
-        cardEl.classList.toggle("selected", selectedExams.has(key));
-        cardEl.setAttribute("aria-pressed", String(selectedExams.has(key)));
-        updateExamFooter();
-      },
-    });
-    examGrid.appendChild(card);
+      onToggle: cardEl => toggleSelection(key, cardEl),
+    }));
   });
+
+  examShowMoreBtn.hidden = visibleRest.length >= restKeys.length;
 
   updateExamFooter();
 }
@@ -286,9 +634,10 @@ function updateExamFooter() {
     : "Selecionar todos";
 }
 
-// Alterna entre marcar TODOS os exames visiveis e limpar a selecao inteira
-// — um so' botao faz as duas coisas (ver texto trocado em updateExamFooter),
-// em vez de dois botoes separados (uma "Selecionar todos" e outra "Nenhum").
+// Alterna entre marcar TODOS os exames (mesmo os fora do filtro/paginação
+// atual) e limpar a selecao inteira — um so' botao faz as duas coisas (ver
+// texto trocado em updateExamFooter), em vez de dois botoes separados (uma
+// "Selecionar todos" e outra "Nenhum").
 examSelectAllBtn.addEventListener("click", () => {
   const keys = allExamKeys();
   const allSelected = keys.length > 0 && keys.every(k => selectedExams.has(k));
@@ -296,6 +645,159 @@ examSelectAllBtn.addEventListener("click", () => {
   else keys.forEach(k => selectedExams.add(k));
   renderExamGrid();
 });
+
+// ------------------------------------------------------- Barra lateral
+
+function openStatsScreen() {
+  screenBeforeStats = currentScreenName();
+  showScreen("stats");
+  loadAndRenderStats();
+}
+
+progressCtaBtn.addEventListener("click", openStatsScreen);
+
+function renderSidePanels() {
+  // "Seu progresso": MESMA agregação (pooled, todo o histórico) que a tela
+  // de Estatísticas sempre usou pro número "Aproveitamento geral" — não é
+  // uma conta nova, só é mostrada aqui também.
+  const answers = statsAnswersCache || [];
+  const total = answers.length;
+  const correct = answers.filter(a => a.correct).length;
+  const pct = pctOf(correct, total);
+
+  progressRingWrap.innerHTML = buildProgressRingSVG(pct);
+  progressRingPct.textContent = total > 0 ? `${pct}%` : "—";
+  progressTotalNum.textContent = total;
+  progressAcertosNum.textContent = correct;
+  progressErrosNum.textContent = total - correct;
+
+  // "Última atividade": exame com o answered_at mais recente entre todos os
+  // grupos calculados em computeExamStats.
+  const stats = computeExamStats();
+  const counts = buildCounts(allQuestions, examKey);
+
+  let lastKey = null;
+  let lastAt = "";
+  stats.forEach((s, key) => {
+    if (s.lastAnsweredAt > lastAt) {
+      lastAt = s.lastAnsweredAt;
+      lastKey = key;
+    }
+  });
+
+  if (!lastKey) {
+    lastActivityPanel.hidden = true;
+    return;
+  }
+
+  const s = stats.get(lastKey);
+  const examTotal = counts.get(lastKey) || 0;
+  const done = s.answered >= examTotal && examTotal > 0;
+  const pctExam = pctOf(s.correct, s.answered);
+
+  lastActivityPanel.hidden = false;
+  lastActivityExam.textContent = lastKey === "__none__" ? "Sem exame" : `${lastKey}º Exame`;
+  lastActivityBadge.textContent = done ? "Concluído" : "Em andamento";
+  lastActivityBadge.className = "badge " + (done ? "badge-done" : "badge-progress");
+  lastActivityRingWrap.innerHTML = buildProgressRingSVG(pctExam, 48, 5);
+  lastActivityPctText.textContent = `${pctExam}% de acerto`;
+  lastActivityDate.textContent = fmtRelativeDate(s.lastAnsweredAt);
+
+  const hasWrong = s.correct < s.answered;
+  lastActivityReviewBtn.hidden = !hasWrong;
+  lastActivityReviewBtn.onclick = () => reviewMistakes(lastKey);
+}
+
+// --------------------------------------------------- Recomendação (IA)
+
+const DASH_TIP_KEY = "neuraoab_dash_tip";
+const DASH_TIP_MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24h — evita rechamar a IA a cada visita ao dashboard
+
+function dashTipFingerprint() {
+  const total = (statsAnswersCache || []).length;
+  const mostRecent = allExamKeys()
+    .filter(k => k !== "__none__")
+    .reduce((max, k) => Math.max(max, Number(k)), 0);
+  return `${total}:${mostRecent}`;
+}
+
+// Garante que o card do exame recomendado esteja visível antes de rolar até
+// ele — troca pra aba "Todos" e expande "Mostrar mais provas" o quanto for
+// preciso, caso o filtro/paginação atual esteja escondendo esse exame.
+function highlightExamCard(key) {
+  if (!examGrid.querySelector(`[data-exam-key="${CSS.escape(key)}"]`)) {
+    examFilterTabsEl.querySelectorAll(".exam-filter-tab").forEach(b => {
+      b.classList.toggle("active", b.dataset.filter === "todos");
+    });
+    examFilterTab = "todos";
+
+    const idx = filteredSortedExamKeys().indexOf(key);
+    if (idx >= 0) examsVisibleCount = Math.max(examsVisibleCount, idx + 1);
+    renderExamGrid();
+  }
+
+  const cardEl = examGrid.querySelector(`[data-exam-key="${CSS.escape(key)}"]`);
+  if (!cardEl) return;
+  cardEl.scrollIntoView({ behavior: "smooth", block: "center" });
+  cardEl.classList.add("exam-card-highlight");
+  setTimeout(() => cardEl.classList.remove("exam-card-highlight"), 2600);
+}
+
+async function loadDashboardTip() {
+  if (!currentSession?.user) return;
+
+  const fingerprint = dashTipFingerprint();
+  let cached = null;
+  try {
+    const raw = localStorage.getItem(DASH_TIP_KEY);
+    if (raw) cached = JSON.parse(raw);
+  } catch { /* cache corrompido — ignora e busca de novo */ }
+
+  const cacheValid = cached
+    && cached.fingerprint === fingerprint
+    && (Date.now() - (cached.savedAt || 0)) < DASH_TIP_MAX_AGE_MS;
+
+  if (cacheValid) {
+    renderDashboardTip(cached);
+    return;
+  }
+
+  const stats = computeExamStats();
+  const meta = examMetaMap();
+  const counts = buildCounts(allQuestions, examKey);
+  const exams = allExamKeys()
+    .filter(k => k !== "__none__")
+    .map(k => ({
+      examNumber: Number(k),
+      year: meta.get(k)?.year || 0,
+      total: counts.get(k) || 0,
+      answered: stats.get(k)?.answered || 0,
+      correct: stats.get(k)?.correct || 0,
+    }));
+  if (exams.length === 0) return;
+
+  try {
+    const { data, error } = await client.functions.invoke("recomendacao-dashboard", { body: { exams } });
+    if (error || !data?.message) return; // sem dica hoje — card fica escondido, sem quebrar o dashboard
+
+    const toCache = { examNumber: data.examNumber, message: data.message, fingerprint, savedAt: Date.now() };
+    try { localStorage.setItem(DASH_TIP_KEY, JSON.stringify(toCache)); } catch { /* localStorage indisponível — segue sem cache */ }
+    renderDashboardTip(toCache);
+  } catch {
+    // Falha de rede/IA: o dashboard funciona normalmente sem a dica.
+  }
+}
+
+function renderDashboardTip(tip) {
+  laureanoTipText.textContent = tip.message;
+  laureanoTip.hidden = false;
+  if (tip.examNumber != null) {
+    laureanoTipBtn.hidden = false;
+    laureanoTipBtn.onclick = () => highlightExamCard(String(tip.examNumber));
+  } else {
+    laureanoTipBtn.hidden = true;
+  }
+}
 
 toSubjectsBtn.addEventListener("click", () => {
   if (selectedExams.size === 0) return;
@@ -791,14 +1293,20 @@ let statsAnswersCache = null;
 let statsPeriod = "all"; // "today" | "7d" | "30d" | "all"
 
 menuStatsBtn.addEventListener("click", () => {
-  screenBeforeStats = currentScreenName();
   closeMenu();
-  showScreen("stats");
-  loadAndRenderStats();
+  openStatsScreen();
 });
 
 backFromStatsBtn.addEventListener("click", () => {
   showScreen(screenBeforeStats);
+  // Estatísticas pode ter acabado de buscar dados mais novos (ou zerado
+  // tudo, ver "Zerar estatísticas" abaixo) — sem isso, o dashboard da Tela
+  // 1 (progresso por exame, painel lateral) ficaria mostrando o estado de
+  // antes de abrir Estatísticas até a página ser recarregada.
+  if (screenBeforeStats === "exams") {
+    renderExamGrid();
+    renderSidePanels();
+  }
 });
 
 function pctOf(correct, total) {
@@ -1267,6 +1775,24 @@ loadingStartBtn.addEventListener("click", () => {
   loadingSplash.remove();
 });
 
+// Mesma busca que loadAndRenderStats() já fazia (linha ~1360), só que
+// chamada mais cedo — em paralelo com fetchAllQuestions() no init() — pra
+// o dashboard da Tela 1 (progresso por exame, painel lateral, recomendação)
+// já nascer com dado real, sem esperar o aluno abrir Estatísticas primeiro.
+// Nunca lança: uma falha aqui não deve impedir a Tela 1 de aparecer, só
+// deixa o progresso "zerado" até o aluno tentar de novo em Estatísticas.
+async function fetchStudentAnswers(userId) {
+  const { data, error } = await client
+    .from("oab_respostas")
+    .select("question_id, correct, answered_at")
+    .eq("user_id", userId);
+  if (error) {
+    console.error("Falha ao carregar respostas do aluno:", error.message);
+    return [];
+  }
+  return data || [];
+}
+
 async function init() {
   const session = await requireAuth();
   if (!session) return; // requireAuth ja' redirecionou pra' landing page
@@ -1275,14 +1801,20 @@ async function init() {
   updateSessionUI();
 
   let data;
+  let answers;
   try {
-    data = await fetchAllQuestions();
+    [data, answers] = await Promise.all([
+      fetchAllQuestions(),
+      fetchStudentAnswers(session.user.id),
+      loadFavoritos(),
+    ]);
   } catch (error) {
     showLoadingError(`Erro ao carregar questões: ${error.message}`);
     return;
   }
 
   allQuestions = data || [];
+  statsAnswersCache = answers || [];
 
   if (allQuestions.length === 0) {
     showLoadingError("Nenhuma questão no banco ainda. Importe um JSON na aba Admin.");
@@ -1290,8 +1822,10 @@ async function init() {
   }
 
   renderExamGrid();
+  renderSidePanels();
   showScreen("exams");
   showLoadingReady();
+  loadDashboardTip();
 }
 
 init();
