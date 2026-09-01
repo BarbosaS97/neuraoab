@@ -285,13 +285,21 @@ a { color: inherit; }
   position: sticky;
   top: 0;
   z-index: 40;
-  height: var(--topbar-h);
+  min-height: var(--topbar-h);
+  /* Em simulado2fase.html o topbar e' filho direto de um flex container
+     (.sim2-body, coluna) — sem isso, o "min-width: auto" padrao de item
+     flex trava a largura no min-content do conteudo (cronometro + abas
+     sem poder encolher) em vez do viewport, e o flex-wrap abaixo nunca
+     chega a disparar (o topbar so' fica largo demais e transborda). Em
+     estudos/index.html (onde o topbar NAO e' item flex) isso e' inocuo. */
+  min-width: 0;
   box-sizing: border-box;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 0 16px;
+  gap: 10px 12px;
+  padding: 12px 16px;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
 }
@@ -599,42 +607,16 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   box-shadow: none;
 }
 
-/* ------------------------------------- Popover de login (simulado2fase.html) */
+/* ------------------------------ Login opcional no menu (simulado2fase.html) */
 /*
-  estudos/index.html moveu o login pra dentro do .menu-panel (ver secao
-  "Menu (≡)" acima) — mas simulado2fase.html ainda usa o popover ancorado
-  no avatar (".session-wrap"/".session-popover", ver topbar daquela pagina)
-  e nao tem CSS proprio pra isso em simulado2fase.css, dependendo 100% do
-  que este arquivo compartilhado (style.css) define. Mantido aqui de
-  proposito pra nao quebrar aquela pagina, que nao faz parte desta
-  reformulacao.
+  estudos/index.html nao precisa disso — login la' e' obrigatorio (ver
+  requireAuth em estudos.js), entao o .menu-panel so' tem o estado logado.
+  simulado2fase.html permite uso anonimo (ver ALUNO_ID em
+  simulado2fase.js), entao o mesmo .menu-panel la' tem uma secao a mais
+  (#menuSessionLoggedOut, ver HTML) com este formulario de login — sem CSS
+  proprio em simulado2fase.css, dependendo 100% do que este arquivo
+  compartilhado (style.css) define.
 */
-
-.session-wrap {
-  position: relative;
-}
-
-.session-popover {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  width: 220px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 14px;
-  box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.5);
-  z-index: 20;
-}
-
-.session-popover[hidden] { display: none; }
-
-.session-popover-title {
-  margin: 0 0 8px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-}
 
 .session-popover-hint {
   margin: 0 0 10px;
@@ -643,7 +625,7 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   line-height: 1.4;
 }
 
-.session-popover input {
+#menuSessionLoggedOut input {
   width: 100%;
   background: var(--bg);
   color: var(--text);
@@ -655,7 +637,7 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   margin-bottom: 8px;
 }
 
-.session-popover input:focus { outline: none; border-color: var(--primary); }
+#menuSessionLoggedOut input:focus { outline: none; border-color: var(--primary); }
 
 .session-popover-btn {
   width: 100%;

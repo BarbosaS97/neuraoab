@@ -59,22 +59,6 @@ function fmtValor(n) {
 //
 // SVG em linha (sem emoji) — mesmo padrão usado em estudos/dr-laureano.js.
 
-const SUN_ICON = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <circle cx="12" cy="12" r="4"></circle>
-  <line x1="12" y1="2" x2="12" y2="4"></line>
-  <line x1="12" y1="20" x2="12" y2="22"></line>
-  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-  <line x1="2" y1="12" x2="4" y2="12"></line>
-  <line x1="20" y1="12" x2="22" y2="12"></line>
-  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-</svg>`;
-
-const MOON_ICON = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-</svg>`;
-
 const PLAY_ICON = `<svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor">
   <polygon points="6 3 20 12 6 21 6 3"></polygon>
 </svg>`;
@@ -127,23 +111,50 @@ const els = {
   resultadoItens: document.getElementById("resultadoItens"),
   btnNovoSimulado: document.getElementById("btnNovoSimulado"),
 
-  themeToggle: document.getElementById("sim2ThemeToggle"),
-
   timerDisplay: document.getElementById("timerDisplay"),
   timerPlayPause: document.getElementById("timerPlayPause"),
   timerReset: document.getElementById("timerReset"),
 
-  sessionAvatarBtn: document.getElementById("sessionAvatarBtn"),
-  sessionPopover: document.getElementById("sessionPopover"),
-  sessionLoginForm: document.getElementById("sessionLoginForm"),
-  sessionLoggedInfo: document.getElementById("sessionLoggedInfo"),
+  menuBtn: document.getElementById("menuBtn"),
+  menuCloseBtn: document.getElementById("menuCloseBtn"),
+  menuBackdrop: document.getElementById("menuBackdrop"),
+  menuPanel: document.getElementById("menuPanel"),
+  menuAvatar: document.getElementById("menuAvatar"),
+  menuUserLabel: document.getElementById("menuUserLabel"),
+
+  menuSessionLoggedOut: document.getElementById("menuSessionLoggedOut"),
+  menuSessionLoggedIn: document.getElementById("menuSessionLoggedIn"),
   sessionEmail: document.getElementById("sessionEmail"),
   sessionPassword: document.getElementById("sessionPassword"),
   sessionLoginBtn: document.getElementById("sessionLoginBtn"),
   sessionLoginMsg: document.getElementById("sessionLoginMsg"),
-  sessionUserLabel: document.getElementById("sessionUserLabel"),
   sessionLogoutBtn: document.getElementById("sessionLogoutBtn"),
 };
+
+// ------------------------------------------------------------------ Menu
+//
+// Mesmo painel overlay de estudos/estudos.js (ver comentário lá) — abre por
+// cima do conteúdo, fecha clicando fora, no X ou com Escape.
+
+function openMenu() {
+  els.menuBackdrop.hidden = false;
+  els.menuPanel.hidden = false;
+  els.menuBtn.setAttribute("aria-expanded", "true");
+}
+
+function closeMenu() {
+  els.menuBackdrop.hidden = true;
+  els.menuPanel.hidden = true;
+  els.menuBtn.setAttribute("aria-expanded", "false");
+}
+
+els.menuBtn.addEventListener("click", openMenu);
+els.menuCloseBtn.addEventListener("click", closeMenu);
+els.menuBackdrop.addEventListener("click", closeMenu);
+
+document.addEventListener("keydown", (ev) => {
+  if (ev.key === "Escape" && !els.menuPanel.hidden) closeMenu();
+});
 
 // ------------------------------------------------------ Sessão do aluno
 //
@@ -151,36 +162,24 @@ const els = {
 // login, currentSession fica null pra sempre e o simulado funciona
 // exatamente como antes (só aluno_id anônimo). Logado, a tentativa criada
 // em createTentativa (abaixo) também grava user_id, pra aparecer no
-// Portal do Professor.
+// Portal do Professor. Ao contrário da 1ª fase (login obrigatório), aqui o
+// menu tem os dois estados — ver comentário no HTML sobre
+// menuSessionLoggedOut/menuSessionLoggedIn.
 
 let currentSession = null;
 
 function updateSessionUI() {
   if (currentSession?.user) {
     const label = currentSession.user.user_metadata?.nome || currentSession.user.email || "?";
-    els.sessionAvatarBtn.textContent = label.trim().charAt(0).toUpperCase() || "?";
-    els.sessionAvatarBtn.title = `Logado como ${currentSession.user.email}`;
-    els.sessionLoginForm.hidden = true;
-    els.sessionLoggedInfo.hidden = false;
-    els.sessionUserLabel.textContent = currentSession.user.email;
+    els.menuAvatar.textContent = label.trim().charAt(0).toUpperCase() || "?";
+    els.menuUserLabel.textContent = currentSession.user.email;
+    els.menuSessionLoggedOut.hidden = true;
+    els.menuSessionLoggedIn.hidden = false;
   } else {
-    els.sessionAvatarBtn.textContent = "E";
-    els.sessionAvatarBtn.title = "Entrar";
-    els.sessionLoginForm.hidden = false;
-    els.sessionLoggedInfo.hidden = true;
+    els.menuSessionLoggedOut.hidden = false;
+    els.menuSessionLoggedIn.hidden = true;
   }
 }
-
-els.sessionAvatarBtn.addEventListener("click", (ev) => {
-  ev.stopPropagation();
-  els.sessionPopover.hidden = !els.sessionPopover.hidden;
-});
-
-els.sessionPopover.addEventListener("click", (ev) => ev.stopPropagation());
-
-document.addEventListener("click", () => {
-  els.sessionPopover.hidden = true;
-});
 
 function showSessionLoginMsg(text) {
   els.sessionLoginMsg.textContent = text;
@@ -205,7 +204,7 @@ async function handleSessionLogin() {
   }
   els.sessionPassword.value = "";
   els.sessionLoginMsg.className = "session-popover-msg";
-  els.sessionPopover.hidden = true;
+  closeMenu();
 }
 
 els.sessionLoginBtn.addEventListener("click", handleSessionLogin);
@@ -215,7 +214,7 @@ els.sessionPassword.addEventListener("keydown", (ev) => {
 
 els.sessionLogoutBtn.addEventListener("click", async () => {
   await client.auth.signOut();
-  els.sessionPopover.hidden = true;
+  closeMenu();
 });
 
 client.auth.onAuthStateChange((_event, session) => {
@@ -238,8 +237,9 @@ function showView(name) {
 // Mede a altura real do topbar e escreve em --topbar-h, usada pelo CSS pra
 // grudar a régua de abas logo abaixo dele (ver .sim2-tabs-sticky em
 // simulado2fase.css). Sem isso, um valor fixo no CSS quebraria sempre que o
-// topbar quebrasse linha (ex.: tela estreita com o cronometro).
-const topbarEl = document.querySelector(".sim2-topbar");
+// topbar quebrasse linha (ex.: tela estreita com o cronometro, ver .topbar
+// em estudos/style.css).
+const topbarEl = document.querySelector(".topbar");
 
 function updateLayoutVars() {
   if (topbarEl) {
@@ -253,19 +253,27 @@ updateLayoutVars();
 // ------------------------------------------------------------------ Tema
 //
 // Mesma chave usada em estudos/estudos.js — o tema escolhido em qualquer
-// uma das duas paginas vale na outra.
+// uma das duas paginas vale na outra. Trocado no mesmo mode-switch
+// (Escuro/Claro) do menu lateral, igual a' 1a fase — em vez de um botao
+// solto de sol/lua no topbar.
 
 const THEME_STORAGE_KEY = "neuraoab-theme";
 
 function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
-  els.themeToggle.innerHTML = theme === "light" ? SUN_ICON : MOON_ICON;
+  document.querySelectorAll("[data-theme-btn]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.themeBtn === theme);
+  });
   safeSetItem(THEME_STORAGE_KEY, theme);
 }
 
-els.themeToggle.addEventListener("click", () => {
-  const current = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
-  applyTheme(current === "light" ? "dark" : "light");
+document.querySelectorAll(".mode-switch").forEach(group => {
+  const buttons = group.querySelectorAll(".mode-btn");
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (btn.dataset.themeBtn) applyTheme(btn.dataset.themeBtn);
+    });
+  });
 });
 
 applyTheme(safeGetItem(THEME_STORAGE_KEY) === "light" ? "light" : "dark");

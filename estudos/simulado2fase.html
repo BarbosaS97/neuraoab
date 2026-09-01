@@ -22,57 +22,82 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=23">
-<link rel="stylesheet" href="simulado2fase.css?v=12">
+<link rel="stylesheet" href="style.css?v=24">
+<link rel="stylesheet" href="simulado2fase.css?v=13">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body class="sim2-body">
 
-<header class="sim2-topbar">
-  <div class="sim2-brand"><img src="../images/logotipo.png" alt="NeuraOAB"></div>
-  <div class="sim2-topbar-title">
-    <span>Simulado — 2ª Fase</span>
-    <span class="sim2-topbar-sub">Correção automática por IA</span>
-  </div>
-
-  <div class="sim2-timer" id="simTimer">
-    <span class="sim2-timer-display" id="timerDisplay">00:00:00</span>
-    <button type="button" id="timerPlayPause" class="sim2-timer-btn" aria-label="Iniciar cronômetro"></button>
-    <button type="button" id="timerReset" class="sim2-timer-btn" aria-label="Zerar cronômetro">
-      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="1 4 1 10 7 10"></polyline>
-        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-      </svg>
+<!-- Mesmo topbar de estudos/index.html (classes .topbar/.topbar-left/
+     .topbar-right, menu ≡ + painel lateral) — antes esta pagina tinha um
+     cabecalho proprio (.sim2-topbar) completamente diferente do da 1a fase,
+     o que fazia o topo "trocar" inteiro ao alternar de aba. So' o
+     cronometro (proprio desta pagina) entra a mais no topbar-right, antes
+     das abas de fase. -->
+<header class="topbar">
+  <div class="topbar-left">
+    <button type="button" id="menuBtn" class="menu-btn" aria-label="Abrir menu" aria-expanded="false">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
     </button>
+    <a href="../index.html" class="topbar-logo"><img src="../images/logotipo.png" alt="NeuraOAB"></a>
   </div>
-
-  <div class="sim2-topbar-nav">
+  <div class="topbar-right">
+    <div class="sim2-timer" id="simTimer">
+      <span class="sim2-timer-display" id="timerDisplay">00:00:00</span>
+      <button type="button" id="timerPlayPause" class="sim2-timer-btn" aria-label="Iniciar cronômetro"></button>
+      <button type="button" id="timerReset" class="sim2-timer-btn" aria-label="Zerar cronômetro">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+      </button>
+    </div>
     <nav class="phase-tabs" aria-label="Fase do exame">
       <a href="index.html" class="phase-tab">1ª Fase</a>
       <span class="phase-tab active" aria-current="page">2ª Fase</span>
     </nav>
-    <!-- Login opcional (aluno convidado por um professor) — mesmo padrão
-         de estudos/index.html, ver comentário lá. -->
-    <div class="session-wrap">
-      <button type="button" id="sessionAvatarBtn" class="avatar" title="Entrar">E</button>
-      <div class="session-popover" id="sessionPopover" hidden>
-        <div id="sessionLoginForm">
-          <p class="session-popover-title">Entrar</p>
-          <p class="session-popover-hint">Recebeu um convite do seu professor? Entre pra suas respostas contarem pra ele.</p>
-          <input type="email" id="sessionEmail" placeholder="E-mail" autocomplete="username">
-          <input type="password" id="sessionPassword" placeholder="Senha" autocomplete="current-password">
-          <button type="button" id="sessionLoginBtn" class="session-popover-btn">Entrar</button>
-          <p class="session-popover-msg" id="sessionLoginMsg"></p>
-        </div>
-        <div id="sessionLoggedInfo" hidden>
-          <p class="session-popover-title" id="sessionUserLabel"></p>
-          <button type="button" id="sessionLogoutBtn" class="session-popover-btn">Sair</button>
-        </div>
-      </div>
-    </div>
-    <button type="button" id="sim2ThemeToggle" class="sim2-theme-toggle" aria-label="Alternar tema"></button>
   </div>
 </header>
+
+<div class="menu-backdrop" id="menuBackdrop" hidden></div>
+<div class="menu-panel" id="menuPanel" hidden role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="menu-panel-head">
+    <span>Menu</span>
+    <button type="button" id="menuCloseBtn" class="icon-btn" aria-label="Fechar menu">&times;</button>
+  </div>
+
+  <section>
+    <h2 class="menu-section-title">Configurações</h2>
+    <div class="mode-switch">
+      <button class="mode-btn active" data-theme-btn="dark" type="button">Escuro</button>
+      <button class="mode-btn" data-theme-btn="light" type="button">Claro</button>
+    </div>
+  </section>
+
+  <!-- Login opcional (aluno convidado por um professor) — ao contrario da
+       1a fase (login OBRIGATORIO, ver requireAuth em estudos.js), aqui o
+       simulado funciona sem conta (ver ALUNO_ID em simulado2fase.js), entao
+       esta secao (ao contrario da equivalente em estudos/index.html) tem
+       dois estados alternados por updateSessionUI(): deslogado (formulario
+       de entrar) e logado (dados da conta + sair). -->
+  <section id="menuSessionLoggedOut">
+    <h2 class="menu-section-title">Conta</h2>
+    <p class="session-popover-hint">Recebeu um convite do seu professor? Entre pra suas respostas contarem pra ele.</p>
+    <input type="email" id="sessionEmail" placeholder="E-mail" autocomplete="username">
+    <input type="password" id="sessionPassword" placeholder="Senha" autocomplete="current-password">
+    <button type="button" id="sessionLoginBtn" class="session-popover-btn">Entrar</button>
+    <p class="session-popover-msg" id="sessionLoginMsg"></p>
+  </section>
+
+  <section id="menuSessionLoggedIn" hidden>
+    <h2 class="menu-section-title">Conta</h2>
+    <div class="menu-user-row">
+      <span class="avatar" id="menuAvatar">?</span>
+      <span class="menu-user-name" id="menuUserLabel"></span>
+    </div>
+    <button type="button" id="sessionLogoutBtn" class="btn-ghost">Sair</button>
+  </section>
+</div>
 
 <main class="sim2-main">
 
@@ -227,6 +252,6 @@
 
 </main>
 
-<script src="simulado2fase.js?v=6"></script>
+<script src="simulado2fase.js?v=7"></script>
 </body>
 </html>
