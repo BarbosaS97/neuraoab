@@ -212,9 +212,19 @@ els.sessionPassword.addEventListener("keydown", (ev) => {
   if (ev.key === "Enter") handleSessionLogin();
 });
 
+// Mesmo comportamento de estudos/estudos.js (handleSessionLogout): sai e
+// redireciona na hora pra' landing page, em vez de so' fechar o menu e
+// deixar o aluno na propria pagina — sem isso o clique em "Sair" na 2a
+// fase parecia nao fazer nada de imediato (so' mudava o menu por baixo).
 els.sessionLogoutBtn.addEventListener("click", async () => {
-  await client.auth.signOut();
+  currentSession = null;
   closeMenu();
+  try {
+    await client.auth.signOut();
+  } catch (err) {
+    console.error("Erro ao encerrar sessão:", err);
+  }
+  window.location.href = "../index.html";
 });
 
 client.auth.onAuthStateChange((_event, session) => {
