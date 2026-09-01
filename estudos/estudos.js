@@ -52,6 +52,7 @@ const backToExamsBtn = document.getElementById("backToExamsBtn");
 const backToSubjectsBtn = document.getElementById("backToSubjectsBtn");
 
 // Dashboard da 1ª fase (Tela 1) — ver seção "Tela 1" mais abaixo.
+const dashboardGreeting = document.getElementById("dashboardGreeting");
 const laureanoTip = document.getElementById("laureanoTip");
 const laureanoTipText = document.getElementById("laureanoTipText");
 const laureanoTipBtn = document.getElementById("laureanoTipBtn");
@@ -1841,6 +1842,32 @@ async function fetchStudentAnswers(userId) {
   return data || [];
 }
 
+// O nome de exibição da sessao (currentSession.user.user_metadata?.nome,
+// ver updateSessionUI) NUNCA e' preenchido no fluxo real de cadastro —
+// estudos/aceitar-convite.html so' chama auth.updateUser({password}), sem
+// {data: {nome}} — o nome digitado ali vai direto pra "profiles.nome" (ver
+// tambem "Meu Perfil"/profileSaveBtn, que edita a mesma coluna). Por isso a
+// saudacao busca "profiles.nome" direto, em vez de reaproveitar
+// user_metadata como o resto do app faz.
+async function fetchStudentFirstName(userId) {
+  const { data, error } = await client
+    .from("profiles")
+    .select("nome")
+    .eq("id", userId)
+    .maybeSingle();
+  if (error || !data?.nome) return null;
+  return data.nome.trim().split(/\s+/)[0] || null;
+}
+
+// Sem nome cadastrado ainda (aluno convidado que nunca preencheu "Meu
+// Perfil"), o título cai de volta pro texto estático já escrito no HTML
+// (ver <h1 id="dashboardGreeting"> em estudos/index.html) — nunca um
+// "Olá, ! Escolha sua prova." com o nome faltando.
+function renderDashboardGreeting(firstName) {
+  if (!firstName) return;
+  dashboardGreeting.textContent = `Olá, ${firstName}! Escolha sua prova.`;
+}
+
 async function init() {
   const session = await requireAuth();
   if (!session) return; // requireAuth ja' redirecionou pra' landing page
@@ -1850,11 +1877,13 @@ async function init() {
 
   let data;
   let answers;
+  let firstName;
   try {
-    [data, answers] = await Promise.all([
+    [data, answers, , firstName] = await Promise.all([
       fetchAllQuestions(),
       fetchStudentAnswers(session.user.id),
       loadFavoritos(),
+      fetchStudentFirstName(session.user.id),
     ]);
   } catch (error) {
     showLoadingError(`Erro ao carregar questões: ${error.message}`);
@@ -1863,6 +1892,7 @@ async function init() {
 
   allQuestions = data || [];
   statsAnswersCache = answers || [];
+  renderDashboardGreeting(firstName);
 
   if (allQuestions.length === 0) {
     showLoadingError("Nenhuma questão no banco ainda. Importe um JSON na aba Admin.");
