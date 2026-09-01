@@ -416,7 +416,7 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 
 .phase-tab.active {
   color: #fff;
-  background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+  background: var(--primary);
   cursor: default;
 }
 
@@ -585,7 +585,7 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 
 .btn-primary {
   width: 100%;
-  background: linear-gradient(100deg, var(--logo-orange), var(--logo-purple) 55%, var(--logo-blue));
+  background: var(--primary);
   color: #fff;
   border: none;
   border-radius: 9px;
@@ -598,9 +598,9 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 }
 
 .btn-primary:hover:not(:disabled) {
-  filter: brightness(1.1) saturate(1.1);
+  filter: brightness(1.08);
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px -10px rgba(122, 24, 252, 0.55);
+  box-shadow: 0 8px 20px -10px var(--primary-glow);
 }
 
 .btn-primary:disabled {
@@ -749,17 +749,20 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   gap: 14px;
 }
 
-/* --accent é a cor de destaque do card (borda/selo/glow no hover e quando
-   selecionado). Já foi uma cor cíclica (laranja/roxo/azul alternando por
-   card) — numa grade com dezenas de provas isso virava ruído visual (cada
-   card gritando uma cor diferente ao mesmo tempo). Um accent único e
-   consistente (a cor primária da marca) deixa a grade inteira mais calma;
-   cor de verdade fica reservada pros poucos elementos que já merecem
-   destaque por conta própria (card em destaque, aba ativa, botão principal). */
+/* --accent é a cor de destaque do card (faixa no topo, borda/glow no hover)
+   — cíclica entre as 3 cores da marca (mesmo padrão da imagem de
+   referência do dashboard), NÃO mais um roxo único: o ruído visual do
+   round anterior não vinha da variação de cor em si, e sim do fundo com
+   brilho ambiente + botões em degradê competindo com ela ao mesmo tempo
+   (já corrigidos). Quando SELECIONADO, todo card vira roxo consistente
+   (ver ".pick-card.selected" mais abaixo, que redefine --accent) — a cor
+   de "isso está marcado" precisa ser sempre a mesma em qualquer card,
+   nunca variar com a cor cíclica dele. */
+.pick-card:nth-child(3n+1) { --accent: var(--logo-orange); --accent-dim: var(--logo-orange-dim); --accent-glow: var(--logo-orange-glow); }
+.pick-card:nth-child(3n+2) { --accent: var(--logo-purple); --accent-dim: var(--logo-purple-dim); --accent-glow: var(--logo-purple-glow); }
+.pick-card:nth-child(3n+3) { --accent: var(--logo-blue); --accent-dim: var(--logo-blue-dim); --accent-glow: var(--logo-blue-glow); }
+
 .pick-card {
-  --accent: var(--primary);
-  --accent-dim: var(--primary-dim);
-  --accent-glow: var(--primary-glow);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -852,6 +855,9 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 }
 
 .pick-card.selected {
+  --accent: var(--primary);
+  --accent-dim: var(--primary-dim);
+  --accent-glow: var(--primary-glow);
   border-color: var(--accent);
   background: var(--accent-dim);
   box-shadow: 0 14px 30px -18px var(--accent-glow);
@@ -1054,6 +1060,9 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 }
 
 .exam-filter-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   background: none;
   border: none;
   border-radius: 999px;
@@ -1067,11 +1076,13 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   transition: color 0.15s ease, background 0.15s ease;
 }
 
+.exam-filter-tab svg { flex-shrink: 0; }
+
 .exam-filter-tab:hover { color: var(--text); background: var(--card-hover); }
 
 .exam-filter-tab.active {
   color: #fff;
-  background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+  background: var(--primary);
 }
 
 .exam-count-badge {
@@ -1111,13 +1122,26 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 .pick-card-favorite.active { color: #f5b400; }
 
 /* Card em destaque (exame mais recente) — ocupa a largura inteira da
-   grade, com o atalho "Começar simulado" que pula direto pra Tela 3 sem
-   mexer na seleção múltipla dos outros cards. */
+   grade, em DUAS colunas: .exam-hero-main (identidade do exame) e
+   .exam-hero-action (um painel só de ação — favoritar, status,
+   "Começar simulado" —, que pula direto pra Tela 3 sem mexer na seleção
+   múltipla dos outros cards). Empilha em coluna única quando não cabem
+   lado a lado (flex-wrap, sem precisar de media query pra isso). */
 .exam-hero {
   grid-column: 1 / -1;
-  padding: 26px 30px 24px 48px;
-  gap: 6px;
-  background: linear-gradient(135deg, var(--accent-dim), var(--card) 65%);
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  padding: 0;
+  gap: 0;
+}
+
+.exam-hero-main {
+  flex: 1 1 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 26px 28px;
 }
 
 .exam-hero-badge {
@@ -1130,14 +1154,16 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   background: var(--accent);
   border-radius: 999px;
   padding: 4px 10px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
+.exam-hero-title-row { display: flex; align-items: baseline; gap: 10px; }
+
 .exam-hero-number {
-  font-size: 40px;
+  font-size: 42px;
   font-weight: 800;
   line-height: 1;
-  color: var(--accent);
+  color: var(--text);
 }
 
 .exam-hero-label {
@@ -1146,23 +1172,52 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-dim);
-  margin-bottom: 4px;
 }
 
-.exam-hero-status { font-size: 13px; color: var(--text-dim); }
+.exam-hero-meta { display: flex; align-items: center; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+
+.exam-hero-action {
+  position: relative;
+  flex: 0 0 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 24px 24px 22px;
+  /* Roxo fixo aqui, independente da cor cíclica do card (--accent, que
+     no destaque costuma sair laranja por ser sempre o 1º filho) — o painel
+     de ação é sobre "o que fazer agora" (mesma cor do botão principal do
+     app), não sobre a identidade do exame. */
+  background: var(--primary-dim);
+  border-left: 1px solid var(--border);
+}
+
+/* Canto SUPERIOR ESQUERDO do painel de ação, de propósito — o checkbox de
+   seleção múltipla (.pick-card-check) mora no canto superior DIREITO do
+   card inteiro, que coincide com o canto direito deste painel (ele é a
+   ponta direita do card); os dois na mesma esquina colidiriam. */
+.exam-hero-action .pick-card-favorite { position: static; align-self: flex-start; margin-bottom: 8px; }
+
+.exam-hero-action-title { font-size: 14px; font-weight: 700; color: var(--text); }
+
+.exam-hero-action-sub {
+  margin: 4px 0 12px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-dim);
+}
 
 .exam-hero-cta {
-  width: auto;
-  margin-top: 10px;
-  padding: 11px 26px;
+  width: 100%;
+  margin-top: auto;
+  padding: 11px 0;
 }
 
-@media (min-width: 720px) {
-  .exam-hero { flex-direction: row; flex-wrap: wrap; align-items: center; padding: 22px 32px; }
-  .exam-hero-badge { position: absolute; top: 16px; left: 48px; margin-bottom: 0; }
-  .exam-hero-number { margin-right: 4px; }
-  .exam-hero-status { flex-basis: 100%; }
-  .exam-hero-cta { margin-top: 0; margin-left: auto; }
+@media (max-width: 560px) {
+  .exam-hero-action {
+    flex-basis: 100%;
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
 }
 
 /* Destaque temporário no card recomendado pelo Dr. Laureano quando o aluno
@@ -1202,10 +1257,10 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 18px 20px;
+  padding: 20px 22px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   animation: pickCardIn 0.32s ease both;
 }
 
@@ -1254,8 +1309,8 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 }
 
 .progress-ring-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.progress-ring-pct { font-size: 24px; font-weight: 800; color: var(--text); }
-.progress-ring-label { font-size: 11.5px; color: var(--text-dim); }
+.progress-ring-pct { font-size: 30px; font-weight: 800; color: var(--text); line-height: 1.1; }
+.progress-ring-label { font-size: 12px; color: var(--text-dim); }
 
 .progress-stats {
   display: grid;

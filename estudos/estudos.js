@@ -398,82 +398,91 @@ async function toggleFavorito(key, btn) {
 // mesma base de botão selecionável (.pick-card/.pick-card-check/selected),
 // mais estrela de favorito e — só no card em destaque (hero) — o atalho
 // "Começar simulado".
+function buildFavoriteBtn(key) {
+  const favBtn = document.createElement("button");
+  favBtn.type = "button";
+  const isFav = favoritedExams.has(key);
+  favBtn.className = "pick-card-favorite" + (isFav ? " active" : "");
+  favBtn.innerHTML = STAR_ICON;
+  favBtn.setAttribute("aria-label", isFav ? "Remover dos favoritos" : "Favoritar");
+  favBtn.addEventListener("click", ev => {
+    ev.stopPropagation();
+    toggleFavorito(key, favBtn);
+  });
+  return favBtn;
+}
+
+function buildCountBadge(started, answered, count, stat) {
+  const countEl = document.createElement("span");
+  countEl.className = "pick-card-count";
+  countEl.textContent = started
+    ? `${answered}/${count} respondidas (${pctOf(stat.correct, answered)}%)`
+    : `${count} questão(ões)`;
+  return countEl;
+}
+
+// Card em destaque (hero, ver .exam-hero no CSS): layout de DUAS colunas —
+// painel esquerdo com a identidade do exame (número/ano/quantidade) e um
+// painel direito só de ação (favoritar, status, "Começar simulado"), em vez
+// de tudo espremido numa linha só. Cards normais continuam numa coluna só.
 function buildExamCard({ key, year, count, stat, hero, selected, onToggle }) {
   const card = document.createElement("button");
   card.type = "button";
   card.className = "pick-card exam-card" + (hero ? " exam-hero" : "") + (selected ? " selected" : "");
   card.dataset.examKey = key;
 
-  if (key !== "__none__") {
-    const favBtn = document.createElement("button");
-    favBtn.type = "button";
-    const isFav = favoritedExams.has(key);
-    favBtn.className = "pick-card-favorite" + (isFav ? " active" : "");
-    favBtn.innerHTML = STAR_ICON;
-    favBtn.setAttribute("aria-label", isFav ? "Remover dos favoritos" : "Favoritar");
-    favBtn.addEventListener("click", ev => {
-      ev.stopPropagation();
-      toggleFavorito(key, favBtn);
-    });
-    card.appendChild(favBtn);
-  }
-
-  const check = document.createElement("span");
-  check.className = "pick-card-check";
-  check.setAttribute("aria-hidden", "true");
-  card.appendChild(check);
-
   const answered = stat?.answered || 0;
   const started = answered > 0;
 
   if (hero) {
+    const main = document.createElement("div");
+    main.className = "exam-hero-main";
+
     const badge = document.createElement("span");
     badge.className = "exam-hero-badge";
     badge.textContent = "MAIS RECENTE";
-    card.appendChild(badge);
+    main.appendChild(badge);
 
+    const titleRow = document.createElement("div");
+    titleRow.className = "exam-hero-title-row";
     const numEl = document.createElement("span");
     numEl.className = "exam-hero-number";
     numEl.textContent = key === "__none__" ? "—" : `${key}º`;
-    card.appendChild(numEl);
-
     const labelEl = document.createElement("span");
     labelEl.className = "exam-hero-label";
     labelEl.textContent = "Exame da OAB";
-    card.appendChild(labelEl);
+    titleRow.append(numEl, labelEl);
+    main.appendChild(titleRow);
 
-    // Só mostra a frase de status quando NÃO começou — uma vez começado, o
-    // selo "X/Y respondidas (Z%)" (countEl, mais abaixo) já diz a mesma
-    // coisa de forma mais compacta; repetir os dois virava informação
-    // duplicada no mesmo card.
-    if (!started) {
-      const statusEl = document.createElement("span");
-      statusEl.className = "exam-hero-status";
-      statusEl.textContent = "Ainda não realizado.";
-      card.appendChild(statusEl);
+    const metaRow = document.createElement("div");
+    metaRow.className = "exam-hero-meta";
+    if (year) {
+      const subEl = document.createElement("span");
+      subEl.className = "pick-card-sub";
+      subEl.textContent = `Ano ${year}`;
+      metaRow.appendChild(subEl);
     }
-  } else {
-    const titleEl = document.createElement("span");
-    titleEl.className = "pick-card-title";
-    titleEl.textContent = key === "__none__" ? "Sem exame" : `${key}º Exame`;
-    card.appendChild(titleEl);
-  }
+    metaRow.appendChild(buildCountBadge(started, answered, count, stat));
+    main.appendChild(metaRow);
 
-  if (year) {
-    const subEl = document.createElement("span");
-    subEl.className = "pick-card-sub";
-    subEl.textContent = `Ano ${year}`;
-    card.appendChild(subEl);
-  }
+    card.appendChild(main);
 
-  const countEl = document.createElement("span");
-  countEl.className = "pick-card-count";
-  countEl.textContent = started
-    ? `${answered}/${count} respondidas (${pctOf(stat.correct, answered)}%)`
-    : `${count} questão(ões)`;
-  card.appendChild(countEl);
+    const action = document.createElement("div");
+    action.className = "exam-hero-action";
+    if (key !== "__none__") action.appendChild(buildFavoriteBtn(key));
 
-  if (hero) {
+    const statusTitle = document.createElement("strong");
+    statusTitle.className = "exam-hero-action-title";
+    statusTitle.textContent = started ? "Continue de onde parou" : "Ainda não realizado";
+    action.appendChild(statusTitle);
+
+    const statusSub = document.createElement("p");
+    statusSub.className = "exam-hero-action-sub";
+    statusSub.textContent = started
+      ? `Faltam ${count - answered} questões pra terminar.`
+      : "Esta é a prova mais recente da OAB.";
+    action.appendChild(statusSub);
+
     const startBtn = document.createElement("button");
     startBtn.type = "button";
     startBtn.className = "btn-primary exam-hero-cta";
@@ -482,7 +491,35 @@ function buildExamCard({ key, year, count, stat, hero, selected, onToggle }) {
       ev.stopPropagation();
       startSimulado(key);
     });
-    card.appendChild(startBtn);
+    action.appendChild(startBtn);
+
+    card.appendChild(action);
+
+    const check = document.createElement("span");
+    check.className = "pick-card-check";
+    check.setAttribute("aria-hidden", "true");
+    card.appendChild(check);
+  } else {
+    if (key !== "__none__") card.appendChild(buildFavoriteBtn(key));
+
+    const check = document.createElement("span");
+    check.className = "pick-card-check";
+    check.setAttribute("aria-hidden", "true");
+    card.appendChild(check);
+
+    const titleEl = document.createElement("span");
+    titleEl.className = "pick-card-title";
+    titleEl.textContent = key === "__none__" ? "Sem exame" : `${key}º Exame`;
+    card.appendChild(titleEl);
+
+    if (year) {
+      const subEl = document.createElement("span");
+      subEl.className = "pick-card-sub";
+      subEl.textContent = `Ano ${year}`;
+      card.appendChild(subEl);
+    }
+
+    card.appendChild(buildCountBadge(started, answered, count, stat));
   }
 
   card.setAttribute("aria-pressed", String(selected));
