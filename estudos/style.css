@@ -7,6 +7,7 @@
   --text-dim: #8b949e;
   --primary: #8b5cf6;
   --primary-dim: rgba(139, 92, 246, 0.14);
+  --primary-glow: rgba(139, 92, 246, 0.45);
   --secondary: #3b82f6;
   --success: #2ea043;
   --success-dim: rgba(46, 160, 67, 0.14);
@@ -113,9 +114,12 @@ body::after {
   background: radial-gradient(circle, var(--logo-blue), transparent 70%);
 }
 
+/* No tema claro esses brilhos liam mais como "fundo sujo" (um véu
+   arroxeado por cima do branco) do que como um toque sutil — desligados
+   aqui; o tema escuro absorve o mesmo brilho sem esse problema. */
 :root[data-theme="light"] body::before,
 :root[data-theme="light"] body::after {
-  opacity: 0.1;
+  display: none;
 }
 
 a { color: inherit; }
@@ -711,21 +715,7 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.01em;
-  width: fit-content;
-}
-
-/* Titulo com o degrade da marca em vez de texto solido — o mesmo
-   tratamento visual do logotipo, so' que tipografico. @supports evita
-   texto invisivel (color: transparent sem clip) em navegadores sem
-   suporte a background-clip: text. */
-@supports (background-clip: text) or (-webkit-background-clip: text) {
-  .pick-screen-head h1 {
-    background: linear-gradient(90deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-  }
+  color: var(--text);
 }
 
 .pick-screen-hint {
@@ -759,15 +749,17 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   gap: 14px;
 }
 
-/* Cada card recebe uma cor de destaque cíclica (laranja/roxo/azul, as
-   mesmas do logotipo) via --accent — em vez de todo card usar o mesmo
-   roxo, a grade fica com mais variação e "vida" visual, e o card
-   selecionado se destaca na SUA própria cor em vez de sempre virar roxo. */
-.pick-card:nth-child(3n+1) { --accent: var(--logo-orange); --accent-dim: var(--logo-orange-dim); --accent-glow: var(--logo-orange-glow); }
-.pick-card:nth-child(3n+2) { --accent: var(--logo-purple); --accent-dim: var(--logo-purple-dim); --accent-glow: var(--logo-purple-glow); }
-.pick-card:nth-child(3n+3) { --accent: var(--logo-blue); --accent-dim: var(--logo-blue-dim); --accent-glow: var(--logo-blue-glow); }
-
+/* --accent é a cor de destaque do card (borda/selo/glow no hover e quando
+   selecionado). Já foi uma cor cíclica (laranja/roxo/azul alternando por
+   card) — numa grade com dezenas de provas isso virava ruído visual (cada
+   card gritando uma cor diferente ao mesmo tempo). Um accent único e
+   consistente (a cor primária da marca) deixa a grade inteira mais calma;
+   cor de verdade fica reservada pros poucos elementos que já merecem
+   destaque por conta própria (card em destaque, aba ativa, botão principal). */
 .pick-card {
+  --accent: var(--primary);
+  --accent-dim: var(--primary-dim);
+  --accent-glow: var(--primary-glow);
   position: relative;
   overflow: hidden;
   display: flex;

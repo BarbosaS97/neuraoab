@@ -442,10 +442,16 @@ function buildExamCard({ key, year, count, stat, hero, selected, onToggle }) {
     labelEl.textContent = "Exame da OAB";
     card.appendChild(labelEl);
 
-    const statusEl = document.createElement("span");
-    statusEl.className = "exam-hero-status";
-    statusEl.textContent = started ? `Você já respondeu ${answered} de ${count} questões.` : "Ainda não realizado.";
-    card.appendChild(statusEl);
+    // Só mostra a frase de status quando NÃO começou — uma vez começado, o
+    // selo "X/Y respondidas (Z%)" (countEl, mais abaixo) já diz a mesma
+    // coisa de forma mais compacta; repetir os dois virava informação
+    // duplicada no mesmo card.
+    if (!started) {
+      const statusEl = document.createElement("span");
+      statusEl.className = "exam-hero-status";
+      statusEl.textContent = "Ainda não realizado.";
+      card.appendChild(statusEl);
+    }
   } else {
     const titleEl = document.createElement("span");
     titleEl.className = "pick-card-title";
@@ -710,7 +716,12 @@ function renderSidePanels() {
 
 // --------------------------------------------------- Recomendação (IA)
 
-const DASH_TIP_KEY = "neuraoab_dash_tip";
+// "v2": muda toda vez que a lógica de recomendação muda de um jeito que
+// invalida dicas já em cache — sem isso, quem já tinha uma dica errada
+// salva (ver bug corrigido em pickRecommendation, supabase/functions/
+// recomendacao-dashboard/index.ts) continuaria vendo a mensagem antiga por
+// até 24h, mesmo depois do conserto.
+const DASH_TIP_KEY = "neuraoab_dash_tip_v2";
 const DASH_TIP_MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24h — evita rechamar a IA a cada visita ao dashboard
 
 function dashTipFingerprint() {

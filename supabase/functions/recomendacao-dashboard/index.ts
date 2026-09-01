@@ -85,7 +85,7 @@ function sanitizeExams(body: unknown): ExamStat[] | null {
   return exams;
 }
 
-type Reason = "start" | "review" | "done";
+type Reason = "recent" | "review" | "done";
 
 interface Recommendation {
   reason: Reason;
@@ -95,15 +95,26 @@ interface Recommendation {
 const MIN_ANSWERED_FOR_REVIEW = 5; // amostra mínima pra confiar no % de acerto de um exame já tentado
 
 // Decide QUAL exame recomendar e POR QUÊ — determinístico, nunca a IA.
-// 1) Prioridade: o exame mais recente que o aluno ainda não começou.
-// 2) Senão, entre os já tentados com amostra suficiente, o de pior
-//    aproveitamento (tem o que revisar).
+// 1) Prioridade ABSOLUTA: o exame de maior examNumber (o mais recente que
+//    existe no banco), sempre que ele ainda não estiver 100% respondido —
+//    não importa se o aluno nunca tocou nele ou já respondeu metade. Um bug
+//    anterior aqui pulava pro "exame mais recente NÃO COMEÇADO" mesmo
+//    quando um exame ainda mais novo já tinha respostas parciais, o que
+//    fazia a dica chamar um exame mais VELHO de "o mais recente" — sempre
+//    falso quando existe um exame de número maior. Com a regra "sempre o de
+//    maior examNumber, se incompleto" isso nunca mais pode acontecer: o
+//    exame escolhido aqui É por definição o de maior número entre os
+//    incompletos.
+// 2) Só quando o mais recente já estiver 100% respondido: entre os já
+//    tentados com amostra suficiente, o de pior aproveitamento (tem o que
+//    revisar).
 // 3) Senão (tudo tentado e sem exame fraco o bastante) — sem recomendação
 //    específica, só uma mensagem de incentivo geral.
 function pickRecommendation(exams: ExamStat[]): Recommendation {
-  const notStarted = exams.filter((e) => e.answered === 0).sort((a, b) => b.examNumber - a.examNumber);
-  if (notStarted.length > 0) {
-    return { reason: "start", exam: notStarted[0] };
+  const sorted = [...exams].sort((a, b) => b.examNumber - a.examNumber);
+  const mostRecent = sorted[0];
+  if (mostRecent && mostRecent.total > 0 && mostRecent.answered < mostRecent.total) {
+    return { reason: "recent", exam: mostRecent };
   }
 
   const reviewable = exams.filter((e) => e.answered >= MIN_ANSWERED_FOR_REVIEW);
@@ -123,12 +134,16 @@ function pickRecommendation(exams: ExamStat[]): Recommendation {
 // fato já decidido em pickRecommendation, nunca decide o exame sozinha.
 function buildPrompt(rec: Recommendation): string {
   const factLine = (() => {
-    if (rec.reason === "start" && rec.exam) {
-      return `O aluno ainda não respondeu nenhuma questão do ${rec.exam.examNumber}º Exame (ano ${rec.exam.year}), que é o exame mais recente que ele ainda não começou.`;
+    if (rec.reason === "recent" && rec.exam) {
+      const { examNumber, year, total, answered } = rec.exam;
+      if (answered === 0) {
+        return `O ${examNumber}º Exame (ano ${year}) é o exame MAIS RECENTE disponível no banco (nenhum outro exame tem número maior que ${examNumber}), e o aluno ainda não respondeu nenhuma das ${total} questões dele.`;
+      }
+      return `O ${examNumber}º Exame (ano ${year}) é o exame MAIS RECENTE disponível no banco (nenhum outro exame tem número maior que ${examNumber}). O aluno já respondeu ${answered} de ${total} questões dele, mas ainda não terminou.`;
     }
     if (rec.reason === "review" && rec.exam) {
       const pct = rec.exam.answered > 0 ? Math.round((rec.exam.correct / rec.exam.answered) * 100) : 0;
-      return `O aluno já tentou o ${rec.exam.examNumber}º Exame (ano ${rec.exam.year}) e acertou ${rec.exam.correct} de ${rec.exam.answered} questões (${pct}%) — esse é o exame com o desempenho mais fraco entre os que ele já tentou o bastante pra confiar no percentual.`;
+      return `O aluno já terminou o exame mais recente. Entre os exames que ele já tentou o bastante pra confiar no percentual, o ${rec.exam.examNumber}º Exame (ano ${rec.exam.year}) é o de desempenho mais fraco: acertou ${rec.exam.correct} de ${rec.exam.answered} questões (${pct}%). Este NÃO é o exame mais recente — é só o que precisa de mais revisão.`;
     }
     return "O aluno já tentou todos os exames disponíveis e não tem nenhum com desempenho claramente fraco no momento — está em dia com a prática.";
   })();
@@ -157,6 +172,9 @@ function buildPrompt(rec: Recommendation): string {
     "- Termine com uma frase curta de incentivo (ex.: \"Boa preparação!\", \"Você consegue!\"), só",
     "  quando fizer sentido de verdade, nunca forçado.",
     "- Nunca invente número, percentual ou exame que não esteja no FATO acima.",
+    "- Só chame um exame de \"mais recente\" se o FATO disser EXPLICITAMENTE que ele é o mais",
+    "  recente (\"MAIS RECENTE disponível no banco\"). Se o FATO for sobre desempenho fraco/revisão,",
+    "  NUNCA diga que esse exame é o mais recente — ele pode ser bem mais antigo.",
     "- Texto corrido, sem nenhuma formatação markdown (nada de **negrito**, listas, títulos).",
   ].join("\n");
 }
