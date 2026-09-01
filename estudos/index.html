@@ -244,18 +244,17 @@
 
       <div class="dashboard-layout">
         <div class="dashboard-main">
-          <!-- Dica gerada por IA (Edge Function recomendacao-dashboard, ver
-               loadDashboardTip em estudos.js) — some por completo se a IA
-               falhar ou ainda não houver exame pra recomendar, em vez de
-               mostrar um card quebrado. -->
+          <!-- Dica do dia: fixa (sem IA, sem chamada de rede — ver
+               STUDY_TIPS/renderDashboardTip em estudos.js), a mesma o dia
+               inteiro pra todo mundo, com um botão pra ver outra na hora. -->
           <div class="laureano-tip-card" id="laureanoTip" hidden>
             <img src="../images/Dr.%20Laureano.png" alt="Dr. Laureano" class="laureano-tip-avatar">
             <div class="laureano-tip-body">
-              <span class="laureano-tip-title">Dr. Laureano recomenda</span>
+              <span class="laureano-tip-title">Dica do Dr. Laureano</span>
               <p class="laureano-tip-text" id="laureanoTipText"></p>
-              <button type="button" class="laureano-tip-btn" id="laureanoTipBtn" hidden>
-                Ver dica completa
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              <button type="button" class="laureano-tip-btn" id="laureanoTipBtn">
+                Nova dica
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
               </button>
             </div>
           </div>
@@ -446,7 +445,7 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=28"></script>
+<script src="estudos.js?v=29"></script>
 <script src="dr-laureano.js?v=10"></script>
 </body>
 </html>

@@ -752,101 +752,51 @@ function renderSidePanels() {
   lastActivityReviewBtn.onclick = () => reviewMistakes(lastKey);
 }
 
-// --------------------------------------------------- Recomendação (IA)
+// ------------------------------------------------------- Dica do dia
 
-// "v2": muda toda vez que a lógica de recomendação muda de um jeito que
-// invalida dicas já em cache — sem isso, quem já tinha uma dica errada
-// salva (ver bug corrigido em pickRecommendation, supabase/functions/
-// recomendacao-dashboard/index.ts) continuaria vendo a mensagem antiga por
-// até 24h, mesmo depois do conserto.
-const DASH_TIP_KEY = "neuraoab_dash_tip_v2";
-const DASH_TIP_MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24h — evita rechamar a IA a cada visita ao dashboard
+// Dicas fixas de bons estudos/prova, na voz do Dr. Laureano (mesmo tom
+// encorajador e direto de supabase/functions/dr-laureano/index.ts) — sem
+// IA, sem chamada de rede: uma dica genérica de estudo não depende do
+// progresso de ninguém pra fazer sentido, e a versão anterior (recomendar
+// UM exame específico via IA, ver supabase/functions/recomendacao-
+// dashboard/index.ts) já causou dois bugs de contradição com o card em
+// destaque — mais simples e sem custo assim.
+const STUDY_TIPS = [
+  "Revise seus erros antes de encarar questões novas — é ali que mora o maior ganho de nota.",
+  "Estudar 40 minutos com foco total vale mais que 3 horas distraído. Respeite suas pausas.",
+  "Leia o enunciado duas vezes antes de marcar uma alternativa — muita pegadinha mora nos detalhes.",
+  "Refaça um simulado antigo de vez em quando: você vai se surpreender com o quanto já evoluiu.",
+  "Direito não se decora, se entende. Prefira compreender o porquê da regra a só memorizar o texto.",
+  "Durma bem na noite anterior à prova — o cérebro cansado erra até o que já sabia.",
+  "Na dúvida entre duas alternativas, elimine primeiro as que você tem certeza que estão erradas.",
+  "Constância vence intensidade: um pouco todo dia bate um dia inteiro só na véspera.",
+  "Anote os erros que mais se repetem — esse padrão é o próximo ponto que você vai garantir.",
+  "Ética profissional rende pontos fáceis: vale a pena reler o Código de Ética antes da prova.",
+  "Treine pelo menos um simulado no tempo real da prova — administrar o relógio também é nota.",
+  "Comemore os acertos, não só os erros. Reconhecer o progresso mantém o ânimo em alta.",
+  "Fundamente sempre a resposta na lei ou na jurisprudência, nunca só na sua intuição.",
+];
 
-function dashTipFingerprint() {
-  const total = (statsAnswersCache || []).length;
-  const mostRecent = allExamKeys()
-    .filter(k => k !== "__none__")
-    .reduce((max, k) => Math.max(max, Number(k)), 0);
-  return `${total}:${mostRecent}`;
+// Dia do ano (1 a ~365) — a mesma dica pra todo mundo o dia inteiro, e ela
+// muda sozinha à meia-noite. "Nova dica" (ver listener mais abaixo) soma
+// um deslocamento por cima disso só na sessão atual, sem mexer na dica do
+// dia de verdade.
+function dayOfYear(date) {
+  return Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
 }
 
-// Garante que o card do exame recomendado esteja visível antes de rolar até
-// ele — troca pra aba "Todos" e expande "Mostrar mais provas" o quanto for
-// preciso, caso o filtro/paginação atual esteja escondendo esse exame.
-function highlightExamCard(key) {
-  if (!examGrid.querySelector(`[data-exam-key="${CSS.escape(key)}"]`)) {
-    examFilterTabsEl.querySelectorAll(".exam-filter-tab").forEach(b => {
-      b.classList.toggle("active", b.dataset.filter === "todos");
-    });
-    examFilterTab = "todos";
+let dashboardTipOffset = 0;
 
-    const idx = filteredSortedExamKeys().indexOf(key);
-    if (idx >= 0) examsVisibleCount = Math.max(examsVisibleCount, idx + 1);
-    renderExamGrid();
-  }
-
-  const cardEl = examGrid.querySelector(`[data-exam-key="${CSS.escape(key)}"]`);
-  if (!cardEl) return;
-  cardEl.scrollIntoView({ behavior: "smooth", block: "center" });
-  cardEl.classList.add("exam-card-highlight");
-  setTimeout(() => cardEl.classList.remove("exam-card-highlight"), 2600);
-}
-
-async function loadDashboardTip() {
-  if (!currentSession?.user) return;
-
-  const fingerprint = dashTipFingerprint();
-  let cached = null;
-  try {
-    const raw = localStorage.getItem(DASH_TIP_KEY);
-    if (raw) cached = JSON.parse(raw);
-  } catch { /* cache corrompido — ignora e busca de novo */ }
-
-  const cacheValid = cached
-    && cached.fingerprint === fingerprint
-    && (Date.now() - (cached.savedAt || 0)) < DASH_TIP_MAX_AGE_MS;
-
-  if (cacheValid) {
-    renderDashboardTip(cached);
-    return;
-  }
-
-  const stats = computeExamStats();
-  const meta = examMetaMap();
-  const counts = buildCounts(allQuestions, examKey);
-  const exams = allExamKeys()
-    .filter(k => k !== "__none__")
-    .map(k => ({
-      examNumber: Number(k),
-      year: meta.get(k)?.year || 0,
-      total: counts.get(k) || 0,
-      answered: stats.get(k)?.answered || 0,
-      correct: stats.get(k)?.correct || 0,
-    }));
-  if (exams.length === 0) return;
-
-  try {
-    const { data, error } = await client.functions.invoke("recomendacao-dashboard", { body: { exams } });
-    if (error || !data?.message) return; // sem dica hoje — card fica escondido, sem quebrar o dashboard
-
-    const toCache = { examNumber: data.examNumber, message: data.message, fingerprint, savedAt: Date.now() };
-    try { localStorage.setItem(DASH_TIP_KEY, JSON.stringify(toCache)); } catch { /* localStorage indisponível — segue sem cache */ }
-    renderDashboardTip(toCache);
-  } catch {
-    // Falha de rede/IA: o dashboard funciona normalmente sem a dica.
-  }
-}
-
-function renderDashboardTip(tip) {
-  laureanoTipText.textContent = tip.message;
+function renderDashboardTip() {
+  const idx = (dayOfYear(new Date()) + dashboardTipOffset) % STUDY_TIPS.length;
+  laureanoTipText.textContent = STUDY_TIPS[idx];
   laureanoTip.hidden = false;
-  if (tip.examNumber != null) {
-    laureanoTipBtn.hidden = false;
-    laureanoTipBtn.onclick = () => highlightExamCard(String(tip.examNumber));
-  } else {
-    laureanoTipBtn.hidden = true;
-  }
 }
+
+laureanoTipBtn.addEventListener("click", () => {
+  dashboardTipOffset++;
+  renderDashboardTip();
+});
 
 toSubjectsBtn.addEventListener("click", () => {
   if (selectedExams.size === 0) return;
@@ -1901,9 +1851,9 @@ async function init() {
 
   renderExamGrid();
   renderSidePanels();
+  renderDashboardTip();
   showScreen("exams");
   showLoadingReady();
-  loadDashboardTip();
 }
 
 init();
