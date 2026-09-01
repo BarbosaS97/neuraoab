@@ -94,37 +94,9 @@
   gap: 10px;
 }
 
-.sim2-topbar-nav a {
-  color: var(--text-dim);
-  text-decoration: none;
-  font-size: 13px;
-  padding: 6px 10px;
-  border-radius: 7px;
-}
-
-.sim2-topbar-nav a:hover { color: var(--text); background: var(--card-hover); }
-
-/* Link de volta pra 1ª fase: texto + icone + fundo/borda proprios, bem mais
-   evidente que um link de texto solto no meio do topbar. Seletor
-   ".sim2-topbar-nav a.sim2-phase-link" (nao so' ".sim2-phase-link") de
-   proposito: precisa ter especificidade MAIOR que ".sim2-topbar-nav a" ali
-   em cima, senao aquela regra (que pinta o texto de --text-dim) vence e o
-   texto fica escuro em cima do fundo roxo — ilegivel. */
-.sim2-topbar-nav a.sim2-phase-link {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 13.5px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  color: #fff;
-  background: var(--primary);
-  border: 1px solid transparent;
-  padding: 7px 14px;
-  transition: filter 0.15s ease, transform 0.15s ease;
-}
-
-.sim2-topbar-nav a.sim2-phase-link:hover { color: #fff; filter: brightness(1.1); transform: translateY(-1px); }
+/* Alternador 1a/2a fase (.phase-tabs) definido em estudos/style.css,
+   compartilhado com estudos/index.html — este arquivo so' cuida do layout
+   dele dentro do topbar da 2a fase. */
 
 .sim2-theme-toggle {
   background: var(--card);
@@ -651,6 +623,25 @@
   border-radius: 10px;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 20px 40px -30px rgba(0, 0, 0, 0.6);
 }
+
+/* Bloqueio da escrita até o aluno clicar em "Iniciar" (ver btnIniciarCaderno
+   em simulado2fase.js) — a folha fica visível mas apagada/travada, e o
+   cartão de aviso acima dela concentra a ação. Sem overlay cobrindo a folha
+   inteira de propósito: ela pode ter até 150 linhas de altura, um overlay
+   absoluto cobrindo isso teria que rolar junto e complicaria a UX à toa. */
+.sim2-start-gate {
+  padding: 18px 22px;
+  text-align: center;
+}
+
+.sim2-start-gate-lede { margin: 0 0 14px; }
+
+.sim2-answer-sheet.locked {
+  opacity: 0.5;
+  filter: grayscale(0.4);
+}
+
+.sim2-textarea:disabled { cursor: not-allowed; }
 
 .sim2-line-gutter {
   flex-shrink: 0;

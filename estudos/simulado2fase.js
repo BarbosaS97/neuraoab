@@ -107,6 +107,9 @@ const els = {
   tabStrip: document.getElementById("tabStrip"),
   itemMeta: document.getElementById("itemMeta"),
   itemEnunciado: document.getElementById("itemEnunciado"),
+  startGate: document.getElementById("startGate"),
+  btnIniciarCaderno: document.getElementById("btnIniciarCaderno"),
+  answerSheet: document.getElementById("answerSheet"),
   lineGutter: document.getElementById("lineGutter"),
   itemResposta: document.getElementById("itemResposta"),
   itemContagem: document.getElementById("itemContagem"),
@@ -147,7 +150,7 @@ const els = {
 // Mesmo mecanismo opcional de estudos/estudos.js (ver comentário lá) — sem
 // login, currentSession fica null pra sempre e o simulado funciona
 // exatamente como antes (só aluno_id anônimo). Logado, a tentativa criada
-// em findOrCreateTentativa (abaixo) também grava user_id, pra aparecer no
+// em createTentativa (abaixo) também grava user_id, pra aparecer no
 // Portal do Professor.
 
 let currentSession = null;
@@ -467,7 +470,11 @@ async function loadItens(provaId) {
   return data || [];
 }
 
-async function findOrCreateTentativa(provaId) {
+// Busca uma tentativa em andamento já existente (retomada), sem criar
+// nenhuma nova — a criação fica a cargo de createTentativa(), disparada só
+// no clique em "Iniciar" (ver btnIniciarCaderno abaixo). Assim, abrir o
+// caderno pra so' ler os enunciados não conta como "início" pro professor.
+async function findTentativa(provaId) {
   const ptrKey = TENTATIVA_PTR_PREFIX + provaId;
   const ptr = safeGetItem(ptrKey);
 
@@ -500,6 +507,13 @@ async function findOrCreateTentativa(provaId) {
     }
   }
 
+  return null;
+}
+
+// Cria a tentativa de fato — started_at grava o momento do clique em
+// "Iniciar", que é o que o Portal do Professor mostra como "Iniciado em"
+// (ver professor-portal/js/aluno-detail.js, loadFase2).
+async function createTentativa(provaId) {
   const { data, error } = await client
     .from("oab2_tentativas")
     .insert({
@@ -512,9 +526,34 @@ async function findOrCreateTentativa(provaId) {
     .single();
   if (error) throw error;
 
-  safeSetItem(ptrKey, data.id);
+  safeSetItem(TENTATIVA_PTR_PREFIX + provaId, data.id);
   return data;
 }
+
+// Trava/libera a escrita conforme a tentativa existir ou não — chamada a
+// cada renderItem() (currentTentativa não muda de item pra item, mas assim
+// o estado visual sempre bate com o real) e depois do clique em "Iniciar".
+function updateAnswerLock() {
+  const locked = !currentTentativa;
+  els.itemResposta.disabled = locked;
+  els.answerSheet.classList.toggle("locked", locked);
+  els.startGate.hidden = !locked;
+  els.btnFinalizar.disabled = locked;
+}
+
+els.btnIniciarCaderno.addEventListener("click", async () => {
+  els.btnIniciarCaderno.disabled = true;
+  els.btnIniciarCaderno.textContent = "Iniciando...";
+  try {
+    currentTentativa = await createTentativa(currentProva.id);
+    updateAnswerLock();
+  } catch (err) {
+    alert(`Não foi possível iniciar: ${err.message}`);
+  } finally {
+    els.btnIniciarCaderno.disabled = false;
+    els.btnIniciarCaderno.textContent = "Iniciar";
+  }
+});
 
 async function loadDrafts(provaId, tentativaId, itens) {
   drafts = new Map();
@@ -547,8 +586,12 @@ async function openCaderno(prova) {
       els.pickerError.textContent = "Este caderno não tem itens importados ainda.";
       return;
     }
-    currentTentativa = await findOrCreateTentativa(prova.id);
-    await loadDrafts(prova.id, currentTentativa.id, currentItens);
+    currentTentativa = await findTentativa(prova.id);
+    if (currentTentativa) {
+      await loadDrafts(prova.id, currentTentativa.id, currentItens);
+    } else {
+      drafts = new Map();
+    }
 
     activeIndex = 0;
     els.cadernoTitulo.textContent = `${prova.exam_number}º Exame — ${prova.area}`;
@@ -708,6 +751,7 @@ function renderItem() {
   els.itemEnunciado.appendChild(buildEnunciadoHTML(item));
 
   els.itemResposta.value = drafts.get(item.id) || "";
+  updateAnswerLock();
   refreshSheetSize();
   updateContagem();
   els.itemSalvo.textContent = " ";

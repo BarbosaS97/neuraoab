@@ -642,21 +642,48 @@ PROPER_LADDER_TOKEN_RE = re.compile(r"^\d+,\d+$")
 # parte de um numero com virgula (evita mexer em "0,20" ou em algo tipo
 # "Art. 45").
 SPLIT_DECIMAL_RE = re.compile(r"(?<![\d,])0[\s/]+(\d{2})(?![\d,])")
+# Outro typo do material oficial (visto no 40o Exame, Direito Civil, peca,
+# item B: "0,00/0,25/0,30/0,35/O,40/0,55/0,65"): a letra maiuscula "O" no
+# lugar do digito "0" num valor da escada — provavelmente erro de digitacao
+# do proprio PDF original (a tecla "O" fica do lado do "0" no teclado). Sem
+# esse reparo, o token inteiro ("O,40") nao bate com \d+,\d+ e quebra o
+# LADDER_RE da celula INTEIRA — nao so' aquele valor: a celula deixa de ser
+# reconhecida como escada, o item vira "sem pontuacao" na propria linha, e o
+# proximo rotulo (que dependia dessa escada) acaba absorvido como
+# continuacao do item ANTERIOR em vez de abrir um item novo (ver
+# extract_criterios_from_tables). So' troca um "O" isolado (nao colado a
+# outra letra/digito, pra' nao mexer em siglas ou trechos de texto real)
+# imediatamente seguido de vírgula+dígitos — padrao que so' aparece mesmo
+# dentro de uma escada de pontuacao, nunca em prosa normal.
+STRAY_LETTER_O_RE = re.compile(r"(?<![A-Za-zÀ-ÿ0-9])O(?=,\d)")
+# Terceira variante do mesmo tipo de typo (vista no 40o Exame, Direito
+# Constitucional, Questao 2: "0.00/0,55/0,65"): um valor da escada digitado
+# com PONTO em vez de virgula — o mesmo erro que to_float_br() ja' trata
+# isoladamente (ver AMERICAN_DECIMAL_RE, visto antes no 42o Exame, Direito
+# Empresarial, "(Valor: 5.00)"), so' que aqui dentro de uma escada inteira,
+# onde ele quebra o LADDER_RE da celula tambem (mistura de separador decimal
+# no meio dos demais valores, todos com virgula). Repara ANTES do parser
+# tentar casar a celula inteira como escada.
+AMERICAN_DECIMAL_TOKEN_RE = re.compile(r"(?<!\d)(\d+)\.(\d{2})(?!\d)")
 
 
 def _repair_missing_commas(cell: str) -> str:
     """Corrige erros de digitacao ja vistos no material oficial: um valor da
     escada sai sem a virgula, seja colado (ex.: "055" em vez de "0,55" em
     "0,00/055/0,65") seja partido em dois tokens pela quebra de linha da
-    celula (ver SPLIT_DECIMAL_RE acima) — provavelmente um typo/glitch de
-    extracao do proprio PDF original, ja que os demais valores da mesma
+    celula (ver SPLIT_DECIMAL_RE acima), com a letra "O" no lugar do digito
+    "0" (ver STRAY_LETTER_O_RE acima), ou com ponto no lugar de virgula (ver
+    AMERICAN_DECIMAL_TOKEN_RE acima) — provavelmente um typo/glitch de
+    digitacao do proprio PDF original, ja que os demais valores da mesma
     celula estao corretos. So mexe quando ha pelo menos um outro token na
     mesma celula ja no formato certo — assim nao arrisca alterar um numero
     que nao tem nada a ver com pontuacao."""
     tokens = re.split(r"([\s/]+)", cell)
     if not any(PROPER_LADDER_TOKEN_RE.match(t) for t in tokens):
         return cell
+    cell = AMERICAN_DECIMAL_TOKEN_RE.sub(r"\1,\2", cell)
     cell = SPLIT_DECIMAL_RE.sub(r"0,\1", cell)
+    cell = STRAY_LETTER_O_RE.sub("0", cell)
     tokens = re.split(r"([\s/]+)", cell)
     return "".join(
         f"{t[0]},{t[1:]}" if MISSING_COMMA_TOKEN_RE.match(t) else t
@@ -693,6 +720,10 @@ def extract_criterios_from_tables(pdf, page_indices: list) -> tuple:
     unrecognized = []
     categoria_atual = None
     current: Optional[dict] = None  # {"rotulo", "categoria", "desc_parts", "faixas"}
+    # Escada "orfa" (ver comentario mais abaixo, no bloco que a preenche):
+    # capturada numa linha sem NENHUM rotulo/texto, esperando o proximo
+    # rotulo pra' ser associada a ele.
+    pending_faixas: Optional[list] = None
 
     def close_current():
         nonlocal current
@@ -747,6 +778,23 @@ def extract_criterios_from_tables(pdf, page_indices: list) -> tuple:
                 if not col_item and not col_pont_compact:
                     continue
 
+                # Linha "orfa": SO' a escada de pontuacao, sem nenhum
+                # rotulo/texto de item (visto no 40o Exame, Direito
+                # Tributario, Questao 1: pdfplumber quebrou a MESMA linha
+                # logica da tabela em duas linhas fisicas porque a celula da
+                # esquerda — rotulo "B." + descricao — ficou mais alta que a
+                # da direita, e a escada "vazou" pra' uma linha vazia que
+                # aparece ANTES da linha com o rotulo de verdade). Sem isso,
+                # esse valor era descartado em silencio (nada nesta funcao
+                # tinha onde guarda-lo) e o rotulo seguinte, chegando sem
+                # escada propria, caia justamente no ramo abaixo que trata
+                # "sem escada" como continuacao do item anterior — perdendo
+                # um criterio inteiro. Guarda aqui pra' usar no PROXIMO
+                # rotulo que chegar sem escada propria.
+                if not col_item and faixas is not None:
+                    pending_faixas = faixas
+                    continue
+
                 label_m = match_item_label(col_item)
                 if label_m:
                     # Visto no 43o Exame (Direito Administrativo, peca, itens
@@ -760,10 +808,12 @@ def extract_criterios_from_tables(pdf, page_indices: list) -> tuple:
                     # nao um item novo e distinto — que ficaria pra sempre
                     # sem pontuacao propria e cairia em linhas_nao_reconhecidas
                     # se tratado como novo. So' faz isso quando ha um item
-                    # aberto E esta linha nao trouxe sua propria escada;
-                    # quando a linha TEM escada propria, e' sempre um item
-                    # novo de verdade (comportamento original, inalterado).
-                    if current is not None and faixas is None:
+                    # aberto, esta linha nao trouxe sua propria escada, E nao
+                    # ha' nenhuma escada orfa esperando (ver bloco acima) —
+                    # se houver, e' ELA que pertence a este rotulo, entao o
+                    # comportamento correto e' abrir um item novo com ela
+                    # (branch de baixo), nao tratar como continuacao.
+                    if current is not None and faixas is None and pending_faixas is None:
                         current["desc_parts"].append(col_item[label_m.end():].strip())
                         continue
                     close_current()
@@ -771,8 +821,9 @@ def extract_criterios_from_tables(pdf, page_indices: list) -> tuple:
                         "rotulo": label_m.group(1),
                         "categoria": categoria_atual,
                         "desc_parts": [col_item[label_m.end():].strip()],
-                        "faixas": faixas,
+                        "faixas": faixas if faixas is not None else pending_faixas,
                     }
+                    pending_faixas = None
                     continue
 
                 if _looks_like_categoria(col_item, col_pont_compact):

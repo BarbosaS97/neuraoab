@@ -318,46 +318,46 @@ a { color: inherit; }
 
 .icon-btn:hover { color: var(--text); border-color: var(--primary); }
 
-/* Acesso destacado a' outra fase — sempre visivel no topo, nunca escondido
-   dentro do menu (o aluno troca de fase com um so' clique, de qualquer
-   tela). Em estudos/index.html aponta pra 2a Fase; em simulado2fase.html
-   (ver sim2-phase-link em simulado2fase.html) o equivalente aponta de
-   volta pra 1a. */
-.phase-switch-btn {
+/* Alternador de fase — sempre visivel no topo, nunca escondido dentro do
+   menu (o aluno troca de fase com um so' clique, de qualquer tela). Duas
+   abas lado a lado (1a/2a Fase) deixam claro ONDE o aluno esta' e pra onde
+   ele pode ir, em vez de um unico botao assimetrico (que so' mostrava a
+   fase de destino, nao a atual). Mesma marcacao/classes nas duas paginas
+   (estudos/index.html e simulado2fase.html) — so' muda qual .phase-tab tem
+   .active. Compartilhado nas duas paginas porque simulado2fase.html tambem
+   carrega este arquivo (style.css), alem do simulado2fase.css proprio. */
+.phase-tabs {
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  color: var(--text);
+  gap: 2px;
+  padding: 3px;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 999px;
-  padding: 6px 16px 6px 6px;
-  font-size: 12.5px;
-  font-weight: 600;
-  white-space: nowrap;
-  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.phase-switch-btn:hover {
-  border-color: var(--primary);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px -10px rgba(139, 92, 246, 0.5);
-}
-
-.phase-switch-num {
+.phase-tab {
   flex-shrink: 0;
-  width: 22px;
-  height: 22px;
-  border-radius: 999px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+  text-decoration: none;
+  color: var(--text-dim);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
+
+.phase-tab.active {
   color: #fff;
-  font-size: 11px;
-  font-weight: 700;
+  background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+  cursor: default;
 }
 
 /* ------------------------------------------------------------- Menu (≡) */
@@ -1711,8 +1711,7 @@ a { color: inherit; }
     width: 100%;
   }
 
-  .phase-switch-btn span:last-child { display: none; }
-  .phase-switch-btn { padding: 6px; }
+  .phase-tab { padding: 7px 10px; font-size: 12px; }
 
   /* Botao "IA" de abrir o chat (visivel so' com o chat fechado) e retrato
      do Dr. Laureano acima dele, ambos maiores para o toque. */

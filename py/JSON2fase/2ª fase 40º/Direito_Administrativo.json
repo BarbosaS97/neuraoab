@@ -1,0 +1,353 @@
+{
+  "exam_number": 40,
+  "phase": 2,
+  "area": "Direito Administrativo",
+  "source_provas_file": "40º_provas_Direito_Administrativo.pdf",
+  "source_resposta_file": "40º_resposta_Direito_Administrativo.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "O Ministério Público ingressou, em fevereiro de 2024, com Ação de Improbidade Administrativa em face de Bernardo, agente público do Município Alfa, sustentando que o referido servidor público, entre os meses de agosto e setembro de 2023, utilizou dolosamente, em uma obra realizada em seu rancho particular, maquinário e pessoal contratado pela municipalidade para implementação de melhorias na rede local de ensino público.\n\nO Juízo da Vara Única da comarca no Município Alfa, integrante do Tribunal de Justiça do Estado X, recebeu a petição inicial, após verificar que esta encontrava-se em devida forma, ordenando a citação do demandado para, caso quisesse, apresentar contestação. Sendo assim, Bernardo contratou um advogado para tutelar os seus interesses, o qual juntou, aos autos, a contestação, em observância às formalidades legais.\n\nAntes da instrução processual, o Ministério Público peticionou nos autos, requerendo a decretação da indisponibilidade dos bens de Bernardo. Nesse contexto, o Juízo, ouvindo previamente o réu, acolheu o pedido ministerial, afirmando que estava convencido da probabilidade da ocorrência dos atos descritos na petição inicial, sendo dispensada, portanto, a comprovação em concreto da urgência, que seria presumida, pela natureza da imputação. Consignou-se no provimento jurisdicional, ainda, que a indisponibilidade deveria recair, preferencialmente, sobre valores pecuniários, de natureza líquida, e, subsidiariamente, sobre bens imóveis.\n\nDepois da implementação da medida, Bernardo, extremamente preocupado, procurou o seu advogado, aduzindo que a sua única conta corrente, com um valor aproximado de R$ 15.000,00 (quinze mil reais), equivalente a cerca dez salários mínimos, foi atingida pela decisão judicial, além do seu único imóvel, onde vive com a sua família, adquirido e pago integralmente em momento anterior à posse no cargo público ocupado no Município Alfa. Já o seu automóvel não foi tornado indisponível.\n\nOs embargos de declaração opostos em face do provimento jurisdicional foram conhecidos e, no mérito, desprovidos, em decisão publicada na última sexta-feira.\n\nDessa forma, Bernardo pediu que o seu advogado adotasse as medidas jurídicas ao seu alcance, impugnando a decisão proferida para tutelar os seus interesses.\n\nDiante das circunstâncias narradas, redija a peça cabível, mediante a apresentação de todos os fundamentos jurídicos pertinentes para a defesa dos interesses de Bernardo.",
+    "subitens": [],
+    "observacao": "A peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação. PEÇA PRÁTICO-PROFISSIONAL – PÁGINA 2",
+    "valor_total": 5.0,
+    "gabarito_comentado": "O(a) examinando(a) deve apresentar recurso de Agravo de Instrumento, com fulcro no Art. 16, §9º e no Art. 17, §21, ambos da Lei nº 8.429/1992. A peça deve ser endereçada ao Excelentíssimo Sr. Presidente do Tribunal de Justiça do Estado X, na forma do Art. 1.016, caput, do CPC. No recurso, devem constar os nomes das partes: Bernardo é o agravante (recorrente) e o Ministério Público é o agravado (recorrido). Preliminarmente, devem ser apontados os requisitos para a admissibilidade recursal: o cabimento, a tempestividade e o preparo do recurso ou o pedido de gratuidade de justiça. A fundamentação deve conter os seguintes argumentos: - Impossibilidade expressa de se presumir a urgência para a decretação da medida de indisponibilidade, conforme preceitua o Art. 16, §4º, da Lei nº 8.429/1992; - A ordem de indisponibilidade de bens deve priorizar veículos, bens imóveis e bens móveis em geral e, apenas na inexistência desses, o bloqueio de contas bancárias, de forma a garantir a subsistência do acusado, nos termos do Art. 16, §11, da Lei nº 8.429/1992. No caso concreto, a medida recaiu sobre a conta corrente de Bernardo, mas o seu automóvel não foi previamente alcançado pela decisão judicial; - Impossibilidade de decretação de indisponibilidade da quantia de até quarenta salários mínimos depositados em caderneta de poupança, em outras aplicações financeiras ou em conta corrente, conforme prevê o Art. 16, §13, da Lei nº 8.429/1992;\n\n- Impossibilidade de decretação de indisponibilidade do bem de família do réu, que não tinha qualquer relação com o ato de improbidade administrativa perpetrado, no esteio do Art. 16, §14, da Lei nº 8.429 /1992.\n\nAo final, deve ser formulado pedido de conhecimento e provimento do recurso, visando à reforma da decisão judicial, para que seja levantada a medida de indisponibilidade em relação à conta corrente e ao bem de família do agravante.\n\nFechamento da peça, com a indicação de local, data, advogado e inscrição OAB.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "Excelentíssimo Sr. Presidente do Tribunal de Justiça do Estado X (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Qualificação das partes",
+        "descricao": "Agravante (recorrente): Bernardo (0,10). Agravado (recorrido): Ministério Público (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Requisitos de admissibilidade recursal",
+        "descricao": "Cabimento do recurso: Art. 16, §9º OU Art. 17, §21, ambos da Lei nº 8.429/1992 OU Art. 1015 do CPC (0,20). Recolhimento do preparo ou requerimento de gratuidade de justiça (0,10). Tempestividade: Indicar que o recurso foi interposto dentro do prazo de 15 dias (0,10), conforme o Art. 1003, § 5º, do CPC (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Fundamentação",
+        "descricao": "Impossibilidade expressa de se presumir a urgência para a decretação da medida de indisponibilidade OU inexistência de periculum in mora presumido (0,60), conforme preceitua o Art. 16, §3º OU §4º, da Lei no 8.429/1992 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fundamentação",
+        "descricao": "Impossibilidade de decretação de indisponibilidade da quantia de até quarenta salários mínimos depositados em caderneta de poupança, em outras aplicações financeiras ou em conta corrente (0,60), conforme prevê o Art. 16, §13, da Lei nº 8.429/1992 (0,10). mínimos depositados conta corrente (0,60), conforme prevê o Art. 16, §13, da Lei nº",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fundamentação",
+        "descricao": "Impossibilidade de decretação de indisponibilidade do bem de família do réu, que não tinha qualquer relação com o ato de improbidade administrativa perpetrado (0,60), no esteio do Art. 16, §14, da Lei nº 8.429/1992 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fundamentação",
+        "descricao": "A ordem de indisponibilidade de bens deve priorizar veículos, bens imóveis e bens móveis em geral e, apenas na inexistência desses, o bloqueio de contas bancárias, de forma a garantir a subsistência do acusado (0,60), nos termos do Art. 16, §11, da Lei nº 8.429/1992 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Pedidos",
+        "descricao": "Conhecimento (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Provimento do recurso, visando à reforma da decisão judicial (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "que seja levantada a medida de indisponibilidade em relação à conta corrente (0,30).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "que seja levantada a medida de indisponibilidade ao bem de família do agravante (0,30).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "que seja observada a ordem de indisponibilidade prevista em lei (0,30).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Fechamento",
+        "descricao": "Local, data, espaço para assinatura do advogado e número de sua inscrição na OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. Excelentíssimo Sr. Presidente do Tribunal de Justiça do Estado X (0,10). 0,00/0,10\nQualificação das partes\n2. Agravante (recorrente): Bernardo (0,10).\n0,00/0,10/0,20\n3. Agravado (recorrido): Ministério Público (0,10).\nRequisitos de admissibilidade recursal\n4. Cabimento do recurso: Art. 16, §9º OU Art. 17, §21, ambos da Lei nº 8.429/1992 OU Art.\n1015 do CPC (0,20).\n0,00/0,10/0,20/0,30/\n5. Recolhimento do preparo ou requerimento de gratuidade de justiça (0,10).\n0,40/0,50\n6. Tempestividade: Indicar que o recurso foi interposto dentro do prazo de 15 dias (0,10),\nconforme o Art. 1003, § 5º, do CPC (0,10).\nFundamentação\n7. Impossibilidade expressa de se presumir a urgência para a decretação da medida de\nindisponibilidade OU inexistência de periculum in mora presumido (0,60), conforme 0,00/0,60/0,70\npreceitua o Art. 16, §3º OU §4º, da Lei no 8.429/1992 (0,10).\n8. Impossibilidade de decretação de indisponibilidade da quantia de até quarenta salários\nmínimos depositados em caderneta de poupança, em outras aplicações financeiras ou em 0,00/0,60/0,70\nconta corrente (0,60), conforme prevê o Art. 16, §13, da Lei nº 8.429/1992 (0,10).\n9. Impossibilidade de decretação de indisponibilidade do bem de família do réu, que não\ntinha qualquer relação com o ato de improbidade administrativa perpetrado (0,60), no 0,0/0,60/0,70\nesteio do Art. 16, §14, da Lei nº 8.429/1992 (0,10).\n10. A ordem de indisponibilidade de bens deve priorizar veículos, bens imóveis e bens\nmóveis em geral e, apenas na inexistência desses, o bloqueio de contas bancárias, de forma\n0,0/0,60/0,70\na garantir a subsistência do acusado (0,60), nos termos do Art. 16, §11, da Lei nº 8.429/1992\n(0,10).\nPedidos\n11. Conhecimento (0,20). 0,00/0,20\n12. Provimento do recurso, visando à reforma da decisão judicial (0,20). 0,00/0,20\n12. que seja levantada a medida de indisponibilidade em relação à conta corrente (0,30). 0,00/0,30\n13. que seja levantada a medida de indisponibilidade ao bem de família do agravante (0,30). 0,00/0,30\n14. que seja observada a ordem de indisponibilidade prevista em lei (0,30). 0,00/0,30\nFechamento\n13. Local, data, espaço para assinatura do advogado e número de sua inscrição na OAB\n0,00/0,10\n(0,10).",
+    "linhas_nao_reconhecidas": [
+      "caderneta de poupança, em outras aplicações financeiras ou em conta corrente, conforme prevê o Art. 16, §13,",
+      "da Lei"
+    ]
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "A sociedade empresária Sagaz S.A. envolveu-se em um esquema de corrupção que importou em ato lesivo à Administração Pública Federal, de modo que o órgão competente está em via de adotar as medidas pertinentes para a sua responsabilização administrativa na respectiva esfera. O mencionado esquema veio à tona por conta de informações prestadas pela sociedade empresária Arguta S.A., que formalizou acordo de leniência com a autoridade que detém tal atribuição. Ao tomar conhecimento de tais fatos, os representantes da sociedade empresária Sagaz procuram você, na condição de advogado(a), a fim de esclarecer os questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Há necessidade de demonstração do elemento subjetivo, ou seja, dolo ou culpa, para a caracterização da responsabilização administrativa da sociedade empresária Sagaz na esfera em questão? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A sociedade empresária Sagaz poderia também formalizar acordo de leniência com a autoridade competente, para cooperar na elucidação dos mesmos fatos, a fim de isentar ou reduzir as penalidades administrativas a ela aplicáveis? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A. Não. A responsabilização administrativa por ato lesivo contra a Administração Pública (ou previsto na Lei Anticorrupção) é objetiva, de modo que independe da demonstração do elemento subjetivo, nos termos do Art. 2º da Lei nº 12.846/2016. B. Não. Diante da existência de acordo de leniência já formalizado com a sociedade Arguta sobre os mesmos fatos, observa-se que a sociedade Sagaz não foi a primeira a manifestar o interesse em cooperar para a apuração do ilícito, não preenchendo assim requisito constante do Art. 16, § 1º, inciso I, da Lei nº 12.846/2016.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A responsabilização administrativa por ato lesivo contra a Administração Pública (ou previsto na Lei Anticorrupção) é objetiva, de modo que independe da demonstração do elemento subjetivo (dolo ou culpa) (0,55), nos termos do Art. 2º da Lei nº 12.846/2016 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. Diante da existência de acordo de leniência já formalizado com a sociedade Arguta sobre os mesmos fatos, observa-se que a sociedade empresária Sagaz não foi a primeira a manifestar o interesse em cooperar para a apuração do ilícito (0,50), não preenchendo assim requisito constante do Art. 16, § 1º, inciso I, da Lei nº 12.846/2016 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A responsabilização administrativa por ato lesivo contra a Administração Pública (ou\nprevisto na Lei Anticorrupção) é objetiva, de modo que independe da demonstração do elemento 0,00/0,55/0,65\nsubjetivo (dolo ou culpa) (0,55), nos termos do Art. 2º da Lei nº 12.846/2016 (0,10).\nB. Não. Diante da existência de acordo de leniência já formalizado com a sociedade Arguta sobre\nos mesmos fatos, observa-se que a sociedade empresária Sagaz não foi a primeira a manifestar\n0,00/0,50/0,60\no interesse em cooperar para a apuração do ilícito (0,50), não preenchendo assim requisito\nconstante do Art. 16, § 1º, inciso I, da Lei nº 12.846/2016 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Determinada informação de interesse público não consta das vias de transparência digitais utilizadas pelo Município Alfa, a despeito de não ter sido submetida a sigilo, razão pela qual a Associação Querosaber, que tem, como uma de suas finalidades institucionais acompanhar as contas públicas, efetuou pedido de acesso a tais dados. Para tanto, o órgão responsável cobrou montante determinado para submeter e processar o requerimento. Mesmo discordando, a Associação pagou o aludido valor, mas seu pedido foi indeferido pela autoridade competente, sob o fundamento de que não foram indicados os motivos determinantes para o acesso aos dados em questão. Diante dessa situação hipotética, responda, fundamentadamente, aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É lícita a cobrança efetuada pelo órgão responsável para fins de acesso à informação? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "O fundamento utilizado pela autoridade competente para indeferir o acesso à informação tem respaldo legal? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar as respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. A submissão e o processamento de pedido de acesso à informação não podem ser cobrados, na medida em que o serviço de busca e fornecimento da informação é gratuito, nos termos do Art. 12, caput, da Lei nº 12.527/2011. (Obs.: Pode ser alegado que apenas poderia ser realizada a cobrança dos custos dos serviços e materiais necessários atinentes à exigência de reprodução de documentos (mas não a submissão do requerimento), na forma do Art. 12, § 1º, da Lei nº 12.527/2011). B) Não. É vedado ao poder público exigir os motivos determinantes da solicitação de informações de interesse público, consoante Art. 10, § 3º, da Lei nº 12.527/2011.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A submissão e o processamento de pedido de acesso à informação não podem ser cobrados, na medida em que o serviço de busca e fornecimento da informação é gratuito (0,55), nos termos do Art. 12, caput, da Lei nº 12.527/2011 (0,10). (Obs: Pode ser alegado que apenas poderia ser realizada a cobrança dos custos dos serviços e materiais necessários atinentes à exigência de reprodução de documentos (mas não a submissão e processamento do requerimento), na forma do Art. 12, §1º, da Lei nº 12.527/2011).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. É vedado ao poder público exigir os motivos determinantes da solicitação de informações de interesse público (0,50), consoante o Art. 10, § 3º, da Lei nº 12.527/2011 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A submissão e o processamento de pedido de acesso à informação não podem ser\ncobrados, na medida em que o serviço de busca e fornecimento da informação é gratuito (0,55),\nnos termos do Art. 12, caput, da Lei nº 12.527/2011 (0,10).\n0,00/0,55/0,65\n(Obs: Pode ser alegado que apenas poderia ser realizada a cobrança dos custos dos serviços e\nmateriais necessários atinentes à exigência de reprodução de documentos (mas não a submissão\ne processamento do requerimento), na forma do Art. 12, §1º, da Lei nº 12.527/2011).\nB. Não. É vedado ao poder público exigir os motivos determinantes da solicitação de informações\n0,00/0,50/0,60\nde interesse público (0,50), consoante o Art. 10, § 3º, da Lei nº 12.527/2011 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Certa Secretaria do Estado Alfa fez publicar dois editais de registro de preços, na qualidade de gerenciadora, à luz da Lei nº 14.133/2021 (Nova Lei de Licitações). Um deles está voltado para a viabilização de contratações futuras e sucessivas de pequenos serviços padronizados de engenharia, de pequena complexidade, que são permanentes e frequentes. O outro, para a aquisição de produtos que são continuamente necessários para as atividades do órgão. Ambos os procedimentos foram adequadamente processados e concluídos sem a adesão de outros participantes. Ocorre que a autarquia federal Ômega precisou dos produtos que constavam de um dos mencionados procedimentos de registro de preços, de modo que visa aderir à respectiva ata, na qualidade de não participante. Diante desta situação hipotética, responda, como advogado(a), aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É possível a utilização do sistema de registro de preços para a contratação de serviços de engenharia em questão? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A autarquia Ômega poderia aderir à ata de registro de preços tal como pretendido? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar as respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. A Administração poderá contratar a execução de obras e serviços de engenharia pelo sistema de registro de preços, desde que preenchidos os seguintes requisitos: a) existência de projeto padronizado, sem complexidade técnica e operacional; b) necessidade permanente e frequente do serviço em questão, como na situação descrita, nos termos do Art. 85 da Lei nº 14.133/2021. B) Não. É vedado à autarquia federal aderir à ata de registro de preços gerenciada por órgão ou entidade estadual, nos termos do Art. 86, § 8º, da Lei nº 14.133/2021.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. A Administração poderá contratar a execução de obras e serviços de engenharia pelo sistema de registro de preços, desde que preenchidos os seguintes requisitos: a) existência de projeto padronizado, sem complexidade técnica e operacional (0,30); b) necessidade permanente e frequente do serviço em questão, como na situação descrita (0,25), nos termos do Art. 85 da Lei nº 14.133/2021 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. É vedado à autarquia federal aderir à ata de registro de preços gerenciada por órgão ou entidade estadual (0,50), nos termos do Art. 86, § 8º, da Lei nº 14.133/2021 (0,10). (Obs.: pode ser alegado que é facultado à autarquia Federal aderir à ata de registro de preços do estado Alfa, com fundamento no Art. 86, § 3º, I, da Lei nº 14.133/2021)",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. A Administração poderá contratar a execução de obras e serviços de engenharia\npelo sistema de registro de preços, desde que preenchidos os seguintes requisitos: a)\n0,00/0,25/0,30/0,35/\nexistência de projeto padronizado, sem complexidade técnica e operacional (0,30); b)\n0,40/0,55/0,65\nnecessidade permanente e frequente do serviço em questão, como na situação descrita\n(0,25), nos termos do Art. 85 da Lei nº 14.133/2021 (0,10).\nB. Não. É vedado à autarquia federal aderir à ata de registro de preços gerenciada por\nórgão ou entidade estadual (0,50), nos termos do Art. 86, § 8º, da Lei nº 14.133/2021\n(0,10). 0,00/0,50/0,60\n(Obs.: pode ser alegado que é facultado à autarquia Federal aderir à ata de registro de\npreços do estado Alfa, com fundamento no Art. 86, § 3º, I, da Lei nº 14.133/2021)",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Recentemente, Iná foi aprovada em concurso público para certa sociedade de economia mista federal que desempenha atividade econômica e distribui lucro entre os seus acionistas, a qual não recebe verbas da União para o pagamento de despesas de pessoal ou para o custeio em geral, sendo certo que ela está em vias de ser chamada. Para melhor compreender as peculiaridades do regime jurídico dos agentes públicos na situação em que foi aprovada, Iná consultou você, como advogado(a), a fim de esclarecer as dúvidas a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A aprovação de Iná no mencionado concurso importará na sua investidura em cargo efetivo para fins de adquirir a estabilidade? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A remuneração dos agentes que atuam na entidade administrativa para a qual Iná foi aprovada deve ser submetida ao teto constitucional? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Iná foi aprovada para emprego público, ao qual é aplicável o regime celetista (OU que se revela incompatível com a garantia da estabilidade prevista no Art. 41 da CRFB/88 prevista para os cargos efetivos), nos termos do Art. 173, §1º, inciso II, da CRFB/88. B) Não. O teto constitucional aplica-se apenas às sociedades de economia mista que recebam recursos do ente federativo responsável por sua criação (no caso, a União) para pagamento de despesas de pessoal ou de custeio em geral, na forma do Art. 37, §9º, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": null,
+          "categoria": null,
+          "descricao": "Não. Iná foi aprovada para emprego público, ao qual é aplicável o regime celetista (OU que se\nrevela incompatível com a garantia da estabilidade prevista no Art. 41 da CRFB/88 prevista para",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": null,
+          "categoria": null,
+          "descricao": "os cargos efetivos) (0,55), nos termos do Art. 173, §1º, inciso II, da CRFB/88 (0,10).\nNão. O teto constitucional é aplicável apenas às sociedades de economia mista que recebam\nrecursos do ente federativo responsável por sua criação (no caso, a União) para pagamento de",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nNão. Iná foi aprovada para emprego público, ao qual é aplicável o regime celetista (OU que se\nrevela incompatível com a garantia da estabilidade prevista no Art. 41 da CRFB/88 prevista para 0,00/0,55/0,65\nos cargos efetivos) (0,55), nos termos do Art. 173, §1º, inciso II, da CRFB/88 (0,10).\nNão. O teto constitucional é aplicável apenas às sociedades de economia mista que recebam\nrecursos do ente federativo responsável por sua criação (no caso, a União) para pagamento de 0,00/0,50/0,60\ndespesas de pessoal ou de custeio em geral (0,50), na forma do Art. 37, §9º, da CRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

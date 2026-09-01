@@ -1,0 +1,391 @@
+{
+  "exam_number": 40,
+  "phase": 2,
+  "area": "Direito Tributário",
+  "source_provas_file": "40º_provas_Direito_Tributário.pdf",
+  "source_resposta_file": "40º_resposta_Direito_Tributário.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "Em 17 de janeiro de 2024, o Plenário do Tribunal de Contas da União (TCU) decidiu pela aprovação da Resolução nº XX/2024 do TCU, que estabelecia nova taxa para a emissão de certidões para defesa de direitos e esclarecimento de situações de interesse pessoal, relacionadas a procedimentos administrativos, fiscalizações e demais atividades do TCU, a pessoas físicas submetidas à jurisdição do Tribunal. A referida Resolução, publicada no Diário Oficial da União (DOU) em 18/01/2024, previa que a nova taxa seria cobrada a partir de 1º de fevereiro de 2024.\n\nOcorrida a publicação no DOU, a Associação dos Prefeitos Municipais do Estado Alfa, legalmente constituída e fundada em 2010, inconformada com a nova exação, por entender que incidiria imunidade constitucional na situação, solicita a você, como advogado(a) da entidade, em 19 de janeiro de 2024, que promova alguma medida judicial que impeça seus associados de terem de pagar a nova taxa. A referida Associação, contudo, é expressa em dizer que, caso vencida, não deseja pagar honorários de sucumbência e que não haverá dilação probatória.\n\nDiante desse cenário, redija a medida judicial mais adequada, considerando a urgência - já que a taxa passará a ser cobrada em 1º de fevereiro de 2024 -, o desejo da Associação em não pagar honorários de sucumbência e que não haverá dilação probatória.",
+    "subitens": [],
+    "observacao": "A peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação. PEÇA PRÁTICO-PROFISSIONAL – PÁGINA 2",
+    "valor_total": 5.0,
+    "gabarito_comentado": "O examinando deverá elaborar a petição inicial de Mandado de Segurança Coletivo Preventivo com pedido de liminar, por se tratar de discussão meramente jurídica e que não necessita de qualquer prova, mas que viola direito líquido e certo dos associados da impetrante. Como a impetrante não deseja ser condenada em honorários de sucumbência, caso não obtenha sucesso em sua pretensão judicial, a única peça possível para o caso é o Mandado de Segurança, nos termos da Súmula STJ nº 105 e Súmula STF nº 512.\n\nA petição deve ser endereçada a um Ministro do Supremo Tribunal Federal, tribunal com competência para julgar mandado de segurança contra atos do Tribunal de Contas da União (TCU), conforme o Art. 102, inciso I, alínea d, da CRFB/88.\n\nO examinando deve indicar, na qualificação das partes, como impetrante a Associação dos Prefeitos Municipais do Estado Alfa, e, como impetrado, o Ministro Presidente do Tribunal de Contas da União. O examinando deverá indicar, ainda, a União como pessoa jurídica de direito público interessada.\n\nA legitimidade ativa da Associação decorre do fato de ser uma associação legalmente constituída e em funcionamento há, pelo menos, 1 (um) ano, em defesa de direitos líquidos e certos da totalidade, ou de parte, dos seus associados, na forma dos seus estatutos e desde que pertinentes às suas finalidades, dispensada, para tanto, autorização especial, tal qual previsto pelo Art. 21 da Lei nº 12.016/2009 ou pelo Art. 5º, inciso LXX, alínea b, da CRFB/88.\n\nA legitimidade passiva do Ministro Presidente do TCU decorre do fato de ter criado ato normativo que estabeleceu a nova taxa para emissão de certidões para defesa de direitos e esclarecimento de situações de interesse pessoal relacionadas às atividades do TCU a pessoas físicas, o que violaria o direito líquido e certo dos associados, daí a incidência do Art. 1º da Lei nº 12.016/2012 ou do Art. 5º, inciso LXIX, da CRFB/88.\n\nOs fatos devem ser descritos brevemente nos termos colocados pelo enunciado.\n\nNo mérito, o examinando deverá alegar que:\n\n1) A Resolução XX/2024 do TCU viola o princípio da legalidade tributária, por pretender criar tributo, na espécie de taxa, não sendo lei em sentido estrito aprovada pelo Congresso Nacional, cf. Art. 150, inciso I, da CRFB/88;\n\n2) A nova taxa criada pelo TCU viola a previsão de imunidade constitucional tributária referente a taxas, uma vez que o Art. 5º, inciso XXXIV, alínea b, da CRFB/88 afirma ser a todos assegurado, independentemente do pagamento de taxas, a obtenção de certidões em repartições públicas, para defesa de direitos e esclarecimento de situações de interesse pessoal.\n\n3) O prazo dentro do qual a Resolução XX/2024 determinou que seus efeitos deverão ser produzidos viola tanto a anterioridade tributária anual como a anterioridade tributária nonagesimal, conforme o Art. 150, inciso III, alíneas b e c, da CRFB/88.\n\nNo que se refere ao pedido de liminar, o examinando precisará comprovar: 1) a presença do fumus boni iuris (plausibilidade do direito alegado pela parte) em razão das inconstitucionalidades flagrantes apresentadas nos fundamentos de mérito; 2) e do periculum in mora (risco de demora na concessão do provimento jurisdicional pleiteado), pois a nova cobrança se iniciará já em 1º de fevereiro de 2024.\n\nNão é necessário mencionar a oitiva prévia do Art. 22, §2º, da Lei do Mandado de Segurança, do representante judicial da pessoa jurídica de direito público interessada, antes de se conceder a liminar no mandado de segurança coletivo, uma vez que tal dispositivo foi declarado inconstitucional pelo STF (ADI 4.296) por restringir o poder geral de cautela do magistrado.\n\nDeve ser requerida a concessão da segurança, com os pedidos de confirmação da liminar em definitivo por ocasião da sentença, bem como os demais pedidos de praxe em mandado de segurança.\n\nPor fim, deve-se atribuir valor à causa e realizar o fechamento da peça, com a indicação do local, data, nome e inscrição da OAB.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "Ministro do Supremo Tribunal Federal (0,10)",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Impetrante: Associação dos Prefeitos Municipais do Estado Alfa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Impetrado: Ministro Presidente do Tribunal de Contas da União (TCU) (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Endereçamento",
+        "descricao": "Pessoa jurídica interessada: União (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Cabimento",
+        "descricao": "Legitimidade ativa da Associação decorre do fato de ser uma associação legalmente constituída e em funcionamento há, pelo menos, 1 (um) ano, em defesa de direitos líquidos e certos da totalidade, ou de parte, dos seus associados, na forma dos seus estatutos e desde que pertinentes às suas finalidades, dispensada, para tanto, autorização especial (0,60), tal qual previsto pelo Art. 21 da Lei nº 12.016/2009 ou pelo Art. 5º, inciso LXX, alínea b, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Cabimento",
+        "descricao": "Breve descrição dos fatos (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "A Resolução nº XX/2024 do TCU viola o princípio da legalidade tributária, por pretender criar tributo, na espécie de taxa, não sendo lei em sentido estrito aprovada pelo Congresso Nacional (0,70), cf. o Art. 150, inciso I, da CRFB/88 OU Art. 97 do CTN (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "A nova taxa criada pelo TCU viola a previsão de imunidade constitucional tributária referente a taxas, uma vez que é a todos assegurado, independentemente do pagamento de taxas, a obtenção de certidões em repartições públicas, para defesa de direitos e esclarecimento de situações de interesse pessoal (0,70), cf. o Art. 5º, inciso XXXIV, alínea b, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "O prazo dentro do qual a Resolução XX/2024 determinou que seus efeitos deverão ser produzidos viola tanto a anterioridade tributária anual como a anterioridade tributária nonagesimal (0,70), cf. Art. 150, inciso III, alíneas b e c, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fundamentos da liminar",
+        "descricao": "Presença do fumus boni iuris por inconstitucionalidades flagrantes apresentadas nos fundamentos de mérito (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Fundamentos da liminar",
+        "descricao": "Presença do periculum in mora, pois a nova cobrança se iniciará já em 1º de fevereiro de 2024 (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Pedido de concessão da medida liminar, para que o Impetrado se abstenha de cobrar a nova taxa (0,20);",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Procedência do pedido para concessão da segurança (0,30);",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "Notificação da autoridade coatora para prestar informações no prazo de 10 dias (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Pedidos",
+        "descricao": "Cientificar o órgão de representação judicial da União (0,10) e intimar o Ministério Público Federal (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Valor da causa / Fechamento",
+        "descricao": "Atribuição de valor à causa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "17",
+        "categoria": "Valor da causa / Fechamento",
+        "descricao": "Local, data, advogado e OAB... (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "PONTUAÇÃO\nITEM\nEndereçamento\n1. Ministro do Supremo Tribunal Federal (0,10) 0,00/0,10\n2. Impetrante: Associação dos Prefeitos Municipais do Estado Alfa (0,10). 0,00/0,10\n3. Impetrado: Ministro Presidente do Tribunal de Contas da União (TCU) (0,10). 0,00/0,10\n4. Pessoa jurídica interessada: União (0,10). 0,00/0,10\nCabimento\n5. Legitimidade ativa da Associação decorre do fato de ser uma associação legalmente constituída e em\nfuncionamento há, pelo menos, 1 (um) ano, em defesa de direitos líquidos e certos da totalidade, ou de\nparte, dos seus associados, na forma dos seus estatutos e desde que pertinentes às suas finalidades, 0,00/0,60/0,70\ndispensada, para tanto, autorização especial (0,60), tal qual previsto pelo Art. 21 da Lei nº 12.016/2009\nou pelo Art. 5º, inciso LXX, alínea b, da CRFB/88 (0,10).\n6. Breve descrição dos fatos (0,10). 0,00/0,10\nFundamentos de mérito\n7. A Resolução nº XX/2024 do TCU viola o princípio da legalidade tributária, por pretender criar tributo,\nna espécie de taxa, não sendo lei em sentido estrito aprovada pelo Congresso Nacional (0,70), cf. o Art. 0,00/0,70/0,80\n150, inciso I, da CRFB/88 OU Art. 97 do CTN (0,10).\n8. A nova taxa criada pelo TCU viola a previsão de imunidade constitucional tributária referente a taxas,\numa vez que é a todos assegurado, independentemente do pagamento de taxas, a obtenção de certidões\n0,00/0,70/0,80\nem repartições públicas, para defesa de direitos e esclarecimento de situações de interesse pessoal (0,70),\ncf. o Art. 5º, inciso XXXIV, alínea b, da CRFB/88 (0,10).\n9. O prazo dentro do qual a Resolução XX/2024 determinou que seus efeitos deverão ser produzidos viola\ntanto a anterioridade tributária anual como a anterioridade tributária nonagesimal (0,70), cf. Art. 150, 0,00/0,70/0,80\ninciso III, alíneas b e c, da CRFB/88 (0,10).\nFundamentos da liminar\n10. Presença do fumus boni iuris por inconstitucionalidades flagrantes apresentadas nos fundamentos de\n0,00/0,20\nmérito (0,20).\n11. Presença do periculum in mora, pois a nova cobrança se iniciará já em 1º de fevereiro de 2024 (0,20). 0,00/0,20\nPedidos\n12. Pedido de concessão da medida liminar, para que o Impetrado se abstenha de cobrar a nova taxa\n0,00/0,20\n(0,20);\n13. Procedência do pedido para concessão da segurança (0,30); 0,00/0,30\n14. Notificação da autoridade coatora para prestar informações no prazo de 10 dias (0,10). 0,00/0,10\n15. Cientificar o órgão de representação judicial da União (0,10) e intimar o Ministério Público Federal\n0,00/0,10/0,20\n(0,10).\nValor da causa / Fechamento\n16. Atribuição de valor à causa (0,10). 0,00/0,10\n17. Local, data, advogado e OAB... (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Para o enfrentamento de uma nova pandemia ocorrida no início do ano de 2023, a Lei Complementar Federal XXX, de 1º de março de 2023, instituiu empréstimo compulsório para atender às despesas extraordinárias decorrentes da calamidade pública (já devidamente oficializada desde fevereiro de 2023) causada pela referida doença, incidente sobre o comércio de qualquer medicamento no país, sendo os recursos arrecadados destinados ao desenvolvimento e à produção de vacinas nacionais para o enfrentamento daquela crise sanitária.\n\nA referida lei estabeleceu que aquele tributo seria cobrado imediatamente após a sua publicação, com alíquota de 0,05% (cinco centésimos) do preço da venda de qualquer medicamento no país. Decidiu-se que uma portaria do Banco Central do Brasil (BACEN), instituição financeira responsável pela devolução da exação, seria futuramente editada para estabelecer o prazo do empréstimo e as condições para a restituição.\n\nA rede de farmácias Cura Tudo Ltda., visando questionar o novo tributo, contrata você, como advogado(a), para assessorá-la. Assim, como advogado(a) da Cura Tudo Ltda., responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É válida a previsão de imediata cobrança daquele empréstimo compulsório? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Pode uma futura portaria do BACEN, sob a ótica do Direito Tributário, estabelecer o prazo do empréstimo e as condições para a sua restituição? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, é válida a previsão de imediata cobrança desse empréstimo compulsório, uma vez que o empréstimo compulsório para atender a despesas extraordinárias, decorrentes de calamidade pública, de guerra externa ou sua iminência não se submete ao princípio da anterioridade tributária, cf. Art. 150, § 1º, da CRFB/88, in verbis: “§ 1º A vedação do inciso III, alínea b, não se aplica aos tributos previstos nos Arts. 148, inciso I, 153, incisos I, II, IV e V; e 154, inciso II; e a vedação do inciso III, c, não se aplica aos tributos previstos nos Arts. 148, inciso I, 153, incisos I, II, III e V; e 154, inciso II, nem à fixação da base de cálculo dos impostos previstos nos Arts. 155, inciso III, e 156, inciso I.” B) Não. É a lei que fixará obrigatoriamente o prazo do empréstimo e as condições de seu resgate, cf. Art. 15, parágrafo único, do CTN, OU Art. 148 caput da CF e não um ato infralegal.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. O empréstimo compulsório para atender a despesas extraordinárias, decorrentes de Sim. O empréstimo compulsório para atender a despesas extraordinárias, decorrentes de calamidade pública, de guerra externa ou sua iminência não se submete ao princípio da anterioridade tributária (0,55), cf. Art. 150, § 1º, da CRFB/88 (0,10)",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. É a lei que fixará obrigatoriamente o prazo do empréstimo e as condições de seu resgate (0,50), cf. Art. 15, parágrafo único, do CTN OU Art. 148 caput da CF (0,10)",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. O empréstimo compulsório para atender a despesas extraordinárias, decorrentes de\ncalamidade pública, de guerra externa ou sua iminência não se submete ao princípio da 0,00/0,55/0,65\nanterioridade tributária (0,55), cf. Art. 150, § 1º, da CRFB/88 (0,10)\nB. Não. É a lei que fixará obrigatoriamente o prazo do empréstimo e as condições de seu resgate\n0,00/0,50/0,60\n(0,50), cf. Art. 15, parágrafo único, do CTN OU Art. 148 caput da CF (0,10)",
+      "linhas_nao_reconhecidas": [
+        "A) Sim, é válida a previsão de imediata cobrança desse empréstimo compulsório, uma vez que o empréstimo compulsório para",
+        "atender a despesas extraordinárias, decorrentes de calamidade pública, de guerra externa ou sua iminência não se submete",
+        "ao princípio da anterioridade tributária, cf. Art. 150, § 1º, da CRFB/88, in verbis: “§ 1º A vedação do inciso III, alínea b, não se",
+        "aplica aos tributos previstos nos Arts. 148, inciso I, 153, incisos I, II, IV e V; e 154, inciso II; e a vedação do inciso III, c, não se",
+        "aplica aos tributos previstos nos Arts. 148, inciso I, 153, incisos I, II, III e V; e 154, inciso II, nem à fixação da base de cálculo dos",
+        "mpostos previstos nos Arts. 155, inciso III, e 156, inciso I.”",
+        "B) Não. É a lei que fixará obrigatoriamente o prazo do empréstimo e as condições de seu resgate, cf. Art. 15, parágrafo único,",
+        "do CTN, OU Art. 148 caput da CF e não um ato infralegal."
+      ]
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "João é cobrado por dívida de Imposto Territorial Rural (ITR) de sua propriedade em que, com as devidas autorizações legais, ele extrai pedras preciosas (mantendo inclusive parte delas em sua titularidade em cofre pessoal), em uma ação de execução fiscal movida pela Procuradoria da Fazenda Nacional (PFN), no valor de R$ 400.000,00 (quatrocentos mil reais). Para a admissão dos embargos do devedor, João indica à penhora, em garantia da execução, um imóvel rural de propriedade de seu irmão André, casado com Maria, com consentimento deles, indicação esta que não foi aceita pela Procuradoria da Fazenda Nacional, alegando violação da ordem de preferência das garantias de execução fiscal. Sobre a hipótese apresentada, à luz da Lei de Execuções Fiscais, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Seria possível a indicação à penhora do imóvel de propriedade de André em garantia de execução fiscal? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Está correta a Procuradoria da Fazenda Nacional em sua alegação de violação da ordem de preferência das garantias de execução fiscal? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, seria possível a indicação à penhora de bem de terceiro (André) em garantia de execução fiscal, uma vez que é admitido bem imóvel de terceiro, com consentimento da esposa, tal como ocorreu no caso, cf. Art. 9º, inciso IV, c/c o § 1º, da Lei nº 6.830/1980: Art. 9º - Em garantia da execução, pelo valor da dívida, juros e multa de mora e encargos indicados na Certidão de Dívida Ativa, o executado poderá: IV - indicar à penhora bens oferecidos por terceiros e aceitos pela Fazenda Pública. Art. 9º. § 1º - O executado só poderá indicar e o terceiro oferecer bem imóvel à penhora com o consentimento expresso do respectivo cônjuge. B) Sim, está correta. Na execução, as pedras preciosas de titularidade de João têm preferência em garantia da execução sobre os imóveis, cf. Art. 11, inciso III, da Lei nº 6.830/1980: Art. 11 - A penhora ou arresto de bens obedecerá à seguinte ordem: III - pedras e metais preciosos; IV – imóveis.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. É possível a indicação à penhora de bem de terceiro em garantia de execução fiscal, desde que haja consentimento de seu cônjuge (0,55), cf. Art. 9º, §1º, da Lei nº 6.830/1980 (0,10)",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. Na execução, as pedras preciosas têm preferência em garantia da execução sobre os imóveis (0,50), cf. Art. 11, inciso III, da Lei nº 6.830/1980. (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. É possível a indicação à penhora de bem de terceiro em garantia de execução\nfiscal, desde que haja consentimento de seu cônjuge (0,55), cf. Art. 9º, §1º, da Lei nº 0,00/0,55/0,65\n6.830/1980 (0,10)\nB. Sim. Na execução, as pedras preciosas têm preferência em garantia da execução sobre\n0,00/0,50/0,60\nos imóveis (0,50), cf. Art. 11, inciso III, da Lei nº 6.830/1980. (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "José, funcionário da organização religiosa Alfa, dirigia o automóvel de propriedade dessa instituição religiosa para entrega em domicílio de livros periódicos de oração adquiridos pelos seguidores daquela religião, quando foi parado por uma blitz. O policial, ao verificar os registros do Departamento de Trânsito, identificou que o automóvel estava sem o pagamento do Imposto sobre a Propriedade de Veículos Automotores (IPVA) e da Taxa de Vistoria e Licenciamento Anual desde a sua aquisição três anos atrás. O policial informou a José que tais tributos já deveriam ter sido pagos. Inconformada com a exigência dos respectivos tributos, a organização religiosa procurou você, como advogado(a), desejando saber se tais exações eram devidas. Sobre a hipótese apresentada, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É correta a exigência do IPVA do automóvel que estava sendo utilizado pelo funcionário da organização religiosa Alfa? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "É correta a exigência da Taxa de Vistoria e Licenciamento Anual do automóvel que estava sendo utilizado pelo funcionário da organização religiosa Alfa? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não é correta a exigência do IPVA do automóvel que estava sendo utilizado pelo funcionário da organização religiosa Alfa, por se tratar de bem de propriedade da entidade religiosa afetado a sua finalidade essencial, fazendo jus ao gozo da imunidade tributária de impostos prevista no Art. 150, inciso VI, alínea b e § 4º, da CRFB/88. B) Sim, é correta a exigência da Taxa de Vistoria e Licenciamento Anual do automóvel que estava sendo utilizado pelo funcionário da organização religiosa Alfa, pois a espécie tributária de taxa não é abrangida pela imunidade tributária de impostos prevista no Art. 150, inciso VI, caput, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não, por se tratar de bem de propriedade da entidade religiosa afetado à sua finalidade essencial, fazendo jus ao gozo da imunidade tributária de impostos (0,50) prevista no Art. 150, inciso VI, alínea b e § 4º, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. A espécie tributária de taxa não é abrangida pela imunidade tributária de impostos (0,55), prevista no Art. 150, inciso VI, caput, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não, por se tratar de bem de propriedade da entidade religiosa afetado à sua finalidade essencial,\nfazendo jus ao gozo da imunidade tributária de impostos (0,50) prevista no Art. 150, inciso VI, alínea b e 0,00/0,50/0,60\n§ 4º, da CRFB/88 (0,10).\nB. Sim. A espécie tributária de taxa não é abrangida pela imunidade tributária de impostos (0,55), prevista\n0,00/0,55/0,65\nno Art. 150, inciso VI, caput, da CRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Decreto estadual datado de 10/01/2024 e publicado no Diário Oficial do Estado Alfa em 11/01/2024 prevê que, a partir de sua publicação, o vencimento de certo tributo estadual ocorrerá 20 (vinte) dias depois da data em que se considera o sujeito passivo notificado do lançamento. A sociedade empresária ABC Ltda., notificada para pagar tal tributo em 11/03/2024, não concorda com o prazo para pagamento previsto nesse decreto e impugna administrativamente tal lançamento, sob os seguintes argumentos: i) o prazo geral previsto no Código Tributário Nacional (CTN) para pagamento de tributos é de 30 (trinta) dias, não podendo norma local contrariar o previsto em lei complementar de caráter nacional; ii) o novo prazo fixado em decreto não respeita o princípio da anterioridade tributária, uma vez que está sendo aplicado antes do exercício seguinte e antes de 90 (noventa) dias da data da publicação. Diante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Poderia mero decreto fixar tal prazo em 20 (vinte) dias, em face do previsto no Código Tributário Nacional (CTN)? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Tal prazo de pagamento de tributo fixado por decreto deve seguir o princípio da anterioridade tributária? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. O Art. 160, caput, do CTN, prevê que compete à legislação tributária de cada ente federado instituidor do tributo fixar o tempo de seu pagamento, ocorrendo o vencimento do crédito trinta dias depois da data em que se considera o sujeito passivo notificado do lançamento apenas quando a legislação tributária não fixar o tempo do pagamento. Apenas se a legislação do ente federado for silente é que o vencimento do crédito ocorrerá 30 (trinta) dias depois da data em que se considera o sujeito passivo notificado do lançamento. Veja-se que é a própria lei complementar nacional (CTN) a autorizar a fixação do prazo pela legislação tributária de cada ente, sendo o prazo genérico de 30 (trinta) dias previsto no CTN meramente supletivo de eventual lacuna normativa na legislação tributária de cada ente federado. Ademais, nos termos do Art. 96 do CTN, a expressão \"legislação tributária\" compreende não apenas leis, mas também os decretos, de modo que é possível a um mero decreto fixar o prazo de pagamento de um tributo.\n\nB) Não. O prazo de pagamento de tributo, não sendo elemento do tributo nem sendo responsável por sua instituição ou majoração, não se submete ao princípio da anterioridade tributária, cf. o Art. 150, inciso I, da CRFB/88 ou o Art. 97 do CTN ou a Súmula Vinculante nº 50: “Norma legal que altera o prazo de recolhimento de obrigação tributária não se sujeita ao princípio da anterioridade”.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. Compete à legislação tributária de cada ente federado instituidor do tributo fixar o tempo de seu pagamento, sendo que o vencimento do crédito em trinta dias só se considera quando a legislação tributária não fixar o tempo do pagamento (0,55), cf. o Art. 160, caput, do CTN (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. O prazo de pagamento de tributo não se submete ao princípio da anterioridade tributária (0,50), cf. o Art. 150, inciso I, da CRFB/88 OU o Art. 97 do CTN OU a Súmula Vinculante nº 50 OU a Súmula nº 669 do STF (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. Compete à legislação tributária de cada ente federado instituidor do tributo fixar o tempo de\nseu pagamento, sendo que o vencimento do crédito em trinta dias só se considera quando a 0,00/0,55/0,65\nlegislação tributária não fixar o tempo do pagamento (0,55), cf. o Art. 160, caput, do CTN (0,10).\nB. Não. O prazo de pagamento de tributo não se submete ao princípio da anterioridade\ntributária (0,50), cf. o Art. 150, inciso I, da CRFB/88 OU o Art. 97 do CTN OU a Súmula 0,00/0,50/0,60\nVinculante nº 50 OU a Súmula nº 669 do STF (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

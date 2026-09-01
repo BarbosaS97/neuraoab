@@ -22,8 +22,8 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=21">
-<link rel="stylesheet" href="simulado2fase.css?v=11">
+<link rel="stylesheet" href="style.css?v=22">
+<link rel="stylesheet" href="simulado2fase.css?v=12">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body class="sim2-body">
@@ -46,14 +46,11 @@
     </button>
   </div>
 
-  <nav class="sim2-topbar-nav">
-    <a href="index.html" class="sim2-phase-link">
-      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="19" y1="12" x2="5" y2="12"></line>
-        <polyline points="12 19 5 12 12 5"></polyline>
-      </svg>
-      Ir para a 1ª Fase
-    </a>
+  <div class="sim2-topbar-nav">
+    <nav class="phase-tabs" aria-label="Fase do exame">
+      <a href="index.html" class="phase-tab">1ª Fase</a>
+      <span class="phase-tab active" aria-current="page">2ª Fase</span>
+    </nav>
     <!-- Login opcional (aluno convidado por um professor) — mesmo padrão
          de estudos/index.html, ver comentário lá. -->
     <div class="session-wrap">
@@ -74,7 +71,7 @@
       </div>
     </div>
     <button type="button" id="sim2ThemeToggle" class="sim2-theme-toggle" aria-label="Alternar tema"></button>
-  </nav>
+  </div>
 </header>
 
 <main class="sim2-main">
@@ -173,6 +170,15 @@
         <div id="itemEnunciado" class="sim2-item-enunciado"></div>
       </div>
 
+      <div class="sim2-card sim2-card-accent sim2-start-gate" id="startGate" hidden>
+        <p class="sim2-lede sim2-start-gate-lede">
+          A escrita da peça e das questões fica bloqueada até você clicar em
+          <b>Iniciar</b>. A partir do clique, seu professor vê no Portal do
+          Professor que você deu início a esta tentativa.
+        </p>
+        <button type="button" id="btnIniciarCaderno" class="sim2-btn-primary">Iniciar</button>
+      </div>
+
       <div class="sim2-answer-sheet" id="answerSheet">
         <div class="sim2-line-gutter" id="lineGutter"></div>
         <textarea id="itemResposta" class="sim2-textarea" placeholder="Digite sua resposta para este item..." spellcheck="true"></textarea>
@@ -221,6 +227,6 @@
 
 </main>
 
-<script src="simulado2fase.js?v=5"></script>
+<script src="simulado2fase.js?v=6"></script>
 </body>
 </html>

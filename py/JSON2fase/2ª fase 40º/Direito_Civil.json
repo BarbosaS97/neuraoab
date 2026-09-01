@@ -1,0 +1,446 @@
+{
+  "exam_number": 40,
+  "phase": 2,
+  "area": "Direito Civil",
+  "source_provas_file": "40º_provas_Direito_Civil.pdf",
+  "source_resposta_file": "40º_resposta_Direito_Civil.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "Paulo Cruz, servidor público federal, e Cristina Silva Cruz, autônoma, residentes e domiciliados em Campina Grande, no Estado da Paraíba, contraíram matrimônio sem pacto antenupcial em 2018. Em 16 de dezembro de 2021, nasceu Júlia, a única filha do casal. Não obstante eles tenham sempre mantido um bom relacionamento, concluíram que não mais permaneceriam casados.\n\nPaulo e Cristina eram solteiros antes do casamento, portanto, nunca viveram em união estável ou matrimônio com qualquer pessoa, não tendo outros descendentes.\n\nDiante da decisão, procuram você, na qualidade de advogado(a) para tomar as providências necessárias para formalizar a extinção do vínculo conjugal e a partilha dos bens, bem como as questões relativas à filha.\n\nEm reunião conjunta, informam que decidiram pela guarda compartilhada, mas que Júlia manterá residência fixa com a mãe, tendo o pai direito à convivência em dois dias da semana, além dos finais de semana alternados. Concordaram que não será devida pensão alimentícia entre eles e que as despesas da filha serão igualmente repartidas, pois possuem capacidade financeira semelhante.\n\nAcordam ainda que Paulo Cruz pagará R$ 3.000,00 (três mil reais), que corresponde a 20% (vinte por cento) dos seus rendimentos, a título de pensão para a filha menor. Pactuaram, ainda, que alterarão as comemorações de Natal e réveillon, cabendo à mãe os anos pares. Como Cristina é cristã e o pai, ateu, estabeleceram que no feriado de Páscoa, Júlia passará com a genitora. No que tange aos demais feriados, nada foi estabelecido.\n\nO casal deseja realizar a partilha de bens no curso do divórcio. Assim, informaram que o patrimônio deles é constituído de dois imóveis. Um apartamento, residência do casal, localizado em Catolé, um bairro de Campina Grande, no Estado da Paraíba, adquirido onerosamente em janeiro de 2021, no valor atual de R$ 600.000,00 (seiscentos mil reais). Destaca-se que 50% (cinquenta por cento) do valor pago por este imóvel adveio da herança legítima do pai de Cristina, que faleceu em 2019, circunstância reconhecida por Paulo. O outro bem é uma loja comercial, situada a 100 (cem) metros da residência do casal, adquirida por meio de compra e venda em 2022, avaliada em R$ 200.000,00 (duzentos mil reais). Todos os dois bens encontram-se pagos e quitados.\n\nSalienta-se que Cristina e Júlia manterão residência no apartamento supracitado, devendo Paulo sair do bem.\n\nPor fim, Cristina informa que voltará a usar o nome de solteira, e eles acordam o rateio das despesas processuais.\n\nNa qualidade de advogado(a) de Paulo e Cristina, elabore a peça processual cabível para a defesa imediata dos interesses de seus clientes, indicando seus requisitos e fundamentos nos termos da legislação vigente.",
+    "subitens": [],
+    "observacao": "A peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação. PEÇA PRÁTICO-PROFISSIONAL – PÁGINA 2",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A peça a ser proposta é uma petição inicial de divórcio consensual que inclui uma filha menor e a partilha de bens, conforme os artigos 731 a 734 do Código de Processo Civil (CPC). É direcionada ao Juízo de uma Vara em Campina Grande, no Estado da Paraíba. Como se trata de procedimento de jurisdição voluntária, não haverá autor e réu, mas sim, interessados que são Paulo Cruz e Cristina Silva Cruz, atendendo-se aos requisitos previstos no Art. 319 do CPC. Deve ser destacado que o divórcio, um direito potestativo, pode ser realizado na modalidade consensual, inexistindo requisito prévio. A peça deve indicar a guarda compartilhada com regime de convivência, revezamento nos feriados de fim de ano. Já o feriado de Páscoa deve ser passado, exclusivamente, na companhia da mãe. Como não foi feito pacto antenupcial, o regime matrimonial é da comunhão parcial de bens por força do Art. 1.640 do Código Civil. Para a partilha de bens, deve ser considerado que o imóvel comercial pertence ao casal, cabendo a cada um, 50% (cinquenta por cento) do bem. O fundamento legal é o Art. 1.658 ou o Art. 1.660, inciso I, ambos do Código Civil. Em relação ao apartamento, 50% (cinquenta por cento) adveio da sub-rogação da herança paterna percebida por Cristina, por força do Art. 1.659, inciso I, do Código Civil. Já os outros 50% (cinquenta por cento) entram na comunhão. Portanto, Cristina terá direito a 75% (setenta e cinco por cento) do imóvel, sendo o restante de Paulo. Deve ser fixada a continuação da residência de Júlia e Cristina no apartamento, devendo Paulo deixar de habitar o imóvel. A pensão alimentícia será de R$ 3.000,00 (três mil reais), que corresponde a 20% dos rendimentos de Paulo, a título de pensão para a filha menor. Cristina retornará ao uso do nome de solteira, em razão do Art. 1.571 do Código Civil. As despesas processuais serão rateadas igualmente entre as partes. Deverá ser requerida a homologação do acordo com prévia assinatura das partes OU apresentação de procuração com poderes específicos. Deverá ser requerida a intimação do Ministério Público. Deverá ser indicado o valor da causa. Por fim, o fechamento, indicando local, data, advogado e OAB.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "Juízo de Direito da Vara de Campina Grande, PB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Qualificação dos interessados/ requerentes",
+        "descricao": "Nome e qualificação dos interessados, Paulo Cruz, servidor público federal (0,10) e Cristina Silva Cruz, autônoma (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Procedimento",
+        "descricao": "O divórcio será na modalidade consensual (0,25), sendo aplicado o procedimento de jurisdição voluntária (0,15), com base no Art. 731 do Código de Processo Civil (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.25,
+          0.35,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Fatos",
+        "descricao": "Exposição dos fatos (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Fundamentação",
+        "descricao": "A guarda será compartilhada (0,20), com base no Art. 1.584, inciso I, do Código Civil (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Fundamentação",
+        "descricao": "Apresentação do plano de convivência (0,30), aplicando-se o disposto no Art. 1.583, § 2º, do Código Civil OU Art. 731, III, do Código de Processo Civil (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Fundamentação",
+        "descricao": "O regime de bens é o da comunhão parcial (0,20), devido a inexistência de pacto antenupcial (0,15) de acordo com o Art. 1.640 do Código Civil (0,10).",
+        "pontuacao_maxima": 0.45,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.2,
+          0.3,
+          0.35,
+          0.45
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fundamentação",
+        "descricao": "Para a partilha do imóvel comercial, cada cônjuge terá direito a cinquenta por cento do bem (0,30), pois o bem foi adquirido onerosamente na constância do casamento (0,15), com fundamento no Art. 1.658 ou no Art. 1.660, inciso I, ambos do Código Civil (0,10).",
+        "pontuacao_maxima": 0.55,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.3,
+          0.4,
+          0.45,
+          0.55
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fundamentação",
+        "descricao": "Para a partilha do apartamento, apenas 50% entram na comunhão (0,30); os outros 50% estão excluídos em razão de advirem da sub-rogação da herança do pai de Cristina (0,15), nos termos do Art. 1659, inciso I, do CC (0,10).",
+        "pontuacao_maxima": 0.55,
+        "faixas_possiveis": [
+          0.0,
+          0.15,
+          0.3,
+          0.4,
+          0.45,
+          0.55
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fundamentação",
+        "descricao": "A residência de Júlia e Cristina continuará sendo o apartamento do casal (0,15), devendo Paulo deixar de habitar o bem (0,10).",
+        "pontuacao_maxima": 0.25,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.15,
+          0.25
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Fundamentação",
+        "descricao": "A pensão alimentícia será de R$ 3.000,00 (vinte por cento da remuneração mensal do pai) (0,30).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Fundamentação",
+        "descricao": "Cristina retornará ao uso do nome de solteira (0,20), em razão do Art. 1.571 do Código Civil (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Pedido de homologação judicial do acordo de divórcio consensual (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "Pedido de intimação do Ministério Público (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Pedidos",
+        "descricao": "Produção OU juntada de prova documental (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Fechamento",
+        "descricao": "Comprovação do pagamento das custas processuais (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "17",
+        "categoria": "Fechamento",
+        "descricao": "Indicação do valor da causa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "18",
+        "categoria": "Fechamento",
+        "descricao": "Assinatura das partes OU juntada de procuração com poderes específicos (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "19",
+        "categoria": "Fechamento",
+        "descricao": "Local..., Data..., Advogado(a)..., OAB nº... (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. Juízo de Direito da Vara de Campina Grande, PB (0,10). 0,00/0,10\nQualificação dos interessados/ requerentes\n2. Nome e qualificação dos interessados, Paulo Cruz, servidor público federal (0,10) e Cristina\n0,00/0,10/0,20\nSilva Cruz, autônoma (0,10).\nProcedimento\n3. O divórcio será na modalidade consensual (0,25), sendo aplicado o procedimento de 0,00/0,15/0,25/\njurisdição voluntária (0,15), com base no Art. 731 do Código de Processo Civil (0,10). 0,35/0,40/0,50\nFatos\n4. Exposição dos fatos (0,10). 0,00/0,10\nFundamentação\n5. A guarda será compartilhada (0,20), com base no Art. 1.584, inciso I, do Código Civil (0,10). 0,00/0,20/0,30\n6. Apresentação do plano de convivência (0,30), aplicando-se o disposto no Art. 1.583, § 2º,\n0,00/0,30/0,40\ndo Código Civil OU Art. 731, III, do Código de Processo Civil (0,10).\n7. O regime de bens é o da comunhão parcial (0,20), devido a inexistência de pacto 0,00/0,15/0,20/\nantenupcial (0,15) de acordo com o Art. 1.640 do Código Civil (0,10). 0,30/0,35/0,45\n8. Para a partilha do imóvel comercial, cada cônjuge terá direito a cinquenta por cento do\n0,00/0,15/0,30/\nbem (0,30), pois o bem foi adquirido onerosamente na constância do casamento (0,15), com\n0,40/0,45/0,55\nfundamento no Art. 1.658 ou no Art. 1.660, inciso I, ambos do Código Civil (0,10).\n9. Para a partilha do apartamento, apenas 50% entram na comunhão (0,30); os outros 50%\n0,00/0,15/0,30/\nestão excluídos em razão de advirem da sub-rogação da herança do pai de Cristina (0,15),\n0,40/0,45/0,55\nnos termos do Art. 1659, inciso I, do CC (0,10).\n10. A residência de Júlia e Cristina continuará sendo o apartamento do casal (0,15), devendo 0,00/0,10/0,15/\nPaulo deixar de habitar o bem (0,10). 0,25\n11. A pensão alimentícia será de R$ 3.000,00 (vinte por cento da remuneração mensal do\n0,00/0,30\npai) (0,30).\n12. Cristina retornará ao uso do nome de solteira (0,20), em razão do Art. 1.571 do Código\n0,00/0,20/0,30\nCivil (0,10).\nPedidos\n13. Pedido de homologação judicial do acordo de divórcio consensual (0,20). 0,00/0,20\n14. Pedido de intimação do Ministério Público (0,20). 0,00/0,20\n15. Produção OU juntada de prova documental (0,10). 0,00/0,10\nFechamento\n16. Comprovação do pagamento das custas processuais (0,10). 0,00/0,10\n17. Indicação do valor da causa (0,10). 0,00/0,10\n18. Assinatura das partes OU juntada de procuração com poderes específicos (0,20). 0,00/0,20\n19. Local..., Data..., Advogado(a)..., OAB nº... (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Otávio, no meio da noite, foi acordado por ruidoso estrondo. Imediatamente, levantou-se e conseguiu observar da janela de seu apartamento que dois pesados halteres esportivos haviam caído de outra unidade e atingiram em cheio seu veículo, que estava estacionado no pátio do edifício, resultando no amassamento do teto e no estilhaçamento do vidro frontal. Na manhã seguinte, ao analisar a cena de destruição e as imagens das câmeras de vigilância do prédio, constatou que a única explicação possível e lógica para o acidente fora a de que os halteres haviam caído de uma unidade residencial do edifício em que mora, e que não era possível identificar a origem. Diante dessa não identificação precisa da unidade, Otávio decidiu, então, ingressar com demanda indenizatória por danos materiais em face do condomínio, a qual foi ajuizada no Juizado Especial Cível do local do imóvel. A respeito do caso de Otávio, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Seria o condomínio responsável pelos danos materiais experimentados por Otávio? Em caso afirmativo, qual a natureza dessa responsabilidade? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Considerando que as partes obtenham a conciliação em audiência e o condomínio isente Otávio do pagamento de três cotas condominiais, qual deverá ser o procedimento judicial adotado pelo juízo? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(Aa) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. Considerando que não foi possível determinar com exatidão a unidade de onde os halteres haviam caído, responderá o condomínio, de forma objetiva, conforme o Art. 938 do CC. B) Conforme previsto no Art. 22, §1º, da Lei nº 9.099/1995, uma vez obtida a conciliação no curso de audiência, os termos conciliatórios serão reduzidos a escrito e a conciliação será homologada pelo Juiz togado mediante sentença, que será dotada de natureza e eficácia de título executivo.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim, ante a impossibilidade de se determinar com exatidão a unidade de onde os halteres caíram (0,20). Responderá o condomínio de forma objetiva (0,35), conforme disposto no Art. 938 do CC (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.35,
+            0.45,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Uma vez obtida a conciliação entre as partes, esta será reduzida a escrito e homologada pelo Juiz togado mediante sentença (0,50), por força do disposto no Art. 22, §1º, da Lei nº 9.099/1995 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim, ante a impossibilidade de se determinar com exatidão a unidade de onde os halteres\n0,00/0,20/0,35/\ncaíram (0,20). Responderá o condomínio de forma objetiva (0,35), conforme disposto no Art. 938\n0,45/0,55/0,65\ndo CC (0,10).\nB. Uma vez obtida a conciliação entre as partes, esta será reduzida a escrito e homologada pelo\nJuiz togado mediante sentença (0,50), por força do disposto no Art. 22, §1º, da Lei nº 9.099/1995 0,00/0,50/0,60\n(0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Maria Lima, 65 anos, aposentada, viúva, não convivente em união estável e sem filhos, celebrou contrato de doação do seu único imóvel, em favor de Thiago Correia Lima, 31 anos, e Beatrice Correia Lima, 29 anos, seus sobrinhos.\n\nPelo referido contrato, Maria Lima doou seu único imóvel para os sobrinhos com reserva de usufruto vitalício, constando que os donatários deveriam realizar alguns reparos na parte elétrica do imóvel em até 45 dias da aceitação da doação. Passados 120 dias da celebração do contrato, Thiago e Beatrice, além de não terem providenciado os reparos devidos, passaram a residir no imóvel, sob a alegação de que eram os proprietários, não obstante os reiterados pedidos de Maria Lima para que não residissem no local enquanto ela lá vivia. Além disso, passaram a dar festas no local, ignorando a presença de Maria na casa, o que a deixou muito aborrecida.\n\nDiante da situação, Maria procura Tereza, amiga de infância e pede apoio para a resolução do problema, afirmando que se arrependeu da doação e que deveria ter doado o imóvel para Tereza. Tereza, vendo a aflição da amiga e interessada em ser beneficiada com o imóvel, indica você, na qualidade de advogado(a), para orientá-la sobre o que pode ser feito.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Há algo que Maria possa fazer para que o imóvel doado retorne à sua propriedade, não mais beneficiando os sobrinhos? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Qual a medida judicial que Maria deverá adotar para que seus sobrinhos não sejam mais os proprietários do bem? Tereza, considerando sua amizade e seu interesse jurídico, pode promover a referida medida judicial, caso Maria não o faça? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, Maria pode revogar a doação por descumprimento do encargo, nos termos do Art. 562 ou do Art. 555, ambos do Código Civil. B) Maria deverá promover ação de revogação da doação. Apenas Maria tem legitimidade para promover essa ação que é personalíssima, nos termos do Art. 18 do CPC.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. Maria pode revogar a doação (0,30) por descumprimento do encargo (0,20), nos termos do Art. 562 OU do Art. 555, ambos do Código Civil (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Maria deverá promover ação de revogação da doação (0,25). Não, apenas Maria tem legitimidade para promover essa ação que é personalíssima (0,30), nos termos do Art. 560 do Código Civil OU Art. 18 do CPC (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. Maria pode revogar a doação (0,30) por descumprimento do encargo (0,20), nos 0,00/0,20/0,30/\ntermos do Art. 562 OU do Art. 555, ambos do Código Civil (0,10). 0,50/0,60\nB. Maria deverá promover ação de revogação da doação (0,25). Não, apenas Maria tem\n0,00/0,25/0,30/0,35/\nlegitimidade para promover essa ação que é personalíssima (0,30), nos termos do Art. 560\nO,40/0,55/0,65\ndo Código Civil OU Art. 18 do CPC (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Marcela e Carlos são irmãos, ambos maiores de idade e filhos de Dulce, que é viúva há muitos anos. Dulce é uma mulher independente e administra sozinha as locações de sete imóveis que possui, sendo essa sua única fonte de renda. Contudo, depois de completar 75 anos, Dulce passou a apresentar algumas confusões mentais. Preocupados, os filhos a levaram ao médico, que a diagnosticou com a doença de Alzheimer. Apesar de terem iniciado o tratamento médico, o quadro agravou-se rapidamente, e, cerca de três meses depois, a capacidade cognitiva e decisória de Dulce estava totalmente comprometida. Preocupados com o bem-estar e a administração dos bens da mãe, Carlos e Marcela procuram você, como advogado(a), para obter a devida orientação. Sobre o caso, responda, como advogado(a), às questões a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Qual a ação judicial cabível para que Carlos e Marcela possam assumir a administração dos bens de Dulce? O que deverá constar na petição inicial para viabilizar essa administração o mais rápido possível? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Considerando que Marcela e Carlos cuidam juntos da mãe, e que não há conflito entre eles, os irmãos questionam se é possível administrar em conjunto os bens de Dulce. Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Carlos e Marcela deverão ingressar com uma ação, com pedido de curatela provisória em sede de antecipação de tutela, devendo especificar em petição inicial os fatos que demonstram a incapacidade do interditando para administrar seus bens e, se for o caso, para praticar atos da vida civil, bem como o momento em que a incapacidade se revelou, na forma do Art. 300 e do Art. 749, caput e parágrafo único, ambos do CPC. B) Marcela e Carlos podem pedir a curatela compartilhada, com base no Art. 1775-A do CC.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Carlos e Marcela deverão ingressar com uma ação de curatela com pedido de curatela 1 provisória (0,20), conforme o Art. 749, caput, do CPC.",
+          "pontuacao_maxima": 0.2,
+          "faixas_possiveis": [
+            0.0,
+            0.2
+          ]
+        },
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Na petição inicial devem ser especificados os fatos que demonstram a incapacidade de 2 Dulce para administrar seus bens e para praticar atos da vida civil (0,20), bem como o momento em que a incapacidade se revelou (0,15), segundo o Art. 749, caput e parágrafo único, OU o Art. 300, ambos do CPC (0,10).",
+          "pontuacao_maxima": 0.45,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.35,
+            0.45
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Marcela e Carlos podem pedir a curatela compartilhada (0,50), com base no Art. 1775-A do CC (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA . Carlos e Marcela deverão ingressar com uma ação de curatela com pedido de curatela\n1 0,00/0,20\nprovisória (0,20), conforme o Art. 749, caput, do CPC.\nA . Na petição inicial devem ser especificados os fatos que demonstram a incapacidade de\n2\nDulce para administrar seus bens e para praticar atos da vida civil (0,20), bem como o 0,00/0,20/0,30/\nmomento em que a incapacidade se revelou (0,15), segundo o Art. 749, caput e parágrafo 0,35/0,45\núnico, OU o Art. 300, ambos do CPC (0,10).\nB. Marcela e Carlos podem pedir a curatela compartilhada (0,50), com base no Art. 1775-A do\n0,00/0,50/0,60\nCC (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Beatriz, professora, celebrou contrato com a sociedade empresária Soluções em Arquitetura com o objetivo de realizar, no prazo de seis meses, a reforma completa do apartamento de sua propriedade. O contrato foi assinado na presença de duas testemunhas. Passados oito meses, a reforma ainda não fora concluída, o que levou Beatriz a ajuizar ação de execução de título extrajudicial em face da sociedade. Citada, Soluções em Arquitetura esclarece a você, advogado(a), que Beatriz não forneceu todo o material necessário para a realização da obra, obrigação que constava de cláusula expressa do contrato. Em consequência, não foi possível a finalização da obra no prazo estabelecido. Sobre tais fatos, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O não cumprimento da obrigação por Beatriz exime a sociedade empresária Soluções em Arquitetura de cumprir o prazo contratualmente previsto para a finalização da obra? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Qual instrumento processual deverá ser usado pela sociedade empresária Soluções em Arquitetura para veicular sua defesa e qual o prazo legal para sua apresentação? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. Beatriz não pode exigir da sociedade empresária Soluções em Arquitetura o cumprimento da obrigação antes de cumprir a sua, uma vez que o contrato celebrado entre as partes é de natureza bilateral, nos termos do Art. 476 do Código Civil. B) A sociedade empresária Soluções em Arquitetura deverá ajuizar ação de embargos à execução, a ser apresentada no prazo de 15 (quinze) dias, nos termos do Art. 915 do CPC.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. Beatriz não pode exigir da sociedade empresária Soluções em Arquitetura o cumprimento da obrigação antes de cumprir a sua (exceção do contrato não cumprido) (0,30), uma vez que o contrato celebrado entre as partes é de natureza bilateral (0,25), com base no Art. 476 do Código Civil (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "A sociedade empresária Soluções em Arquitetura deverá ajuizar ação de embargos à execução (0,30), a ser apresentada no prazo de 15 (quinze) dias (0,20), segundo o Art. 915 do CPC (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. Beatriz não pode exigir da sociedade empresária Soluções em Arquitetura o\n0,00/0,25/0,30/\ncumprimento da obrigação antes de cumprir a sua (exceção do contrato não cumprido)\n0,35/0,40/0,55/\n(0,30), uma vez que o contrato celebrado entre as partes é de natureza bilateral (0,25), com\n0,65\nbase no Art. 476 do Código Civil (0,10).\nB. A sociedade empresária Soluções em Arquitetura deverá ajuizar ação de embargos à\n0,00/0,30/0,40/\nexecução (0,30), a ser apresentada no prazo de 15 (quinze) dias (0,20), segundo o Art. 915\n0,50/0,60\ndo CPC (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

@@ -1,0 +1,373 @@
+{
+  "exam_number": 41,
+  "phase": 2,
+  "area": "Direito Constitucional",
+  "source_provas_file": "41º_provas_Direito_Constitucional.pdf",
+  "source_resposta_file": "41º_resposta_Direito_Constitucional.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "Diversas instituições de ensino brasileiras uniram esforços para o desenvolvimento científico do país, o que acarretaria benefícios não só no plano econômico como também no ambiente social. Como fruto desse movimento, foi submetido à apreciação do Presidente da República um anteprojeto de lei, que veio a ser apresentado ao Poder Legislativo e deu origem à Lei nº XX.\n\nNos termos do Art. 1º da Lei nº XX, a União deveria alocar mais recursos, observadas as políticas públicas adotadas por esse ente federativo, nos projetos direcionados ao aperfeiçoamento das teorias científicas, o que consubstancia a pesquisa científica básica, e nos projetos que buscam estabelecer padrões de inovação em atividade de interesse da coletividade, o que aponta para a pesquisa científica tecnológica. O Art. 2º, por sua vez, autorizou que a União celebrasse ajustes com os órgãos e as entidades públicas, bem como com entidades privadas, visando, entre outros objetivos, ao compartilhamento de recursos humanos especializados para a execução de projetos de pesquisa, o que ocorreria mediante contrapartida do beneficiário, não necessariamente financeira. Por fim, o Art. 3º estatuiu que a União poderia oferecer estímulos creditícios para a atuação de inventores independentes, de modo a aprimorar o processo criativo e a favorecer o aproveitamento econômico das invenções.\n\nA publicação da Lei nº XX acarretou uma grande repulsa de setores econômicos, que passaram a defender a sua inconstitucionalidade. Eram basicamente três os argumentos que invocavam para sustentar a sua conclusão: (I) normas dessa natureza deveriam ter sido veiculadas em lei complementar, não em lei ordinária; (II) a isonomia foi flagrantemente afrontada ao se permitir tratamento diferenciado em relação a certos aspectos do saber; e, (III) especificamente em relação ao denominado “compartilhamento de recursos humanos especializados”, alegava-se a ausência de previsão constitucional e a consequente afronta à exigência de prévia aprovação em concurso público para o provimento de cargos públicos, sempre que esse compartilhamento ocorresse entre órgãos públicos.\n\nEsses argumentos encontraram ressonância em diversos pontos do país, com o correlato ajuizamento de inúmeras ações individuais e coletivas, nas quais a inconstitucionalidade dos artigos 1º a 3º da Lei nº XX era incidentalmente reconhecida, em primeiro e em segundo graus de jurisdição, o que vinha inviabilizando a sua efetiva projeção na realidade.\n\nSensível aos prejuízos para o interesse social que a não aplicação da Lei nº XX vinha acarretando, o Partido Político Alfa, que contava com representantes no Senado Federal, contratou os seus serviços como advogado(a) e solicitou o ajuizamento da ação constitucional cabível, com o objetivo de que fosse requerido o reconhecimento da plena compatibilidade da Lei nº XX com a CRFB/88.\n\nRedija a peça processual adequada aos objetivos almejados pelo Partido Político Alfa.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A peça adequada é a petição inicial de ação declaratória de constitucionalidade. A petição deve ser endereçada ao Ministro Presidente do Supremo Tribunal Federal, órgão jurisdicional competente para processar e julgar a referida ação, conforme o Art. 102, inciso I, alínea a, da CRFB/88. A ação deve ser proposta pelo Partido Político Alfa. A legitimidade do Partido decorre do disposto no Art. 103, inciso VIII, da CRFB/88. Devem ser indicados, na petição inicial, os artigos 1º, 2º e 3º da Lei nº XX, dispositivos cuja constitucionalidade tem sido questionada. Deve ser justificado o cabimento da ADC, por se tratar de lei federal, nos ternos do Art. 102, inciso I, alínea a, da CRFB/88 em razão da controvérsia judicial relevante, presente nas diversas decisões que negaram aplicação aos artigos 1º a 3º da Lei nº XX, conforme é exigido pelo Art. 14, inciso III, da Lei nº 9.868/99. O examinando deve informar e demonstrar, justificadamente, as normas da CRFB/88 que embasam a constitucionalidade dos artigos 1º a 3º da Lei nº XX, quais sejam: (i) A Lei nº XX é constitucional porque: (i.i) a matéria inserida na Lei nº XX foi corretamente veiculada em lei ordinária, considerando a não exigência de lei complementar pelo Art. 219-B, § 1º, da CRFB/88; A Lei Ordinária nº XX é igualmente constitucional porque: (ii.i) em relação ao Art. 1º, o tratamento prioritário da pesquisa científica básica e tecnológica é expressamente determinado pela ordem constitucional, nos termos do Art. 218, § 1º, da CRFB/88; (ii.ii) quanto ao Art. 2º, a União pode firmar instrumentos de cooperação com órgãos e entidades públicos e com entidades privadas, para o compartilhamento de recursos humanos especializados, visando à execução de projetos de pesquisa, conforme dispõe o Art. 219-A da CRFB/88; (ii.iii) no que diz respeito ao Art. 3º, o Estado deve estimular a atuação dos inventores independentes, de acordo com o Art. 219, parágrafo único, da CRFB/88; (ii.iv) o tratamento diferenciado preconizado pela ordem constitucional não acarreta qualquer mácula à isonomia. Deve ser formulado pedido de medida cautelar, com fundamento no Art. 21 da Lei nº 9.868/99, com o objetivo de suspender os processos judiciais em curso até o julgamento do mérito. O pedido principal deve ser a declaração de constitucionalidade dos Artigos 1º a 3º da Lei nº XX. A petição inicial deve ser instruída com cópias do ato normativo impugnado e dos documentos que comprovem a prolação de decisões judiciais contrárias à constitucionalidade dos Artigos 1º a 3º da Lei nº XX, nos termos do Art. 14, parágrafo único, da Lei nº 9.868/1999. Por fim, deve haver o fechamento da petição pelo advogado.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "A petição deve ser encaminhada ao Ministro Presidente do Supremo Tribunal Federal (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Legitimidade ativa: a ação deve ser proposta pelo Partido Político Alfa (0,10), conforme o disposto no Art. 103, inciso VIII, da CRFB/88 ou Art. 2º, inciso VIII, da Lei nº 9.868/99 (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Devem ser indicados, na petição inicial, os artigos 1º a 3º da Lei nº XX, dispositivos cuja constitucionalidade tem sido questionada (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Endereçamento",
+        "descricao": "Cabimento da ADC: Medida prevista no Art. 102, inciso I, alínea a, da CRFB/88 (0,10), em razão da controvérsia judicial relevante (0,10), presente nas diversas decisões que negaram aplicação aos artigos 1º a 3º da Lei nº XX, ato normativo federal (0,10), o que atende ao requisito do Art. 14, inciso III, da Lei nº 9.869/99 (0,10). Fundamentos de mérito, em relação à constitucionalidade da Lei federal nº XX",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Endereçamento",
+        "descricao": "A matéria inserida na Lei nº XX foi corretamente veiculada em lei ordinária, considerando a não exigência de lei complementar (0,40), conforme dispõe o Art. 219-B, § 1º, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Endereçamento",
+        "descricao": "Em relação ao Art. 1º, o tratamento prioritário da pesquisa científica básica e tecnológica é expressamente determinado pela ordem constitucional (0,40), nos termos do Art. 218, § 1º, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Endereçamento",
+        "descricao": "Q uanto ao Art. 2º, a União pode firmar instrumentos de cooperação com órgãos públicos e entidades públicas e privadas, para o compartilhamento de recursos humanos especializados, visando à execução de projetos de pesquisa (0,40), conforme dispõe o Art. 219-A da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Endereçamento",
+        "descricao": "No que diz respeito ao Art. 3º, o Estado deve estimular a atuação dos inventores independentes (0,40), de acordo com o Art. 219, parágrafo único, da CRFB/88 (0,10);",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Endereçamento",
+        "descricao": "O tratamento diferenciado preconizado pela ordem constitucional não acarreta qualquer mácula à isonomia (0,50).",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.5
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fundamentos da cautelar",
+        "descricao": "A patente constitucionalidade demonstrada nos fundamentos de mérito (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Fundamentos da cautelar",
+        "descricao": "O risco na demora, pois estão sendo descumpridas as normas afetas à pesquisa, o que gera grandes prejuízos para o interesse social, considerando a diminuição das pesquisas (0,40). Pedidos:",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Fundamentos da cautelar",
+        "descricao": "Pedido cautelar, com o objetivo específico de suspender os processos judiciais em curso (0,20), embasado no Art. 21 da Lei nº 9.868/1999 (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Fundamentos da cautelar",
+        "descricao": "Pedido principal, visando à declaração de constitucionalidade dos artigos 1º a 3º da Lei nº XX (0,30).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Fundamentos da cautelar",
+        "descricao": "A petição inicial deve ser instruída com cópias do ato normativo impugnado (0,10) e dos documentos que comprovem a prolação de decisões judiciais contrárias à constitucionalidade dos artigos 1º a 3º da Lei federal nº XX (0,20), nos termos do Art. 14, parágrafo único, da Lei nº 9.868/1999 (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Fechamento",
+        "descricao": "Local ..., Data..., Advogado... e OAB... (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. A petição deve ser encaminhada ao Ministro Presidente do Supremo Tribunal Federal\n0,00/0,10\n(0,10).\n2. Legitimidade ativa: a ação deve ser proposta pelo Partido Político Alfa (0,10), conforme o\n0,00/0,10/0,20\ndisposto no Art. 103, inciso VIII, da CRFB/88 ou Art. 2º, inciso VIII, da Lei nº 9.868/99 (0,10).\n3. Devem ser indicados, na petição inicial, os artigos 1º a 3º da Lei nº XX, dispositivos cuja\n0,00/0,10\nconstitucionalidade tem sido questionada (0,10).\n4. Cabimento da ADC: Medida prevista no Art. 102, inciso I, alínea a, da CRFB/88 (0,10), em\nrazão da controvérsia judicial relevante (0,10), presente nas diversas decisões que negaram 0,00/0,10/0,20/\naplicação aos artigos 1º a 3º da Lei nº XX, ato normativo federal (0,10), o que atende ao 0,30/0,40\nrequisito do Art. 14, inciso III, da Lei nº 9.869/99 (0,10).\nFundamentos de mérito, em relação à constitucionalidade da Lei federal nº XX\n5. A matéria inserida na Lei nº XX foi corretamente veiculada em lei ordinária, considerando a\nnão exigência de lei complementar (0,40), conforme dispõe o Art. 219-B, § 1º, da CRFB/88 0,00/0,40/0,50\n(0,10).\n6. Em relação ao Art. 1º, o tratamento prioritário da pesquisa científica básica e tecnológica é\nexpressamente determinado pela ordem constitucional (0,40), nos termos do Art. 218, § 1º, 0,00/0,40/0,50\nda CRFB/88 (0,10).\n7. Quanto ao Art. 2º, a União pode firmar instrumentos de cooperação com órgãos públicos e\nentidades públicas e privadas, para o compartilhamento de recursos humanos especializados,\n0,00/0,40/0,50\nvisando à execução de projetos de pesquisa (0,40), conforme dispõe o Art. 219-A da CRFB/88\n(0,10).\n8. No que diz respeito ao Art. 3º, o Estado deve estimular a atuação dos inventores\n0,00/0,40/0,50\nindependentes (0,40), de acordo com o Art. 219, parágrafo único, da CRFB/88 (0,10);\n9. O tratamento diferenciado preconizado pela ordem constitucional não acarreta qualquer\n0,00/0,50\nmácula à isonomia (0,50).\nFundamentos da cautelar\n10. A patente constitucionalidade demonstrada nos fundamentos de mérito (0,20). 0,00/0,20\n11. O risco na demora, pois estão sendo descumpridas as normas afetas à pesquisa, o que\n0,00/0,40\ngera grandes prejuízos para o interesse social, considerando a diminuição das pesquisas\n(0,40).\nPedidos:\n12. Pedido cautelar, com o objetivo específico de suspender os processos judiciais em curso\n0,00/0,20/0,30\n(0,20), embasado no Art. 21 da Lei nº 9.868/1999 (0,10).\n13. Pedido principal, visando à declaração de constitucionalidade dos artigos 1º a 3º da Lei nº\n0,00/0,30\nXX (0,30).\n14. A petição inicial deve ser instruída com cópias do ato normativo impugnado (0,10) e dos\ndocumentos que comprovem a prolação de decisões judiciais contrárias à constitucionalidade 0,00/0,10/0,20/\ndos artigos 1º a 3º da Lei federal nº XX (0,20), nos termos do Art. 14, parágrafo único, da Lei 0,30/0,40\nnº 9.868/1999 (0,10).\nFechamento\n15. Local ..., Data..., Advogado... e OAB... (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "João dos Santos, vereador no Município Alfa, participou, em Brasília, de um grande evento organizado pelo Partido Político Delta, ao qual estava filiado. Na ocasião, criticou duramente a gestão do prefeito municipal de Alfa, principalmente por direcionar recursos públicos para escolas vinculadas a certas religiões, que não tivessem finalidade lucrativa, e que aplicassem seus excedentes em educação e assegurassem a destinação do seu patrimônio, no caso de encerramento de suas atividades, às escolas comunitárias, filantrópicas ou confessionais, ou ao Poder Público. Para João, apesar da tentativa de atribuir ares de licitude à medida, ela seria francamente contrária ao caráter laico das estruturas estatais de poder, configurando, portanto, ato ilícito.\n\nAo tomar conhecimento dos fatos, o prefeito informou que adotaria as medidas necessárias para a responsabilização de João, tendo este último afirmado que não poderia ser responsabilizado por suas opiniões.\n\nSobre o quadro fático narrado, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "João, nas circunstâncias indicadas, pode vir a ser responsabilizado por suas opiniões a respeito do prefeito do Município Alfa? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Os recursos públicos, na forma descrita no enunciado, podem ser direcionados a escolas vinculadas a certas religiões? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, pois as opiniões não foram exaradas na circunscrição do Município Alfa, nos termos do Art. 29, inciso VIII, da CRFB/88. B) Sim. A destinação de recursos públicos a escolas confessionais, na forma indicada, é admitida, nos termos do Art. 213, incisos I e II, e/ou do Art. 19, inciso I, ambos da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim, pois as opiniões não foram exaradas na circunscrição do Município Alfa (0,55), nos termos do Art. 29, inciso VIII, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. A destinação de recursos públicos a escolas confessionais, na forma indicada, é admitida (0,50), nos termos do Art. 213, incisos I e II, e/ou do Art. 19, inciso I, ambos da CRFB/88. (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim, pois as opiniões não foram exaradas na circunscrição do Município Alfa (0,55),\n0,00/0,55/0,65\nnos termos do Art. 29, inciso VIII, da CRFB/88 (0,10).\nB. Sim. A destinação de recursos públicos a escolas confessionais, na forma indicada, é\nadmitida (0,50), nos termos do Art. 213, incisos I e II, e/ou do Art. 19, inciso I, ambos da 0,00/0,50/0,60\nCRFB/88. (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "A Assembleia Legislativa do Estado Alfa instituiu uma Comissão Parlamentar de Inquérito (CPI) com o objetivo de apurar informações a respeito da desconformidade constitucional dos programas de rádio X, Y e Z, veiculados pelas emissoras Delta, Beta e Gama nos limites do território de Alfa. De acordo com as referidas informações, os programas, em vez de promover a cultura nacional e regional, as ridicularizavam. Havia notícia, ademais, de que estava prestes a ser votado pela CPI requerimento para que fossem ouvidos os proprietários das emissoras, que estariam sujeitos à prisão na hipótese de não comparecimento. Os proprietários das emissoras Delta, Beta e Gama contrataram você, como advogado(a), e formularam os questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A Assembleia Legislativa do Estado Alfa pode instituir CPI com o objeto descrito na narrativa? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Em razão dos termos do requerimento que será votado, há alguma ação constitucional passível de ser ajuizada pelos proprietários para que deixem de atender a uma futura convocação da CPI? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Como compete ao Congresso Nacional atuar na área de radiodifusão, nos termos do Art. 48, inciso XII, ou do Art. 223, ambos da CRFB/88, não pode ser instaurada Comissão Parlamentar de Inquérito no âmbito da Assembleia Legislativa do Estado Alfa para investigar atividades realizadas nessa área. B) Sim. Como há ameaça à liberdade de locomoção, realizada por órgão incompetente, pode ser impetrado habeas corpus, nos termos do Art. 5º, inciso LXVIII, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. Compete ao Congresso Nacional, não à Assembleia Legislativa do Estado Alfa, atuar na área de radiodifusão (0,55), nos termos do Art. 48, inciso XII, ou do Art. 223, ambos da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. Como há ameaça inconstitucional à liberdade de locomoção (0,15), pode ser impetrado habeas corpus (0,35), nos termos do Art. 5º, inciso LXVIII, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.15,
+            0.25,
+            0.35,
+            0.45,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. Compete ao Congresso Nacional, não à Assembleia Legislativa do\nEstado Alfa, atuar na área de radiodifusão (0,55), nos termos do Art. 48, inciso 0,00/0,55/0,65\nXII, ou do Art. 223, ambos da CRFB/88 (0,10).\nB. Sim. Como há ameaça inconstitucional à liberdade de locomoção (0,15),\n0,00/0,15/0,25/0,35/0,45/\npode ser impetrado habeas corpus (0,35), nos termos do Art. 5º, inciso LXVIII,\n0,50/0,60\nda CRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Maria, jornalista, figurava como demandada em uma ação que tramitava perante a Vara Federal da Seção Judiciária de Alfa. Em razão das peculiaridades da causa de pedir, o magistrado titular determinou que Maria apresentasse os dados de identificação das pessoas que lhe forneceram as informações que subsidiaram a realização da reportagem de repercussão internacional, da qual fora a autora. Por entender que a determinação não se compatibilizava com a ordem constitucional, o(a) advogado(a) de Maria decidiu impetrar mandado de segurança contra esse ato, o que, pelas peculiaridades do caso, foi considerada a medida mais adequada. Sobre a hipótese apresentada, responda aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Qual é o direito constitucional violado a ser tutelado por meio do mandado de segurança? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Caso a decisão de mérito, a ser proferida no mandado de segurança pelo órgão jurisdicional competente, seja denegatória, qual será o recurso constitucional passível de ser interposto para que a causa seja reapreciada em outra instância? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Nos termos do Art. 5º, inciso XIV, ou do Art. 220, § 1º, ambos da CRFB/88, foi violado o direito ao sigilo da fonte. B) Poderá ser interposto o recurso ordinário, nos termos do Art. 105, inciso II, alínea b, da CRFB/88, ou Art. 18 da Lei nº 12.016/2009.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Foi violado o direito ao sigilo da fonte (0,50), nos termos do Art. 5º, inciso XIV, ou do Art. 220, § 1º, ambos da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Poderá ser interposto o recurso ordinário (0,55), nos termos do Art. 105, inciso II, alínea b, da CRFB/88, ou Art. 18 da Lei nº 12.016/2009 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Foi violado o direito ao sigilo da fonte (0,50), nos termos do Art. 5º, inciso XIV, ou\n0,00/0,50/0,60\ndo Art. 220, § 1º, ambos da CRFB/88 (0,10).\nB. Poderá ser interposto o recurso ordinário (0,55), nos termos do Art. 105, inciso II,\n0,00/0,55/0,65\nalínea b, da CRFB/88, ou Art. 18 da Lei nº 12.016/2009 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "A sociedade empresária XX, por identificar uma ótima oportunidade de negócios, decidiu instalar uma unidade hospitalar no território do Município Alfa, pois era de conhecimento público a precariedade do serviço oferecido pelo hospital público existente no local. Com o objetivo de traçar o devido planejamento, contratou seus serviços como advogado(a) e formulou os questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A exploração econômica da atividade hospitalar é privativa do Poder Público, de modo que deve explorá- la diretamente ou anuir que outrem, como a sociedade empresária XX, o faça? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "De modo a aumentar a qualidade do serviço médico prestado às pessoas que contratem seus serviços, a sociedade empresária XX pode obter recursos financeiros do Poder Público, de qualquer esfera de governo? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. A exploração econômica da atividade hospitalar é livre para a iniciativa privada, nos termos do Art. 199, caput, da CRFB/88. B) Não. O Poder Público não pode destinar recursos financeiros à sociedade empresária XX, pois ela tem fins lucrativos, o que decorre do disposto no Art. 199, § 2º, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A exploração econômica da atividade hospitalar é livre para a iniciativa privada (0,55), nos termos do Art. 199, caput, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. O Poder Público não pode destinar recursos financeiros à sociedade empresária XX, pois ela tem fins lucrativos (0,50), o que decorre do disposto no Art. 199, § 2º, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A exploração econômica da atividade hospitalar é livre para a iniciativa\n0,00/0,55/0,65\nprivada (0,55), nos termos do Art. 199, caput, da CRFB/88 (0,10).\nB. Não. O Poder Público não pode destinar recursos financeiros à sociedade\nempresária XX, pois ela tem fins lucrativos (0,50), o que decorre do disposto no 0,00/0,50/0,60\nArt. 199, § 2º, da CRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

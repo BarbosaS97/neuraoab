@@ -1,0 +1,454 @@
+{
+  "exam_number": 41,
+  "phase": 2,
+  "area": "Direito Civil",
+  "source_provas_file": "41º_provas_Direito_Civil.pdf",
+  "source_resposta_file": "41º_resposta_Direito_Civil.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "Paulo adquiriu os direitos possessórios sobre uma casa situada na Rua XYZ, nº 99, em Goiânia, GO, por meio de adjudicação em um processo de inventário, com sentença datada de 21/01/2012, transitada em julgado. O imóvel não tem matrícula regular ou registro de propriedade, situando-se em área onde historicamente há problemas de regularização fundiária.\n\nNa casa, Cíntia, como cuidadora, morava com José, pai de Paulo, assistindo-o durante toda a sua enfermidade. Depois da morte do pai, Paulo decidiu realizar o desejo dele, que fora manifestado oralmente antes do falecimento, ou seja, permitir que Cíntia, exclusivamente, residisse no imóvel pelo tempo que julgasse necessário, enquanto viva fosse. Assim, em 30/01/2012, poucos dias após a sentença de adjudicação, Paulo e Cíntia se encontraram para a celebração de contrato de comodato, no qual ficou ajustado que ela poderia residir no imóvel pelo tempo que quisesse.\n\nDoze anos depois, em 10/01/2024, Paulo foi informado pelo síndico do condomínio de que Cíntia falecera de infarto fulminante no dia anterior, deixando no imóvel o seu filho João. Em 11/01/2024, Paulo notificou João para que, no prazo de 30 (trinta) dias, restituísse o bem, com a entrega das chaves na portaria.\n\nOcorre que João descumpriu a ordem, enviando contranotificação, em 20/01/2024, informando que não reconhecia a posse de Paulo, porque sabe que o imóvel não tem matrícula regular ou registro de propriedade, sendo ele o verdadeiro dono do bem, por força de usucapião. O imóvel está avaliado em R$ 200.000,00 (duzentos mil reais).\n\nNa qualidade de advogado(a) de Paulo, elabore a peça processual cabível para a defesa imediata dos interesses de seu cliente, indicando seus requisitos e fundamentos nos termos da legislação vigente.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A peça processual adequada é a petição inicial de ação de reintegração de posse (Art. 560 do Código de Processo Civil). A parte autora (Paulo) deve propor a demanda em face de João (réu), pelo rito especial do Art. 560 e pelos seguintes presentes no Código de Processo Civil, em razão da propositura da demanda dentro de ano e dia do esbulho (Art. 558 do Código de Processo Civil), distribuindo a ação em uma das Varas Cíveis da Comarca de Goiânia/GO, requerendo gratuidade de justiça ou informando o recolhimento das custas iniciais. No mérito, deve o demandante argumentar, em seus fundamentos jurídicos, que: (i) na qualidade de possuidor do bem, cedeu a posse direta, voluntariamente, à Cíntia, por meio de contrato de comodato, na forma do Art. 579 do Código Civil, mantendo a posse indireta sobre o bem, como admite o Art. 1.197 do Código Civil; (ii) o contrato se extinguiu pela morte da comodatária (Cíntia), na forma do Art. 581 do Código Civil; (iii) a posse de João é injusta, porque precária, na forma do Art. 1.200 do Código Civil; (iv) a negativa de João de restituir o bem configura o ato de esbulho possessório, ante a perda do poder sobre o bem, como preceitua o Art. 1.223 do Código Civil; (v) em face do esbulho tem o direito a ser reintegrado na posse do bem, como garante o Art. 1.210 do Código Civil, não obstando a reintegração a alegação de propriedade (por usucapião) realizada pelo réu, conforme Art. 1.210, § 2º, do Código Civil; (vi) o autor faz prova documental (a) da posse anterior de Paulo; (b) do esbulho; (c) da data do esbulho; e (d) da perda da posse, na forma do Art. 561 do Código de Processo Civil; (vii) considerando que a inicial está devidamente instruída, o juiz deve deferir, sem ouvir o réu, a medida liminar de reintegração de posse, na forma do Art. 562 do Código de Processo Civil. Por tais razões, o autor deve pedir: (i) a concessão da medida liminar, com a expedição do mandado de reintegração de posse; (ii) a procedência do pedido para determinar a reintegração do autor na posse do imóvel; (iii) a condenação do réu ao pagamento de custas e honorários de sucumbência. O autor deve informar o valor da causa em R$200.000,00 (duzentos mil reais), aplicando-se analogicamente o disposto no Art. 292, inciso IV, do Código de Processo Civil, protestando pela produção de provas. Finalizando a peça, indicar local, data, nome e OAB.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "A ação deve ser ajuizada perante uma das Varas Cíveis da Comarca de Goiânia/GO (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Indicação do autor, Paulo, (0,10) e do réu João (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Pedido de gratuidade de justiça ou recolhimento das custas iniciais (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Fundamentação Jurídica/Legal",
+        "descricao": "Demonstrar que a demanda é proposta dentro de ano e dia do esbulho (0,15), na forma do Art. 558 do Código de Processo Civil (0,10), adotando-se o rito especial do Art. 560 do Código de Processo Civil (0,10).",
+        "pontuacao_maxima": 0.35,
+        "faixas_possiveis": [
+          0.15,
+          0.25,
+          0.35
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Fundamentação Jurídica/Legal",
+        "descricao": "Exposição dos fatos",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Fundamentação Jurídica/Legal",
+        "descricao": "Argumentar que cedeu a posse à Cíntia, por meio de contrato de comodato (0,20), na forma do Art. 579 do Código Civil (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Fundamentação Jurídica/Legal",
+        "descricao": "Afirmar que manteve a posse indireta sobre o bem (0,20), como admite o Art. 1.197 do Código Civil (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fundamentação Jurídica/Legal",
+        "descricao": "Indicar que o contrato se extinguiu pela morte da comodatária (Cíntia) (0,20), na forma do Art. 581 do Código Civil (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fundamentação Jurídica/Legal",
+        "descricao": "Apontar que a posse de João é injusta, porque precária (0,20), na forma do Art. 1.200 do Código Civil (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fundamentação Jurídica/Legal",
+        "descricao": "Salientar que a negativa de João de restituir o bem configura o ato de esbulho possessório (0,20), ante a perda do poder sobre o bem (0,10), como preceitua o Art. 1.223 do Código Civil (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Fundamentação Jurídica/Legal",
+        "descricao": "Sustentar que, em face do esbulho, tem o direito a ser reintegrado na posse do bem (0,20), nos moldes do Art. 1.210 do Código Civil (0,10),",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Fundamentação Jurídica/Legal",
+        "descricao": "A alegação de propriedade (por usucapião) realizada pelo réu não obsta a reintegração (0,20), conforme Art. 1.210, § 2º, do Código Civil (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Fundamentação Jurídica/Legal",
+        "descricao": "Acentuar que o autor faz prova documental (a) da posse anterior de Paulo; (b) do esbulho; (c) da data do esbulho; e (d) da perda da posse (0,20), cumprindo com os requisitos do Art. 561 do Código de Processo Civil (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Fundamentação Jurídica/Legal",
+        "descricao": "Aduzir que, estando a inicial devidamente instruída, o juiz deve deferir, sem ouvir o réu, a medida liminar de reintegração de posse (0,20), na forma do Art. 562 do Código de Processo Civil (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Pedidos",
+        "descricao": "Concessão da medida liminar (0,25), com a expedição do mandado de reintegração de posse (0,15).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.25,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "16",
+        "categoria": "Pedidos",
+        "descricao": "Reintegração do autor na posse do bem (0,25).",
+        "pontuacao_maxima": 0.25,
+        "faixas_possiveis": [
+          0.0,
+          0.25
+        ]
+      },
+      {
+        "rotulo": "17",
+        "categoria": "Pedidos",
+        "descricao": "Citação do réu para, querendo, apresentar contestação (0,10), na forma do Art. 564 do Código de Processo Civil (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "18",
+        "categoria": "Pedidos",
+        "descricao": "Condenação do réu ao pagamento das custas (0,10) e honorários de advogado (0,10) ou no ônus de sucumbência (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "19",
+        "categoria": "Pedidos",
+        "descricao": "Protestar pela produção de provas (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "20",
+        "categoria": "Fechamento",
+        "descricao": "Indicação do valor da causa (R$200.000,00) (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "21",
+        "categoria": "Fechamento",
+        "descricao": "Local, data, assinatura e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. A ação deve ser ajuizada perante uma das Varas Cíveis da Comarca de\n0,00/0,10\nGoiânia/GO (0,10).\n2. Indicação do autor, Paulo, (0,10) e do réu João (0,10). 0,00/0,10/0,20\n3. Pedido de gratuidade de justiça ou recolhimento das custas iniciais (0,10). 0,00/0,10\nFundamentação Jurídica/Legal\n4. Demonstrar que a demanda é proposta dentro de ano e dia do esbulho (0,15),\nna forma do Art. 558 do Código de Processo Civil (0,10), adotando-se o rito 0,15/0,25/0,35\nespecial do Art. 560 do Código de Processo Civil (0,10).\n5. Exposição dos fatos 0,00/0,10\n6. Argumentar que cedeu a posse à Cíntia, por meio de contrato de comodato\n0,00/0,20/0,30\n(0,20), na forma do Art. 579 do Código Civil (0,10).\n7. Afirmar que manteve a posse indireta sobre o bem (0,20), como admite o Art.\n0,00/0,20/0,30\n1.197 do Código Civil (0,10).\n8. Indicar que o contrato se extinguiu pela morte da comodatária (Cíntia) (0,20), na\n0,00/0,20/0,30\nforma do Art. 581 do Código Civil (0,10).\n9. Apontar que a posse de João é injusta, porque precária (0,20), na forma do Art.\n0,00/0,20/0,30\n1.200 do Código Civil (0,10).\n10. Salientar que a negativa de João de restituir o bem configura o ato de esbulho\npossessório (0,20), ante a perda do poder sobre o bem (0,10), como preceitua o 0,00/0,20/0,30/0,40\nArt. 1.223 do Código Civil (0,10).\n11. Sustentar que, em face do esbulho, tem o direito a ser reintegrado na posse do\n0,00/0,20/0,30\nbem (0,20), nos moldes do Art. 1.210 do Código Civil (0,10),\n12. A alegação de propriedade (por usucapião) realizada pelo réu não obsta a\n0,00/0,20/0,30\nreintegração (0,20), conforme Art. 1.210, § 2º, do Código Civil (0,10).\n13. Acentuar que o autor faz prova documental (a) da posse anterior de Paulo; (b)\ndo esbulho; (c) da data do esbulho; e (d) da perda da posse (0,20), cumprindo com 0,00/0,20/0,30\nos requisitos do Art. 561 do Código de Processo Civil (0,10).\n14. Aduzir que, estando a inicial devidamente instruída, o juiz deve deferir, sem\nouvir o réu, a medida liminar de reintegração de posse (0,20), na forma do Art. 562 0,00/0,20/0,30\ndo Código de Processo Civil (0,10).\nPedidos\n15. Concessão da medida liminar (0,25), com a expedição do mandado de\n0,00/0,25/0,40\nreintegração de posse (0,15).\n16. Reintegração do autor na posse do bem (0,25). 0,00/0,25\n17. Citação do réu para, querendo, apresentar contestação (0,10), na forma do\n0,00/0,10/0,20\nArt. 564 do Código de Processo Civil (0,10).\n18. Condenação do réu ao pagamento das custas (0,10) e honorários de advogado\n0,00/0,10/0,20\n(0,10) ou no ônus de sucumbência (0,20).\n19. Protestar pela produção de provas (0,10). 0,00/0,10\nFechamento\n20. Indicação do valor da causa (R$200.000,00) (0,10). 0,00/0,10\n21. Local, data, assinatura e OAB (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Joaquim conduzia seu automóvel por avenida movimentada do bairro de Copacabana, no Rio de Janeiro, em velocidade acima da permitida, após consumir elevada dose de bebida alcoólica. Ao tentar desviar de outro veículo, Joaquim perdeu o controle e subiu na calçada, vindo a colidir contra um poste. Maria, que andava pela calçada, viu o momento em que Joaquim perdeu o controle de seu automóvel e, para salvar Joana, que estava ao seu lado, empurrou-a, vindo ambas a caírem em cima da vidraça de uma loja. Na queda, quebraram o vidro e danificaram alguns itens que estavam em exibição na vitrine. Sobre o caso narrado, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Maria praticou ato ilícito ao empurrar Joana, quebrando o vidro e danificando os itens da vitrine? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Maria, uma vez demandada em Juízo pelo dono da loja para ser indenizado pelos danos sofridos, poderá provocar intervenção de terceiros? Caso afirmativo, qual a modalidade e em face de quem? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Maria não cometeu ato ilícito ao empurrar Joana, eis que agiu em estado de necessidade, conforme o Art. 188, inciso II, do CC. B) Maria poderá denunciar a lide em face de Joaquim, com amparo no Art. 125, inciso II, do CPC, pois tem direito de regresso em face deste, conforme o Art. 930 do CC.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não, pois agiu em estado de necessidade (0,55), conforme o Art. 188, inciso II, do CC (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim. Maria poderá denunciar a lide em face de Joaquim (0,20), com amparo no Art. 125, inciso II, do CPC (0,10), pois tem direito de regresso em face deste (0,20), conforme o Art. 930 do CC (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não, pois agiu em estado de necessidade (0,55), conforme o Art. 188, inciso II,\n0,00/0,55/0,65\ndo CC (0,10).\nB. Sim. Maria poderá denunciar a lide em face de Joaquim (0,20), com amparo no\n0,00/0,20/0,30/\nArt. 125, inciso II, do CPC (0,10), pois tem direito de regresso em face deste (0,20),\n0,40/0,50/0,60\nconforme o Art. 930 do CC (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "O gado Nelore criado por Duarte vem sofrendo de doença desconhecida. Inocêncio, produtor rural, comprometeu- se a ajudá-lo, conseguindo que o melhor veterinário da região e também produtor rural, Matias, concordasse em visitar o rebanho de Duarte em, no máximo, três dias, em virtude da urgência da situação. Matias aceitou o compromisso, mas não compareceu em razão dos seus próprios compromissos em sua fazenda, especialmente por causa do recebimento de duas novas máquinas agrícolas. Na semana seguinte, Matias foi até a fazenda de Duarte e constatou a morte de toda a criação. Duarte, diante disso, acionou Inocêncio e Matias pleiteando indenização pelos danos sofridos. Sobre a hipótese narrada, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O pedido de perdas e danos em face de Inocêncio merece prosperar? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Se Matias for condenado, as duas máquinas agrícolas de sua propriedade poderão ser penhoradas? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Trata-se de promessa de fato de terceiro. Inocêncio se comprometeu a conseguir que Matias, o melhor veterinário da região e produtor rural, visitasse a criação do gado Nelore de Duarte, que padecia de desconhecida doença. Matias aceitou o compromisso, mas não compareceu, o que resultou na morte de toda a criação. O pedido de perdas e danos em face de Inocêncio não merece prosperar, pois Matias se obrigou, exonerando Inocêncio, de acordo com o Art. 440 do Código Civil. B) Não. As máquinas agrícolas de Matias são consideradas necessárias ao exercício da profissão e, por isso, são consideradas impenhoráveis, conforme Art. 833, §3º, do Código de Processo Civil.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. Tratando-se de promessa de fato de terceiro (0,30), uma vez que Matias se comprometeu a visitar o gado de Duarte (0,25), Inocêncio fica exonerado, conforme Art. 440 do Código Civil (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. As máquinas agrícolas pertencentes à pessoa física são impenhoráveis, porque são necessárias ao exercício da profissão de Matias (0,50), de acordo com o Art. 833, §3º, do Código de Processo Civil (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. Tratando-se de promessa de fato de terceiro (0,30), uma vez que Matias\n0,00/0,25/0,30/0,35/\nse comprometeu a visitar o gado de Duarte (0,25), Inocêncio fica exonerado,\n0,40/0,55/0,65\nconforme Art. 440 do Código Civil (0,10).\nB. Não. As máquinas agrícolas pertencentes à pessoa física são impenhoráveis,\nporque são necessárias ao exercício da profissão de Matias (0,50), de acordo com 0,00/0,50/0,60\no Art. 833, §3º, do Código de Processo Civil (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Iara, atriz famosa por interpretar papéis de protagonista em diversas novelas, descobre que seu nome e sua imagem vêm sendo utilizados, indevidamente e sem sua autorização, por uma clínica de estética, em publicidade anunciando seus serviços. Na publicidade em questão, constava a foto da atriz com uma frase, entre aspas, dizendo que ela só realizava procedimentos estéticos naquela clínica, por considerá-la a melhor do ramo. Ocorre que a atriz sequer conhecia a referida clínica e não havia autorizado a utilização de sua imagem. Com receio de perder nova oportunidade de trabalho, já em fase de negociação de exclusividade, Iara procura você, como advogado(a), buscando a proibição da utilização de sua imagem pela clínica. Diante do caso narrado, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Pode haver a proibição da utilização da imagem da atriz? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Para requerer a imediata cessação da divulgação da imagem, antes de eventual sentença de mérito, qual instrumento processual é cabível? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. Na hipótese, a atriz poderá requerer que a clínica de estética seja proibida de utilizar a sua imagem, sem a sua autorização, para fins comerciais, nos termos do Art. 20 do CC ou do Art. 5º, inciso X, da CRFB/88. B) A imediata cessação da divulgação da imagem poderá ser requerida por meio de tutela de urgência antecipada, em caráter antecedente ou incidental, nos termos do Art. 294, parágrafo único, do CPC.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim, a atriz poderá requerer que a clínica de estética seja proibida de utilizar a sua imagem, sem a sua autorização (0,50), nos termos do Art. 20 do CC ou do Art. 5º, inciso X, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Tutela de urgência antecipada (0,40), em caráter antecedente ou incidental (0,15), nos termos do Art. 294, parágrafo único, ou Art. 303, ambos do CPC (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.4,
+            0.5,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim, a atriz poderá requerer que a clínica de estética seja proibida de\nutilizar a sua imagem, sem a sua autorização (0,50), nos termos do Art. 20 do 0,00/0,50/0,60\nCC ou do Art. 5º, inciso X, da CRFB/88 (0,10).\nB. Tutela de urgência antecipada (0,40), em caráter antecedente ou incidental\n0,00/0,40/0,50/\n(0,15), nos termos do Art. 294, parágrafo único, ou Art. 303, ambos do\n0,55/0,65\nCPC (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Antônio, casado com Maria em regime de separação voluntária de bens, desde 2015, celebrou um contrato de seguro de vida em 2017, renovando-o anualmente. Antônio não indicou os beneficiários do seguro de vida quando da celebração do contrato, nem em suas consecutivas renovações.\n\nApós seu falecimento, que se deu na vigência do contrato de seguro de vida, sua esposa, Maria, individualmente, e seus dois filhos de um relacionamento anterior, Caetano e Caio, conjuntamente, requereram o pagamento integral do capital estipulado no seguro. Maria alega que, na condição de cônjuge, é, por direito, a beneficiária do seguro. Já os filhos alegam que seu pai, ao optar pelo regime da separação de bens, indicou a intenção de que Maria não participasse de seu patrimônio; sendo assim, ela não poderia ser beneficiária, restando tal condição a eles, filhos.\n\nDiante dessa situação, você, na qualidade de advogado(a) do corpo jurídico da seguradora é consultado sobre os itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O argumento apresentado por Caetano e Caio é válido? Justifique e indique a quem deve ser pago o capital estipulado no contrato.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Diante do impasse, qual medida processual a seguradora deve adotar para efetuar o pagamento do capital segurado de forma segura? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não, pois o capital estipulado no seguro de vida não integra o patrimônio de Antônio e a herança, nos termos do Art. 794 do CC, porque, na ausência de indicação de beneficiário, o capital estipulado será dividido entre o cônjuge e os herdeiros, segundo ordem de vocação hereditária, nos termos do Art. 792 do CC. B) A seguradora deverá ajuizar ação de consignação em pagamento, por haver dúvida sobre quem deve legitimamente receber o pagamento, nos termos do Art. 547 do CPC ou Art. 539 do CPC c/c Art. 335, IV, do CC.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não, pois o capital estipulado no seguro de vida não integra o patrimônio de 1 Antônio e a herança (0,25), nos termos do Art. 794 do CC (0,10).",
+          "pontuacao_maxima": 0.35,
+          "faixas_possiveis": [
+            0.0,
+            0.25,
+            0.35
+          ]
+        },
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "O capital estipulado será dividido entre o cônjuge e os herdeiros (0,20), nos 2 termos do Art. 792 do CC (0,10).",
+          "pontuacao_maxima": 0.3,
+          "faixas_possiveis": [
+            0.0,
+            0.2,
+            0.3
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "A seguradora deverá ajuizar ação de consignação em pagamento (0,30), por haver dúvida sobre quem deve legitimamente receber o pagamento (0,20), nos termos do Art. 547 do CPC ou Art. 539 do CPC c/c Art. 335, IV, do CC (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA . Não, pois o capital estipulado no seguro de vida não integra o patrimônio de\n1 0,00/0,25/0,35\nAntônio e a herança (0,25), nos termos do Art. 794 do CC (0,10).\nA . O capital estipulado será dividido entre o cônjuge e os herdeiros (0,20), nos\n2 0,00/0,20/0,30\ntermos do Art. 792 do CC (0,10).\nB. A seguradora deverá ajuizar ação de consignação em pagamento (0,30), por\n0,00/0,30/0,40/\nhaver dúvida sobre quem deve legitimamente receber o pagamento (0,20), nos\n0,50/0,60\ntermos do Art. 547 do CPC ou Art. 539 do CPC c/c Art. 335, IV, do CC (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

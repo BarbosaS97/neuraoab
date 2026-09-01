@@ -1,0 +1,357 @@
+{
+  "exam_number": 41,
+  "phase": 2,
+  "area": "Direito Tributário",
+  "source_provas_file": "41º_provas_Direito_Tributário.pdf",
+  "source_resposta_file": "41º_resposta_Direito_Tributário.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "José, aposentado pelo Regime Geral de Previdência Social (RGPS) desde 2020, foi diagnosticado como portador de neoplasia maligna (câncer), em janeiro de 2022, comprovada por diversos exames médicos inequívocos. Em janeiro de 2023, apresentou pedido administrativo de isenção do Imposto de Renda sobre proventos de aposentadoria, mas o órgão administrativo competente negou o pleito, sob a alegação de que tal doença lhe acometera após a sua aposentadoria, fato que lhe retiraria tal direito, deixando de analisar a documentação comprobatória da doença.\n\nSem recorrer da recusa administrativa, José ajuizou ação ordinária própria, juntando os mesmos documentos que antes foram apresentados administrativamente e, levantados os argumentos jurídicos próprios, pediu, também, a restituição do imposto pago desde a data do diagnóstico da doença.\n\nA sentença da Vara Única Federal da Subseção Judiciária do Município Alfa, Seção Judiciária do Estado Beta, foi improcedente, e baseou-se em três fundamentos: i) que havia falta de interesse de agir, pois só teria direito de ajuizar a ação após esgotar os pedidos na via administrativa; ii) que a doença lhe acometera após a sua aposentadoria, fato superveniente e que lhe retiraria o direito à isenção tributária; e iii) que, embora estivesse fartamente comprovada a doença, não teria apresentado laudo médico oficial de serviço público, não podendo aceitar-se apenas os exames e um laudo de médico particular.\n\nDiante desse cenário, como advogado(a) de José (que não é beneficiário de gratuidade de justiça), e sabendo que já se passaram sete dias úteis da intimação da sentença, elabore a peça processual cabível para impugnar tal decisão.",
+    "subitens": [],
+    "observacao": "a peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "O examinando deverá elaborar a peça de apelação, com o objetivo de ver reformada a sentença que julgou improcedente o pedido de José de reconhecimento do direito à isenção de IR por ser portador de neoplasia maligna (câncer), bem como a restituição do indébito tributário. Não caberiam embargos de declaração, uma vez que já se passaram sete dias úteis da intimação da sentença. O recurso deve ser interposto perante o juízo de 1º grau (Vara Única Federal da Subseção Judiciária do Município Alfa), mas as razões recursais devem ser endereçadas ao Desembargador Relator da Apelação no Tribunal Regional Federal da ... Região. É apelante José e apelada a União, ente instituidor e arrecadador do tributo. Quanto ao cabimento, deve-se indicar que contra essa sentença cabe apelação, nos termos do Art. 1.009 e do Art. 1.013, § 5º, ambos do CPC, sendo o prazo de apelação de 15 dias úteis (tempestividade), nos termos do Art. 1.003, § 5º, do CPC. Também se deve indicar o recolhimento do preparo recursal, uma vez que José não é beneficiário de gratuidade de justiça. Os fatos devem ser descritos sinteticamente nos termos colocados pelo enunciado. Nas razões recursais, deve-se indicar 1) preliminarmente, a presença do interesse de agir, pois o cidadão não necessita esgotar a via administrativa para demandar perante o Poder Judiciário, em razão da cláusula de inafastabilidade de jurisdição, cf. Art. 5º, inciso XXXV, da CRFB/88. No mesmo sentido: Tema 350 de repercussão geral do STF: “2. A concessão de benefícios previdenciários depende de requerimento do interessado, não se caracterizando ameaça ou lesão a direito antes de sua apreciação e indeferimento pelo INSS, ou se excedido o prazo legal para sua análise. É bem de ver, no entanto, que a exigência de prévio requerimento não se confunde com o exaurimento das vias administrativas.”\n\n2) O fato de a doença lhe acometer após a sua aposentadoria, fato superveniente, não lhe retira o direito à isenção tributária, cf. Súmula 627 do STJ: “O contribuinte faz jus à concessão ou à manutenção da isenção do Imposto de Renda, não se lhe exigindo a demonstração da contemporaneidade dos sintomas da doença nem da recidiva da enfermidade.” ou Art. 6º, inciso XIV, da Lei nº 7.713/1988: “Ficam isentos do imposto de renda os seguintes rendimentos percebidos por pessoas físicas: XIV – os proventos de aposentadoria ou reforma motivada por [...] neoplasia maligna [...], com base em conclusão da medicina especializada, mesmo que a doença tenha sido contraída depois da aposentadoria ou reforma.”\n\n3) É desnecessária a apresentação de laudo médico oficial para o reconhecimento judicial da isenção do Imposto de Renda, desde que o magistrado entenda suficientemente demonstrada a doença grave por outros meios de prova, cf. Súmula 598 do STJ. Nos pedidos, deve o examinado requerer: a) admissão do recurso; b) provimento do recurso para reforma integral da decisão recorrida; c) inversão do ônus de sucumbência. Deve ser requerido, também, o provimento do recurso por decisão monocrática do Relator, cf. o Art. 932, inciso V, alíneas a e b, do CPC, uma vez que a sentença viola as Súmulas 627 e 598 do STJ, bem como o Tema 350 de Repercussão Geral do STF. Por fim, o examinado deve respeitar as normas de fechamento da peça.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "Interposição da apelação por petição dirigida à Vara Única Federal da Subseção Judiciária do Município Alfa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Endereçamento das razões recursais ao Desembargador Relator da Apelação no Tribunal Regional Federal da ... Região (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Apelante: José (0,10); Apelada: União (0,10)",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Cabimento",
+        "descricao": "Cabimento: o recurso cabível para a reforma de sentença é a apelação (0,50), nos termos do Art. 1009, caput, ou Art. 994, inciso I, ambos do CPC (0,10).",
+        "pontuacao_maxima": 0.6,
+        "faixas_possiveis": [
+          0.0,
+          0.5,
+          0.6
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Cabimento",
+        "descricao": "Tempestividade: apelação interposta tempestivamente, a saber, dentro do prazo de 15 dias úteis (0,10), nos termos do Art. 1.003, § 5º, do CPC (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Cabimento",
+        "descricao": "Recolhimento do Preparo Recursal (0,20), cf. Art. 1.007, caput, do CPC (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Cabimento",
+        "descricao": "Breve descrição dos fatos (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fundamentação",
+        "descricao": "Presença do interesse de agir, pois o cidadão não necessita esgotar a via administrativa para demandar perante o Poder Judiciário (0,70), cf. Art. 5º, inciso XXXV, da CRFB/88 ou Tema 350 de Repercussão Geral do STF (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fundamentação",
+        "descricao": "O fato de a doença lhe acometer após a sua aposentadoria, fato superveniente, não lhe retira o direito à isenção tributária (0,70), cf. Súmula 627 do STJ ou Art. 6º, inciso XIV, da Lei 7.713/88 (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fundamentação",
+        "descricao": "É desnecessária a apresentação de laudo médico oficial para o reconhecimento judicial da isenção do Imposto de Renda, desde que o magistrado entenda suficientemente demonstrada a doença grave por outros meios de prova (0,70), cf. Súmula 598 do STJ (0,10).",
+        "pontuacao_maxima": 0.8,
+        "faixas_possiveis": [
+          0.0,
+          0.7,
+          0.8
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Pedidos",
+        "descricao": "Provimento do recurso para reforma integral da decisão recorrida, com reconhecimento da isenção (0,40) por decisão monocrática do próprio Relator, uma vez que a decisão recorrida é contrária às Súmulas do STJ e Repercussão Geral (0,20), cf. Art. 932, inciso V, alínea a, ou Art. 1.011, inciso I, CPC (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Pedidos",
+        "descricao": "Intimação do Apelado para, querendo, oferecer contrarrazões (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Inversão do ônus de sucumbência (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Fechamento",
+        "descricao": "Local, data, assinatura e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. Interposição da apelação por petição dirigida à Vara Única Federal da Subseção\n0,00/0,10\nJudiciária do Município Alfa (0,10).\n2. Endereçamento das razões recursais ao Desembargador Relator da Apelação no 0,00/0,10\nTribunal Regional Federal da ... Região (0,10).\n3. Apelante: José (0,10); Apelada: União (0,10) 0,00/0,10/0,20\nCabimento\n4. Cabimento: o recurso cabível para a reforma de sentença é a apelação (0,50),\n0,00/0,50/0,60\nnos termos do Art. 1009, caput, ou Art. 994, inciso I, ambos do CPC (0,10).\n5. Tempestividade: apelação interposta tempestivamente, a saber, dentro do\n0,00/0,10/0,20\nprazo de 15 dias úteis (0,10), nos termos do Art. 1.003, § 5º, do CPC (0,10).\n6. Recolhimento do Preparo Recursal (0,20), cf. Art. 1.007, caput, do CPC (0,10). 0,00/0,20/0,30\n7. Breve descrição dos fatos (0,10). 0,00/0,10\nFundamentação\n8. Presença do interesse de agir, pois o cidadão não necessita esgotar a via\nadministrativa para demandar perante o Poder Judiciário (0,70), cf. Art. 5º, inciso 0,00/0,70/0,80\nXXXV, da CRFB/88 ou Tema 350 de Repercussão Geral do STF (0,10).\n9. O fato de a doença lhe acometer após a sua aposentadoria, fato\nsuperveniente, não lhe retira o direito à isenção tributária (0,70), cf. Súmula 627 0,00/0,70/0,80\ndo STJ ou Art. 6º, inciso XIV, da Lei 7.713/88 (0,10).\n10. É desnecessária a apresentação de laudo médico oficial para o\nreconhecimento judicial da isenção do Imposto de Renda, desde que o\n0,00/0,70/0,80\nmagistrado entenda suficientemente demonstrada a doença grave por outros\nmeios de prova (0,70), cf. Súmula 598 do STJ (0,10).\nPedidos\n11. Provimento do recurso para reforma integral da decisão recorrida, com\nreconhecimento da isenção (0,40) por decisão monocrática do próprio Relator, 0,00/0,40/\numa vez que a decisão recorrida é contrária às Súmulas do STJ e Repercussão 0,50/0,60/0,70\nGeral (0,20), cf. Art. 932, inciso V, alínea a, ou Art. 1.011, inciso I, CPC (0,10).\n12. Intimação do Apelado para, querendo, oferecer contrarrazões (0,10). 0,00/0,10\n13. Inversão do ônus de sucumbência (0,10). 0,00/0,10\nFechamento\n14. Local, data, assinatura e OAB (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "Teobaldo, funcionário da sociedade empresária CBA Ltda., no período em que todos os funcionários trabalhavam em regime de home office, foi demitido durante uma reunião por videoconferência, diante de sua própria equipe.\n\nNa rescisão do contrato de trabalho, a sociedade empresária reconheceu como vexatória a forma de demissão e firmou um acordo extrajudicial indenizando Teobaldo em danos morais no valor de R$ 50.000,00. Recebeu também, além de outros valores devidos, o pagamento das férias vencidas e não gozadas, bem como das férias proporcionais, convertidas em pecúnia, inclusive os respectivos acréscimos de 1/3. Ao verificar o demonstrativo do pagamento das verbas decorrentes da rescisão do contrato de trabalho emitido pela sociedade empresária, percebeu que estava sendo descontado a título de Imposto sobre a Renda da Pessoa Física retido na fonte (IRRF), calculado sobre todo o valor recebido.\n\nDiante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "É correta a retenção de Imposto sobre a Renda da Pessoa Física na fonte sobre férias vencidas e não gozadas, férias proporcionais e respectivos acréscimos de 1/3? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Sobre os valores do acordo extrajudicial feito entre Teobaldo e a sociedade empresária para pagamento dos danos morais, incide Imposto sobre a Renda da Pessoa Física? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Não incide Imposto sobre a Renda da Pessoa Física em relação aos pagamentos das férias vencidas e não gozadas, bem como das férias proporcionais, convertidas em pecúnia, inclusive os respectivos acréscimos de 1/3 (um terço), dado o seu caráter indenizatório, conforme a Súmula 125 ou a Súmula 386, ambas do STJ. B) Não. Não incide Imposto sobre a Renda da Pessoa Física em relação às indenizações por danos morais, dado o seu caráter indenizatório, segundo a Súmula 498 do STJ.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. Não incide IRPF sobre pagamentos das férias vencidas e não gozadas, bem como das férias proporcionais, convertidas em pecúnia, inclusive os respectivos acréscimos de 1/3 (um terço) (0,55), conforme as Súmulas 125 ou 386, ambas do STJ (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. Não incide IRPF sobre indenizações por danos morais (0,50), segundo a Súmula do STJ (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. Não incide IRPF sobre pagamentos das férias vencidas e não gozadas, bem\ncomo das férias proporcionais, convertidas em pecúnia, inclusive os respectivos\n0,00/0,55/0,65\nacréscimos de 1/3 (um terço) (0,55), conforme as Súmulas 125 ou 386, ambas do\nSTJ (0,10).\nB. Não. Não incide IRPF sobre indenizações por danos morais (0,50), segundo a Súmula\n0,00/0,50/0,60\n498 do STJ (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Em agosto de 2023, o Governador do Estado Alfa sancionou uma lei ordinária estadual revogando, com efeitos imediatos, a isenção de IPVA que era concedida para todos os automóveis movidos a biocombustível e fixando a alíquota de ICMS sobre operações com combustíveis em 29,8%, patamar superior à alíquota de ICMS das operações em geral daquele Estado (que era de 17%). A Associação das Empresas de Transporte do Estado Alfa contratou você, como advogado(a) para orientá-la sobre essas mudanças tributárias. Diante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A revogação daquela isenção de IPVA pode produzir os efeitos imediatos conforme prevê expressamente a referida lei ordinária? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "É válida a fixação de alíquotas de ICMS nas operações com combustíveis em patamar superior à alíquota das operações em geral do Estado Alfa? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. O princípio da anterioridade tributária também se aplica à revogação de isenção, que produz o mesmo efeito de instituição ou majoração de tributo, cf. Art. 150, inciso III, alíneas b e c, da CRFB/88 ou Art. 104, inciso III, do CTN. B) Não é válida, pois os combustíveis, como bens essenciais, não podem ostentar alíquota de ICMS superior àquela prevista para as operações em geral tributadas com ICMS no referido Estado, conforme o Art. 18-A, parágrafo único, inciso I, do CTN ou o Art. 32-A, § 1º, inciso I, da LC 87/1996.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. O princípio da anterioridade tributária também se aplica à revogação de isenção, que produz o mesmo efeito de instituição ou majoração de tributo (0,55), cf. o Art. 150, inciso III, alíneas b e c, da CRFB/88 ou Art. 104, inciso III, do CTN (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. Os combustíveis, como bens essenciais, não podem ter alíquota de ICMS superior àquela prevista para as operações em geral tributadas com ICMS no referido Estado (0,50), segundo o Art. 18-A, parágrafo único, inciso I, do CTN, ou o Art. 32-A, §1º, inciso I, da LC 87/1996 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. O princípio da anterioridade tributária também se aplica à revogação de isenção,\nque produz o mesmo efeito de instituição ou majoração de tributo (0,55), cf. o Art. 150, 0,00/0,55/0,65\ninciso III, alíneas b e c, da CRFB/88 ou Art. 104, inciso III, do CTN (0,10).\nB. Não. Os combustíveis, como bens essenciais, não podem ter alíquota de ICMS\nsuperior àquela prevista para as operações em geral tributadas com ICMS no referido\n0,00/0,50/0,60\nEstado (0,50), segundo o Art. 18-A, parágrafo único, inciso I, do CTN, ou o Art. 32-A, §1º,\ninciso I, da LC 87/1996 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "Natureza 100 Ltda., prestadora de serviços de corte e poda de árvores, buscando diminuir seus custos tributários, resolveu alterar sua sede do Município Alfa para o Município Beta. Embora em ambos os municípios a alíquota de ISS para tais serviços fosse de 2,5%, uma lei recente aprovada pela Câmara de Vereadores do Município Beta, sancionada pelo Prefeito, concedeu redução da base de cálculo do ISS incidente sobre tais serviços, resultando em carga tributária menor, que equivaleria a uma alíquota de 2%. A mesma lei também afirmava que produziria seus efeitos imediatamente, não necessitando aguardar o exercício financeiro seguinte. Diante desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "O Município Beta poderia conceder tal redução da base de cálculo do ISS incidente sobre tais serviços? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Tratando-se de lei em matéria tributária, poderia a lei de redução de base de cálculo produzir seus efeitos imediatamente? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, o Município Beta poderia conceder tal redução da base de cálculo do ISS incidente sobre tais serviços, pois a redução da base de cálculo do ISS concedida não resultou em carga tributária menor que a decorrente da aplicação da alíquota mínima de 2%, segundo o Art. 8º-A, § 1º, da LC 116/2003. B) Sim, poderia a lei de redução da base de cálculo do ISS produzir seus efeitos imediatamente, uma vez que não se trata de lei tributária que institua ou majore tributos, conforme o Art. 150, inciso III, alíneas b e c, da CRFB/88 ou Art. 97, § 2º, do CTN.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim, pois a redução da base de cálculo do ISS concedida não resultou em carga tributária menor que a decorrente da aplicação da alíquota mínima de 2% (0,55), segundo o Art. 8º-A, § 1º, da LC 116/2003 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim, poderia a lei de redução da base de cálculo do ISS produzir seus efeitos imediatamente, uma vez que não se trata de lei tributária que institua ou majore tributos (0,50), conforme o Art. 150, inciso III, alíneas b e c, da CRFB/88 ou Art. 97, § 2º, do CTN (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim, pois a redução da base de cálculo do ISS concedida não resultou em carga\ntributária menor que a decorrente da aplicação da alíquota mínima de 2% (0,55), 0,00/0,55/0,65\nsegundo o Art. 8º-A, § 1º, da LC 116/2003 (0,10).\nB. Sim, poderia a lei de redução da base de cálculo do ISS produzir seus efeitos\nimediatamente, uma vez que não se trata de lei tributária que institua ou majore\n0,00/0,50/0,60\ntributos (0,50), conforme o Art. 150, inciso III, alíneas b e c, da CRFB/88 ou Art. 97, § 2º,\ndo CTN (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Para incrementar a arrecadação federal, a União instituiu por lei complementar, publicada em 1º de julho de 2023, uma nova contribuição para a Seguridade Social para garantir a manutenção dos benefícios da Previdência Social, dotada de não cumulatividade e com fato gerador e base de cálculo distintos dos demais tributos existentes na Constituição Federal de 1988. Foi estabelecido que a referida nova contribuição iria produzir efeitos a partir de 1º de novembro de 2023. A partir desse cenário, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Foi válida a instituição pela União da nova contribuição da Seguridade Social, além das que já são previstas na Constituição Federal de 1988, por norma infraconstitucional? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Poderia o novo tributo passar a viger e produzir efeitos na data prevista naquela lei? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "o(a) examinando(a) deve fundamentar as respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim, foi válida a instituição pela União de tal nova contribuição da Seguridade Social, além das que já são previstas na Constituição Federal de 1988, já que lei complementar poderá instituir outras fontes destinadas a garantir a manutenção ou expansão da Seguridade Social, cf. o Art. 195, § 4º da CRFB/88. B) Sim, poderia tal tributo novo já passar a viger e produzir efeitos na data prevista naquela lei, pois foi obedecida a anterioridade nonagesimal exigida pelo Art. 195, § 6º, da CRFB/88, in verbis: “As contribuições sociais de que trata este artigo só poderão ser exigidas após decorridos noventa dias da data da publicação da lei que as houver instituído ou modificado, não se lhes aplicando o disposto no Art. 150, inciso III, alínea b.”",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim, já que lei complementar poderá instituir outras contribuições destinadas a garantir a manutenção ou expansão da Seguridade Social (0,55), segundo o Art. 195, § 4º da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Sim, pois foi obedecida a anterioridade nonagesimal (0,50) exigida pelo Art. 195, § 6º, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim, já que lei complementar poderá instituir outras contribuições destinadas a\ngarantir a manutenção ou expansão da Seguridade Social (0,55), segundo o Art. 195, 0,00/0,55/0,65\n§ 4º da CRFB/88 (0,10).\nB. Sim, pois foi obedecida a anterioridade nonagesimal (0,50) exigida pelo Art. 195, § 6º,\n0,00/0,50/0,60\nda CRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

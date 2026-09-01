@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=33">
+<link rel="stylesheet" href="style.css?v=34">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
@@ -192,9 +192,10 @@
   </div>
   <div class="topbar-right">
     <button type="button" id="helpBtn" class="icon-btn" aria-label="Como funciona o NeuraOAB" title="Ajuda">?</button>
-    <a href="simulado2fase.html" class="phase-switch-btn">
-      <span class="phase-switch-num">2</span><span>2ª Fase</span>
-    </a>
+    <nav class="phase-tabs" aria-label="Fase do exame">
+      <span class="phase-tab active" aria-current="page">1ª Fase</span>
+      <a href="simulado2fase.html" class="phase-tab">2ª Fase</a>
+    </nav>
   </div>
 </header>
 

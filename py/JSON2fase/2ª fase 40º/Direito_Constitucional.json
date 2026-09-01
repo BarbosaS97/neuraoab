@@ -1,0 +1,369 @@
+{
+  "exam_number": 40,
+  "phase": 2,
+  "area": "Direito Constitucional",
+  "source_provas_file": "40º_provas_Direito_Constitucional.pdf",
+  "source_resposta_file": "40º_resposta_Direito_Constitucional.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "Em razão de notícias de irregularidades difundidas por diversos meios de comunicação social, que teriam sido praticadas nas Assembleias Legislativas de alguns estados da Federação, um grupo de deputados federais apresentou projeto de lei cujo fim precípuo era o de veicular o “Estatuto Básico do Deputado Estadual”. De acordo com os autores da proposta, a medida era essencial para a preservação da moralidade administrativa e para a sedimentação do princípio republicano.\n\nO projeto teve grande receptividade da opinião pública, dando origem, ao fim do processo legislativo regular, à Lei Federal nº XX. De acordo com o seu Art. 1º, os deputados estaduais poderiam ser responsabilizados civil e criminalmente sempre que votassem favoravelmente a aprovação de leis cuja inconstitucionalidade viesse a ser declarada em decisão definitiva do Supremo Tribunal Federal. O Art. 2º dispôs que, nas situações a que se refere o Art. 1º, a competência para o processo e o julgamento da ação penal a ser ajuizada em face do deputado estadual é do Supremo Tribunal Federal. Por fim, o Art. 3º veiculou um conjunto de regras que deveria ser inserido no Regimento Interno de cada Assembleia Legislativa, cujo objetivo era o de disciplinar o fluxo de informações entre os distintos órgãos da Casa Legislativa.\n\nTão logo foi publicada, a Lei Federal nº XX encontrou forte resistência das Assembleias Legislativas Estaduais. Afinal, para elas, os preceitos que a lei veiculava eram francamente contrários à ordem constitucional, além de comprometer, de modo imediato e irreversível, o exercício funcional dos deputados estaduais e a própria organização interna das Casas Legislativas, considerando a “ameaça” que representava para os primeiros e os embaraços administrativos que acarretaria para as últimas.\n\nEm razão desse quadro, a Mesa da Assembleia Legislativa do Estado Alfa, dias após a publicação, decidiu ajuizar a ação judicial cabível, de modo que a Lei Federal nº XX fosse submetida ao controle concentrado de constitucionalidade, permitindo o seu cotejo com a Constituição da República de 1988.\n\nConsiderando a narrativa acima, elabore a petição inicial da medida judicial cabível.",
+    "subitens": [],
+    "observacao": "A peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação.",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A peça adequada é a petição inicial de Ação Direta de Inconstitucionalidade (ADI).\n\nA petição deve ser endereçada ao Ministro Presidente do Supremo Tribunal Federal, órgão jurisdicional competente para processar e julgar a referida ação, conforme o Art. 102, inciso I, alínea a, da CRFB/88, c/c o Art. 1º da Lei nº 9.868/1999.\n\nA ação deve ser proposta pela Mesa da Assembleia Legislativa do Estado Alfa. A legitimidade da Mesa da Assembleia decorre do disposto no Art. 103, inciso IV, da CRFB/88 ou do Art. 2º, inciso IV, da Lei nº 9.868/1999. O requisito da pertinência temática decorre da constatação de que a Lei Federal nº XX produzirá efeitos diretos na Assembleia Legislativa do Estado Alfa e nas ações dos deputados estaduais que a integram.\n\nDeve ser indicado que a Lei Federal nº XX foi editada com o concurso da Câmara dos Deputados, do Senado Federal e do Presidente da República.\n\nDeve ser informado o teor da lei federal impugnada, especificamente o dos artigos 1º a 3º da Lei Federal nº XX.\n\nDeve ser justificado o cabimento da ADI, pois se está perante uma lei federal dissonante da Constituição da República, conforme previsto no Art. 102, inciso I, alínea a, da CRFB/88.\n\nO examinando deve informar e demonstrar, justificadamente, as normas da CRFB/88 violadas, quais sejam:\n\n(i) O Art. 1º da Lei Federal nº XX afronta a inviolabilidade civil e penal dos Deputados Estaduais, pelos seus votos, consagrada no Art. 53, caput, c/c. o Art. 27, § 1º, ambos da CRFB/88; (ii) O Art. 2º da Lei Federal nº XX amplia indevidamente o rol exaustivo de competências do Supremo Tribunal Federal, previsto no Art. 102 da CRFB/88 ou no Art. 53, § 1º, da CRFB/88; (iii) O Art. 3º da Lei Federal nº XX afronta a competência das Assembleias Legislativas para dispor sobre o seu regimento interno, conforme prevê o Art. 27, § 3º, da CRFB/88. Além dos fundamentos de mérito, deve ser indicado o embasamento da medida cautelar a ser pleiteada, já que, além da patente inconstitucionalidade, há risco na demora, pois os deputados estaduais poderão ser responsabilizados por seus votos e a organização interna das Assembleias Legislativa será afetada.\n\nDeve ser formulado pedido de medida cautelar, com fundamento no Art. 10 da Lei nº 9.868/1999, com o objetivo específico de sustar a eficácia da Lei Federal nº XX.\n\nO pedido principal deve ser a declaração de inconstitucionalidade da Lei Federal nº XX.\n\nPor fim, deve haver o fechamento da petição.",
+    "criterios": [
+      {
+        "rotulo": "1",
+        "categoria": "Endereçamento",
+        "descricao": "Ministro Presidente do Supremo Tribunal Federal (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "2",
+        "categoria": "Endereçamento",
+        "descricao": "Autor: a ação deve ser proposta pela Mesa da Assembleia Legislativa do Estado Alfa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "3",
+        "categoria": "Endereçamento",
+        "descricao": "Legitimidade ativa: decorre do disposto no Art. 103, inciso IV, da CRFB/88 ou no Art. 2º, inciso IV, da Lei nº 9.868/1999 (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "4",
+        "categoria": "Endereçamento",
+        "descricao": "O requisito da pertinência temática (0,10) decorre da constatação de que a Lei federal nº XX produzirá efeitos diretos na Assembleia Legislativa do Estado Alfa (0,10) e nos Deputados Estaduais que a integram (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "5",
+        "categoria": "Endereçamento",
+        "descricao": "Deve ser indicado que o ato normativo foi editado com o concurso da Câmara dos Deputados (0,10), do Senado Federal (0,10) e do Presidente da República (0,10).",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "6",
+        "categoria": "Endereçamento",
+        "descricao": "Ato normativo impugnado: Lei Federal nº XX (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": "7",
+        "categoria": "Endereçamento",
+        "descricao": "Cabimento da ADI: lei federal dissonante da Constituição da República (0,10), conforme previsto no Art. 102, inciso I, alínea a, da CRFB/88 ou Art. 27, § 1º, ou Art. 53, da CRFB/88; (0,10).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": "8",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "O Art. 1º da Lei Federal nº XX afronta a inviolabilidade civil e penal, dos deputados estaduais, pelos seus votos (0,60), consagrada no Art. 53, caput c/c o Art. 27, § 1º, ambos da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "9",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "O Art. 2º da Lei Federal nº XX amplia indevidamente o rol exaustivo de competências do Supremo Tribunal Federal (0,60), previsto no Art. 102 da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "10",
+        "categoria": "Fundamentos de mérito",
+        "descricao": "O Art. 3º afronta a competência das Assembleias Legislativas para dispor sobre o seu regimento interno (0,60), conforme prevê o Art. 27, § 3º, da CRFB/88 (0,10).",
+        "pontuacao_maxima": 0.7,
+        "faixas_possiveis": [
+          0.0,
+          0.6,
+          0.7
+        ]
+      },
+      {
+        "rotulo": "11",
+        "categoria": "Fundamentos da cautelar",
+        "descricao": "A patente inconstitucionalidade demonstrada nos fundamentos de mérito (0,40).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "12",
+        "categoria": "Fundamentos da cautelar",
+        "descricao": "O risco na demora (0,20), pois os Deputados Estaduais poderão ser responsabilizados por seus votos (0,10) e a organização interna das Assembleias Legislativa será afetada (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "13",
+        "categoria": "Pedidos",
+        "descricao": "Pedido cautelar com o objetivo específico de sustar a eficácia da Lei federal nº XX (0,30), embasado no Art. 10 da Lei nº 9.868/1999 (0,10).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "14",
+        "categoria": "Pedidos",
+        "descricao": "Pedido principal, visando à declaração de inconstitucionalidade da Lei Federal nº XX (0,40).",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.4
+        ]
+      },
+      {
+        "rotulo": "15",
+        "categoria": "Fechamento",
+        "descricao": "Local, data, advogado e OAB (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nEndereçamento\n1. Ministro Presidente do Supremo Tribunal Federal (0,10). 0,00/0,10\n2. Autor: a ação deve ser proposta pela Mesa da Assembleia Legislativa do Estado Alfa\n0,00/0,10\n(0,10).\n3. Legitimidade ativa: decorre do disposto no Art. 103, inciso IV, da CRFB/88 ou no Art. 2º,\n0,00/0,10\ninciso IV, da Lei nº 9.868/1999 (0,10).\n4. O requisito da pertinência temática (0,10) decorre da constatação de que a Lei federal nº\nXX produzirá efeitos diretos na Assembleia Legislativa do Estado Alfa (0,10) e nos Deputados 0,00/0,10/0,20/0,30\nEstaduais que a integram (0,10).\n5. Deve ser indicado que o ato normativo foi editado com o concurso da Câmara dos\n0,00/0,10/0,20/0,30\nDeputados (0,10), do Senado Federal (0,10) e do Presidente da República (0,10).\n6. Ato normativo impugnado: Lei Federal nº XX (0,10). 0,00/0,10\n7. Cabimento da ADI: lei federal dissonante da Constituição da República (0,10), conforme\nprevisto no Art. 102, inciso I, alínea a, da CRFB/88 ou Art. 27, § 1º, ou Art. 53, da CRFB/88; 0,00/0,10/0,20\n(0,10).\nFundamentos de mérito\n8. O Art. 1º da Lei Federal nº XX afronta a inviolabilidade civil e penal, dos deputados\nestaduais, pelos seus votos (0,60), consagrada no Art. 53, caput c/c o Art. 27, § 1º, ambos 0,00/0,60/0,70\nda CRFB/88 (0,10).\n9. O Art. 2º da Lei Federal nº XX amplia indevidamente o rol exaustivo de competências do\n0,00/0,60/0,70\nSupremo Tribunal Federal (0,60), previsto no Art. 102 da CRFB/88 (0,10).\n10. O Art. 3º afronta a competência das Assembleias Legislativas para dispor sobre o seu\n0,00/0,60/0,70\nregimento interno (0,60), conforme prevê o Art. 27, § 3º, da CRFB/88 (0,10).\nFundamentos da cautelar\n11. A patente inconstitucionalidade demonstrada nos fundamentos de mérito (0,40). 0,00/0,40\n12. O risco na demora (0,20), pois os Deputados Estaduais poderão ser responsabilizados\n0,00/0,10/0,20/\npor seus votos (0,10) e a organização interna das Assembleias Legislativa será afetada\n0,30/0,40\n(0,10).\nPedidos\n13. Pedido cautelar com o objetivo específico de sustar a eficácia da Lei federal nº XX (0,30),\n0,00/0,30/0,40\nembasado no Art. 10 da Lei nº 9.868/1999 (0,10).\n14. Pedido principal, visando à declaração de inconstitucionalidade da Lei Federal nº XX\n0,00/0,40\n(0,40).\nFechamento\n15. Local, data, advogado e OAB (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "A Lei Orçamentária do Município Beta foi regularmente aprovada, prevendo as dotações a serem direcionadas ao Poder Executivo e ao Poder Legislativo no curso do exercício financeiro. Apesar disso, o Prefeito Municipal, em razão de divergências momentâneas com a Câmara Municipal, decidiu repassar os duodécimos em montante inferior a 30% (trinta por cento) do valor correto. Dada a gravidade da situação, que comprometia a governança interna da Câmara Municipal, o Presidente da Câmara o procurou como advogado(a) e solicitou respostas para os questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A conduta do Prefeito Municipal configura algum ilícito previsto na ordem constitucional? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Qual é a ação constitucional passível de ser ajuizada pela Câmara Municipal visando compelir o Prefeito Municipal a regularizar os repasses? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Sim. A conduta do Prefeito Municipal configura o crime de responsabilidade, previsto no Art. 29-A, § 2º, inciso III, da CRFB/88. B) A ação constitucional é o mandado de segurança, conforme permite o Art. 5º, inciso LXIX, da CRFB/88, ou o Art. 1º, caput, da Lei nº 12.016/2009.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. A conduta do Prefeito Municipal configura o crime de responsabilidade (0,50), previsto no Art. 29-A, § 2º, inciso III, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "A ação constitucional é o mandado de segurança, (0,55) conforme permite o Art. 5º, inciso LXIX, da CRFB/88, ou o Art. 1º, caput, da Lei nº 12.016/2009. (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. A conduta do Prefeito Municipal configura o crime de responsabilidade (0,50), previsto\n0,00/0,50/0,60\nno Art. 29-A, § 2º, inciso III, da CRFB/88 (0,10).\nB. A ação constitucional é o mandado de segurança, (0,55) conforme permite o Art. 5º, inciso\n0,00/0,55/0,65\nLXIX, da CRFB/88, ou o Art. 1º, caput, da Lei nº 12.016/2009. (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "Três Estados de determinada região do país tinham grande destaque no plano nacional em razão da produção de determinado gênero alimentício, que crescia ano após ano, o que gerava um grande fluxo de receitas para a população desses entes federativos e, em particular, para os cofres públicos. Em comum acordo, cada um desses entes federativos editou uma lei ordinária de idêntico teor, na qual era reconhecido o fluxo forçado da denominada “unidade regional de valor”, no território de cada um deles, sendo o valor dessa unidade definido de comum acordo, mês a mês, conforme a produção agrícola do período. A emissão dessas unidades, por sua vez, seria realizada pelos três Estados, observados os limites de emissão fixados de comum acordo, devendo ser aceita não só nas transações comerciais em geral, como, também, no pagamento de tributos. Sobre a hipótese apresentada, responda aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Os três Estados possuem competência material para emitir a “unidade regional de valor”? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Os Estados possuem competência legislativa para regulamentar o curso forçado da “unidade regional de valor”? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. Compete à União emitir moeda, nos termos do Art. 21, inciso VII, da CRFB/88. B) Não. Compete privativamente à União legislar sobre sistema monetário, nos termos do Art. 22, inciso VI, ou compete ao Congresso Nacional legislar sobre o tema, nos termos do Art. 48, inciso II ou XIV da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. Compete à União emitir moeda, (0,55) nos termos do Art. 21, inciso VII, da CRFB/88. (0,10)",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. Compete privativamente à União legislar sobre sistema monetário (0,50), nos termos do Art. 22, inciso VI, da CRFB/88. (0,10) OU Compete ao Congresso Nacional legislar sobre o tema (0,50), nos termos do Art. 48, inciso II ou XIV da CRFB/88. (0,10)",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. Compete à União emitir moeda, (0,55) nos termos do Art. 21, inciso VII, da CRFB/88.\n0.00/0,55/0,65\n(0,10)\nB. Não. Compete privativamente à União legislar sobre sistema monetário (0,50), nos termos\ndo Art. 22, inciso VI, da CRFB/88. (0,10)\nOU\nCompete ao Congresso Nacional legislar sobre o tema (0,50), nos termos do Art. 48, inciso II 0,00/0,50/0,60\nou XIV da CRFB/88. (0,10)",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "O Município Alfa decidiu editar a Lei Municipal nº XX, em razão das reclamações apresentadas por pais de alunos da rede pública de ensino, que entendiam ser adequada a criação de uma regra uniformizando os planos de aula dos professores, mais especificamente em relação à forma como deveriam ensinar, na perspectiva das aulas expositivas, considerando a necessidade de o conteúdo da aula precisar ser ditado, e à preparação do material de apoio audiovisual com citações e opiniões alheias. Esse diploma normativo padronizou, de maneira detalhada, as referidas práticas, o que terminou por gerar grande insatisfação dos professores.\n\nSensível a essa situação, o Partido Político Y, que conta com representantes em ambas as casas do Congresso Nacional, procurou você, como advogado(a), e formulou os seguintes questionamentos.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Os planos de aula dos professores podem ser uniformizados na forma estabelecida pela Lei Municipal nº XX? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Qual é a ação constitucional passível de ser ajuizada para que a Lei Municipal nº XX seja submetida ao controle concentrado de constitucionalidade perante o Supremo Tribunal Federal, caso esteja em desacordo com a Constituição da República de 1988? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. A Lei Municipal nº XX afronta a liberdade de ensinar ou a pluralidade de ideias ou de concepções pedagógicas, assegurada no Art. 206, inciso II ou III, da CRFB/88. B) A arguição de descumprimento de preceito fundamental, nos termos do Art. 1º, parágrafo único, inciso I, da Lei nº 9.882/1999.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A Lei municipal nº XX afronta a liberdade de ensinar ou a pluralidade de ideias ou de concepções pedagógicas (0,55), assegurada no Art. 206, inciso II ou III, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "A arguição de descumprimento de preceito fundamental (0,50), nos termos do Art. 102, § 1º, da CRFB ou Art. 1º, parágrafo único, inciso I, da Lei nº 9.882/1999 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A Lei municipal nº XX afronta a liberdade de ensinar ou a pluralidade de ideias ou\nde concepções pedagógicas (0,55), assegurada no Art. 206, inciso II ou III, da CRFB/88 0,00/0,55/0,65\n(0,10).\nB. A arguição de descumprimento de preceito fundamental (0,50), nos termos do Art. 102,\n0,00/0,50/0,60\n§ 1º, da CRFB ou Art. 1º, parágrafo único, inciso I, da Lei nº 9.882/1999 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Com o alegado objetivo de conter o crescimento do déficit público, a Lei Federal X estabeleceu o realinhamento dos benefícios de assistência social oferecidos às populações urbanas e rurais, o que decorria de uma série de estudos que demonstravam a existência de acentuadas diferenças no custo de vida que vivenciavam. Por tal razão, decidiu-se que os benefícios devidos às populações rurais seriam percentualmente mais baixos que aqueles concedidos às populações urbanas, ainda apresentando variações conforme a região do país. Para fazer jus a tais benefícios, foi instituída contribuição para a seguridade social, assegurado que ela estaria limitada a 1% (um por cento) do benefício assistencial que o interessado viria a fruir. Com base na situação descrita, responda aos questionamentos a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Os benefícios de assistência social oferecidos às populações urbanas e rurais podem ser oferecidos em valores diferenciados? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "É correto o estabelecimento de percentual módico, fixado a título de contribuição, para que o interessado possa fruir o benefício assistencial? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A) Não. É objetivo da seguridade social que haja uniformidade e equivalência dos benefícios, nos termos do Art. 194, parágrafo único, inciso II, da CRFB/88. B) Não. A fruição do benefício de assistência social independe de contribuição, nos termos do Art. 203, caput, da CRFB/88.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. É objetivo da seguridade social que haja uniformidade e equivalência dos benefícios (0,55), nos termos do Art. 194, parágrafo único, inciso II, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A fruição do benefício de assistência social independe de contribuição (0,50), nos termos do Art. 203, caput, da CRFB/88 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. É objetivo da seguridade social que haja uniformidade e equivalência dos benefícios\n0,00/0,55/0,65\n(0,55), nos termos do Art. 194, parágrafo único, inciso II, da CRFB/88 (0,10).\nB. Não. A fruição do benefício de assistência social independe de contribuição (0,50), nos\n0,00/0,50/0,60\ntermos do Art. 203, caput, da CRFB/88 (0,10).",
+      "linhas_nao_reconhecidas": []
+    }
+  ],
+  "valor_total_prova": 10.0
+}

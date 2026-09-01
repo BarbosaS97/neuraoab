@@ -1,0 +1,413 @@
+{
+  "exam_number": 40,
+  "phase": 2,
+  "area": "Direito Empresarial",
+  "source_provas_file": "40º_provas_Direito_Empresarial.pdf",
+  "source_resposta_file": "40º_resposta_Direito_Empresarial.pdf",
+  "peca": {
+    "tipo": "peca",
+    "numero": null,
+    "enunciado": "O Banco de Belém S.A. ajuizou ação de execução por quantia certa em face de Bragança, Capanema, Sapucaia & Cia. Ltda. e seu sócio majoritário, Sr. Eliseu Capanema.\n\nEm março de 2022, a sociedade empresária e o sócio Eliseu Capanema emitiram em conjunto notas promissórias com vencimento em 30/03/2023. Na data do vencimento não houve pagamento, fato que levou o credor a promover a cobrança judicial sem protesto prévio. As cambiais não têm endosso nem aval.\n\nO juízo da 2ª Vara Cível da Comarca de Santarém, no Estado do Pará, determinou a penhora de bens dos devedores para garantir a execução, sendo que também foi penhorado o imóvel comercial de propriedade do Sr. Domingos Chaves, sócio minoritário da sociedade, que não contraiu a dívida e não exerce a administração.\n\nAo tomar ciência da penhora e ter acesso ao auto de penhora, cinco dias após sua efetivação, o Sr. Domingos Chaves encontrou a descrição do seu imóvel, situado na localidade de Alter do Chão, município de Santarém, no Pará.\n\nImediatamente, o Sr. Domingos Chaves procura você, como advogado(a), para que sejam tomadas as providências cabíveis para reverter a medida judicial.\n\nElabore a peça processual adequada.",
+    "subitens": [],
+    "observacao": "A peça deve abranger todos os fundamentos de Direito que possam ser utilizados para dar respaldo à pretensão. A simples menção ou transcrição do dispositivo legal não confere pontuação. PEÇA PRÁTICO-PROFISSIONAL – PÁGINA 2",
+    "valor_total": 5.0,
+    "gabarito_comentado": "A questão tem por finalidade verificar o conhecimento do examinando sobre o cabimento da ação de embargos de terceiro para defender o direito de propriedade do proprietário de imóvel comercial, apreendido por ato de constrição judicial (penhora), não sendo ele parte no processo. Portanto, com fundamento no Art. 674, caput, e § 1º, do CPC, a peça processual adequada é a petição inicial da Ação de Embargos de Terceiro. I- Endereçamento: A ação de embargos de terceiro é processada perante o juízo que ordenou a constrição, no caso, o Juízo da 2ª Vara Cível da Comarca de Santarém, no Estado do Pará (Art. 676, caput, do CPC). II- Qualificação das partes: autor/embargante Domingos Chaves, qualificação etc.; réu/embargado Banco de Belém S.A., representado por seu diretor etc. III- Tempestividade: os embargos são tempestivos por não ter havido ainda alienação (por iniciativa particular ou em hasta pública) ou adjudicação do bem, segundo o Art. 675, caput, do CPC. IV- Dos Fundamentos Jurídicos (a mera descrição dos fatos não pontua): a) Domingos Chaves não é devedor do embargado, por não ter subscrito a nota promissória; b) Domingos Chaves, não sendo parte no processo, sofreu constrição (penhora) em relação ao imóvel de sua propriedade; c) O embargante pode requerer o desfazimento do ato por meio de embargos de terceiro, de acordo com o Art. 674, caput, do CPC; d) A ação é proposta em face do Banco de Belém S.A., sujeito a quem o ato de constrição aproveita, na condição de credor e exequente, nos termos do Art. 677, § 4º, do CPC; e) Domingos Chaves é considerado como terceiro proprietário, com fundamento no Art. 674, § 1º, do CPC; V- Dos Pedidos: a) a procedência do pedido para excluir da penhora o imóvel (Art. 681 do CPC); b) a suspensão imediata dos atos executórios em relação ao imóvel (Art. 678, caput, do CPC); c) a citação do réu (embargado) para oferecer contestação no prazo de 15 dias (Art. 679 do CPC); d) a condenação do embargado em custas processuais e honorários advocatícios ou em ônus de sucumbência. VI- Das Provas: a) documento de propriedade do imóvel ou certidão do Registro de Imóveis;\n\nb) contrato social;\n\nc) auto de penhora;\n\nd) protesto pela apresentação de outros documentos (Art. 677 do CPC);\n\ne) rol de testemunhas (Art. 677 do CPC).\n\nVII- Menção ao valor da causa.\n\nVIII- Fechamento, indicando o local/Município (ou XXX), data (ou XXX), Advogado(a) (ou XXX), OAB (ou XXX).",
+    "criterios": [
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "I. Endereçamento\nAo Juízo da 2ª Vara Cível da Comarca de Santarém/PA (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "II. Qualificação das partes:\nEmbargante: Domingos Chaves, qualificação, etc.; embargado: Banco de Belém S.A. (0,10),",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.1,
+          0.2
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "representado por seu diretor (0,10).\nIII. Tempestividade:\nOs embargos são tempestivos por não ter havido ainda alienação (por iniciativa particular ou em hasta",
+        "pontuacao_maxima": 0.4,
+        "faixas_possiveis": [
+          0.0,
+          0.3,
+          0.4
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "pública) ou adjudicação do bem (0,30), de acordo com o Art. 675, caput, do CPC (0,10).\nIV. Fundamentos jurídicos\na) Domingos Chaves não é devedor do embargado, por não ter subscrito a nota promissória (0,35).",
+        "pontuacao_maxima": 0.35,
+        "faixas_possiveis": [
+          0.0,
+          0.35
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "b) Domingos Chaves, não sendo parte no processo, sofreu constrição (penhora) em relação ao imóvel",
+        "pontuacao_maxima": 0.35,
+        "faixas_possiveis": [
+          0.0,
+          0.35
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "de sua propriedade (0,35);\nc) O embargante pode requerer o desfazimento do ato por meio de embargos de terceiro (0,40), de",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "acordo com o Art. 674, caput, do CPC (0,10).\nd) A ação é proposta em face do Banco de Belém S/A, sujeito a quem o ato de constrição aproveita,",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "na condição de credor e exequente (0,40), nos termos do Art. 677, § 4º, do CPC (0,10).\ne) Domingos Chaves é considerada como terceiro proprietário (0,40), com fundamento no Art. 674, §",
+        "pontuacao_maxima": 0.5,
+        "faixas_possiveis": [
+          0.0,
+          0.4,
+          0.5
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "1º, do CPC (0,10).\nV. Dos Pedidos\na) distribuição por dependência ao processo n. _____ (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "b) a procedência do pedido para excluir da penhora o imóvel do embargante (0,20), de acordo com o",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "Art. 681 do CPC (0,10).\nc) a suspensão imediata dos atos executórios em relação ao imóvel (0,20), de acordo com o Art. 678,",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "caput, do CPC (0,10).\nd) citação do réu (embargado) para oferecer contestação no prazo de 15 dias (0,20), com base no Art.",
+        "pontuacao_maxima": 0.3,
+        "faixas_possiveis": [
+          0.0,
+          0.2,
+          0.3
+        ]
+      },
+      {
+        "rotulo": "679",
+        "categoria": null,
+        "descricao": "do CPC (0,10).\ne) Condenação do embargado ao pagamento das custas e honorários advocatícios OU ônus de",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "sucumbência (0,10).\nVI. Das Provas\na) documento de propriedade do imóvel ou certidão do Registro de Imóveis (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "b) auto de penhora (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "c) protesto pela apresentação de outros documentos (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "d) rol de testemunhas (0,20).",
+        "pontuacao_maxima": 0.2,
+        "faixas_possiveis": [
+          0.0,
+          0.2
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "VII. Menção ao valor da causa (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      },
+      {
+        "rotulo": null,
+        "categoria": null,
+        "descricao": "VIII. Fechamento\nLocal (ou XXX), data (ou XXX), Advogado(a) (ou XXX) e OAB (ou XXX) (0,10).",
+        "pontuacao_maxima": 0.1,
+        "faixas_possiveis": [
+          0.0,
+          0.1
+        ]
+      }
+    ],
+    "criterios_texto_bruto": "ITEM PONTUAÇÃO\nI. Endereçamento\nAo Juízo da 2ª Vara Cível da Comarca de Santarém/PA (0,10). 0,00/0,10\nII. Qualificação das partes:\nEmbargante: Domingos Chaves, qualificação, etc.; embargado: Banco de Belém S.A. (0,10), 0,00/0,10/0,20\nrepresentado por seu diretor (0,10).\nIII. Tempestividade:\nOs embargos são tempestivos por não ter havido ainda alienação (por iniciativa particular ou em hasta 0,00/0,30/0,40\npública) ou adjudicação do bem (0,30), de acordo com o Art. 675, caput, do CPC (0,10).\nIV. Fundamentos jurídicos\na) Domingos Chaves não é devedor do embargado, por não ter subscrito a nota promissória (0,35). 0,00/0,35\nb) Domingos Chaves, não sendo parte no processo, sofreu constrição (penhora) em relação ao imóvel 0,00/0,35\nde sua propriedade (0,35);\nc) O embargante pode requerer o desfazimento do ato por meio de embargos de terceiro (0,40), de 0,00/0,40/0,50\nacordo com o Art. 674, caput, do CPC (0,10).\nd) A ação é proposta em face do Banco de Belém S/A, sujeito a quem o ato de constrição aproveita, 0,00/0,40/0,50\nna condição de credor e exequente (0,40), nos termos do Art. 677, § 4º, do CPC (0,10).\ne) Domingos Chaves é considerada como terceiro proprietário (0,40), com fundamento no Art. 674, § 0,00/0,40/0,50\n1º, do CPC (0,10).\nV. Dos Pedidos\na) distribuição por dependência ao processo n. _____ (0,10). 0,00/0,10\nb) a procedência do pedido para excluir da penhora o imóvel do embargante (0,20), de acordo com o 0,00/0,20/0,30\nArt. 681 do CPC (0,10).\nc) a suspensão imediata dos atos executórios em relação ao imóvel (0,20), de acordo com o Art. 678, 0,00/0,20/0,30\ncaput, do CPC (0,10).\nd) citação do réu (embargado) para oferecer contestação no prazo de 15 dias (0,20), com base no Art. 0,00/0,20/0,30\n679 do CPC (0,10).\ne) Condenação do embargado ao pagamento das custas e honorários advocatícios OU ônus de 0,00/0,10\nsucumbência (0,10).\nVI. Das Provas\na) documento de propriedade do imóvel ou certidão do Registro de Imóveis (0,20). 0,00/0,20\nb) auto de penhora (0,20). 0,00/0,20\nc) protesto pela apresentação de outros documentos (0,20). 0,00/0,20\nd) rol de testemunhas (0,20). 0,00/0,20\nVII. Menção ao valor da causa (0,10). 0,00/0,10\nVIII. Fechamento\nLocal (ou XXX), data (ou XXX), Advogado(a) (ou XXX) e OAB (ou XXX) (0,10). 0,00/0,10",
+    "linhas_nao_reconhecidas": []
+  },
+  "questoes": [
+    {
+      "tipo": "questao",
+      "numero": 1,
+      "enunciado": "A sociedade empresária Baraúna Participações S.A., companhia constituída por prazo indeterminado, tem entre seus vários empreendimentos, a exploração de um centro de terapia e tratamentos de saúde denominado Spa da Longevidade, elemento da identificação da empresa na categoria de título de estabelecimento, situado na cidade de Campos do Jordão, no Estado de São Paulo. É elemento característico do título de estabelecimento a forma figurativa da palavra longevidade, em formato de coração.\n\nNa cidade de Itabaiana, no estado de Sergipe, há uma casa geriátrica de propriedade da sociedade Maruim & Riachuelo Ltda., destinada à internação de idosos em situação de vulnerabilidade, cujo estabelecimento tem como título Lar da Longevidade, que também adota a forma figurativa de coração para a palavra longevidade. Há semelhança do elemento figurativo do título do estabelecimento situado em Campos do Jordão com o de Itabaiana.\n\nCom base nessas informações e nas condições previstas na lei especial para o registro de sinais distintivos como marca, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "A sociedade Baraúna Participações S.A. poderá registrar como marca figurativa Spa da Longevidade, sendo certo que há novidade deste sinal distintivo como marca? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "O registro de marca tem a validade vinculada ao prazo de duração da sociedade que pretende obter sua titularidade, no caso, um prazo indeterminado? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão tem por objetivo verificar o conhecimento do examinando das proibições ao registro de marca, em especial a semelhança com o título de estabelecimento de terceiro. É fundamental que o examinando seja capaz de identificar, pelas informações do enunciado, a disparidade das atividades de cada sociedade empresária (tratamentos e spa versus casa de geriatria de idosos em situação de vulnerabilidade), além da considerável distância entre os estabelecimentos. Por não estar compreendido na proibição do Art. 124, inciso V, da Lei nº 9.279/1996, o sinal distintivo visualmente perceptível é suscetível de registro como marca.\n\nA) Sim. É possível o registro da marca Spa da Longevidade. Embora haja semelhança no elemento figurativo longevidade, não há possibilidade de confusão ou associação do título de estabelecimento com a marca, em razão da localização de cada estabelecimento e do ramo de atividade distintos. Não incide, portanto, a proibição prevista no Art. 124, inciso V, da Lei nº 9.279/1996. B) Não. O registro de marca vigora pelo prazo de 10 (dez) anos, prorrogável por períodos iguais e sucessivos, de acordo com o Art. 133, caput, da Lei nº 9.279/1996.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Sim. Embora haja semelhança no elemento figurativo longevidade, não há possibilidade de confusão ou associação do título de estabelecimento com a marca, em razão da localização de cada estabelecimento e do ramo de atividade distintos (0,55) . Não incide, portanto, a proibição prevista no Art. 124, inciso V, da Lei nº 9.279/1996 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. O registro de marca vigora pelo prazo de 10 (dez) anos, prorrogável por períodos iguais e sucessivos prorrogável por períodos iguais e sucessivos (0,50), de acordo com o Art. 133, caput, da Lei nº 9.279/1996 (0,10)",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Sim. Embora haja semelhança no elemento figurativo longevidade, não há possibilidade de confusão ou\nassociação do título de estabelecimento com a marca, em razão da localização de cada estabelecimento e\n0,00/0,55/0,65\ndo ramo de atividade distintos (0,55). Não incide, portanto, a proibição prevista no Art. 124, inciso V, da\nLei nº 9.279/1996 (0,10).\nB. Não. O registro de marca vigora pelo prazo de 10 (dez) anos, prorrogável por períodos iguais e sucessivos\n0,00/0,50/0,60\n(0,50), de acordo com o Art. 133, caput, da Lei nº 9.279/1996 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 2,
+      "enunciado": "No curso da execução por título extrajudicial ajuizada pelo Banco Três Arroios S.A. em face de Educandário Canoas Ltda. foi requerida a instauração do incidente de desconsideração da personalidade jurídica em razão da insuficiência dos bens penhorados para saldar a integralidade do débito. O exequente motivou o pedido na existência de um expressivo patrimônio dos sócios controladores que sempre integrou o patrimônio pessoal deles, mas alguns desses bens eram utilizados a título gratuito pelo Educandário, o que, para o credor, caracterizou confusão patrimonial. Ademais, a sociedade ampliou seu objeto social durante a vigência do financiamento, expandindo a finalidade original da empresa. Tal fato, na visão do credor, representou desvio de finalidade da pessoa jurídica. Considerados os fatos narrados, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Procede o argumento apresentado de que a utilização de certos bens a título gratuito do controlador pela pessoa jurídica configura confusão patrimonial? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "A expansão do objeto da pessoa jurídica caracterizou desvio de finalidade? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão tem por finalidade verificar o conhecimento do examinando trazido no Código Civil após o advento da Lei nº 13.874/2019 para a configuração do abuso da personalidade jurídica por confusão patrimonial entre a pessoa jurídica e o membro e por desvio da finalidade original. Com isso, se a separação é formal e não existe confusão, de fato, entre o patrimônio da pessoa jurídica e o do sócio controlador, não há fundamento para a desconsideração. No mesmo sentido, a mera ampliação do objeto social não configura desvio de finalidade. Assim sendo, são improcedentes os argumentos apontados pelo credor para o deferimento do incidente de desconsideração instaurado.\n\nA) Não. A utilização por parte da pessoa jurídica de bens pertencentes ao patrimônio do sócio controlador, não caracteriza confusão patrimonial, pois há separação entre os patrimônios, não incidindo o disposto no Art. 50, § 2º, do Código Civil.\n\nB) Não. A mera ampliação do objeto social da pessoa jurídica não caracteriza desvio de finalidade, de acordo com o Art. 50, § 5º, do Código Civil.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "Não. A utilização por parte da pessoa jurídica de bens pertencentes ao patrimônio do sócio controlador, não caracteriza confusão patrimonial, pois há separação entre os patrimônios (0,55), não incidindo o disposto no Art. 50, § 2º, do Código Civil (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "Não. A mera ampliação do objeto social da pessoa jurídica não caracteriza desvio de finalidade (0,50), de acordo com o Art. 50, § 5º, do Código Civil (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A utilização por parte da pessoa jurídica de bens pertencentes ao patrimônio do sócio\ncontrolador, não caracteriza confusão patrimonial, pois há separação entre os patrimônios (0,55), não 0,00/0,55/0,65\nincidindo o disposto no Art. 50, § 2º, do Código Civil (0,10).\nB. Não. A mera ampliação do objeto social da pessoa jurídica não caracteriza desvio de finalidade (0,50),\n0,00/0,50/0,60\nde acordo com o Art. 50, § 5º, do Código Civil (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 3,
+      "enunciado": "O administrador judicial da massa falida de Gráfica Araucária S.A. recebeu interpelação da sociedade empresária Santa Rebouças sobre o cumprimento de contrato de compra e venda com reserva de domínio, celebrado por esta com a companhia antes da decretação da falência. A Gráfica Araucária S.A. já havia pagado sete das vinte prestações e está na posse direta do bem. Considerando-se que não há comitê de credores na falência e a condição de vendedora da sociedade Santa Rebouças, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Como será classificado o crédito caso o administrador judicial decida pelo cumprimento do contrato? Justifique.",
+          "valor": 0.65
+        },
+        {
+          "letra": "B",
+          "enunciado": "Qual deve ser a atuação do administrador judicial perante a vendedora se ele decidir não dar execução ao contrato? Justifique.",
+          "valor": 0.6
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão tem por finalidade verificar se o examinando conhece a regra da lei de falências sobre o cumprimento e o não cumprimento de contratos bilaterais pelo administrador judicial com foco no contrato de venda com reserva de domínio. Caso o administrador judicial dê cumprimento ao contrato, o crédito será extraconcursal, pois se trata de uma obrigação que a massa assume perante a vendedora após a decretação da falência. Na hipótese de não ser cumprido o contrato, o administrador judicial deverá restituir o bem comprado pelo devedor com reserva de domínio do vendedor, exigindo a devolução dos valores pagos.\n\nA) O crédito da vendedora Santa Rebouças será classificado como extraconcursal, pois a confirmação da execução do contrato é uma obrigação assumida pela massa resultante de ato jurídico válido praticado após a decretação da falência, de acordo com o Art. 84, inciso I-E, da Lei nº 11.101/2005.\n\nB) O administrador judicial deverá restituir à vendedora o bem adquirido pelo devedor com reserva de domínio, exigindo a devolução dos valores pagos, de acordo com o Art. 119, inciso IV, da Lei nº 11.101/2005.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": null,
+          "descricao": "O crédito da vendedora Santa Rebouças será classificado como extraconcursal, pois a confirmação da execução do contrato é uma obrigação assumida pela massa resultante de ato jurídico válido praticado após a decretação da falência (0,55), de acordo com o Art. 84, inciso I-E, da Lei nº 11.101/2005 (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": null,
+          "descricao": "O administrador judicial deverá restituir à vendedora o bem adquirido pelo devedor com reserva de domínio, exigindo a devolução dos valores pagos (0,50), de acordo com o Art. 119, inciso IV, da Lei nº 11.101/2005 (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. O crédito da vendedora Santa Rebouças será classificado como extraconcursal, pois a\nconfirmação da execução do contrato é uma obrigação assumida pela massa resultante de ato\n0,00/0,55/0,65\njurídico válido praticado após a decretação da falência (0,55), de acordo com o Art. 84, inciso I-E, da\nLei nº 11.101/2005 (0,10).\nB. O administrador judicial deverá restituir à vendedora o bem adquirido pelo devedor com reserva\nde domínio, exigindo a devolução dos valores pagos (0,50), de acordo com o Art. 119, inciso IV, da 0,00/0,50/0,60\nLei nº 11.101/2005 (0,10).",
+      "linhas_nao_reconhecidas": []
+    },
+    {
+      "tipo": "questao",
+      "numero": 4,
+      "enunciado": "Arandu pretende iniciar o exercício de sociedade empresária em nome próprio e realizar previamente sua inscrição como empresário na Junta Comercial. Para ele, é obrigatória a escrituração do livro Diário. Nesse sentido, responda aos itens a seguir.",
+      "subitens": [
+        {
+          "letra": "A",
+          "enunciado": "Arandu poderá, ele próprio, realizar a escrituração do livro Diário? Justifique.",
+          "valor": 0.6
+        },
+        {
+          "letra": "B",
+          "enunciado": "Arandu poderá autenticar o livro Diário na Junta Comercial? Justifique.",
+          "valor": 0.65
+        }
+      ],
+      "observacao": "O(A) examinando(a) deve fundamentar suas respostas. A mera citação do dispositivo legal não confere pontuação.",
+      "valor_total": 1.25,
+      "gabarito_comentado": "A questão tem por objetivo aferir se o examinando reconhece que a escrituração do livro Diário deve ficar sob responsabilidade de contabilista e não do próprio empresário e que, somente após a inscrição do empresário, é que podem ser autenticados os instrumentos de escrituração. A) Não. A escrituração do livro Diário ficará sob a responsabilidade de contabilista legalmente habilitado, salvo se nenhum houver na localidade, de acordo com o Art. 1.182 do Código Civil. B) Sim. Desde que esteja previamente inscrito como empresário, Arandu poderá autenticar o livro Diário, de acordo com o Art. 1.181, parágrafo único, do Código Civil.",
+      "criterios": [
+        {
+          "rotulo": "A",
+          "categoria": "Gabarito Comentado",
+          "descricao": "Não. A escrituração do livro Diário ficará sob a responsabilidade de contabilista legalmente habilitado, salvo se nenhum houver na localidade (0,50), segundo o Art. 1.182 do Código Civil (0,10).",
+          "pontuacao_maxima": 0.6,
+          "faixas_possiveis": [
+            0.0,
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "rotulo": "B",
+          "categoria": "Gabarito Comentado",
+          "descricao": "Sim. Arandu poderá autenticar o livro Diário, se estiver previamente inscrito como empresário. (0,55), com fundamento legal no A rt. 1.181, parágrafo único, do Código Civil (0,10).",
+          "pontuacao_maxima": 0.65,
+          "faixas_possiveis": [
+            0.0,
+            0.55,
+            0.65
+          ]
+        }
+      ],
+      "criterios_texto_bruto": "ITEM PONTUAÇÃO\nA. Não. A escrituração do livro Diário ficará sob a responsabilidade de contabilista legalmente\n0,00/0,50/0,60\nhabilitado, salvo se nenhum houver na localidade (0,50), segundo o Art. 1.182 do Código Civil (0,10).\nB. Sim. Arandu poderá autenticar o livro Diário, se estiver previamente inscrito como empresário.\n0,00/0,55/0,65\n(0,55), com fundamento legal no Art. 1.181, parágrafo único, do Código Civil (0,10).",
+      "linhas_nao_reconhecidas": [
+        "A questão tem por objetivo aferir se o examinando reconhece que a escrituração do livro Diário deve ficar sob responsabilidade",
+        "de contabilista e não do próprio empresário e que, somente após a inscrição do empresário, é que podem ser autenticados os",
+        "instrumentos de escrituração.",
+        "A) Não. A escrituração do livro Diário ficará sob a responsabilidade de contabilista legalmente habilitado, salvo se nenhum",
+        "houver na localidade, de acordo com o Art. 1.182 do Código Civil.",
+        "B) Sim. Desde que esteja previamente inscrito como empresário, Arandu poderá autenticar o livro Diário, de acordo com o Art.",
+        "1.181, parágrafo único, do Código Civil."
+      ]
+    }
+  ],
+  "valor_total_prova": 10.0
+}
