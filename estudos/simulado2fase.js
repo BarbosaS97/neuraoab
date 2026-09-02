@@ -86,6 +86,8 @@ const els = {
   dashGreeting: document.getElementById("dashGreeting"),
   streakPill: document.getElementById("streakPill"),
   streakPillText: document.getElementById("streakPillText"),
+  dashboardError: document.getElementById("dashboardError"),
+  dashboardRetryBtn: document.getElementById("dashboardRetryBtn"),
 
   heroFormState: document.getElementById("heroFormState"),
   heroContinueState: document.getElementById("heroContinueState"),
@@ -1315,6 +1317,13 @@ async function openResultadoHistorico(t) {
 
 // ---------------------------------------------------------------- Dashboard
 
+// Erro de CARREGAMENTO (RPC ausente/indisponível) precisa ficar visualmente
+// diferente de "aluno ainda sem dados" — sem essa distinção, uma função que
+// falhou (ex.: schema_fase2_dashboard*.sql não rodado no projeto Supabase)
+// mostra os MESMOS estados vazios de um aluno de verdade sem histórico, e
+// ninguém percebe que é um erro sem abrir o console.
+let dashboardLoadError = false;
+
 async function loadMinhasTentativas() {
   try {
     const { data, error } = await client.rpc("oab2_minhas_tentativas", { p_aluno_id: ALUNO_ID });
@@ -1323,6 +1332,7 @@ async function loadMinhasTentativas() {
   } catch (err) {
     console.error("Erro ao carregar histórico de simulados:", err.message);
     minhasTentativas = [];
+    dashboardLoadError = true;
   }
 }
 
@@ -1341,6 +1351,7 @@ async function loadMinhasRespostas() {
   } catch (err) {
     console.error("Erro ao carregar desempenho por tipo de item:", err.message);
     minhasRespostas = [];
+    dashboardLoadError = true;
   }
 }
 
@@ -1742,6 +1753,7 @@ els.howToggle.addEventListener("click", () => {
 });
 
 async function refreshDashboard() {
+  dashboardLoadError = false;
   await Promise.all([loadMinhasTentativas(), loadMinhasRespostas()]);
   const tipoStats = computeTipoStats();
   renderStreakPill();
@@ -1750,7 +1762,17 @@ async function refreshDashboard() {
   renderPerfPanel(tipoStats);
   renderHistoryPanel();
   renderRecommendation();
+  els.dashboardError.hidden = !dashboardLoadError;
 }
+
+els.dashboardRetryBtn.addEventListener("click", () => {
+  els.dashboardRetryBtn.disabled = true;
+  els.dashboardRetryBtn.textContent = "Atualizando...";
+  refreshDashboard().finally(() => {
+    els.dashboardRetryBtn.disabled = false;
+    els.dashboardRetryBtn.textContent = "Tentar de novo";
+  });
+});
 
 // ---------------------------------------------------------------- Init
 

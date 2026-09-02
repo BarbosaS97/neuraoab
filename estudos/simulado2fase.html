@@ -23,7 +23,7 @@
   })();
 </script>
 <link rel="stylesheet" href="style.css?v=27">
-<link rel="stylesheet" href="simulado2fase.css?v=14">
+<link rel="stylesheet" href="simulado2fase.css?v=15">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
 <body class="sim2-body">
@@ -112,6 +112,14 @@
         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17a2.5 2.5 0 0 0 2.5-2.5c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7.5 7.5 0 1 1-15 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
         <span id="streakPillText">—</span>
       </span>
+    </div>
+
+    <!-- So' aparece se alguma das chamadas do dashboard falhar de verdade
+         (ex.: RPC ainda nao criada no Supabase) — distinto dos estados
+         vazios normais, que sao pra aluno sem historico nenhum ainda. -->
+    <div class="sim2-err-box sim2-dashboard-error" id="dashboardError" hidden>
+      Não foi possível carregar seus dados de desempenho agora.
+      <button type="button" id="dashboardRetryBtn" class="sim2-link-btn">Tentar de novo</button>
     </div>
 
     <!-- Tier 1: "o que eu faço agora" — um unico card, sempre no mesmo
@@ -386,6 +394,6 @@
 
 </main>
 
-<script src="simulado2fase.js?v=9"></script>
+<script src="simulado2fase.js?v=10"></script>
 </body>
 </html>

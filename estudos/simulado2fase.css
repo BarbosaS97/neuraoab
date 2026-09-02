@@ -898,6 +898,9 @@
 
 .sim2-dash-head h1 { margin: 0; font-size: 23px; }
 
+.sim2-dashboard-error { margin-bottom: 18px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.sim2-dashboard-error .sim2-link-btn { margin: 0; color: inherit; }
+
 .sim2-streak-pill {
   display: inline-flex;
   align-items: center;

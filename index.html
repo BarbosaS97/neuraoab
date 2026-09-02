@@ -348,6 +348,72 @@
 
   .login-error.show { display: block; }
 
+  .login-error.info {
+    background: rgba(46, 160, 67, 0.12);
+    border-color: rgba(46, 160, 67, 0.35);
+    color: var(--success);
+  }
+
+  .google-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    margin-bottom: 14px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .google-btn:hover:not(:disabled) { border-color: var(--primary); transform: translateY(-1px); }
+  .google-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .login-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 14px;
+    color: var(--text-dim);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .login-divider::before, .login-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .login-toggle-mode {
+    margin: 14px 0 0;
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--text-dim);
+  }
+
+  .login-toggle-link {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 12.5px;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 0 0 0 4px;
+  }
+
+  .login-toggle-link:hover { text-decoration: underline; }
+
   /* ------------------------------------------------------------- Navbar */
 
   .navbar {
@@ -1739,7 +1805,7 @@
     </nav>
     <div class="navbar-actions">
       <button type="button" class="btn-ghost" id="loginBtn">Entrar</button>
-      <button type="button" class="btn-gradient-sm" data-open-login>Começar agora</button>
+      <button type="button" class="btn-gradient-sm" data-open-login="signup">Começar agora</button>
       <button type="button" class="theme-toggle" id="themeToggleBtn" aria-label="Alternar entre tema claro e escuro">
         <svg class="icon-moon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
@@ -1754,7 +1820,7 @@
     <a href="#como-funciona">Como funciona</a>
     <a href="#perguntas">Perguntas</a>
     <button type="button" class="btn-ghost" data-open-login>Entrar</button>
-    <button type="button" class="btn-gradient-sm" data-open-login>Começar agora</button>
+    <button type="button" class="btn-gradient-sm" data-open-login="signup">Começar agora</button>
     <button type="button" class="theme-toggle" id="themeToggleBtnMobile" aria-label="Alternar entre tema claro e escuro">
       <svg class="icon-moon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
       <svg class="icon-sun" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
@@ -1770,7 +1836,7 @@
       <h1 class="hero-title">Estude melhor.<br>Chegue <span class="grad-text">mais preparado.</span></h1>
       <p class="hero-sub">Questões oficiais, IA para explicar seus erros e simulados com correção segundo os critérios da FGV.</p>
       <div class="hero-ctas">
-        <button type="button" class="btn-gradient-lg" data-open-login>
+        <button type="button" class="btn-gradient-lg" data-open-login="signup">
           COMEÇAR AGORA
           <svg class="cta-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
             <line x1="4" y1="12" x2="20" y2="12"></line>
@@ -2555,7 +2621,7 @@
             <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
           </span>
           <strong>Aluno</strong>
-          <span>Convidado por um professor</span>
+          <span>Entrar ou criar conta grátis</span>
         </button>
         <button type="button" class="role-choice" data-role="professor">
           <span class="role-choice-icon">
@@ -2573,7 +2639,34 @@
         Voltar
       </button>
       <h2 class="login-modal-title" id="credsTitle">Entrar</h2>
-      <p class="login-modal-sub">Use o e-mail e senha da sua conta</p>
+      <p class="login-modal-sub" id="credsSub">Use o e-mail e senha da sua conta</p>
+
+      <!-- Só aparece pro papel "aluno" (professor não tem auto-cadastro,
+           só entra por convite) — ver updateCredsFormMode no <script>
+           abaixo, que mostra/esconde isto de acordo com o papel escolhido. -->
+      <button type="button" class="google-btn" id="googleBtn" hidden>
+        <svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true">
+          <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.71v2.26h2.92c1.71-1.57 2.68-3.88 2.68-6.61z"/>
+          <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.19l-2.92-2.26c-.81.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.71H.96v2.33A9 9 0 0 0 9 18z"/>
+          <path fill="#FBBC05" d="M3.97 10.7A5.4 5.4 0 0 1 3.68 9c0-.59.1-1.17.29-1.7V4.97H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.03l3.01-2.33z"/>
+          <path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.59-2.59C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.97l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/>
+        </svg>
+        Entrar com Google
+      </button>
+      <div class="login-divider" id="loginDivider" hidden><span>ou</span></div>
+
+      <!-- Só aparece no modo "cadastro" (aluno avulso) — ver
+           updateCredsFormMode. No modo "entrar" o nome já está salvo em
+           profiles (convite ou cadastro anterior), não precisa pedir de novo. -->
+      <div class="login-field" id="nomeField" hidden>
+        <label for="signupNome">Nome completo</label>
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </span>
+          <input type="text" id="signupNome" autocomplete="name">
+        </div>
+      </div>
       <div class="login-field">
         <label for="loginEmail">E-mail</label>
         <div class="input-wrap">
@@ -2604,6 +2697,12 @@
       <div class="turnstile-wrap" id="turnstileContainer"></div>
       <button type="submit" class="login-submit" id="loginSubmitBtn" disabled>Entrar</button>
       <p class="login-error" id="loginErrorMsg"></p>
+      <!-- Alterna entrar/cadastrar — só visível pro papel "aluno" (ver
+           updateCredsFormMode). Professor nunca vê isto: conta só existe
+           por convite (portal-mestre/js/admin.js), sem auto-cadastro. -->
+      <p class="login-toggle-mode" id="toggleModeWrap" hidden>
+        <span id="toggleModeText">Não tem conta?</span><button type="button" class="login-toggle-link" id="toggleModeBtn">Criar conta grátis</button>
+      </p>
     </form>
   </div>
 </div>
@@ -2638,13 +2737,27 @@
   const roleStep = document.getElementById("roleStep");
   const credsForm = document.getElementById("credsForm");
   const credsTitle = document.getElementById("credsTitle");
+  const credsSub = document.getElementById("credsSub");
+  const googleBtn = document.getElementById("googleBtn");
+  const loginDivider = document.getElementById("loginDivider");
+  const nomeField = document.getElementById("nomeField");
+  const signupNome = document.getElementById("signupNome");
   const loginBackBtn = document.getElementById("loginBackBtn");
   const loginEmail = document.getElementById("loginEmail");
   const loginPassword = document.getElementById("loginPassword");
   const togglePasswordBtn = document.getElementById("togglePasswordBtn");
   const loginSubmitBtn = document.getElementById("loginSubmitBtn");
   const loginErrorMsg = document.getElementById("loginErrorMsg");
+  const toggleModeWrap = document.getElementById("toggleModeWrap");
+  const toggleModeText = document.getElementById("toggleModeText");
+  const toggleModeBtn = document.getElementById("toggleModeBtn");
   const turnstileContainer = document.getElementById("turnstileContainer");
+
+  // "aluno" é o único papel com auto-cadastro (professor só entra por
+  // convite, ver portal-mestre/js/admin.js) — currentMode só importa
+  // quando currentRole === "aluno" (ver updateCredsFormMode abaixo).
+  let currentRole = null;
+  let currentMode = "login"; // "login" | "signup"
 
   const EYE_ICON = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
   const EYE_OFF_ICON = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
@@ -2733,9 +2846,30 @@
   function openLogin() {
     showRoleStep();
     credsForm.reset();
+    currentRole = null;
+    currentMode = "login";
     togglePasswordBtn.innerHTML = EYE_ICON;
     loginPassword.type = "password";
     loginOverlay.hidden = false;
+  }
+
+  // Atalho pros CTAs "Começar agora" (data-open-login="signup") — pula
+  // direto pro formulário de cadastro do aluno, sem passar pela escolha de
+  // papel: quem clica ali já está dizendo que quer criar conta, e professor
+  // não tem auto-cadastro mesmo (só convite), então não faz sentido
+  // perguntar "você é aluno ou professor?" nesse fluxo.
+  function openSignup() {
+    credsForm.reset();
+    currentRole = "aluno";
+    currentMode = "signup";
+    roleStep.hidden = true;
+    credsForm.hidden = false;
+    updateCredsFormMode();
+    togglePasswordBtn.innerHTML = EYE_ICON;
+    loginPassword.type = "password";
+    loginOverlay.hidden = false;
+    loginEmail.focus();
+    renderTurnstile();
   }
 
   function closeLogin() {
@@ -2750,7 +2884,8 @@
   document.querySelectorAll("[data-open-login]").forEach((el) => {
     el.addEventListener("click", () => {
       closeMobileNav();
-      openLogin();
+      if (el.dataset.openLogin === "signup") openSignup();
+      else openLogin();
     });
   });
   loginModalClose.addEventListener("click", closeLogin);
@@ -2761,22 +2896,114 @@
     if (ev.key === "Escape" && !loginOverlay.hidden) closeLogin();
   });
 
+  // Mostra/esconde cada pedaço do formulário de credenciais de acordo com
+  // currentRole/currentMode — chamada toda vez que um dos dois muda (escolha
+  // de papel, toggle entrar/cadastrar, ou os atalhos openLogin/openSignup).
+  function updateCredsFormMode() {
+    const isAluno = currentRole === "aluno";
+    const isSignup = isAluno && currentMode === "signup";
+
+    if (isSignup) {
+      credsTitle.textContent = "Criar conta grátis";
+      credsSub.textContent = "Teste o plano grátis, sem precisar de convite";
+    } else {
+      credsTitle.textContent = currentRole === "professor" ? "Entrar como professor" : "Entrar como aluno";
+      credsSub.textContent = "Use o e-mail e senha da sua conta";
+    }
+
+    // Login com Google só faz sentido pro aluno (professor não tem
+    // auto-cadastro, então também não tem OAuth — a conta dele é sempre
+    // e-mail/senha definida ao aceitar o convite).
+    googleBtn.hidden = !isAluno;
+    loginDivider.hidden = !isAluno;
+
+    nomeField.hidden = !isSignup;
+    signupNome.required = isSignup;
+
+    toggleModeWrap.hidden = !isAluno;
+    toggleModeText.textContent = isSignup ? "Já tem conta?" : "Não tem conta?";
+    toggleModeBtn.textContent = isSignup ? "Entrar" : "Criar conta grátis";
+
+    loginSubmitBtn.textContent = isSignup ? "Criar conta" : "Entrar";
+  }
+
   document.querySelectorAll(".role-choice").forEach((btn) => {
     btn.addEventListener("click", () => {
-      credsTitle.textContent = btn.dataset.role === "professor" ? "Entrar como professor" : "Entrar como aluno";
+      currentRole = btn.dataset.role;
+      currentMode = "login";
       roleStep.hidden = true;
       credsForm.hidden = false;
+      updateCredsFormMode();
       loginEmail.focus();
       renderTurnstile();
     });
   });
 
+  toggleModeBtn.addEventListener("click", () => {
+    currentMode = currentMode === "signup" ? "login" : "signup";
+    loginErrorMsg.className = "login-error";
+    updateCredsFormMode();
+    // Token antigo era pro outro modo (entrar/cadastrar) — mais seguro
+    // pedir um desafio novo do que reaproveitar um token que o visitante
+    // resolveu num contexto diferente.
+    renderTurnstile();
+  });
+
   loginBackBtn.addEventListener("click", showRoleStep);
 
-  function showLoginError(text) {
+  function showLoginError(text, kind) {
     loginErrorMsg.textContent = text;
-    loginErrorMsg.className = "login-error show";
+    loginErrorMsg.className = kind === "info" ? "login-error show info" : "login-error show";
   }
+
+  // -------------------------------------------------------- Login com Google
+  //
+  // Só existe pro papel "aluno" (ver updateCredsFormMode/googleBtn.hidden) —
+  // sem Turnstile aqui: o próprio Google já faz a checagem anti-bot da conta
+  // que está logando, diferente do formulário de e-mail/senha (que fala
+  // direto com o GoTrue, sem esse tipo de proteção embutida).
+  //
+  // "Allow new users to sign up" PRECISA estar ligado no painel do Supabase
+  // (Authentication > Providers > Email) pra um aluno NOVO conseguir entrar
+  // pela primeira vez com o Google — ver roteiro em
+  // supabase/schema_aluno_avulso.sql. Se o perfil ainda não existir quando a
+  // pessoa voltar do Google, o gatilho handle_new_auth_user (mesmo arquivo)
+  // já criou como aluno avulso antes do redirect voltar pra cá.
+  //
+  // sessionStorage (não uma variável comum) porque a página inteira recarrega
+  // no meio do fluxo (redirect pro Google e de volta) — uma variável em
+  // memória se perderia.
+  const OAUTH_PENDING_KEY = "neuraoab-oauth-pending";
+
+  googleBtn.addEventListener("click", async () => {
+    googleBtn.disabled = true;
+    sessionStorage.setItem(OAUTH_PENDING_KEY, "1");
+    const { error } = await client.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: window.location.origin + window.location.pathname },
+    });
+    if (error) {
+      sessionStorage.removeItem(OAUTH_PENDING_KEY);
+      googleBtn.disabled = false;
+      showLoginError("Não foi possível iniciar o login com Google. Tente novamente.");
+    }
+    // Sucesso: o navegador já está sendo redirecionado pro Google, nada mais
+    // a fazer aqui — o retorno é tratado pelo listener de onAuthStateChange
+    // logo abaixo, quando a página recarregar de volta.
+  });
+
+  // Volta do redirect do Google com sessão pronta (supabase-js já processa o
+  // token da URL sozinho, "detectSessionInUrl" é o padrão). Só redireciona
+  // se essa sessão veio de um login com Google iniciado por ESTA aba
+  // (OAUTH_PENDING_KEY) — sem essa checagem, qualquer visitante que já
+  // estivesse logado (professor incluso, voltando à landing por outro
+  // motivo) seria empurrado pra fora da página só por visitar.
+  client.auth.onAuthStateChange((_event, session) => {
+    if (session?.user && sessionStorage.getItem(OAUTH_PENDING_KEY) === "1") {
+      sessionStorage.removeItem(OAUTH_PENDING_KEY);
+      window.location.replace(ROLE_DESTINATIONS.aluno);
+    }
+  });
 
   // Mesmo padrão de checkIsAdmin/checkIsProfessor (portal-mestre/js/auth.js,
   // professor-portal/js/auth.js) — devolve o nome do role de verdade em vez
@@ -2792,10 +3019,21 @@
     ev.preventDefault();
     loginErrorMsg.className = "login-error";
 
+    const isSignup = currentRole === "aluno" && currentMode === "signup";
+    const nome = signupNome.value.trim();
     const email = loginEmail.value.trim();
     const password = loginPassword.value;
+
+    if (isSignup && !nome) {
+      showLoginError("Preencha seu nome completo.");
+      return;
+    }
     if (!email || !password) {
       showLoginError("Preencha e-mail e senha.");
+      return;
+    }
+    if (isSignup && password.length < 8) {
+      showLoginError("A senha precisa ter pelo menos 8 caracteres.");
       return;
     }
     if (!turnstileToken) {
@@ -2820,8 +3058,46 @@
     });
 
     if (verifyError || !verify?.success) {
-      loginSubmitBtn.textContent = "Entrar";
+      loginSubmitBtn.textContent = isSignup ? "Criar conta" : "Entrar";
       showLoginError("Não foi possível confirmar a verificação de segurança. Tente novamente.");
+      return;
+    }
+
+    if (isSignup) {
+      loginSubmitBtn.textContent = "Criando conta...";
+
+      // Cria a própria conta (aluno avulso, sem convite de professor). O
+      // gatilho handle_new_auth_user (ver supabase/schema_aluno_avulso.sql)
+      // é quem grava o perfil em "profiles" — role "aluno", is_avulso=true,
+      // plano='gratuito', professor_id/turma_id NULL — assim que esta linha
+      // é criada em auth.users; não fazemos esse INSERT aqui.
+      const { data: signUpData, error: signUpError } = await client.auth.signUp({
+        email,
+        password,
+        options: { data: { nome } },
+      });
+
+      if (signUpError) {
+        loginSubmitBtn.textContent = "Criar conta";
+        const jaCadastrado = /already registered|already exists|user already/i.test(signUpError.message || "");
+        showLoginError(
+          jaCadastrado
+            ? "Este e-mail já tem conta. Tente entrar em vez de cadastrar."
+            : signUpError.message || "Não foi possível criar a conta.",
+        );
+        return;
+      }
+
+      if (!signUpData?.session) {
+        // Projeto com "Confirm email" ligado (ver roteiro em
+        // schema_aluno_avulso.sql) — conta criada, mas sem sessão até o
+        // aluno confirmar o e-mail; nada mais a fazer nesta aba agora.
+        loginSubmitBtn.textContent = "Criar conta";
+        showLoginError("Conta criada! Enviamos um e-mail de confirmação — clique no link pra ativar seu acesso.", "info");
+        return;
+      }
+
+      window.location.href = ROLE_DESTINATIONS.aluno;
       return;
     }
 
