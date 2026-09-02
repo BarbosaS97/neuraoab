@@ -198,10 +198,14 @@ function isChatLimitReached() {
 function appendUpgradeCta() {
   const wrap = document.createElement("div");
   wrap.className = "chat-upgrade-cta";
-  const link = document.createElement("a");
-  link.href = "../index.html#planos";
-  link.textContent = "Ver planos e fazer upgrade →";
-  wrap.appendChild(link);
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.textContent = "Ver planos e fazer upgrade →";
+  // openPlansModal e' declarada em estudos.js (mesmo escopo global, ver
+  // comentario no topo deste arquivo) — abre o modal de planos direto no
+  // dashboard, sem sair da tela de estudo.
+  btn.addEventListener("click", () => openPlansModal());
+  wrap.appendChild(btn);
   chatMessagesEl.appendChild(wrap);
   if (stickToBottom) chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
 }

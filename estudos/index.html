@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=39">
+<link rel="stylesheet" href="style.css?v=40">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -162,7 +162,7 @@
         <label>Plano atual</label>
         <div class="profile-plan-row">
           <span class="profile-plan-badge" id="profilePlanBadge">Grátis</span>
-          <a href="../index.html#planos" class="profile-plan-upgrade" id="profilePlanUpgrade">Fazer upgrade</a>
+          <button type="button" class="profile-plan-upgrade" id="profilePlanUpgrade">Fazer upgrade</button>
         </div>
         <p class="profile-plan-usage" id="profilePlanUsage"></p>
       </div>
@@ -187,6 +187,69 @@
 
     <div class="help-modal-footer">
       <button type="button" id="profileSaveBtn" class="btn-primary">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal "Planos" — versão B2C (Grátis/Básico/Pro) do bloco de preços da
+     landing page (ver index.html, seção #planos), sem a parte de cursinhos
+     (não faz sentido dentro do dashboard do aluno). Aberto por qualquer
+     "Fazer upgrade" do app (Meu Perfil, chat, cadeados de limite) via
+     openPlansModal() — ver estudos.js. -->
+<div class="help-overlay" id="plansOverlay" hidden>
+  <div class="help-modal plans-modal" role="dialog" aria-modal="true" aria-labelledby="plansTitle">
+    <div class="help-modal-header">
+      <h2 id="plansTitle">Planos</h2>
+      <button type="button" id="plansCloseBtn" class="help-modal-close" aria-label="Fechar">&times;</button>
+    </div>
+
+    <div class="help-modal-body plans-modal-body">
+      <div class="plans-grid">
+        <article class="plan-card" data-plano="gratuito">
+          <span class="plan-card-current" hidden>Seu plano atual</span>
+          <h3>Grátis</h3>
+          <div class="plan-card-price"><span class="amount">R$ 0</span></div>
+          <p class="plan-card-annual">Sem cartão, sem cobrança</p>
+          <ul class="plan-card-features">
+            <li class="yes">10 questões por dia</li>
+            <li class="yes">1 simulado por mês (1ª fase)</li>
+            <li class="yes">5 mensagens com o Dr. Laureano por mês</li>
+            <li class="yes">Estatísticas básicas (sem análise por IA)</li>
+            <li class="no">Sem simulado da 2ª fase</li>
+          </ul>
+        </article>
+
+        <article class="plan-card" data-plano="basico">
+          <span class="plan-card-current" hidden>Seu plano atual</span>
+          <h3>Básico</h3>
+          <div class="plan-card-price"><span class="amount">R$ 11,99</span><span class="unit">/mês</span></div>
+          <p class="plan-card-annual">ou <b>R$ 119,90/ano</b> (2 meses grátis)</p>
+          <ul class="plan-card-features">
+            <li class="yes">Questões ilimitadas</li>
+            <li class="yes">Chat ilimitado com o Dr. Laureano</li>
+            <li class="yes">Estatísticas completas com análise por IA</li>
+            <li class="yes">Simulados ilimitados (1ª fase)</li>
+            <li class="no">Sem simulado da 2ª fase</li>
+          </ul>
+          <a class="btn-primary plan-card-cta" href="mailto:contato@neuraoab.com.br?subject=Quero%20assinar%20o%20plano%20B%C3%A1sico">Assinar Básico</a>
+        </article>
+
+        <article class="plan-card featured" data-plano="pro">
+          <span class="plan-card-badge">Mais completo</span>
+          <span class="plan-card-current" hidden>Seu plano atual</span>
+          <h3>Pro</h3>
+          <div class="plan-card-price"><span class="amount">R$ 19,99</span><span class="unit">/mês</span></div>
+          <p class="plan-card-annual">ou <b>R$ 199,90/ano</b> (2 meses grátis)</p>
+          <ul class="plan-card-features">
+            <li class="yes">Tudo do plano Básico</li>
+            <li class="yes">Simulado da 2ª fase (peça + discursivas)</li>
+            <li class="yes">Correção automática pelos critérios da FGV</li>
+            <li class="yes">Relatórios detalhados de desempenho</li>
+          </ul>
+          <a class="btn-primary plan-card-cta" href="mailto:contato@neuraoab.com.br?subject=Quero%20assinar%20o%20plano%20Pro">Assinar Pro</a>
+        </article>
+      </div>
+      <p class="plans-modal-note">Pagamento por assinatura chega em breve — por enquanto, clique em "Assinar" pra falar com a gente e ativarmos seu upgrade manualmente.</p>
     </div>
   </div>
 </div>
@@ -453,7 +516,7 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=29"></script>
-<script src="dr-laureano.js?v=10"></script>
+<script src="estudos.js?v=30"></script>
+<script src="dr-laureano.js?v=11"></script>
 </body>
 </html>

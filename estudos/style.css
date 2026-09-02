@@ -1557,10 +1557,23 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   color: var(--text);
   line-height: 1.55;
 }
-.stats-ai-locked a {
+.stats-ai-locked .upgrade-link {
   color: var(--logo-orange);
   font-weight: 700;
   text-decoration: underline;
+}
+
+/* Botão de "Fazer upgrade" embutido em texto (ver UPGRADE_LINK_HTML em
+   estudos.js) — reset de <button> pra parecer um link inline comum; a cor
+   vem de cada contexto onde aparece (.feedback.locked, .stats-ai-locked). */
+.upgrade-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 /* Aba "2ª Fase" travada pro plano grátis (ver applyPhaseTabLock em
@@ -1792,10 +1805,8 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   color: var(--logo-orange);
   flex-wrap: wrap;
 }
-.feedback.locked a {
+.feedback.locked .upgrade-link {
   color: inherit;
-  font-weight: 700;
-  text-decoration: underline;
 }
 
 .nav-buttons {
@@ -2184,7 +2195,7 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
    cadeados de plano (ver .feedback.locked em estudos.js). */
 .chat-upgrade-cta { align-self: flex-start; }
 
-.chat-upgrade-cta a {
+.chat-upgrade-cta button {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -2194,12 +2205,13 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   border-radius: 10px;
   padding: 9px 14px;
   font-size: 12.5px;
+  font-family: inherit;
   font-weight: 700;
-  text-decoration: none;
+  cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
 }
 
-.chat-upgrade-cta a:hover { background: var(--logo-orange); color: #fff; }
+.chat-upgrade-cta button:hover { background: var(--logo-orange); color: #fff; }
 
 .chat-input-area {
   border-top: 1px solid var(--border);
@@ -2516,6 +2528,9 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 .profile-plan-badge.pro { background: var(--logo-orange-dim); color: var(--logo-orange); }
 
 .profile-plan-upgrade {
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
   font-size: 12px;
   font-weight: 700;
   color: var(--logo-orange);
@@ -2533,4 +2548,122 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   margin: 8px 0 0;
   font-size: 11.5px;
   color: var(--text-dim);
+}
+
+/* ------------------------------------------------------- Modal de planos */
+/* Mesma base .help-overlay/.help-modal (abrir/fechar/animar), só que bem
+   mais largo — pedido explícito de "bloco grande" — pra caber as 3 colunas
+   de plano lado a lado, como na landing page (ver #planos em index.html),
+   mas sem o bloco de cursinhos (não cabe aqui). */
+
+.plans-modal { max-width: 960px; }
+
+.plans-modal-body { padding: 24px; }
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.plan-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 20px;
+}
+
+.plan-card.featured {
+  border-color: var(--primary);
+  box-shadow: 0 20px 45px -25px var(--primary-glow);
+}
+
+.plan-card-badge {
+  align-self: flex-start;
+  background: var(--primary);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+.plan-card-current {
+  align-self: flex-start;
+  background: var(--success-dim);
+  color: var(--success);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+.plan-card h3 { margin: 0 0 2px; font-size: 15.5px; font-weight: 800; }
+
+.plan-card-price { display: flex; align-items: baseline; gap: 4px; margin-top: 8px; }
+.plan-card-price .amount { font-size: 24px; font-weight: 800; letter-spacing: -0.01em; }
+.plan-card-price .unit { font-size: 12px; color: var(--text-dim); font-weight: 600; }
+
+.plan-card-annual { margin: 3px 0 16px; font-size: 11px; color: var(--text-dim); }
+.plan-card-annual b { color: var(--success); font-weight: 700; }
+
+.plan-card-features {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-grow: 1;
+}
+
+.plan-card-features li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.plan-card-features li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.plan-card-features li.yes::before { background: var(--success-dim); box-shadow: inset 0 0 0 1.5px var(--success); }
+.plan-card-features li.no { color: var(--text-dim); }
+.plan-card-features li.no::before { background: var(--border); }
+
+.plan-card-cta {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  margin-top: auto;
+}
+
+.plans-modal-note {
+  margin: 18px 0 0;
+  font-size: 11.5px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .plans-grid { grid-template-columns: 1fr; }
 }

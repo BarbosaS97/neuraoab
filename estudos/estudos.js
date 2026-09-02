@@ -28,6 +28,8 @@ const sessionLogoutBtn = document.getElementById("sessionLogoutBtn");
 
 const profileOverlay = document.getElementById("profileOverlay");
 const profileCloseBtn = document.getElementById("profileCloseBtn");
+const plansOverlay = document.getElementById("plansOverlay");
+const plansCloseBtn = document.getElementById("plansCloseBtn");
 const profilePlanBadge = document.getElementById("profilePlanBadge");
 const profilePlanUpgrade = document.getElementById("profilePlanUpgrade");
 const profilePlanUsage = document.getElementById("profilePlanUsage");
@@ -128,9 +130,43 @@ helpOverlay.addEventListener("click", (ev) => {
   if (ev.target === helpOverlay) closeHelpModal();
 });
 
+// ------------------------------------------------------------------ Planos
+//
+// Modal "bloco grande" com os planos B2C (Grátis/Básico/Pro) direto no
+// dashboard — aberto por qualquer "Fazer upgrade" do app (Meu Perfil, chat,
+// cadeados de limite) em vez de navegar pra fora pra landing page. HTML em
+// estudos/index.html (#plansOverlay) — os 3 cards já têm o preço/benefícios
+// escritos direto lá (mesma copy de index.html, seção #planos); aqui só
+// destacamos em qual card o aluno já está (renderPlansModalCurrent).
+function renderPlansModalCurrent() {
+  const plano = planStatus?.plano || "gratuito";
+  document.querySelectorAll(".plan-card").forEach((card) => {
+    const isCurrent = card.dataset.plano === plano;
+    card.querySelector(".plan-card-current").hidden = !isCurrent;
+    const cta = card.querySelector(".plan-card-cta");
+    if (cta) cta.hidden = isCurrent;
+  });
+}
+
+function openPlansModal() {
+  renderPlansModalCurrent();
+  plansOverlay.hidden = false;
+  loadPlanStatus().then(renderPlansModalCurrent);
+}
+
+function closePlansModal() {
+  plansOverlay.hidden = true;
+}
+
+plansCloseBtn.addEventListener("click", closePlansModal);
+plansOverlay.addEventListener("click", (ev) => {
+  if (ev.target === plansOverlay) closePlansModal();
+});
+
 document.addEventListener("keydown", (ev) => {
   if (ev.key !== "Escape") return;
-  if (!helpOverlay.hidden) closeHelpModal();
+  if (!plansOverlay.hidden) closePlansModal();
+  else if (!helpOverlay.hidden) closeHelpModal();
   else if (!profileOverlay.hidden) closeProfileModal();
   else if (!menuPanel.hidden) closeMenu();
 });
@@ -551,7 +587,8 @@ async function startSimulado(key) {
   if (planStatus) planStatus.simulados_mes_atual = quota.used_count ?? planStatus.simulados_mes_atual;
 
   if (!quota.allowed) {
-    alert(`Você já usou o simulado gratuito deste mês (limite: ${quota.max_count}). Faça upgrade em Planos, na página inicial, pra praticar sem limite.`);
+    alert(`Você já usou o simulado gratuito deste mês (limite: ${quota.max_count}). Veja os planos pra praticar sem limite.`);
+    openPlansModal();
     return;
   }
 
@@ -1195,19 +1232,29 @@ async function loadPlanStatus() {
 }
 
 // Aba "2ª Fase" — trava pro plano grátis (plan_limits.segunda_fase). Ainda
-// clicável: leva pra seção de planos da landing page em vez de abrir o
-// simulado. NOTA: isto só protege quem chega pela aba aqui de dentro —
-// simulado2fase.html continua com uso anônimo aberto de propósito (ver
-// comentário em supabase/functions/corretor-2fase/index.ts), então esta
-// trava é um atalho de produto, não um limite de segurança.
+// clicável: abre o modal de planos (openPlansModal, ver seção "Planos" mais
+// abaixo) em vez de abrir o simulado. NOTA: isto só protege quem chega pela
+// aba aqui de dentro — simulado2fase.html continua com uso anônimo aberto
+// de propósito (ver comentário em supabase/functions/corretor-2fase/
+// index.ts), então esta trava é um atalho de produto, não um limite de
+// segurança.
 function applyPhaseTabLock() {
   if (!phaseTab2fase || !planStatus || planStatus.segunda_fase) return;
   phaseTab2fase.classList.add("locked");
-  phaseTab2fase.href = "../index.html#planos";
   phaseTab2fase.title = "Disponível nos planos Básico e Pro";
+  phaseTab2fase.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    openPlansModal();
+  });
 }
 
-const UPGRADE_LINK_HTML = '<a href="../index.html#planos">Fazer upgrade</a>';
+// Botão embutido nas mensagens de "limite atingido" (ver showLockedFeedback/
+// requestStatsAnalysis) — onclick inline de propósito: esse HTML é inserido
+// via innerHTML em mais de um lugar, então reanexar addEventListener depois
+// de cada inserção só pra isto seria mais código pra o mesmo resultado.
+// openPlansModal (ver seção "Planos" mais abaixo) já é uma função global
+// (function declarada no escopo do script, não módulo), acessível daqui.
+const UPGRADE_LINK_HTML = '<button type="button" class="upgrade-link" onclick="openPlansModal()">Fazer upgrade</button>';
 
 function showLockedFeedback(feedbackEl, message) {
   feedbackEl.className = "feedback locked";
@@ -1334,6 +1381,10 @@ menuProfileBtn.addEventListener("click", openProfileModal);
 profileCloseBtn.addEventListener("click", closeProfileModal);
 profileOverlay.addEventListener("click", (ev) => {
   if (ev.target === profileOverlay) closeProfileModal();
+});
+profilePlanUpgrade.addEventListener("click", () => {
+  closeProfileModal();
+  openPlansModal();
 });
 
 function showProfileMsg(text, ok) {
