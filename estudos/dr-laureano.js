@@ -181,12 +181,40 @@ async function sayAsLaureano(text) {
   return clean;
 }
 
+// `planStatus` e' declarado em estudos.js (script classico carregado antes
+// deste — mesmo escopo global, ver comentario no topo do arquivo) e mantido
+// atualizado por loadPlanStatus() ali. Le direto daqui em vez de duplicar
+// esse estado: se o aluno ja' gastou as mensagens do mes, nem deixa tentar
+// mandar mais uma (increment_plan_usage_for, no servidor, e' quem decide de
+// verdade — isto aqui e' so' pra' nao deixar a pessoa digitar a toa).
+function isChatLimitReached() {
+  return !!(
+    planStatus &&
+    planStatus.chat_mensagens_por_mes != null &&
+    planStatus.chat_mes_atual >= planStatus.chat_mensagens_por_mes
+  );
+}
+
+function appendUpgradeCta() {
+  const wrap = document.createElement("div");
+  wrap.className = "chat-upgrade-cta";
+  const link = document.createElement("a");
+  link.href = "../index.html#planos";
+  link.textContent = "Ver planos e fazer upgrade →";
+  wrap.appendChild(link);
+  chatMessagesEl.appendChild(wrap);
+  if (stickToBottom) chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+}
+
 function updateInputAvailability() {
   // O textarea trava enquanto o Dr. Laureano esta' respondendo (nao da'
-  // pra mandar outra pergunta em cima), mas o botao continua habilitado —
-  // nesse estado ele vira "parar" em vez de "enviar" (ver setSendButtonMode).
-  chatInput.disabled = !currentQuestion || sending;
-  chatSendBtn.disabled = !currentQuestion;
+  // pra mandar outra pergunta em cima) ou depois que a cota mensal do plano
+  // acabou (isChatLimitReached) — nesse ultimo caso o botao tambem trava
+  // (nao vira' "parar", nao ha' nada rodando).
+  const limitReached = isChatLimitReached();
+  chatInput.disabled = !currentQuestion || sending || limitReached;
+  chatInput.placeholder = limitReached ? "Limite mensal atingido — faça upgrade pra continuar" : "Pergunte sobre esta questão...";
+  chatSendBtn.disabled = !currentQuestion || limitReached;
 }
 
 function setSendButtonMode(mode) {
@@ -251,7 +279,21 @@ async function resetChatForQuestion(question) {
     // chamada foi superada — desiste sem mexer no chat da questao atual.
     if (myGeneration !== chatGeneration) return;
     chatHistory.push({ role: "assistant", content: shown });
-    showSuggestions();
+
+    if (isChatLimitReached()) {
+      // Cota do mes ja' esgotada (ver isChatLimitReached) — nem oferece as
+      // sugestoes de pergunta, ja' avisa de cara em vez de deixar o aluno
+      // clicar numa delas so' pra' descobrir que esta' bloqueado.
+      const limitMsg = await sayAsLaureano(
+        `Você atingiu o limite de ${planStatus.chat_mensagens_por_mes} mensagens do plano grátis este mês.`,
+      );
+      if (myGeneration !== chatGeneration) return;
+      chatHistory.push({ role: "assistant", content: limitMsg });
+      appendUpgradeCta();
+      updateInputAvailability();
+    } else {
+      showSuggestions();
+    }
   } else {
     await sayAsLaureano("Selecione uma questão para eu poder ajudar.");
   }
@@ -314,19 +356,42 @@ async function sendChatMessage(text) {
       },
       messages: chatHistory,
     },
-  }).then(({ data, error }) => {
-    if (error || !data?.reply) throw error || new Error("Resposta vazia.");
+  }).then(async ({ data, error }) => {
+    if (error) {
+      // Erro HTTP (ex.: limite de mensagens do plano, 403 — ver
+      // checkPlanChatQuota em supabase/functions/dr-laureano/index.ts) traz
+      // uma mensagem específica no corpo da resposta; sem ela, cai no aviso
+      // genérico de "não consegui responder" logo abaixo.
+      let friendlyMessage = null;
+      let limitReached = false;
+      try {
+        const body = await error.context?.json();
+        if (body?.error) friendlyMessage = body.error;
+        if (body?.limitReached) limitReached = true;
+      } catch {
+        // corpo não é JSON ou já foi consumido — segue sem mensagem específica
+      }
+      const wrapped = new Error(friendlyMessage || "Falha ao chamar o Dr. Laureano.");
+      wrapped.friendlyMessage = friendlyMessage;
+      wrapped.limitReached = limitReached;
+      throw wrapped;
+    }
+    if (!data?.reply) throw new Error("Resposta vazia.");
     return data.reply;
   });
 
   let replyText = null;
+  let friendlyError = null;
+  let limitReached = false;
   let stoppedBeforeReply = false;
   try {
     const result = await Promise.race([invokePromise, waitForStopRequest()]);
     if (result === "__STOPPED__") stoppedBeforeReply = true;
     else replyText = result;
-  } catch {
+  } catch (err) {
     replyText = null;
+    friendlyError = err?.friendlyMessage || null;
+    limitReached = err?.limitReached === true;
   }
 
   // O aluno pode ter trocado de questao enquanto isso estava em andamento
@@ -347,8 +412,16 @@ async function sendChatMessage(text) {
     // respondeu algo que na verdade foi interrompido).
     appendInterruptedNote();
   } else if (replyText === null) {
-    const shown = await sayAsLaureano("Desculpe, não consegui responder agora. Tente novamente em instantes.");
+    const shown = await sayAsLaureano(friendlyError || "Desculpe, não consegui responder agora. Tente novamente em instantes.");
     chatHistory.push({ role: "assistant", content: shown });
+    if (limitReached) {
+      appendUpgradeCta();
+      // Recarrega planStatus (estudos.js) pra refletir o consumo que a
+      // Edge Function acabou de contabilizar no servidor — é o que faz
+      // updateInputAvailability(), logo abaixo, travar a caixa de digitar
+      // de vez (ver isChatLimitReached).
+      await loadPlanStatus();
+    }
   } else {
     const shown = await sayAsLaureano(replyText);
     chatHistory.push({ role: "assistant", content: shown });

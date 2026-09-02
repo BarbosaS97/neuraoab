@@ -59,6 +59,62 @@
       </table>
     </div>
   </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <h2>Planos</h2>
+    </div>
+    <p class="field-hint">Limites de uso de cada plano — mudanças valem na hora, sem precisar redeployar nada. Campos de número em branco = ilimitado.</p>
+
+    <div style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Plano</th>
+            <th>Questões / dia</th>
+            <th>Simulados / mês</th>
+            <th>Mensagens de chat / mês</th>
+            <th>Análise por IA</th>
+            <th>2ª Fase</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="planLimitsTableBody">
+          <tr class="empty-row"><td colspan="7">Carregando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="modal-msg" id="planLimitsMsg"></p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <h2>Testar plano de um aluno</h2>
+    </div>
+    <p class="field-hint">
+      Muda o plano de um aluno específico sem passar por cobrança — útil pra testar a experiência do Básico/Pro
+      antes da integração com o Asaas. Busque pelo e-mail cadastrado.
+    </p>
+
+    <form id="studentPlanForm" class="student-plan-form">
+      <input type="email" id="studentPlanEmail" placeholder="e-mail do aluno" required>
+      <button type="submit" class="btn-accent" id="studentPlanSearchBtn">Buscar</button>
+    </form>
+
+    <div id="studentPlanResult" class="student-plan-result" hidden>
+      <div class="student-plan-info">
+        <strong id="studentPlanNome">—</strong>
+        <span id="studentPlanEmailLabel" class="text-dim">—</span>
+      </div>
+      <select id="studentPlanSelect">
+        <option value="gratuito">Grátis</option>
+        <option value="basico">Básico</option>
+        <option value="pro">Pro</option>
+      </select>
+      <button type="button" class="btn-accent" id="studentPlanSaveBtn">Salvar</button>
+    </div>
+    <p class="modal-msg" id="studentPlanMsg"></p>
+  </div>
 </div>
 
 <div class="modal-overlay" id="professorModal" hidden>
@@ -140,5 +196,6 @@
 <script src="js/config.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/admin.js"></script>
+<script src="js/planos.js"></script>
 </body>
 </html>

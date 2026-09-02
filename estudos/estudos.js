@@ -14,6 +14,7 @@ const helpBtn = document.getElementById("helpBtn");
 const helpOverlay = document.getElementById("helpOverlay");
 const helpCloseBtn = document.getElementById("helpCloseBtn");
 const helpGotItBtn = document.getElementById("helpGotItBtn");
+const phaseTab2fase = document.getElementById("phaseTab2fase");
 
 const menuBtn = document.getElementById("menuBtn");
 const menuCloseBtn = document.getElementById("menuCloseBtn");
@@ -27,6 +28,9 @@ const sessionLogoutBtn = document.getElementById("sessionLogoutBtn");
 
 const profileOverlay = document.getElementById("profileOverlay");
 const profileCloseBtn = document.getElementById("profileCloseBtn");
+const profilePlanBadge = document.getElementById("profilePlanBadge");
+const profilePlanUpgrade = document.getElementById("profilePlanUpgrade");
+const profilePlanUsage = document.getElementById("profilePlanUsage");
 const profNome = document.getElementById("profNome");
 const profEmail = document.getElementById("profEmail");
 const profCursinho = document.getElementById("profCursinho");
@@ -536,7 +540,21 @@ function buildExamCard({ key, year, count, stat, hero, selected, onToggle }) {
 // dele, e já abre a Tela 3. Reaproveita exatamente as mesmas variáveis/telas
 // de toSubjectsBtn/toStudyBtn (linhas acima) — nenhuma lógica nova de
 // filtragem.
-function startSimulado(key) {
+// Consome 1 simulado da cota mensal do plano (plan_limits.simulados_por_mes)
+// ANTES de abrir a tela de estudo — mesma RPC increment_plan_usage usada em
+// handleAnswer (é ela quem decide de verdade). Alerta simples em vez de um
+// "feedback" inline (não há nenhuma questão/feedbackEl na tela nesse ponto
+// — o clique acontece ainda na grade de exames).
+async function startSimulado(key) {
+  const { data, error } = await client.rpc("increment_plan_usage", { p_kind: "simulado" });
+  const quota = !error && data?.[0] ? data[0] : { allowed: true };
+  if (planStatus) planStatus.simulados_mes_atual = quota.used_count ?? planStatus.simulados_mes_atual;
+
+  if (!quota.allowed) {
+    alert(`Você já usou o simulado gratuito deste mês (limite: ${quota.max_count}). Faça upgrade em Planos, na página inicial, pra praticar sem limite.`);
+    return;
+  }
+
   selectedExams = new Set([key]);
   examPool = allQuestions.filter(q => examKey(q) === key);
   selectedSubjects = new Set(allSubjectKeys());
@@ -1026,6 +1044,17 @@ function renderQuestionBody(q, body) {
   if (previous) {
     selectedAnswer = previous.letter;
     revealAnswer(altButtons, correctLetter, previous.correct ? null : previous.letter, feedbackEl);
+  } else if (planStatus?.questoes_por_dia != null && planStatus.questoes_hoje >= planStatus.questoes_por_dia) {
+    // Já sabemos, ANTES de qualquer clique, que a cota diária acabou (ver
+    // handleAnswer) — evita o vaivém de deixar clicar numa alternativa só
+    // pra descobrir depois que não podia. planStatus pode estar desatualizado
+    // (outra aba, outro dispositivo); a checagem de verdade continua sendo
+    // increment_plan_usage em handleAnswer, isto aqui é só antecipação de UI.
+    altButtons.forEach(({ btn, eliminateBtn }) => {
+      btn.disabled = true;
+      eliminateBtn.disabled = true;
+    });
+    showLockedFeedback(feedbackEl, `Você atingiu o limite de ${planStatus.questoes_por_dia} questões gratuitas hoje.`);
   }
 }
 
@@ -1145,33 +1174,103 @@ client.auth.onAuthStateChange((_event, session) => {
   else window.location.replace("../index.html");
 });
 
-function handleAnswer(q, letter, correctLetter, altButtons, feedbackEl) {
-  if (selectedAnswer !== null) return;
-  selectedAnswer = letter;
+// --------------------------------------------------------- Plano (limites)
+//
+// planStatus reflete supabase/schema_planos.sql: quantas questões/dia,
+// simulados/mês e mensagens de chat/mês o plano do aluno permite (null =
+// ilimitado), e se ele libera análise por IA / 2ª fase. Recarregado no
+// init() e depois de qualquer ação que consome cota, pra UI nunca mostrar
+// um número desatualizado. A fonte de verdade de "quanto já usei" é sempre
+// o banco (increment_plan_usage), nunca um contador só no navegador — isso
+// aqui só existe pra refletir esse resultado na tela.
+let planStatus = null;
 
-  const isCorrect = letter === correctLetter;
-  revealAnswer(altButtons, correctLetter, isCorrect ? null : letter, feedbackEl);
+async function loadPlanStatus() {
+  const { data, error } = await client.rpc("get_my_plan_status");
+  if (error || !data || data.length === 0) {
+    planStatus = null;
+    return;
+  }
+  planStatus = data[0];
+}
 
-  if (!results.has(q.id)) {
-    results.set(q.id, { letter, correct: isCorrect });
-    answeredCount++;
-    if (isCorrect) correctCount++;
-    updateScoreUI();
+// Aba "2ª Fase" — trava pro plano grátis (plan_limits.segunda_fase). Ainda
+// clicável: leva pra seção de planos da landing page em vez de abrir o
+// simulado. NOTA: isto só protege quem chega pela aba aqui de dentro —
+// simulado2fase.html continua com uso anônimo aberto de propósito (ver
+// comentário em supabase/functions/corretor-2fase/index.ts), então esta
+// trava é um atalho de produto, não um limite de segurança.
+function applyPhaseTabLock() {
+  if (!phaseTab2fase || !planStatus || planStatus.segunda_fase) return;
+  phaseTab2fase.classList.add("locked");
+  phaseTab2fase.href = "../index.html#planos";
+  phaseTab2fase.title = "Disponível nos planos Básico e Pro";
+}
 
-    // Só grava quando logado (aluno convidado por um professor) — fire-
-    // and-forget, nunca bloqueia nem altera o feedback já mostrado acima;
-    // uma falha aqui (rede, RLS etc.) não deve incomodar quem só está
-    // estudando. Ver oab_respostas em supabase/schema_professor_portal.sql.
-    if (currentSession?.user) {
-      client.from("oab_respostas").insert({
-        user_id: currentSession.user.id,
-        question_id: q.id,
-        letter,
-        correct: isCorrect,
-      }).then(({ error }) => {
-        if (error) console.error("Falha ao registrar resposta:", error.message);
+const UPGRADE_LINK_HTML = '<a href="../index.html#planos">Fazer upgrade</a>';
+
+function showLockedFeedback(feedbackEl, message) {
+  feedbackEl.className = "feedback locked";
+  feedbackEl.innerHTML = `<span>${message} ${UPGRADE_LINK_HTML}</span>`;
+}
+
+// answering (não só selectedAnswer !== null) evita que dois cliques em
+// alternativas diferentes, antes da checagem de cota abaixo terminar,
+// consumam a cota duas vezes ou revelem a resposta duas vezes — selectedAnswer
+// só é setado DEPOIS da checagem passar, então sozinho ele não bastaria pra
+// bloquear o segundo clique enquanto o primeiro ainda está em andamento.
+let answering = false;
+
+async function handleAnswer(q, letter, correctLetter, altButtons, feedbackEl) {
+  if (selectedAnswer !== null || answering) return;
+  answering = true;
+
+  try {
+    // Consome 1 questão da cota diária ANTES de revelar — increment_plan_usage
+    // (supabase/schema_planos.sql) é quem decide de verdade, nunca um
+    // contador local; se a chamada falhar (rede etc.), deixa passar em vez
+    // de travar quem está estudando por um problema de infra.
+    const { data: quotaData, error: quotaError } = await client.rpc("increment_plan_usage", { p_kind: "questoes" });
+    const quota = !quotaError && quotaData?.[0] ? quotaData[0] : { allowed: true };
+
+    if (planStatus) planStatus.questoes_hoje = quota.used_count ?? planStatus.questoes_hoje;
+
+    if (!quota.allowed) {
+      altButtons.forEach(({ btn, eliminateBtn }) => {
+        btn.disabled = true;
+        eliminateBtn.disabled = true;
       });
+      showLockedFeedback(feedbackEl, `Você atingiu o limite de ${quota.max_count} questões gratuitas hoje.`);
+      return;
     }
+
+    selectedAnswer = letter;
+    const isCorrect = letter === correctLetter;
+    revealAnswer(altButtons, correctLetter, isCorrect ? null : letter, feedbackEl);
+
+    if (!results.has(q.id)) {
+      results.set(q.id, { letter, correct: isCorrect });
+      answeredCount++;
+      if (isCorrect) correctCount++;
+      updateScoreUI();
+
+      // Só grava quando logado (aluno convidado por um professor) — fire-
+      // and-forget, nunca bloqueia nem altera o feedback já mostrado acima;
+      // uma falha aqui (rede, RLS etc.) não deve incomodar quem só está
+      // estudando. Ver oab_respostas em supabase/schema_professor_portal.sql.
+      if (currentSession?.user) {
+        client.from("oab_respostas").insert({
+          user_id: currentSession.user.id,
+          question_id: q.id,
+          letter,
+          correct: isCorrect,
+        }).then(({ error }) => {
+          if (error) console.error("Falha ao registrar resposta:", error.message);
+        });
+      }
+    }
+  } finally {
+    answering = false;
   }
 }
 
@@ -1184,11 +1283,46 @@ function handleAnswer(q, letter, correctLetter, altButtons, feedbackEl) {
 // propria, ver schema_portal_mestre.sql — role_id/ativo/professor_id
 // continuam travados por um gatilho, mas nome/email/cursinho/telefone nao).
 
+const PLAN_LABELS = { gratuito: "Grátis", basico: "Básico", pro: "Pro" };
+
+// Mostra o plano atual + quanto já foi usado este mês/hoje, a partir de
+// planStatus (ver loadPlanStatus acima) — nunca escondido atrás de outra
+// navegação: quem quer saber "em que plano eu tô" ou "quanto falta pra
+// acabar minha cota" encontra isso direto em "Meu Perfil".
+function renderProfilePlan() {
+  const plano = planStatus?.plano || "gratuito";
+  profilePlanBadge.textContent = PLAN_LABELS[plano] || plano;
+  profilePlanBadge.classList.toggle("pro", plano === "pro");
+  profilePlanUpgrade.hidden = plano === "pro";
+
+  if (!planStatus) {
+    profilePlanUsage.textContent = "";
+    return;
+  }
+
+  const parts = [];
+  if (planStatus.questoes_por_dia != null) {
+    parts.push(`${planStatus.questoes_hoje}/${planStatus.questoes_por_dia} questões hoje`);
+  }
+  if (planStatus.simulados_por_mes != null) {
+    parts.push(`${planStatus.simulados_mes_atual}/${planStatus.simulados_por_mes} simulado(s) este mês`);
+  }
+  if (planStatus.chat_mensagens_por_mes != null) {
+    parts.push(`${planStatus.chat_mes_atual}/${planStatus.chat_mensagens_por_mes} mensagens do chat este mês`);
+  }
+  profilePlanUsage.textContent = parts.length > 0 ? parts.join(" · ") : "Uso ilimitado no seu plano.";
+}
+
 function openProfileModal() {
   if (!currentSession?.user) return;
   closeMenu();
   profileMsg.className = "profile-msg";
   profileOverlay.hidden = false;
+  // Mostra o que já tem em cache na hora (sem tela em branco) e atualiza
+  // assim que o dado mais fresco chegar — mesmo espírito de qualquer outra
+  // tela deste app que já tem algo pra mostrar antes da rede responder.
+  renderProfilePlan();
+  loadPlanStatus().then(renderProfilePlan);
   loadProfile();
 }
 
@@ -1503,8 +1637,20 @@ function appendStatsAiRefreshLink(stats, aiSection, label) {
 // devolve 3 campos (pontosFracos/precisaEstudar/pontosFortes), cada um null
 // quando ainda nao ha' dados suficientes pra aquela analise especifica.
 async function requestStatsAnalysis(stats, aiSection) {
-  aiSection.querySelectorAll(".stats-ai-loading, .stats-ai-error, .stats-ai-cards, .stats-ai-refresh")
+  aiSection.querySelectorAll(".stats-ai-loading, .stats-ai-error, .stats-ai-cards, .stats-ai-refresh, .stats-ai-locked")
     .forEach(el => el.remove());
+
+  // Recurso do plano Básico/Pro (plan_limits.estatisticas_ia) — plano
+  // grátis nem chega a chamar a Edge Function (que também recusaria, ver
+  // supabase/functions/estatisticas-ia/index.ts — esta checagem aqui é só
+  // pra não gastar uma chamada de rede à toa e mostrar o aviso na hora).
+  if (planStatus && planStatus.estatisticas_ia === false) {
+    const locked = document.createElement("div");
+    locked.className = "stats-ai-locked";
+    locked.innerHTML = `Análise por IA é um recurso dos planos Básico e Pro. ${UPGRADE_LINK_HTML} pra desbloquear.`;
+    aiSection.appendChild(locked);
+    return;
+  }
 
   const loading = document.createElement("p");
   loading.className = "stats-ai-loading";
@@ -1834,6 +1980,7 @@ async function init() {
       fetchStudentAnswers(session.user.id),
       loadFavoritos(),
       fetchStudentFirstName(session.user.id),
+      loadPlanStatus(),
     ]);
   } catch (error) {
     showLoadingError(`Erro ao carregar questões: ${error.message}`);
@@ -1843,6 +1990,7 @@ async function init() {
   allQuestions = data || [];
   statsAnswersCache = answers || [];
   renderDashboardGreeting(firstName);
+  applyPhaseTabLock();
 
   if (allQuestions.length === 0) {
     showLoadingError("Nenhuma questão no banco ainda. Importe um JSON na aba Admin.");

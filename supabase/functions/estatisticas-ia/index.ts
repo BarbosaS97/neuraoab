@@ -39,18 +39,50 @@ function jsonResponse(body: unknown, status = 200): Response {
 // aqui nao quebra nenhum dos dois e fecha a chamada direta so' com a anon
 // key. Nao precisa ser professor/admin (aluno analisando a propria
 // estatistica tambem e' uso legitimo) — so' precisa ser alguem logado.
+//
+// Limite de PLANO (ver planAllowsAiStats, supabase/schema_planos.sql): alem
+// de exigir login, so' quem esta num plano com estatisticas_ia=true
+// (Basico/Pro — editavel no Portal Mestre) consegue gerar a analise; aluno
+// do plano gratuito continua vendo as estatisticas normais (calculadas no
+// front-end, sem chamar esta function), so' sem o texto gerado por IA.
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
 const authClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: { autoRefreshToken: false, persistSession: false },
 });
 
-async function requireAuthenticatedUser(req: Request): Promise<boolean> {
+// Devolve o id do usuario se o JWT for valido, null caso contrario — troca
+// de um boolean pra um id porque agora tambem precisamos SABER QUEM e' pra
+// checar o plano dele logo abaixo (planAllowsAiStats).
+async function requireAuthenticatedUser(req: Request): Promise<string | null> {
   const authHeader = req.headers.get("Authorization") ?? "";
   const jwt = authHeader.replace(/^Bearer\s+/i, "").trim();
-  if (!jwt) return false;
+  if (!jwt) return null;
   const { data, error } = await authClient.auth.getUser(jwt);
-  return !error && !!data?.user;
+  if (error || !data?.user) return null;
+  return data.user.id;
+}
+
+// Client privilegiado (service_role) usado SO' pra checar o plano de quem
+// chamou (get_plan_status_for exige service_role de proposito — ver
+// supabase/schema_planos.sql, mesmo motivo/mesmo padrao de
+// supabase/functions/dr-laureano/index.ts) — nada mais nesta function usa a
+// service_role key.
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+const adminClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+  auth: { autoRefreshToken: false, persistSession: false },
+});
+
+// Analise por IA e' um recurso do plano Basico/Pro (plan_limits.
+// estatisticas_ia, editavel no Portal Mestre) — plano gratuito continua
+// vendo as estatisticas normais (numeros/graficos calculados no front-end,
+// sem chamar esta function), so' nao ganha o texto gerado por IA. Falha de
+// infra (RPC fora do ar) NAO bloqueia, mesmo espirito de checkRateLimit em
+// outras functions: um problema de infra nao pode travar quem tem direito.
+async function planAllowsAiStats(userId: string): Promise<boolean> {
+  const { data, error } = await adminClient.rpc("get_plan_status_for", { p_user_id: userId });
+  if (error || !data || data.length === 0) return true;
+  return (data[0] as { estatisticas_ia: boolean }).estatisticas_ia !== false;
 }
 
 interface SubjectStat {
@@ -215,8 +247,16 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ error: "Método não permitido." }, 405);
   }
 
-  if (!(await requireAuthenticatedUser(req))) {
+  const userId = await requireAuthenticatedUser(req);
+  if (!userId) {
     return jsonResponse({ error: "É preciso estar logado para gerar essa análise." }, 401);
+  }
+
+  if (!(await planAllowsAiStats(userId))) {
+    return jsonResponse(
+      { error: "A análise por IA não está disponível no plano grátis. Faça upgrade pra desbloquear.", planLocked: true },
+      403,
+    );
   }
 
   let body: unknown;

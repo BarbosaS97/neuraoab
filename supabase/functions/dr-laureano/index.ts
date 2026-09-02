@@ -11,6 +11,13 @@
 // (chat acessivel sem login) e cada chamada custa dinheiro de verdade — sem
 // poder exigir login aqui, o limite e' por IP via check_rate_limit() no
 // banco (ver supabase/schema_security_hardening.sql).
+//
+// Limite de PLANO (ver checkPlanChatQuota, supabase/schema_planos.sql):
+// alem do rate-limit por IP acima (que vale sempre, logado ou nao), quem
+// esta logado tambem consome a cota mensal do proprio plano
+// (plan_limits.chat_mensagens_por_mes, editavel no Portal Mestre) — quem
+// nao esta logado nao tem plano, entao so' fica sob o rate-limit por IP,
+// exatamente como antes desta mudanca.
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
@@ -35,6 +42,51 @@ const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
 const rateLimitClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: { autoRefreshToken: false, persistSession: false },
 });
+
+// Client privilegiado (service_role) usado SÓ pra checar/consumir a cota
+// mensal de chat de quem chamou, se estiver logado (ver checkPlanChatQuota
+// abaixo) — nada mais nesta function usa a service_role key. Precisa dela
+// porque increment_plan_usage_for/get_plan_status_for (ver
+// supabase/schema_planos.sql) são de propósito restritas a service_role:
+// aceitam um user id explícito, então só podem ser chamadas por algo que já
+// verificou esse id no servidor (auth.getUser(jwt) logo abaixo), nunca por
+// um cliente anônimo com a anon key.
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+const adminClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+  auth: { autoRefreshToken: false, persistSession: false },
+});
+
+// Chat funciona sem login (uso anônimo, mesmo espírito de corretor-2fase) —
+// quem não está logado não tem "plano" nenhum, então continua só sob o
+// rate-limit por IP de sempre (checkRateLimit acima), sem limite de plano.
+// Quem está logado consome 1 mensagem da cota mensal do próprio plano (ver
+// plan_limits.chat_mensagens_por_mes, editável no Portal Mestre) — se
+// estourou, bloqueia ANTES de gastar dinheiro numa chamada à DeepSeek.
+async function checkPlanChatQuota(req: Request): Promise<{ blocked: boolean; message?: string }> {
+  const authHeader = req.headers.get("Authorization") ?? "";
+  const jwt = authHeader.replace(/^Bearer\s+/i, "").trim();
+  if (!jwt) return { blocked: false };
+
+  const { data: userData, error: userError } = await adminClient.auth.getUser(jwt);
+  if (userError || !userData?.user) return { blocked: false };
+
+  const { data, error } = await adminClient.rpc("increment_plan_usage_for", {
+    p_user_id: userData.user.id,
+    p_kind: "chat",
+  });
+  // Falha de infra (RPC fora do ar etc.) não pode travar o chat pra todo
+  // mundo — deixa passar, igual ao mesmo tipo de fallback em checkRateLimit.
+  if (error || !data || data.length === 0) return { blocked: false };
+
+  const result = data[0] as { allowed: boolean; used_count: number; max_count: number | null };
+  if (!result.allowed) {
+    return {
+      blocked: true,
+      message: `Você atingiu o limite de ${result.max_count} mensagens do plano grátis este mês. Faça upgrade pra continuar conversando com o Dr. Laureano.`,
+    };
+  }
+  return { blocked: false };
+}
 
 // Chat interativo — usuario legitimo manda varias mensagens numa conversa
 // so', entao o limite precisa ser bem mais folgado que corretor-2fase.
@@ -212,6 +264,11 @@ Deno.serve(async (req: Request) => {
     .filter((m) => m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
     .slice(-MAX_MESSAGES)
     .map((m) => ({ role: m.role, content: cap(m.content, MAX_MESSAGE_CHARS) }));
+
+  const planCheck = await checkPlanChatQuota(req);
+  if (planCheck.blocked) {
+    return jsonResponse({ error: planCheck.message, limitReached: true }, 403);
+  }
 
   const apiKey = Deno.env.get("API_DEEPSEEK_KEY");
   if (!apiKey) {

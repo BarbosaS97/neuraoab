@@ -425,3 +425,67 @@ tbody tr:last-child td { border-bottom: none; }
   .modal-footer { flex-direction: column-reverse; }
   .modal-footer button { width: 100%; }
 }
+
+/* ------------------------------------------------- Planos (schema_planos.sql) */
+
+.wrap .panel + .panel { margin-top: 20px; }
+
+.text-dim { color: var(--text-dim); font-size: 12.5px; }
+
+/* Inputs de número dentro da tabela de limites — bem menores que .field
+   input (que assume 100% de largura, feito pra formulário empilhado, não
+   pra célula de tabela). Em branco = ilimitado (ver placeholder no HTML). */
+.plan-limit-input {
+  width: 64px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 13px;
+}
+
+.plan-limit-input:focus { outline: none; border-color: var(--accent); }
+
+.plan-limit-check { width: 16px; height: 16px; cursor: pointer; }
+
+.student-plan-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.student-plan-form input {
+  flex: 1;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 7px;
+  padding: 9px 12px;
+  font-size: 13.5px;
+}
+
+.student-plan-form input:focus { outline: none; border-color: var(--accent); }
+
+.student-plan-result {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding: 14px;
+  background: var(--bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+}
+
+.student-plan-info { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 160px; }
+
+.student-plan-result select {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 7px;
+  padding: 8px 10px;
+  font-size: 13.5px;
+}

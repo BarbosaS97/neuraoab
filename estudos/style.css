@@ -1544,6 +1544,37 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   display: inline-block;
 }
 
+/* Análise por IA bloqueada pro plano grátis (ver requestStatsAnalysis em
+   estudos.js) — mesmo cartão visual do resto da seção, sem tentar imitar
+   erro nem card normal. */
+.stats-ai-locked {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--logo-orange-dim);
+  border: 1px solid var(--logo-orange);
+  font-size: 12.5px;
+  color: var(--text);
+  line-height: 1.55;
+}
+.stats-ai-locked a {
+  color: var(--logo-orange);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* Aba "2ª Fase" travada pro plano grátis (ver applyPhaseTabLock em
+   estudos.js) — continua clicável (leva pra seção de planos da landing
+   page), só com um visual de "bloqueado" em vez de escondida. */
+.phase-tab.locked {
+  opacity: 0.6;
+}
+.phase-tab.locked::after {
+  content: "🔒";
+  margin-left: 5px;
+  font-size: 10px;
+}
+
 .stats-reset-section {
   border-top: 1px solid var(--border);
   padding-top: 20px;
@@ -1752,6 +1783,20 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 
 .feedback.correct { background: var(--success-dim); color: var(--success); }
 .feedback.wrong { background: var(--error-dim); color: var(--error); }
+
+/* Limite do plano grátis atingido (ver consumeQuestionQuota em estudos.js,
+   supabase/schema_planos.sql) — mesmo formato do .feedback normal, cor
+   própria (laranja da marca) pra não parecer um "erro". */
+.feedback.locked {
+  background: var(--logo-orange-dim);
+  color: var(--logo-orange);
+  flex-wrap: wrap;
+}
+.feedback.locked a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+}
 
 .nav-buttons {
   display: flex;
@@ -2132,6 +2177,30 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   color: var(--error);
 }
 
+/* Limite mensal de mensagens do plano grátis atingido (ver
+   checkPlanChatQuota em supabase/functions/dr-laureano/index.ts e
+   isChatLimitReached em estudos/dr-laureano.js) — CTA logo abaixo do aviso
+   em texto, mesma cor "upgrade" (laranja da marca) usada nos outros
+   cadeados de plano (ver .feedback.locked em estudos.js). */
+.chat-upgrade-cta { align-self: flex-start; }
+
+.chat-upgrade-cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--logo-orange-dim);
+  color: var(--logo-orange);
+  border: 1px solid var(--logo-orange);
+  border-radius: 10px;
+  padding: 9px 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.chat-upgrade-cta a:hover { background: var(--logo-orange); color: #fff; }
+
 .chat-input-area {
   border-top: 1px solid var(--border);
   flex-shrink: 0;
@@ -2422,3 +2491,46 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 
 .profile-msg.show { display: block; }
 .profile-msg.ok { color: var(--success); }
+
+/* Plano atual + upgrade (ver renderProfilePlan em estudos.js) — mesma
+   linguagem visual dos outros cadeados de plano (laranja da marca pro CTA
+   de upgrade, ver .feedback.locked). */
+.profile-plan-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.profile-plan-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 700;
+  background: var(--primary-dim);
+  color: var(--primary);
+}
+
+.profile-plan-badge.pro { background: var(--logo-orange-dim); color: var(--logo-orange); }
+
+.profile-plan-upgrade {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--logo-orange);
+  text-decoration: none;
+  border: 1px solid var(--logo-orange);
+  border-radius: 999px;
+  padding: 5px 12px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.profile-plan-upgrade:hover { background: var(--logo-orange); color: #fff; }
+.profile-plan-upgrade[hidden] { display: none; }
+
+.profile-plan-usage {
+  margin: 8px 0 0;
+  font-size: 11.5px;
+  color: var(--text-dim);
+}

@@ -158,6 +158,14 @@
     </div>
 
     <div class="help-modal-body">
+      <div class="field profile-plan-field">
+        <label>Plano atual</label>
+        <div class="profile-plan-row">
+          <span class="profile-plan-badge" id="profilePlanBadge">Grátis</span>
+          <a href="../index.html#planos" class="profile-plan-upgrade" id="profilePlanUpgrade">Fazer upgrade</a>
+        </div>
+        <p class="profile-plan-usage" id="profilePlanUsage"></p>
+      </div>
       <div class="field">
         <label for="profNome">Nome</label>
         <input type="text" id="profNome" placeholder="Seu nome completo">
@@ -194,7 +202,7 @@
     <button type="button" id="helpBtn" class="icon-btn" aria-label="Como funciona o NeuraOAB" title="Ajuda">?</button>
     <nav class="phase-tabs" aria-label="Fase do exame">
       <span class="phase-tab active" aria-current="page">1ª Fase</span>
-      <a href="simulado2fase.html" class="phase-tab">2ª Fase</a>
+      <a href="simulado2fase.html" class="phase-tab" id="phaseTab2fase">2ª Fase</a>
     </nav>
   </div>
 </header>

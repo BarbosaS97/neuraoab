@@ -1078,6 +1078,126 @@
     .feature-card { padding: 22px 18px; }
   }
 
+  /* ------------------------------------------------------------- Planos */
+
+  .pricing {
+    padding: 88px 24px;
+    border-top: 1px solid transparent;
+    border-image: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent) 1;
+  }
+
+  .pricing-grid {
+    max-width: 1020px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .pricing-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 30px 26px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  /* Cartão em destaque (Pro) — mesmo truque de "elevação" visual que o
+     restante do site usa pra dar hierarquia (ver .exam-hero em estudos, por
+     ex.), sem precisar de nenhum componente novo. */
+  .pricing-card.featured {
+    border-color: var(--primary);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 30px 60px -30px rgba(139, 92, 246, 0.55);
+  }
+
+  .pricing-badge {
+    align-self: flex-start;
+    background: var(--primary);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+
+  .pricing-card h3 { margin: 0 0 4px; font-size: 17px; font-weight: 800; }
+  .pricing-card-sub { margin: 0 0 18px; font-size: 12.5px; color: var(--text-dim); }
+
+  .pricing-price { display: flex; align-items: baseline; gap: 5px; }
+  .pricing-price .amount { font-size: 32px; font-weight: 800; letter-spacing: -0.01em; }
+  .pricing-price .unit { font-size: 13px; color: var(--text-dim); font-weight: 600; }
+  .pricing-annual { margin: 4px 0 20px; font-size: 12px; color: var(--text-dim); }
+  .pricing-annual b { color: var(--success); font-weight: 700; }
+
+  .pricing-features {
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-grow: 1;
+  }
+
+  .pricing-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .pricing-features li.no { color: var(--text-dim); }
+  .pricing-features li svg { flex-shrink: 0; margin-top: 2px; }
+  .pricing-features li.yes svg { color: var(--success); }
+  .pricing-features li.no svg { color: var(--text-dim); }
+
+  .pricing-cta { width: 100%; text-align: center; }
+
+  @media (max-width: 860px) {
+    .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
+  }
+
+  @media (max-width: 480px) {
+    .pricing { padding: 56px 16px; }
+    .pricing-card { padding: 24px 20px; }
+  }
+
+  /* ------------------------------------------------------ Planos: cursinhos */
+  /* Sem preço nenhum de propósito (pedido explícito) — só uma propaganda
+     convidando o cursinho a levar a plataforma pros próprios alunos. */
+
+  .pricing-b2b {
+    max-width: 1020px;
+    margin: 32px auto 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 34px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+  }
+
+  .pricing-b2b-copy h3 { margin: 10px 0 8px; font-size: 18px; font-weight: 800; }
+  .pricing-b2b-copy p { margin: 0; font-size: 13px; line-height: 1.65; color: var(--text-dim); max-width: 520px; }
+
+  .pricing-b2b-cta { flex-shrink: 0; }
+
+  @media (max-width: 720px) {
+    .pricing-b2b { flex-direction: column; align-items: flex-start; }
+    .pricing-b2b-cta { align-self: stretch; }
+    .pricing-b2b-cta .btn-gradient-sm { width: 100%; }
+  }
+
   /* --------------------------------------------------------------- FAQ */
 
   .faq {
@@ -1801,6 +1921,7 @@
     <nav class="navbar-links" aria-label="Navegação principal">
       <a href="#recursos">Recursos</a>
       <a href="#como-funciona">Como funciona</a>
+      <a href="#planos">Planos</a>
       <a href="#perguntas">Perguntas</a>
     </nav>
     <div class="navbar-actions">
@@ -1818,6 +1939,7 @@
   <div class="navbar-mobile" id="navbarMobile" hidden>
     <a href="#recursos">Recursos</a>
     <a href="#como-funciona">Como funciona</a>
+    <a href="#planos">Planos</a>
     <a href="#perguntas">Perguntas</a>
     <button type="button" class="btn-ghost" data-open-login>Entrar</button>
     <button type="button" class="btn-gradient-sm" data-open-login="signup">Começar agora</button>
@@ -2003,6 +2125,73 @@
       <p>Pratique peças e questões discursivas e receba correção em segundos segundo os critérios oficiais.</p>
       <button type="button" class="feature-link" data-open-login>Praticar agora →</button>
     </article>
+  </div>
+</section>
+
+<section class="pricing" id="planos">
+  <div class="section-head" data-aos="fade-up">
+    <h2 class="section-title">Planos pra <span class="grad-text">todo momento da sua preparação</span></h2>
+  </div>
+
+  <div class="pricing-grid">
+    <article class="pricing-card" data-aos="fade-up" data-aos-delay="0">
+      <h3>Grátis</h3>
+      <p class="pricing-card-sub">Pra testar a plataforma sem compromisso</p>
+      <div class="pricing-price"><span class="amount">R$ 0</span></div>
+      <p class="pricing-annual">Sem cartão, sem cobrança</p>
+      <ul class="pricing-features">
+        <li class="yes"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>10 questões por dia</li>
+        <li class="yes"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>1 simulado por mês (1ª fase)</li>
+        <li class="yes"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>5 mensagens com o Dr. Laureano por mês</li>
+        <li class="yes"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Estatísticas básicas (sem análise por IA)</li>
+        <li class="no"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Sem simulado da 2ª fase</li>
+      </ul>
+      <button type="button" class="btn-ghost pricing-cta" data-open-login="signup">Começar grátis</button>
+    </article>
+
+    <article class="pricing-card" data-aos="fade-up" data-aos-delay="100">
+      <h3>Básico</h3>
+      <p class="pricing-card-sub">Pra estudar sem pensar em limite</p>
+      <div class="pricing-price"><span class="amount">R$ 11,99</span><span class="unit">/mês</span></div>
+      <p class="pricing-annual">ou <b>R$ 119,90/ano</b> (2 meses grátis)</p>
+      <ul class="pricing-features">
+        <li class="yes"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Questões ilimitadas</li>
+        <li class="yes"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Chat ilimitado com o Dr. Laureano</li>
+        <li class="yes"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Estatísticas completas com análise por IA</li>
+        <li class="yes"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Simulados ilimitados (1ª fase)</li>
+        <li class="no"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Sem simulado da 2ª fase</li>
+      </ul>
+      <button type="button" class="btn-ghost pricing-cta" data-open-login="signup">Assinar Básico</button>
+    </article>
+
+    <article class="pricing-card featured" data-aos="fade-up" data-aos-delay="200">
+      <span class="pricing-badge">Mais completo</span>
+      <h3>Pro</h3>
+      <p class="pricing-card-sub">Pra chegar preparado nas duas fases</p>
+      <div class="pricing-price"><span class="amount">R$ 19,99</span><span class="unit">/mês</span></div>
+      <p class="pricing-annual">ou <b>R$ 199,90/ano</b> (2 meses grátis)</p>
+      <ul class="pricing-features">
+        <li class="yes"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Tudo do plano Básico</li>
+        <li class="yes"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Simulado da 2ª fase (peça + discursivas)</li>
+        <li class="yes"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Correção automática pelos critérios da FGV</li>
+        <li class="yes"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Relatórios detalhados de desempenho</li>
+      </ul>
+      <button type="button" class="btn-gradient-sm pricing-cta" data-open-login="signup">Assinar Pro</button>
+    </article>
+  </div>
+
+  <div class="pricing-b2b" data-aos="fade-up">
+    <div class="pricing-b2b-copy">
+      <p class="showcase-eyebrow">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path></svg>
+        Para cursinhos e escolas
+      </p>
+      <h3>Tem um cursinho ou uma escola de Direito?</h3>
+      <p>Leve o NeuraOAB pra dentro da sua turma: seus alunos estudam com questões oficiais, tutor de IA e simulado completo da 2ª fase — e você acompanha o desempenho de cada um no Portal do Professor. Fale com a gente pra montar um plano sob medida pro tamanho da sua turma.</p>
+    </div>
+    <div class="pricing-b2b-cta">
+      <a class="btn-gradient-sm" href="mailto:contato@neuraoab.com.br?subject=Quero%20levar%20o%20NeuraOAB%20para%20o%20meu%20cursinho">Fale conosco</a>
+    </div>
   </div>
 </section>
 
@@ -2317,6 +2506,7 @@
     <nav class="footer-links" aria-label="Links do rodapé">
       <a href="#recursos">Recursos</a>
       <a href="#como-funciona">Como funciona</a>
+      <a href="#planos">Planos</a>
       <a href="#perguntas">Perguntas</a>
     </nav>
   </div>
