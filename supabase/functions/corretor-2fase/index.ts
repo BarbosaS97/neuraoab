@@ -21,6 +21,14 @@
 // (API paga da DeepSeek) — sem exigir login (isso quebraria o fluxo
 // anonimo), o unico jeito de conter abuso e' limitar por IP, via
 // check_rate_limit() no banco (ver supabase/schema_security_hardening.sql).
+//
+// Limite de PLANO (ver planAllowsSegundaFase, supabase/schema_planos.sql):
+// quem nao esta logado continua sem nenhuma restricao de plano (uso
+// anonimo, ver acima). Quem esta logado no plano gratuito (sem
+// segunda_fase) e' recusado aqui mesmo que consiga chamar esta function
+// direto — a trava "de verdade" pra esse aluno e' nunca deixar clicar em
+// "Iniciar" em simulado2fase.js (applySegundaFaseLock), isto aqui e' so'
+// defesa em profundidade.
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
@@ -45,6 +53,38 @@ const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
 const rateLimitClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: { autoRefreshToken: false, persistSession: false },
 });
+
+// Client privilegiado (service_role) usado SÓ pra checar o plano de quem
+// chamou, se estiver logado (ver planAllowsSegundaFase abaixo) — mesmo
+// padrão/mesmo motivo de supabase/functions/dr-laureano/index.ts e
+// estatisticas-ia/index.ts (get_plan_status_for exige service_role de
+// propósito, ver supabase/schema_planos.sql). Nada mais nesta function usa
+// a service_role key.
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+const adminClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+  auth: { autoRefreshToken: false, persistSession: false },
+});
+
+// Uso anônimo continua 100% livre (mesmo motivo de sempre, ver comentário
+// no topo do arquivo) — quem não está logado não tem "plano" nenhum, então
+// esta checagem só entra em ação pra quem manda um JWT válido no header
+// Authorization. É a mesma trava de simulado2fase.js (applySegundaFaseLock,
+// que já impede o aluno logado no grátis de sequer clicar "Iniciar") — isto
+// aqui é defesa em profundidade, caso alguém contorne aquela trava do lado
+// do cliente e chame esta function direto com uma tentativa criada na mão.
+async function planAllowsSegundaFase(req: Request): Promise<boolean> {
+  const authHeader = req.headers.get("Authorization") ?? "";
+  const jwt = authHeader.replace(/^Bearer\s+/i, "").trim();
+  if (!jwt) return true;
+
+  const { data: userData, error: userError } = await adminClient.auth.getUser(jwt);
+  if (userError || !userData?.user) return true;
+
+  const { data, error } = await adminClient.rpc("get_plan_status_for", { p_user_id: userData.user.id });
+  if (error || !data || data.length === 0) return true;
+
+  return (data[0] as { segunda_fase: boolean }).segunda_fase !== false;
+}
 
 // Ate' 5 itens (peca + 4 questoes) sao corrigidos de uma vez ao clicar
 // "Finalizar" (Promise.all em simulado2fase.js) — o limite precisa acomodar
@@ -457,6 +497,13 @@ Deno.serve(async (req: Request) => {
 
   if (!(await checkRateLimit(req))) {
     return jsonResponse({ error: "Muitas correções em pouco tempo. Aguarde alguns minutos e tente novamente." }, 429);
+  }
+
+  if (!(await planAllowsSegundaFase(req))) {
+    return jsonResponse(
+      { error: "A 2ª fase completa (correção por IA) é um recurso dos planos Básico e Pro.", planLocked: true },
+      403,
+    );
   }
 
   let body: CorrectionRequest;

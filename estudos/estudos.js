@@ -1231,21 +1231,17 @@ async function loadPlanStatus() {
   planStatus = data[0];
 }
 
-// Aba "2ª Fase" — trava pro plano grátis (plan_limits.segunda_fase). Ainda
-// clicável: abre o modal de planos (openPlansModal, ver seção "Planos" mais
-// abaixo) em vez de abrir o simulado. NOTA: isto só protege quem chega pela
-// aba aqui de dentro — simulado2fase.html continua com uso anônimo aberto
-// de propósito (ver comentário em supabase/functions/corretor-2fase/
-// index.ts), então esta trava é um atalho de produto, não um limite de
-// segurança.
+// Aba "2ª Fase" pro plano grátis: NÃO bloqueia mais a navegação — deixa
+// abrir simulado2fase.html normalmente, só com um selo visual (🔒 + tooltip)
+// avisando que é limitado. O bloqueio de verdade (deixar ver o enunciado,
+// mas nunca escrever/corrigir) acontece dentro de simulado2fase.js
+// (applySegundaFaseLock) — é lá que faz sentido, porque essa página também
+// é usada sem login nenhum (uso anônimo, ver corretor-2fase/index.ts), e só
+// ela sabe se quem chegou é logado-gratuito ou anônimo.
 function applyPhaseTabLock() {
   if (!phaseTab2fase || !planStatus || planStatus.segunda_fase) return;
   phaseTab2fase.classList.add("locked");
-  phaseTab2fase.title = "Disponível nos planos Básico e Pro";
-  phaseTab2fase.addEventListener("click", (ev) => {
-    ev.preventDefault();
-    openPlansModal();
-  });
+  phaseTab2fase.title = "Prévia no plano grátis — escrever e receber correção é dos planos Básico e Pro";
 }
 
 // Botão embutido nas mensagens de "limite atingido" (ver showLockedFeedback/
@@ -2053,6 +2049,14 @@ async function init() {
   renderDashboardTip();
   showScreen("exams");
   showLoadingReady();
+
+  // Chegou aqui com "#upgrade" na URL (ex.: link de upgrade em
+  // simulado2fase.js, que não tem o modal de planos na própria página) —
+  // abre o modal direto, sem o aluno precisar achar "Meu Perfil" sozinho.
+  if (window.location.hash === "#upgrade") {
+    history.replaceState({}, document.title, window.location.pathname);
+    openPlansModal();
+  }
 }
 
 init();

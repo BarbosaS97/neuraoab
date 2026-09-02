@@ -301,7 +301,50 @@ client.auth.onAuthStateChange((_event, session) => {
 client.auth.getSession().then(({ data }) => {
   currentSession = data.session;
   updateSessionUI();
+  applySegundaFaseLock();
 });
+
+// ---------------------------------------------- Prévia pro plano grátis
+//
+// Só existe pra quem está LOGADO — o uso anônimo desta página (ver comentário
+// no topo do arquivo) continua 100% livre, sem noção nenhuma de "plano".
+// Pro aluno avulso/convidado no plano grátis (sem segunda_fase, ver
+// supabase/schema_planos.sql), deixa ele navegar pelos exames e ler o
+// enunciado da peça/questões à vontade ("um gostinho") — só nunca deixa
+// clicar em "Iniciar" de verdade, porque é isso que libera escrever e, no
+// fim, chamar a correção paga (corretor-2fase). previewLocked é lido em
+// updateAnswerLock() (força a trava mesmo que currentTentativa exista, ex.:
+// uma tentativa antiga de quando o plano ainda permitia) e no clique de
+// btnIniciarCaderno (abaixo). corretor-2fase/index.ts também recusa a
+// correção pra quem está nesta situação — defesa em profundidade, caso
+// alguém contorne esta trava do lado do cliente.
+let previewLocked = false;
+
+async function applySegundaFaseLock() {
+  if (!currentSession?.user) return;
+
+  const { data, error } = await client.rpc("get_my_plan_status");
+  if (error || !data || data.length === 0) return;
+  if (data[0].segunda_fase) return;
+
+  previewLocked = true;
+
+  // Troca o texto do "startGate" (mesmo elemento que já trava a escrita até
+  // clicar "Iniciar") uma vez só — updateAnswerLock() roda de novo a cada
+  // troca de item, mas só mexe em hidden/disabled, nunca no conteúdo.
+  const lede = els.startGate.querySelector(".sim2-start-gate-lede");
+  if (lede) {
+    lede.innerHTML =
+      "A 2ª fase completa — escrever a peça/questões e receber correção por IA — é exclusiva dos planos " +
+      "<b>Básico</b> e <b>Pro</b>. Por enquanto você pode navegar pelos enunciados pra conhecer o formato.";
+  }
+  els.btnIniciarCaderno.textContent = "Fazer upgrade";
+
+  // Se já existia uma tentativa em andamento (ex.: começou quando o plano
+  // ainda permitia, e foi rebaixado depois) — atualiza a trava visual na
+  // hora, sem esperar a próxima renderItem().
+  updateAnswerLock();
+}
 
 function showView(name) {
   ["viewPicker", "viewCaderno", "viewCorrigindo", "viewResultado"].forEach(v => {
@@ -697,7 +740,7 @@ async function createTentativa(provaId) {
 // cada renderItem() (currentTentativa não muda de item pra item, mas assim
 // o estado visual sempre bate com o real) e depois do clique em "Iniciar".
 function updateAnswerLock() {
-  const locked = !currentTentativa;
+  const locked = !currentTentativa || previewLocked;
   els.itemResposta.disabled = locked;
   els.answerSheet.classList.toggle("locked", locked);
   els.startGate.hidden = !locked;
@@ -705,6 +748,14 @@ function updateAnswerLock() {
 }
 
 els.btnIniciarCaderno.addEventListener("click", async () => {
+  if (previewLocked) {
+    // Sem modal de planos nesta página (o "bloco grande" mora em
+    // estudos/index.html, ver openPlansModal) — manda pra lá já abrindo o
+    // modal (ver o handler de "#upgrade" no init() de estudos.js).
+    window.location.href = "index.html#upgrade";
+    return;
+  }
+
   els.btnIniciarCaderno.disabled = true;
   els.btnIniciarCaderno.textContent = "Iniciando...";
   try {
