@@ -162,15 +162,6 @@
 
 /* -------------------------------------------------------------- Picker */
 
-.sim2-picker-stamp {
-  display: block;
-  width: 100%;
-  max-width: 280px;
-  height: auto;
-  margin: 0 auto 18px;
-  filter: drop-shadow(0 0 20px rgba(226, 80, 10, 0.25)) drop-shadow(0 0 26px rgba(10, 107, 253, 0.2));
-}
-
 .sim2-picker-form {
   display: flex;
   flex-direction: column;
@@ -278,82 +269,81 @@
 }
 
 /* ---------------------------------------------------------- Como funciona */
+/*
+  Secao secundaria (tier 4) — recolhida por padrao atras de um toggle, em
+  vez de um bloco de 4 cards sempre visivel disputando atencao com o que
+  realmente importa (simulado principal, desempenho, recomendacao). So' o
+  toggle fica visivel de cara; o grid de passos entra no fluxo so' quando
+  expandido (ver #howToggle/#howContent em simulado2fase.js).
+*/
 
 .sim2-how {
-  margin-top: 36px;
+  margin-top: 28px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+}
+
+.sim2-how-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 12px 2px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dim);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.sim2-how-toggle:hover { color: var(--text); }
+
+.sim2-how-chevron { flex-shrink: 0; transition: transform 0.15s ease; }
+.sim2-how-toggle[aria-expanded="true"] .sim2-how-chevron { transform: rotate(180deg); }
+
+/* auto-fit (em vez de media queries por largura de VIEWPORT) porque este
+   grid pode aparecer ao lado de outros elementos mais estreitos que a tela
+   inteira — precisa reagir a largura real do container. */
+.sim2-how-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
   padding-bottom: 8px;
 }
 
-.sim2-how-title {
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-dim);
-  text-align: center;
-  margin: 0 0 18px;
-}
-
-.sim2-how-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-}
-
-@media (min-width: 560px) {
-  .sim2-how-grid { grid-template-columns: 1fr 1fr; }
-}
-
-@media (min-width: 900px) {
-  .sim2-how-grid { grid-template-columns: repeat(4, 1fr); }
-}
-
 .sim2-how-step {
-  background: var(--card);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 18px 20px;
-  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.sim2-how-step:hover {
-  transform: translateY(-2px);
-  border-color: var(--border);
-  box-shadow: 0 14px 28px -18px rgba(0, 0, 0, 0.45);
+  padding: 16px 18px;
 }
 
 .sim2-how-num {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
-  color: #fff;
+  background: var(--card-hover);
+  color: var(--text-dim);
   font-size: 12px;
   font-weight: 700;
   margin-bottom: 10px;
 }
 
-/* Cada etapa com uma cor propria da marca, em vez do mesmo degrade repetido
-   4 vezes — reforca a identidade visual e ajuda a distinguir os passos de
-   relance. */
-.sim2-how-step:nth-child(1) .sim2-how-num { background: var(--logo-orange); }
-.sim2-how-step:nth-child(2) .sim2-how-num { background: var(--logo-purple); }
-.sim2-how-step:nth-child(3) .sim2-how-num { background: var(--logo-blue); }
-.sim2-how-step:nth-child(4) .sim2-how-num {
-  background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
-}
-
 .sim2-how-step h3 {
-  font-size: 14px;
+  font-size: 13.5px;
   margin: 0 0 6px;
   color: var(--text);
 }
 
 .sim2-how-step p {
-  font-size: 13px;
+  font-size: 12.5px;
   line-height: 1.55;
   color: var(--text-dim);
   margin: 0;
@@ -883,3 +873,382 @@
 }
 
 .sim2-resposta-aluno.show { display: block; }
+
+/* -------------------------------------------------------------- Dashboard */
+/*
+  Hierarquia de leitura (o dashboard precisa responder em ~3s "como estou /
+  o que melhorar / o que fazer agora"), de cima pra baixo:
+    0. saudacao + sequencia de dias
+    1. hero — UNICO card de acao (novo OU continuar simulado, nunca os dois)
+    1.5. foco de hoje — uma linha, ponte entre "agir" e "entender"
+    2. desempenho — um painel so', 4 indicadores, nunca vazio de verdade
+    3. historico/evolucao + recomendacao da IA, lado a lado
+    4. como funciona — secundario, recolhido por padrao
+  Poucos paineis grandes (nao uma grade de cards pequenos) e' proposital —
+  ver pedido de reformulacao "menos pagina composta por varios cards".
+*/
+
+.sim2-dash-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.sim2-dash-head h1 { margin: 0; font-size: 23px; }
+
+.sim2-streak-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--logo-orange);
+  background: var(--logo-orange-dim);
+  border: 1px solid var(--logo-orange-glow);
+  border-radius: 999px;
+  padding: 5px 11px;
+}
+
+/* Rotulo pequeno em versalete acima do titulo de um painel — mesmo
+   dispositivo de hierarquia repetido em todo o dashboard (foco, desempenho,
+   historico, recomendacao), pra cada secao se identificar de relance sem
+   precisar de uma borda/cor propria cada uma. */
+.sim2-eyebrow {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-dim);
+}
+
+/* ------------------------------------------------------------- Hero card */
+
+.sim2-hero-card .sim2-card-head h2 { font-size: 19px; }
+
+.sim2-hero-switch-note {
+  margin: -6px 0 18px;
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+
+.sim2-hero-switch-note .sim2-link-btn { display: inline; margin-top: 0; }
+
+/* So' espacamento (nao mexe em cor) — evita que o link herde o cinza do
+   texto acima como .sim2-hero-switch-note faria se fosse reaproveitada
+   direto num <button class="sim2-link-btn">. */
+.sim2-hero-switch-btn { margin-top: 14px; }
+
+/* ----------------------------------------------------------- Card header */
+
+.sim2-card-head { margin-bottom: 18px; }
+.sim2-card-head h2 { margin: 0; font-size: 17px; }
+.sim2-card-head-sub { margin: 4px 0 0; font-size: 13px; color: var(--text-dim); }
+
+.sim2-field-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.sim2-field-row .sim2-field { flex: 1 1 180px; }
+
+.sim2-btn-block { width: 100%; }
+
+/* -------------------------------------------------------- Tipo de treino */
+
+.sim2-mode-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+
+.sim2-mode-tab {
+  flex: 1 1 auto;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  border-radius: 7px;
+  padding: 9px 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.sim2-mode-tab:hover { color: var(--text); }
+
+.sim2-mode-tab.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ---------------------------------------------------------- Continuar */
+
+.sim2-continue-badge {
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--primary);
+  background: var(--primary-dim);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  border-radius: 999px;
+  padding: 4px 11px;
+  margin-bottom: 10px;
+}
+
+.sim2-continue-title { margin: 0 0 4px; font-size: 19px; }
+.sim2-continue-sub { margin: 0 0 18px; color: var(--text-dim); font-size: 13.5px; }
+
+.sim2-continue-progress { margin-bottom: 18px; }
+
+.sim2-continue-progress-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+#continueProgressPct { font-weight: 700; color: var(--text); }
+
+.sim2-progress-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* Roxo solido (nao o degrade de 3 cores da marca) — a barra e' um elemento
+   funcional pequeno e repetido, nao um "momento" da marca; roxo e' a cor de
+   acao/CTA do produto, entao reforca "isto e' progresso rumo ao botao". */
+.sim2-progress-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--primary);
+  transition: width 0.3s ease;
+}
+
+/* -------------------------------------------------------------- Foco de hoje */
+
+.sim2-focus-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin: 14px 0 22px;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.sim2-focus-icon { display: flex; flex-shrink: 0; color: var(--primary); }
+
+.sim2-focus-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.sim2-focus-text { color: var(--text); line-height: 1.5; }
+
+/* ------------------------------------------------------------- Paineis */
+/*
+  Container generico reaproveitado por desempenho/historico/recomendacao —
+  um unico estilo de "moldura" em vez de cada secao inventar a propria, pra
+  a pagina ler como um produto coeso, nao uma colagem de cards diferentes.
+*/
+
+.sim2-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px 22px 24px;
+}
+
+@media (min-width: 600px) {
+  .sim2-panel { padding: 26px 28px 28px; }
+}
+
+.sim2-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.sim2-panel-head h2 { margin: 3px 0 0; font-size: 16px; }
+
+.sim2-panel-head-sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  padding-top: 3px;
+}
+
+.sim2-panel-empty {
+  color: var(--text-dim);
+  font-size: 13.5px;
+  line-height: 1.6;
+  padding: 6px 0 2px;
+}
+
+/* --------------------------------------------------------- Desempenho */
+
+.sim2-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 22px 24px;
+}
+
+.sim2-metric-tile { display: flex; flex-direction: column; gap: 4px; }
+
+.sim2-metric-label { font-size: 12px; color: var(--text-dim); }
+
+.sim2-metric-value {
+  font-size: 25px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.sim2-metric-value.up { color: var(--success); }
+.sim2-metric-value.down { color: var(--error); }
+
+/* Sem dado ainda: valor menor e neutro (nunca "0" nem um traco sozinho sem
+   contexto) — a dica embaixo (.sim2-metric-hint) e' que carrega a
+   explicacao real de como desbloquear o indicador. */
+.sim2-metric-value.empty { font-size: 18px; font-weight: 600; color: var(--text-dim); }
+
+.sim2-metric-hint { font-size: 11.5px; line-height: 1.45; color: var(--text-dim); }
+
+/* ------------------------------------------------------ Historico + IA */
+
+.sim2-two-col {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 18px;
+  align-items: start;
+  margin-top: 18px;
+}
+
+@media (max-width: 900px) {
+  .sim2-two-col { grid-template-columns: 1fr; }
+}
+
+.sim2-chart-wrap { width: 100%; }
+
+.sim2-chart-svg text {
+  font-size: 9px;
+  fill: var(--text-dim);
+  font-family: inherit;
+}
+
+.sim2-chart-svg .sim2-chart-value {
+  font-size: 10px;
+  font-weight: 700;
+  fill: var(--text);
+}
+
+.sim2-chart-svg .sim2-chart-line {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sim2-chart-svg .sim2-chart-area { fill: url(#sim2ChartGradient); }
+.sim2-chart-svg .sim2-chart-dot { fill: var(--primary); stroke: var(--card); stroke-width: 2; }
+
+.sim2-last-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.sim2-last-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.sim2-last-item:hover { border-color: var(--primary); background: var(--card-hover); }
+
+.sim2-last-item-main { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.sim2-last-item-title { font-size: 13.5px; font-weight: 600; color: var(--text); }
+.sim2-last-item-sub { font-size: 11.5px; color: var(--text-dim); }
+
+.sim2-last-item-side { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; }
+.sim2-last-item-nota { font-size: 15px; font-weight: 700; color: var(--text); white-space: nowrap; }
+.sim2-last-item-nota .den { font-weight: 400; color: var(--text-dim); }
+
+.sim2-last-item-tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.sim2-last-item-tag.up { color: var(--success); background: var(--success-dim); }
+.sim2-last-item-tag.mid { color: var(--text-dim); background: var(--card-hover); }
+.sim2-last-item-tag.down { color: var(--error); background: var(--error-dim); }
+
+/* Proximo treino recomendado pela IA */
+
+.sim2-priority-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  padding: 4px 10px;
+  margin-bottom: 12px;
+}
+
+.sim2-priority-badge.high { color: var(--error); background: var(--error-dim); }
+.sim2-priority-badge.medium { color: var(--logo-orange); background: var(--logo-orange-dim); }
+.sim2-priority-badge.low { color: var(--success); background: var(--success-dim); }
+
+.sim2-recommend-area { margin: 0 0 8px; font-size: 17px; }
+
+.sim2-recommend-text {
+  margin: 0 0 20px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-dim);
+}

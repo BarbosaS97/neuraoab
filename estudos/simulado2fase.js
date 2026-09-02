@@ -23,6 +23,7 @@ const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const ALUNO_ID_KEY = "neuraoab_aluno_id";
 const DRAFT_KEY_PREFIX = "sim2_draft_"; // + provaId + "_" + itemId
 const TENTATIVA_PTR_PREFIX = "sim2_tentativa_ptr_"; // + provaId -> tentativa id
+const MODO_KEY_PREFIX = "sim2_modo_"; // + provaId -> "completo" | "peca" | "questoes"
 
 function getAlunoId() {
   try {
@@ -68,6 +69,12 @@ const PAUSE_ICON = `<svg viewBox="0 0 24 24" width="11" height="11" fill="curren
   <rect x="14" y="4" width="4" height="16" rx="1"></rect>
 </svg>`;
 
+const MODO_LABELS = {
+  completo: "Simulado completo",
+  peca: "Peça profissional",
+  questoes: "Questões discursivas",
+};
+
 // -------------------------------------------------------------- Elementos
 
 const els = {
@@ -76,13 +83,60 @@ const els = {
   viewCorrigindo: document.getElementById("viewCorrigindo"),
   viewResultado: document.getElementById("viewResultado"),
 
+  dashGreeting: document.getElementById("dashGreeting"),
+  streakPill: document.getElementById("streakPill"),
+  streakPillText: document.getElementById("streakPillText"),
+
+  heroFormState: document.getElementById("heroFormState"),
+  heroContinueState: document.getElementById("heroContinueState"),
+  heroBackToContinueNote: document.getElementById("heroBackToContinueNote"),
+  btnVoltarContinuar: document.getElementById("btnVoltarContinuar"),
+  btnComecarOutro: document.getElementById("btnComecarOutro"),
+
+  continueBadge: document.getElementById("continueBadge"),
+  continueSub: document.getElementById("continueSub"),
+  continueProgressWrap: document.getElementById("continueProgressWrap"),
+  continueProgressText: document.getElementById("continueProgressText"),
+  continueProgressPct: document.getElementById("continueProgressPct"),
+  continueProgressFill: document.getElementById("continueProgressFill"),
+  btnContinuar: document.getElementById("btnContinuar"),
+
   pickerLoading: document.getElementById("pickerLoading"),
   pickerForm: document.getElementById("pickerForm"),
   pickerEmpty: document.getElementById("pickerEmpty"),
   pickerError: document.getElementById("pickerError"),
   selExame: document.getElementById("selExame"),
   selArea: document.getElementById("selArea"),
+  modeTabs: document.getElementById("modeTabs"),
   btnStart: document.getElementById("btnStart"),
+
+  focusText: document.getElementById("focusText"),
+
+  perfPanelSub: document.getElementById("perfPanelSub"),
+  notaMediaValue: document.getElementById("notaMediaValue"),
+  notaMediaHint: document.getElementById("notaMediaHint"),
+  evolucaoValue: document.getElementById("evolucaoValue"),
+  evolucaoHint: document.getElementById("evolucaoHint"),
+  pecaValue: document.getElementById("pecaValue"),
+  pecaHint: document.getElementById("pecaHint"),
+  questoesValue: document.getElementById("questoesValue"),
+  questoesHint: document.getElementById("questoesHint"),
+
+  historyEmpty: document.getElementById("historyEmpty"),
+  historyEmptyText: document.getElementById("historyEmptyText"),
+  chartWrap: document.getElementById("chartWrap"),
+  lastList: document.getElementById("lastList"),
+
+  recommendEmpty: document.getElementById("recommendEmpty"),
+  recommendEmptyText: document.getElementById("recommendEmptyText"),
+  recommendBody: document.getElementById("recommendBody"),
+  recommendPriority: document.getElementById("recommendPriority"),
+  recommendArea: document.getElementById("recommendArea"),
+  recommendText: document.getElementById("recommendText"),
+  recommendBtn: document.getElementById("recommendBtn"),
+
+  howToggle: document.getElementById("howToggle"),
+  howContent: document.getElementById("howContent"),
 
   cadernoTitulo: document.getElementById("cadernoTitulo"),
   cadernoSub: document.getElementById("cadernoSub"),
@@ -168,6 +222,15 @@ document.addEventListener("keydown", (ev) => {
 
 let currentSession = null;
 
+// Primeiro nome do aluno logado no cabeçalho do dashboard ("Olá, João!") —
+// sem login, fica só o "Olá!" genérico (não dá pra saber o nome de quem
+// nunca criou conta, ver ALUNO_ID acima).
+function renderGreeting() {
+  const nome = currentSession?.user?.user_metadata?.nome?.trim();
+  const primeiroNome = nome ? nome.split(/\s+/)[0] : null;
+  els.dashGreeting.textContent = primeiroNome ? `Olá, ${primeiroNome}! 👋` : "Olá! 👋";
+}
+
 function updateSessionUI() {
   if (currentSession?.user) {
     const label = currentSession.user.user_metadata?.nome || currentSession.user.email || "?";
@@ -179,6 +242,7 @@ function updateSessionUI() {
     els.menuSessionLoggedOut.hidden = false;
     els.menuSessionLoggedIn.hidden = true;
   }
+  renderGreeting();
 }
 
 function showSessionLoginMsg(text) {
@@ -392,11 +456,39 @@ els.timerReset.addEventListener("click", () => {
 
 let provas = [];              // [{id, exam_number, area, valor_total}]
 let currentProva = null;
-let currentItens = [];        // itens (peca + 4 questoes), com oab2_subitens/oab2_criterios embutidos
+let currentItens = [];        // itens da tentativa atual (ja filtrados pelo modo), com oab2_subitens/oab2_criterios embutidos
 let currentTentativa = null;  // {id, status, ...}
+let currentModo = "completo"; // "completo" | "peca" | "questoes" — ver MODO_LABELS
+let currentValorTotal = 0;    // soma do valor_total dos itens de currentItens (== prova.valor_total só no modo completo)
 let drafts = new Map();       // item_id -> texto
 let activeIndex = 0;
 let saveTimer = null;
+
+// ------------------------------------------------------------ Dashboard
+//
+// Estado do painel inicial (Tela 1) — carregado uma vez em initPicker() e
+// recarregado ao voltar do caderno (ver refreshDashboard/backToPicker), pra
+// refletir uma tentativa que acabou de ser iniciada/concluida.
+
+let minhasTentativas = [];   // ver oab2_minhas_tentativas() em schema_fase2_dashboard.sql
+let continueTentativa = null; // a tentativa em_andamento mostrada no card "Continuar simulado", se houver
+
+function dayOfYear(date) {
+  return Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
+}
+
+function fmt1(n) {
+  return (Number(n) || 0).toFixed(1).replace(".", ",");
+}
+
+// Nota do item/tentativa reescalada pra base 10 — necessario pra comparar
+// tentativas de modos diferentes (peca vale menos que o caderno completo)
+// numa unica media/grafico.
+function notaPct(nota, valorTotal) {
+  const vt = Number(valorTotal) || 0;
+  if (vt <= 0) return 0;
+  return (Number(nota) || 0) / vt * 10;
+}
 
 // ------------------------------------------------------------ 1. Picker
 
@@ -426,15 +518,51 @@ function populateAreaSelect() {
 
 els.selExame.addEventListener("change", populateAreaSelect);
 
+// Tipo de treinamento: peca sozinha ou so' as 4 questoes discursivas, alem
+// do caderno completo de sempre — guardado por prova (ver MODO_KEY_PREFIX)
+// pra abrir/retomar sempre no mesmo modo em que a tentativa foi criada.
+let selectedModo = "completo";
+
+els.modeTabs.querySelectorAll(".sim2-mode-tab").forEach(btn => {
+  btn.addEventListener("click", () => {
+    selectedModo = btn.dataset.modo;
+    els.modeTabs.querySelectorAll(".sim2-mode-tab").forEach(b => {
+      const active = b === btn;
+      b.classList.toggle("active", active);
+      b.setAttribute("aria-checked", String(active));
+    });
+  });
+});
+
+const BTN_START_LABEL = "Começar simulado →";
+const BTN_CONTINUAR_LABEL = "Continuar simulado →";
+
 els.btnStart.addEventListener("click", () => {
   const provaId = els.selArea.value;
   const prova = provas.find(p => p.id === provaId);
   if (!prova) return;
+  safeSetItem(MODO_KEY_PREFIX + prova.id, selectedModo);
   els.btnStart.disabled = true;
   els.btnStart.textContent = "Abrindo...";
-  openCaderno(prova).finally(() => {
+  openCaderno(prova, selectedModo).finally(() => {
     els.btnStart.disabled = false;
-    els.btnStart.textContent = "Abrir caderno";
+    els.btnStart.textContent = BTN_START_LABEL;
+  });
+});
+
+els.btnContinuar.addEventListener("click", () => {
+  if (!continueTentativa) return;
+  const prova = provas.find(p => p.id === continueTentativa.prova_id) || {
+    id: continueTentativa.prova_id,
+    exam_number: continueTentativa.exam_number,
+    area: continueTentativa.area,
+    valor_total: continueTentativa.valor_total,
+  };
+  els.btnContinuar.disabled = true;
+  els.btnContinuar.textContent = "Abrindo...";
+  openCaderno(prova, continueTentativa.modo).finally(() => {
+    els.btnContinuar.disabled = false;
+    els.btnContinuar.textContent = BTN_CONTINUAR_LABEL;
   });
 });
 
@@ -452,20 +580,33 @@ async function initPicker() {
 
   if (provas.length === 0) {
     els.pickerEmpty.hidden = false;
-    return;
+  } else {
+    populateExameSelect();
+    populateAreaSelect();
+    els.pickerForm.hidden = false;
   }
 
-  populateExameSelect();
-  populateAreaSelect();
-  els.pickerForm.hidden = false;
+  refreshDashboard();
 }
 
 function backToPicker() {
   currentProva = null;
   currentItens = [];
   currentTentativa = null;
+  currentModo = "completo";
+  currentValorTotal = 0;
   drafts = new Map();
+  // Volta sempre pro estado padrao do hero (continuar, se houver uma
+  // tentativa em andamento) — sem isso, quem tivesse clicado "Prefiro
+  // começar um simulado diferente" antes de entrar no caderno veria o
+  // formulario de novo ao voltar, mesmo logo depois de retomar/criar uma
+  // tentativa.
+  heroShowingForm = false;
   showView("viewPicker");
+  // Uma tentativa pode ter acabado de ser criada/concluida — recarrega o
+  // dashboard pra refletir isso (card "Continuar simulado", estatisticas
+  // etc.). Nao precisa de await: a tela ja mostra o skeleton normalmente.
+  refreshDashboard();
 }
 
 // ----------------------------------------------------------- 2. Caderno
@@ -539,6 +680,8 @@ async function createTentativa(provaId) {
       user_id: currentSession?.user?.id ?? null,
       prova_id: provaId,
       status: "em_andamento",
+      modo: currentModo,
+      valor_total_tentativa: currentValorTotal,
     })
     .select("*")
     .single();
@@ -592,16 +735,28 @@ async function loadDrafts(provaId, tentativaId, itens) {
   });
 }
 
-async function openCaderno(prova) {
+async function openCaderno(prova, modoParam) {
   els.pickerError.hidden = true;
   try {
     currentProva = prova;
-    currentItens = await loadItens(prova.id);
+    // Sem modo explicito (retomada por um caminho que nao passa pelo
+    // picker/card "Continuar simulado"), usa o modo salvo pra esta prova —
+    // sempre reabre no mesmo subconjunto de itens em que a tentativa foi
+    // criada, nunca o caderno completo por engano.
+    currentModo = modoParam || safeGetItem(MODO_KEY_PREFIX + prova.id) || "completo";
+
+    const todosItens = await loadItens(prova.id);
+    currentItens = currentModo === "completo"
+      ? todosItens
+      : todosItens.filter(i => i.tipo === (currentModo === "peca" ? "peca" : "questao"));
+
     if (currentItens.length === 0) {
       els.pickerError.hidden = false;
       els.pickerError.textContent = "Este caderno não tem itens importados ainda.";
       return;
     }
+    currentValorTotal = currentItens.reduce((sum, i) => sum + (Number(i.valor_total) || 0), 0);
+
     currentTentativa = await findTentativa(prova.id);
     if (currentTentativa) {
       await loadDrafts(prova.id, currentTentativa.id, currentItens);
@@ -610,7 +765,8 @@ async function openCaderno(prova) {
     }
 
     activeIndex = 0;
-    els.cadernoTitulo.textContent = `${prova.exam_number}º Exame — ${prova.area}`;
+    const modoSuffix = currentModo === "completo" ? "" : ` — ${MODO_LABELS[currentModo]}`;
+    els.cadernoTitulo.textContent = `${prova.exam_number}º Exame — ${prova.area}${modoSuffix}`;
 
     renderTabs();
     // Mostra a view ANTES de renderItem(): refreshSheetSize() (chamada por
@@ -648,7 +804,7 @@ function renderTabs() {
     els.tabStrip.appendChild(btn);
   });
 
-  els.cadernoSub.textContent = `Valor total: ${fmtValor(currentProva.valor_total)} pontos · ` +
+  els.cadernoSub.textContent = `Valor total: ${fmtValor(currentValorTotal)} pontos · ` +
     `${filledCount}/${currentItens.length} itens preenchidos`;
 }
 
@@ -849,7 +1005,7 @@ els.btnReiniciarCaderno.addEventListener("click", async () => {
   const provaId = currentProva.id;
   currentItens.forEach(item => safeRemoveItem(DRAFT_KEY_PREFIX + provaId + "_" + item.id));
   safeRemoveItem(TENTATIVA_PTR_PREFIX + provaId);
-  await openCaderno(currentProva);
+  await openCaderno(currentProva, currentModo);
 });
 
 // -------------------------------------------------------- 3. Finalizar
@@ -1008,8 +1164,9 @@ function findCriterioDescricao(item, rotulo) {
 
 function renderResultado(notaTotal, resultados) {
   els.notaTotalNum.textContent = fmtValor(notaTotal);
-  els.notaTotalDen.textContent = fmtValor(currentProva.valor_total);
-  els.resultadoSub.textContent = `${currentProva.exam_number}º Exame — ${currentProva.area}`;
+  els.notaTotalDen.textContent = fmtValor(currentValorTotal);
+  const modoSuffix = currentModo === "completo" ? "" : ` — ${MODO_LABELS[currentModo]}`;
+  els.resultadoSub.textContent = `${currentProva.exam_number}º Exame — ${currentProva.area}${modoSuffix}`;
 
   els.resultadoItens.innerHTML = "";
 
@@ -1108,7 +1265,492 @@ function renderResultado(notaTotal, resultados) {
   showView("viewResultado");
 }
 
-els.btnNovoSimulado.addEventListener("click", backToPicker);
+els.btnNovoSimulado.addEventListener("click", () => {
+  els.btnNovoSimulado.textContent = "Novo simulado";
+  backToPicker();
+});
+
+// ------------------------------------------------ Resultado de uma tentativa antiga
+//
+// Reabre a tela de resultado (mesmo renderResultado do fluxo normal) pra
+// uma tentativa ja' corrigida, a partir do card "Últimos simulados" — usa
+// oab2_get_respostas (agora com nota/feedback, ver schema_fase2_dashboard.sql)
+// em vez do resultado em memoria de uma correcao recem-feita.
+async function openResultadoHistorico(t) {
+  try {
+    const [todosItens, respRes] = await Promise.all([
+      loadItens(t.prova_id),
+      client.rpc("oab2_get_respostas", { p_tentativa_id: t.tentativa_id }),
+    ]);
+    if (respRes.error) throw respRes.error;
+    const respostas = respRes.data || [];
+
+    currentProva = { id: t.prova_id, exam_number: t.exam_number, area: t.area, valor_total: t.valor_total };
+    currentModo = t.modo || "completo";
+    currentItens = currentModo === "completo"
+      ? todosItens
+      : todosItens.filter(i => i.tipo === (currentModo === "peca" ? "peca" : "questao"));
+    currentValorTotal = Number(t.valor_total) || currentItens.reduce((sum, i) => sum + (Number(i.valor_total) || 0), 0);
+    drafts = new Map(respostas.map(r => [r.item_id, r.texto_resposta || ""]));
+
+    const resultados = currentItens.map(item => {
+      const r = respostas.find(x => x.item_id === item.id);
+      return {
+        item,
+        ok: true,
+        nota: r ? Number(r.nota) || 0 : 0,
+        feedback_geral: r?.feedback_geral || "",
+        criterios: r?.feedback_criterios || [],
+        alertas_juridicos: r?.alertas_juridicos || [],
+      };
+    });
+
+    els.btnNovoSimulado.textContent = "Voltar ao painel";
+    const notaTotal = t.nota_total != null ? Number(t.nota_total) : resultados.reduce((acc, r) => acc + r.nota, 0);
+    renderResultado(notaTotal, resultados);
+  } catch (err) {
+    alert(`Não foi possível abrir este resultado: ${err.message}`);
+  }
+}
+
+// ---------------------------------------------------------------- Dashboard
+
+async function loadMinhasTentativas() {
+  try {
+    const { data, error } = await client.rpc("oab2_minhas_tentativas", { p_aluno_id: ALUNO_ID });
+    if (error) throw error;
+    minhasTentativas = data || [];
+  } catch (err) {
+    console.error("Erro ao carregar histórico de simulados:", err.message);
+    minhasTentativas = [];
+  }
+}
+
+// Nota por ITEM (peca ou questao) do aluno, nao por tentativa — precisa
+// disso pra separar "desempenho na peça" de "desempenho nas questões" (ver
+// oab2_minhas_respostas_corrigidas em schema_fase2_dashboard_v2.sql), o que
+// oab2_minhas_tentativas() sozinha nao da', porque um simulado "completo"
+// mistura peça e questões numa unica nota.
+let minhasRespostas = [];
+
+async function loadMinhasRespostas() {
+  try {
+    const { data, error } = await client.rpc("oab2_minhas_respostas_corrigidas", { p_aluno_id: ALUNO_ID });
+    if (error) throw error;
+    minhasRespostas = data || [];
+  } catch (err) {
+    console.error("Erro ao carregar desempenho por tipo de item:", err.message);
+    minhasRespostas = [];
+  }
+}
+
+function computeTipoStats() {
+  const porTipo = { peca: [], questao: [] };
+  minhasRespostas.forEach(r => {
+    if (porTipo[r.item_tipo]) porTipo[r.item_tipo].push(notaPct(r.nota, r.valor_total));
+  });
+  const media = arr => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : null;
+  return { peca: media(porTipo.peca), questao: media(porTipo.questao) };
+}
+
+// Dias consecutivos com pelo menos uma tentativa iniciada — conta a partir
+// de hoje; se hoje ainda nao estudou, conta a partir de ontem (senao a
+// sequencia "zeraria" as 00h mesmo pra quem estudou ontem a noite e ainda
+// nao abriu o app hoje).
+function computeStreak() {
+  const dias = new Set(minhasTentativas.map(t => new Date(t.started_at).toDateString()));
+  function contarSequencia(inicio) {
+    let n = 0;
+    const cursor = new Date(inicio);
+    while (dias.has(cursor.toDateString())) {
+      n++;
+      cursor.setDate(cursor.getDate() - 1);
+    }
+    return n;
+  }
+  let streak = contarSequencia(new Date());
+  if (streak === 0 && dias.size > 0) {
+    const ontem = new Date();
+    ontem.setDate(ontem.getDate() - 1);
+    streak = contarSequencia(ontem);
+  }
+  return streak;
+}
+
+function renderStreakPill() {
+  const streak = computeStreak();
+  if (streak <= 0) {
+    els.streakPill.hidden = true;
+    return;
+  }
+  els.streakPillText.textContent = `${streak} dia${streak === 1 ? "" : "s"} seguido${streak === 1 ? "" : "s"}`;
+  els.streakPill.hidden = false;
+}
+
+// -------------------------------------------------------------- Hero card
+//
+// Um unico card de acao — "Novo simulado" (form) OU "Continuar simulado"
+// (progresso), NUNCA os dois ao mesmo tempo, pra nao dividir a atencao do
+// aluno logo na primeira decisao da tela. heroShowingForm existe so' pra
+// deixar o aluno espiar o formulario mesmo tendo uma tentativa em
+// andamento (btnComecarOutro) sem descartar essa tentativa.
+let heroShowingForm = false;
+
+function updateHeroVisibility() {
+  const showContinue = !!continueTentativa && !heroShowingForm;
+  els.heroContinueState.hidden = !showContinue;
+  els.heroFormState.hidden = showContinue;
+  els.heroBackToContinueNote.hidden = !(continueTentativa && heroShowingForm);
+}
+
+async function renderHero() {
+  const emAndamento = minhasTentativas.find(t => t.status === "em_andamento") || null;
+  continueTentativa = emAndamento;
+  updateHeroVisibility();
+
+  if (!emAndamento) return;
+
+  els.continueBadge.textContent = `${emAndamento.exam_number}º Exame`;
+  els.continueSub.textContent = `${emAndamento.area} — ${MODO_LABELS[emAndamento.modo] || MODO_LABELS.completo}`;
+
+  // O ponteiro local (localStorage) pode ter sido perdido (outro
+  // navegador/limpou os dados) — como a tentativa ja veio filtrada pelo
+  // proprio ALUNO_ID (capacidade equivalente), e' seguro reescreve-lo aqui
+  // pra findTentativa() achar de primeira quando o aluno clicar "Continuar".
+  safeSetItem(TENTATIVA_PTR_PREFIX + emAndamento.prova_id, emAndamento.tentativa_id);
+  safeSetItem(MODO_KEY_PREFIX + emAndamento.prova_id, emAndamento.modo);
+
+  els.continueProgressWrap.hidden = true;
+  try {
+    const [itensTodos, respRes] = await Promise.all([
+      loadItens(emAndamento.prova_id),
+      client.rpc("oab2_get_respostas", { p_tentativa_id: emAndamento.tentativa_id }),
+    ]);
+    const respostas = respRes.data || [];
+    const itensModo = emAndamento.modo === "completo"
+      ? itensTodos
+      : itensTodos.filter(i => i.tipo === (emAndamento.modo === "peca" ? "peca" : "questao"));
+
+    const respondidos = itensModo.filter(item => {
+      const r = respostas.find(x => x.item_id === item.id);
+      return r && (r.texto_resposta || "").trim().length > 0;
+    }).length;
+    const pct = itensModo.length ? Math.round((respondidos / itensModo.length) * 100) : 0;
+
+    els.continueProgressText.textContent = `${respondidos} de ${itensModo.length} ${itensModo.length === 1 ? "item respondido" : "itens respondidos"}`;
+    els.continueProgressPct.textContent = `${pct}%`;
+    els.continueProgressFill.style.width = `${pct}%`;
+    els.continueProgressWrap.hidden = false;
+  } catch {
+    // Sem progresso detalhado o card continua funcional, so' sem a barra.
+  }
+}
+
+els.btnVoltarContinuar.addEventListener("click", () => {
+  heroShowingForm = false;
+  updateHeroVisibility();
+});
+
+els.btnComecarOutro.addEventListener("click", () => {
+  heroShowingForm = true;
+  updateHeroVisibility();
+});
+
+// Dicas fixas (sem IA, sem chamada de rede) — mesma logica/motivo de
+// STUDY_TIPS em estudos.js (uma versao anterior recomendando via IA ja
+// causou bugs de contradicao com o card em destaque; estatico e' mais
+// simples e sem custo). So' aparecem no "Foco de hoje" antes do aluno ter
+// dado nenhuma resposta corrigida — a partir dai', o foco vira dado real
+// (ver renderFocusStrip).
+const FASE2_TIPS = [
+  "Estruture sua peça pelo endereçamento antes de escrever o mérito — é onde a banca mais fecha questão zero.",
+  "Releia sua resposta procurando o fundamento legal: cada tese precisa estar amarrada a um artigo ou súmula, não só à sua conclusão.",
+  "Escreva as questões discursivas como se estivesse explicando pra um colega que não sabe o caso — clareza pontua tanto quanto conteúdo.",
+  "Treine no tempo real da prova: administrar as 5 horas entre a peça e as 4 questões também é habilidade que se pratica.",
+  "Releia o padrão de resposta oficial depois de cada correção — entender por que perdeu ponto vale mais do que só ver a nota.",
+];
+
+// ------------------------------------------------------------ Foco de hoje
+//
+// Ponte entre "o que fazer agora" (hero) e "como estou" (desempenho) —
+// compara o proprio desempenho do aluno na peça x nas questões (dado real,
+// nunca inventado) e aponta o lado mais fraco.
+function renderFocusStrip(tipoStats) {
+  const { peca, questao } = tipoStats;
+
+  if (peca == null && questao == null) {
+    const idx = dayOfYear(new Date()) % FASE2_TIPS.length;
+    els.focusText.textContent = FASE2_TIPS[idx];
+  } else if (peca == null || questao == null) {
+    els.focusText.textContent = "Pratique os dois formatos — peça e questões — pra descobrirmos onde focar.";
+  } else if (Math.abs(peca - questao) < 0.5) {
+    els.focusText.textContent = "Seu desempenho está equilibrado entre peça e questões — bom momento pra variar as áreas do Direito.";
+  } else if (peca < questao) {
+    els.focusText.textContent = `Você rende mais nas questões discursivas (${fmt1(questao)}/10) do que na peça (${fmt1(peca)}/10). Vale reforçar a peça profissional hoje.`;
+  } else {
+    els.focusText.textContent = `Você rende mais na peça profissional (${fmt1(peca)}/10) do que nas questões (${fmt1(questao)}/10). Vale reforçar as questões discursivas hoje.`;
+  }
+}
+
+// -------------------------------------------------------------- Desempenho
+
+function setMetricEmpty(valueEl, hintEl, hintText) {
+  valueEl.textContent = "—";
+  valueEl.className = "sim2-metric-value empty";
+  hintEl.textContent = hintText;
+  hintEl.hidden = false;
+}
+
+function setMetricValue(valueEl, hintEl, text, variant) {
+  valueEl.textContent = text;
+  valueEl.className = "sim2-metric-value" + (variant ? " " + variant : "");
+  hintEl.hidden = true;
+}
+
+function renderPerfPanel(tipoStats) {
+  const corrigidas = minhasTentativas.filter(t => t.status === "corrigida");
+
+  els.perfPanelSub.hidden = corrigidas.length === 0;
+  if (corrigidas.length > 0) {
+    els.perfPanelSub.textContent =
+      `com base em ${corrigidas.length} simulado${corrigidas.length === 1 ? "" : "s"} corrigido${corrigidas.length === 1 ? "" : "s"}`;
+  }
+
+  if (corrigidas.length === 0) {
+    setMetricEmpty(els.notaMediaValue, els.notaMediaHint, "Faça seu primeiro simulado corrigido pra desbloquear.");
+  } else {
+    const notas = corrigidas.map(t => notaPct(t.nota_total, t.valor_total));
+    const media = notas.reduce((a, b) => a + b, 0) / notas.length;
+    setMetricValue(els.notaMediaValue, els.notaMediaHint, `${fmt1(media)} / 10`);
+  }
+
+  // Evolucao: media dos ultimos 30 dias vs media dos 30 dias anteriores.
+  const DAY = 86400000;
+  const now = Date.now();
+  const idade = t => now - new Date(t.finished_at || t.started_at).getTime();
+  const recentes = corrigidas.filter(t => idade(t) <= 30 * DAY);
+  const anteriores = corrigidas.filter(t => idade(t) > 30 * DAY && idade(t) <= 60 * DAY);
+  const mediaDe = lista => lista.length
+    ? lista.reduce((a, t) => a + notaPct(t.nota_total, t.valor_total), 0) / lista.length
+    : null;
+  const mediaRecente = mediaDe(recentes);
+  const mediaAnterior = mediaDe(anteriores);
+  const evolucao = (mediaRecente != null && mediaAnterior != null && mediaAnterior > 0)
+    ? ((mediaRecente - mediaAnterior) / mediaAnterior) * 100
+    : null;
+
+  if (evolucao == null) {
+    setMetricEmpty(els.evolucaoValue, els.evolucaoHint, corrigidas.length === 0
+      ? "Aparece depois de simulados em pelo menos 2 momentos diferentes."
+      : "Continue praticando nos próximos dias pra vermos sua evolução.");
+  } else {
+    setMetricValue(els.evolucaoValue, els.evolucaoHint,
+      `${evolucao >= 0 ? "+" : ""}${Math.round(evolucao)}%`, evolucao >= 0 ? "up" : "down");
+  }
+
+  if (tipoStats.peca == null) {
+    setMetricEmpty(els.pecaValue, els.pecaHint, "Pratique uma peça pra ver sua média aqui.");
+  } else {
+    setMetricValue(els.pecaValue, els.pecaHint, `${fmt1(tipoStats.peca)} / 10`);
+  }
+
+  if (tipoStats.questao == null) {
+    setMetricEmpty(els.questoesValue, els.questoesHint, "Pratique as questões discursivas pra ver sua média aqui.");
+  } else {
+    setMetricValue(els.questoesValue, els.questoesHint, `${fmt1(tipoStats.questao)} / 10`);
+  }
+}
+
+// -------------------------------------------------------------- Histórico
+
+function renderHistoryPanel() {
+  const corrigidas = minhasTentativas.filter(t => t.status === "corrigida");
+
+  if (corrigidas.length === 0) {
+    els.historyEmpty.hidden = false;
+    els.historyEmptyText.textContent = "Seu histórico aparece aqui depois do seu primeiro simulado corrigido.";
+    els.chartWrap.hidden = true;
+    els.lastList.hidden = true;
+    return;
+  }
+
+  els.historyEmpty.hidden = true;
+
+  const porDataDesc = corrigidas.slice()
+    .sort((a, b) => new Date(b.finished_at || b.started_at) - new Date(a.finished_at || a.started_at));
+  renderLastList(porDataDesc);
+
+  const porDataAsc = corrigidas.slice()
+    .sort((a, b) => new Date(a.finished_at || a.started_at) - new Date(b.finished_at || b.started_at))
+    .slice(-8);
+  renderChart(porDataAsc);
+}
+
+function renderLastList(corrigidasDesc) {
+  els.lastList.hidden = false;
+  const media = corrigidasDesc.reduce((a, t) => a + notaPct(t.nota_total, t.valor_total), 0) / corrigidasDesc.length;
+
+  els.lastList.innerHTML = "";
+  corrigidasDesc.slice(0, 5).forEach(t => {
+    const item = document.createElement("button");
+    item.type = "button";
+    item.className = "sim2-last-item";
+
+    const main = document.createElement("span");
+    main.className = "sim2-last-item-main";
+    const title = document.createElement("span");
+    title.className = "sim2-last-item-title";
+    title.textContent = `${t.exam_number}º Exame · ${t.area}`;
+    const sub = document.createElement("span");
+    sub.className = "sim2-last-item-sub";
+    const dataStr = t.finished_at ? new Date(t.finished_at).toLocaleDateString("pt-BR") : "—";
+    sub.textContent = `${MODO_LABELS[t.modo] || MODO_LABELS.completo} · ${dataStr}`;
+    main.append(title, sub);
+
+    const side = document.createElement("span");
+    side.className = "sim2-last-item-side";
+    const nota = document.createElement("span");
+    nota.className = "sim2-last-item-nota";
+    nota.innerHTML = `${fmtValor(t.nota_total)} <span class="den">/ ${fmtValor(t.valor_total)}</span>`;
+    const diff = notaPct(t.nota_total, t.valor_total) - media;
+    const tag = document.createElement("span");
+    tag.className = "sim2-last-item-tag " + (diff > 0.3 ? "up" : diff < -0.3 ? "down" : "mid");
+    tag.textContent = diff > 0.3 ? "Acima da sua média" : diff < -0.3 ? "Abaixo da média" : "Na média";
+    side.append(nota, tag);
+
+    item.append(main, side);
+    item.addEventListener("click", () => openResultadoHistorico(t));
+    els.lastList.appendChild(item);
+  });
+}
+
+// Grafico de linha em SVG puro (mesma filosofia do anel de progresso da 1a
+// fase, ver buildProgressRingSVG em estudos.js — sem lib nenhuma).
+function renderChart(corrigidasAsc) {
+  if (corrigidasAsc.length < 2) {
+    els.chartWrap.hidden = true;
+    return;
+  }
+  els.chartWrap.hidden = false;
+
+  const pts = corrigidasAsc.map(t => notaPct(t.nota_total, t.valor_total));
+  const w = 260, h = 150;
+  const padX = 18, padTop = 20, padBottom = 26;
+  const plotTop = padTop, plotBottom = h - padBottom;
+  const stepX = pts.length > 1 ? (w - padX * 2) / (pts.length - 1) : 0;
+
+  const coords = pts.map((v, i) => {
+    const x = padX + i * stepX;
+    const clamped = Math.max(0, Math.min(10, v));
+    const y = plotTop + (plotBottom - plotTop) * (1 - clamped / 10);
+    return [x, y];
+  });
+
+  const linePath = coords.map((c, i) => `${i === 0 ? "M" : "L"} ${c[0].toFixed(1)} ${c[1].toFixed(1)}`).join(" ");
+  const lastX = coords[coords.length - 1][0].toFixed(1);
+  const firstX = coords[0][0].toFixed(1);
+  const areaPath = `${linePath} L ${lastX} ${plotBottom} L ${firstX} ${plotBottom} Z`;
+
+  const marksSvg = coords.map((c, i) => {
+    const dataLabel = new Date(corrigidasAsc[i].finished_at || corrigidasAsc[i].started_at)
+      .toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
+    return `<circle class="sim2-chart-dot" cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" r="3.5"></circle>` +
+      `<text class="sim2-chart-value" x="${c[0].toFixed(1)}" y="${(c[1] - 8).toFixed(1)}" text-anchor="middle">${fmt1(pts[i])}</text>` +
+      `<text x="${c[0].toFixed(1)}" y="${h - 6}" text-anchor="middle">${dataLabel}</text>`;
+  }).join("");
+
+  els.chartWrap.innerHTML = `
+    <svg class="sim2-chart-svg" viewBox="0 0 ${w} ${h}" width="100%" height="${h}" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <linearGradient id="sim2ChartGradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" style="stop-color:var(--primary);stop-opacity:0.28"></stop>
+          <stop offset="100%" style="stop-color:var(--primary);stop-opacity:0"></stop>
+        </linearGradient>
+      </defs>
+      <path class="sim2-chart-area" d="${areaPath}"></path>
+      <path class="sim2-chart-line" d="${linePath}"></path>
+      ${marksSvg}
+    </svg>`;
+}
+
+// ------------------------------------------------- Próximo treino (IA)
+
+function focarPickerNaArea(area) {
+  heroShowingForm = true;
+  updateHeroVisibility();
+  const prova = provas.find(p => p.area === area);
+  if (prova) {
+    els.selExame.value = String(prova.exam_number);
+    populateAreaSelect();
+    els.selArea.value = prova.id;
+  }
+  document.querySelector(".sim2-hero-card")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// Recomendacao real (area com a pior media do proprio aluno, comparada as
+// demais) — sem IA generativa, so' os dados que ja existem, com um nivel de
+// prioridade calculado a partir da propria nota. So' aparece com pelo menos
+// 2 areas distintas corrigidas (senao "a pior area" nao significa nada —
+// seria so' a unica area praticada).
+function renderRecommendation() {
+  const corrigidas = minhasTentativas.filter(t => t.status === "corrigida");
+
+  const porArea = new Map();
+  corrigidas.forEach(t => {
+    if (!porArea.has(t.area)) porArea.set(t.area, []);
+    porArea.get(t.area).push(notaPct(t.nota_total, t.valor_total));
+  });
+
+  if (porArea.size < 2) {
+    els.recommendEmpty.hidden = false;
+    els.recommendBody.hidden = true;
+    els.recommendEmptyText.textContent = corrigidas.length === 0
+      ? "Faça alguns simulados pra IA identificar seu próximo treino recomendado."
+      : "Pratique pelo menos 2 áreas do Direito pra recebermos uma recomendação.";
+    return;
+  }
+
+  let pior = null;
+  porArea.forEach((valores, area) => {
+    const media = valores.reduce((a, b) => a + b, 0) / valores.length;
+    if (!pior || media < pior.media) pior = { area, media };
+  });
+
+  els.recommendEmpty.hidden = true;
+  els.recommendBody.hidden = false;
+
+  const priority = pior.media < 5 ? { label: "Alta prioridade", cls: "high" }
+    : pior.media < 7 ? { label: "Prioridade média", cls: "medium" }
+    : { label: "Reforço leve", cls: "low" };
+
+  els.recommendPriority.textContent = priority.label;
+  els.recommendPriority.className = "sim2-priority-badge " + priority.cls;
+  els.recommendArea.textContent = pior.area;
+  els.recommendText.textContent = priority.cls === "low"
+    ? `Seu desempenho está sólido em todas as áreas praticadas — ${pior.area} (${fmt1(pior.media)} / 10) é a que mais pode subir. Treine pra manter o ritmo.`
+    : `${pior.area} está com a nota média mais baixa entre suas áreas praticadas (${fmt1(pior.media)} / 10). Focar nela agora é o que mais eleva sua nota geral.`;
+  els.recommendBtn.textContent = `Treinar ${pior.area} agora →`;
+  els.recommendBtn.onclick = () => focarPickerNaArea(pior.area);
+}
+
+// -------------------------------------------------------- Como funciona
+
+els.howToggle.addEventListener("click", () => {
+  const expanded = els.howToggle.getAttribute("aria-expanded") === "true";
+  els.howToggle.setAttribute("aria-expanded", String(!expanded));
+  els.howContent.hidden = expanded;
+});
+
+async function refreshDashboard() {
+  await Promise.all([loadMinhasTentativas(), loadMinhasRespostas()]);
+  const tipoStats = computeTipoStats();
+  renderStreakPill();
+  await renderHero();
+  renderFocusStrip(tipoStats);
+  renderPerfPanel(tipoStats);
+  renderHistoryPanel();
+  renderRecommendation();
+}
 
 // ---------------------------------------------------------------- Init
 

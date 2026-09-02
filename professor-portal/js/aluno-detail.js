@@ -31,6 +31,11 @@ function notaClass(nota, valorMax) {
   return "";
 }
 
+// Tipo de treinamento da tentativa (ver "Novo simulado" em
+// estudos/simulado2fase.js) — só a peça, só as questões, ou o caderno
+// completo (padrão de sempre, por isso sem rótulo próprio abaixo).
+const MODO_LABELS = { peca: "Peça profissional", questoes: "Questões discursivas" };
+
 function getStudentId() {
   return new URLSearchParams(window.location.search).get("id");
 }
@@ -532,7 +537,7 @@ async function loadFase2(studentId) {
 
   const { data: tentativas, error } = await client
     .from("oab2_tentativas")
-    .select("id, status, nota_total, started_at, finished_at, oab2_provas(exam_number, area, valor_total)")
+    .select("id, status, nota_total, modo, valor_total_tentativa, started_at, finished_at, oab2_provas(exam_number, area, valor_total)")
     .eq("user_id", studentId)
     .order("started_at", { ascending: false });
 
@@ -559,9 +564,12 @@ async function loadFase2(studentId) {
     const summary = document.createElement("summary");
     const prova = tentativa.oab2_provas;
 
+    const modoLabel = MODO_LABELS[tentativa.modo];
     const titleSpan = document.createElement("span");
     titleSpan.className = "tentativa-summary-title";
-    titleSpan.textContent = prova ? `Exame ${prova.exam_number} — ${prova.area}` : "Caderno";
+    titleSpan.textContent = prova
+      ? `Exame ${prova.exam_number} — ${prova.area}${modoLabel ? ` (${modoLabel})` : ""}`
+      : "Caderno";
 
     const statusLabels = { em_andamento: "Em andamento", corrigindo: "Corrigindo", corrigida: "Corrigida" };
     const statusBadge = document.createElement("span");
@@ -574,7 +582,11 @@ async function loadFase2(studentId) {
 
     const notaSpan = document.createElement("span");
     notaSpan.className = "tentativa-summary-nota";
-    const valorMax = prova?.valor_total;
+    // valor_total_tentativa (schema_fase2_dashboard.sql) reflete o que essa
+    // tentativa especifica valia — pode ser menor que o caderno inteiro num
+    // treino de "so' a peca"/"so' as questoes"; sem isso, uma peca perfeita
+    // apareceria como "4,00 / 10,00" (usando o valor do caderno completo).
+    const valorMax = tentativa.valor_total_tentativa ?? prova?.valor_total;
     notaSpan.textContent = tentativa.nota_total != null
       ? `${fmtValor(tentativa.nota_total)} / ${fmtValor(valorMax)}`
       : "—";

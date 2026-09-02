@@ -2827,20 +2827,18 @@
 
     loginSubmitBtn.textContent = "Entrando...";
 
-    // captchaToken: sem isso, o Turnstile so' controlava o BOTAO desta tela —
-    // nada impedia chamar POST /auth/v1/token direto (curl, script) pulando
-    // a validacao inteira. Passar o token aqui so' tem efeito de verdade se
-    // "Enable CAPTCHA protection" (Authentication > Settings, com a MESMA
-    // site key/secret key do Turnstile ja' usadas) estiver ligado no
-    // dashboard do Supabase — sem isso ligado, o GoTrue ignora o campo e
-    // nada muda. A validacao via Edge Function acima continua existindo (da'
-    // feedback mais cedo, sem gastar tentativa de login), mas deixou de ser
-    // a UNICA linha de defesa.
-    const { data, error } = await client.auth.signInWithPassword({
-      email,
-      password,
-      options: { captchaToken: tokenToValidate },
-    });
+    // NAO passar captchaToken aqui pro signInWithPassword: o mesmo token so'
+    // serve UMA vez (Turnstile invalida no primeiro uso), e a chamada a
+    // validate-turnstile logo acima JA' o consumiu verificando com a API do
+    // Cloudflare. Mandar de novo aqui faria o GoTrue tentar validar um token
+    // ja' gasto e falhar com 400 em TODO login, mesmo com e-mail/senha
+    // corretos (foi exatamente isso que quebrou o login em produção — ver
+    // histórico). Se um dia quiser exigir o token no proprio endpoint do
+    // Supabase Auth (mais forte que so' a Edge Function), a Edge Function
+    // validate-turnstile precisa ser removida do fluxo (ou passar a so'
+    // checar formato, nao consumir via siteverify), nunca as duas chamadas
+    // validando o MESMO token.
+    const { data, error } = await client.auth.signInWithPassword({ email, password });
     if (error || !data?.user) {
       loginSubmitBtn.textContent = "Entrar";
       showLoginError("E-mail ou senha inválidos.");
