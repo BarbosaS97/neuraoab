@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=41">
+<link rel="stylesheet" href="style.css?v=42">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -260,21 +260,32 @@
           <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
           Voltar aos planos
         </button>
-        <h3 id="checkoutTitle">Assinar</h3>
+
+        <div class="checkout-summary">
+          <div class="checkout-summary-plan">
+            <span class="checkout-summary-label">Assinando</span>
+            <strong id="checkoutTitle">Plano</strong>
+          </div>
+          <div class="checkout-summary-price">
+            <strong id="checkoutSummaryAmount">R$ 0</strong>
+            <span id="checkoutSummaryPeriod">/mês</span>
+          </div>
+        </div>
 
         <form id="checkoutForm">
           <div class="checkout-field">
             <label>Ciclo de cobrança</label>
-            <div class="checkout-radio-row">
-              <label class="checkout-radio"><input type="radio" name="checkoutCiclo" value="MONTHLY" checked> Mensal — <b id="checkoutPriceMonthly"></b></label>
-              <label class="checkout-radio"><input type="radio" name="checkoutCiclo" value="YEARLY"> Anual — <b id="checkoutPriceYearly"></b></label>
+            <div class="checkout-segmented" id="checkoutCicloSegmented">
+              <button type="button" class="checkout-seg-btn active" data-ciclo="MONTHLY">Mensal</button>
+              <button type="button" class="checkout-seg-btn" data-ciclo="YEARLY">Anual <span class="checkout-seg-badge">2 meses grátis</span></button>
             </div>
           </div>
           <div class="checkout-field">
             <label>Forma de pagamento</label>
-            <div class="checkout-radio-row">
-              <label class="checkout-radio"><input type="radio" name="checkoutBillingType" value="PIX" checked> PIX</label>
-              <label class="checkout-radio"><input type="radio" name="checkoutBillingType" value="BOLETO"> Boleto</label>
+            <div class="checkout-segmented checkout-segmented-3" id="checkoutBillingSegmented">
+              <button type="button" class="checkout-seg-btn active" data-billing="PIX">PIX</button>
+              <button type="button" class="checkout-seg-btn" data-billing="BOLETO">Boleto</button>
+              <button type="button" class="checkout-seg-btn" data-billing="CREDIT_CARD">Cartão</button>
             </div>
           </div>
           <div class="checkout-field">
@@ -285,7 +296,7 @@
             <label for="checkoutCpf">CPF</label>
             <input type="text" id="checkoutCpf" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" required>
           </div>
-          <button type="submit" class="btn-primary" id="checkoutSubmitBtn">Gerar cobrança</button>
+          <button type="submit" class="btn-primary checkout-submit" id="checkoutSubmitBtn">Gerar cobrança</button>
           <p class="checkout-msg" id="checkoutMsg"></p>
         </form>
 
@@ -295,7 +306,14 @@
             <button type="button" class="checkout-copy-btn" id="checkoutCopyPixBtn">Copiar código PIX</button>
           </div>
           <div id="checkoutBoletoResult" hidden>
-            <a id="checkoutBoletoLink" class="btn-primary" target="_blank" rel="noopener">Abrir boleto</a>
+            <a id="checkoutBoletoLink" class="btn-primary checkout-submit" target="_blank" rel="noopener">Abrir boleto</a>
+          </div>
+          <div id="checkoutCardResult" hidden>
+            <!-- Dados do cartão NUNCA passam pelo NeuraOAB — preenchidos direto
+                 na página segura do próprio Asaas (ver comentário em
+                 criar-cobranca/index.ts sobre PCI-DSS). -->
+            <p class="checkout-card-note">Por segurança, os dados do seu cartão são preenchidos direto na página do Asaas — nunca passam pelo NeuraOAB.</p>
+            <a id="checkoutCardLink" class="btn-primary checkout-submit" target="_blank" rel="noopener">Inserir dados do cartão</a>
           </div>
           <p class="checkout-status" id="checkoutStatus">Assim que o pagamento for confirmado, seu plano é liberado automaticamente — pode fechar esta janela e continuar estudando enquanto isso.</p>
         </div>
@@ -566,7 +584,7 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=32"></script>
+<script src="estudos.js?v=33"></script>
 <script src="dr-laureano.js?v=11"></script>
 </body>
 </html>

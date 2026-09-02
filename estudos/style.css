@@ -2668,7 +2668,7 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 /* Formulário de assinatura — abre DENTRO do mesmo modal de planos (ver
    openCheckout/closeCheckout em estudos.js), no lugar do grid de cards. */
 
-.checkout-view { max-width: 380px; margin: 0 auto; }
+.checkout-view { max-width: 400px; margin: 0 auto; }
 
 .checkout-back {
   display: inline-flex;
@@ -2681,20 +2681,43 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   font-family: inherit;
   cursor: pointer;
   padding: 0;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
+  transition: color 0.15s ease;
 }
 
 .checkout-back:hover { color: var(--text); }
 
-.checkout-view h3 { margin: 0 0 18px; font-size: 16px; font-weight: 800; }
+/* Resumo fixo no topo (plano + preço) — atualiza ao vivo conforme o ciclo
+   escolhido (ver updateCheckoutSummary em estudos.js), pra sempre deixar
+   claro quanto vai ser cobrado antes do clique final. */
+.checkout-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--card-hover);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 22px;
+}
 
-.checkout-field { margin-bottom: 14px; }
+.checkout-summary-plan { display: flex; flex-direction: column; gap: 3px; }
+.checkout-summary-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.03em; }
+.checkout-summary-plan strong { font-size: 15px; font-weight: 800; }
+
+.checkout-summary-price { text-align: right; white-space: nowrap; }
+.checkout-summary-price strong { font-size: 18px; font-weight: 800; color: var(--primary); }
+.checkout-summary-price span { font-size: 12px; color: var(--text-dim); }
+
+.checkout-field { margin-bottom: 18px; }
 
 .checkout-field > label {
   display: block;
   font-size: 12px;
+  font-weight: 600;
   color: var(--text-dim);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .checkout-field input[type="text"] {
@@ -2702,30 +2725,76 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   background: var(--bg);
   color: var(--text);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 9px 11px;
-  font-size: 13.5px;
+  border-radius: 9px;
+  padding: 11px 13px;
+  font-size: 14px;
   font-family: inherit;
+  transition: border-color 0.15s ease;
 }
 
 .checkout-field input[type="text"]:focus { outline: none; border-color: var(--primary); }
 
-.checkout-radio-row { display: flex; flex-direction: column; gap: 8px; }
-
-.checkout-radio {
+/* Controle segmentado (mesmo padrão visual do toggle de tema, ver
+   .mode-switch/.mode-btn) — troca os radios antigos por botões maiores e
+   mais fáceis de comparar lado a lado. */
+.checkout-segmented {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: var(--text);
-  cursor: pointer;
+  gap: 4px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 4px;
 }
 
-.checkout-radio input { accent-color: var(--primary); width: 15px; height: 15px; }
+.checkout-segmented-3 { flex-wrap: wrap; }
+
+.checkout-seg-btn {
+  flex: 1;
+  min-width: 84px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  padding: 9px 6px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.checkout-seg-btn:hover { color: var(--text); }
+.checkout-seg-btn.active { background: var(--primary); color: #fff; }
+
+.checkout-seg-badge {
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--success-dim);
+  color: var(--success);
+}
+
+.checkout-seg-btn.active .checkout-seg-badge { background: rgba(255, 255, 255, 0.22); color: #fff; }
+
+.checkout-submit {
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  padding: 12px 0;
+  font-size: 14px;
+}
 
 .checkout-msg {
-  margin: 12px 0 0;
-  padding: 9px 12px;
+  margin: 14px 0 0;
+  padding: 10px 12px;
   border-radius: 8px;
   font-size: 12.5px;
   background: var(--error-dim);
@@ -2735,7 +2804,7 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 
 .checkout-msg.show { display: block; }
 
-.checkout-result { margin-top: 18px; text-align: center; }
+.checkout-result { margin-top: 22px; text-align: center; }
 
 .checkout-qr-image {
   display: block;
@@ -2754,17 +2823,25 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: 9px;
-  padding: 10px 0;
+  padding: 11px 0;
   font-size: 13px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
+  transition: border-color 0.15s ease;
 }
 
 .checkout-copy-btn:hover { border-color: var(--primary); }
 
+.checkout-card-note {
+  margin: 0 0 14px;
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
 .checkout-status {
-  margin: 14px 0 0;
+  margin: 16px 0 0;
   font-size: 12px;
   color: var(--text-dim);
   line-height: 1.5;

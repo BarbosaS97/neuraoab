@@ -35,9 +35,11 @@ const plansModalNote = document.getElementById("plansModalNote");
 const checkoutView = document.getElementById("checkoutView");
 const checkoutBackBtn = document.getElementById("checkoutBackBtn");
 const checkoutTitle = document.getElementById("checkoutTitle");
+const checkoutSummaryAmount = document.getElementById("checkoutSummaryAmount");
+const checkoutSummaryPeriod = document.getElementById("checkoutSummaryPeriod");
+const checkoutCicloSegmented = document.getElementById("checkoutCicloSegmented");
+const checkoutBillingSegmented = document.getElementById("checkoutBillingSegmented");
 const checkoutForm = document.getElementById("checkoutForm");
-const checkoutPriceMonthly = document.getElementById("checkoutPriceMonthly");
-const checkoutPriceYearly = document.getElementById("checkoutPriceYearly");
 const checkoutNome = document.getElementById("checkoutNome");
 const checkoutCpf = document.getElementById("checkoutCpf");
 const checkoutSubmitBtn = document.getElementById("checkoutSubmitBtn");
@@ -48,6 +50,8 @@ const checkoutQrImage = document.getElementById("checkoutQrImage");
 const checkoutCopyPixBtn = document.getElementById("checkoutCopyPixBtn");
 const checkoutBoletoResult = document.getElementById("checkoutBoletoResult");
 const checkoutBoletoLink = document.getElementById("checkoutBoletoLink");
+const checkoutCardResult = document.getElementById("checkoutCardResult");
+const checkoutCardLink = document.getElementById("checkoutCardLink");
 const checkoutStatus = document.getElementById("checkoutStatus");
 const profilePlanBadge = document.getElementById("profilePlanBadge");
 const profilePlanUpgrade = document.getElementById("profilePlanUpgrade");
@@ -181,20 +185,56 @@ function closePlansModal() {
 // -------------------------------------------------------------- Checkout
 //
 // Assinatura de verdade via Asaas (Edge Functions criar-cobranca/
-// webhook-asaas, ver supabase/schema_asaas.sql) — PIX ou boleto, sem
-// cartão de crédito (exigiria tokenização/PCI própria, fora de escopo).
+// webhook-asaas, ver supabase/schema_asaas.sql) — PIX, boleto ou cartão de
+// crédito. Cartão NUNCA é preenchido nesta tela: o botão leva pra página
+// hospedada do próprio Asaas (ver comentário grande em criar-cobranca/
+// index.ts sobre PCI-DSS SAQ-D — mandar dado de cartão cru pro nosso
+// servidor exigiria uma certificação que este projeto não tem).
+//
 // Preços aqui são só pra EXIBIÇÃO — duplicados do mesmo mapa fixo que
 // existe em criar-cobranca/index.ts (mesmo espírito de plans-grid acima:
 // não há uma fonte única de preço compartilhada ainda); quem decide o
 // valor cobrado de verdade é sempre o servidor, nunca o que esta tela manda.
 const CHECKOUT_PRICES = {
-  basico: { MONTHLY: "R$ 11,99/mês", YEARLY: "R$ 119,90/ano" },
-  pro: { MONTHLY: "R$ 19,99/mês", YEARLY: "R$ 199,90/ano" },
+  basico: { MONTHLY: "R$ 11,99", YEARLY: "R$ 119,90" },
+  pro: { MONTHLY: "R$ 19,99", YEARLY: "R$ 199,90" },
 };
+const CHECKOUT_PERIOD_LABEL = { MONTHLY: "/mês", YEARLY: "/ano" };
 const CHECKOUT_PLAN_LABELS = { basico: "Básico", pro: "Pro" };
 
 let checkoutPlano = null;
+let checkoutCiclo = "MONTHLY";
+let checkoutBillingType = "PIX";
 let checkoutPollTimer = null;
+
+// Controle segmentado genérico (ver .checkout-segmented no CSS) — troca a
+// classe "active" pro botão clicado dentro do MESMO grupo, lê o valor de
+// volta de data-ciclo/data-billing. Usado tanto pro ciclo quanto pra forma
+// de pagamento, único jeito de eles diferirem é o dataset lido.
+function setupSegmented(container, datasetKey, onChange) {
+  container.querySelectorAll(".checkout-seg-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      container.querySelectorAll(".checkout-seg-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      onChange(btn.dataset[datasetKey]);
+    });
+  });
+}
+
+function updateCheckoutSummary() {
+  checkoutTitle.textContent = `Plano ${CHECKOUT_PLAN_LABELS[checkoutPlano] ?? ""}`;
+  checkoutSummaryAmount.textContent = CHECKOUT_PRICES[checkoutPlano]?.[checkoutCiclo] ?? "";
+  checkoutSummaryPeriod.textContent = CHECKOUT_PERIOD_LABEL[checkoutCiclo];
+}
+
+setupSegmented(checkoutCicloSegmented, "ciclo", (value) => {
+  checkoutCiclo = value;
+  updateCheckoutSummary();
+});
+
+setupSegmented(checkoutBillingSegmented, "billing", (value) => {
+  checkoutBillingType = value;
+});
 
 function stopCheckoutPolling() {
   if (checkoutPollTimer) {
@@ -229,13 +269,25 @@ function startCheckoutPolling(plano) {
   }, 6000);
 }
 
+function resetSegmented(container, activeValue, datasetKey) {
+  container.querySelectorAll(".checkout-seg-btn").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset[datasetKey] === activeValue);
+  });
+}
+
 function openCheckout(plano) {
   checkoutPlano = plano;
+  checkoutCiclo = "MONTHLY";
+  checkoutBillingType = "PIX";
+  resetSegmented(checkoutCicloSegmented, "MONTHLY", "ciclo");
+  resetSegmented(checkoutBillingSegmented, "PIX", "billing");
+
   checkoutForm.reset();
   checkoutForm.hidden = false;
   checkoutResult.hidden = true;
   checkoutPixResult.hidden = true;
   checkoutBoletoResult.hidden = true;
+  checkoutCardResult.hidden = true;
   checkoutQrImage.src = "";
   checkoutBoletoLink.textContent = "Abrir boleto";
   checkoutMsg.className = "checkout-msg";
@@ -246,9 +298,7 @@ function openCheckout(plano) {
   checkoutSubmitBtn.textContent = "Gerar cobrança";
   stopCheckoutPolling();
 
-  checkoutTitle.textContent = `Assinar plano ${CHECKOUT_PLAN_LABELS[plano]}`;
-  checkoutPriceMonthly.textContent = CHECKOUT_PRICES[plano].MONTHLY;
-  checkoutPriceYearly.textContent = CHECKOUT_PRICES[plano].YEARLY;
+  updateCheckoutSummary();
   checkoutNome.value = profNome.value || currentSession?.user?.user_metadata?.nome || "";
 
   plansGrid.hidden = true;
@@ -292,8 +342,8 @@ checkoutForm.addEventListener("submit", async (ev) => {
 
   const nome = checkoutNome.value.trim();
   const cpfCnpj = checkoutCpf.value.replace(/\D/g, "");
-  const ciclo = checkoutForm.querySelector('input[name="checkoutCiclo"]:checked').value;
-  const billingType = checkoutForm.querySelector('input[name="checkoutBillingType"]:checked').value;
+  const ciclo = checkoutCiclo;
+  const billingType = checkoutBillingType;
 
   if (!nome) {
     showCheckoutMsg("Informe seu nome completo.");
@@ -332,12 +382,18 @@ checkoutForm.addEventListener("submit", async (ev) => {
     checkoutPixResult.hidden = false;
     checkoutQrImage.src = `data:image/png;base64,${data.pixQrImage}`;
     checkoutCopyPixBtn.dataset.payload = data.pixPayload || "";
+  } else if (data.billingType === "CREDIT_CARD" && data.invoiceUrl) {
+    // Dados do cartão são preenchidos na página do próprio Asaas — ver
+    // comentário grande em criar-cobranca/index.ts sobre PCI-DSS.
+    checkoutCardResult.hidden = false;
+    checkoutCardLink.href = data.invoiceUrl;
   } else if (data.boletoUrl) {
     checkoutBoletoResult.hidden = false;
     checkoutBoletoLink.href = data.boletoUrl;
   } else if (data.invoiceUrl) {
     // Sem QR/boleto por algum motivo (ex.: pixQrCode falhou do lado do
-    // Asaas) — invoiceUrl sempre existe, é o link universal de fallback.
+    // Asaas mesmo após as tentativas em criar-cobranca/index.ts) —
+    // invoiceUrl sempre existe, é o link universal de fallback.
     checkoutBoletoResult.hidden = false;
     checkoutBoletoLink.href = data.invoiceUrl;
     checkoutBoletoLink.textContent = "Abrir cobrança";

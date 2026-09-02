@@ -20,6 +20,15 @@
 // userId mandado pelo cliente deixaria qualquer um comprar um plano "pra"
 // outra pessoa (ou fingir ser admin/outro aluno).
 //
+// CREDIT_CARD é só mais um billingType passado pro Asaas — esta function
+// NUNCA recebe nem repassa número de cartão, validade ou CVV. Decisão
+// consciente: mandar dado de cartão cru direto pro Asaas via API exigiria
+// nosso lado ser certificado PCI-DSS SAQ-D (o nível mais rigoroso — a
+// própria documentação do Asaas confirma isso, já que eles não oferecem
+// tokenização client-side). Em vez disso, o aluno completa o pagamento com
+// cartão na página hospedada do próprio Asaas (invoiceUrl da cobrança) —
+// nenhum dado de cartão passa perto do NeuraOAB em nenhum momento.
+//
 // Secrets necessários (Project Settings > Edge Functions > Secrets):
 // ASAAS_API_KEY, ASAAS_ENV ("production" ou "sandbox" — controla a base
 // URL abaixo). ASAAS_WEBHOOK_TOKEN não é usado aqui (só em webhook-asaas).
@@ -132,6 +141,31 @@ interface CreatePayload {
   cpfCnpj?: string;
 }
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Espera um pouco e tenta de novo — tanto a 1ª cobrança de uma assinatura
+// recém-criada quanto o QR code PIX de um pagamento recém-criado podem não
+// estar prontos no exato instante em que o Asaas devolve o id (geração
+// assíncrona do lado deles) — sem isso, a chamada seguinte falha
+// silenciosamente e cai num fallback pior (link genérico em vez do QR code
+// embutido na tela, que foi exatamente o bug relatado na primeira versão
+// desta function).
+async function withRetry<T>(
+  fn: () => Promise<T>,
+  isReady: (result: T) => boolean,
+  attempts = 4,
+  delayMs = 1500,
+): Promise<T> {
+  let result = await fn();
+  for (let i = 1; i < attempts && !isReady(result); i++) {
+    await sleep(delayMs);
+    result = await fn();
+  }
+  return result;
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: CORS_HEADERS });
@@ -175,8 +209,8 @@ Deno.serve(async (req: Request) => {
   if (ciclo !== "MONTHLY" && ciclo !== "YEARLY") {
     return jsonResponse({ error: "\"ciclo\" precisa ser 'MONTHLY' ou 'YEARLY'." }, 400);
   }
-  if (billingType !== "PIX" && billingType !== "BOLETO") {
-    return jsonResponse({ error: "\"billingType\" precisa ser 'PIX' ou 'BOLETO'." }, 400);
+  if (billingType !== "PIX" && billingType !== "BOLETO" && billingType !== "CREDIT_CARD") {
+    return jsonResponse({ error: "\"billingType\" precisa ser 'PIX', 'BOLETO' ou 'CREDIT_CARD'." }, 400);
   }
   if (!nome) {
     return jsonResponse({ error: "Informe seu nome completo." }, 400);
@@ -238,7 +272,10 @@ Deno.serve(async (req: Request) => {
   // 3. Primeira cobrança gerada pela assinatura — criar a assinatura não
   // devolve o pagamento em si (a API do Asaas não junta os dois na mesma
   // resposta), então busca à parte.
-  const paymentsResult = await asaasFetch(`/subscriptions/${subscriptionId}/payments`);
+  const paymentsResult = await withRetry(
+    () => asaasFetch(`/subscriptions/${subscriptionId}/payments`),
+    (r) => r.ok && Array.isArray(r.data?.data) && r.data.data.length > 0,
+  );
   const firstPayment =
     paymentsResult.ok && Array.isArray(paymentsResult.data?.data) ? paymentsResult.data.data[0] : null;
   if (!firstPayment) {
@@ -254,15 +291,25 @@ Deno.serve(async (req: Request) => {
   let boletoUrl: string | null = null;
 
   if (billingType === "PIX") {
-    const pixResult = await asaasFetch(`/payments/${firstPayment.id}/pixQrCode`);
+    const pixResult = await withRetry(
+      () => asaasFetch(`/payments/${firstPayment.id}/pixQrCode`),
+      (r) => r.ok && !!r.data?.encodedImage,
+    );
     if (pixResult.ok) {
       pixPayload = pixResult.data?.payload ?? null;
       pixQrImage = pixResult.data?.encodedImage ?? null;
       pixExpiration = pixResult.data?.expirationDate ?? null;
+    } else {
+      console.error("Falha ao buscar QR code PIX após retries:", pixResult.status, pixResult.data);
     }
-  } else {
+  } else if (billingType === "BOLETO") {
     boletoUrl = firstPayment.bankSlipUrl ?? null;
   }
+  // CREDIT_CARD: nenhum campo específico aqui de propósito — os dados do
+  // cartão NUNCA passam por este servidor (decisão consciente, ver
+  // comentário no topo do arquivo sobre PCI-DSS SAQ-D). O aluno completa o
+  // pagamento na própria página hospedada do Asaas (firstPayment.invoiceUrl,
+  // sempre presente em qualquer billingType), preenchendo o cartão lá.
 
   const { data: cobranca, error: cobrancaError } = await adminClient
     .from("cobrancas")

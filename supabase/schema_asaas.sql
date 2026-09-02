@@ -67,7 +67,7 @@ create table if not exists cobrancas (
   user_id uuid not null references auth.users(id) on delete cascade,
   plano text not null check (plano in ('basico', 'pro')),
   ciclo text not null check (ciclo in ('MONTHLY', 'YEARLY')),
-  billing_type text not null check (billing_type in ('PIX', 'BOLETO')),
+  billing_type text not null check (billing_type in ('PIX', 'BOLETO', 'CREDIT_CARD')),
   valor numeric not null,
   asaas_customer_id text not null,
   asaas_subscription_id text not null,
@@ -89,6 +89,14 @@ create table if not exists cobrancas (
 create index if not exists idx_cobrancas_user on cobrancas (user_id);
 create index if not exists idx_cobrancas_subscription on cobrancas (asaas_subscription_id);
 create index if not exists idx_cobrancas_payment on cobrancas (asaas_payment_id);
+
+-- Redeclaração pra quem rodou este arquivo antes de "CREDIT_CARD" existir
+-- como forma de pagamento (create table if not exists acima não mexe em
+-- constraint de tabela já existente) — nome do constraint é o padrão que o
+-- Postgres gera sozinho pra um "check" inline (<tabela>_<coluna>_check).
+alter table cobrancas drop constraint if exists cobrancas_billing_type_check;
+alter table cobrancas add constraint cobrancas_billing_type_check
+  check (billing_type in ('PIX', 'BOLETO', 'CREDIT_CARD'));
 
 alter table cobrancas enable row level security;
 
