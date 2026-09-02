@@ -6,6 +6,13 @@
 // (compativel com o formato de chat completions da OpenAI).
 //
 // Secret necessario, ja configurado no projeto Supabase: API_DEEPSEEK_KEY
+//
+// Rate limit: assim como corretor-2fase, esta funcao e' publica de proposito
+// (chat acessivel sem login) e cada chamada custa dinheiro de verdade — sem
+// poder exigir login aqui, o limite e' por IP via check_rate_limit() no
+// banco (ver supabase/schema_security_hardening.sql).
+
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const DEEPSEEK_URL = "https://api.deepseek.com/chat/completions";
 const DEEPSEEK_MODEL = "deepseek-chat";
@@ -21,6 +28,34 @@ function jsonResponse(body: unknown, status = 200): Response {
     status,
     headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
   });
+}
+
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
+const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
+const rateLimitClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: { autoRefreshToken: false, persistSession: false },
+});
+
+// Chat interativo — usuario legitimo manda varias mensagens numa conversa
+// so', entao o limite precisa ser bem mais folgado que corretor-2fase.
+const RATE_LIMIT_MAX = 60;
+const RATE_LIMIT_WINDOW_SECONDS = 600;
+
+function getClientIp(req: Request): string {
+  const forwarded = req.headers.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0].trim();
+  return req.headers.get("cf-connecting-ip") ?? "unknown";
+}
+
+async function checkRateLimit(req: Request): Promise<boolean> {
+  const key = `dr-laureano:${getClientIp(req)}`;
+  const { data, error } = await rateLimitClient.rpc("check_rate_limit", {
+    p_key: key,
+    p_max_count: RATE_LIMIT_MAX,
+    p_window_seconds: RATE_LIMIT_WINDOW_SECONDS,
+  });
+  if (error) return true;
+  return data === true;
 }
 
 interface QuestionContext {
@@ -151,6 +186,10 @@ Deno.serve(async (req: Request) => {
 
   if (req.method !== "POST") {
     return jsonResponse({ error: "Método não permitido." }, 405);
+  }
+
+  if (!(await checkRateLimit(req))) {
+    return jsonResponse({ error: "Muitas mensagens em pouco tempo. Aguarde alguns minutos e tente novamente." }, 429);
   }
 
   let body: { question?: QuestionContext; messages?: Array<{ role: string; content: string }> };

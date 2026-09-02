@@ -82,11 +82,26 @@ function renderBars(rows) {
     const pct = row.acertoPct ?? 0;
     const wrap = document.createElement("div");
     wrap.className = "bar-row";
-    wrap.innerHTML = `
-      <span>${row.nome}</span>
-      <div class="bar-track"><div class="bar-fill" style="width: ${pct}%;"></div></div>
-      <span class="bar-value">${fmtPct(row.acertoPct)}</span>
-    `;
+
+    // DOM construído por partes (não innerHTML com o nome interpolado cru)
+    // — row.nome é texto livre que o próprio professor escolhe ao criar a
+    // turma; sem isso, um nome como "<img onerror=...>" executaria no
+    // navegador de quem estivesse vendo esta mesma tela.
+    const nameEl = document.createElement("span");
+    nameEl.textContent = row.nome;
+
+    const track = document.createElement("div");
+    track.className = "bar-track";
+    const fill = document.createElement("div");
+    fill.className = "bar-fill";
+    fill.style.width = pct + "%";
+    track.appendChild(fill);
+
+    const valueEl = document.createElement("span");
+    valueEl.className = "bar-value";
+    valueEl.textContent = fmtPct(row.acertoPct);
+
+    wrap.append(nameEl, track, valueEl);
     barsEl.appendChild(wrap);
   });
 }

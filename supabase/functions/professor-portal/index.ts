@@ -31,6 +31,20 @@ const adminClient = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
   auth: { autoRefreshToken: false, persistSession: false },
 });
 
+// Rate limit generico via check_rate_limit() no banco (ver
+// supabase/schema_security_hardening.sql) — usado nas acoes de convite pra
+// nao deixar uma conta de professor (comprometida ou nao) despejar volume
+// alto de e-mail sem limite nenhum.
+async function checkRateLimit(key: string, maxCount: number, windowSeconds: number): Promise<boolean> {
+  const { data, error } = await adminClient.rpc("check_rate_limit", {
+    p_key: key,
+    p_max_count: maxCount,
+    p_window_seconds: windowSeconds,
+  });
+  if (error) return true;
+  return data === true;
+}
+
 // Pra onde o link de convite do aluno leva depois que ele clica — precisa
 // estar cadastrada em Authentication > URL Configuration > Redirect URLs no
 // projeto Supabase (ver roteiro em supabase/schema_professor_portal.sql).
@@ -378,6 +392,12 @@ Deno.serve(async (req: Request) => {
 
     if (body.action === "create-student") {
       if (!body.email) return jsonResponse({ error: "'email' é obrigatório." }, 400);
+      // Mesmo rate limit da acao bulk-invite-students, pra chamadas
+      // repetidas de create-student nao virarem um jeito de contornar o
+      // limite de la (ver comentario abaixo).
+      if (!(await checkRateLimit(`bulk-invite:${professorId}`, 8, 3600))) {
+        return jsonResponse({ error: "Muitos convites em pouco tempo. Aguarde um pouco e tente novamente." }, 429);
+      }
       const result = await inviteStudent(professorId, alunoRoleId, {
         email: body.email,
         nome: body.nome,
@@ -394,6 +414,16 @@ Deno.serve(async (req: Request) => {
     }
     if (students.length > MAX_BULK_INVITES) {
       return jsonResponse({ error: `No máximo ${MAX_BULK_INVITES} alunos por vez.` }, 400);
+    }
+
+    // Rate limit por professor: já exige login (requireProfessorSession
+    // acima), mas nada limitava QUANTAS VEZES um professor (ou uma conta
+    // comprometida) podia chamar isso — cada chamada dispara e-mail de
+    // verdade via Resend, com o remetente do domínio da NeuraOAB. Limite
+    // generoso o bastante pra importar uma turma inteira em algumas
+    // chamadas, curto o bastante pra travar um script disparando em loop.
+    if (!(await checkRateLimit(`bulk-invite:${professorId}`, 8, 3600))) {
+      return jsonResponse({ error: "Muitos convites em pouco tempo. Aguarde um pouco e tente novamente." }, 429);
     }
 
     // Sequencial de propósito (não Promise.all): não há garantia documentada

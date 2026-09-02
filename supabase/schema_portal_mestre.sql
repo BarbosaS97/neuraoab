@@ -165,5 +165,5 @@ create trigger trg_protect_profile_privileged_fields
 
 -- insert into profiles (id, role_id, nome, email)
 -- select id, (select id from roles where name = 'admin'), 'Seu Nome', email
--- from auth.users where email = 'barbosafellipee@gmail.com'
+-- from auth.users where email = 'seu-email-de-admin@exemplo.com'
 -- on conflict (id) do update set role_id = excluded.role_id;

@@ -15,6 +15,14 @@
 // do supabase/functions/dr-laureano.
 //
 // Secret necessario, ja configurado no projeto Supabase: API_DEEPSEEK_KEY
+//
+// Rate limit: esta funcao e' publica de proposito (uso anonimo da 2a fase,
+// ver estudos/simulado2fase.js) e cada chamada custa dinheiro de verdade
+// (API paga da DeepSeek) — sem exigir login (isso quebraria o fluxo
+// anonimo), o unico jeito de conter abuso e' limitar por IP, via
+// check_rate_limit() no banco (ver supabase/schema_security_hardening.sql).
+
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const DEEPSEEK_URL = "https://api.deepseek.com/chat/completions";
 const DEEPSEEK_MODEL = "deepseek-chat";
@@ -30,6 +38,38 @@ function jsonResponse(body: unknown, status = 200): Response {
     status,
     headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
   });
+}
+
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
+const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
+const rateLimitClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: { autoRefreshToken: false, persistSession: false },
+});
+
+// Ate' 5 itens (peca + 4 questoes) sao corrigidos de uma vez ao clicar
+// "Finalizar" (Promise.all em simulado2fase.js) — o limite precisa acomodar
+// varios cadernos numa sessao de estudo normal sem incomodar ninguem, so'
+// bloqueando um script automatizado martelando chamadas.
+const RATE_LIMIT_MAX = 40;
+const RATE_LIMIT_WINDOW_SECONDS = 600;
+
+function getClientIp(req: Request): string {
+  const forwarded = req.headers.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0].trim();
+  return req.headers.get("cf-connecting-ip") ?? "unknown";
+}
+
+async function checkRateLimit(req: Request): Promise<boolean> {
+  const key = `corretor-2fase:${getClientIp(req)}`;
+  const { data, error } = await rateLimitClient.rpc("check_rate_limit", {
+    p_key: key,
+    p_max_count: RATE_LIMIT_MAX,
+    p_window_seconds: RATE_LIMIT_WINDOW_SECONDS,
+  });
+  // Se a checagem em si falhar (RPC indisponivel etc.), deixa passar — um
+  // erro de infra aqui nao pode travar a correcao pra todo mundo.
+  if (error) return true;
+  return data === true;
 }
 
 interface SubItem {
@@ -413,6 +453,10 @@ Deno.serve(async (req: Request) => {
 
   if (req.method !== "POST") {
     return jsonResponse({ error: "Método não permitido." }, 405);
+  }
+
+  if (!(await checkRateLimit(req))) {
+    return jsonResponse({ error: "Muitas correções em pouco tempo. Aguarde alguns minutos e tente novamente." }, 429);
   }
 
   let body: CorrectionRequest;

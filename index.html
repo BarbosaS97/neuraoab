@@ -3,6 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- CSP restrita as origens que a pagina realmente usa (cdnjs = AOS,
+     jsdelivr = supabase-js, challenges.cloudflare.com = widget do
+     Turnstile, o dominio *.supabase.co = Auth/DB/Edge Functions) — bloqueia
+     qualquer script/estilo/conexao de origem nao listada aqui, mesmo que
+     algum vetor de injecao consiga colar uma tag no HTML. "unsafe-inline"
+     em script-src/style-src continua necessario (a pagina usa <script>/
+     <style> inline, sem nonce/hash), entao isso NAO bloqueia um <script>
+     injetado inline — so' scripts/estilos carregados de outra origem. */
+     -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data:; font-src 'self'; connect-src 'self' https://lgcphxncteqpbntnlzhe.supabase.co; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self';">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <!-- Aplica o tema salvo ANTES do CSS pintar a pagina — sem isso a troca de
      tema so' aconteceria depois do JS do fim do <body> rodar, e todo
      carregamento com tema claro salvo mostraria um "flash" escuro primeiro. -->
@@ -30,7 +41,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0d1117">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" integrity="sha384-/rJKQnzOkEo+daG0jMjU1IwwY9unxt1NBw3Ef2fmOJ3PW/TfAg2KXVoWwMZQZtw9" crossorigin="anonymous">
 <!-- Cloudflare Turnstile — protecao anti-bot do formulario de login (ver
      renderTurnstile no <script> no fim do body). "onload=onloadTurnstile"
      chama essa funcao global assim que o script termina de carregar (ele e'
@@ -78,6 +89,25 @@
     margin: 0;
     height: 100%;
   }
+
+  /* Detalhes de marca que passam despercebidos ate' faltarem: cor de
+     selecao de texto, contorno de foco por teclado, e a barra de rolagem
+     (webkit + Firefox) — nenhum muda layout, so' reforca a identidade
+     visual em interacoes que o mouse sozinho nunca mostra. */
+  ::selection { background: rgba(139, 92, 246, 0.35); color: #fff; }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  html { scrollbar-color: var(--primary) var(--bg); scrollbar-width: thin; }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; border: 2px solid var(--bg); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
   /* Transicao suave de cores no toggle de tema — escopo generico o
      suficiente pra cobrir qualquer elemento que nao declare sua propria
@@ -334,6 +364,7 @@
   .navbar.scrolled {
     border-bottom-color: var(--border);
     background: rgba(var(--bg-rgb), 0.92);
+    box-shadow: 0 1px 0 rgba(139, 92, 246, 0.15), 0 12px 24px -18px rgba(0, 0, 0, 0.5);
   }
 
   .navbar-inner {
@@ -407,7 +438,14 @@
     cursor: pointer;
   }
 
-  .navbar-mobile { display: flex; flex-direction: column; gap: 4px; padding: 10px 24px 18px; border-top: 1px solid var(--border); }
+  .navbar-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 24px 18px;
+    border-top: 1px solid transparent;
+    border-image: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent) 1;
+  }
   .navbar-mobile[hidden] { display: none; }
   .navbar-mobile a { color: var(--text-dim); text-decoration: none; font-size: 14px; font-weight: 600; padding: 10px 4px; }
   .navbar-mobile .btn-ghost, .navbar-mobile .btn-gradient-sm { width: 100%; margin-top: 6px; }
@@ -444,6 +482,7 @@
   .hero-badge {
     display: inline-flex;
     align-items: center;
+    gap: 7px;
     padding: 7px 16px;
     border-radius: 999px;
     border: 1px solid rgba(139, 92, 246, 0.4);
@@ -453,6 +492,16 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     animation: riseIn 0.6s ease both;
+  }
+
+  .hero-badge::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--primary);
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.6);
+    animation: onlinePulse 2s ease-out infinite;
   }
 
   .hero-title {
@@ -559,6 +608,7 @@
     padding: 18px 12px;
     text-align: center;
     background: rgba(var(--bg-rgb), 0.6);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     transition: background 0.15s ease;
@@ -608,7 +658,7 @@
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 16px 16px 14px;
-    box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.7);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 24px 50px -20px rgba(0, 0, 0, 0.7);
     animation: riseIn 0.6s ease 0.3s both;
   }
 
@@ -708,7 +758,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .hero-badge, .hero-title, .hero-sub, .hero-ctas, .hero-stats, .hero-figure, .hero-card, .hero-bubble { animation: none; }
-    .online-dot { animation: none; }
+    .online-dot, .hero-badge::before { animation: none; }
     .hero-bubble p { animation: none; width: 21ch; border-right: none; }
   }
 
@@ -720,7 +770,15 @@
 
   /* -------------------------------------------------- Dashboard preview */
 
-  .dash-showcase { padding: 88px 24px; border-top: 1px solid var(--border); }
+  /* Linha de divisao entre secoes em degrade, esvaecendo nas pontas em vez
+     de uma borda reta de ponta a ponta — reaproveitada em todas as secoes
+     abaixo (features/faq/footer/vitrines), mesmo "selo" visual em toda a
+     pagina. */
+  .dash-showcase {
+    padding: 88px 24px;
+    border-top: 1px solid transparent;
+    border-image: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent) 1;
+  }
 
   .dash-frame {
     max-width: 980px;
@@ -728,10 +786,13 @@
     display: grid;
     grid-template-columns: 176px 1fr;
     background: var(--card);
-    border: 1px solid var(--border);
+    border: 1px solid rgba(139, 92, 246, 0.2);
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 44px 90px -36px rgba(139, 92, 246, 0.35), 0 24px 50px -24px rgba(0, 0, 0, 0.6);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 44px 90px -36px rgba(139, 92, 246, 0.35),
+      0 24px 50px -24px rgba(0, 0, 0, 0.6);
     animation: dashFloat 6s ease-in-out infinite;
   }
 
@@ -762,7 +823,7 @@
   }
 
   .dash-nav-item svg { flex-shrink: 0; }
-  .dash-nav-item.active { background: rgba(139, 92, 246, 0.14); color: var(--text); }
+  .dash-nav-item.active { background: rgba(139, 92, 246, 0.14); color: var(--text); box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.25); }
 
   .dash-main { padding: 22px 26px 26px; min-width: 0; }
   .dash-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
@@ -781,7 +842,7 @@
 
   .dash-cards-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
 
-  .dash-card { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+  .dash-card { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03); }
   .dash-card h3 { margin: 0 0 14px; font-size: 12.5px; font-weight: 700; }
   .dash-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
   .dash-card-head h3 { margin: 0; }
@@ -805,6 +866,7 @@
     height: 108px;
     border-radius: 50%;
     background: conic-gradient(var(--secondary) calc(var(--pct) * 1%), var(--border) 0);
+    box-shadow: 0 0 24px -6px rgba(59, 130, 246, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -812,7 +874,7 @@
   }
 
   .progress-ring::before { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: var(--bg); }
-  .progress-ring span { position: relative; font-size: 20px; font-weight: 800; }
+  .progress-ring span { position: relative; font-size: 20px; font-weight: 800; text-shadow: 0 0 18px rgba(59, 130, 246, 0.35); }
 
   .progress-breakdown { flex: 1; min-width: 0; }
   .progress-msg { margin: 0 0 10px; font-size: 11px; color: var(--text-dim); line-height: 1.5; }
@@ -831,6 +893,7 @@
     height: 54px;
     border-radius: 50%;
     background: conic-gradient(var(--primary) calc(var(--pct) * 1%), var(--border) 0);
+    box-shadow: 0 0 16px -4px rgba(139, 92, 246, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -838,7 +901,7 @@
   }
 
   .mini-ring::before { content: ""; position: absolute; inset: 6px; border-radius: 50%; background: var(--bg); }
-  .mini-ring span { position: relative; font-size: 11px; font-weight: 800; }
+  .mini-ring span { position: relative; font-size: 11px; font-weight: 800; text-shadow: 0 0 12px rgba(139, 92, 246, 0.35); }
 
   .dash-activity strong { display: block; font-size: 12.5px; }
   .dash-activity p { margin: 2px 0; font-size: 11px; color: var(--text-dim); line-height: 1.4; }
@@ -874,7 +937,11 @@
 
   /* ------------------------------------------------------------ Features */
 
-  .features { padding: 88px 24px; border-top: 1px solid var(--border); }
+  .features {
+    padding: 88px 24px;
+    border-top: 1px solid transparent;
+    border-image: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent) 1;
+  }
 
   .features-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
@@ -883,6 +950,10 @@
     border: 1px solid var(--border);
     border-radius: 18px;
     padding: 28px 24px;
+    /* Filete de luz no topo interno — mesmo truque de "borda de vidro" dos
+       botoes gradiente (inset 0 1px 0 branco translucido), so' que aqui
+       sutil o bastante pra nao competir com o conteudo do card. */
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
     /* "opacity" fica na lista so' pra' nao pisar na transicao de fade que o
        AOS (ver data-aos="fade-up" no HTML) aplica neste mesmo elemento —
        sem ela aqui, o shorthand abaixo substituiria o transition-property
@@ -893,19 +964,44 @@
   .feature-card:hover {
     border-color: rgba(139, 92, 246, 0.5);
     transform: translateY(-4px);
-    box-shadow: 0 30px 60px -30px rgba(139, 92, 246, 0.45);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 30px 60px -30px rgba(139, 92, 246, 0.45);
   }
 
   .feature-icon { display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 13px; margin-bottom: 18px; }
-  .feature-icon.i-purple { background: rgba(139, 92, 246, 0.14); color: var(--primary); }
-  .feature-icon.i-blue { background: rgba(59, 130, 246, 0.14); color: var(--secondary); }
-  .feature-icon.i-orange { background: rgba(249, 115, 22, 0.14); color: var(--accent-orange); }
+  .feature-icon.i-purple { background: rgba(139, 92, 246, 0.14); color: var(--primary); box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.28); }
+  .feature-icon.i-blue { background: rgba(59, 130, 246, 0.14); color: var(--secondary); box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.28); }
+  .feature-icon.i-orange { background: rgba(249, 115, 22, 0.14); color: var(--accent-orange); box-shadow: inset 0 0 0 1px rgba(249, 115, 22, 0.28); }
 
   .feature-card h3 { margin: 0 0 8px; font-size: 16px; font-weight: 700; }
   .feature-card p { margin: 0 0 16px; font-size: 13px; line-height: 1.6; color: var(--text-dim); }
 
-  .feature-link { background: none; border: none; padding: 0; font-family: inherit; font-size: 12.5px; font-weight: 700; color: var(--primary); cursor: pointer; }
-  .feature-link:hover { text-decoration: underline; }
+  .feature-link {
+    position: relative;
+    display: inline-block;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--primary);
+    cursor: pointer;
+  }
+
+  .feature-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
+  .feature-link:hover::after { transform: scaleX(1); }
 
   @media (max-width: 860px) {
     .features-grid { grid-template-columns: 1fr; }
@@ -918,10 +1014,26 @@
 
   /* --------------------------------------------------------------- FAQ */
 
-  .faq { padding: 88px 24px; border-top: 1px solid var(--border); }
+  .faq {
+    padding: 88px 24px;
+    border-top: 1px solid transparent;
+    border-image: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent) 1;
+  }
   .faq-list { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
 
-  .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 4px 18px; }
+  .faq-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 2px solid transparent;
+    border-radius: 12px;
+    padding: 4px 18px;
+    transition: border-color 0.2s ease;
+  }
+
+  /* Detalhe de cor no estado aberto — a borda esquerda (e o "+"/"x") pegam
+     a cor da marca em vez de so' a rotacao do icone avisar o que mudou. */
+  .faq-item[open] { border-left-color: var(--primary); }
+  .faq-item[open] summary::after { color: var(--primary); }
 
   .faq-item summary {
     padding: 15px 0;
@@ -948,20 +1060,45 @@
 
   /* ------------------------------------------------------------- Footer */
 
-  .site-footer { padding: 44px 24px 28px; border-top: 1px solid var(--border); }
+  .site-footer {
+    padding: 44px 24px 28px;
+    border-top: 1px solid transparent;
+    border-image: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent) 1;
+  }
+
   .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px; }
   .footer-brand { display: flex; align-items: center; gap: 10px; }
   .footer-brand img { height: 30px; width: auto; }
   .footer-brand p { margin: 0; font-size: 12px; color: var(--text-dim); }
   .footer-links { display: flex; flex-wrap: wrap; gap: 22px; }
-  .footer-links a { color: var(--text-dim); text-decoration: none; font-size: 12.5px; }
+  .footer-links a { position: relative; color: var(--text-dim); text-decoration: none; font-size: 12.5px; }
   .footer-links a:hover { color: var(--text); }
+
+  /* Sublinhado que desliza da esquerda pra direita no hover, em vez de so'
+     aparecer/sumir — o mesmo tipo de "efeito detalhista" usado no
+     feature-link mais abaixo, pra manter a linguagem de interacao igual em
+     toda a pagina. */
+  .footer-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 1px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
+  .footer-links a:hover::after { transform: scaleX(1); }
 
   .footer-copy {
     max-width: 1100px;
     margin: 26px auto 0;
     padding-top: 18px;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid transparent;
+    border-image: linear-gradient(90deg, transparent, var(--border) 30%, var(--border) 70%, transparent) 1;
     font-size: 11.5px;
     color: var(--text-dim);
     text-align: center;
@@ -981,6 +1118,7 @@
     height: 3px;
     z-index: 60;
     background: linear-gradient(90deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+    box-shadow: 0 0 8px rgba(122, 24, 252, 0.6);
     transition: none;
   }
 
@@ -1053,7 +1191,8 @@
   .showcase {
     position: relative;
     padding: 76px 24px 88px;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid transparent;
+    border-image: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent) 1;
     /* Os cards vizinhos do carrossel "espiam" pra fora do card central de
        proposito (efeito coverflow) — clipa aqui, na propria secao, em vez
        de confiar so' no overflow-x:hidden do body: alem de mais correto
@@ -2469,7 +2608,7 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 <script>
   // Mesma anon key publica de sempre (ver estudos/estudos.js, portal-mestre/
   // js/config.js etc.) — quem decide pra onde a pessoa vai depois de logar
@@ -2688,7 +2827,20 @@
 
     loginSubmitBtn.textContent = "Entrando...";
 
-    const { data, error } = await client.auth.signInWithPassword({ email, password });
+    // captchaToken: sem isso, o Turnstile so' controlava o BOTAO desta tela —
+    // nada impedia chamar POST /auth/v1/token direto (curl, script) pulando
+    // a validacao inteira. Passar o token aqui so' tem efeito de verdade se
+    // "Enable CAPTCHA protection" (Authentication > Settings, com a MESMA
+    // site key/secret key do Turnstile ja' usadas) estiver ligado no
+    // dashboard do Supabase — sem isso ligado, o GoTrue ignora o campo e
+    // nada muda. A validacao via Edge Function acima continua existindo (da'
+    // feedback mais cedo, sem gastar tentativa de login), mas deixou de ser
+    // a UNICA linha de defesa.
+    const { data, error } = await client.auth.signInWithPassword({
+      email,
+      password,
+      options: { captchaToken: tokenToValidate },
+    });
     if (error || !data?.user) {
       loginSubmitBtn.textContent = "Entrar";
       showLoginError("E-mail ou senha inválidos.");
@@ -2711,7 +2863,7 @@
 <!-- AOS (Animate On Scroll) — revela as secoes abaixo da hero conforme a
      pagina rola (data-aos="fade-up" nos elementos). Carregado por ultimo e
      so' inicializado depois que o DOM inteiro existe. -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha384-n1AULnKdMJlK1oQCLNDL9qZsDgXtH6jRYFCpBtWFc+a9Yve0KSoMn575rk755NJZ" crossorigin="anonymous"></script>
 <script>
   AOS.init({ duration: 600, easing: "ease-out-cubic", once: true, offset: 60 });
 </script>

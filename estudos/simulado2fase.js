@@ -497,13 +497,13 @@ async function findTentativa(provaId) {
   const ptr = safeGetItem(ptrKey);
 
   if (ptr) {
-    const { data } = await client
-      .from("oab2_tentativas")
-      .select("*")
-      .eq("id", ptr)
-      .eq("status", "em_andamento")
-      .maybeSingle();
-    if (data) return data;
+    // RPC em vez de .from().select() direto: o RLS de oab2_tentativas não
+    // libera mais leitura aberta pro papel anon (ver
+    // supabase/schema_security_hardening.sql) — o id da tentativa (aleatório,
+    // guardado só neste navegador) já era a "senha" de fato usada aqui, então
+    // a função exige exatamente esse id em vez de confiar numa policy aberta.
+    const { data } = await client.rpc("oab2_get_tentativa", { p_tentativa_id: ptr });
+    if (data && data.length > 0) return data[0];
     safeRemoveItem(ptrKey);
   }
 
@@ -583,11 +583,9 @@ async function loadDrafts(provaId, tentativaId, itens) {
   });
 
   // 2) Supabase por cima, quando existir (fonte mais confiavel entre
-  // sessoes/abas diferentes do mesmo navegador)
-  const { data } = await client
-    .from("oab2_respostas")
-    .select("item_id, texto_resposta")
-    .eq("tentativa_id", tentativaId);
+  // sessoes/abas diferentes do mesmo navegador) — RPC pelo mesmo motivo do
+  // findTentativa() acima (ver supabase/schema_security_hardening.sql).
+  const { data } = await client.rpc("oab2_get_respostas", { p_tentativa_id: tentativaId });
 
   (data || []).forEach(r => {
     if (r.texto_resposta) drafts.set(r.item_id, r.texto_resposta);
@@ -790,11 +788,13 @@ function flushCurrentDraft() {
 async function syncDraftToSupabase(item, text) {
   try {
     els.itemSalvo.textContent = "Salvando...";
-    await client.from("oab2_respostas").upsert({
-      tentativa_id: currentTentativa.id,
-      item_id: item.id,
-      texto_resposta: text,
-    }, { onConflict: "tentativa_id,item_id" });
+    // RPC em vez de .upsert() direto — mesmo motivo do findTentativa() lá
+    // em cima (ver supabase/schema_security_hardening.sql).
+    await client.rpc("oab2_upsert_resposta", {
+      p_tentativa_id: currentTentativa.id,
+      p_item_id: item.id,
+      p_texto_resposta: text,
+    });
     if (currentItens[activeIndex]?.id === item.id) {
       const now = new Date();
       els.itemSalvo.textContent = `Salvo às ${now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}`;
@@ -889,16 +889,18 @@ async function correctItem(item, idx) {
     if (error) throw error;
     if (!data || typeof data.nota_total !== "number") throw new Error("Resposta inesperada da IA.");
 
-    await client.from("oab2_respostas").upsert({
-      tentativa_id: currentTentativa.id,
-      item_id: item.id,
-      texto_resposta: text,
-      nota: data.nota_total,
-      feedback_geral: data.feedback_geral,
-      feedback_criterios: data.criterios || [],
-      alertas_juridicos: data.alertas_juridicos || [],
-      corrected_at: new Date().toISOString(),
-    }, { onConflict: "tentativa_id,item_id" });
+    // RPC em vez de .upsert() direto — mesmo motivo do findTentativa() lá
+    // em cima (ver supabase/schema_security_hardening.sql).
+    await client.rpc("oab2_upsert_resposta", {
+      p_tentativa_id: currentTentativa.id,
+      p_item_id: item.id,
+      p_texto_resposta: text,
+      p_nota: data.nota_total,
+      p_feedback_geral: data.feedback_geral,
+      p_feedback_criterios: data.criterios || [],
+      p_alertas_juridicos: data.alertas_juridicos || [],
+      p_corrected: true,
+    });
 
     setCorrigindoStatus(idx, "done", `${fmtValor(data.nota_total)} / ${fmtValor(item.valor_total)}`);
     return {
@@ -916,15 +918,15 @@ async function correctItem(item, idx) {
     // tempo, entao uma rejeicao aqui (mesmo so' na tentativa de salvar o
     // fallback) travaria a tela de correcao dos OUTROS itens tambem.
     try {
-      await client.from("oab2_respostas").upsert({
-        tentativa_id: currentTentativa.id,
-        item_id: item.id,
-        texto_resposta: text,
-        nota: 0,
-        feedback_geral: "Não foi possível corrigir este item automaticamente. Tente novamente mais tarde.",
-        feedback_criterios: [],
-        alertas_juridicos: [],
-      }, { onConflict: "tentativa_id,item_id" });
+      await client.rpc("oab2_upsert_resposta", {
+        p_tentativa_id: currentTentativa.id,
+        p_item_id: item.id,
+        p_texto_resposta: text,
+        p_nota: 0,
+        p_feedback_geral: "Não foi possível corrigir este item automaticamente. Tente novamente mais tarde.",
+        p_feedback_criterios: [],
+        p_alertas_juridicos: [],
+      });
     } catch { /* ja' esta' marcado como erro na tela; segue sem essa gravacao */ }
     return {
       item,
@@ -962,7 +964,12 @@ els.btnFinalizar.addEventListener("click", async () => {
   });
 
   try {
-    await client.from("oab2_tentativas").update({ status: "corrigindo" }).eq("id", currentTentativa.id);
+    // RPC em vez de .update() direto — mesmo motivo do findTentativa() lá em
+    // cima (ver supabase/schema_security_hardening.sql).
+    await client.rpc("oab2_update_tentativa_status", {
+      p_tentativa_id: currentTentativa.id,
+      p_status: "corrigindo",
+    });
   } catch { /* segue mesmo se essa atualizacao de status falhar */ }
 
   currentItens.forEach((item, idx) => setCorrigindoStatus(idx, "pending"));
@@ -971,12 +978,12 @@ els.btnFinalizar.addEventListener("click", async () => {
   const notaTotal = resultados.reduce((acc, r) => acc + (r.nota || 0), 0);
 
   try {
-    await client.from("oab2_tentativas").update({
-      status: "corrigida",
-      nota_total: Math.round(notaTotal * 100) / 100,
-      finished_at: new Date().toISOString(),
-      corrected_at: new Date().toISOString(),
-    }).eq("id", currentTentativa.id);
+    await client.rpc("oab2_update_tentativa_status", {
+      p_tentativa_id: currentTentativa.id,
+      p_status: "corrigida",
+      p_nota_total: Math.round(notaTotal * 100) / 100,
+      p_mark_finished: true,
+    });
   } catch { /* a tela de resultado ja tem os dados calculados no cliente */ }
 
   const provaId = currentProva.id;
