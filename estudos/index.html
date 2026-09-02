@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=40">
+<link rel="stylesheet" href="style.css?v=41">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -204,7 +204,7 @@
     </div>
 
     <div class="help-modal-body plans-modal-body">
-      <div class="plans-grid">
+      <div class="plans-grid" id="plansGrid">
         <article class="plan-card" data-plano="gratuito">
           <span class="plan-card-current" hidden>Seu plano atual</span>
           <h3>Grátis</h3>
@@ -231,7 +231,7 @@
             <li class="yes">Simulados ilimitados (1ª fase)</li>
             <li class="no">Sem simulado da 2ª fase</li>
           </ul>
-          <a class="btn-primary plan-card-cta" href="mailto:contato@neuraoab.com.br?subject=Quero%20assinar%20o%20plano%20B%C3%A1sico">Assinar Básico</a>
+          <button type="button" class="btn-primary plan-card-cta" data-checkout-plano="basico">Assinar Básico</button>
         </article>
 
         <article class="plan-card featured" data-plano="pro">
@@ -246,10 +246,60 @@
             <li class="yes">Correção automática pelos critérios da FGV</li>
             <li class="yes">Relatórios detalhados de desempenho</li>
           </ul>
-          <a class="btn-primary plan-card-cta" href="mailto:contato@neuraoab.com.br?subject=Quero%20assinar%20o%20plano%20Pro">Assinar Pro</a>
+          <button type="button" class="btn-primary plan-card-cta" data-checkout-plano="pro">Assinar Pro</button>
         </article>
       </div>
-      <p class="plans-modal-note">Pagamento por assinatura chega em breve — por enquanto, clique em "Assinar" pra falar com a gente e ativarmos seu upgrade manualmente.</p>
+      <p class="plans-modal-note" id="plansModalNote">Pagamento via PIX ou boleto, processado pelo Asaas.</p>
+
+      <!-- Formulário de assinatura — some com #plansGrid quando aberto (ver
+           openCheckout/closeCheckout em estudos.js). Fica dentro do MESMO
+           modal de propósito: já é o "bloco grande" pedido, não faz
+           sentido abrir mais um por cima. -->
+      <div class="checkout-view" id="checkoutView" hidden>
+        <button type="button" class="checkout-back" id="checkoutBackBtn">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Voltar aos planos
+        </button>
+        <h3 id="checkoutTitle">Assinar</h3>
+
+        <form id="checkoutForm">
+          <div class="checkout-field">
+            <label>Ciclo de cobrança</label>
+            <div class="checkout-radio-row">
+              <label class="checkout-radio"><input type="radio" name="checkoutCiclo" value="MONTHLY" checked> Mensal — <b id="checkoutPriceMonthly"></b></label>
+              <label class="checkout-radio"><input type="radio" name="checkoutCiclo" value="YEARLY"> Anual — <b id="checkoutPriceYearly"></b></label>
+            </div>
+          </div>
+          <div class="checkout-field">
+            <label>Forma de pagamento</label>
+            <div class="checkout-radio-row">
+              <label class="checkout-radio"><input type="radio" name="checkoutBillingType" value="PIX" checked> PIX</label>
+              <label class="checkout-radio"><input type="radio" name="checkoutBillingType" value="BOLETO"> Boleto</label>
+            </div>
+          </div>
+          <div class="checkout-field">
+            <label for="checkoutNome">Nome completo</label>
+            <input type="text" id="checkoutNome" autocomplete="name" required>
+          </div>
+          <div class="checkout-field">
+            <label for="checkoutCpf">CPF</label>
+            <input type="text" id="checkoutCpf" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" required>
+          </div>
+          <button type="submit" class="btn-primary" id="checkoutSubmitBtn">Gerar cobrança</button>
+          <p class="checkout-msg" id="checkoutMsg"></p>
+        </form>
+
+        <div class="checkout-result" id="checkoutResult" hidden>
+          <div id="checkoutPixResult" hidden>
+            <img id="checkoutQrImage" class="checkout-qr-image" alt="QR Code PIX">
+            <button type="button" class="checkout-copy-btn" id="checkoutCopyPixBtn">Copiar código PIX</button>
+          </div>
+          <div id="checkoutBoletoResult" hidden>
+            <a id="checkoutBoletoLink" class="btn-primary" target="_blank" rel="noopener">Abrir boleto</a>
+          </div>
+          <p class="checkout-status" id="checkoutStatus">Assim que o pagamento for confirmado, seu plano é liberado automaticamente — pode fechar esta janela e continuar estudando enquanto isso.</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -516,7 +566,7 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=31"></script>
+<script src="estudos.js?v=32"></script>
 <script src="dr-laureano.js?v=11"></script>
 </body>
 </html>

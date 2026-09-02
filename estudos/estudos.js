@@ -30,6 +30,25 @@ const profileOverlay = document.getElementById("profileOverlay");
 const profileCloseBtn = document.getElementById("profileCloseBtn");
 const plansOverlay = document.getElementById("plansOverlay");
 const plansCloseBtn = document.getElementById("plansCloseBtn");
+const plansGrid = document.getElementById("plansGrid");
+const plansModalNote = document.getElementById("plansModalNote");
+const checkoutView = document.getElementById("checkoutView");
+const checkoutBackBtn = document.getElementById("checkoutBackBtn");
+const checkoutTitle = document.getElementById("checkoutTitle");
+const checkoutForm = document.getElementById("checkoutForm");
+const checkoutPriceMonthly = document.getElementById("checkoutPriceMonthly");
+const checkoutPriceYearly = document.getElementById("checkoutPriceYearly");
+const checkoutNome = document.getElementById("checkoutNome");
+const checkoutCpf = document.getElementById("checkoutCpf");
+const checkoutSubmitBtn = document.getElementById("checkoutSubmitBtn");
+const checkoutMsg = document.getElementById("checkoutMsg");
+const checkoutResult = document.getElementById("checkoutResult");
+const checkoutPixResult = document.getElementById("checkoutPixResult");
+const checkoutQrImage = document.getElementById("checkoutQrImage");
+const checkoutCopyPixBtn = document.getElementById("checkoutCopyPixBtn");
+const checkoutBoletoResult = document.getElementById("checkoutBoletoResult");
+const checkoutBoletoLink = document.getElementById("checkoutBoletoLink");
+const checkoutStatus = document.getElementById("checkoutStatus");
 const profilePlanBadge = document.getElementById("profilePlanBadge");
 const profilePlanUpgrade = document.getElementById("profilePlanUpgrade");
 const profilePlanUsage = document.getElementById("profilePlanUsage");
@@ -156,7 +175,189 @@ function openPlansModal() {
 
 function closePlansModal() {
   plansOverlay.hidden = true;
+  closeCheckout();
 }
+
+// -------------------------------------------------------------- Checkout
+//
+// Assinatura de verdade via Asaas (Edge Functions criar-cobranca/
+// webhook-asaas, ver supabase/schema_asaas.sql) — PIX ou boleto, sem
+// cartão de crédito (exigiria tokenização/PCI própria, fora de escopo).
+// Preços aqui são só pra EXIBIÇÃO — duplicados do mesmo mapa fixo que
+// existe em criar-cobranca/index.ts (mesmo espírito de plans-grid acima:
+// não há uma fonte única de preço compartilhada ainda); quem decide o
+// valor cobrado de verdade é sempre o servidor, nunca o que esta tela manda.
+const CHECKOUT_PRICES = {
+  basico: { MONTHLY: "R$ 11,99/mês", YEARLY: "R$ 119,90/ano" },
+  pro: { MONTHLY: "R$ 19,99/mês", YEARLY: "R$ 199,90/ano" },
+};
+const CHECKOUT_PLAN_LABELS = { basico: "Básico", pro: "Pro" };
+
+let checkoutPlano = null;
+let checkoutPollTimer = null;
+
+function stopCheckoutPolling() {
+  if (checkoutPollTimer) {
+    clearInterval(checkoutPollTimer);
+    checkoutPollTimer = null;
+  }
+}
+
+// Confere a cada poucos segundos se webhook-asaas já confirmou o pagamento
+// e liberou o plano — só enquanto esta tela estiver aberta, por
+// conveniência (ver o pagamento confirmar "na hora" sem precisar recarregar
+// a página). Se o aluno fechar o modal antes de pagar, o plano é liberado
+// de qualquer jeito assim que ele voltar (loadPlanStatus roda de novo no
+// próximo init()) — este polling não é o mecanismo real de liberação, só
+// um feedback mais rápido pra quem ficou esperando aqui.
+function startCheckoutPolling(plano) {
+  stopCheckoutPolling();
+  let attempts = 0;
+  const MAX_ATTEMPTS = 40; // ~4 minutos, a cada 6s — cobre bem o caso normal de PIX
+  checkoutPollTimer = setInterval(async () => {
+    attempts++;
+    await loadPlanStatus();
+    if (planStatus?.plano === plano) {
+      stopCheckoutPolling();
+      checkoutStatus.textContent = "Pagamento confirmado! Seu plano foi atualizado. 🎉";
+      checkoutStatus.className = "checkout-status ok";
+      renderPlansModalCurrent();
+      renderProfilePlan();
+    } else if (attempts >= MAX_ATTEMPTS) {
+      stopCheckoutPolling();
+    }
+  }, 6000);
+}
+
+function openCheckout(plano) {
+  checkoutPlano = plano;
+  checkoutForm.reset();
+  checkoutForm.hidden = false;
+  checkoutResult.hidden = true;
+  checkoutPixResult.hidden = true;
+  checkoutBoletoResult.hidden = true;
+  checkoutQrImage.src = "";
+  checkoutBoletoLink.textContent = "Abrir boleto";
+  checkoutMsg.className = "checkout-msg";
+  checkoutStatus.className = "checkout-status";
+  checkoutStatus.textContent =
+    "Assim que o pagamento for confirmado, seu plano é liberado automaticamente — pode fechar esta janela e continuar estudando enquanto isso.";
+  checkoutSubmitBtn.disabled = false;
+  checkoutSubmitBtn.textContent = "Gerar cobrança";
+  stopCheckoutPolling();
+
+  checkoutTitle.textContent = `Assinar plano ${CHECKOUT_PLAN_LABELS[plano]}`;
+  checkoutPriceMonthly.textContent = CHECKOUT_PRICES[plano].MONTHLY;
+  checkoutPriceYearly.textContent = CHECKOUT_PRICES[plano].YEARLY;
+  checkoutNome.value = profNome.value || currentSession?.user?.user_metadata?.nome || "";
+
+  plansGrid.hidden = true;
+  plansModalNote.hidden = true;
+  checkoutView.hidden = false;
+}
+
+function closeCheckout() {
+  stopCheckoutPolling();
+  checkoutView.hidden = true;
+  plansGrid.hidden = false;
+  plansModalNote.hidden = false;
+}
+
+document.querySelectorAll("[data-checkout-plano]").forEach((btn) => {
+  btn.addEventListener("click", () => openCheckout(btn.dataset.checkoutPlano));
+});
+
+checkoutBackBtn.addEventListener("click", closeCheckout);
+
+function showCheckoutMsg(text) {
+  checkoutMsg.textContent = text;
+  checkoutMsg.className = "checkout-msg show";
+}
+
+// Máscara leve de CPF ao digitar — só cosmética; a validação de verdade
+// (dígito verificador) acontece no servidor, ver isValidCpf em
+// criar-cobranca/index.ts.
+checkoutCpf.addEventListener("input", () => {
+  const digits = checkoutCpf.value.replace(/\D/g, "").slice(0, 11);
+  let formatted = digits;
+  if (digits.length > 9) formatted = `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9)}`;
+  else if (digits.length > 6) formatted = `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6)}`;
+  else if (digits.length > 3) formatted = `${digits.slice(0, 3)}.${digits.slice(3)}`;
+  checkoutCpf.value = formatted;
+});
+
+checkoutForm.addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  checkoutMsg.className = "checkout-msg";
+
+  const nome = checkoutNome.value.trim();
+  const cpfCnpj = checkoutCpf.value.replace(/\D/g, "");
+  const ciclo = checkoutForm.querySelector('input[name="checkoutCiclo"]:checked').value;
+  const billingType = checkoutForm.querySelector('input[name="checkoutBillingType"]:checked').value;
+
+  if (!nome) {
+    showCheckoutMsg("Informe seu nome completo.");
+    return;
+  }
+  if (cpfCnpj.length !== 11) {
+    showCheckoutMsg("CPF inválido.");
+    return;
+  }
+
+  checkoutSubmitBtn.disabled = true;
+  checkoutSubmitBtn.textContent = "Gerando cobrança...";
+
+  const { data, error } = await client.functions.invoke("criar-cobranca", {
+    body: { plano: checkoutPlano, ciclo, billingType, nome, cpfCnpj },
+  });
+
+  if (error) {
+    checkoutSubmitBtn.disabled = false;
+    checkoutSubmitBtn.textContent = "Gerar cobrança";
+    let detail = null;
+    try {
+      const errBody = await error.context?.json();
+      detail = errBody?.error;
+    } catch {
+      // corpo não é JSON ou já foi consumido — segue sem mensagem específica
+    }
+    showCheckoutMsg(detail || "Não foi possível gerar a cobrança. Tente novamente.");
+    return;
+  }
+
+  checkoutForm.hidden = true;
+  checkoutResult.hidden = false;
+
+  if (data.billingType === "PIX" && data.pixQrImage) {
+    checkoutPixResult.hidden = false;
+    checkoutQrImage.src = `data:image/png;base64,${data.pixQrImage}`;
+    checkoutCopyPixBtn.dataset.payload = data.pixPayload || "";
+  } else if (data.boletoUrl) {
+    checkoutBoletoResult.hidden = false;
+    checkoutBoletoLink.href = data.boletoUrl;
+  } else if (data.invoiceUrl) {
+    // Sem QR/boleto por algum motivo (ex.: pixQrCode falhou do lado do
+    // Asaas) — invoiceUrl sempre existe, é o link universal de fallback.
+    checkoutBoletoResult.hidden = false;
+    checkoutBoletoLink.href = data.invoiceUrl;
+    checkoutBoletoLink.textContent = "Abrir cobrança";
+  }
+
+  startCheckoutPolling(checkoutPlano);
+});
+
+checkoutCopyPixBtn.addEventListener("click", async () => {
+  const payload = checkoutCopyPixBtn.dataset.payload;
+  if (!payload) return;
+  try {
+    await navigator.clipboard.writeText(payload);
+  } catch {
+    return;
+  }
+  const original = checkoutCopyPixBtn.textContent;
+  checkoutCopyPixBtn.textContent = "Copiado!";
+  setTimeout(() => { checkoutCopyPixBtn.textContent = original; }, 1500);
+});
 
 plansCloseBtn.addEventListener("click", closePlansModal);
 plansOverlay.addEventListener("click", (ev) => {
