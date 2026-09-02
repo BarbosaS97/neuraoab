@@ -3,13 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NeuraOAB</title>
+<!-- Aplica o tema salvo ANTES do CSS pintar a pagina — sem isso a troca de
+     tema so' aconteceria depois do JS do fim do <body> rodar, e todo
+     carregamento com tema claro salvo mostraria um "flash" escuro primeiro. -->
+<script>
+  (function () {
+    try {
+      if (localStorage.getItem("neuraoab-theme") === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    } catch (e) {}
+  })();
+</script>
+<title>NeuraOAB — Preparação inteligente para a OAB com IA</title>
+<meta name="description" content="Estude para a OAB com mais de 2.000 questões oficiais da FGV, um tutor de IA que explica seus erros e simulados de 2ª fase com correção pelos critérios oficiais.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://neuraoab.com.br/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://neuraoab.com.br/">
+<meta property="og:title" content="NeuraOAB — Preparação inteligente para a OAB com IA">
+<meta property="og:description" content="Mais de 2.000 questões oficiais da FGV, IA para explicar seus erros e simulados de 2ª fase com correção pelos critérios oficiais.">
+<meta property="og:locale" content="pt_BR">
 <link rel="icon" href="images/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0d1117">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
 <!-- Cloudflare Turnstile — protecao anti-bot do formulario de login (ver
      renderTurnstile no <script> no fim do body). "onload=onloadTurnstile"
      chama essa funcao global assim que o script termina de carregar (ele e'
@@ -18,6 +39,7 @@
 <style>
   :root {
     --bg: #0d1117;
+    --bg-rgb: 13, 17, 23;
     --card: #161b22;
     --border: #30363d;
     --text: #f0f6fc;
@@ -37,11 +59,32 @@
     --accent-orange: #f97316;
   }
 
+  /* Tema claro: mesmas variaveis, valores trocados — todo o resto do CSS
+     usa var(--bg)/var(--card)/etc, entao o toggle (ver themeToggleBtn no
+     <script> perto do fim do <body>) so' precisa alternar este atributo no
+     <html>, nunca duplicar regra nenhuma. */
+  :root[data-theme="light"] {
+    --bg: #f6f7fb;
+    --bg-rgb: 246, 247, 251;
+    --card: #ffffff;
+    --border: #e2e5ec;
+    --text: #10151d;
+    --text-dim: #5b6472;
+  }
+
   * { box-sizing: border-box; }
 
   html, body {
     margin: 0;
     height: 100%;
+  }
+
+  /* Transicao suave de cores no toggle de tema — escopo generico o
+     suficiente pra cobrir qualquer elemento que nao declare sua propria
+     "transition" (que, por especificidade de seletor, sempre prevalece
+     sobre esta regra universal). */
+  *, *::before, *::after {
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
   }
 
   body {
@@ -56,172 +99,13 @@
     overflow-x: hidden;
   }
 
-  .landing {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 24px;
-  }
-
-  /* Brilho ambiente atras da logo, nas cores da marca — da' o "impacto"
-     da landing sem precisar de mais nenhum elemento na tela. */
-  .landing::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(circle at 50% 38%, rgba(226, 80, 10, 0.16), transparent 32%),
-      radial-gradient(circle at 42% 45%, rgba(122, 24, 252, 0.18), transparent 38%),
-      radial-gradient(circle at 58% 45%, rgba(10, 107, 253, 0.16), transparent 38%);
-    pointer-events: none;
-  }
-
-  .logo {
-    position: relative;
-    width: min(340px, 70vw);
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 0 26px rgba(226, 80, 10, 0.35)) drop-shadow(0 0 34px rgba(10, 107, 253, 0.3));
-    animation: riseIn 0.6s ease both;
-  }
-
-  /* Duas linhas, uma por fase da OAB — cada uma com seu proprio numero
-     (mesma "bolinha" gradiente ja usada pra 1a/2a Fase dentro do app, ver
-     estudos/style.css .phase-num) pra dar peso visual sem precisar de caixas,
-     bordas ou qualquer elemento a mais nessa tela, que e' de proposito bem
-     enxuta. */
-  .phases {
-    position: relative;
-    margin: 28px 0 0;
-    width: 100%;
-    max-width: 520px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    animation: riseIn 0.6s ease 0.1s both;
-  }
-
-  .phase-line {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-align: left;
-  }
-
-  .phase-num {
-    flex-shrink: 0;
-    width: 26px;
-    height: 26px;
-    border-radius: 999px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
-    color: #fff;
-    font-size: 12px;
-    font-weight: 700;
-  }
-
-  .phase-line p {
-    margin: 0;
-    font-size: clamp(14px, 2.2vw, 17px);
-    color: var(--text-dim);
-    line-height: 1.5;
-  }
-
-  .phase-line strong { color: var(--text); font-weight: 600; }
-
-  /* Selo de credibilidade: uma linha fina (nao uma borda inteira, pra
-     continuar leve) separando a proposta de valor do "prova social" —
-     curto de proposito, so' pra reforcar confianca antes do CTA. */
-  .divider {
-    position: relative;
-    width: 100%;
-    max-width: 340px;
-    height: 1px;
-    margin: 26px 0 16px;
-    background: linear-gradient(90deg, transparent, var(--text-dim), transparent);
-    opacity: 0.3;
-    animation: riseIn 0.6s ease 0.15s both;
-  }
-
-  .source-note {
-    position: relative;
-    margin: 0;
-    font-size: 12px;
-    color: var(--text-dim);
-    letter-spacing: 0.03em;
-    animation: riseIn 0.6s ease 0.18s both;
-  }
-
-  /* Botao unico da tela: pilula com gradiente da marca, sombra em duas
-     camadas (brilho colorido + sombra de profundidade) e um filete de luz
-     no topo (inset), pra parecer solido/premium em vez de uma cor chapada.
-     A seta desliza no hover — reforca "pra frente"/"comecar" sem precisar
-     de mais texto. */
-  .cta {
-    position: relative;
-    margin-top: 36px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 18px 46px;
-    border: none;
-    border-radius: 999px;
-    background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
-    color: #fff;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    font-family: inherit;
-    text-decoration: none;
-    cursor: pointer;
-    box-shadow:
-      0 18px 40px -14px rgba(122, 24, 252, 0.6),
-      0 6px 18px -6px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.28);
-    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
-    animation: riseIn 0.6s ease 0.24s both;
-  }
-
   .cta-arrow {
     transition: transform 0.18s ease;
-  }
-
-  .cta:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.1);
-    box-shadow:
-      0 22px 48px -12px rgba(122, 24, 252, 0.7),
-      0 8px 22px -6px rgba(0, 0, 0, 0.55),
-      inset 0 1px 0 rgba(255, 255, 255, 0.32);
-  }
-
-  .cta:hover .cta-arrow {
-    transform: translateX(4px);
-  }
-
-  .cta:active {
-    transform: translateY(0) scale(0.98);
-  }
-
-  .cta:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: 3px;
   }
 
   @keyframes riseIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .logo, .phases, .divider, .source-note, .cta { animation: none; }
   }
 
   /* ------------------------------------------------------- Login modal */
@@ -434,41 +318,728 @@
 
   .login-error.show { display: block; }
 
-  /* ---------------------------------------------------- Conhecer mais */
-  /*
-    Unico convite pra' rolar (alem do proprio scroll natural da pagina) —
-    deliberadamente discreto (texto + seta), pra nao competir com o botao
-    LOGIN, que continua sendo o unico CTA "de peso" da tela.
-  */
+  /* ------------------------------------------------------------- Navbar */
 
-  .scroll-more {
-    position: relative;
-    margin-top: 26px;
-    display: inline-flex;
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(var(--bg-rgb), 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .navbar.scrolled {
+    border-bottom-color: var(--border);
+    background: rgba(var(--bg-rgb), 0.92);
+  }
+
+  .navbar-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
     align-items: center;
-    gap: 6px;
-    background: none;
-    border: none;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .navbar-logo { display: flex; align-items: center; text-decoration: none; }
+  .navbar-logo img { height: 40px; width: auto; display: block; }
+
+  .navbar-links { display: flex; align-items: center; gap: 30px; }
+
+  .navbar-links a {
     color: var(--text-dim);
-    font-size: 12.5px;
-    letter-spacing: 0.03em;
-    font-family: inherit;
-    cursor: pointer;
-    padding: 4px;
-    animation: riseIn 0.6s ease 0.3s both;
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
     transition: color 0.15s ease;
   }
 
-  .scroll-more:hover { color: var(--text); }
-  .scroll-more svg { animation: bounceDown 1.6s ease-in-out infinite; }
+  .navbar-links a:hover { color: var(--text); }
 
-  @keyframes bounceDown {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(4px); }
+  .navbar-actions { display: flex; align-items: center; gap: 10px; }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 999px;
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .btn-ghost:hover { border-color: var(--primary); transform: translateY(-1px); }
+
+  .btn-gradient-sm {
+    background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+    border: none;
+    color: #fff;
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 10px 24px -10px rgba(122, 24, 252, 0.55);
+    transition: transform 0.15s ease, filter 0.15s ease;
+  }
+
+  .btn-gradient-sm:hover { transform: translateY(-1px); filter: brightness(1.08); }
+
+  .navbar-burger {
+    display: none;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .navbar-mobile { display: flex; flex-direction: column; gap: 4px; padding: 10px 24px 18px; border-top: 1px solid var(--border); }
+  .navbar-mobile[hidden] { display: none; }
+  .navbar-mobile a { color: var(--text-dim); text-decoration: none; font-size: 14px; font-weight: 600; padding: 10px 4px; }
+  .navbar-mobile .btn-ghost, .navbar-mobile .btn-gradient-sm { width: 100%; margin-top: 6px; }
+
+  @media (max-width: 880px) {
+    .navbar-links, .navbar-actions { display: none; }
+    .navbar-burger { display: flex; }
+  }
+
+  /* --------------------------------------------------------------- Hero */
+
+  .hero { position: relative; padding: 64px 24px 40px; overflow: hidden; }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 78% 12%, rgba(226, 80, 10, 0.14), transparent 40%),
+      radial-gradient(circle at 62% 30%, rgba(122, 24, 252, 0.16), transparent 42%),
+      radial-gradient(circle at 85% 55%, rgba(10, 107, 253, 0.14), transparent 42%);
+  }
+
+  .hero-inner {
+    position: relative;
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    animation: riseIn 0.6s ease both;
+  }
+
+  .hero-title {
+    margin: 18px 0 0;
+    font-size: clamp(30px, 3.6vw, 44px);
+    line-height: 1.16;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    animation: riseIn 0.6s ease 0.05s both;
+  }
+
+  .grad-text {
+    background: linear-gradient(135deg, var(--logo-purple), var(--logo-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero-sub {
+    margin: 18px 0 0;
+    max-width: 480px;
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--text-dim);
+    animation: riseIn 0.6s ease 0.1s both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    margin-top: 30px;
+    animation: riseIn 0.6s ease 0.15s both;
+  }
+
+  .btn-gradient-lg {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow:
+      0 18px 40px -14px rgba(122, 24, 252, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  }
+
+  .btn-gradient-lg:hover { transform: translateY(-2px); filter: brightness(1.1); }
+  .btn-gradient-lg:hover .cta-arrow { transform: translateX(4px); }
+
+  .btn-outline-lg {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 15px 26px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .btn-outline-lg:hover { border-color: var(--primary); transform: translateY(-1px); }
+
+  /* Um unico cartao coeso, nao quatro caixas soltas — as "divisorias" entre
+     os itens sao o proprio "gap" do grid aparecendo por baixo (o container
+     tem a cor da borda, cada item cobre o resto com o fundo real), truque
+     que da' linhas de 1px perfeitas nas duas direcoes de graca, inclusive
+     quando o grid quebra pra 2 colunas no mobile — sem precisar de
+     nth-child pra saber qual item "e' a ultima coluna" e nao deveria ter
+     divisoria de um lado. */
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    margin-top: 40px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    animation: riseIn 0.6s ease 0.2s both;
+  }
+
+  .hero-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-width: 0;
+    padding: 18px 12px;
+    text-align: center;
+    background: rgba(var(--bg-rgb), 0.6);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: background 0.15s ease;
+  }
+
+  .hero-stat:hover { background: rgba(var(--bg-rgb), 0.85); }
+
+  .hero-stat strong { font-size: 15px; font-weight: 800; color: var(--text); }
+  .hero-stat span { font-size: 11px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+
+  .hero-figure { position: relative; display: flex; justify-content: center; animation: riseIn 0.7s ease 0.1s both; }
+
+  .hero-avatar-wrap { position: relative; width: min(360px, 100%); }
+
+  .hero-avatar-wrap::before {
+    content: "";
+    position: absolute;
+    inset: -10%;
+    background: radial-gradient(circle, rgba(122, 24, 252, 0.35), transparent 65%);
+    filter: blur(20px);
+    z-index: 0;
+  }
+
+  /* Mascara de opacidade no rodape da foto — a imagem original termina com
+     um corte reto na altura da perna, e mostrar essa borda quadrada em cima
+     do fundo gradiente da hero parecia um recorte malfeito. O mask-image
+     dissolve a propria imagem em transparencia antes do corte, deixando o
+     fundo da secao aparecer por baixo aos poucos em vez de uma quina seca. */
+  .hero-avatar {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 24px;
+    mask-image: linear-gradient(to bottom, #000 70%, transparent 96%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 96%);
+  }
+
+  .hero-card {
+    position: absolute;
+    right: -8px;
+    bottom: 18px;
+    z-index: 2;
+    width: 208px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 16px 14px;
+    box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.7);
+    animation: riseIn 0.6s ease 0.3s both;
+  }
+
+  .hero-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 3px; }
+  .hero-card h3 { margin: 0; font-size: 14px; color: var(--primary); }
+  .hero-card p { margin: 0 0 10px; font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+  .hero-card ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .hero-card li { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--text); }
+  .hero-card li svg { flex-shrink: 0; color: var(--success); }
+
+  /* Selo "Online": bolinha verde com anel pulsante (box-shadow crescendo e
+     sumindo) — o mesmo truque visual de indicador de presenca de qualquer
+     chat, so' em CSS puro. */
+  .online-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--success);
+    flex-shrink: 0;
+  }
+
+  .online-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--success);
+    box-shadow: 0 0 0 0 rgba(46, 160, 67, 0.6);
+    animation: onlinePulse 2s ease-out infinite;
+  }
+
+  @keyframes onlinePulse {
+    0% { box-shadow: 0 0 0 0 rgba(46, 160, 67, 0.6); }
+    70% { box-shadow: 0 0 0 7px rgba(46, 160, 67, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(46, 160, 67, 0); }
+  }
+
+  /* Balao de fala do Dr. Laureano: texto real no DOM (leitor de tela le'
+     tudo de uma vez), so' a REVELACAO e' animada — largura de 0 ate' Nch em
+     steps(), classico efeito de "maquina de escrever" sem nenhum JS. */
+  .hero-bubble {
+    position: absolute;
+    left: -6px;
+    top: 6px;
+    z-index: 2;
+    max-width: 216px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px 14px 14px 4px;
+    padding: 10px 14px;
+    box-shadow: 0 16px 34px -16px rgba(0, 0, 0, 0.6);
+    animation: riseIn 0.5s ease 0.5s both;
+  }
+
+  .hero-bubble p {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text);
+    border-right: 2px solid var(--primary);
+    width: 0;
+    animation: heroTyping 1.8s steps(21, end) 1s forwards, heroCursorBlink 0.8s step-end infinite 1s;
+  }
+
+  @keyframes heroTyping {
+    from { width: 0; }
+    to { width: 21ch; }
+  }
+
+  @keyframes heroCursorBlink {
+    50% { border-color: transparent; }
+  }
+
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; text-align: center; }
+    .hero-sub { margin-left: auto; margin-right: auto; }
+    .hero-ctas, .hero-stats { justify-content: center; }
+    .hero-figure { margin-top: 24px; flex-direction: column; align-items: center; }
+    .hero-card { position: static; margin: 18px auto 0; }
+    .hero-bubble { position: static; margin: 0 auto 14px; max-width: 260px; }
+  }
+
+  @media (max-width: 640px) {
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 48px 16px 32px; }
+    .hero-title { font-size: clamp(26px, 8vw, 34px); }
+    .hero-sub { font-size: 14px; }
+    .btn-gradient-lg, .btn-outline-lg { padding: 13px 22px; font-size: 13px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .scroll-more svg { animation: none; }
+    .hero-badge, .hero-title, .hero-sub, .hero-ctas, .hero-stats, .hero-figure, .hero-card, .hero-bubble { animation: none; }
+    .online-dot { animation: none; }
+    .hero-bubble p { animation: none; width: 21ch; border-right: none; }
+  }
+
+  /* --------------------------------------------------------- Section head */
+
+  .section-head { max-width: 620px; margin: 0 auto 44px; text-align: center; }
+  .section-title { margin: 0; font-size: clamp(22px, 3.2vw, 30px); font-weight: 800; line-height: 1.3; }
+  .section-sub { margin: 10px 0 0; font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+
+  /* -------------------------------------------------- Dashboard preview */
+
+  .dash-showcase { padding: 88px 24px; border-top: 1px solid var(--border); }
+
+  .dash-frame {
+    max-width: 980px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 176px 1fr;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 44px 90px -36px rgba(139, 92, 246, 0.35), 0 24px 50px -24px rgba(0, 0, 0, 0.6);
+    animation: dashFloat 6s ease-in-out infinite;
+  }
+
+  /* Flutuacao sutil (so' translateY, poucos px) — da' vida ao preview sem
+     competir com o resto da pagina nem distrair de verdade. */
+  @keyframes dashFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dash-frame { animation: none; }
+  }
+
+  .dash-sidebar { background: var(--bg); border-right: 1px solid var(--border); padding: 18px 14px; }
+  .dash-sidebar-logo { height: 26px; width: auto; display: block; margin: 0 0 18px 6px; }
+  .dash-nav { display: flex; flex-direction: column; gap: 3px; }
+
+  .dash-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-dim);
+  }
+
+  .dash-nav-item svg { flex-shrink: 0; }
+  .dash-nav-item.active { background: rgba(139, 92, 246, 0.14); color: var(--text); }
+
+  .dash-main { padding: 22px 26px 26px; min-width: 0; }
+  .dash-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .dash-phase-pills { display: inline-flex; gap: 6px; background: var(--bg); border: 1px solid var(--border); border-radius: 999px; padding: 3px; }
+
+  .dash-phase-pills .pill { padding: 5px 12px; border-radius: 999px; font-size: 10.5px; font-weight: 700; color: var(--text-dim); }
+  .dash-phase-pills .pill.active { background: linear-gradient(135deg, var(--logo-purple), var(--logo-blue)); color: #fff; }
+
+  .dash-avatar { width: 30px; height: 30px; border-radius: 999px; overflow: hidden; border: 1px solid var(--border); flex-shrink: 0; }
+  .dash-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+
+  .dash-greeting { margin: 0; font-size: 17px; font-weight: 700; }
+  .dash-greeting-sub { margin: 3px 0 20px; font-size: 12px; color: var(--text-dim); }
+
+  .dash-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+
+  .dash-cards-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+
+  .dash-card { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+  .dash-card h3 { margin: 0 0 14px; font-size: 12.5px; font-weight: 700; }
+  .dash-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .dash-card-head h3 { margin: 0; }
+
+  .tag-success {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: rgba(46, 160, 67, 0.16);
+    color: var(--success);
+  }
+
+  .dash-progress { display: flex; align-items: center; gap: 16px; }
+
+  .progress-ring {
+    flex-shrink: 0;
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    background: conic-gradient(var(--secondary) calc(var(--pct) * 1%), var(--border) 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .progress-ring::before { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: var(--bg); }
+  .progress-ring span { position: relative; font-size: 20px; font-weight: 800; }
+
+  .progress-breakdown { flex: 1; min-width: 0; }
+  .progress-msg { margin: 0 0 10px; font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+  .progress-msg b { color: var(--success); }
+
+  .progress-row { display: flex; align-items: center; gap: 8px; font-size: 10.5px; color: var(--text-dim); margin-bottom: 7px; }
+  .progress-row .progress-row-label { flex: 0 0 50px; }
+  .progress-row .mock-bar-track { flex: 1; }
+  .progress-row .progress-row-val { flex: 0 0 34px; text-align: right; color: var(--text); font-weight: 600; }
+
+  .dash-activity { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+
+  .mini-ring {
+    flex-shrink: 0;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: conic-gradient(var(--primary) calc(var(--pct) * 1%), var(--border) 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .mini-ring::before { content: ""; position: absolute; inset: 6px; border-radius: 50%; background: var(--bg); }
+  .mini-ring span { position: relative; font-size: 11px; font-weight: 800; }
+
+  .dash-activity strong { display: block; font-size: 12.5px; }
+  .dash-activity p { margin: 2px 0; font-size: 11px; color: var(--text-dim); line-height: 1.4; }
+  .dash-activity .dim { font-size: 10px; color: var(--text-dim); }
+
+  .dash-link-btn {
+    width: 100%;
+    padding: 9px 0;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+  }
+
+  .dash-link-btn:hover { border-color: var(--primary); }
+
+  @media (max-width: 760px) {
+    .dash-showcase { padding: 64px 16px; }
+    .dash-frame { grid-template-columns: 1fr; animation: none; }
+    .dash-sidebar { display: none; }
+    .dash-cards-row { grid-template-columns: 1fr; }
+    .dash-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 420px) {
+    .dash-main { padding: 18px 16px 20px; }
+  }
+
+  /* ------------------------------------------------------------ Features */
+
+  .features { padding: 88px 24px; border-top: 1px solid var(--border); }
+
+  .features-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+  .feature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px 24px;
+    /* "opacity" fica na lista so' pra' nao pisar na transicao de fade que o
+       AOS (ver data-aos="fade-up" no HTML) aplica neste mesmo elemento —
+       sem ela aqui, o shorthand abaixo substituiria o transition-property
+       inteiro e o fade do AOS quebraria, sobrando so' o "slide". */
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  }
+
+  .feature-card:hover {
+    border-color: rgba(139, 92, 246, 0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 30px 60px -30px rgba(139, 92, 246, 0.45);
+  }
+
+  .feature-icon { display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 13px; margin-bottom: 18px; }
+  .feature-icon.i-purple { background: rgba(139, 92, 246, 0.14); color: var(--primary); }
+  .feature-icon.i-blue { background: rgba(59, 130, 246, 0.14); color: var(--secondary); }
+  .feature-icon.i-orange { background: rgba(249, 115, 22, 0.14); color: var(--accent-orange); }
+
+  .feature-card h3 { margin: 0 0 8px; font-size: 16px; font-weight: 700; }
+  .feature-card p { margin: 0 0 16px; font-size: 13px; line-height: 1.6; color: var(--text-dim); }
+
+  .feature-link { background: none; border: none; padding: 0; font-family: inherit; font-size: 12.5px; font-weight: 700; color: var(--primary); cursor: pointer; }
+  .feature-link:hover { text-decoration: underline; }
+
+  @media (max-width: 860px) {
+    .features-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .features, .faq { padding: 56px 16px; }
+    .feature-card { padding: 22px 18px; }
+  }
+
+  /* --------------------------------------------------------------- FAQ */
+
+  .faq { padding: 88px 24px; border-top: 1px solid var(--border); }
+  .faq-list { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+
+  .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 4px 18px; }
+
+  .faq-item summary {
+    padding: 15px 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: "+"; flex-shrink: 0; font-size: 18px; color: var(--text-dim); transition: transform 0.15s ease; }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+
+  /* Resposta com icone de confirmacao — leitura mais rapida ao rolar a
+     lista, ja' que todas as respostas do FAQ confirmam algo sobre a
+     plataforma (nenhuma delas nega). */
+  .faq-answer { display: flex; align-items: flex-start; gap: 8px; margin: 0 0 16px; }
+  .faq-answer-icon { flex-shrink: 0; margin-top: 2px; color: var(--success); }
+  .faq-answer p { margin: 0; font-size: 12.5px; line-height: 1.6; color: var(--text-dim); }
+
+  /* ------------------------------------------------------------- Footer */
+
+  .site-footer { padding: 44px 24px 28px; border-top: 1px solid var(--border); }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px; }
+  .footer-brand { display: flex; align-items: center; gap: 10px; }
+  .footer-brand img { height: 30px; width: auto; }
+  .footer-brand p { margin: 0; font-size: 12px; color: var(--text-dim); }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 22px; }
+  .footer-links a { color: var(--text-dim); text-decoration: none; font-size: 12.5px; }
+  .footer-links a:hover { color: var(--text); }
+
+  .footer-copy {
+    max-width: 1100px;
+    margin: 26px auto 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    font-size: 11.5px;
+    color: var(--text-dim);
+    text-align: center;
+  }
+
+  /* ------------------------------------------------------ Scroll progress */
+  /* Barra fixa no topo (acima ate' do navbar) — a largura e' setada via JS
+     (ver updateScrollProgress no <script> perto do fim do <body>) direto
+     como % da rolagem total, sem transition nela mesma pra nao "atrasar"
+     visualmente atras do scroll real. */
+
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    z-index: 60;
+    background: linear-gradient(90deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+    transition: none;
+  }
+
+  /* --------------------------------------------------------- Theme toggle */
+
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .theme-toggle:hover { border-color: var(--primary); }
+
+  /* So' um dos dois icones fica visivel por vez, trocado pelo atributo
+     data-theme no <html> — nenhum JS alem do toggle do atributo em si. */
+  .theme-toggle .icon-moon { display: block; }
+  .theme-toggle .icon-sun { display: none; }
+  :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+  :root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+
+  .navbar-mobile .theme-toggle { align-self: flex-start; margin-top: 4px; }
+
+  /* ------------------------------------------------------------ Back to top */
+
+  .back-to-top {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 55;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 14px 30px -12px rgba(122, 24, 252, 0.6);
+    opacity: 0;
+    transform: translateY(12px) scale(0.9);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .back-to-top.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+  .back-to-top:hover { filter: brightness(1.1); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .back-to-top { transition: opacity 0.25s ease; }
   }
 
   /* --------------------------------------------------------- Vitrines */
@@ -1015,34 +1586,256 @@
 </head>
 <body>
 
-<div class="landing">
-  <img class="logo" src="images/logotipo.png" alt="NeuraOAB">
-  <div class="phases">
-    <div class="phase-line">
-      <span class="phase-num">1</span>
-      <p><strong>+ 2.000 questões oficiais</strong> e Chat IA embutido</p>
+<div class="scroll-progress" id="scrollProgress" role="progressbar" aria-label="Progresso de leitura da página" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+
+<header class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a class="navbar-logo" href="#top">
+      <img src="images/logotipo.png" alt="NeuraOAB" loading="lazy">
+    </a>
+    <nav class="navbar-links" aria-label="Navegação principal">
+      <a href="#recursos">Recursos</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#perguntas">Perguntas</a>
+    </nav>
+    <div class="navbar-actions">
+      <button type="button" class="btn-ghost" id="loginBtn">Entrar</button>
+      <button type="button" class="btn-gradient-sm" data-open-login>Começar agora</button>
+      <button type="button" class="theme-toggle" id="themeToggleBtn" aria-label="Alternar entre tema claro e escuro">
+        <svg class="icon-moon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
     </div>
-    <div class="phase-line">
-      <span class="phase-num">2</span>
-      <p><strong>Simulado de prática com peça e questões discursivas</strong>, correção em
-        segundos pelos critérios oficiais de cada exame</p>
+    <button type="button" class="navbar-burger" id="navBurgerBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="navbarMobile">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+  </div>
+  <div class="navbar-mobile" id="navbarMobile" hidden>
+    <a href="#recursos">Recursos</a>
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#perguntas">Perguntas</a>
+    <button type="button" class="btn-ghost" data-open-login>Entrar</button>
+    <button type="button" class="btn-gradient-sm" data-open-login>Começar agora</button>
+    <button type="button" class="theme-toggle" id="themeToggleBtnMobile" aria-label="Alternar entre tema claro e escuro">
+      <svg class="icon-moon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <span class="hero-badge">A SUA PREPARAÇÃO PARA A OAB</span>
+      <h1 class="hero-title">Estude melhor.<br>Chegue <span class="grad-text">mais preparado.</span></h1>
+      <p class="hero-sub">Questões oficiais, IA para explicar seus erros e simulados com correção segundo os critérios da FGV.</p>
+      <div class="hero-ctas">
+        <button type="button" class="btn-gradient-lg" data-open-login>
+          COMEÇAR AGORA
+          <svg class="cta-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <polyline points="13 5 20 12 13 19"></polyline>
+          </svg>
+        </button>
+        <button type="button" class="btn-outline-lg" id="heroSecondaryBtn">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+          Ver como funciona
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <strong data-count-to="2000" data-prefix="+">+0</strong><span>questões oficiais</span>
+        </div>
+        <div class="hero-stat">
+          <strong>46º Exame</strong><span>disponível</span>
+        </div>
+        <div class="hero-stat">
+          <strong>1ª e 2ª fases</strong><span>da OAB</span>
+        </div>
+        <div class="hero-stat">
+          <strong>IA exclusiva</strong><span>Dr. Laureano</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-figure">
+      <div class="hero-avatar-wrap">
+        <div class="hero-bubble">
+          <p>Vamos estudar juntos?</p>
+        </div>
+        <img class="hero-avatar" src="images/avatar-início.png" alt="Dr. Laureano, assistente de estudos de IA da NeuraOAB" fetchpriority="high">
+        <div class="hero-card">
+          <div class="hero-card-top">
+            <h3>Dr. Laureano</h3>
+            <span class="online-badge"><span class="online-dot" aria-hidden="true"></span>Online</span>
+          </div>
+          <p>Seu assistente de estudos para a OAB.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Explica seus erros</li>
+            <li><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Tira suas dúvidas</li>
+            <li><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Indica o que estudar</li>
+            <li><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Acompanha seu progresso</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="divider"></div>
-  <p class="source-note">Baseado em dados 100% oficiais da FGV</p>
-  <button class="cta" id="loginBtn" type="button">
-    LOGIN
-    <svg class="cta-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="4" y1="12" x2="20" y2="12"></line>
-      <polyline points="13 5 20 12 13 19"></polyline>
-    </svg>
-  </button>
+</section>
 
-  <button class="scroll-more" id="scrollMoreBtn" type="button">
-    Conhecer mais
-    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-  </button>
-</div>
+<section class="dash-showcase" id="como-funciona">
+  <div class="section-head" data-aos="fade-up">
+    <h2 class="section-title">Tudo o que você precisa em <span class="grad-text">um só lugar</span></h2>
+  </div>
+  <div class="dash-frame">
+    <div class="dash-sidebar">
+      <img class="dash-sidebar-logo" src="images/logotipo.png" alt="" loading="lazy">
+      <nav class="dash-nav" aria-hidden="true">
+        <span class="dash-nav-item active"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"></path><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"></path></svg>Início</span>
+        <span class="dash-nav-item"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"></path><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"></path></svg>Questões</span>
+        <span class="dash-nav-item"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Simulados</span>
+        <span class="dash-nav-item"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>Peças</span>
+        <span class="dash-nav-item"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 6"></polyline><polyline points="14 6 21 6 21 13"></polyline></svg>Desempenho</span>
+        <span class="dash-nav-item"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>Caderno de erros</span>
+        <span class="dash-nav-item"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 20l1-4.5A8.5 8.5 0 1 1 21 11.5z"></path></svg>Dr. Laureano</span>
+        <span class="dash-nav-item"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"></circle><path d="M9 14l-1.5 7L12 19l4.5 2L15 14"></path></svg>Medalhas</span>
+      </nav>
+    </div>
+    <div class="dash-main">
+      <div class="dash-topbar">
+        <div class="dash-phase-pills">
+          <span class="pill active">1ª Fase</span>
+          <span class="pill">2ª Fase</span>
+        </div>
+        <span class="dash-avatar"><img src="images/avatar-início.png" alt="" loading="lazy"></span>
+      </div>
+      <h3 class="dash-greeting">Olá! 👋</h3>
+      <p class="dash-greeting-sub">Pronto para mais uma sessão de estudos?</p>
+
+      <div class="dash-stats-grid">
+        <div class="mock-stat">
+          <span class="mock-stat-icon c-purple"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"></path><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"></path></svg></span>
+          <div class="num" data-count-to="1284">0</div><div class="label">Questões respondidas</div>
+        </div>
+        <div class="mock-stat">
+          <span class="mock-stat-icon c-blue"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle></svg></span>
+          <div class="num" data-count-to="68" data-suffix="%">0%</div><div class="label">Taxa de acerto</div>
+        </div>
+        <div class="mock-stat">
+          <span class="mock-stat-icon c-orange"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span>
+          <div class="num" data-count-to="18">0</div><div class="label">Simulados realizados</div>
+        </div>
+        <div class="mock-stat">
+          <span class="mock-stat-icon c-success"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg></span>
+          <div class="num" data-count-to="12" data-suffix=" dias">0 dias</div><div class="label">Sequência de estudos</div>
+        </div>
+      </div>
+
+      <div class="dash-cards-row">
+        <div class="dash-card">
+          <h3>Seu progresso geral</h3>
+          <div class="dash-progress">
+            <div class="progress-ring" style="--pct:68"><span data-count-to="68" data-suffix="%">0%</span></div>
+            <div class="progress-breakdown">
+              <p class="progress-msg"><b>Ótimo!</b> Você está acima da média.</p>
+              <div class="progress-row">
+                <span class="progress-row-label">Questões</span>
+                <span class="mock-bar-track"><span class="mock-bar-fill c-purple" style="width:100%"></span></span>
+                <span class="progress-row-val" data-count-to="1284">0</span>
+              </div>
+              <div class="progress-row">
+                <span class="progress-row-label">Acertos</span>
+                <span class="mock-bar-track"><span class="mock-bar-fill good" style="width:66%"></span></span>
+                <span class="progress-row-val" data-count-to="846">0</span>
+              </div>
+              <div class="progress-row">
+                <span class="progress-row-label">Erros</span>
+                <span class="mock-bar-track"><span class="mock-bar-fill bad" style="width:34%"></span></span>
+                <span class="progress-row-val" data-count-to="438">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-head">
+            <h3>Última atividade</h3>
+            <span class="tag-success">Concluído</span>
+          </div>
+          <div class="dash-activity">
+            <div class="mini-ring" style="--pct:68"><span data-count-to="68" data-suffix="%">0%</span></div>
+            <div>
+              <strong>44º Exame</strong>
+              <p>Seu desempenho<br>68% de acerto</p>
+              <span class="dim">Ontem · 2h 15min</span>
+            </div>
+          </div>
+          <button type="button" class="dash-link-btn" data-open-login>Revisar erros →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="recursos">
+  <div class="section-head" data-aos="fade-up">
+    <h2 class="section-title">Recursos que <span class="grad-text">fazem a diferença</span></h2>
+  </div>
+  <div class="features-grid">
+    <article class="feature-card" data-aos="fade-up" data-aos-delay="0">
+      <span class="feature-icon i-purple"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"></path><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"></path></svg></span>
+      <h3>Questões oficiais</h3>
+      <p>Mais de 2.000 questões da FGV organizadas por exame, disciplina e assunto para você praticar.</p>
+      <button type="button" class="feature-link" data-open-login>Explorar questões →</button>
+    </article>
+    <article class="feature-card" data-aos="fade-up" data-aos-delay="100">
+      <span class="feature-icon i-blue"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2l1.6 6.4L20 10l-6.4 1.6L12 18l-1.6-6.4L4 10l6.4-1.6L12 2z"></path></svg></span>
+      <h3>IA para entender seus erros</h3>
+      <p>O Dr. Laureano explica o raciocínio por trás de cada questão e ajuda você a fixar o conteúdo.</p>
+      <button type="button" class="feature-link" data-open-login>Conversar com o Dr. Laureano →</button>
+    </article>
+    <article class="feature-card" data-aos="fade-up" data-aos-delay="200">
+      <span class="feature-icon i-orange"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="3" x2="12" y2="21"></line><path d="M5 7l-3 6.5a3 3 0 0 0 6 0z"></path><path d="M19 7l-3 6.5a3 3 0 0 0 6 0z"></path><path d="M5 7h14"></path><path d="M9 21h6"></path></svg></span>
+      <h3>Simulado da 2ª fase</h3>
+      <p>Pratique peças e questões discursivas e receba correção em segundos segundo os critérios oficiais.</p>
+      <button type="button" class="feature-link" data-open-login>Praticar agora →</button>
+    </article>
+  </div>
+</section>
+
+<section class="faq" id="perguntas">
+  <div class="section-head" data-aos="fade-up">
+    <h2 class="section-title">Perguntas frequentes</h2>
+  </div>
+  <div class="faq-list">
+    <details class="faq-item" data-aos="fade-up">
+      <summary>As questões são realmente da FGV?</summary>
+      <div class="faq-answer">
+        <svg class="faq-answer-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <p>Sim. Todo o banco de questões da 1ª fase vem diretamente das provas oficiais aplicadas pela FGV em cada exame da OAB.</p>
+      </div>
+    </details>
+    <details class="faq-item" data-aos="fade-up">
+      <summary>Como funciona a correção da 2ª fase?</summary>
+      <div class="faq-answer">
+        <svg class="faq-answer-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <p>Você resolve peças e questões discursivas e recebe, em segundos, uma correção da IA baseada nos critérios oficiais de cada exame — com pontuação por item e explicação do que faltou.</p>
+      </div>
+    </details>
+    <details class="faq-item" data-aos="fade-up">
+      <summary>O que é o Dr. Laureano?</summary>
+      <div class="faq-answer">
+        <svg class="faq-answer-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <p>É o assistente de IA da NeuraOAB: explica o raciocínio de cada questão, tira dúvidas em conversa e indica o que estudar com base no seu desempenho.</p>
+      </div>
+    </details>
+    <details class="faq-item" data-aos="fade-up">
+      <summary>Como faço para entrar na plataforma?</summary>
+      <div class="faq-answer">
+        <svg class="faq-answer-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <p>Alunos entram com a conta criada pelo convite do professor; professores entram com a conta do Portal do Professor. Use o botão "Entrar" no topo da página.</p>
+      </div>
+    </details>
+  </div>
+</section>
 
 <!-- ------------------------------------------------------- Vitrine: aluno -->
 <section class="showcase" id="showcaseAluno">
@@ -1081,7 +1874,7 @@
                 </div>
                 <div class="mock-chat-msg assistant">
                   <span class="mock-chat-avatar">
-                    <img src="images/Dr.%20Laureano.png" alt="Dr. Laureano">
+                    <img src="images/Dr.%20Laureano.png" alt="Dr. Laureano" loading="lazy">
                   </span>
                   <p><b>Dr. Laureano:</b> Na concussão o agente exige a vantagem; aqui João já tinha a posse do dinheiro e se apropriou dele — isso é peculato, art. 312 do CP. A alternativa correta é a B.</p>
                 </div>
@@ -1310,12 +2103,149 @@
   </div>
 </section>
 
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="images/logotipo.png" alt="NeuraOAB" loading="lazy">
+      <p>Preparação inteligente para a OAB.</p>
+    </div>
+    <nav class="footer-links" aria-label="Links do rodapé">
+      <a href="#recursos">Recursos</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#perguntas">Perguntas</a>
+    </nav>
+  </div>
+  <p class="footer-copy">© 2026 NeuraOAB. Baseado em dados 100% oficiais da FGV.</p>
+</footer>
+
+<button type="button" class="back-to-top" id="backToTopBtn" aria-label="Voltar ao topo">
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+</button>
+
 <script>
-  // Botao "Conhecer mais" — rola ate' a primeira vitrine (a do professor
-  // vem logo em seguida, ja' visivel ao continuar rolando).
-  document.getElementById("scrollMoreBtn").addEventListener("click", () => {
-    document.getElementById("showcaseAluno").scrollIntoView({ behavior: "smooth" });
+  // Sombra/blur do header, barra de progresso de leitura e botao "voltar ao
+  // topo" dependem todos da mesma posicao de scroll — um so' listener
+  // (com rAF pra nao rodar mais de uma vez por frame) atualiza os tres.
+  const navbarEl = document.getElementById("navbar");
+  const scrollProgressEl = document.getElementById("scrollProgress");
+  const backToTopBtn = document.getElementById("backToTopBtn");
+  let scrollTicking = false;
+
+  function updateOnScroll() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+
+    navbarEl.classList.toggle("scrolled", scrollTop > 8);
+
+    scrollProgressEl.style.width = pct + "%";
+    scrollProgressEl.setAttribute("aria-valuenow", String(Math.round(pct)));
+
+    backToTopBtn.classList.toggle("visible", scrollTop > 480);
+
+    scrollTicking = false;
+  }
+
+  window.addEventListener("scroll", () => {
+    if (!scrollTicking) {
+      window.requestAnimationFrame(updateOnScroll);
+      scrollTicking = true;
+    }
+  }, { passive: true });
+  updateOnScroll();
+
+  backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
+
+  // Menu mobile: mesmo overlay simples de sempre (nao um drawer separado),
+  // fecha sozinho ao clicar em qualquer link/botao dentro dele.
+  const navBurgerBtn = document.getElementById("navBurgerBtn");
+  const navbarMobile = document.getElementById("navbarMobile");
+  function closeMobileNav() {
+    navbarMobile.hidden = true;
+    navBurgerBtn.setAttribute("aria-expanded", "false");
+  }
+  navBurgerBtn.addEventListener("click", () => {
+    const willOpen = navbarMobile.hidden;
+    navbarMobile.hidden = !willOpen;
+    navBurgerBtn.setAttribute("aria-expanded", String(willOpen));
+  });
+  navbarMobile.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeMobileNav));
+
+  // Botao secundario da hero — rola ate' a vitrine do dashboard.
+  document.getElementById("heroSecondaryBtn").addEventListener("click", () => {
+    document.getElementById("como-funciona").scrollIntoView({ behavior: "smooth" });
+  });
+
+  // -------------------------------------------------------------- Tema
+  // O <script> inline no <head> ja' aplica o tema salvo antes da pagina
+  // pintar (evita flash) — aqui so' cuidamos do CLIQUE no toggle, que
+  // alterna o atributo, persiste a escolha e atualiza a cor da barra do
+  // navegador (meta theme-color) pra combinar com o tema ativo.
+  const THEME_KEY = "neuraoab-theme";
+  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+  function applyTheme(isLight) {
+    if (isLight) {
+      document.documentElement.setAttribute("data-theme", "light");
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+    }
+    if (themeColorMeta) themeColorMeta.setAttribute("content", isLight ? "#f6f7fb" : "#0d1117");
+  }
+
+  function toggleTheme() {
+    const isLight = document.documentElement.getAttribute("data-theme") !== "light";
+    applyTheme(isLight);
+    try {
+      localStorage.setItem(THEME_KEY, isLight ? "light" : "dark");
+    } catch (e) {}
+  }
+
+  // Garante a cor certa da meta theme-color mesmo no primeiro carregamento
+  // (o <script> do <head> so' mexeu no atributo, nao nessa meta tag).
+  if (themeColorMeta && document.documentElement.getAttribute("data-theme") === "light") {
+    themeColorMeta.setAttribute("content", "#f6f7fb");
+  }
+
+  document.getElementById("themeToggleBtn").addEventListener("click", toggleTheme);
+  document.getElementById("themeToggleBtnMobile").addEventListener("click", () => {
+    toggleTheme();
+    closeMobileNav();
+  });
+
+  // ------------------------------------------------------ Contador animado
+  // Anima cada [data-count-to] de 0 ate' o valor alvo quando ele entra na
+  // tela — uma unica vez (o observer se desliga do elemento logo depois),
+  // formatado em pt-BR (separador de milhar) pra combinar com o resto do
+  // texto ("2.000", "1.284" etc.).
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      countObserver.unobserve(el);
+
+      const target = parseInt(el.dataset.countTo, 10);
+      const prefix = el.dataset.prefix || "";
+      const suffix = el.dataset.suffix || "";
+      if (Number.isNaN(target)) return;
+
+      const duration = 1200;
+      const start = performance.now();
+
+      function tick(now) {
+        const progress = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = Math.round(target * eased);
+        el.textContent = prefix + value.toLocaleString("pt-BR") + suffix;
+        if (progress < 1) window.requestAnimationFrame(tick);
+      }
+      window.requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.4 });
+
+  document.querySelectorAll("[data-count-to]").forEach((el) => countObserver.observe(el));
 
   // Carrossel "coverflow" infinito das vitrines (aluno/professor) — cada
   // slide e' posicionado com transform (translateX + scale + rotateY)
@@ -1678,6 +2608,12 @@
   }
 
   loginBtn.addEventListener("click", openLogin);
+  document.querySelectorAll("[data-open-login]").forEach((el) => {
+    el.addEventListener("click", () => {
+      closeMobileNav();
+      openLogin();
+    });
+  });
   loginModalClose.addEventListener("click", closeLogin);
   loginOverlay.addEventListener("click", (ev) => {
     if (ev.target === loginOverlay) closeLogin();
@@ -1770,6 +2706,14 @@
 
     window.location.href = destination;
   });
+</script>
+
+<!-- AOS (Animate On Scroll) — revela as secoes abaixo da hero conforme a
+     pagina rola (data-aos="fade-up" nos elementos). Carregado por ultimo e
+     so' inicializado depois que o DOM inteiro existe. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  AOS.init({ duration: 600, easing: "ease-out-cubic", once: true, offset: 60 });
 </script>
 </body>
 </html>
