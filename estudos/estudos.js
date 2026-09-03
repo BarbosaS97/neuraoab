@@ -52,6 +52,8 @@ const checkoutNome = document.getElementById("checkoutNome");
 const checkoutCpf = document.getElementById("checkoutCpf");
 const checkoutSubmitBtn = document.getElementById("checkoutSubmitBtn");
 const checkoutMsg = document.getElementById("checkoutMsg");
+const checkoutAlreadyOwned = document.getElementById("checkoutAlreadyOwned");
+const checkoutAlreadyOwnedPlano = document.getElementById("checkoutAlreadyOwnedPlano");
 const checkoutResult = document.getElementById("checkoutResult");
 const checkoutPixResult = document.getElementById("checkoutPixResult");
 const checkoutQrImage = document.getElementById("checkoutQrImage");
@@ -322,6 +324,19 @@ function openCheckout(plano) {
   plansModalNote.hidden = true;
   checkoutView.hidden = false;
   plansOverlay.classList.add("is-checkout");
+
+  // Segunda barreira contra pagar de nova um plano já ativo — a primeira
+  // (o botão "Assinar" some do card do plano atual, ver
+  // renderPlansModalCurrent) só protege a GRADE; se openCheckout(plano) for
+  // chamado mesmo assim pro plano corrente (ex.: planStatus desatualizado
+  // no momento do clique), aqui a gente barra antes de mostrar o
+  // formulário de pagamento.
+  const jaTemEssePlano = planStatus?.plano === plano;
+  checkoutForm.hidden = jaTemEssePlano;
+  checkoutAlreadyOwned.hidden = !jaTemEssePlano;
+  if (jaTemEssePlano) {
+    checkoutAlreadyOwnedPlano.textContent = `Plano ${CHECKOUT_PLAN_LABELS[plano] ?? ""}`;
+  }
 }
 
 function closeCheckout() {

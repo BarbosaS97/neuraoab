@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=47">
+<link rel="stylesheet" href="style.css?v=48">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -316,6 +316,26 @@
           <button type="submit" class="btn-primary checkout-submit" id="checkoutSubmitBtn">Gerar cobrança</button>
           <p class="checkout-msg" id="checkoutMsg"></p>
         </form>
+
+        <!-- Segunda barreira contra pagar de novo um plano que o aluno já tem
+             — a primeira é o botão "Assinar" sumir sozinho no card do plano
+             atual (ver renderPlansModalCurrent em estudos.js), mas essa
+             checagem acontece só na hora de MONTAR a grade; se por qualquer
+             motivo openCheckout(plano) for chamado pro plano que já está
+             ativo, é aqui que o formulário de pagamento não chega a
+             aparecer. Mostrada no lugar de #checkoutForm (ver openCheckout
+             em estudos.js), nunca junto. -->
+        <div class="checkout-pay-card checkout-owned-card" id="checkoutAlreadyOwned" hidden>
+          <div class="checkout-pay-head">
+            <span class="checkout-pay-icon checkout-pay-icon-success" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>
+            </span>
+            <div>
+              <h3>Você já tem este plano</h3>
+              <p>Sua assinatura do <strong id="checkoutAlreadyOwnedPlano">Plano</strong> já está ativa — não é preciso pagar de novo.</p>
+            </div>
+          </div>
+        </div>
 
         <!-- Resultado da cobrança — um "card" com identidade própria (ícone,
              título, faixa de destaque no topo), separado visualmente do
@@ -690,7 +710,7 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=39"></script>
+<script src="estudos.js?v=40"></script>
 <script src="dr-laureano.js?v=11"></script>
 </body>
 </html>
