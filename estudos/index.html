@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=48">
+<link rel="stylesheet" href="style.css?v=49">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -160,11 +160,18 @@
     <div class="help-modal-body">
       <div class="field profile-plan-field">
         <label>Plano atual</label>
-        <div class="profile-plan-row">
-          <span class="profile-plan-badge" id="profilePlanBadge">Grátis</span>
-          <button type="button" class="profile-plan-upgrade" id="profilePlanUpgrade">Fazer upgrade</button>
+        <div class="profile-plan-card" id="profilePlanCard">
+          <span class="profile-plan-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.6 6.6L22 9l-5.5 4.8L18 22l-6-4-6 4 1.5-8.2L2 9l7.4-.4z"></path></svg>
+          </span>
+          <div class="profile-plan-info">
+            <div class="profile-plan-row">
+              <strong class="profile-plan-badge" id="profilePlanBadge">Grátis</strong>
+              <button type="button" class="profile-plan-upgrade" id="profilePlanUpgrade">Fazer upgrade</button>
+            </div>
+            <p class="profile-plan-usage" id="profilePlanUsage"></p>
+          </div>
         </div>
-        <p class="profile-plan-usage" id="profilePlanUsage"></p>
       </div>
       <div class="field">
         <label for="profNome">Nome</label>
@@ -435,6 +442,15 @@
     <a href="../index.html" class="topbar-logo"><img src="../images/logotipo.png" alt="NeuraOAB"></a>
   </div>
   <div class="topbar-right">
+    <!-- Selo do plano atual — sempre visível, não só dentro de "Meu Perfil",
+         pra reforçar de relance em que plano o aluno está (ver renderTopbarPlanBadge
+         em estudos.js). Clicável: abre a mesma tela de planos do "Fazer
+         upgrade" (openPlansModal), tanto pra quem quer assinar quanto pra
+         quem só quer conferir os planos. -->
+    <button type="button" id="topbarPlanBadge" class="topbar-plan-badge" title="Ver planos">
+      <span class="topbar-plan-badge-dot" aria-hidden="true"></span>
+      <span id="topbarPlanBadgeLabel">Grátis</span>
+    </button>
     <button type="button" id="helpBtn" class="icon-btn" aria-label="Como funciona o NeuraOAB" title="Ajuda">?</button>
     <nav class="phase-tabs" aria-label="Fase do exame">
       <span class="phase-tab active" aria-current="page">1ª Fase</span>
@@ -710,7 +726,7 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=40"></script>
+<script src="estudos.js?v=41"></script>
 <script src="dr-laureano.js?v=11"></script>
 </body>
 </html>

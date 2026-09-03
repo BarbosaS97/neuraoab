@@ -378,6 +378,57 @@ a { color: inherit; }
 
 .icon-btn:hover { color: var(--text); border-color: var(--primary); }
 
+/* Selo do plano atual no topbar (ver renderTopbarPlanBadge em estudos.js) —
+   cor muda por nível (neutro/roxo/laranja, mesmo código de cores de
+   .profile-plan-badge em "Meu Perfil") pra ser reconhecível de relance sem
+   precisar ler o texto. Clicável (abre a tela de planos), por isso os
+   estados de hover/foco parecidos com um botão de verdade, não só um chip
+   decorativo. */
+.topbar-plan-badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--primary-glow);
+  background: var(--primary-dim);
+  color: var(--primary);
+  font-size: 12.5px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.topbar-plan-badge:hover { transform: translateY(-1px); box-shadow: 0 8px 18px -10px var(--primary-glow); }
+
+.topbar-plan-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.topbar-plan-badge.gratuito {
+  background: var(--card-hover);
+  color: var(--text-dim);
+  border-color: var(--border);
+}
+
+.topbar-plan-badge.pro {
+  background: var(--logo-orange-dim);
+  color: var(--logo-orange);
+  border-color: var(--logo-orange-glow);
+}
+
+@media (max-width: 480px) {
+  .topbar-plan-badge span:not(.topbar-plan-badge-dot) { display: none; }
+  .topbar-plan-badge { width: 34px; height: 34px; padding: 0; justify-content: center; border-radius: 50%; }
+}
+
 /* Alternador de fase — sempre visivel no topo, nunca escondido dentro do
    menu (o aluno troca de fase com um so' clique, de qualquer tela). Duas
    abas lado a lado (1a/2a Fase) deixam claro ONDE o aluno esta' e pra onde
@@ -2703,9 +2754,64 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 .profile-msg.show { display: block; }
 .profile-msg.ok { color: var(--success); }
 
-/* Plano atual + upgrade (ver renderProfilePlan em estudos.js) — mesma
-   linguagem visual dos outros cadeados de plano (laranja da marca pro CTA
-   de upgrade, ver .feedback.locked). */
+/* Plano atual + upgrade (ver renderProfilePlan em estudos.js) — card com
+   identidade própria (ícone + lavagem de gradiente + faixa de destaque),
+   mesmo vocabulário visual de .checkout-summary/.checkout-pay-card: antes
+   era só um chip pequeno solto acima do formulário, sem nenhum destaque
+   real (a mesma "pegadinha" de amadorismo já corrigida no checkout). */
+.profile-plan-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, var(--primary-dim), transparent 65%), var(--card-hover);
+  border: 1px solid var(--primary-glow);
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 18px 36px -26px var(--primary-glow);
+}
+
+.profile-plan-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+}
+
+.profile-plan-card.gratuito {
+  background: var(--card-hover);
+  border-color: var(--border);
+  box-shadow: none;
+}
+.profile-plan-card.gratuito::before { display: none; }
+
+.profile-plan-card.pro {
+  background: linear-gradient(135deg, var(--logo-orange-dim), transparent 65%), var(--card-hover);
+  border-color: var(--logo-orange-glow);
+  box-shadow: 0 18px 36px -26px var(--logo-orange-glow);
+}
+
+.profile-plan-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background: var(--primary-dim);
+  color: var(--primary);
+}
+
+.profile-plan-card.gratuito .profile-plan-icon { background: var(--card-hover); color: var(--text-dim); }
+.profile-plan-card.pro .profile-plan-icon { background: var(--logo-orange-dim); color: var(--logo-orange); }
+
+.profile-plan-info { flex: 1; min-width: 0; }
+
 .profile-plan-row {
   display: flex;
   align-items: center;
@@ -2714,17 +2820,10 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 }
 
 .profile-plan-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 5px 12px;
-  border-radius: 999px;
-  font-size: 12.5px;
-  font-weight: 700;
-  background: var(--primary-dim);
-  color: var(--primary);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
 }
-
-.profile-plan-badge.pro { background: var(--logo-orange-dim); color: var(--logo-orange); }
 
 .profile-plan-upgrade {
   background: none;
@@ -2744,7 +2843,7 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 .profile-plan-upgrade[hidden] { display: none; }
 
 .profile-plan-usage {
-  margin: 8px 0 0;
+  margin: 6px 0 0;
   font-size: 11.5px;
   color: var(--text-dim);
 }

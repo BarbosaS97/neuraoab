@@ -65,8 +65,11 @@ const checkoutCardResult = document.getElementById("checkoutCardResult");
 const checkoutCardLink = document.getElementById("checkoutCardLink");
 const checkoutStatus = document.getElementById("checkoutStatus");
 const checkoutStatusSpinner = document.getElementById("checkoutStatusSpinner");
+const profilePlanCard = document.getElementById("profilePlanCard");
 const profilePlanBadge = document.getElementById("profilePlanBadge");
 const profilePlanUpgrade = document.getElementById("profilePlanUpgrade");
+const topbarPlanBadge = document.getElementById("topbarPlanBadge");
+const topbarPlanBadgeLabel = document.getElementById("topbarPlanBadgeLabel");
 const profilePlanUsage = document.getElementById("profilePlanUsage");
 const profNome = document.getElementById("profNome");
 const profEmail = document.getElementById("profEmail");
@@ -1836,11 +1839,27 @@ const PLAN_LABELS = { gratuito: "Grátis", basico: "Básico", pro: "Pro" };
 // planStatus (ver loadPlanStatus acima) — nunca escondido atrás de outra
 // navegação: quem quer saber "em que plano eu tô" ou "quanto falta pra
 // acabar minha cota" encontra isso direto em "Meu Perfil".
+// Selo do plano SEMPRE visível no topbar (não só dentro de "Meu Perfil") —
+// mesmas 3 cores de PLAN_LABELS/profilePlanBadge, pra reforçar de relance em
+// que plano o aluno está. Chamado toda vez que renderProfilePlan roda (mesmo
+// dado, dois lugares) e uma vez no init(), já que o topbar aparece muito
+// antes do aluno abrir "Meu Perfil" pela primeira vez.
+function renderTopbarPlanBadge() {
+  const plano = planStatus?.plano || "gratuito";
+  topbarPlanBadgeLabel.textContent = PLAN_LABELS[plano] || plano;
+  topbarPlanBadge.classList.toggle("gratuito", plano === "gratuito");
+  topbarPlanBadge.classList.toggle("pro", plano === "pro");
+}
+
+topbarPlanBadge.addEventListener("click", () => openPlansModal());
+
 function renderProfilePlan() {
   const plano = planStatus?.plano || "gratuito";
   profilePlanBadge.textContent = PLAN_LABELS[plano] || plano;
-  profilePlanBadge.classList.toggle("pro", plano === "pro");
+  profilePlanCard.classList.toggle("gratuito", plano === "gratuito");
+  profilePlanCard.classList.toggle("pro", plano === "pro");
   profilePlanUpgrade.hidden = plano === "pro";
+  renderTopbarPlanBadge();
 
   if (!planStatus) {
     profilePlanUsage.textContent = "";
@@ -2664,6 +2683,7 @@ async function init() {
   statsAnswersCache = answers || [];
   renderDashboardGreeting(firstName);
   applyPhaseTabLock();
+  renderTopbarPlanBadge();
 
   if (allQuestions.length === 0) {
     showLoadingError("Nenhuma questão no banco ainda. Importe um JSON na aba Admin.");
