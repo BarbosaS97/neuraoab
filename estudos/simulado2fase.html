@@ -74,22 +74,11 @@
     </div>
   </section>
 
-  <!-- Login opcional (aluno convidado por um professor) — ao contrario da
-       1a fase (login OBRIGATORIO, ver requireAuth em estudos.js), aqui o
-       simulado funciona sem conta (ver ALUNO_ID em simulado2fase.js), entao
-       esta secao (ao contrario da equivalente em estudos/index.html) tem
-       dois estados alternados por updateSessionUI(): deslogado (formulario
-       de entrar) e logado (dados da conta + sair). -->
-  <section id="menuSessionLoggedOut">
-    <h2 class="menu-section-title">Conta</h2>
-    <p class="session-popover-hint">Recebeu um convite do seu professor? Entre pra suas respostas contarem pra ele.</p>
-    <input type="email" id="sessionEmail" placeholder="E-mail" autocomplete="username">
-    <input type="password" id="sessionPassword" placeholder="Senha" autocomplete="current-password">
-    <button type="button" id="sessionLoginBtn" class="session-popover-btn">Entrar</button>
-    <p class="session-popover-msg" id="sessionLoginMsg"></p>
-  </section>
-
-  <section id="menuSessionLoggedIn" hidden>
+  <!-- Acesso a' area da 2a fase agora EXIGE login (ver requireAuth em
+       simulado2fase.js, mesmo padrao de estudos/index.html) — so' chega ate'
+       aqui quem ja' tem uma sessao valida, entao esta secao nunca precisa de
+       um estado "deslogado" alternativo (ao contrario de antes). -->
+  <section id="menuSessionLoggedIn">
     <h2 class="menu-section-title">Conta</h2>
     <div class="menu-user-row">
       <span class="avatar" id="menuAvatar">?</span>

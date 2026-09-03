@@ -3,6 +3,13 @@
 -- schema_security_hardening.sql e schema_alertas_juridicos.sql. Aditivo e
 -- idempotente — seguro re-rodar.
 --
+-- [ATUALIZADO — ver schema_fase2_login_obrigatorio.sql] O "fluxo anônimo"
+-- mencionado abaixo (aluno_id por localStorage, getAlunoId()) não existe
+-- mais — a 2ª fase passou a exigir login, igual ao resto do site. O comando
+-- em si (oab2_minhas_tentativas) continua igual, só que "aluno_id" hoje é
+-- sempre o próprio user.id (uuid) como texto, nunca mais um id aleatório
+-- separado.
+--
 -- O novo dashboard de estudos/simulado2fase.html (cards "Simulados
 -- realizados"/"Nota média"/"Sequência", "Continuar simulado", "Últimos
 -- simulados" e o gráfico de evolução) precisa de duas coisas que o schema

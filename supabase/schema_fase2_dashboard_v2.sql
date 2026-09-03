@@ -12,11 +12,13 @@
 -- (peça/questão), pra o front-end (estudos/simulado2fase.js) somar por
 -- categoria em vez de por tentativa.
 --
--- Mesmo modelo de segurança das outras funções deste fluxo anônimo: filtra
--- por aluno_id (id aleatório gerado no primeiro acesso, guardado só no
--- localStorage do navegador do aluno — ver getAlunoId() em
--- estudos/simulado2fase.js), a mesma "capacidade imprevisível" já usada por
--- oab2_minhas_tentativas().
+-- Filtra por aluno_id, mesma coluna usada por oab2_minhas_tentativas().
+--
+-- [ATUALIZADO — ver schema_fase2_login_obrigatorio.sql] Quando este arquivo
+-- foi escrito, aluno_id era um id aleatório por localStorage (fluxo
+-- anônimo, ver getAlunoId() em estudos/simulado2fase.js) — a 2ª fase passou
+-- a exigir login depois, então aluno_id hoje é sempre o próprio user.id
+-- (uuid) como texto. O comando abaixo não mudou.
 
 create or replace function oab2_minhas_respostas_corrigidas(p_aluno_id text)
 returns table (

@@ -611,60 +611,6 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   box-shadow: none;
 }
 
-/* ------------------------------ Login opcional no menu (simulado2fase.html) */
-/*
-  estudos/index.html nao precisa disso — login la' e' obrigatorio (ver
-  requireAuth em estudos.js), entao o .menu-panel so' tem o estado logado.
-  simulado2fase.html permite uso anonimo (ver ALUNO_ID em
-  simulado2fase.js), entao o mesmo .menu-panel la' tem uma secao a mais
-  (#menuSessionLoggedOut, ver HTML) com este formulario de login — sem CSS
-  proprio em simulado2fase.css, dependendo 100% do que este arquivo
-  compartilhado (style.css) define.
-*/
-
-.session-popover-hint {
-  margin: 0 0 10px;
-  font-size: 11.5px;
-  color: var(--text-dim);
-  line-height: 1.4;
-}
-
-#menuSessionLoggedOut input {
-  width: 100%;
-  background: var(--bg);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  padding: 7px 9px;
-  font-size: 12.5px;
-  font-family: inherit;
-  margin-bottom: 8px;
-}
-
-#menuSessionLoggedOut input:focus { outline: none; border-color: var(--primary); }
-
-.session-popover-btn {
-  width: 100%;
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  border-radius: 7px;
-  padding: 7px 0;
-  font-size: 12.5px;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.session-popover-msg {
-  margin: 8px 0 0;
-  font-size: 11.5px;
-  color: var(--error);
-  display: none;
-}
-
-.session-popover-msg.show { display: block; }
-
 /* -------------------------------------------------------------- Content */
 
 .app {

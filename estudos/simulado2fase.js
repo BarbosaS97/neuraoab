@@ -4,43 +4,26 @@
 // questões discursivas -> "Finalizar" dispara uma correção por IA por item
 // (Edge Function corretor-2fase) -> nota + feedback item a item.
 //
-// Sem login (so' a anon key do Supabase) continua sendo o modo padrao do
-// site inteiro — por isso identificamos o aluno por um UUID anonimo gerado
-// no primeiro acesso e guardado no localStorage (ALUNO_ID_KEY). Isso nao
-// protege as respostas de um aluno contra outro que tenha a anon key (ver
-// nota grande em supabase/schema_fase2.sql); e' so' uma identidade de
-// conveniencia para retomar o progresso no mesmo navegador. Login (opcional,
-// ver currentSession abaixo) so' existe pra quem foi convidado por um
-// professor (ver professor-portal/) — quando logado, a tentativa tambem
-// grava user_id, alem do aluno_id anonimo, pra aparecer no Portal do
-// Professor (ver supabase/schema_professor_portal.sql).
+// EXIGE LOGIN, igual ao resto do site (ver requireAuth() abaixo, mesmo
+// padrão de estudos/estudos.js) — até aqui esta era a ÚNICA área que
+// funcionava sem conta (identidade por um UUID anônimo gerado no primeiro
+// acesso e guardado no localStorage). Isso mudou por um motivo concreto, não
+// só de consistência: sem exigir login, "corretor-2fase" (a correção por
+// IA, que custa dinheiro de verdade a cada chamada) não tinha NENHUM limite
+// de plano — ver planAllowsSegundaFase em supabase/functions/corretor-2fase/
+// index.ts — então o paywall dos planos Básico/Pro era contornável só não
+// fazendo login. Ver também supabase/schema_fase2_login_obrigatorio.sql.
+// A identidade agora é sempre currentSession.user.id — não existe mais
+// "aluno_id anônimo" separado de "user_id".
 
 const SUPABASE_URL = "https://lgcphxncteqpbntnlzhe.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnY3BoeG5jdGVxcGJudG5semhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc3NzI5NTIsImV4cCI6MjEwMzM0ODk1Mn0.gQltbgj-OPpDEPuyOSonM3G8h1ppwwez0Dwi3SOdx98";
 
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const ALUNO_ID_KEY = "neuraoab_aluno_id";
 const DRAFT_KEY_PREFIX = "sim2_draft_"; // + provaId + "_" + itemId
 const TENTATIVA_PTR_PREFIX = "sim2_tentativa_ptr_"; // + provaId -> tentativa id
 const MODO_KEY_PREFIX = "sim2_modo_"; // + provaId -> "completo" | "peca" | "questoes"
-
-function getAlunoId() {
-  try {
-    let id = localStorage.getItem(ALUNO_ID_KEY);
-    if (!id) {
-      id = crypto.randomUUID();
-      localStorage.setItem(ALUNO_ID_KEY, id);
-    }
-    return id;
-  } catch {
-    // localStorage indisponivel — usa um id so' desta sessao (nao retoma
-    // entre visitas, mas o simulado continua funcionando).
-    return crypto.randomUUID();
-  }
-}
-
-const ALUNO_ID = getAlunoId();
 
 function safeGetItem(key) {
   try { return localStorage.getItem(key); } catch { return null; }
@@ -178,12 +161,6 @@ const els = {
   menuAvatar: document.getElementById("menuAvatar"),
   menuUserLabel: document.getElementById("menuUserLabel"),
 
-  menuSessionLoggedOut: document.getElementById("menuSessionLoggedOut"),
-  menuSessionLoggedIn: document.getElementById("menuSessionLoggedIn"),
-  sessionEmail: document.getElementById("sessionEmail"),
-  sessionPassword: document.getElementById("sessionPassword"),
-  sessionLoginBtn: document.getElementById("sessionLoginBtn"),
-  sessionLoginMsg: document.getElementById("sessionLoginMsg"),
   sessionLogoutBtn: document.getElementById("sessionLogoutBtn"),
 };
 
@@ -214,19 +191,27 @@ document.addEventListener("keydown", (ev) => {
 
 // ------------------------------------------------------ Sessão do aluno
 //
-// Mesmo mecanismo opcional de estudos/estudos.js (ver comentário lá) — sem
-// login, currentSession fica null pra sempre e o simulado funciona
-// exatamente como antes (só aluno_id anônimo). Logado, a tentativa criada
-// em createTentativa (abaixo) também grava user_id, pra aparecer no
-// Portal do Professor. Ao contrário da 1ª fase (login obrigatório), aqui o
-// menu tem os dois estados — ver comentário no HTML sobre
-// menuSessionLoggedOut/menuSessionLoggedIn.
+// EXIGE LOGIN, mesmo padrão de requireAuth() em estudos/estudos.js (ver
+// comentário no topo do arquivo pra motivo) — o menu só tem UM estado
+// (logado), diferente de antes (que tinha logado/deslogado).
 
 let currentSession = null;
 
-// Primeiro nome do aluno logado no cabeçalho do dashboard ("Olá, João!") —
-// sem login, fica só o "Olá!" genérico (não dá pra saber o nome de quem
-// nunca criou conta, ver ALUNO_ID acima).
+// Confere sessão ANTES de qualquer outra coisa (chamado no bootstrap, no
+// fim do arquivo) — sem sessão válida, manda de volta pra' landing page em
+// vez de liberar o uso anônimo de antes. Mesmo formato de requireAuth() em
+// estudos/estudos.js.
+async function requireAuth() {
+  const { data } = await client.auth.getSession();
+  if (!data.session?.user) {
+    window.location.replace("../index.html");
+    return null;
+  }
+  return data.session;
+}
+
+// Primeiro nome do aluno no cabeçalho do dashboard ("Olá, João!") — sem
+// nome preenchido em "Meu Perfil", fica só o "Olá!" genérico.
 function renderGreeting() {
   const nome = currentSession?.user?.user_metadata?.nome?.trim();
   const primeiroNome = nome ? nome.split(/\s+/)[0] : null;
@@ -234,49 +219,12 @@ function renderGreeting() {
 }
 
 function updateSessionUI() {
-  if (currentSession?.user) {
-    const label = currentSession.user.user_metadata?.nome || currentSession.user.email || "?";
-    els.menuAvatar.textContent = label.trim().charAt(0).toUpperCase() || "?";
-    els.menuUserLabel.textContent = currentSession.user.email;
-    els.menuSessionLoggedOut.hidden = true;
-    els.menuSessionLoggedIn.hidden = false;
-  } else {
-    els.menuSessionLoggedOut.hidden = false;
-    els.menuSessionLoggedIn.hidden = true;
-  }
+  if (!currentSession?.user) return; // requireAuth() já garante sessão antes de chegar aqui
+  const label = currentSession.user.user_metadata?.nome || currentSession.user.email || "?";
+  els.menuAvatar.textContent = label.trim().charAt(0).toUpperCase() || "?";
+  els.menuUserLabel.textContent = currentSession.user.email;
   renderGreeting();
 }
-
-function showSessionLoginMsg(text) {
-  els.sessionLoginMsg.textContent = text;
-  els.sessionLoginMsg.className = "session-popover-msg show";
-}
-
-async function handleSessionLogin() {
-  const email = els.sessionEmail.value.trim();
-  const password = els.sessionPassword.value;
-  if (!email || !password) {
-    showSessionLoginMsg("Preencha e-mail e senha.");
-    return;
-  }
-
-  els.sessionLoginBtn.disabled = true;
-  const { error } = await client.auth.signInWithPassword({ email, password });
-  els.sessionLoginBtn.disabled = false;
-
-  if (error) {
-    showSessionLoginMsg("E-mail ou senha inválidos.");
-    return;
-  }
-  els.sessionPassword.value = "";
-  els.sessionLoginMsg.className = "session-popover-msg";
-  closeMenu();
-}
-
-els.sessionLoginBtn.addEventListener("click", handleSessionLogin);
-els.sessionPassword.addEventListener("keydown", (ev) => {
-  if (ev.key === "Enter") handleSessionLogin();
-});
 
 // Mesmo comportamento de estudos/estudos.js (handleSessionLogout): sai e
 // redireciona na hora pra' landing page, em vez de so' fechar o menu e
@@ -293,36 +241,30 @@ els.sessionLogoutBtn.addEventListener("click", async () => {
   window.location.href = "../index.html";
 });
 
+// Se a sessao cair enquanto o aluno esta' na pagina (token expirado, logout
+// em outra aba etc.), manda de volta pra' landing page — mesmo tratamento
+// de estudos/estudos.js, agora que login e' obrigatorio aqui tambem.
 client.auth.onAuthStateChange((_event, session) => {
   currentSession = session;
-  updateSessionUI();
-});
-
-client.auth.getSession().then(({ data }) => {
-  currentSession = data.session;
-  updateSessionUI();
-  applySegundaFaseLock();
+  if (session?.user) updateSessionUI();
+  else window.location.replace("../index.html");
 });
 
 // ---------------------------------------------- Prévia pro plano grátis
 //
-// Só existe pra quem está LOGADO — o uso anônimo desta página (ver comentário
-// no topo do arquivo) continua 100% livre, sem noção nenhuma de "plano".
-// Pro aluno avulso/convidado no plano grátis (sem segunda_fase, ver
-// supabase/schema_planos.sql), deixa ele navegar pelos exames e ler o
-// enunciado da peça/questões à vontade ("um gostinho") — só nunca deixa
-// clicar em "Iniciar" de verdade, porque é isso que libera escrever e, no
-// fim, chamar a correção paga (corretor-2fase). previewLocked é lido em
-// updateAnswerLock() (força a trava mesmo que currentTentativa exista, ex.:
-// uma tentativa antiga de quando o plano ainda permitia) e no clique de
-// btnIniciarCaderno (abaixo). corretor-2fase/index.ts também recusa a
-// correção pra quem está nesta situação — defesa em profundidade, caso
-// alguém contorne esta trava do lado do cliente.
+// Pro aluno no plano grátis (sem segunda_fase, ver supabase/schema_planos.sql),
+// deixa ele navegar pelos exames e ler o enunciado da peça/questões à
+// vontade ("um gostinho") — só nunca deixa clicar em "Iniciar" de verdade,
+// porque é isso que libera escrever e, no fim, chamar a correção paga
+// (corretor-2fase). previewLocked é lido em updateAnswerLock() (força a
+// trava mesmo que currentTentativa exista, ex.: uma tentativa antiga de
+// quando o plano ainda permitia) e no clique de btnIniciarCaderno (abaixo).
+// corretor-2fase/index.ts também recusa a correção pra quem está nesta
+// situação — defesa em profundidade, caso alguém contorne esta trava do
+// lado do cliente.
 let previewLocked = false;
 
 async function applySegundaFaseLock() {
-  if (!currentSession?.user) return;
-
   const { data, error } = await client.rpc("get_my_plan_status");
   if (error || !data || data.length === 0) return;
   if (data[0].segunda_fase) return;
@@ -693,22 +635,22 @@ async function findTentativa(provaId) {
     safeRemoveItem(ptrKey);
   }
 
-  // Segundo caminho de retomada, só pra quem está logado: o ponteiro acima
-  // é por navegador (localStorage), então trocar de dispositivo/navegador
-  // logado perderia a tentativa em andamento sem isso — busca por
-  // user_id+prova_id+status em vez de confiar só no ponteiro local.
-  if (currentSession?.user) {
-    const { data } = await client
-      .from("oab2_tentativas")
-      .select("*")
-      .eq("user_id", currentSession.user.id)
-      .eq("prova_id", provaId)
-      .eq("status", "em_andamento")
-      .maybeSingle();
-    if (data) {
-      safeSetItem(ptrKey, data.id);
-      return data;
-    }
+  // Segundo caminho de retomada: o ponteiro acima é por navegador
+  // (localStorage), então trocar de dispositivo/navegador perderia a
+  // tentativa em andamento sem isso — busca por user_id+prova_id+status em
+  // vez de confiar só no ponteiro local (RLS "oab2_tentativas_select_auth",
+  // ver schema_professor_portal.sql, garante que só volta tentativa do
+  // PRÓPRIO aluno logado).
+  const { data } = await client
+    .from("oab2_tentativas")
+    .select("*")
+    .eq("user_id", currentSession.user.id)
+    .eq("prova_id", provaId)
+    .eq("status", "em_andamento")
+    .maybeSingle();
+  if (data) {
+    safeSetItem(ptrKey, data.id);
+    return data;
   }
 
   return null;
@@ -716,13 +658,19 @@ async function findTentativa(provaId) {
 
 // Cria a tentativa de fato — started_at grava o momento do clique em
 // "Iniciar", que é o que o Portal do Professor mostra como "Iniciado em"
-// (ver professor-portal/js/aluno-detail.js, loadFase2).
+// (ver professor-portal/js/aluno-detail.js, loadFase2). aluno_id (coluna
+// legada de quando o fluxo era anônimo, ver topo do arquivo) sempre grava o
+// próprio user.id como texto agora — nunca mais um id aleatório separado —
+// é o que oab2_minhas_tentativas/oab2_minhas_respostas_corrigidas usam pra
+// achar o histórico do aluno (ver loadMinhasTentativas/loadMinhasRespostas
+// abaixo), e precisa bater com "user_id = auth.uid()" exigido pela policy
+// de insert (ver supabase/schema_fase2_login_obrigatorio.sql).
 async function createTentativa(provaId) {
   const { data, error } = await client
     .from("oab2_tentativas")
     .insert({
-      aluno_id: ALUNO_ID,
-      user_id: currentSession?.user?.id ?? null,
+      aluno_id: currentSession.user.id,
+      user_id: currentSession.user.id,
       prova_id: provaId,
       status: "em_andamento",
       modo: currentModo,
@@ -1377,7 +1325,7 @@ let dashboardLoadError = false;
 
 async function loadMinhasTentativas() {
   try {
-    const { data, error } = await client.rpc("oab2_minhas_tentativas", { p_aluno_id: ALUNO_ID });
+    const { data, error } = await client.rpc("oab2_minhas_tentativas", { p_aluno_id: currentSession.user.id });
     if (error) throw error;
     minhasTentativas = data || [];
   } catch (err) {
@@ -1396,7 +1344,7 @@ let minhasRespostas = [];
 
 async function loadMinhasRespostas() {
   try {
-    const { data, error } = await client.rpc("oab2_minhas_respostas_corrigidas", { p_aluno_id: ALUNO_ID });
+    const { data, error } = await client.rpc("oab2_minhas_respostas_corrigidas", { p_aluno_id: currentSession.user.id });
     if (error) throw error;
     minhasRespostas = data || [];
   } catch (err) {
@@ -1477,8 +1425,8 @@ async function renderHero() {
 
   // O ponteiro local (localStorage) pode ter sido perdido (outro
   // navegador/limpou os dados) — como a tentativa ja veio filtrada pelo
-  // proprio ALUNO_ID (capacidade equivalente), e' seguro reescreve-lo aqui
-  // pra findTentativa() achar de primeira quando o aluno clicar "Continuar".
+  // proprio user.id (aluno_id, ver createTentativa), e' seguro reescreve-lo
+  // aqui pra findTentativa() achar de primeira quando clicar "Continuar".
   safeSetItem(TENTATIVA_PTR_PREFIX + emAndamento.prova_id, emAndamento.tentativa_id);
   safeSetItem(MODO_KEY_PREFIX + emAndamento.prova_id, emAndamento.modo);
 
@@ -1826,5 +1774,16 @@ els.dashboardRetryBtn.addEventListener("click", () => {
 });
 
 // ---------------------------------------------------------------- Init
+//
+// requireAuth() ANTES de tudo — sem sessão válida, redireciona pra' landing
+// e nem chega a carregar cadernos/dashboard (mesmo formato de init() em
+// estudos/estudos.js).
+(async () => {
+  const session = await requireAuth();
+  if (!session) return; // requireAuth() já redirecionou pra' landing page
 
-initPicker();
+  currentSession = session;
+  updateSessionUI();
+  await applySegundaFaseLock();
+  initPicker();
+})();

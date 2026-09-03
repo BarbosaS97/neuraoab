@@ -72,6 +72,17 @@ create index if not exists idx_oab2_criterios_item on oab2_criterios (item_id);
 -- Progresso do aluno: tentativas e respostas corrigidas pela IA
 -- ---------------------------------------------------------------------------
 --
+-- [ATUALIZADO — ver schema_portal_mestre.sql, schema_aluno_avulso.sql e,
+-- principalmente, schema_fase2_login_obrigatorio.sql] O parágrafo abaixo é
+-- histórico: descreve como este arquivo foi escrito, quando o NeuraOAB
+-- inteiro rodava sem login de verdade. Isso não é mais verdade — o site
+-- inteiro (1ª e 2ª fase) hoje exige Supabase Auth de verdade, e
+-- profiles.plano depende disso. A coluna "aluno_id" abaixo continua
+-- existindo por compatibilidade (linhas antigas), mas toda tentativa nova
+-- grava nela o próprio auth.uid() (como texto), nunca mais um UUID
+-- aleatório separado de user_id — ver createTentativa em
+-- estudos/simulado2fase.js.
+--
 -- O NeuraOAB inteiro roda sem sistema de login (só a anon key do Supabase no
 -- navegador — ver estudos/estudos.js e admin/import.html). Por isso, em vez
 -- de auth.uid()/auth.users, identificamos o aluno por um UUID anônimo gerado
