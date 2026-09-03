@@ -1526,17 +1526,55 @@ function showConviteMsg(text) {
   conviteMsg.className = text ? "profile-msg show" : "profile-msg";
 }
 
+// Ícone padrão (capelo — mesma linguagem do resto do app pra "estudo/
+// turma") e ícone de sucesso (check), trocados via icon.innerHTML no
+// próprio elemento .convite-row-icon (ver acceptConvite abaixo), pra não
+// precisar recriar a linha inteira só pra mostrar a comemoração.
+const CONVITE_ICON_CAP =
+  '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"></path><path d="M6 12.5V17c0 1.1 2.7 3 6 3s6-1.9 6-3v-4.5"></path></svg>';
+const CONVITE_ICON_CHECK =
+  '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+// Estrelinha do selo "Libera acesso Pro" — ícone, não emoji, pra ficar no
+// mesmo estilo (stroke/fill controlado por CSS) do resto do app.
+const CONVITE_ICON_SPARK =
+  '<svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M12 2.5l1.8 6.2 6.2 1.8-6.2 1.8-1.8 6.2-1.8-6.2-6.2-1.8 6.2-1.8L12 2.5z"></path></svg>';
+const CONVITE_BTN_SPINNER = '<span class="convite-btn-spinner"></span>';
+
+// Tempo que a linha fica mostrando o check verde antes de encolher e sumir
+// — dá pro aluno REGISTRAR que aconteceu, em vez da linha só desaparecer na
+// hora (ver CSS ".convite-row.accepted"/".convite-row.leaving").
+const CONVITE_CELEBRATE_MS = 1100;
+const CONVITE_COLLAPSE_MS = 450; // um pouco mais que a transição de 0.4s no CSS, margem de sobra
+
 async function acceptConvite(codigo, row, btn) {
   btn.disabled = true;
-  btn.textContent = "Ativando...";
+  btn.innerHTML = `${CONVITE_BTN_SPINNER}Ativando...`;
   try {
-    await callAlunoPortal({ action: "ativar-convite", codigo });
+    const result = await callAlunoPortal({ action: "ativar-convite", codigo });
     latestConvites = latestConvites.filter((c) => c.codigo !== codigo);
-    row.remove();
-    conviteEmptyMsg.hidden = latestConvites.length > 0;
-    convitesBadge.hidden = latestConvites.every((c) => c.expirado);
-    showConviteMsg("Convite aceito! Acesso Pro liberado.");
-    conviteMsg.classList.add("ok");
+
+    // Comemoração inline: troca o ícone pra check verde (com o "ping" duplo
+    // ao redor, ver CSS ".convite-row.accepted .convite-row-icon::before/
+    // ::after") e o texto pra confirmação, com o botão saindo — só depois
+    // de um tempinho é que a linha encolhe e some de vez.
+    row.classList.add("accepted");
+    row.querySelector(".convite-row-icon").innerHTML = CONVITE_ICON_CHECK;
+    const info = row.querySelector(".convite-row-info");
+    info.innerHTML = "";
+    const doneStrong = document.createElement("strong");
+    doneStrong.textContent = `Você entrou em "${result.turma_nome}"`;
+    const doneSpan = document.createElement("span");
+    doneSpan.textContent = "Acesso Pro liberado";
+    info.append(doneStrong, doneSpan);
+    btn.remove();
+
+    setTimeout(() => {
+      row.classList.add("leaving");
+      conviteEmptyMsg.hidden = latestConvites.length > 0;
+      convitesBadge.hidden = latestConvites.every((c) => c.expirado);
+      setTimeout(() => row.remove(), CONVITE_COLLAPSE_MS);
+    }, CONVITE_CELEBRATE_MS);
+
     // Reflete o novo plano na hora em "Meu Perfil"/cadeados de limite, sem
     // esperar o aluno reabrir nada.
     loadPlanStatus().then(renderProfilePlan);
@@ -1561,6 +1599,11 @@ function renderConvites() {
     const row = document.createElement("div");
     row.className = "convite-row";
 
+    const icon = document.createElement("div");
+    icon.className = "convite-row-icon";
+    icon.innerHTML = CONVITE_ICON_CAP;
+    row.appendChild(icon);
+
     const info = document.createElement("div");
     info.className = "convite-row-info";
     const turmaEl = document.createElement("strong");
@@ -1570,6 +1613,12 @@ function renderConvites() {
       ? `Convite de ${c.professor_nome} — expirado, peça um novo`
       : `Convite de ${c.professor_nome}`;
     info.append(turmaEl, profEl);
+    if (!c.expirado) {
+      const perk = document.createElement("span");
+      perk.className = "convite-row-perk";
+      perk.innerHTML = `${CONVITE_ICON_SPARK}Libera acesso Pro`;
+      info.appendChild(perk);
+    }
     row.appendChild(info);
 
     if (!c.expirado) {
