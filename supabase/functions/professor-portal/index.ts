@@ -116,7 +116,7 @@ function buildInviteHtml(inviteLink: string, copy: typeof STUDENT_INVITE_EMAIL_C
                   <tr>
                     <td style="border-radius: 8px; background: #4f7cff;">
                       <a href="${inviteLink}" style="display: inline-block; padding: 13px 32px; font-size: 14px; font-weight: bold; color: #ffffff; text-decoration: none;">
-                        Aceitar convite
+                        Fazer login e aceitar convite
                       </a>
                     </td>
                   </tr>
