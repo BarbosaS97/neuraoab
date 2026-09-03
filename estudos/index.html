@@ -183,6 +183,12 @@
         <input type="text" id="profTelefone" placeholder="(opcional)">
       </div>
       <p class="profile-msg" id="profileMsg"></p>
+
+      <!-- Montado uma vez em buildDeleteAccountSection (estudos.js) e
+           resetado toda vez que o modal abre (ver openProfileModal) — mesmo
+           padrão de duas etapas de "Zerar estatísticas" (ver
+           buildStatsResetSection), só que aqui a ação é bem mais séria. -->
+      <div id="deleteAccountSection"></div>
     </div>
 
     <div class="help-modal-footer">

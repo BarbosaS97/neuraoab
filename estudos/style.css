@@ -1675,6 +1675,7 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   line-height: 1.5;
   max-width: 480px;
 }
+.stats-reset-warning.ok { color: var(--success); }
 
 .stats-reset-confirm-row {
   display: flex;

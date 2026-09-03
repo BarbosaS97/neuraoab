@@ -70,6 +70,7 @@ const profCursinho = document.getElementById("profCursinho");
 const profTelefone = document.getElementById("profTelefone");
 const profileMsg = document.getElementById("profileMsg");
 const profileSaveBtn = document.getElementById("profileSaveBtn");
+const deleteAccountSection = document.getElementById("deleteAccountSection");
 
 const screenExams = document.getElementById("screenExams");
 const screenSubjects = document.getElementById("screenSubjects");
@@ -1838,6 +1839,7 @@ function openProfileModal() {
   renderProfilePlan();
   loadPlanStatus().then(renderProfilePlan);
   loadProfile();
+  resetDeleteAccountSection(); // sempre volta pro botão inicial, nunca reabre já no "tem certeza?"
 }
 
 function closeProfileModal() {
@@ -1922,6 +1924,118 @@ profileSaveBtn.addEventListener("click", async () => {
   }
   showProfileMsg("Perfil atualizado!", true);
 });
+
+// ------------------------------------------------------- Excluir conta
+//
+// Apaga a conta de verdade (histórico de respostas, plano, cadastro — tudo
+// via aluno-portal, ação "excluir-conta", que usa service_role pra chamar
+// auth.admin.deleteUser: o cliente nunca consegue apagar a própria conta de
+// autenticação sozinho). Se a pessoa se cadastrar de novo com o mesmo
+// e-mail depois, é uma conta 100% nova (mesmo trigger handle_new_auth_user
+// de qualquer primeiro cadastro, ver schema_aluno_avulso.sql) — não sobra
+// nada da anterior. Mesmo fluxo de duas etapas de "Zerar estatísticas" (ver
+// buildStatsResetSection), só que bem mais sério — por isso mora dentro de
+// "Meu Perfil", não solto em algum canto.
+function buildDeleteAccountSection() {
+  const section = document.createElement("div");
+  section.className = "stats-reset-section";
+
+  const title = document.createElement("h2");
+  title.className = "stats-section-title";
+  title.textContent = "Excluir conta";
+  section.appendChild(title);
+
+  const intro = document.createElement("p");
+  intro.className = "stats-ai-intro";
+  intro.textContent =
+    "Apaga sua conta e todo o seu histórico (respostas, simulados, plano) permanentemente. Se você se cadastrar de novo depois, começa do zero, como se fosse a primeira vez.";
+  section.appendChild(intro);
+
+  const actionWrap = document.createElement("div");
+  section.appendChild(actionWrap);
+
+  function showInitial() {
+    actionWrap.innerHTML = "";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn-danger stats-reset-btn";
+    btn.textContent = "Excluir conta";
+    btn.addEventListener("click", showConfirm);
+    actionWrap.appendChild(btn);
+  }
+
+  function showConfirm() {
+    actionWrap.innerHTML = "";
+
+    const warn = document.createElement("p");
+    warn.className = "stats-reset-warning";
+    warn.textContent =
+      "Tem certeza? Sua conta e todo o seu histórico serão apagados permanentemente — não é possível desfazer.";
+    actionWrap.appendChild(warn);
+
+    const row = document.createElement("div");
+    row.className = "stats-reset-confirm-row";
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.type = "button";
+    cancelBtn.className = "btn-ghost";
+    cancelBtn.textContent = "Cancelar";
+    cancelBtn.addEventListener("click", showInitial);
+
+    const confirmBtn = document.createElement("button");
+    confirmBtn.type = "button";
+    confirmBtn.className = "btn-danger";
+    confirmBtn.textContent = "Sim, excluir minha conta";
+    confirmBtn.addEventListener("click", () => doDeleteAccount(actionWrap, confirmBtn, cancelBtn));
+
+    row.append(cancelBtn, confirmBtn);
+    actionWrap.appendChild(row);
+  }
+
+  async function doDeleteAccount(wrap, confirmBtn, cancelBtn) {
+    confirmBtn.disabled = true;
+    cancelBtn.disabled = true;
+    confirmBtn.textContent = "Excluindo...";
+
+    try {
+      await callAlunoPortal({ action: "excluir-conta" });
+    } catch (err) {
+      wrap.innerHTML = "";
+      const errEl = document.createElement("p");
+      errEl.className = "stats-ai-error";
+      errEl.textContent = `Erro ao excluir conta: ${err.message || "erro inesperado"}`;
+      wrap.appendChild(errEl);
+      const retryBtn = document.createElement("button");
+      retryBtn.type = "button";
+      retryBtn.className = "btn-ghost";
+      retryBtn.textContent = "Voltar";
+      retryBtn.addEventListener("click", showInitial);
+      wrap.appendChild(retryBtn);
+      return;
+    }
+
+    wrap.innerHTML = "";
+    const doneEl = document.createElement("p");
+    doneEl.className = "stats-reset-warning ok";
+    doneEl.textContent = "Conta excluída. Redirecionando...";
+    wrap.appendChild(doneEl);
+
+    // signOut limpa a sessão local antes de sair — a conta já não existe
+    // mais no servidor, então o token guardado no navegador não serve mais
+    // pra nada (mas continuaria "parecendo" válido pro cliente até expirar
+    // sozinho se não fosse limpo agora).
+    await client.auth.signOut();
+    setTimeout(() => window.location.replace("../index.html"), 1500);
+  }
+
+  showInitial();
+  return section;
+}
+
+function resetDeleteAccountSection() {
+  deleteAccountSection.innerHTML = "";
+  deleteAccountSection.appendChild(buildDeleteAccountSection());
+}
 
 // --------------------------------------------------------- Estatísticas
 //

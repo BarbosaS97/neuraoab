@@ -54,6 +54,19 @@ async function requireCaller(req: Request): Promise<Caller | null> {
   return { id: data.user.id, email: data.user.email };
 }
 
+// Só usado por "excluir-conta" abaixo: apagar a PRÓPRIA conta é uma ação de
+// aluno (botão fica só em "Meu Perfil", estudos/index.html) — trava por
+// role, não só por autenticação, pra uma conta de professor/admin nunca
+// conseguir se autoexcluir por aqui e levar junto turmas/alunos inteiros
+// (turmas.professor_id é "on delete cascade" — o blast radius de apagar um
+// PROFESSOR é bem maior que o de um aluno).
+async function isAluno(userId: string): Promise<boolean> {
+  const { data: profile } = await adminClient.from("profiles").select("role_id").eq("id", userId).maybeSingle();
+  if (!profile?.role_id) return false;
+  const { data: role } = await adminClient.from("roles").select("name").eq("id", profile.role_id).maybeSingle();
+  return role?.name === "aluno";
+}
+
 // ---------------------------------------------------------------------------
 // E-mails transacionais (boas-vindas no cadastro, parabéns ao subir de
 // plano) via Resend — mesmo padrão de professor-portal/index.ts (RESEND_API_KEY
@@ -253,7 +266,15 @@ interface ListarConvitesPayload {
 interface BoasVindasPayload {
   action: "boas-vindas";
 }
-type RequestBody = ValidarConvitePayload | AtivarConvitePayload | ListarConvitesPayload | BoasVindasPayload;
+interface ExcluirContaPayload {
+  action: "excluir-conta";
+}
+type RequestBody =
+  | ValidarConvitePayload
+  | AtivarConvitePayload
+  | ListarConvitesPayload
+  | BoasVindasPayload
+  | ExcluirContaPayload;
 
 interface ConviteRow {
   id: string;
@@ -425,6 +446,32 @@ Deno.serve(async (req: Request) => {
   if (body.action === "boas-vindas") {
     const { data: profile } = await adminClient.from("profiles").select("nome").eq("id", caller.id).maybeSingle();
     await sendWelcomeEmail(caller.email, profile?.nome ?? null);
+    return jsonResponse({ ok: true });
+  }
+
+  // Apaga a conta de verdade — "Meu Perfil" > "Excluir conta"
+  // (estudos/estudos.js, buildDeleteAccountSection). Ordem importa: primeiro
+  // o que NÃO cascade automaticamente (oab2_tentativas/oab_respostas são
+  // "on delete SET NULL" de propósito, pra continuar valendo pro uso
+  // anônimo — ver schema_professor_portal.sql — mas aqui o pedido é apagar
+  // de verdade) e o que bloquearia o delete por FK sem isso (convites.
+  // used_by, ver schema_aluno_exclui_conta.sql); só depois disso
+  // auth.admin.deleteUser, que cascade-apaga profiles (schema_portal_
+  // mestre.sql) e, por tabela, cobrancas/oab_favoritos/plan_usage_monthly
+  // (todas "on delete cascade" desde auth.users).
+  if (body.action === "excluir-conta") {
+    if (!(await isAluno(caller.id))) {
+      return jsonResponse({ error: "Esta ação só está disponível pra contas de aluno." }, 403);
+    }
+
+    await adminClient.from("oab2_tentativas").delete().eq("user_id", caller.id); // cascade -> oab2_respostas
+    await adminClient.from("oab_respostas").delete().eq("user_id", caller.id);
+    await adminClient.from("convites").update({ used_by: null }).eq("used_by", caller.id);
+
+    const { error: deleteError } = await adminClient.auth.admin.deleteUser(caller.id);
+    if (deleteError) {
+      return jsonResponse({ error: deleteError.message }, 400);
+    }
     return jsonResponse({ ok: true });
   }
 
