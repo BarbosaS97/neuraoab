@@ -2755,7 +2755,14 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
    de plano lado a lado, como na landing page (ver #planos em index.html),
    mas sem o bloco de cursinhos (não cabe aqui). */
 
-.plans-modal { max-width: 960px; }
+.plans-modal { max-width: 960px; transition: max-width 0.2s ease; }
+
+/* O passo de checkout é uma coluna só (.checkout-view, 400px) — dentro do
+   modal de 960px pensado pra grade de 3 planos, sobrava vazio enorme dos
+   dois lados ("card grande com vazios laterais"). Classe ligada/desligada
+   em openCheckout/closeCheckout (ver estudos.js) estreita o modal só
+   enquanto esse passo estiver ativo. */
+#plansOverlay.is-checkout .plans-modal { max-width: 500px; }
 
 .plans-modal-body { padding: 24px; }
 

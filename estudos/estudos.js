@@ -321,11 +321,13 @@ function openCheckout(plano) {
   plansGrid.hidden = true;
   plansModalNote.hidden = true;
   checkoutView.hidden = false;
+  plansOverlay.classList.add("is-checkout");
 }
 
 function closeCheckout() {
   stopCheckoutPolling();
   checkoutView.hidden = true;
+  plansOverlay.classList.remove("is-checkout");
   plansGrid.hidden = false;
   plansModalNote.hidden = false;
 }
