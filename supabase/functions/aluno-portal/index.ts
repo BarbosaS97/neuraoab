@@ -62,7 +62,10 @@ interface AtivarConvitePayload {
   action: "ativar-convite";
   codigo: string;
 }
-type RequestBody = ValidarConvitePayload | AtivarConvitePayload;
+interface ListarConvitesPayload {
+  action: "listar-convites";
+}
+type RequestBody = ValidarConvitePayload | AtivarConvitePayload | ListarConvitesPayload;
 
 interface ConviteRow {
   id: string;
@@ -152,6 +155,55 @@ async function validateConvite(codigo: string, callerEmail: string): Promise<Val
   };
 }
 
+interface ConviteListItem {
+  codigo: string;
+  turma_nome: string;
+  professor_nome: string;
+  expirado: boolean;
+}
+
+// Lista TODO convite pendente do e-mail de quem chamou — o que preenche
+// "Meus convites" no dashboard (estudos/estudos.js, loadConvites) e também
+// o que decide se o modal abre sozinho ao clicar um link de e-mail (o link
+// só manda um SINAL "?convite=1" pra abrir a lista, o conteúdo em si vem
+// sempre daqui, nunca de um único código específico — assim o aluno vê
+// qualquer outro convite pendente também, não só o que acabou de clicar).
+// Inclui convite JÁ EXPIRADO (mas ainda "pendente", nunca aceito) com
+// expirado:true, pra o aluno saber que precisa pedir um novo em vez de a
+// lista simplesmente parecer vazia sem explicação.
+async function listarConvites(callerEmail: string): Promise<ConviteListItem[]> {
+  const { data: convites } = await adminClient
+    .from("convites")
+    .select("codigo, turma_id, professor_id, expires_at")
+    .eq("email", callerEmail.toLowerCase())
+    .eq("status", "pendente")
+    .order("created_at", { ascending: false });
+
+  if (!convites || convites.length === 0) return [];
+
+  const result: ConviteListItem[] = [];
+  for (const c of convites) {
+    let turmaNome = "Sem turma";
+    if (c.turma_id) {
+      const { data: turma } = await adminClient.from("turmas").select("nome").eq("id", c.turma_id).maybeSingle();
+      if (turma) turmaNome = turma.nome;
+    }
+    const { data: professor } = await adminClient
+      .from("profiles")
+      .select("nome, email")
+      .eq("id", c.professor_id)
+      .maybeSingle();
+
+    result.push({
+      codigo: c.codigo,
+      turma_nome: turmaNome,
+      professor_nome: professor?.nome || professor?.email || "seu professor",
+      expirado: new Date(c.expires_at).getTime() < Date.now(),
+    });
+  }
+  return result;
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: CORS_HEADERS });
@@ -170,6 +222,11 @@ Deno.serve(async (req: Request) => {
     body = await req.json();
   } catch {
     return jsonResponse({ error: "JSON inválido." }, 400);
+  }
+
+  if (body.action === "listar-convites") {
+    const convites = await listarConvites(caller.email);
+    return jsonResponse({ convites });
   }
 
   if (body.action === "validar-convite") {

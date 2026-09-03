@@ -321,27 +321,27 @@
   </div>
 </div>
 
-<!-- Convite de professor/turma — abre sozinho quando "?convite=CODIGO" está
-     na URL (link do e-mail, ver checkPendingConvite em estudos.js): tanto
-     pra quem clicou o link já logado quanto pra quem só chegou aqui depois
-     de logar/criar conta (o código atravessa esse passo por sessionStorage,
-     não pela URL — ver PENDING_CONVITE_KEY). Reaproveita .help-overlay/
-     .help-modal, mesmo padrão de profileOverlay/plansOverlay acima. -->
+<!-- "Meus convites" — lista todo convite pendente do aluno (aceita não fica
+     nem some sozinho até ser aceito/expirar, ver loadConvites em
+     estudos.js). Abre pelo item "Meus convites" do menu (sempre disponível,
+     não só logo após clicar num link de e-mail) e TAMBÉM sozinha quando
+     "?convite=" está na URL (acabou de clicar o link, ver
+     checkPendingConvite) — nos dois casos mostra a MESMA lista buscada na
+     hora do banco, nunca um card "adivinhado" a partir da URL/sessionStorage
+     (só o SINAL de "abrir automaticamente" vem de lá, não o conteúdo).
+     Reaproveita .help-overlay/.help-modal, mesmo padrão de profileOverlay/
+     plansOverlay acima. -->
 <div class="help-overlay" id="conviteOverlay" hidden>
   <div class="help-modal" role="dialog" aria-modal="true" aria-labelledby="conviteTitle">
     <div class="help-modal-header">
-      <h2 id="conviteTitle">Convite de turma</h2>
+      <h2 id="conviteTitle">Meus convites</h2>
       <button type="button" id="conviteCloseBtn" class="help-modal-close" aria-label="Fechar">&times;</button>
     </div>
 
     <div class="help-modal-body">
-      <p id="conviteBody">Confirmando seu convite...</p>
+      <p class="convite-empty" id="conviteEmptyMsg" hidden>Nenhum convite pendente no momento.</p>
+      <div class="convite-list" id="conviteList"></div>
       <p class="profile-msg" id="conviteMsg"></p>
-    </div>
-
-    <div class="help-modal-footer convite-modal-footer">
-      <button type="button" class="btn-ghost" id="conviteDismissBtn">Agora não</button>
-      <button type="button" class="btn-primary" id="conviteAcceptBtn" hidden>Aceitar convite</button>
     </div>
   </div>
 </div>
@@ -380,6 +380,13 @@
   <section class="menu-item-list">
     <button type="button" id="menuProfileBtn" class="menu-item-btn">Meu Perfil</button>
     <button type="button" id="menuStatsBtn" class="menu-item-btn">Estatísticas</button>
+    <!-- convitesBadge: bolinha que só aparece quando há convite pendente de
+         verdade (ver loadConvites/renderConvites em estudos.js) — não é só
+         decoração, é o sinal de "tem algo esperando aqui". -->
+    <button type="button" id="menuConvitesBtn" class="menu-item-btn">
+      Meus convites
+      <span class="menu-item-badge" id="convitesBadge" hidden></span>
+    </button>
   </section>
 
   <!-- Acesso a' area do aluno exige login (ver requireAuth em estudos.js) —

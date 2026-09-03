@@ -2536,17 +2536,48 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   flex-shrink: 0;
 }
 
-/* Dois botões lado a lado (modal de convite, ver conviteOverlay) — os
-   outros rodapés de .help-modal-footer têm só um botão, que já herda
-   width:100% de .btn-primary sozinho, então não precisavam disso. */
-.convite-modal-footer {
-  display: flex;
-  gap: 10px;
+/* --------------------------------------------------- Modal "Meus convites" */
+/* Lista de convites pendentes (ver renderConvites em estudos.js) — cada
+   linha já carrega o próprio botão "Aceitar", por isso .help-modal-footer
+   não é usado aqui (nenhuma ação única do modal inteiro). */
+
+.convite-empty {
+  margin: 4px 0 16px;
+  font-size: 13px;
+  color: var(--text-dim);
 }
-.convite-modal-footer .btn-primary,
-.convite-modal-footer .btn-ghost {
+
+.convite-list { display: flex; flex-direction: column; gap: 10px; }
+
+.convite-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.convite-row-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.convite-row-info strong { font-size: 13.5px; }
+.convite-row-info span { font-size: 12px; color: var(--text-dim); }
+
+.convite-row .btn-primary {
   width: auto;
-  flex: 1;
+  flex-shrink: 0;
+  padding: 8px 16px;
+}
+
+/* Bolinha no item de menu "Meus convites" — só aparece quando há convite
+   pendente de verdade (ver renderConvites em estudos.js), nunca decorativa
+   por padrão. */
+.menu-item-badge {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  flex-shrink: 0;
 }
 
 /* -------------------------------------------------------- Modal de perfil */
