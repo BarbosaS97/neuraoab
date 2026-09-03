@@ -554,9 +554,12 @@
     border: 1px solid rgba(139, 92, 246, 0.4);
     background: rgba(139, 92, 246, 0.1);
     color: var(--primary);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-size: 12px;
+    font-weight: 600;
+    /* Antes era um selo curto em CAIXA ALTA (letter-spacing largo combina
+       com isso); agora é uma frase mais longa em caixa normal — mantido
+       baixo pra não ficar solto/estranho num texto maior. */
+    letter-spacing: 0.01em;
     animation: riseIn 0.6s ease both;
   }
 
@@ -584,6 +587,18 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  /* "OAB" no hero — tom de vermelho que remete ao brasão oficial da Ordem
+     (sem usar o brasão em si, só um eco tipográfico de cor — ver decisão
+     no histórico: usar o selo oficial teria risco de parecer afiliação/
+     endosso da OAB, que este projeto não tem). */
+  .oab-brand-text {
+    background: linear-gradient(160deg, #ff5c5c, #b91c1c 70%, #7a0000);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 900;
   }
 
   .hero-sub {
@@ -1954,9 +1969,9 @@
   <div class="hero-bg" aria-hidden="true"></div>
   <div class="hero-inner">
     <div class="hero-content">
-      <span class="hero-badge">A SUA PREPARAÇÃO PARA A OAB</span>
-      <h1 class="hero-title">Estude melhor.<br>Chegue <span class="grad-text">mais preparado.</span></h1>
-      <p class="hero-sub">Questões oficiais, IA para explicar seus erros e simulados com correção segundo os critérios da FGV.</p>
+      <span class="hero-badge">Sua jornada inteligente para a aprovação na OAB</span>
+      <h1 class="hero-title">Estude melhor.<br>Chegue <span class="grad-text">mais preparado para a</span> <span class="oab-brand-text">OAB</span>.</h1>
+      <p class="hero-sub">Questões oficiais do Exame de Ordem, IA para explicar seus erros e simulados das duas fases com correção segundo os critérios da FGV.</p>
       <div class="hero-ctas">
         <button type="button" class="btn-gradient-lg" data-open-login="signup">
           COMEÇAR AGORA
