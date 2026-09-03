@@ -26,6 +26,51 @@
     } catch (e) {}
   })();
 </script>
+<!-- Evita o "flash" da landing pintando por completo ao voltar do redirect
+     do login com Google — o Google manda o navegador de volta pra ESTA
+     MESMA página (ver options.redirectTo em signInWithOAuth, mais abaixo no
+     arquivo), recarregando a landing inteira (hero, seções de preço, AOS)
+     ANTES do <script> do fim do <body> conseguir processar a sessão
+     (onAuthStateChange) e mandar pro destino certo — sem isso, a landing
+     pesada aparecia por alguns segundos antes do redirect de verdade
+     acontecer. "neuraoab-oauth-pending" (mesma chave usada mais abaixo,
+     OAUTH_PENDING_KEY) só fica "1" nesse exato cenário — clicou "Entrar com
+     Google" NESTA aba e voltou; QUALQUER outra visita normal (sem esse
+     sinal) nunca aciona isso, então a landing continua pintando normalmente
+     de primeira pra todo mundo. Precisa rodar aqui, ANTES do <body>, porque
+     é a única forma de esconder o conteúdo antes dele sequer começar a
+     pintar (o mesmo motivo do <script> de tema logo acima). -->
+<script>
+  (function () {
+    try {
+      if (sessionStorage.getItem("neuraoab-oauth-pending") === "1") {
+        document.documentElement.classList.add("oauth-returning");
+      }
+    } catch (e) {}
+  })();
+</script>
+<style>
+  html.oauth-returning body > *:not(#oauthReturningOverlay) { display: none !important; }
+  #oauthReturningOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #0a0e1a;
+    align-items: center;
+    justify-content: center;
+  }
+  html.oauth-returning #oauthReturningOverlay { display: flex; }
+  #oauthReturningOverlay .oauth-returning-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    border-top-color: #4f7cff;
+    border-radius: 50%;
+    animation: oauthReturningSpin 0.8s linear infinite;
+  }
+  @keyframes oauthReturningSpin { to { transform: rotate(360deg); } }
+</style>
 <title>NeuraOAB — Preparação inteligente para a OAB com IA</title>
 <meta name="description" content="Estude para a OAB com mais de 2.000 questões oficiais da FGV, um tutor de IA que explica seus erros e simulados de 2ª fase com correção pelos critérios oficiais.">
 <meta name="robots" content="index, follow">
@@ -1926,6 +1971,12 @@
 </head>
 <body>
 
+<!-- Primeiro elemento do <body> de propósito — é o único que fica visível
+     enquanto "oauth-returning" está ativo (ver <style>/<script> no <head>).
+     Revelada/removida por revealPage() perto do fim do arquivo, em todo
+     caminho que não termina em redirect de verdade (erro, timeout). -->
+<div id="oauthReturningOverlay"><div class="oauth-returning-spinner"></div></div>
+
 <div class="scroll-progress" id="scrollProgress" role="progressbar" aria-label="Progresso de leitura da página" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
 
 <header class="navbar" id="navbar">
@@ -3190,6 +3241,30 @@
   // memória se perderia.
   const OAUTH_PENDING_KEY = "neuraoab-oauth-pending";
 
+  // Desfaz o "esconde a página inteira" do <script> no <head> — chamada em
+  // todo caminho que NÃO termina em redirect de verdade (deu erro, ou o
+  // timeout de segurança abaixo bateu), senão a pessoa ficava presa numa
+  // tela em branco.
+  function revealPage() {
+    document.documentElement.classList.remove("oauth-returning");
+  }
+
+  // Rede de segurança: se a página carregou escondida (voltou do Google)
+  // mas nenhuma sessão válida chegou a tempo — aba fechada no meio do
+  // caminho, usuário cancelou no Google, erro silencioso do GoTrue ao
+  // processar o token da URL — sem isso a pessoa ficava presa numa tela em
+  // branco pra sempre, porque só o listener de onAuthStateChange (mais
+  // abaixo) sabe desfazer o "oauth-returning", e ele só dispara se uma
+  // sessão de fato chegar.
+  if (document.documentElement.classList.contains("oauth-returning")) {
+    setTimeout(() => {
+      if (document.documentElement.classList.contains("oauth-returning")) {
+        sessionStorage.removeItem(OAUTH_PENDING_KEY);
+        revealPage();
+      }
+    }, 6000);
+  }
+
   googleBtn.addEventListener("click", async () => {
     googleBtn.disabled = true;
     sessionStorage.setItem(OAUTH_PENDING_KEY, "1");
@@ -3257,6 +3332,17 @@
     const roleName = await getRoleName(session.user.id);
     if (!ROLE_DESTINATIONS[roleName]) {
       await client.auth.signOut();
+      // revealPage() sozinho não bastaria: a página volta a aparecer, mas o
+      // modal de login começa fechado — sem isso a pessoa via a landing
+      // normal, sem nenhum sinal do que deu errado. Abre direto na etapa de
+      // aluno (é o único papel que usa o botão do Google) já com o erro.
+      revealPage();
+      currentRole = "aluno";
+      currentMode = "login";
+      roleStep.hidden = true;
+      credsForm.hidden = false;
+      updateCredsFormMode();
+      loginOverlay.hidden = false;
       showLoginError("Essa conta não tem acesso configurado.");
       googleBtn.disabled = false;
       return;
