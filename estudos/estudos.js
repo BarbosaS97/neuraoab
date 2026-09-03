@@ -370,9 +370,18 @@ checkoutForm.addEventListener("submit", async (ev) => {
   checkoutSubmitBtn.disabled = true;
   checkoutSubmitBtn.textContent = "Gerando cobrança...";
 
-  const { data, error } = await client.functions.invoke("criar-cobranca", {
-    body: { plano: checkoutPlano, ciclo, billingType, nome, cpfCnpj },
-  });
+  // PIX vai pra Woovi (gateway de PIX do produto, ver supabase/schema_webhook_woovi.sql)
+  // — boleto/cartão continuam no Asaas, que é quem sabe emitir os dois
+  // (criar-cobranca-woovi só faz cobrança PIX avulsa, sem billingType no
+  // corpo). As duas functions devolvem os MESMOS nomes de campo de
+  // propósito (ver comentário em criar-cobranca-woovi/index.ts), então o
+  // resto deste handler abaixo não precisa saber qual gateway respondeu —
+  // só o formato de pixQrImage difere (ver bloco "PIX" logo adiante).
+  const usingWoovi = billingType === "PIX";
+  const { data, error } = await client.functions.invoke(
+    usingWoovi ? "criar-cobranca-woovi" : "criar-cobranca",
+    { body: usingWoovi ? { plano: checkoutPlano, ciclo, nome, cpfCnpj } : { plano: checkoutPlano, ciclo, billingType, nome, cpfCnpj } },
+  );
 
   if (error) {
     checkoutSubmitBtn.disabled = false;
@@ -393,7 +402,10 @@ checkoutForm.addEventListener("submit", async (ev) => {
 
   if (data.billingType === "PIX" && data.pixQrImage) {
     checkoutPixResult.hidden = false;
-    checkoutQrImage.src = `data:image/png;base64,${data.pixQrImage}`;
+    // Woovi já devolve uma URL de imagem pronta (funciona direto num
+    // src="..."); o Asaas devolve o PNG em base64 cru, sem o prefixo
+    // "data:" — só este último precisa ser montado como data URI.
+    checkoutQrImage.src = usingWoovi ? data.pixQrImage : `data:image/png;base64,${data.pixQrImage}`;
     checkoutCopyPixBtn.dataset.payload = data.pixPayload || "";
   } else if (data.billingType === "CREDIT_CARD" && data.invoiceUrl) {
     // Dados do cartão são preenchidos na página do próprio Asaas — ver
