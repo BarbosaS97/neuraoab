@@ -472,6 +472,8 @@ const inviteResultHint = document.getElementById("inviteResultHint");
 const inviteResultBody = document.getElementById("inviteResultBody");
 const inviteResultFooter = document.getElementById("inviteResultFooter");
 const inviteModalSaveBtn = document.getElementById("inviteModalSave");
+const inviteSendingEl = document.getElementById("inviteSending");
+const inviteSendingMsg = document.getElementById("inviteSendingMsg");
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -502,8 +504,23 @@ function parseInviteInput(text) {
 function showInviteFormState() {
   inviteFormFields.hidden = false;
   inviteFormFooter.hidden = false;
+  inviteSendingEl.hidden = true;
   inviteResultEl.hidden = true;
   inviteResultFooter.hidden = true;
+}
+
+// Sem barra de progresso de verdade: "bulk-invite-students" é uma chamada
+// só que só responde depois de mandar TODOS os e-mails (sequencial no
+// servidor, ver comentário em professor-portal/index.ts) — não há como
+// saber "quantos já foram" no meio do caminho, só "começou"/"terminou".
+function showInviteSendingState(count) {
+  inviteFormFields.hidden = true;
+  inviteFormFooter.hidden = true;
+  inviteResultEl.hidden = true;
+  inviteResultFooter.hidden = true;
+  inviteSendingMsg.textContent =
+    count === 1 ? "Enviando 1 convite..." : `Enviando ${count} convites... isso pode levar alguns segundos.`;
+  inviteSendingEl.hidden = false;
 }
 
 function openInviteModal() {
@@ -520,6 +537,7 @@ function closeInviteModal() {
 function renderInviteResults(results, parseErrors) {
   inviteFormFields.hidden = true;
   inviteFormFooter.hidden = true;
+  inviteSendingEl.hidden = true;
   inviteResultEl.hidden = false;
   inviteResultFooter.hidden = false;
 
@@ -575,11 +593,16 @@ inviteForm.addEventListener("submit", async (ev) => {
   }
 
   inviteModalSaveBtn.disabled = true;
+  showInviteSendingState(students.length);
   try {
     const { results } = await callProfessorPortal({ action: "bulk-invite-students", students });
     await refreshAll();
     renderInviteResults(results, parseErrors);
   } catch (err) {
+    // Volta pro formulário (preenchido do jeito que a pessoa deixou, ver
+    // inviteForm.reset só em openInviteModal/closeInviteModal) pra dar pra
+    // tentar de novo, com o erro explicado acima do textarea.
+    showInviteFormState();
     showMsg(inviteModalMsg, err.message || "Ocorreu um erro inesperado.", "err");
   } finally {
     inviteModalSaveBtn.disabled = false;

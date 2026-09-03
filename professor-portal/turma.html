@@ -144,6 +144,15 @@
           </div>
         </div>
 
+        <!-- Enviar é uma chamada só (não incremental), então não dá pra
+             mostrar "3 de 10 enviados" de verdade — o spinner + mensagem
+             genérica é o que dá pra prometer sem inventar progresso que o
+             servidor não reporta. -->
+        <div class="invite-sending" id="inviteSending" hidden>
+          <div class="invite-sending-spinner"></div>
+          <p id="inviteSendingMsg">Enviando convites...</p>
+        </div>
+
         <div id="inviteResult" hidden>
           <p class="field-hint" id="inviteResultHint"></p>
           <div class="bulk-results-wrap">

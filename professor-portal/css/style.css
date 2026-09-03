@@ -1081,6 +1081,39 @@ details[open] > .panel-summary .toggle-chevron {
 .modal-msg.ok { background: rgba(53, 199, 138, 0.1); border: 1px solid rgba(53, 199, 138, 0.35); color: var(--ok); }
 .modal-msg.err { background: rgba(239, 87, 87, 0.1); border: 1px solid rgba(239, 87, 87, 0.35); color: var(--err); }
 
+/* Estado "enviando" do modal de convite (ver inviteForm.submit em turma.js)
+   — cada convite em lote é uma chamada sequencial (código + Resend) do lado
+   do servidor, então uma leva de vários alunos pode levar alguns segundos;
+   sem isso, o botão só ficava desabilitado sem nenhum sinal do que estava
+   acontecendo.
+   "[hidden]" explícito abaixo é necessário: uma regra de autor com
+   "display" (aqui, "display: flex") sempre vence "[hidden] { display: none
+   }" da folha padrão do navegador, mesmo com especificidade igual — mesmo
+   problema já resolvido em ".help-overlay[hidden]" (estudos/style.css). */
+@keyframes inviteSendingSpin { to { transform: rotate(360deg); } }
+.invite-sending {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 32px 0;
+  text-align: center;
+}
+.invite-sending[hidden] { display: none; }
+.invite-sending-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid var(--panel-border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: inviteSendingSpin 0.8s linear infinite;
+}
+.invite-sending p {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--text-dim);
+}
+
 @media (max-width: 560px) {
   .modal-footer { flex-direction: column-reverse; }
   .modal-footer button { width: 100%; }
