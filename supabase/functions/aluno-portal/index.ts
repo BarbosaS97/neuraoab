@@ -199,25 +199,29 @@ async function sendNotificationEmail(email: string, subject: string, html: strin
   }
 }
 
+const WELCOME_BENEFITS = ["10 questões por dia na 1ª fase", "Estatísticas do seu desempenho", "5 mensagens por mês com o Dr. Laureano"];
+const WELCOME_BODY_TEXT =
+  "Sua conta foi criada com sucesso. Você já pode começar a estudar pra 1ª fase da OAB agora mesmo — resolva questões, acompanhe seu desempenho e converse com o Dr. Laureano, nosso assistente de estudos. No seu plano grátis, você já tem:";
+
 // Disparado uma vez, logo depois do cadastro (ver ação "boas-vindas"
 // abaixo) — mostra o que já dá pra usar no plano grátis, sem prometer nada
 // que só vem com upgrade (isso é o e-mail de "parabéns", ver
 // sendPlanUpgradeEmail).
 async function sendWelcomeEmail(email: string, nome: string | null): Promise<void> {
   const saudacao = primeiroNome(nome) ? `, ${primeiroNome(nome)}` : "";
+  const heading = `Bem-vindo ao NeuraOAB${saudacao}!`;
   const html = buildNotificationHtml({
     subject: "Bem-vindo ao NeuraOAB!",
-    heading: `Bem-vindo ao NeuraOAB${saudacao}!`,
-    bodyText:
-      "Sua conta foi criada com sucesso. Você já pode começar a estudar pra 1ª fase da OAB agora mesmo — resolva questões, acompanhe seu desempenho e converse com o Dr. Laureano, nosso assistente de estudos. No seu plano grátis, você já tem:",
-    benefits: ["10 questões por dia na 1ª fase", "Estatísticas do seu desempenho", "5 mensagens por mês com o Dr. Laureano"],
+    heading,
+    bodyText: WELCOME_BODY_TEXT,
+    benefits: WELCOME_BENEFITS,
     ctaLabel: "Começar a estudar",
     ctaLink: APP_URL,
   });
   const text = buildNotificationText({
-    heading: `Bem-vindo ao NeuraOAB${saudacao}!`,
-    bodyText: "Sua conta foi criada com sucesso. Você já pode começar a estudar pra 1ª fase da OAB agora mesmo.",
-    benefits: ["10 questões por dia na 1ª fase", "Estatísticas do seu desempenho", "5 mensagens por mês com o Dr. Laureano"],
+    heading,
+    bodyText: WELCOME_BODY_TEXT,
+    benefits: WELCOME_BENEFITS,
     ctaLink: APP_URL,
   });
   await sendNotificationEmail(email, "Bem-vindo ao NeuraOAB!", html, text);
@@ -373,10 +377,13 @@ interface ConviteListItem {
 
 // Lista TODO convite pendente do e-mail de quem chamou — o que preenche
 // "Meus convites" no dashboard (estudos/estudos.js, loadConvites) e também
-// o que decide se o modal abre sozinho ao clicar um link de e-mail (o link
-// só manda um SINAL "?convite=1" pra abrir a lista, o conteúdo em si vem
-// sempre daqui, nunca de um único código específico — assim o aluno vê
-// qualquer outro convite pendente também, não só o que acabou de clicar).
+// o que decide se o modal abre sozinho ao clicar um link de e-mail. O link
+// do e-mail carrega o código de verdade ("?convite=CODIGO", ver
+// STUDENT_INVITE_BASE_URL em professor-portal/index.ts), mas
+// estudos/estudos.js só usa a PRESENÇA desse parâmetro como sinal pra abrir
+// o modal sozinho — o conteúdo mostrado vem sempre desta consulta fresca,
+// nunca só do código específico clicado, assim o aluno vê qualquer outro
+// convite pendente também, não só o que acabou de clicar.
 // Inclui convite JÁ EXPIRADO (mas ainda "pendente", nunca aceito) com
 // expirado:true, pra o aluno saber que precisa pedir um novo em vez de a
 // lista simplesmente parecer vazia sem explicação.
@@ -438,14 +445,32 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ convites });
   }
 
-  // Chamada uma vez pelo index.html, logo depois de client.auth.signUp()
-  // resolver com sucesso (ver credsForm.submit lá) — nunca automática por
-  // trigger de banco: enviar e-mail de dentro de um trigger Postgres
-  // exigiria expor a RESEND_API_KEY fora das Edge Functions (Vault), um
-  // mecanismo novo que este projeto não usa em nenhum outro lugar.
+  // Chamada pelo index.html toda vez que um ALUNO loga com sucesso —
+  // cadastro por senha, login por senha e login com Google (ver
+  // credsForm.submit e o listener de onAuthStateChange lá) — nunca
+  // automática por trigger de banco: enviar e-mail de dentro de um trigger
+  // Postgres exigiria expor a RESEND_API_KEY fora das Edge Functions
+  // (Vault), um mecanismo novo que este projeto não usa em nenhum outro
+  // lugar. IDEMPOTENTE de propósito (profiles.boas_vindas_enviada_em, ver
+  // schema_email_boas_vindas.sql): não dá pra saber com certeza, só pelo
+  // lado do cliente, se uma sessão do Google é um cadastro novo ou um login
+  // de volta — em vez de adivinhar isso, a function decide sozinha se já
+  // mandou ou não, e index.html pode chamar em TODA forma de login sem
+  // medo de duplicar (o que também resgata contas antigas que nunca
+  // receberam o e-mail: a coluna começa NULL pra todo mundo).
   if (body.action === "boas-vindas") {
-    const { data: profile } = await adminClient.from("profiles").select("nome").eq("id", caller.id).maybeSingle();
-    await sendWelcomeEmail(caller.email, profile?.nome ?? null);
+    const { data: profile } = await adminClient
+      .from("profiles")
+      .select("nome, boas_vindas_enviada_em")
+      .eq("id", caller.id)
+      .maybeSingle();
+    if (!profile?.boas_vindas_enviada_em) {
+      await sendWelcomeEmail(caller.email, profile?.nome ?? null);
+      await adminClient
+        .from("profiles")
+        .update({ boas_vindas_enviada_em: new Date().toISOString() })
+        .eq("id", caller.id);
+    }
     return jsonResponse({ ok: true });
   }
 
@@ -511,12 +536,20 @@ Deno.serve(async (req: Request) => {
       .eq("id", caller.id)
       .maybeSingle();
 
+    // is_avulso:false de propósito — todo aluno hoje é criado pelo MESMO
+    // signUp() de autocadastro (a conta não é mais criada junto com o
+    // convite, ver comentário no topo do arquivo), então nasce com
+    // is_avulso=true mesmo quem vai aceitar um convite de professor na
+    // sequência. Sem corrigir aqui, "Tipo" no Portal Mestre (portal-mestre/
+    // js/alunos.js) mostraria "Avulso" pra TODO aluno vinculado a
+    // professor a partir de agora, mesmo com professor_id preenchido.
     const { error: profileError } = await adminClient
       .from("profiles")
       .update({
         professor_id: result.convite.professor_id,
         turma_id: result.convite.turma_id,
         plano: "pro",
+        is_avulso: false,
       })
       .eq("id", caller.id);
     if (profileError) {

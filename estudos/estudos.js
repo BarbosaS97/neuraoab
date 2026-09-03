@@ -1550,6 +1550,7 @@ const CONVITE_COLLAPSE_MS = 450; // um pouco mais que a transição de 0.4s no C
 async function acceptConvite(codigo, row, btn) {
   btn.disabled = true;
   btn.innerHTML = `${CONVITE_BTN_SPINNER}Ativando...`;
+  showConviteMsg(""); // limpa erro de uma tentativa anterior (em OUTRO convite da mesma lista)
   try {
     const result = await callAlunoPortal({ action: "ativar-convite", codigo });
     latestConvites = latestConvites.filter((c) => c.codigo !== codigo);
@@ -1653,7 +1654,6 @@ async function loadConvites() {
 function openConviteModal() {
   closeMenu();
   showConviteMsg("");
-  conviteMsg.classList.remove("ok");
   conviteOverlay.hidden = false;
   loadConvites(); // sempre recarrega na hora de abrir, nunca mostra dado velho
 }
@@ -1678,7 +1678,6 @@ async function checkPendingConvite() {
   await loadConvites();
   if (veioDeLink && latestConvites.length > 0) {
     showConviteMsg("");
-    conviteMsg.classList.remove("ok");
     conviteOverlay.hidden = false;
   }
 }
@@ -2023,8 +2022,16 @@ function buildDeleteAccountSection() {
     // signOut limpa a sessão local antes de sair — a conta já não existe
     // mais no servidor, então o token guardado no navegador não serve mais
     // pra nada (mas continuaria "parecendo" válido pro cliente até expirar
-    // sozinho se não fosse limpo agora).
-    await client.auth.signOut();
+    // sozinho se não fosse limpo agora). Em try/catch de propósito (mesmo
+    // padrão de handleSessionLogout acima): a conta acabou de ser apagada,
+    // então a própria API de signOut pode falhar tentando revogar um
+    // token cujo usuário não existe mais — sem isso, o redirect abaixo
+    // nunca rodaria e a pessoa ficaria presa em "Redirecionando...".
+    try {
+      await client.auth.signOut();
+    } catch (err) {
+      console.error("Erro ao encerrar sessão após excluir conta:", err);
+    }
     setTimeout(() => window.location.replace("../index.html"), 1500);
   }
 

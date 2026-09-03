@@ -26,6 +26,7 @@ const turmaModalMsg = document.getElementById("turmaModalMsg");
 const turmaForm = document.getElementById("turmaForm");
 const tuId = document.getElementById("tuId");
 const tuNome = document.getElementById("tuNome");
+const tuLimite = document.getElementById("tuLimite");
 const turmaModalSaveBtn = document.getElementById("turmaModalSave");
 
 const EDIT_ICON = `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`;
@@ -60,7 +61,8 @@ function openEditTurmaModal(turma) {
   turmaForm.reset();
   tuId.value = turma.id;
   tuNome.value = turma.nome;
-  turmaModalTitle.textContent = "Renomear turma";
+  tuLimite.value = turma.limite_alunos ?? "";
+  turmaModalTitle.textContent = "Editar turma";
   turmaModalSaveBtn.textContent = "Salvar";
   clearMsg(turmaModalMsg);
   turmaModal.hidden = false;
@@ -83,12 +85,17 @@ turmaForm.addEventListener("submit", async (ev) => {
   turmaModalSaveBtn.disabled = true;
 
   const nome = tuNome.value.trim();
+  // Campo em branco = sem limite (null) — nunca 0, que travaria qualquer
+  // convite novo pra esta turma (mesmo tratamento de turma.html).
+  const limite = tuLimite.value.trim() ? parseInt(tuLimite.value, 10) : null;
   try {
     if (tuId.value) {
-      const { error } = await client.from("turmas").update({ nome }).eq("id", tuId.value);
+      const { error } = await client.from("turmas").update({ nome, limite_alunos: limite }).eq("id", tuId.value);
       if (error) throw new Error(error.message);
     } else {
-      const { error } = await client.from("turmas").insert({ professor_id: currentProfessorId, nome });
+      const { error } = await client
+        .from("turmas")
+        .insert({ professor_id: currentProfessorId, nome, limite_alunos: limite });
       if (error) throw new Error(error.message);
     }
     closeTurmaModal();
@@ -118,7 +125,6 @@ async function deleteTurma(turma) {
 // -------------------------------------------------------------------- Grade
 
 function buildTurmaCard(turma, students, pendentes) {
-
   const card = document.createElement("a");
   card.className = "turma-card";
   card.href = `turma.html?id=${encodeURIComponent(turma.id)}`;
@@ -129,7 +135,7 @@ function buildTurmaCard(turma, students, pendentes) {
   const editBtn = document.createElement("button");
   editBtn.type = "button";
   editBtn.innerHTML = EDIT_ICON;
-  editBtn.setAttribute("aria-label", "Renomear turma");
+  editBtn.setAttribute("aria-label", "Editar turma");
   editBtn.addEventListener("click", (ev) => {
     ev.preventDefault();
     ev.stopPropagation();
@@ -211,7 +217,7 @@ function renderTurmasGrid() {
 async function loadTurmas() {
   const { data, error } = await client
     .from("turmas")
-    .select("id, nome, created_at")
+    .select("id, nome, created_at, limite_alunos")
     .eq("professor_id", currentProfessorId)
     .order("created_at", { ascending: true });
   if (error) {

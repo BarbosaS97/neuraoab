@@ -1,0 +1,21 @@
+-- NeuraOAB — marca de "já mandei o e-mail de boas-vindas" (profiles)
+-- Execute este script uma vez no SQL Editor do Supabase, depois de
+-- schema_portal_mestre.sql. Aditivo e seguro de re-rodar ("add column if
+-- not exists").
+--
+-- CONTEXTO: o e-mail de boas-vindas (ação "boas-vindas" em
+-- supabase/functions/aluno-portal/index.ts) só era chamado no cadastro por
+-- e-mail/senha (index.html) — quem criava conta pela primeira vez com
+-- Google nunca recebia nada, porque não existe um jeito confiável de saber
+-- "essa sessão do Google é um cadastro novo ou um login de volta" só
+-- olhando pro lado do cliente. Em vez de tentar adivinhar isso no
+-- navegador, a Edge Function passa a ser IDEMPOTENTE: guarda quando já
+-- mandou (esta coluna) e não manda de novo se já tiver. Isso libera
+-- index.html a chamar "boas-vindas" em TODA forma de login bem-sucedido do
+-- aluno (cadastro por senha, login por senha, login com Google) sem medo de
+-- mandar em duplicidade — e, de quebra, "resgata" qualquer conta criada
+-- ANTES desta coluna existir (boas_vindas_enviada_em começa NULL pra
+-- todo mundo, então a primeira vez que essa conta logar depois deste
+-- deploy, o e-mail sai).
+
+alter table profiles add column if not exists boas_vindas_enviada_em timestamptz;

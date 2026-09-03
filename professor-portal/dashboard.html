@@ -83,6 +83,11 @@
           <label for="tuNome">Nome da turma</label>
           <input type="text" id="tuNome" required placeholder="Ex.: Intensivo Dezembro 2026">
         </div>
+        <div class="field">
+          <label for="tuLimite">Limite de alunos</label>
+          <input type="number" id="tuLimite" min="1" step="1" placeholder="Sem limite">
+          <p class="field-hint">Deixe em branco pra não limitar quantos alunos podem aceitar convite pra esta turma.</p>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn-ghost" id="turmaModalCancel">Cancelar</button>

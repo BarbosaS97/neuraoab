@@ -2580,7 +2580,7 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 .convite-row:hover {
   transform: translateY(-2px);
   border-color: var(--primary);
-  box-shadow: 0 10px 24px -12px rgba(139, 92, 246, 0.45);
+  box-shadow: 0 10px 24px -12px var(--primary-glow);
 }
 
 /* Ícone à esquerda — gradiente na cor da marca com leve flutuação, pra
@@ -2622,7 +2622,7 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   font-size: 11px;
   font-weight: 600;
   color: var(--primary);
-  background: rgba(139, 92, 246, 0.14);
+  background: var(--primary-dim);
 }
 .convite-row-perk svg { flex-shrink: 0; }
 
@@ -2674,7 +2674,11 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   100% { transform: scale(2.4); opacity: 0; }
 }
 .convite-row.accepted {
-  background: linear-gradient(135deg, rgba(46, 160, 67, 0.12), transparent 60%);
+  /* var(--success-dim), não um rgba fixo: --success MUDA de valor no tema
+     claro (diferente de --primary, que fica igual nos dois temas — ver
+     comentário no topo do arquivo), então um verde fixo aqui ficaria com o
+     tom errado no claro. */
+  background: linear-gradient(135deg, var(--success-dim), transparent 60%);
   border-color: var(--success);
 }
 .convite-row.accepted .convite-row-icon {

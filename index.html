@@ -3220,6 +3220,23 @@
     return role?.name ?? null;
   }
 
+  // Chamada nos 3 pontos de login bem-sucedido de aluno (Google, cadastro
+  // por senha, login por senha) — a Edge Function decide sozinha se já
+  // mandou o e-mail antes (profiles.boas_vindas_enviada_em, ver
+  // supabase/functions/aluno-portal/index.ts), então chamar de novo num
+  // login que já recebeu não manda em duplicidade. Isso resolve o caso do
+  // Google: não dá pra saber só pelo lado do cliente se essa sessão é um
+  // cadastro novo ou um login de volta, então em vez de adivinhar, chama
+  // sempre e deixa o servidor decidir. Nunca bloqueia o redirect por causa
+  // de falha (a conta já está criada/logada de qualquer jeito).
+  async function triggerBoasVindas() {
+    try {
+      await client.functions.invoke("aluno-portal", { body: { action: "boas-vindas" } });
+    } catch {
+      // sem e-mail de boas-vindas não é motivo pra travar o login/cadastro
+    }
+  }
+
   // Volta do redirect do Google com sessão pronta (supabase-js já processa o
   // token da URL sozinho, "detectSessionInUrl" é o padrão). Só redireciona
   // se essa sessão veio de um login com Google iniciado por ESTA aba
@@ -3245,6 +3262,7 @@
       return;
     }
 
+    if (roleName === "aluno") await triggerBoasVindas();
     window.location.replace(ROLE_DESTINATIONS[roleName]);
   });
 
@@ -3335,15 +3353,7 @@
         return;
       }
 
-      // Dispara o e-mail de boas-vindas — não bloqueia o redirect por muito
-      // tempo (é uma chamada leve) nem trava o cadastro se falhar (a conta
-      // já foi criada com sucesso, ver comentário acima).
-      try {
-        await client.functions.invoke("aluno-portal", { body: { action: "boas-vindas" } });
-      } catch {
-        // sem e-mail de boas-vindas não é motivo pra travar o cadastro
-      }
-
+      await triggerBoasVindas();
       window.location.href = ROLE_DESTINATIONS.aluno;
       return;
     }
@@ -3376,6 +3386,7 @@
       return;
     }
 
+    if (roleName === "aluno") await triggerBoasVindas();
     window.location.href = ROLE_DESTINATIONS[roleName];
   });
 </script>
