@@ -74,6 +74,7 @@ const subjectGrid = document.getElementById("subjectGrid");
 const examSelCount = document.getElementById("examSelCount");
 const subjectSelCount = document.getElementById("subjectSelCount");
 const examSelectAllBtn = document.getElementById("examSelectAllBtn");
+const examSelectAllBtnText = document.getElementById("examSelectAllBtnText");
 const subjectSelectAllBtn = document.getElementById("subjectSelectAllBtn");
 const toSubjectsBtn = document.getElementById("toSubjectsBtn");
 const toStudyBtn = document.getElementById("toStudyBtn");
@@ -973,7 +974,7 @@ function updateExamFooter() {
   toSubjectsBtn.disabled = selectedExams.size === 0;
 
   const keys = allExamKeys();
-  examSelectAllBtn.textContent = keys.length > 0 && keys.every(k => selectedExams.has(k))
+  examSelectAllBtnText.textContent = keys.length > 0 && keys.every(k => selectedExams.has(k))
     ? "Desmarcar todos"
     : "Selecionar todos";
 }

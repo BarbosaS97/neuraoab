@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=42">
+<link rel="stylesheet" href="style.css?v=43">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -416,7 +416,13 @@
                 Já realizados
               </button>
             </div>
-            <span class="exam-count-badge" id="examCountBadge">0 provas disponíveis</span>
+            <div class="exam-filter-row-actions">
+              <button type="button" id="examSelectAllBtn" class="select-all-btn-top">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                <span id="examSelectAllBtnText">Selecionar todos</span>
+              </button>
+              <span class="exam-count-badge" id="examCountBadge">0 provas disponíveis</span>
+            </div>
           </div>
 
           <div class="pick-grid exam-grid" id="examGrid"></div>
@@ -427,7 +433,6 @@
 
           <div class="pick-footer">
             <div class="pick-footer-left">
-              <button type="button" id="examSelectAllBtn" class="select-all-btn">Selecionar todos</button>
               <span class="pick-footer-count" id="examSelCount">0 selecionado(s)</span>
             </div>
             <button type="button" id="toSubjectsBtn" class="btn-primary pick-cta" disabled>Ver matérias</button>
@@ -583,7 +588,7 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=34"></script>
+<script src="estudos.js?v=35"></script>
 <script src="dr-laureano.js?v=11"></script>
 </body>
 </html>
