@@ -3210,28 +3210,46 @@
     // logo abaixo, quando a página recarregar de volta.
   });
 
-  // Volta do redirect do Google com sessão pronta (supabase-js já processa o
-  // token da URL sozinho, "detectSessionInUrl" é o padrão). Só redireciona
-  // se essa sessão veio de um login com Google iniciado por ESTA aba
-  // (OAUTH_PENDING_KEY) — sem essa checagem, qualquer visitante que já
-  // estivesse logado (professor incluso, voltando à landing por outro
-  // motivo) seria empurrado pra fora da página só por visitar.
-  client.auth.onAuthStateChange((_event, session) => {
-    if (session?.user && sessionStorage.getItem(OAUTH_PENDING_KEY) === "1") {
-      sessionStorage.removeItem(OAUTH_PENDING_KEY);
-      window.location.replace(alunoDestination());
-    }
-  });
-
   // Mesmo padrão de checkIsAdmin/checkIsProfessor (portal-mestre/js/auth.js,
   // professor-portal/js/auth.js) — devolve o nome do role de verdade em vez
-  // de confiar em qual aba a pessoa escolheu no passo anterior.
+  // de confiar em qual aba a pessoa escolheu no passo anterior. "async
+  // function" (declaração, não expressão) fica hoisted — pode ser chamada
+  // pelo listener de onAuthStateChange logo abaixo mesmo definida depois
+  // no arquivo.
   async function getRoleName(userId) {
     const { data: profile } = await client.from("profiles").select("role_id").eq("id", userId).maybeSingle();
     if (!profile?.role_id) return null;
     const { data: role } = await client.from("roles").select("name").eq("id", profile.role_id).maybeSingle();
     return role?.name ?? null;
   }
+
+  // Volta do redirect do Google com sessão pronta (supabase-js já processa o
+  // token da URL sozinho, "detectSessionInUrl" é o padrão). Só redireciona
+  // se essa sessão veio de um login com Google iniciado por ESTA aba
+  // (OAUTH_PENDING_KEY) — sem essa checagem, qualquer visitante que já
+  // estivesse logado (professor incluso, voltando à landing por outro
+  // motivo) seria empurrado pra fora da página só por visitar.
+  //
+  // Precisa consultar o role de verdade (mesma checagem do login por
+  // senha, ver credsForm.submit abaixo) em vez de mandar sempre pra
+  // alunoDestination(): o botão Google só aparece na aba "Aluno", mas
+  // nada impede uma conta de PROFESSOR (ou admin) ter uma identidade
+  // Google vinculada e usar esse mesmo botão — sem essa checagem, ela
+  // caía sempre no dashboard do aluno, nunca no Portal do Professor.
+  client.auth.onAuthStateChange(async (_event, session) => {
+    if (!session?.user || sessionStorage.getItem(OAUTH_PENDING_KEY) !== "1") return;
+    sessionStorage.removeItem(OAUTH_PENDING_KEY);
+
+    const roleName = await getRoleName(session.user.id);
+    if (!ROLE_DESTINATIONS[roleName]) {
+      await client.auth.signOut();
+      showLoginError("Essa conta não tem acesso configurado.");
+      googleBtn.disabled = false;
+      return;
+    }
+
+    window.location.replace(roleName === "aluno" ? alunoDestination() : ROLE_DESTINATIONS[roleName]);
+  });
 
   credsForm.addEventListener("submit", async (ev) => {
     ev.preventDefault();
