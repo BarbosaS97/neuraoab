@@ -1048,7 +1048,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background: var(--card);
+  background: linear-gradient(90deg, var(--primary-dim), transparent 60%), var(--card);
   border: 1px solid var(--border);
   border-left: 3px solid var(--primary);
   border-radius: 10px;
@@ -1111,8 +1111,22 @@
   color: var(--text-dim);
   font-size: 13.5px;
   line-height: 1.6;
-  padding: 6px 0 2px;
+  padding: 10px 0 4px;
 }
+
+.sim2-panel-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  color: var(--primary);
+  background: var(--primary-dim);
+}
+
+.sim2-panel-empty p { margin: 0; }
 
 /* --------------------------------------------------------- Desempenho */
 
@@ -1122,7 +1136,28 @@
   gap: 22px 24px;
 }
 
-.sim2-metric-tile { display: flex; flex-direction: column; gap: 4px; }
+.sim2-metric-tile { display: flex; flex-direction: column; gap: 6px; }
+
+/* Icone pequeno acima do rotulo — identifica cada indicador de relance e
+   da' cor ao painel (as 3 cores da marca: laranja/roxo/azul) sem repetir o
+   gradiente de destaque reservado pros cards de "momento principal" (ver
+   .sim2-card-accent). Cada tile define --accent/--accent-dim proprios. */
+.sim2-metric-tile--nota { --accent: var(--primary); --accent-dim: var(--primary-dim); --accent-glow: var(--primary-glow); }
+.sim2-metric-tile--evolucao { --accent: var(--logo-purple); --accent-dim: var(--logo-purple-dim); --accent-glow: var(--logo-purple-glow); }
+.sim2-metric-tile--peca { --accent: var(--logo-blue); --accent-dim: var(--logo-blue-dim); --accent-glow: var(--logo-blue-glow); }
+.sim2-metric-tile--questoes { --accent: var(--logo-orange); --accent-dim: var(--logo-orange-dim); --accent-glow: var(--logo-orange-glow); }
+
+.sim2-metric-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  color: var(--accent);
+  background: var(--accent-dim);
+  margin-bottom: 2px;
+}
 
 .sim2-metric-label { font-size: 12px; color: var(--text-dim); }
 
@@ -1142,6 +1177,27 @@
 .sim2-metric-value.empty { font-size: 18px; font-weight: 600; color: var(--text-dim); }
 
 .sim2-metric-hint { font-size: 11.5px; line-height: 1.45; color: var(--text-dim); }
+
+/* Nota media e' o indicador de cabeca ("headline stat") do painel — maior
+   que os outros 3, pra' quem abre a tela em 1 segundo saber "como estou
+   indo" sem ler os outros indicadores. */
+.sim2-metric-tile--hero .sim2-metric-value { font-size: 34px; }
+.sim2-metric-tile--hero .sim2-metric-value.empty { font-size: 18px; }
+.sim2-metric-tile--hero .sim2-metric-icon { width: 32px; height: 32px; border-radius: 9px; }
+
+@media (min-width: 600px) {
+  .sim2-metric-tile--hero {
+    grid-column: span 2;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 18px;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-glow);
+    border-radius: 12px;
+  }
+  .sim2-metric-tile--hero .sim2-metric-icon { margin-bottom: 0; }
+}
 
 /* ------------------------------------------------------ Historico + IA */
 
@@ -1181,6 +1237,26 @@
 
 .sim2-chart-svg .sim2-chart-area { fill: url(#sim2ChartGradient); }
 .sim2-chart-svg .sim2-chart-dot { fill: var(--primary); stroke: var(--card); stroke-width: 2; }
+.sim2-chart-svg .sim2-chart-dot:hover { r: 5; }
+
+/* Grade horizontal (0/5/10) — da' uma referencia de escala ao grafico, que
+   antes so' tinha a linha solta sem eixo nenhum. */
+.sim2-chart-svg .sim2-chart-grid { stroke: var(--border); stroke-width: 1; }
+.sim2-chart-svg .sim2-chart-axis-label { font-size: 8px; fill: var(--text-dim); }
+
+/* Bolinha colorida indicando o tipo de treinamento (completo/peca/questoes)
+   de cada tentativa do historico — mesmas 3 cores da marca usadas nos
+   tiles de desempenho, pra' o olho reconhecer o padrao entre os dois
+   paineis sem precisar ler o texto. */
+.sim2-last-item-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--dot-color, var(--primary));
+}
+
+.sim2-last-item-title-row { display: flex; align-items: center; gap: 7px; }
 
 .sim2-last-list {
   display: flex;

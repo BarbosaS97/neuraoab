@@ -58,6 +58,16 @@ const MODO_LABELS = {
   questoes: "Questões discursivas",
 };
 
+// Mesmas 3 cores da marca usadas nos icones do painel de desempenho (ver
+// .sim2-metric-tile--peca/--questoes em simulado2fase.css) — reaproveitadas
+// na bolinha de cada item do historico, pra' o olho reconhecer o padrao
+// entre os dois paineis.
+const MODO_DOT_VAR = {
+  completo: "--primary",
+  peca: "--logo-blue",
+  questoes: "--logo-orange",
+};
+
 // -------------------------------------------------------------- Elementos
 
 const els = {
@@ -1608,14 +1618,20 @@ function renderLastList(corrigidasDesc) {
 
     const main = document.createElement("span");
     main.className = "sim2-last-item-main";
+    const titleRow = document.createElement("span");
+    titleRow.className = "sim2-last-item-title-row";
+    const dot = document.createElement("span");
+    dot.className = "sim2-last-item-dot";
+    dot.style.setProperty("--dot-color", `var(${MODO_DOT_VAR[t.modo] || MODO_DOT_VAR.completo})`);
     const title = document.createElement("span");
     title.className = "sim2-last-item-title";
     title.textContent = `${t.exam_number}º Exame · ${t.area}`;
+    titleRow.append(dot, title);
     const sub = document.createElement("span");
     sub.className = "sim2-last-item-sub";
     const dataStr = t.finished_at ? new Date(t.finished_at).toLocaleDateString("pt-BR") : "—";
     sub.textContent = `${MODO_LABELS[t.modo] || MODO_LABELS.completo} · ${dataStr}`;
-    main.append(title, sub);
+    main.append(titleRow, sub);
 
     const side = document.createElement("span");
     side.className = "sim2-last-item-side";
@@ -1661,10 +1677,21 @@ function renderChart(corrigidasAsc) {
   const firstX = coords[0][0].toFixed(1);
   const areaPath = `${linePath} L ${lastX} ${plotBottom} L ${firstX} ${plotBottom} Z`;
 
+  // Grade horizontal em 0/5/10 — antes o grafico nao tinha nenhuma
+  // referencia de escala, so' a linha solta (dava pra ver a tendencia mas
+  // nao "quao boa" e' a nota sem olhar os rotulos de cada ponto).
+  const gridSvg = [0, 5, 10].map(v => {
+    const y = (plotTop + (plotBottom - plotTop) * (1 - v / 10)).toFixed(1);
+    return `<line class="sim2-chart-grid" x1="${padX}" y1="${y}" x2="${w - padX}" y2="${y}"></line>` +
+      `<text class="sim2-chart-axis-label" x="0" y="${(Number(y) + 3).toFixed(1)}">${v}</text>`;
+  }).join("");
+
   const marksSvg = coords.map((c, i) => {
-    const dataLabel = new Date(corrigidasAsc[i].finished_at || corrigidasAsc[i].started_at)
+    const t = corrigidasAsc[i];
+    const dataLabel = new Date(t.finished_at || t.started_at)
       .toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
-    return `<circle class="sim2-chart-dot" cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" r="3.5"></circle>` +
+    const tooltip = `${t.exam_number}º Exame · ${t.area} — ${fmt1(pts[i])}/10 em ${dataLabel}`;
+    return `<circle class="sim2-chart-dot" cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" r="3.5"><title>${tooltip}</title></circle>` +
       `<text class="sim2-chart-value" x="${c[0].toFixed(1)}" y="${(c[1] - 8).toFixed(1)}" text-anchor="middle">${fmt1(pts[i])}</text>` +
       `<text x="${c[0].toFixed(1)}" y="${h - 6}" text-anchor="middle">${dataLabel}</text>`;
   }).join("");
@@ -1677,6 +1704,7 @@ function renderChart(corrigidasAsc) {
           <stop offset="100%" style="stop-color:var(--primary);stop-opacity:0"></stop>
         </linearGradient>
       </defs>
+      ${gridSvg}
       <path class="sim2-chart-area" d="${areaPath}"></path>
       <path class="sim2-chart-line" d="${linePath}"></path>
       ${marksSvg}
