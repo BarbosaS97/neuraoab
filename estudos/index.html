@@ -321,6 +321,31 @@
   </div>
 </div>
 
+<!-- Convite de professor/turma — abre sozinho quando "?convite=CODIGO" está
+     na URL (link do e-mail, ver checkPendingConvite em estudos.js): tanto
+     pra quem clicou o link já logado quanto pra quem só chegou aqui depois
+     de logar/criar conta (o código atravessa esse passo por sessionStorage,
+     não pela URL — ver PENDING_CONVITE_KEY). Reaproveita .help-overlay/
+     .help-modal, mesmo padrão de profileOverlay/plansOverlay acima. -->
+<div class="help-overlay" id="conviteOverlay" hidden>
+  <div class="help-modal" role="dialog" aria-modal="true" aria-labelledby="conviteTitle">
+    <div class="help-modal-header">
+      <h2 id="conviteTitle">Convite de turma</h2>
+      <button type="button" id="conviteCloseBtn" class="help-modal-close" aria-label="Fechar">&times;</button>
+    </div>
+
+    <div class="help-modal-body">
+      <p id="conviteBody">Confirmando seu convite...</p>
+      <p class="profile-msg" id="conviteMsg"></p>
+    </div>
+
+    <div class="help-modal-footer convite-modal-footer">
+      <button type="button" class="btn-ghost" id="conviteDismissBtn">Agora não</button>
+      <button type="button" class="btn-primary" id="conviteAcceptBtn" hidden>Aceitar convite</button>
+    </div>
+  </div>
+</div>
+
 <header class="topbar">
   <div class="topbar-left">
     <button type="button" id="menuBtn" class="menu-btn" aria-label="Abrir menu" aria-expanded="false">

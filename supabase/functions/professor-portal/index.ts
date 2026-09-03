@@ -55,12 +55,14 @@ async function checkRateLimit(key: string, maxCount: number, windowSeconds: numb
   return data === true;
 }
 
-// Pra onde o link de convite do aluno leva — página estática, não precisa
-// estar cadastrada em Authentication > URL Configuration > Redirect URLs
-// (diferente do convite antigo): estudos/convite.html não depende de um
-// token de recuperação de senha do Supabase Auth, só lê "?c=" da própria
-// URL e chama a Edge Function "aluno-portal" pra validar.
-const STUDENT_INVITE_BASE_URL = "https://neuraoab.com.br/estudos/convite.html";
+// Pra onde o link de convite do aluno leva — direto pro dashboard do aluno
+// (não uma página separada), que abre um modal de aceite sozinho quando vê
+// "?convite=" na própria URL (ver checkPendingConvite em estudos/
+// estudos.js). Não precisa estar cadastrada em Authentication > URL
+// Configuration > Redirect URLs (diferente do convite antigo): não depende
+// de um token de recuperação de senha do Supabase Auth, só chama a Edge
+// Function "aluno-portal" pra validar o código.
+const STUDENT_INVITE_BASE_URL = "https://neuraoab.com.br/estudos/index.html";
 
 // Convite pendente expira 7 dias depois de gerado (ou reenviado, ver
 // resendInvite) — mesmo espírito de MAX_BULK_INVITES abaixo: um número
@@ -363,7 +365,7 @@ async function createConvite(professorId: string, input: StudentInput): Promise<
     return { email, ok: false, error: insertError?.message || "Falha ao gerar o convite." };
   }
 
-  const inviteLink = `${STUDENT_INVITE_BASE_URL}?c=${codigo}`;
+  const inviteLink = `${STUDENT_INVITE_BASE_URL}?convite=${codigo}`;
   const emailResult = await sendInviteEmail(email, inviteLink, STUDENT_INVITE_EMAIL_COPY);
   if (!emailResult.ok) {
     console.error(`Falha ao enviar convite por e-mail para ${email}: ${emailResult.error}`);
@@ -408,7 +410,7 @@ async function resendInvite(id: string, professorId: string): Promise<{ ok: bool
     return { ok: false, error: updateError.message };
   }
 
-  const inviteLink = `${STUDENT_INVITE_BASE_URL}?c=${codigo}`;
+  const inviteLink = `${STUDENT_INVITE_BASE_URL}?convite=${codigo}`;
   const emailResult = await sendInviteEmail(convite.email, inviteLink, STUDENT_INVITE_EMAIL_COPY);
   if (!emailResult.ok) {
     return { ok: false, error: `Não foi possível enviar o e-mail: ${emailResult.error}` };

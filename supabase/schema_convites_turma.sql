@@ -13,8 +13,10 @@
 -- já existente a uma turma. Este arquivo introduz "convites": um REGISTRO
 -- (código + validade), não uma criação de conta — o aluno aceita logado
 -- (conta nova ou avulsa já existente, tanto faz), e só nesse momento o
--- perfil dele é vinculado à turma. Ver estudos/convite.html e
--- supabase/functions/aluno-portal/index.ts.
+-- perfil dele é vinculado à turma — o link do e-mail leva direto pro
+-- dashboard do aluno (estudos/index.html?convite=CODIGO), que abre um modal
+-- de aceite sozinho (ver "Convite de turma" em estudos/estudos.js e
+-- supabase/functions/aluno-portal/index.ts).
 --
 -- ROTEIRO:
 --   1. Rode este arquivo inteiro no SQL Editor.

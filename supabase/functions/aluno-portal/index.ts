@@ -1,6 +1,7 @@
 // supabase/functions/aluno-portal/index.ts
 //
-// Backend do aceite de convite do aluno (estudos/convite.html): valida um
+// Backend do aceite de convite do aluno (modal de convite dentro do próprio
+// dashboard, ver "Convite de turma" em estudos/estudos.js): valida um
 // código de convite (tabela "convites", ver schema_convites_turma.sql) e,
 // se tudo bater, vincula o aluno logado à turma do convite e sobe o plano
 // pra "pro". Usa a service_role key pelo mesmo motivo de professor-portal/
@@ -13,7 +14,8 @@
 // Diferente de professor-portal (que exige role "professor"/"admin"), aqui
 // qualquer usuário autenticado pode chamar — é o PRÓPRIO aluno aceitando o
 // próprio convite (conta nova, criada na hora pra isso, ou avulsa já
-// existente, tanto faz — ver estudos/convite.html).
+// existente, tanto faz — o dashboard exige login antes de mostrar o modal,
+// ver requireAuth() em estudos.js).
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 

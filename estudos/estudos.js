@@ -26,6 +26,14 @@ const menuAvatar = document.getElementById("menuAvatar");
 const menuUserLabel = document.getElementById("menuUserLabel");
 const sessionLogoutBtn = document.getElementById("sessionLogoutBtn");
 
+const conviteOverlay = document.getElementById("conviteOverlay");
+const conviteCloseBtn = document.getElementById("conviteCloseBtn");
+const conviteDismissBtn = document.getElementById("conviteDismissBtn");
+const conviteAcceptBtn = document.getElementById("conviteAcceptBtn");
+const conviteTitle = document.getElementById("conviteTitle");
+const conviteBody = document.getElementById("conviteBody");
+const conviteMsg = document.getElementById("conviteMsg");
+
 const profileOverlay = document.getElementById("profileOverlay");
 const profileCloseBtn = document.getElementById("profileCloseBtn");
 const plansOverlay = document.getElementById("plansOverlay");
@@ -426,7 +434,8 @@ plansOverlay.addEventListener("click", (ev) => {
 
 document.addEventListener("keydown", (ev) => {
   if (ev.key !== "Escape") return;
-  if (!plansOverlay.hidden) closePlansModal();
+  if (!conviteOverlay.hidden) closeConviteModal();
+  else if (!plansOverlay.hidden) closePlansModal();
   else if (!helpOverlay.hidden) closeHelpModal();
   else if (!profileOverlay.hidden) closeProfileModal();
   else if (!menuPanel.hidden) closeMenu();
@@ -1412,8 +1421,9 @@ function revealAnswer(altButtons, correctLetter, wrongLetter, feedbackEl) {
 // ------------------------------------------------------ Sessão do aluno
 //
 // A area do aluno agora EXIGE login — so' se chega aqui com uma conta de
-// verdade (avulsa, ou vinculada a um professor via estudos/convite.html) ja'
-// autenticada pela landing page (ver index.html, ROLE_DESTINATIONS). Ver
+// verdade (avulsa, ou vinculada a um professor via convite — ver seção
+// "Convite de turma" logo abaixo) ja' autenticada pela landing page (ver
+// index.html, ROLE_DESTINATIONS). Ver
 // requireAuth() logo abaixo, chamado antes de qualquer outra coisa em
 // init(). Cada resposta de 1ª fase e' gravada em oab_respostas (ver
 // handleAnswer abaixo) pra aparecer no Portal do Professor, e "Meu Perfil"
@@ -1465,6 +1475,106 @@ client.auth.onAuthStateChange((_event, session) => {
   currentSession = session;
   if (session?.user) updateSessionUI();
   else window.location.replace("../index.html");
+});
+
+// ------------------------------------------------------ Convite de turma
+//
+// O link do e-mail de convite (ver supabase/functions/professor-portal/
+// index.ts, STUDENT_INVITE_BASE_URL) aponta direto pra cá com
+// "?convite=CODIGO" — sem página separada: se o aluno já está logado, o
+// modal abre na hora; se não está, requireAuth() (chamado em init(), logo
+// abaixo) vai mandar ele pra landing pra entrar/criar conta ANTES de
+// qualquer coisa daqui rodar. Por isso a chave precisa ir pro
+// sessionStorage já na carga do script, não só dentro de init() — assim
+// sobrevive à ida-e-volta pela landing (sessionStorage é do domínio
+// inteiro, não da aba/URL específica) e aparece de novo quando o aluno
+// volta logado pra este mesmo dashboard.
+const PENDING_CONVITE_KEY = "neuraoab-pending-convite";
+{
+  const codigoNaUrl = new URLSearchParams(window.location.search).get("convite");
+  if (codigoNaUrl) sessionStorage.setItem(PENDING_CONVITE_KEY, codigoNaUrl);
+}
+
+async function callAlunoPortal(payload) {
+  const { data, error } = await client.functions.invoke("aluno-portal", { body: payload });
+  if (error) {
+    let detail = error.message;
+    try {
+      const body = await error.context?.json?.();
+      if (body?.error) detail = body.error;
+    } catch {
+      // mantém a mensagem genérica
+    }
+    throw new Error(detail);
+  }
+  if (data?.error) throw new Error(data.error);
+  return data;
+}
+
+let pendingConviteCodigo = null;
+
+function showConviteMsg(text) {
+  conviteMsg.textContent = text || "";
+  conviteMsg.className = text ? "profile-msg show" : "profile-msg";
+}
+
+function closeConviteModal() {
+  conviteOverlay.hidden = true;
+}
+
+// Chamado uma vez, depois que requireAuth() já garantiu sessão válida (ver
+// init()) — nunca bloqueia o resto do dashboard: o modal abre por cima
+// assim que a validação responde, enquanto questões/estatísticas carregam
+// em paralelo.
+async function checkPendingConvite() {
+  const codigo = sessionStorage.getItem(PENDING_CONVITE_KEY);
+  if (!codigo) return;
+  sessionStorage.removeItem(PENDING_CONVITE_KEY);
+  pendingConviteCodigo = codigo;
+
+  conviteTitle.textContent = "Convite de turma";
+  conviteBody.textContent = "Confirmando seu convite...";
+  conviteAcceptBtn.hidden = true;
+  conviteDismissBtn.textContent = "Agora não";
+  showConviteMsg("");
+  conviteOverlay.hidden = false;
+
+  try {
+    const result = await callAlunoPortal({ action: "validar-convite", codigo });
+    conviteBody.textContent = `${result.professor_nome} te convidou para a turma "${result.turma_nome}". Aceite pra entrar na turma e liberar o acesso Pro.`;
+    conviteAcceptBtn.hidden = false;
+  } catch (err) {
+    conviteBody.textContent = "Não foi possível confirmar este convite.";
+    showConviteMsg(err.message || "Ocorreu um erro inesperado.");
+  }
+}
+
+conviteAcceptBtn.addEventListener("click", async () => {
+  if (!pendingConviteCodigo) return;
+  conviteAcceptBtn.disabled = true;
+  conviteAcceptBtn.textContent = "Ativando...";
+  try {
+    const result = await callAlunoPortal({ action: "ativar-convite", codigo: pendingConviteCodigo });
+    pendingConviteCodigo = null;
+    conviteAcceptBtn.hidden = true;
+    conviteDismissBtn.textContent = "Fechar";
+    conviteTitle.textContent = "Convite aceito!";
+    conviteBody.textContent = `Você agora faz parte da turma "${result.turma_nome}" e tem acesso Pro.`;
+    showConviteMsg("");
+    // Reflete o novo plano na hora em "Meu Perfil"/cadeados de limite, sem
+    // esperar o aluno reabrir nada.
+    loadPlanStatus().then(renderProfilePlan);
+  } catch (err) {
+    conviteAcceptBtn.disabled = false;
+    conviteAcceptBtn.textContent = "Aceitar convite";
+    showConviteMsg(err.message || "Não foi possível aceitar o convite.");
+  }
+});
+
+conviteCloseBtn.addEventListener("click", closeConviteModal);
+conviteDismissBtn.addEventListener("click", closeConviteModal);
+conviteOverlay.addEventListener("click", (ev) => {
+  if (ev.target === conviteOverlay) closeConviteModal();
 });
 
 // --------------------------------------------------------- Plano (limites)
@@ -2273,6 +2383,7 @@ async function init() {
 
   currentSession = session;
   updateSessionUI();
+  checkPendingConvite(); // não bloqueia o resto do carregamento — ver comentário na definição
 
   let data;
   let answers;

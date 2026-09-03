@@ -2536,6 +2536,19 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   flex-shrink: 0;
 }
 
+/* Dois botões lado a lado (modal de convite, ver conviteOverlay) — os
+   outros rodapés de .help-modal-footer têm só um botão, que já herda
+   width:100% de .btn-primary sozinho, então não precisavam disso. */
+.convite-modal-footer {
+  display: flex;
+  gap: 10px;
+}
+.convite-modal-footer .btn-primary,
+.convite-modal-footer .btn-ghost {
+  width: auto;
+  flex: 1;
+}
+
 /* -------------------------------------------------------- Modal de perfil */
 /*
   Reaproveita .help-overlay/.help-modal (mesmo comportamento de abrir/

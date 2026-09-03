@@ -2929,25 +2929,22 @@
   // localStorage do domínio (mesma origem pra landing/estudos/portal-mestre/
   // professor-portal), então a sessão criada aqui já "aparece" logada assim
   // que a próxima página carrega — não precisa passar token por querystring.
+  // Pra onde cada role vai depois de logar. Sessão do Supabase Auth fica no
+  // localStorage do domínio (mesma origem pra landing/estudos/portal-mestre/
+  // professor-portal), então a sessão criada aqui já "aparece" logada assim
+  // que a próxima página carrega — não precisa passar token por querystring.
+  //
+  // Um convite pendente (aluno clicou no link do e-mail sem estar logado)
+  // sobrevive a esse redirect sozinho: quem grava e lê a chave em
+  // sessionStorage é sempre estudos/estudos.js (ver checkPendingConvite lá),
+  // nunca esta página — sessionStorage é do domínio inteiro, não da aba/URL
+  // específica, então não precisa de nenhum tratamento especial aqui, o
+  // aluno só cai no dashboard normal e o modal de convite abre sozinho lá.
   const ROLE_DESTINATIONS = {
     admin: "portal-mestre/dashboard.html",
     professor: "professor-portal/dashboard.html",
     aluno: "estudos/index.html",
   };
-
-  // Setado por estudos/convite.html antes de mandar um aluno deslogado pra
-  // cá (login ou cadastro) — sem isso, aceitar um convite exigiria já estar
-  // logado, e alguém sem conta nunca voltava pro convite depois de criar a
-  // conta. sessionStorage (não uma variável comum) pelo mesmo motivo de
-  // OAUTH_PENDING_KEY logo abaixo: a página recarrega/navega no meio do
-  // fluxo.
-  const PENDING_CONVITE_KEY = "neuraoab-pending-convite";
-  function alunoDestination() {
-    const pendingCodigo = sessionStorage.getItem(PENDING_CONVITE_KEY);
-    if (!pendingCodigo) return ROLE_DESTINATIONS.aluno;
-    sessionStorage.removeItem(PENDING_CONVITE_KEY);
-    return `estudos/convite.html?c=${encodeURIComponent(pendingCodigo)}`;
-  }
 
   const loginBtn = document.getElementById("loginBtn");
   const loginOverlay = document.getElementById("loginOverlay");
@@ -3231,11 +3228,11 @@
   // motivo) seria empurrado pra fora da página só por visitar.
   //
   // Precisa consultar o role de verdade (mesma checagem do login por
-  // senha, ver credsForm.submit abaixo) em vez de mandar sempre pra
-  // alunoDestination(): o botão Google só aparece na aba "Aluno", mas
-  // nada impede uma conta de PROFESSOR (ou admin) ter uma identidade
-  // Google vinculada e usar esse mesmo botão — sem essa checagem, ela
-  // caía sempre no dashboard do aluno, nunca no Portal do Professor.
+  // senha, ver credsForm.submit abaixo) em vez de mandar sempre pro
+  // dashboard do aluno: o botão Google só aparece na aba "Aluno", mas nada
+  // impede uma conta de PROFESSOR (ou admin) ter uma identidade Google
+  // vinculada e usar esse mesmo botão — sem essa checagem, ela caía sempre
+  // no dashboard do aluno, nunca no Portal do Professor.
   client.auth.onAuthStateChange(async (_event, session) => {
     if (!session?.user || sessionStorage.getItem(OAUTH_PENDING_KEY) !== "1") return;
     sessionStorage.removeItem(OAUTH_PENDING_KEY);
@@ -3248,7 +3245,7 @@
       return;
     }
 
-    window.location.replace(roleName === "aluno" ? alunoDestination() : ROLE_DESTINATIONS[roleName]);
+    window.location.replace(ROLE_DESTINATIONS[roleName]);
   });
 
   credsForm.addEventListener("submit", async (ev) => {
@@ -3333,7 +3330,7 @@
         return;
       }
 
-      window.location.href = alunoDestination();
+      window.location.href = ROLE_DESTINATIONS.aluno;
       return;
     }
 
@@ -3365,7 +3362,7 @@
       return;
     }
 
-    window.location.href = roleName === "aluno" ? alunoDestination() : ROLE_DESTINATIONS[roleName];
+    window.location.href = ROLE_DESTINATIONS[roleName];
   });
 </script>
 
