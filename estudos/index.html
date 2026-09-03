@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=49">
+<link rel="stylesheet" href="style.css?v=50">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -403,6 +403,18 @@
             <span class="checkout-status-spinner" id="checkoutStatusSpinner" aria-hidden="true"></span>
             <p class="checkout-status" id="checkoutStatus">Assim que o pagamento for confirmado, seu plano é liberado automaticamente — pode fechar esta janela e continuar estudando enquanto isso.</p>
           </div>
+
+          <!-- Aviso de titularidade — o nome que aparece no extrato/comprovante
+               do pagamento é quem está de fato cadastrado como titular na
+               Woovi/Asaas (configuração da CONTA nesses painéis, fora do
+               alcance deste código); isto aqui só avisa o aluno ANTES de
+               pagar, pra esse nome não assustar quando aparecer depois. Se o
+               nome/CNPJ real cadastrado nos painéis for outro, atualize aqui
+               também. -->
+          <p class="checkout-billing-entity">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="16" x2="12" y2="11"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            A cobrança aparece no seu extrato ou comprovante em nome de <strong>Fellipe Barbosa dos Santos</strong> — CNPJ 67.194.116/0001-80, responsável pelo NeuraOAB.
+          </p>
         </div>
       </div>
     </div>

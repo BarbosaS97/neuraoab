@@ -3284,6 +3284,23 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 
 .checkout-status.ok { color: var(--success); font-weight: 700; }
 
+/* Titularidade de quem cobra — ver comentário grande em index.html. Ícone +
+   texto pequeno, discreto (não é um alerta, é só uma informação de
+   contexto), mas sempre visível junto do QR/boleto/link de cartão. */
+.checkout-billing-entity {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 14px 0 0;
+  padding: 0 2px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+.checkout-billing-entity svg { flex-shrink: 0; margin-top: 2px; color: var(--text-dim); }
+.checkout-billing-entity strong { color: var(--text); font-weight: 700; }
+
 @media (max-width: 760px) {
   .plans-grid { grid-template-columns: 1fr; }
 }
