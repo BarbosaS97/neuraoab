@@ -157,7 +157,8 @@
   function showLoggedOut() {
     spinner.hidden = true;
     titleEl.textContent = "Quase lá!";
-    statusMsg.textContent = "Entre ou crie sua conta pra aceitar o convite — depois de logar, você volta pra cá automaticamente.";
+    statusMsg.textContent =
+      "Entre ou crie sua conta primeiro. Só entrar não é suficiente: você ainda precisa confirmar a entrada na turma — por isso, depois de logar, a gente te traz de volta pra esta página pra você clicar em \"Aceitar convite\".";
     sessionStorage.setItem(PENDING_CONVITE_KEY, codigo);
     loggedOutActions.hidden = false;
   }
