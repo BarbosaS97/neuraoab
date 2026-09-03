@@ -95,9 +95,16 @@ const PRICES: Record<string, Record<string, number>> = {
   pro: { MONTHLY: 19.99, YEARLY: 199.90 },
 };
 
+// ASCII puro de propósito (sem travessão, sem acento) — diferente do
+// PLAN_DESCRIPTIONS equivalente em criar-cobranca/index.ts (Asaas, aceita
+// UTF-8 no campo "description" sem problema). A Woovi recusa o campo
+// "comment" com HTTP 400 "Emoji não é permitido no comentário" pra
+// caracteres fora do ASCII básico (confirmado em produção: o travessão "—"
+// já foi suficiente pra disparar essa validação, mesmo não sendo emoji de
+// verdade — o filtro deles parece mais amplo do que o nome sugere).
 const PLAN_DESCRIPTIONS: Record<string, string> = {
-  basico: "NeuraOAB — Plano Básico",
-  pro: "NeuraOAB — Plano Pro",
+  basico: "NeuraOAB - Plano Basico",
+  pro: "NeuraOAB - Plano Pro",
 };
 
 function onlyDigits(s: string): string {
@@ -212,6 +219,14 @@ Deno.serve(async (req: Request) => {
   });
 
   if (!chargeResult.ok || !chargeResult.data?.charge) {
+    // Sem isto, o log só mostra "booted" — o motivo real (401 de AppID
+    // errado/ambiente errado, 400 de corpo inválido etc.) ficava só no
+    // corpo da resposta HTTP, que o aluno nunca vê e o log não registrava.
+    console.error("criar-cobranca-woovi: falha ao criar cobrança na Woovi", {
+      status: chargeResult.status,
+      data: chargeResult.data,
+      baseUrl: WOOVI_BASE_URL,
+    });
     return jsonResponse({ error: wooviErrorMessage(chargeResult, "Falha ao criar cobrança na Woovi.") }, 502);
   }
   const charge = chargeResult.data.charge;

@@ -56,11 +56,13 @@ const checkoutResult = document.getElementById("checkoutResult");
 const checkoutPixResult = document.getElementById("checkoutPixResult");
 const checkoutQrImage = document.getElementById("checkoutQrImage");
 const checkoutCopyPixBtn = document.getElementById("checkoutCopyPixBtn");
+const checkoutCopyPixLabel = document.getElementById("checkoutCopyPixLabel");
 const checkoutBoletoResult = document.getElementById("checkoutBoletoResult");
 const checkoutBoletoLink = document.getElementById("checkoutBoletoLink");
 const checkoutCardResult = document.getElementById("checkoutCardResult");
 const checkoutCardLink = document.getElementById("checkoutCardLink");
 const checkoutStatus = document.getElementById("checkoutStatus");
+const checkoutStatusSpinner = document.getElementById("checkoutStatusSpinner");
 const profilePlanBadge = document.getElementById("profilePlanBadge");
 const profilePlanUpgrade = document.getElementById("profilePlanUpgrade");
 const profilePlanUsage = document.getElementById("profilePlanUsage");
@@ -274,6 +276,7 @@ function startCheckoutPolling(plano) {
       stopCheckoutPolling();
       checkoutStatus.textContent = "Pagamento confirmado! Seu plano foi atualizado. 🎉";
       checkoutStatus.className = "checkout-status ok";
+      checkoutStatusSpinner.hidden = true;
       renderPlansModalCurrent();
       renderProfilePlan();
     } else if (attempts >= MAX_ATTEMPTS) {
@@ -307,6 +310,7 @@ function openCheckout(plano) {
   checkoutStatus.className = "checkout-status";
   checkoutStatus.textContent =
     "Assim que o pagamento for confirmado, seu plano é liberado automaticamente — pode fechar esta janela e continuar estudando enquanto isso.";
+  checkoutStatusSpinner.hidden = false;
   checkoutSubmitBtn.disabled = false;
   checkoutSubmitBtn.textContent = "Gerar cobrança";
   stopCheckoutPolling();
@@ -435,9 +439,9 @@ checkoutCopyPixBtn.addEventListener("click", async () => {
   } catch {
     return;
   }
-  const original = checkoutCopyPixBtn.textContent;
-  checkoutCopyPixBtn.textContent = "Copiado!";
-  setTimeout(() => { checkoutCopyPixBtn.textContent = original; }, 1500);
+  const original = checkoutCopyPixLabel.textContent;
+  checkoutCopyPixLabel.textContent = "Copiado!";
+  setTimeout(() => { checkoutCopyPixLabel.textContent = original; }, 1500);
 });
 
 plansCloseBtn.addEventListener("click", closePlansModal);

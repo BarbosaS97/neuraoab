@@ -2765,6 +2765,14 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   gap: 16px;
 }
 
+/* Regra de autor com "display" sempre vence "[hidden] { display: none }" do
+   navegador (mesma pegadinha de .pick-screen[hidden]/.help-overlay[hidden],
+   ver comentário lá) — sem isto, "plansGrid.hidden = true" em openCheckout()
+   não escondia a grade de verdade: o formulário/QR do checkout renderizava
+   junto, logo abaixo dos cards de plano ainda visíveis. Era isso que
+   parecia "estranho".*/
+.plans-grid[hidden] { display: none; }
+
 .plan-card {
   position: relative;
   display: flex;
@@ -3003,44 +3011,118 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 
 .checkout-msg.show { display: block; }
 
-.checkout-result { margin-top: 22px; text-align: center; }
+.checkout-result { margin-top: 22px; }
+
+/* Card com identidade própria (ícone + título + faixa de destaque no topo,
+   mesmo dispositivo visual de .card-accent/.sim2-card-accent usado no resto
+   do produto) — troca "elementos soltos um embaixo do outro" por "isto é
+   uma única coisa com contexto", que era o que ficava estranho antes. */
+.checkout-pay-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--card-hover);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  text-align: left;
+}
+
+.checkout-pay-card-accent::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--logo-orange), var(--logo-purple), var(--logo-blue));
+}
+
+.checkout-pay-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.checkout-pay-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background: var(--primary-dim);
+  color: var(--primary);
+}
+
+.checkout-pay-head h3 { margin: 0 0 4px; font-size: 15px; }
+.checkout-pay-head p { margin: 0; font-size: 12.5px; color: var(--text-dim); line-height: 1.5; }
+
+/* Moldura branca em volta do QR mesmo no tema escuro (o PNG do QR em si
+   não tem fundo transparente pronto pra dark mode) — antes o QR "flutuava"
+   direto no fundo escuro do modal sem nenhum respiro ao redor. */
+.checkout-qr-frame {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+  margin-bottom: 16px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
 
 .checkout-qr-image {
   display: block;
-  width: 200px;
-  height: 200px;
-  margin: 0 auto 14px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: #fff;
-  padding: 8px;
+  width: 190px;
+  height: 190px;
 }
 
 .checkout-copy-btn {
   width: 100%;
-  background: var(--card-hover);
-  color: var(--text);
-  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
   border-radius: 9px;
-  padding: 11px 0;
-  font-size: 13px;
+  padding: 12px 0;
+  font-size: 13.5px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  transition: border-color 0.15s ease;
+  transition: opacity 0.15s ease;
 }
 
-.checkout-copy-btn:hover { border-color: var(--primary); }
+.checkout-copy-btn:hover { opacity: 0.88; }
 
-.checkout-card-note {
-  margin: 0 0 14px;
-  font-size: 12px;
-  color: var(--text-dim);
-  line-height: 1.5;
+.checkout-status-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
 }
+
+.checkout-status-spinner {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 2px solid var(--border);
+  border-top-color: var(--primary);
+  animation: checkoutSpin 0.8s linear infinite;
+}
+
+@keyframes checkoutSpin { to { transform: rotate(360deg); } }
 
 .checkout-status {
-  margin: 16px 0 0;
+  margin: 0;
   font-size: 12px;
   color: var(--text-dim);
   line-height: 1.5;

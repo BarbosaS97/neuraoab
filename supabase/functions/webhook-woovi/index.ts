@@ -298,6 +298,15 @@ Deno.serve(async (req: Request) => {
   const authHeader = req.headers.get("Authorization") ?? "";
   const receivedToken = authHeader.replace(/^Bearer\s+/i, "").trim();
   if (!WOOVI_WEBHOOK_TOKEN || receivedToken !== WOOVI_WEBHOOK_TOKEN) {
+    // Sem isto, um 401 aqui é indistinguível nos logs de um 401 do GATEWAY
+    // do Supabase (que rejeita ANTES deste código rodar, se "Enforce JWT
+    // Verification" estiver ligado pra esta function) — se esta linha
+    // aparecer, o problema é o header/secret; se não aparecer nenhuma
+    // invocação nos logs, o problema é o gateway.
+    console.error("webhook-woovi: token inválido", {
+      recebeuHeaderAuthorization: authHeader.length > 0,
+      tokenConfigurado: !!WOOVI_WEBHOOK_TOKEN,
+    });
     return jsonResponse({ error: "Token inválido." }, 401);
   }
 
