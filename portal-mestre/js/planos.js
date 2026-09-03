@@ -65,16 +65,6 @@ function buildPlanLimitsRow(row) {
   questoesTd.appendChild(questoesInput);
   tr.appendChild(questoesTd);
 
-  const simuladosInput = document.createElement("input");
-  simuladosInput.type = "number";
-  simuladosInput.min = "0";
-  simuladosInput.className = "plan-limit-input";
-  simuladosInput.placeholder = "Ilimitado";
-  simuladosInput.value = row.simulados_por_mes ?? "";
-  const simuladosTd = document.createElement("td");
-  simuladosTd.appendChild(simuladosInput);
-  tr.appendChild(simuladosTd);
-
   const chatInput = document.createElement("input");
   chatInput.type = "number";
   chatInput.min = "0";
@@ -113,7 +103,6 @@ function buildPlanLimitsRow(row) {
       .from("plan_limits")
       .update({
         questoes_por_dia: parseLimitInput(questoesInput),
-        simulados_por_mes: parseLimitInput(simuladosInput),
         chat_mensagens_por_mes: parseLimitInput(chatInput),
         estatisticas_ia: iaCheck.checked,
         segunda_fase: faseCheck.checked,
@@ -141,7 +130,7 @@ async function loadPlanLimits() {
     const tr = document.createElement("tr");
     tr.className = "empty-row";
     const td = document.createElement("td");
-    td.colSpan = 7;
+    td.colSpan = 6;
     td.textContent = "Não foi possível carregar os planos — rode supabase/schema_planos.sql.";
     tr.appendChild(td);
     planLimitsTableBody.appendChild(tr);

@@ -832,23 +832,11 @@ function buildExamCard({ key, year, count, stat, hero, selected, onToggle }) {
 // selecionar todas -> Estudar): seleciona só este exame, TODAS as matérias
 // dele, e já abre a Tela 3. Reaproveita exatamente as mesmas variáveis/telas
 // de toSubjectsBtn/toStudyBtn (linhas acima) — nenhuma lógica nova de
-// filtragem.
-// Consome 1 simulado da cota mensal do plano (plan_limits.simulados_por_mes)
-// ANTES de abrir a tela de estudo — mesma RPC increment_plan_usage usada em
-// handleAnswer (é ela quem decide de verdade). Alerta simples em vez de um
-// "feedback" inline (não há nenhuma questão/feedbackEl na tela nesse ponto
-// — o clique acontece ainda na grade de exames).
-async function startSimulado(key) {
-  const { data, error } = await client.rpc("increment_plan_usage", { p_kind: "simulado" });
-  const quota = !error && data?.[0] ? data[0] : { allowed: true };
-  if (planStatus) planStatus.simulados_mes_atual = quota.used_count ?? planStatus.simulados_mes_atual;
-
-  if (!quota.allowed) {
-    alert(`Você já usou o simulado gratuito deste mês (limite: ${quota.max_count}). Veja os planos pra praticar sem limite.`);
-    openPlansModal();
-    return;
-  }
-
+// filtragem. Sem limite de plano nenhum: "simulado" aqui é só um atalho de
+// navegação sobre a MESMA 1ª fase que já é limitada por questão/dia
+// (handleAnswer) — não é um recurso à parte que faça sentido cobrar
+// separado, então nunca teve um limite de verdade pra ele valer a pena.
+function startSimulado(key) {
   selectedExams = new Set([key]);
   examPool = allQuestions.filter(q => examKey(q) === key);
   selectedSubjects = new Set(allSubjectKeys());

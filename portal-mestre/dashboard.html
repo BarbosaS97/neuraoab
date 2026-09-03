@@ -33,6 +33,14 @@
       <div class="num" id="statProfessoresAtivos">—</div>
       <div class="label">Professores ativos</div>
     </div>
+    <div class="stat-card">
+      <div class="num" id="statTotalAlunos">—</div>
+      <div class="label">Alunos cadastrados</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="statAlunosPagos">—</div>
+      <div class="label">Alunos em plano pago</div>
+    </div>
   </div>
 
   <div class="panel">
@@ -72,7 +80,6 @@
           <tr>
             <th>Plano</th>
             <th>Questões / dia</th>
-            <th>Simulados / mês</th>
             <th>Mensagens de chat / mês</th>
             <th>Análise por IA</th>
             <th>2ª Fase</th>
@@ -80,7 +87,7 @@
           </tr>
         </thead>
         <tbody id="planLimitsTableBody">
-          <tr class="empty-row"><td colspan="7">Carregando...</td></tr>
+          <tr class="empty-row"><td colspan="6">Carregando...</td></tr>
         </tbody>
       </table>
     </div>
@@ -89,31 +96,45 @@
 
   <div class="panel">
     <div class="panel-header">
-      <h2>Testar plano de um aluno</h2>
+      <h2>Alunos</h2>
     </div>
     <p class="field-hint">
-      Muda o plano de um aluno específico sem passar por cobrança — útil pra testar a experiência do Básico/Pro
-      antes da integração com o Asaas. Busque pelo e-mail cadastrado.
+      Todos os alunos cadastrados — avulsos (se cadastraram sozinhos) e convidados por um professor. Mude o plano
+      de qualquer um direto na tabela, sem passar por cobrança (útil pra testar Básico/Pro, ou pra liberar
+      manualmente um pagamento combinado por fora do Asaas).
     </p>
 
-    <form id="studentPlanForm" class="student-plan-form">
-      <input type="email" id="studentPlanEmail" placeholder="e-mail do aluno" required>
-      <button type="submit" class="btn-accent" id="studentPlanSearchBtn">Buscar</button>
-    </form>
-
-    <div id="studentPlanResult" class="student-plan-result" hidden>
-      <div class="student-plan-info">
-        <strong id="studentPlanNome">—</strong>
-        <span id="studentPlanEmailLabel" class="text-dim">—</span>
-      </div>
-      <select id="studentPlanSelect">
+    <div class="students-filters">
+      <input type="search" id="studentsSearch" placeholder="Buscar por nome ou e-mail...">
+      <select id="studentsPlanFilter">
+        <option value="">Todos os planos</option>
         <option value="gratuito">Grátis</option>
         <option value="basico">Básico</option>
         <option value="pro">Pro</option>
       </select>
-      <button type="button" class="btn-accent" id="studentPlanSaveBtn">Salvar</button>
     </div>
-    <p class="modal-msg" id="studentPlanMsg"></p>
+
+    <div style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Tipo</th>
+            <th>Plano</th>
+            <th>Cadastrado em</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="studentsTableBody">
+          <tr class="empty-row"><td colspan="6">Carregando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="students-footer">
+      <p class="modal-msg" id="studentsMsg"></p>
+      <button type="button" class="btn-ghost" id="studentsLoadMoreBtn" hidden>Carregar mais</button>
+    </div>
   </div>
 </div>
 
@@ -197,5 +218,6 @@
 <script src="js/auth.js"></script>
 <script src="js/admin.js"></script>
 <script src="js/planos.js"></script>
+<script src="js/alunos.js"></script>
 </body>
 </html>

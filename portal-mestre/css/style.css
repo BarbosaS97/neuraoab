@@ -449,14 +449,18 @@ tbody tr:last-child td { border-bottom: none; }
 
 .plan-limit-check { width: 16px; height: 16px; cursor: pointer; }
 
-.student-plan-form {
+/* ------------------------------------------------- Painel "Alunos" (js/alunos.js) */
+
+.students-filters {
   display: flex;
   gap: 10px;
-  margin-bottom: 4px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
 }
 
-.student-plan-form input {
+.students-filters input[type="search"] {
   flex: 1;
+  min-width: 200px;
   background: var(--bg);
   color: var(--text);
   border: 1px solid var(--panel-border);
@@ -465,27 +469,38 @@ tbody tr:last-child td { border-bottom: none; }
   font-size: 13.5px;
 }
 
-.student-plan-form input:focus { outline: none; border-color: var(--accent); }
+.students-filters input[type="search"]:focus { outline: none; border-color: var(--accent); }
 
-.student-plan-result {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 16px;
-  padding: 14px;
+.students-filters select {
   background: var(--bg);
-  border: 1px solid var(--panel-border);
-  border-radius: 8px;
-}
-
-.student-plan-info { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 160px; }
-
-.student-plan-result select {
-  background: var(--panel);
   color: var(--text);
   border: 1px solid var(--panel-border);
   border-radius: 7px;
-  padding: 8px 10px;
+  padding: 9px 12px;
   font-size: 13.5px;
 }
+
+/* Select de plano embutido na própria linha da tabela — muda e salva na
+   hora (ver "change" em js/alunos.js), sem precisar abrir nada. */
+.student-plano-select {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 7px;
+  padding: 6px 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.student-plano-select:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.students-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.students-footer .modal-msg { flex: 1; margin: 0; }
+.students-footer .btn-ghost { width: auto; padding: 8px 18px; }

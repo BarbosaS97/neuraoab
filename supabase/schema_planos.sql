@@ -41,10 +41,22 @@ create table if not exists plan_limits (
 
 insert into plan_limits (plano, questoes_por_dia, simulados_por_mes, chat_mensagens_por_mes, estatisticas_ia, segunda_fase)
 values
-  ('gratuito', 10, 1, 5, false, false),
+  ('gratuito', 10, null, 5, false, false),
   ('basico', null, null, null, true, false),
   ('pro', null, null, null, true, true)
 on conflict (plano) do nothing;
+
+-- "1 simulado por mês" nunca foi um recurso de verdade — "simulado" é só
+-- um atalho de navegação sobre a MESMA 1ª fase (ver startSimulado em
+-- estudos/estudos.js), já coberta pelo limite de questoes_por_dia; não faz
+-- sentido cobrar separado por ele. simulados_por_mes fica na tabela (e em
+-- plan_usage_monthly/increment_plan_usage, que continuam sabendo lidar com
+-- kind='simulado') só como um mecanismo genérico já pronto, caso um dia
+-- exista um recurso de verdade que precise dele — mas nada no produto
+-- chama isso hoje, e o valor abaixo garante que nenhum ambiente antigo
+-- (que já tinha rodado a versão anterior deste arquivo, com limite de 1)
+-- fique com essa trava fantasma.
+update plan_limits set simulados_por_mes = null where plano = 'gratuito';
 
 alter table plan_limits enable row level security;
 
