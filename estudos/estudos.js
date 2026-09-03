@@ -76,10 +76,13 @@ const subjectSelCount = document.getElementById("subjectSelCount");
 const examSelectAllBtn = document.getElementById("examSelectAllBtn");
 const examSelectAllBtnText = document.getElementById("examSelectAllBtnText");
 const subjectSelectAllBtn = document.getElementById("subjectSelectAllBtn");
+const subjectSelectAllBtnText = document.getElementById("subjectSelectAllBtnText");
 const toSubjectsBtn = document.getElementById("toSubjectsBtn");
 const toStudyBtn = document.getElementById("toStudyBtn");
 const backToExamsBtn = document.getElementById("backToExamsBtn");
 const backToSubjectsBtn = document.getElementById("backToSubjectsBtn");
+const examPickFooter = document.getElementById("examPickFooter");
+const subjectPickFooter = document.getElementById("subjectPickFooter");
 
 // Dashboard da 1ª fase (Tela 1) — ver seção "Tela 1" mais abaixo.
 const dashboardGreeting = document.getElementById("dashboardGreeting");
@@ -972,6 +975,10 @@ function allExamKeys() {
 function updateExamFooter() {
   examSelCount.textContent = `${selectedExams.size} selecionado(s)`;
   toSubjectsBtn.disabled = selectedExams.size === 0;
+  // Barra fixa (ver .pick-footer.visible no CSS) só aparece com pelo menos
+  // 1 exame selecionado — pedido explícito, pra sempre ficar alcançável
+  // sem rolar a página até o fim da grade, principalmente no mobile.
+  examPickFooter.classList.toggle("visible", selectedExams.size > 0);
 
   const keys = allExamKeys();
   examSelectAllBtnText.textContent = keys.length > 0 && keys.every(k => selectedExams.has(k))
@@ -1156,9 +1163,12 @@ function allSubjectKeys() {
 function updateSubjectFooter() {
   subjectSelCount.textContent = `${selectedSubjects.size} selecionado(s)`;
   toStudyBtn.disabled = selectedSubjects.size === 0;
+  // Mesma barra fixa da Tela 1 (ver updateExamFooter) — só aparece com
+  // pelo menos 1 matéria selecionada.
+  subjectPickFooter.classList.toggle("visible", selectedSubjects.size > 0);
 
   const keys = allSubjectKeys();
-  subjectSelectAllBtn.textContent = keys.length > 0 && keys.every(k => selectedSubjects.has(k))
+  subjectSelectAllBtnText.textContent = keys.length > 0 && keys.every(k => selectedSubjects.has(k))
     ? "Desmarcar todos"
     : "Selecionar todos";
 }

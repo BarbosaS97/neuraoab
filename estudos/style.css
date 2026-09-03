@@ -700,6 +700,10 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   width: 100%;
   margin: 0 auto;
   animation: questionCardIn 0.28s ease;
+  /* Reserva espaço pro .pick-footer fixo (ver mais abaixo) não cobrir o
+     último card da grade quando ele aparece — só some quando NADA está
+     selecionado, então essa folga é sempre segura de deixar. */
+  padding-bottom: 90px;
 }
 
 .pick-screen[hidden] { display: none; }
@@ -892,18 +896,47 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 
 .pick-card.selected .pick-card-count { color: var(--accent); border-color: var(--accent-glow); }
 
+/* Barra de ação fixa no rodapé da TELA (não do card) — some por completo
+   até o aluno selecionar algo (ver toggle de ".visible" em
+   updateExamFooter/updateSubjectFooter, estudos.js), aí desliza pra cima
+   de ponta a ponta da viewport. Pedido explícito: no fluxo antigo (sticky
+   só dentro do card) o botão de avançar podia ficar fora da vista,
+   principalmente no mobile — assim ele fica sempre alcançável assim que
+   há uma seleção, sem precisar rolar até o fim da grade. */
 .pick-footer {
-  position: sticky;
+  position: fixed;
+  left: 0;
+  right: 0;
   bottom: 0;
+  z-index: 60;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -14px 34px -20px rgba(0, 0, 0, 0.5);
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.pick-footer.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pick-footer-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  background: var(--bg);
-  border-top: 1px solid var(--border);
-  padding: 16px 2px 4px;
-  margin-top: 4px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 14px 16px calc(14px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 900px) {
+  .pick-footer-inner { padding-left: 40px; padding-right: 40px; }
 }
 
 .pick-footer-left {
@@ -1102,6 +1135,11 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   gap: 10px;
   flex-wrap: wrap;
 }
+
+/* Tela 2 (matérias) não tem abas de filtro pra balancear contra, ao
+   contrário da Tela 1 — sozinho, o botão de selecionar todas vai pra
+   direita mesmo assim, no mesmo lugar visual que ocupa lá. */
+.pick-actions-row { justify-content: flex-end; }
 
 /* "Selecionar todos" em destaque, no topo da grade de exames (pedido
    explícito — antes era um link discreto só no rodapé, ver .select-all-btn

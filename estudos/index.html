@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=43">
+<link rel="stylesheet" href="style.css?v=44">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -431,11 +431,13 @@
             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </button>
 
-          <div class="pick-footer">
-            <div class="pick-footer-left">
-              <span class="pick-footer-count" id="examSelCount">0 selecionado(s)</span>
+          <div class="pick-footer" id="examPickFooter">
+            <div class="pick-footer-inner">
+              <div class="pick-footer-left">
+                <span class="pick-footer-count" id="examSelCount">0 selecionado(s)</span>
+              </div>
+              <button type="button" id="toSubjectsBtn" class="btn-primary pick-cta" disabled>Ver matérias</button>
             </div>
-            <button type="button" id="toSubjectsBtn" class="btn-primary pick-cta" disabled>Ver matérias</button>
           </div>
         </div>
 
@@ -507,13 +509,20 @@
         <h1>Escolha a matéria</h1>
         <p class="pick-screen-hint">Selecione uma ou mais matérias para estudar.</p>
       </div>
+      <div class="exam-filter-row-actions pick-actions-row">
+        <button type="button" id="subjectSelectAllBtn" class="select-all-btn-top">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          <span id="subjectSelectAllBtnText">Selecionar todos</span>
+        </button>
+      </div>
       <div class="pick-grid" id="subjectGrid"></div>
-      <div class="pick-footer">
-        <div class="pick-footer-left">
-          <button type="button" id="subjectSelectAllBtn" class="select-all-btn">Selecionar todos</button>
-          <span class="pick-footer-count" id="subjectSelCount">0 selecionado(s)</span>
+      <div class="pick-footer" id="subjectPickFooter">
+        <div class="pick-footer-inner">
+          <div class="pick-footer-left">
+            <span class="pick-footer-count" id="subjectSelCount">0 selecionado(s)</span>
+          </div>
+          <button type="button" id="toStudyBtn" class="btn-primary pick-cta" disabled>Estudar</button>
         </div>
-        <button type="button" id="toStudyBtn" class="btn-primary pick-cta" disabled>Estudar</button>
       </div>
     </section>
 
@@ -588,7 +597,7 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=35"></script>
+<script src="estudos.js?v=36"></script>
 <script src="dr-laureano.js?v=11"></script>
 </body>
 </html>
