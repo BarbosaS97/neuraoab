@@ -95,8 +95,20 @@ const STUDENT_INVITE_EMAIL_COPY = {
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const INVITE_FROM_EMAIL = "NeuraOAB <convites@neuraoab.com.br>";
 
+// Documento HTML completo (DOCTYPE/html/head/body), não só o fragmento de
+// tabela — sem isso, alguns clientes de e-mail mais rígidos (Outlook
+// desktop principalmente, que renderiza com o motor do Word) podem falhar
+// em exibir um fragmento solto e mostrar o e-mail em branco.
 function buildInviteHtml(inviteLink: string, copy: typeof STUDENT_INVITE_EMAIL_COPY): string {
   return `
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${copy.subject}</title>
+  </head>
+  <body style="margin: 0; padding: 0; background: #f4f5f7;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background: #f4f5f7; padding: 32px 16px;">
       <tr>
         <td align="center">
@@ -121,7 +133,11 @@ function buildInviteHtml(inviteLink: string, copy: typeof STUDENT_INVITE_EMAIL_C
                     </td>
                   </tr>
                 </table>
-                <p style="margin: 28px 0 0; font-size: 12.5px; line-height: 1.5; color: #8b93a7;">
+                <p style="margin: 20px 0 0; font-size: 12.5px; line-height: 1.5; color: #8b93a7;">
+                  Se o botão não funcionar, copie e cole este link no navegador:<br>
+                  <a href="${inviteLink}" style="color: #4f7cff;">${inviteLink}</a>
+                </p>
+                <p style="margin: 20px 0 0; font-size: 12.5px; line-height: 1.5; color: #8b93a7;">
                   Se você não esperava este convite, pode ignorar este e-mail.
                 </p>
               </td>
@@ -130,13 +146,23 @@ function buildInviteHtml(inviteLink: string, copy: typeof STUDENT_INVITE_EMAIL_C
         </td>
       </tr>
     </table>
+  </body>
+</html>
   `.trim();
+}
+
+// Fallback em texto puro — some dos clientes que não renderizam HTML bem
+// mostram ISSO em vez de nada. Resend usa "html" por padrão quando os dois
+// estão presentes, então "text" só entra em jogo como rede de segurança.
+function buildInviteText(inviteLink: string, copy: typeof STUDENT_INVITE_EMAIL_COPY): string {
+  return `${copy.heading}\n\n${copy.bodyText}\n\n${inviteLink}\n\nSe você não esperava este convite, pode ignorar este e-mail.`;
 }
 
 async function sendInviteEmail(
   email: string,
   inviteLink: string,
   copy: typeof STUDENT_INVITE_EMAIL_COPY,
+  subjectOverride?: string,
 ): Promise<{ ok: boolean; error?: string }> {
   if (!RESEND_API_KEY) {
     return { ok: false, error: "RESEND_API_KEY não configurado no servidor." };
@@ -152,8 +178,9 @@ async function sendInviteEmail(
       body: JSON.stringify({
         from: INVITE_FROM_EMAIL,
         to: email,
-        subject: copy.subject,
+        subject: subjectOverride || copy.subject,
         html: buildInviteHtml(inviteLink, copy),
+        text: buildInviteText(inviteLink, copy),
       }),
     });
     if (!res.ok) {
@@ -411,7 +438,17 @@ async function resendInvite(id: string, professorId: string): Promise<{ ok: bool
   }
 
   const inviteLink = `${STUDENT_INVITE_BASE_URL}?convite=${codigo}`;
-  const emailResult = await sendInviteEmail(convite.email, inviteLink, STUDENT_INVITE_EMAIL_COPY);
+  // Assunto diferente do convite original (não só "Lembrete:" — troca o
+  // "!" por "." também) de propósito: alguns clientes de e-mail (Gmail
+  // principalmente) agrupam/colapsam mensagens com assunto idêntico do
+  // mesmo remetente na mesma conversa, e o reenvio podia aparecer "vazio"
+  // por causa disso mesmo com o HTML/texto corretos sendo enviados.
+  const emailResult = await sendInviteEmail(
+    convite.email,
+    inviteLink,
+    STUDENT_INVITE_EMAIL_COPY,
+    `Lembrete: você foi convidado para o NeuraOAB`,
+  );
   if (!emailResult.ok) {
     return { ok: false, error: `Não foi possível enviar o e-mail: ${emailResult.error}` };
   }

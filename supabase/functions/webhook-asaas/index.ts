@@ -45,6 +45,140 @@ const adminClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
 
 const ASAAS_WEBHOOK_TOKEN = Deno.env.get("ASAAS_WEBHOOK_TOKEN")!;
 
+// ---------------------------------------------------------------------------
+// E-mail de "parabéns" ao subir de plano — mesmo padrão duplicado de
+// professor-portal/index.ts e aluno-portal/index.ts (RESEND_API_KEY, sem
+// módulo compartilhado porque o deploy é colar direto no editor do
+// Dashboard do Supabase). Só dispara numa subida DE VERDADE (ver checagem
+// de profiles.plano ANTES do update, no handler principal abaixo) — sem
+// isso, toda renovação mensal/anual do MESMO plano mandaria "parabéns" de
+// novo, o que é ruído, não celebração.
+// ---------------------------------------------------------------------------
+
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const NOTIFY_FROM_EMAIL = "NeuraOAB <ola@neuraoab.com.br>";
+const APP_URL = "https://neuraoab.com.br/estudos/index.html";
+
+const PLANO_LABELS: Record<string, string> = { basico: "Básico", pro: "Pro" };
+const PLANO_BENEFICIOS: Record<string, string[]> = {
+  basico: [
+    "Questões ilimitadas por dia na 1ª fase",
+    "Chat ilimitado com o Dr. Laureano, nosso assistente de estudos",
+    "Estatísticas completas, com análise de desempenho por IA",
+    "Simulados ilimitados da 1ª fase",
+  ],
+  pro: [
+    "Tudo do plano Básico",
+    "Simulado completo da 2ª fase (peça + questões discursivas)",
+    "Correção automática pelos critérios oficiais da FGV",
+    "Relatórios detalhados de desempenho na 2ª fase",
+  ],
+};
+
+function buildBenefitsListHtml(items: string[]): string {
+  return items
+    .map(
+      (item) => `
+        <tr>
+          <td style="padding: 0 0 10px; vertical-align: top; width: 22px;">
+            <span style="display: inline-block; width: 18px; height: 18px; border-radius: 50%; background: #35c78a; text-align: center; line-height: 18px; font-size: 12px; color: #ffffff;">&#10003;</span>
+          </td>
+          <td style="padding: 0 0 10px; font-size: 13.5px; line-height: 1.5; color: #334155;">${item}</td>
+        </tr>`,
+    )
+    .join("");
+}
+
+function buildPlanUpgradeHtml(nome: string | null, label: string, benefits: string[]): string {
+  const primeiro = nome?.trim().split(/\s+/)[0];
+  const saudacao = primeiro ? `, ${primeiro}` : "";
+  const subject = `Parabéns! Seu plano agora é ${label}`;
+  return `
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${subject}</title>
+  </head>
+  <body style="margin: 0; padding: 0; background: #f4f5f7;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background: #f4f5f7; padding: 32px 16px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="480" cellpadding="0" cellspacing="0" style="max-width: 480px; width: 100%; background: #ffffff; border-radius: 14px; overflow: hidden; font-family: Arial, Helvetica, sans-serif;">
+            <tr>
+              <td style="background: #0f1420; padding: 28px 32px; text-align: center;">
+                <img src="https://neuraoab.com.br/images/logotipo.png" alt="NeuraOAB" height="36" style="display: inline-block;">
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 32px;">
+                <h1 style="margin: 0 0 12px; font-size: 19px; color: #0f172a;">Parabéns${saudacao}!</h1>
+                <p style="margin: 0 0 20px; font-size: 14px; line-height: 1.6; color: #52606d;">
+                  Seu plano no NeuraOAB agora é <strong>${label}</strong>. Veja o que você já pode aproveitar:
+                </p>
+                <table role="presentation" cellpadding="0" cellspacing="0" style="width: 100%; margin: 4px 0 26px;">
+                  ${buildBenefitsListHtml(benefits)}
+                </table>
+                <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+                  <tr>
+                    <td style="border-radius: 8px; background: #4f7cff;">
+                      <a href="${APP_URL}" style="display: inline-block; padding: 13px 32px; font-size: 14px; font-weight: bold; color: #ffffff; text-decoration: none;">
+                        Aproveitar agora
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+  `.trim();
+}
+
+function buildPlanUpgradeText(nome: string | null, label: string, benefits: string[]): string {
+  const primeiro = nome?.trim().split(/\s+/)[0];
+  const saudacao = primeiro ? `, ${primeiro}` : "";
+  return `Parabéns${saudacao}!\n\nSeu plano no NeuraOAB agora é ${label}. Veja o que você já pode aproveitar:\n\n${benefits.map((b) => `- ${b}`).join("\n")}\n\n${APP_URL}`;
+}
+
+// Nunca lança — uma falha de e-mail aqui não pode derrubar o resto do
+// webhook (o plano já foi liberado de verdade antes desta chamada, ver
+// handler principal abaixo).
+async function sendPlanUpgradeEmail(email: string | null, nome: string | null, plano: string): Promise<void> {
+  const label = PLANO_LABELS[plano];
+  const benefits = PLANO_BENEFICIOS[plano];
+  if (!email || !label || !benefits) return; // "gratuito" (downgrade) ou plano desconhecido — nada a comemorar
+
+  if (!RESEND_API_KEY) {
+    console.error("webhook-asaas: falha ao enviar e-mail de upgrade — RESEND_API_KEY não configurado.");
+    return;
+  }
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${RESEND_API_KEY}` },
+      body: JSON.stringify({
+        from: NOTIFY_FROM_EMAIL,
+        to: email,
+        subject: `Parabéns! Seu plano agora é ${label}`,
+        html: buildPlanUpgradeHtml(nome, label, benefits),
+        text: buildPlanUpgradeText(nome, label, benefits),
+      }),
+    });
+    if (!res.ok) {
+      const detail = await res.text().catch(() => "");
+      console.error(`webhook-asaas: falha ao enviar e-mail de upgrade pra ${email}: Resend respondeu ${res.status}: ${detail}`);
+    }
+  } catch (err) {
+    console.error(`webhook-asaas: falha ao enviar e-mail de upgrade pra ${email}:`, String(err));
+  }
+}
+
 // Eventos que liberam o plano — tanto a confirmação "vai cair na conta" (PAYMENT_CONFIRMED,
 // típico de cartão) quanto "já caiu" (PAYMENT_RECEIVED, típico de PIX/boleto)
 // contam como pago pra nós: nenhum dos dois volta atrás sozinho.
@@ -156,6 +290,16 @@ Deno.serve(async (req: Request) => {
 
     await adminClient.from("cobrancas").update(updates).eq("id", cobranca.id);
 
+    // Pega o plano/e-mail/nome ANTES de atualizar — precisa do plano
+    // ANTERIOR pra só mandar o e-mail de "parabéns" numa subida de
+    // verdade, nunca numa renovação do MESMO plano (ver PAID_EVENTS
+    // disparando em toda renovação, não só na primeira assinatura).
+    const { data: profileBefore } = await adminClient
+      .from("profiles")
+      .select("plano, email, nome")
+      .eq("id", cobranca.user_id)
+      .maybeSingle();
+
     // Libera o plano de verdade — service_role ignora o gatilho
     // protect_profile_privileged_fields (schema_aluno_avulso.sql), que
     // travaria "plano" pra qualquer UPDATE que não fosse admin/service_role.
@@ -165,6 +309,8 @@ Deno.serve(async (req: Request) => {
       .eq("id", cobranca.user_id);
     if (planoError) {
       console.error("webhook-asaas: falha ao atualizar plano", planoError.message, { userId: cobranca.user_id });
+    } else if (profileBefore?.plano !== cobranca.plano) {
+      await sendPlanUpgradeEmail(profileBefore?.email ?? null, profileBefore?.nome ?? null, cobranca.plano);
     }
   } else if (OVERDUE_EVENTS.has(event)) {
     await adminClient.from("cobrancas").update({ status: "atrasado" }).eq("id", cobranca.id);

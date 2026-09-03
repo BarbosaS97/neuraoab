@@ -80,8 +80,21 @@ const PROFESSOR_INVITE_EMAIL_COPY = {
 // como abrir o convite; aceitavel aqui porque quem convidou sempre pode
 // gerar outro (o link tambem continua disponivel no painel como fallback,
 // ver showInviteResult em portal-mestre/js/admin.js).
+//
+// Documento HTML completo (DOCTYPE/html/head/body), não só o fragmento de
+// tabela — sem isso, alguns clientes de e-mail mais rígidos (Outlook
+// desktop principalmente, que renderiza com o motor do Word) podem falhar
+// em exibir um fragmento solto e mostrar o e-mail em branco.
 function buildInviteHtml(inviteLink: string, copy: typeof PROFESSOR_INVITE_EMAIL_COPY): string {
   return `
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${copy.subject}</title>
+  </head>
+  <body style="margin: 0; padding: 0; background: #f4f5f7;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background: #f4f5f7; padding: 32px 16px;">
       <tr>
         <td align="center">
@@ -115,7 +128,17 @@ function buildInviteHtml(inviteLink: string, copy: typeof PROFESSOR_INVITE_EMAIL
         </td>
       </tr>
     </table>
+  </body>
+</html>
   `.trim();
+}
+
+// Fallback em texto puro — diferente do HTML (ver comentário acima), este
+// PRECISA ter o link cru: sem botão pra clicar, é o único jeito de abrir o
+// convite num cliente que só mostra a versão em texto. Não conflita com o
+// pedido de "e-mail mais limpo" (esse pedido era sobre a versão HTML).
+function buildInviteText(inviteLink: string, copy: typeof PROFESSOR_INVITE_EMAIL_COPY): string {
+  return `${copy.heading}\n\n${copy.bodyText}\n\n${inviteLink}\n\nSe você não esperava este convite, pode ignorar este e-mail.`;
 }
 
 async function sendInviteEmail(
@@ -139,6 +162,7 @@ async function sendInviteEmail(
         to: email,
         subject: copy.subject,
         html: buildInviteHtml(inviteLink, copy),
+        text: buildInviteText(inviteLink, copy),
       }),
     });
     if (!res.ok) {

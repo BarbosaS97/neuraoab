@@ -3324,10 +3324,24 @@
       if (!signUpData?.session) {
         // Projeto com "Confirm email" ligado (ver roteiro em
         // schema_aluno_avulso.sql) — conta criada, mas sem sessão até o
-        // aluno confirmar o e-mail; nada mais a fazer nesta aba agora.
+        // aluno confirmar o e-mail; nada mais a fazer nesta aba agora. Sem
+        // sessão não dá pra chamar a Edge Function (precisa de JWT) — o
+        // e-mail de boas-vindas (ver abaixo) simplesmente não sai nesse
+        // caso, já que não existe nenhum outro ponto do código que rode
+        // depois da confirmação (o link de confirmação é tratado pelo
+        // próprio Supabase Auth, sem passar por aqui de novo).
         loginSubmitBtn.textContent = "Criar conta";
         showLoginError("Conta criada! Enviamos um e-mail de confirmação — clique no link pra ativar seu acesso.", "info");
         return;
+      }
+
+      // Dispara o e-mail de boas-vindas — não bloqueia o redirect por muito
+      // tempo (é uma chamada leve) nem trava o cadastro se falhar (a conta
+      // já foi criada com sucesso, ver comentário acima).
+      try {
+        await client.functions.invoke("aluno-portal", { body: { action: "boas-vindas" } });
+      } catch {
+        // sem e-mail de boas-vindas não é motivo pra travar o cadastro
       }
 
       window.location.href = ROLE_DESTINATIONS.aluno;

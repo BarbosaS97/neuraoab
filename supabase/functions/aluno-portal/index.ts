@@ -54,6 +54,191 @@ async function requireCaller(req: Request): Promise<Caller | null> {
   return { id: data.user.id, email: data.user.email };
 }
 
+// ---------------------------------------------------------------------------
+// E-mails transacionais (boas-vindas no cadastro, parabéns ao subir de
+// plano) via Resend — mesmo padrão de professor-portal/index.ts (RESEND_API_KEY
+// já configurado, ver supabase/schema_portal_mestre.sql). Duplicado (não
+// importado de um módulo compartilhado) pelo mesmo motivo de sempre: o
+// deploy é colar o código direto no editor do Dashboard do Supabase, que só
+// enxerga o conteúdo desta function.
+// ---------------------------------------------------------------------------
+
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const NOTIFY_FROM_EMAIL = "NeuraOAB <ola@neuraoab.com.br>";
+const APP_URL = "https://neuraoab.com.br/estudos/index.html";
+
+function primeiroNome(nome: string | null | undefined): string {
+  return nome?.trim().split(/\s+/)[0] || "";
+}
+
+// Mesmos benefícios listados no modal "Planos" do app (estudos/index.html)
+// e na landing — repetidos aqui de propósito (nenhum módulo compartilhado
+// possível nesse tipo de deploy, ver comentário no topo do arquivo), mas
+// PRECISAM continuar batendo se um dia mudarem lá.
+const PLANO_LABELS: Record<string, string> = { basico: "Básico", pro: "Pro" };
+const PLANO_BENEFICIOS: Record<string, string[]> = {
+  basico: [
+    "Questões ilimitadas por dia na 1ª fase",
+    "Chat ilimitado com o Dr. Laureano, nosso assistente de estudos",
+    "Estatísticas completas, com análise de desempenho por IA",
+    "Simulados ilimitados da 1ª fase",
+  ],
+  pro: [
+    "Tudo do plano Básico",
+    "Simulado completo da 2ª fase (peça + questões discursivas)",
+    "Correção automática pelos critérios oficiais da FGV",
+    "Relatórios detalhados de desempenho na 2ª fase",
+  ],
+};
+
+function buildBenefitsListHtml(items: string[]): string {
+  return items
+    .map(
+      (item) => `
+        <tr>
+          <td style="padding: 0 0 10px; vertical-align: top; width: 22px;">
+            <span style="display: inline-block; width: 18px; height: 18px; border-radius: 50%; background: #35c78a; text-align: center; line-height: 18px; font-size: 12px; color: #ffffff;">&#10003;</span>
+          </td>
+          <td style="padding: 0 0 10px; font-size: 13.5px; line-height: 1.5; color: #334155;">${item}</td>
+        </tr>`,
+    )
+    .join("");
+}
+
+// Envelope HTML compartilhado pelos dois e-mails abaixo — mesma identidade
+// visual dos convites (professor-portal/index.ts), só o miolo muda.
+function buildNotificationHtml(opts: {
+  subject: string;
+  heading: string;
+  bodyText: string;
+  benefits?: string[];
+  ctaLabel: string;
+  ctaLink: string;
+}): string {
+  const benefitsBlock = opts.benefits?.length
+    ? `<table role="presentation" cellpadding="0" cellspacing="0" style="width: 100%; margin: 4px 0 26px;">${buildBenefitsListHtml(opts.benefits)}</table>`
+    : "";
+  return `
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${opts.subject}</title>
+  </head>
+  <body style="margin: 0; padding: 0; background: #f4f5f7;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background: #f4f5f7; padding: 32px 16px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="480" cellpadding="0" cellspacing="0" style="max-width: 480px; width: 100%; background: #ffffff; border-radius: 14px; overflow: hidden; font-family: Arial, Helvetica, sans-serif;">
+            <tr>
+              <td style="background: #0f1420; padding: 28px 32px; text-align: center;">
+                <img src="https://neuraoab.com.br/images/logotipo.png" alt="NeuraOAB" height="36" style="display: inline-block;">
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 32px;">
+                <h1 style="margin: 0 0 12px; font-size: 19px; color: #0f172a;">${opts.heading}</h1>
+                <p style="margin: 0 0 20px; font-size: 14px; line-height: 1.6; color: #52606d;">${opts.bodyText}</p>
+                ${benefitsBlock}
+                <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+                  <tr>
+                    <td style="border-radius: 8px; background: #4f7cff;">
+                      <a href="${opts.ctaLink}" style="display: inline-block; padding: 13px 32px; font-size: 14px; font-weight: bold; color: #ffffff; text-decoration: none;">
+                        ${opts.ctaLabel}
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+  `.trim();
+}
+
+function buildNotificationText(opts: { heading: string; bodyText: string; benefits?: string[]; ctaLink: string }): string {
+  const benefitsText = opts.benefits?.length ? `\n\n${opts.benefits.map((b) => `- ${b}`).join("\n")}` : "";
+  return `${opts.heading}\n\n${opts.bodyText}${benefitsText}\n\n${opts.ctaLink}`;
+}
+
+async function sendNotificationEmail(email: string, subject: string, html: string, text: string): Promise<void> {
+  if (!RESEND_API_KEY) {
+    console.error("Falha ao enviar e-mail:", "RESEND_API_KEY não configurado no servidor.");
+    return;
+  }
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${RESEND_API_KEY}` },
+      body: JSON.stringify({ from: NOTIFY_FROM_EMAIL, to: email, subject, html, text }),
+    });
+    if (!res.ok) {
+      const detail = await res.text().catch(() => "");
+      console.error(`Falha ao enviar e-mail para ${email}: Resend respondeu ${res.status}: ${detail}`);
+    }
+  } catch (err) {
+    console.error(`Falha ao enviar e-mail para ${email}:`, String(err));
+  }
+}
+
+// Disparado uma vez, logo depois do cadastro (ver ação "boas-vindas"
+// abaixo) — mostra o que já dá pra usar no plano grátis, sem prometer nada
+// que só vem com upgrade (isso é o e-mail de "parabéns", ver
+// sendPlanUpgradeEmail).
+async function sendWelcomeEmail(email: string, nome: string | null): Promise<void> {
+  const saudacao = primeiroNome(nome) ? `, ${primeiroNome(nome)}` : "";
+  const html = buildNotificationHtml({
+    subject: "Bem-vindo ao NeuraOAB!",
+    heading: `Bem-vindo ao NeuraOAB${saudacao}!`,
+    bodyText:
+      "Sua conta foi criada com sucesso. Você já pode começar a estudar pra 1ª fase da OAB agora mesmo — resolva questões, acompanhe seu desempenho e converse com o Dr. Laureano, nosso assistente de estudos. No seu plano grátis, você já tem:",
+    benefits: ["10 questões por dia na 1ª fase", "Estatísticas do seu desempenho", "5 mensagens por mês com o Dr. Laureano"],
+    ctaLabel: "Começar a estudar",
+    ctaLink: APP_URL,
+  });
+  const text = buildNotificationText({
+    heading: `Bem-vindo ao NeuraOAB${saudacao}!`,
+    bodyText: "Sua conta foi criada com sucesso. Você já pode começar a estudar pra 1ª fase da OAB agora mesmo.",
+    benefits: ["10 questões por dia na 1ª fase", "Estatísticas do seu desempenho", "5 mensagens por mês com o Dr. Laureano"],
+    ctaLink: APP_URL,
+  });
+  await sendNotificationEmail(email, "Bem-vindo ao NeuraOAB!", html, text);
+}
+
+// Disparado toda vez que profiles.plano sobe pra "basico" ou "pro" de
+// verdade (nunca em renovação do MESMO plano — ver checagem em
+// webhook-asaas/index.ts — nem aqui em ativar-convite, que só roda uma vez
+// por convite). "gratuito" nunca chama isso (downgrade não é comemoração).
+async function sendPlanUpgradeEmail(email: string, nome: string | null, plano: string): Promise<void> {
+  const label = PLANO_LABELS[plano];
+  const benefits = PLANO_BENEFICIOS[plano];
+  if (!label || !benefits) return; // plano desconhecido ou "gratuito" — nada a comemorar
+
+  const saudacao = primeiroNome(nome) ? `, ${primeiroNome(nome)}` : "";
+  const subject = `Parabéns! Seu plano agora é ${label}`;
+  const bodyText = `Seu plano no NeuraOAB agora é <strong>${label}</strong>. Veja o que você já pode aproveitar:`;
+  const html = buildNotificationHtml({
+    subject,
+    heading: `Parabéns${saudacao}!`,
+    bodyText,
+    benefits,
+    ctaLabel: "Aproveitar agora",
+    ctaLink: APP_URL,
+  });
+  const text = buildNotificationText({
+    heading: `Parabéns${saudacao}!`,
+    bodyText: `Seu plano no NeuraOAB agora é ${label}. Veja o que você já pode aproveitar:`,
+    benefits,
+    ctaLink: APP_URL,
+  });
+  await sendNotificationEmail(email, subject, html, text);
+}
+
 interface ValidarConvitePayload {
   action: "validar-convite";
   codigo: string;
@@ -65,7 +250,10 @@ interface AtivarConvitePayload {
 interface ListarConvitesPayload {
   action: "listar-convites";
 }
-type RequestBody = ValidarConvitePayload | AtivarConvitePayload | ListarConvitesPayload;
+interface BoasVindasPayload {
+  action: "boas-vindas";
+}
+type RequestBody = ValidarConvitePayload | AtivarConvitePayload | ListarConvitesPayload | BoasVindasPayload;
 
 interface ConviteRow {
   id: string;
@@ -229,6 +417,17 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ convites });
   }
 
+  // Chamada uma vez pelo index.html, logo depois de client.auth.signUp()
+  // resolver com sucesso (ver credsForm.submit lá) — nunca automática por
+  // trigger de banco: enviar e-mail de dentro de um trigger Postgres
+  // exigiria expor a RESEND_API_KEY fora das Edge Functions (Vault), um
+  // mecanismo novo que este projeto não usa em nenhum outro lugar.
+  if (body.action === "boas-vindas") {
+    const { data: profile } = await adminClient.from("profiles").select("nome").eq("id", caller.id).maybeSingle();
+    await sendWelcomeEmail(caller.email, profile?.nome ?? null);
+    return jsonResponse({ ok: true });
+  }
+
   if (body.action === "validar-convite") {
     const result = await validateConvite(body.codigo, caller.email);
     if (!result.ok) return jsonResponse({ error: result.error }, 400);
@@ -255,6 +454,16 @@ Deno.serve(async (req: Request) => {
       return jsonResponse({ error: "Este código já foi utilizado." }, 400);
     }
 
+    // Pega o plano/nome ANTES de atualizar — precisa dos dois: o plano pra
+    // só mandar o e-mail de "parabéns" se isso for uma subida de verdade
+    // (aluno pode já estar em "pro" por outro convite/assinatura, ver
+    // sendPlanUpgradeEmail), e o nome pra saudação do e-mail.
+    const { data: profileBefore } = await adminClient
+      .from("profiles")
+      .select("plano, nome")
+      .eq("id", caller.id)
+      .maybeSingle();
+
     const { error: profileError } = await adminClient
       .from("profiles")
       .update({
@@ -271,6 +480,10 @@ Deno.serve(async (req: Request) => {
         .update({ status: "pendente", used_at: null, used_by: null })
         .eq("id", result.convite.id);
       return jsonResponse({ error: profileError.message }, 400);
+    }
+
+    if (profileBefore?.plano !== "pro") {
+      await sendPlanUpgradeEmail(caller.email, profileBefore?.nome ?? null, "pro");
     }
 
     return jsonResponse({ ok: true, turma_nome: result.turmaNome });

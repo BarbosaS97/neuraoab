@@ -175,9 +175,15 @@ create policy "oab_respostas_insert" on oab_respostas
 -- Insert continua aberto pra anon/authenticated sem mudança — quem responde
 -- anonimamente ainda precisa conseguir criar/gravar a própria tentativa.
 
+-- "drop policy if exists" pro nome ANTIGO (uma policy só, pré-split) E pros
+-- dois nomes NOVOS (_anon/_auth) antes de cada create — sem os dois de
+-- "_anon"/"_auth", reexecutar este arquivo falhava com "policy ... already
+-- exists" a partir da segunda vez (create policy não tem "if not exists").
 drop policy if exists "oab2_tentativas_select" on oab2_tentativas;
+drop policy if exists "oab2_tentativas_select_anon" on oab2_tentativas;
 create policy "oab2_tentativas_select_anon" on oab2_tentativas
   for select to anon using (true);
+drop policy if exists "oab2_tentativas_select_auth" on oab2_tentativas;
 create policy "oab2_tentativas_select_auth" on oab2_tentativas
   for select to authenticated using (
     user_id = auth.uid()
@@ -189,16 +195,20 @@ create policy "oab2_tentativas_select_auth" on oab2_tentativas
   );
 
 drop policy if exists "oab2_tentativas_update" on oab2_tentativas;
+drop policy if exists "oab2_tentativas_update_anon" on oab2_tentativas;
 create policy "oab2_tentativas_update_anon" on oab2_tentativas
   for update to anon using (true) with check (true);
+drop policy if exists "oab2_tentativas_update_auth" on oab2_tentativas;
 create policy "oab2_tentativas_update_auth" on oab2_tentativas
   for update to authenticated
   using (user_id = auth.uid() or is_admin())
   with check (user_id = auth.uid() or is_admin());
 
 drop policy if exists "oab2_respostas_select" on oab2_respostas;
+drop policy if exists "oab2_respostas_select_anon" on oab2_respostas;
 create policy "oab2_respostas_select_anon" on oab2_respostas
   for select to anon using (true);
+drop policy if exists "oab2_respostas_select_auth" on oab2_respostas;
 create policy "oab2_respostas_select_auth" on oab2_respostas
   for select to authenticated using (
     exists (
@@ -216,8 +226,10 @@ create policy "oab2_respostas_select_auth" on oab2_respostas
   );
 
 drop policy if exists "oab2_respostas_update" on oab2_respostas;
+drop policy if exists "oab2_respostas_update_anon" on oab2_respostas;
 create policy "oab2_respostas_update_anon" on oab2_respostas
   for update to anon using (true) with check (true);
+drop policy if exists "oab2_respostas_update_auth" on oab2_respostas;
 create policy "oab2_respostas_update_auth" on oab2_respostas
   for update to authenticated
   using (
