@@ -14,6 +14,20 @@
 // renovação como uma atualização da MESMA linha em "cobrancas" (casada por
 // asaas_subscription_id), não uma linha nova.
 //
+// EXCEÇÃO — CREDIT_CARD + YEARLY (parcelamento em CREDIT_CARD_YEARLY_INSTALLMENTS
+// vezes): a API de assinatura do Asaas (/subscriptions) NÃO tem campo de
+// parcelamento nenhum (confirmado na documentação oficial deles —
+// installmentCount/totalValue só existem em POST /payments, cobrança
+// avulsa). Por isso só esta combinação foge do fluxo de assinatura acima e
+// vira uma cobrança avulsa parcelada — o que significa que ela NÃO renova
+// sozinha depois de 1 ano (diferente de todo o resto: PIX/boleto em
+// qualquer ciclo, e cartão mensal, continuam assinatura de verdade). Sem um
+// lembrete de renovação (fora do escopo por enquanto), o aluno que assinar
+// o anual parcelado precisa comprar de novo manualmente quando o ano
+// acabar. webhook-asaas não precisou de nenhuma mudança pra isso: já cai no
+// fallback de achar a cobranca por asaas_payment_id quando não há
+// asaas_subscription_id (ver findCobranca lá).
+//
 // "userId" NUNCA vem do corpo da requisição, mesmo que fosse mais simples
 // de implementar assim — vem sempre do JWT verificado (requireUser
 // abaixo), porque é isso que decide QUEM está assinando; confiar num
@@ -100,6 +114,10 @@ const PRICES: Record<string, Record<string, number>> = {
   basico: { MONTHLY: 11.99, YEARLY: 119.90 },
   pro: { MONTHLY: 19.99, YEARLY: 199.90 },
 };
+
+// Só se aplica a CREDIT_CARD + YEARLY (ver comentário grande no topo do
+// arquivo) — PIX/boleto e o ciclo mensal nunca usam este número.
+const CREDIT_CARD_YEARLY_INSTALLMENTS = 10;
 
 const PLAN_DESCRIPTIONS: Record<string, string> = {
   basico: "NeuraOAB — Plano Básico",
@@ -248,41 +266,67 @@ Deno.serve(async (req: Request) => {
     customerId = createCustomerResult.data.id;
   }
 
-  // 2. Assinatura — nextDueDate = hoje, pra gerar a primeira cobrança já
-  // pronta pra pagar na hora (é assim que o Asaas decide a data de
-  // vencimento da 1ª parcela; as próximas seguem o ciclo a partir dela).
+  // 2. Assinatura (ou, só pra CREDIT_CARD + YEARLY, cobrança avulsa
+  // parcelada — ver comentário grande no topo do arquivo) — nextDueDate/
+  // dueDate = hoje, pra gerar a cobrança já pronta pra pagar na hora.
   const today = new Date().toISOString().slice(0, 10);
-  const subscriptionResult = await asaasFetch("/subscriptions", {
-    method: "POST",
-    body: JSON.stringify({
-      customer: customerId,
-      billingType,
-      value: valor,
-      nextDueDate: today,
-      cycle: ciclo,
-      description: PLAN_DESCRIPTIONS[plano],
-      externalReference: user.id,
-    }),
-  });
-  if (!subscriptionResult.ok || !subscriptionResult.data?.id) {
-    return jsonResponse({ error: asaasErrorMessage(subscriptionResult, "Falha ao criar assinatura no Asaas.") }, 502);
-  }
-  const subscriptionId = subscriptionResult.data.id;
+  const isParceladoAnual = billingType === "CREDIT_CARD" && ciclo === "YEARLY";
 
-  // 3. Primeira cobrança gerada pela assinatura — criar a assinatura não
-  // devolve o pagamento em si (a API do Asaas não junta os dois na mesma
-  // resposta), então busca à parte.
-  const paymentsResult = await withRetry(
-    () => asaasFetch(`/subscriptions/${subscriptionId}/payments`),
-    (r) => r.ok && Array.isArray(r.data?.data) && r.data.data.length > 0,
-  );
-  const firstPayment =
-    paymentsResult.ok && Array.isArray(paymentsResult.data?.data) ? paymentsResult.data.data[0] : null;
-  if (!firstPayment) {
-    return jsonResponse(
-      { error: "Assinatura criada, mas não foi possível obter a cobrança inicial. Tente novamente em instantes." },
-      502,
+  let subscriptionId: string | null = null;
+  // deno-lint-ignore no-explicit-any
+  let firstPayment: any;
+
+  if (isParceladoAnual) {
+    const paymentResult = await asaasFetch("/payments", {
+      method: "POST",
+      body: JSON.stringify({
+        customer: customerId,
+        billingType,
+        dueDate: today,
+        installmentCount: CREDIT_CARD_YEARLY_INSTALLMENTS,
+        totalValue: valor,
+        description: PLAN_DESCRIPTIONS[plano],
+        externalReference: user.id,
+      }),
+    });
+    if (!paymentResult.ok || !paymentResult.data?.id) {
+      return jsonResponse({ error: asaasErrorMessage(paymentResult, "Falha ao criar cobrança parcelada no Asaas.") }, 502);
+    }
+    firstPayment = paymentResult.data;
+  } else {
+    const subscriptionResult = await asaasFetch("/subscriptions", {
+      method: "POST",
+      body: JSON.stringify({
+        customer: customerId,
+        billingType,
+        value: valor,
+        nextDueDate: today,
+        cycle: ciclo,
+        description: PLAN_DESCRIPTIONS[plano],
+        externalReference: user.id,
+      }),
+    });
+    if (!subscriptionResult.ok || !subscriptionResult.data?.id) {
+      return jsonResponse({ error: asaasErrorMessage(subscriptionResult, "Falha ao criar assinatura no Asaas.") }, 502);
+    }
+    subscriptionId = subscriptionResult.data.id;
+
+    // 3. Primeira cobrança gerada pela assinatura — criar a assinatura não
+    // devolve o pagamento em si (a API do Asaas não junta os dois na mesma
+    // resposta), então busca à parte. Não se aplica ao ramo parcelado acima:
+    // POST /payments já devolve a cobrança direto na resposta.
+    const paymentsResult = await withRetry(
+      () => asaasFetch(`/subscriptions/${subscriptionId}/payments`),
+      (r) => r.ok && Array.isArray(r.data?.data) && r.data.data.length > 0,
     );
+    firstPayment =
+      paymentsResult.ok && Array.isArray(paymentsResult.data?.data) ? paymentsResult.data.data[0] : null;
+    if (!firstPayment) {
+      return jsonResponse(
+        { error: "Assinatura criada, mas não foi possível obter a cobrança inicial. Tente novamente em instantes." },
+        502,
+      );
+    }
   }
 
   let pixPayload: string | null = null;
@@ -332,13 +376,14 @@ Deno.serve(async (req: Request) => {
     .single();
 
   if (cobrancaError) {
-    // A assinatura já existe DE VERDADE no Asaas mesmo se isto falhar —
-    // devolve os dados pro aluno conseguir pagar mesmo assim; só o
+    // A assinatura/cobrança já existe DE VERDADE no Asaas mesmo se isto
+    // falhar — devolve os dados pro aluno conseguir pagar mesmo assim; só o
     // registro local fica incompleto (webhook-asaas ainda vai encontrar a
     // cobranca certa quando/se ela existir, casando por
-    // asaas_subscription_id — sem essa linha, o webhook não vai saber qual
-    // aluno liberar, então isto aqui merece atenção se aparecer nos logs).
-    console.error("Falha ao salvar cobranca:", cobrancaError.message, { subscriptionId, userId: user.id });
+    // asaas_subscription_id, ou por asaas_payment_id no ramo parcelado sem
+    // assinatura — sem essa linha, o webhook não vai saber qual aluno
+    // liberar, então isto aqui merece atenção se aparecer nos logs).
+    console.error("Falha ao salvar cobranca:", cobrancaError.message, { subscriptionId, paymentId: firstPayment.id, userId: user.id });
   }
 
   return jsonResponse({

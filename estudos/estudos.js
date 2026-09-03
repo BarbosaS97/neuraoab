@@ -241,10 +241,20 @@ function setupSegmented(container, datasetKey, onChange) {
   });
 }
 
+// Anual + cartão é a ÚNICA combinação parcelada (ver
+// CREDIT_CARD_YEARLY_INSTALLMENTS em criar-cobranca/index.ts — a própria
+// tela hospedada do Asaas não deixa o aluno escolher "em quantas vezes",
+// isso é decidido no servidor ao criar a cobrança) — avisa aqui ANTES do
+// clique em "Gerar cobrança", pra não ser surpresa só na hora de pagar.
+const CREDIT_CARD_YEARLY_INSTALLMENTS = 10;
+
 function updateCheckoutSummary() {
   checkoutTitle.textContent = `Plano ${CHECKOUT_PLAN_LABELS[checkoutPlano] ?? ""}`;
   checkoutSummaryAmount.textContent = CHECKOUT_PRICES[checkoutPlano]?.[checkoutCiclo] ?? "";
-  checkoutSummaryPeriod.textContent = CHECKOUT_PERIOD_LABEL[checkoutCiclo];
+  const isParceladoAnual = checkoutCiclo === "YEARLY" && checkoutBillingType === "CREDIT_CARD";
+  checkoutSummaryPeriod.textContent = isParceladoAnual
+    ? `${CHECKOUT_PERIOD_LABEL[checkoutCiclo]} · em até ${CREDIT_CARD_YEARLY_INSTALLMENTS}x no cartão`
+    : CHECKOUT_PERIOD_LABEL[checkoutCiclo];
 }
 
 setupSegmented(checkoutCicloSegmented, "ciclo", (value) => {
@@ -254,6 +264,7 @@ setupSegmented(checkoutCicloSegmented, "ciclo", (value) => {
 
 setupSegmented(checkoutBillingSegmented, "billing", (value) => {
   checkoutBillingType = value;
+  updateCheckoutSummary();
 });
 
 function stopCheckoutPolling() {
