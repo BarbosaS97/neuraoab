@@ -52,7 +52,7 @@
         </div>
         <div style="display: flex; gap: 10px;">
           <button type="button" class="btn-ghost danger" id="deleteTurmaBtn" hidden>Excluir turma</button>
-          <button type="button" class="btn-ghost" id="renameTurmaBtn" hidden>Renomear</button>
+          <button type="button" class="btn-ghost" id="renameTurmaBtn" hidden>Editar turma</button>
           <button type="button" class="btn-accent" id="newStudentsBtn">Convidar aluno(s)</button>
         </div>
       </div>
@@ -193,11 +193,11 @@
   </div>
 </div>
 
-<!-- Renomear turma (não aparece em "Sem turma", que não é uma turma de verdade). -->
+<!-- Editar turma (não aparece em "Sem turma", que não é uma turma de verdade). -->
 <div class="modal-overlay" id="renameModal" hidden>
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="renameModalTitle">
     <div class="modal-header">
-      <h2 id="renameModalTitle">Renomear turma</h2>
+      <h2 id="renameModalTitle">Editar turma</h2>
       <button type="button" id="renameModalClose" class="modal-close" aria-label="Fechar">&times;</button>
     </div>
     <form id="renameForm">
@@ -206,6 +206,11 @@
         <div class="field">
           <label for="renameNome">Nome da turma</label>
           <input type="text" id="renameNome" required>
+        </div>
+        <div class="field">
+          <label for="renameLimite">Limite de alunos</label>
+          <input type="number" id="renameLimite" min="1" step="1" placeholder="Sem limite">
+          <p class="field-hint">Deixe em branco pra não limitar quantos alunos podem aceitar convite pra esta turma.</p>
         </div>
       </div>
       <div class="modal-footer">

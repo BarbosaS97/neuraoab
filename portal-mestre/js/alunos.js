@@ -70,18 +70,14 @@ async function loadStudentStats() {
 function buildStudentRow(student) {
   const tr = document.createElement("tr");
 
+  // Nota: só existe linha em "profiles" pra quem já ACEITOU um convite (ou
+  // é avulso) — ver supabase/functions/aluno-portal/index.ts. Sem nome
+  // aqui não é mais sinal de "convite pendente" (isso agora mora só na
+  // tabela "convites", visível pro professor em turma.html — Portal Mestre
+  // não lista convite pendente nenhum), só de conta que nunca preencheu o
+  // próprio nome (ex.: primeiro login com Google sem nome no perfil).
   const nomeTd = document.createElement("td");
-  if (student.nome) {
-    nomeTd.textContent = student.nome;
-  } else {
-    // Mesmo espírito de "Convite pendente" na tabela de professores (ver
-    // js/admin.js) — sem nome ainda significa que o convite não foi
-    // aceito, não que faltou preencher algo.
-    const pending = document.createElement("span");
-    pending.className = "badge inativo";
-    pending.textContent = "Convite pendente";
-    nomeTd.appendChild(pending);
-  }
+  nomeTd.textContent = student.nome || "(sem nome)";
   tr.appendChild(nomeTd);
 
   const emailTd = document.createElement("td");
@@ -108,7 +104,18 @@ function buildStudentRow(student) {
     planoSelect.disabled = true;
     clearMsg(studentsMsgEl);
 
-    const { error } = await client.from("profiles").update({ plano: novoPlano }).eq("id", student.id);
+    // .select().maybeSingle() de propósito, não só .update() — um UPDATE
+    // bloqueado pela RLS (linha não bate com nenhuma policy) não é um erro
+    // pro Supabase: ele só afeta ZERO linhas e devolve error:null do mesmo
+    // jeito que um sucesso de verdade. Sem pedir a linha de volta, isso
+    // aparecia aqui como "sucesso" mesmo sem ter mudado nada no banco — o
+    // "falha silenciosa" que motivou este comentário.
+    const { data, error } = await client
+      .from("profiles")
+      .update({ plano: novoPlano })
+      .eq("id", student.id)
+      .select("id, plano")
+      .maybeSingle();
 
     planoSelect.disabled = false;
     const label = student.nome || student.email || "aluno";
@@ -116,6 +123,20 @@ function buildStudentRow(student) {
     if (error) {
       planoSelect.value = planoAnterior; // desfaz a seleção visualmente
       showMsg(studentsMsgEl, `Falha ao mudar o plano de ${label}: ${error.message}`, "err");
+      return;
+    }
+
+    if (!data || data.plano !== novoPlano) {
+      // UPDATE "passou" sem erro, mas nenhuma linha voltou (ou voltou com
+      // outro valor) — sinal de que a RLS bloqueou silenciosamente. Mais
+      // comum quando quem está logado no Portal Mestre não é (ou deixou de
+      // ser) admin de verdade em profiles.role_id.
+      planoSelect.value = planoAnterior;
+      showMsg(
+        studentsMsgEl,
+        `O plano de ${label} não foi alterado — o Supabase não confirmou a mudança (RLS?). Confira se sua conta ainda tem o papel "admin" em profiles.`,
+        "err",
+      );
       return;
     }
 

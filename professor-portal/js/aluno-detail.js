@@ -85,7 +85,7 @@ async function loadStudentHeader(studentId) {
     return null;
   }
 
-  document.getElementById("studentName").textContent = student.nome || "(convite pendente)";
+  document.getElementById("studentName").textContent = student.nome || "(sem nome)";
   const statusLabel = student.ativo ? "Ativo" : "Inativo";
   document.getElementById("studentMeta").textContent =
     `${student.email || "—"} · Convidado em ${fmtDate(student.created_at)} · ${statusLabel}`;
@@ -97,7 +97,7 @@ async function loadStudentHeader(studentId) {
   const breadcrumbTurma = document.getElementById("breadcrumbTurma");
   breadcrumbTurma.href = turmaHref;
   breadcrumbTurma.textContent = student.turmas?.nome || "Sem turma";
-  document.getElementById("breadcrumbAluno").textContent = student.nome || "(convite pendente)";
+  document.getElementById("breadcrumbAluno").textContent = student.nome || "(sem nome)";
 
   return student;
 }

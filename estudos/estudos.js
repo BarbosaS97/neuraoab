@@ -1412,7 +1412,7 @@ function revealAnswer(altButtons, correctLetter, wrongLetter, feedbackEl) {
 // ------------------------------------------------------ Sessão do aluno
 //
 // A area do aluno agora EXIGE login — so' se chega aqui com uma conta de
-// verdade (convidada por um professor, ver estudos/aceitar-convite.html) ja'
+// verdade (avulsa, ou vinculada a um professor via estudos/convite.html) ja'
 // autenticada pela landing page (ver index.html, ROLE_DESTINATIONS). Ver
 // requireAuth() logo abaixo, chamado antes de qualquer outra coisa em
 // init(). Cada resposta de 1ª fase e' gravada em oab_respostas (ver
@@ -1576,7 +1576,7 @@ async function handleAnswer(q, letter, correctLetter, altButtons, feedbackEl) {
 // -------------------------------------------------------------- Meu Perfil
 //
 // Pega os dados ja preenchidos no cadastro (tabela "profiles" — nome,
-// email, cursinho, telefone; ver estudos/aceitar-convite.html e
+// email, cursinho, telefone; ver index.html — cadastro/login — e
 // supabase/schema_portal_mestre.sql) e permite editar a propria linha
 // (RLS "profiles_update_self" libera qualquer autenticado a editar so' a
 // propria, ver schema_portal_mestre.sql — role_id/ativo/professor_id
@@ -2241,13 +2241,13 @@ async function fetchStudentAnswers(userId) {
   return data || [];
 }
 
-// O nome de exibição da sessao (currentSession.user.user_metadata?.nome,
-// ver updateSessionUI) NUNCA e' preenchido no fluxo real de cadastro —
-// estudos/aceitar-convite.html so' chama auth.updateUser({password}), sem
-// {data: {nome}} — o nome digitado ali vai direto pra "profiles.nome" (ver
-// tambem "Meu Perfil"/profileSaveBtn, que edita a mesma coluna). Por isso a
-// saudacao busca "profiles.nome" direto, em vez de reaproveitar
-// user_metadata como o resto do app faz.
+// A saudacao busca "profiles.nome" direto (em vez de reaproveitar
+// currentSession.user.user_metadata?.nome, como o resto do app faz) porque
+// nem toda conta passa por ali com nome preenchido no metadata (ex.: login
+// com Google sem nome, ou conta que so' aceitou um convite sem nunca ter
+// passado pelo formulario de cadastro) — "profiles.nome" e' a mesma coluna
+// que "Meu Perfil"/profileSaveBtn edita, entao e' sempre a fonte mais
+// atualizada.
 async function fetchStudentFirstName(userId) {
   const { data, error } = await client
     .from("profiles")

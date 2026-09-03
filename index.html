@@ -2935,6 +2935,20 @@
     aluno: "estudos/index.html",
   };
 
+  // Setado por estudos/convite.html antes de mandar um aluno deslogado pra
+  // cá (login ou cadastro) — sem isso, aceitar um convite exigiria já estar
+  // logado, e alguém sem conta nunca voltava pro convite depois de criar a
+  // conta. sessionStorage (não uma variável comum) pelo mesmo motivo de
+  // OAUTH_PENDING_KEY logo abaixo: a página recarrega/navega no meio do
+  // fluxo.
+  const PENDING_CONVITE_KEY = "neuraoab-pending-convite";
+  function alunoDestination() {
+    const pendingCodigo = sessionStorage.getItem(PENDING_CONVITE_KEY);
+    if (!pendingCodigo) return ROLE_DESTINATIONS.aluno;
+    sessionStorage.removeItem(PENDING_CONVITE_KEY);
+    return `estudos/convite.html?c=${encodeURIComponent(pendingCodigo)}`;
+  }
+
   const loginBtn = document.getElementById("loginBtn");
   const loginOverlay = document.getElementById("loginOverlay");
   const loginModalClose = document.getElementById("loginModalClose");
@@ -3205,7 +3219,7 @@
   client.auth.onAuthStateChange((_event, session) => {
     if (session?.user && sessionStorage.getItem(OAUTH_PENDING_KEY) === "1") {
       sessionStorage.removeItem(OAUTH_PENDING_KEY);
-      window.location.replace(ROLE_DESTINATIONS.aluno);
+      window.location.replace(alunoDestination());
     }
   });
 
@@ -3301,7 +3315,7 @@
         return;
       }
 
-      window.location.href = ROLE_DESTINATIONS.aluno;
+      window.location.href = alunoDestination();
       return;
     }
 
@@ -3326,15 +3340,14 @@
     }
 
     const roleName = await getRoleName(data.user.id);
-    const destination = ROLE_DESTINATIONS[roleName];
-    if (!destination) {
+    if (!ROLE_DESTINATIONS[roleName]) {
       await client.auth.signOut();
       loginSubmitBtn.textContent = "Entrar";
       showLoginError("Essa conta não tem acesso configurado.");
       return;
     }
 
-    window.location.href = destination;
+    window.location.href = roleName === "aluno" ? alunoDestination() : ROLE_DESTINATIONS[roleName];
   });
 </script>
 

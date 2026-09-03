@@ -11,6 +11,7 @@
 let currentProfessorId = null;
 let alunoRoleId = null;
 let studentsCache = [];
+let convitesCache = []; // convites pendentes (ver loadConvites) — contam separado dos alunos já aceitos
 let turmasCache = [];
 let loadError = null; // distingue "nenhuma turma" de "falha ao carregar" na grade (ver renderTurmasGrid)
 
@@ -116,8 +117,7 @@ async function deleteTurma(turma) {
 
 // -------------------------------------------------------------------- Grade
 
-function buildTurmaCard(turma, students) {
-  const pendentes = students.filter((s) => !s.nome).length;
+function buildTurmaCard(turma, students, pendentes) {
 
   const card = document.createElement("a");
   card.className = "turma-card";
@@ -163,7 +163,7 @@ function buildTurmaCard(turma, students) {
   return card;
 }
 
-function buildUnassignedCard(students) {
+function buildUnassignedCard(students, pendentes) {
   const card = document.createElement("a");
   card.className = "turma-card turma-card-unassigned";
   card.href = "turma.html?id=none";
@@ -173,7 +173,10 @@ function buildUnassignedCard(students) {
 
   const stats = document.createElement("div");
   stats.className = "turma-stats";
-  stats.innerHTML = `<div><strong>${students.length}</strong><span>aluno(s)</span></div>`;
+  stats.innerHTML = `
+    <div><strong>${students.length}</strong><span>aluno(s)</span></div>
+    <div><strong>${pendentes}</strong><span>convite pendente</span></div>
+  `;
 
   card.append(title, stats);
   return card;
@@ -192,12 +195,14 @@ function renderTurmasGrid() {
 
   turmasCache.forEach((turma) => {
     const students = studentsCache.filter((s) => s.turma_id === turma.id);
-    turmasGridEl.appendChild(buildTurmaCard(turma, students));
+    const pendentes = convitesCache.filter((c) => c.turma_id === turma.id).length;
+    turmasGridEl.appendChild(buildTurmaCard(turma, students, pendentes));
   });
 
   const semTurma = studentsCache.filter((s) => !s.turma_id);
-  if (turmasCache.length === 0 || semTurma.length > 0) {
-    turmasGridEl.appendChild(buildUnassignedCard(semTurma));
+  const semTurmaPendentes = convitesCache.filter((c) => !c.turma_id).length;
+  if (turmasCache.length === 0 || semTurma.length > 0 || semTurmaPendentes > 0) {
+    turmasGridEl.appendChild(buildUnassignedCard(semTurma, semTurmaPendentes));
   }
 }
 
@@ -234,6 +239,19 @@ async function loadStudents() {
   studentsCache = error ? [] : data || [];
 }
 
+// Só "pendente" (ver mesma escolha em loadConvites de turma.js) — contagem
+// por card é só pra sinalizar "tem convite esperando resposta", não um
+// histórico de tudo que já foi enviado.
+async function loadConvites() {
+  const { data, error } = await client
+    .from("convites")
+    .select("turma_id")
+    .eq("professor_id", currentProfessorId)
+    .eq("status", "pendente");
+  if (error) console.error("Falha ao carregar convites:", error);
+  convitesCache = error ? [] : data || [];
+}
+
 function renderStats() {
   statTotalAlunosEl.textContent = studentsCache.length;
   statAlunosAtivosEl.textContent = studentsCache.filter((s) => s.ativo).length;
@@ -242,7 +260,7 @@ function renderStats() {
 
 async function refreshAll() {
   loadError = null; // reseta antes de recarregar, senão um erro antigo já corrigido continuaria exibido
-  await Promise.all([loadTurmas(), loadStudents()]);
+  await Promise.all([loadTurmas(), loadStudents(), loadConvites()]);
   renderStats();
   renderTurmasGrid();
 }

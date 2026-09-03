@@ -18,8 +18,10 @@ const IS_UNASSIGNED = TURMA_ID === "none";
 let currentProfessorId = null;
 let alunoRoleId = null;
 let studentsCache = [];
+let convitesCache = []; // convites pendentes desta turma (ver loadConvites) — misturados na mesma tabela
 let excludedCache = [];
 let turmasCache = []; // todas as turmas do professor, pro seletor inline de cada linha da tabela
+let currentTurmaLimite = null; // turmas.limite_alunos desta turma (null = sem limite) — ver openRenameModal
 let studentsLoadError = null; // distingue "sem alunos" de "falha ao carregar" na tabela (ver renderStudents)
 
 const turmaTitleEl = document.getElementById("turmaTitle"); // breadcrumb (nome curto)
@@ -85,7 +87,7 @@ async function loadTurmaHeader() {
 
   const { data: turma, error } = await client
     .from("turmas")
-    .select("id, nome")
+    .select("id, nome, limite_alunos")
     .eq("id", TURMA_ID)
     .maybeSingle();
 
@@ -98,6 +100,7 @@ async function loadTurmaHeader() {
   }
 
   setTurmaName(turma.nome);
+  currentTurmaLimite = turma.limite_alunos;
   turmaSubtitleEl.textContent = "";
   renameTurmaBtn.hidden = false;
   deleteTurmaBtn.hidden = false;
@@ -130,6 +133,60 @@ deleteTurmaBtn.addEventListener("click", deleteTurma);
 
 // -------------------------------------------------------------- Listagem
 
+// Convite pendente vira uma linha na mesma tabela dos alunos já aceitos —
+// mesma ideia de "Excluídos" (uma seção, não uma tela separada), mas aqui
+// misturado direto porque não há tanto volume normalmente. Sem "Turma"
+// selecionável, "Ver detalhes"/"Editar"/"Inativar"/"Excluir": nada disso
+// existe ainda pra um convite (não há profiles row até ser aceito, ver
+// supabase/functions/aluno-portal/index.ts) — só "Reenviar"/"Cancelar".
+function buildConviteRow(c) {
+  const tr = document.createElement("tr");
+  tr.className = "convite-row";
+
+  const nomeTd = document.createElement("td");
+  nomeTd.textContent = c.nome || "—";
+  tr.appendChild(nomeTd);
+
+  const turmaTd = document.createElement("td");
+  turmaTd.textContent = IS_UNASSIGNED ? "Sem turma" : turmaTitleEl.textContent;
+  tr.appendChild(turmaTd);
+
+  [c.email || "—", fmtDate(c.created_at)].forEach((text) => {
+    const td = document.createElement("td");
+    td.textContent = text;
+    tr.appendChild(td);
+  });
+
+  const expirado = new Date(c.expires_at).getTime() < Date.now();
+  const statusTd = document.createElement("td");
+  const badge = document.createElement("span");
+  badge.className = "badge " + (expirado ? "err" : "inativo");
+  badge.textContent = expirado ? "Convite expirado" : "Convite pendente";
+  statusTd.appendChild(badge);
+  tr.appendChild(statusTd);
+
+  const actionsTd = document.createElement("td");
+  const actions = document.createElement("div");
+  actions.className = "row-actions";
+
+  const resendBtn = document.createElement("button");
+  resendBtn.type = "button";
+  resendBtn.textContent = "Reenviar convite";
+  resendBtn.addEventListener("click", () => resendInvite(c, resendBtn));
+
+  const cancelBtn = document.createElement("button");
+  cancelBtn.type = "button";
+  cancelBtn.className = "danger";
+  cancelBtn.textContent = "Cancelar convite";
+  cancelBtn.addEventListener("click", () => cancelInvite(c, cancelBtn));
+
+  actions.append(resendBtn, cancelBtn);
+  actionsTd.appendChild(actions);
+  tr.appendChild(actionsTd);
+
+  return tr;
+}
+
 function renderStudents() {
   tableBodyEl.innerHTML = "";
 
@@ -145,7 +202,7 @@ function renderStudents() {
     return;
   }
 
-  if (studentsCache.length === 0) {
+  if (studentsCache.length === 0 && convitesCache.length === 0) {
     const tr = document.createElement("tr");
     tr.className = "empty-row";
     const td = document.createElement("td");
@@ -160,14 +217,7 @@ function renderStudents() {
     const tr = document.createElement("tr");
 
     const nomeTd = document.createElement("td");
-    if (s.nome) {
-      nomeTd.textContent = s.nome;
-    } else {
-      const pending = document.createElement("span");
-      pending.className = "badge inativo";
-      pending.textContent = "Convite pendente";
-      nomeTd.appendChild(pending);
-    }
+    nomeTd.textContent = s.nome || "(sem nome)";
     tr.appendChild(nomeTd);
 
     // Seletor de turma inline: move o aluno na hora, sem precisar abrir o
@@ -217,19 +267,6 @@ function renderStudents() {
     editBtn.textContent = "Editar";
     editBtn.addEventListener("click", () => openEditModal(s));
 
-    // Só pra convite pendente (nome ainda null): o e-mail original pode ter
-    // se perdido/expirado, e sem isso não havia como recuperar — convidar
-    // de novo pelo mesmo e-mail esbarra em "já cadastrado" (ver
-    // inviteStudent na Edge Function), porque a conta já existe desde o
-    // primeiro convite.
-    let resendBtn = null;
-    if (!s.nome) {
-      resendBtn = document.createElement("button");
-      resendBtn.type = "button";
-      resendBtn.textContent = "Reenviar convite";
-      resendBtn.addEventListener("click", () => resendInvite(s, resendBtn));
-    }
-
     // Inativar/Reativar: pausa reversível de login, sem tirar o aluno da
     // turma nem das estatísticas — diferente de "Excluir" logo abaixo.
     const toggleActiveBtn = document.createElement("button");
@@ -243,13 +280,18 @@ function renderStudents() {
     deleteBtn.textContent = "Excluir";
     deleteBtn.addEventListener("click", () => deleteStudent(s));
 
-    actions.append(detailsLink, editBtn);
-    if (resendBtn) actions.append(resendBtn);
-    actions.append(toggleActiveBtn, deleteBtn);
+    actions.append(detailsLink, editBtn, toggleActiveBtn, deleteBtn);
     actionsTd.appendChild(actions);
     tr.appendChild(actionsTd);
 
     tableBodyEl.appendChild(tr);
+  });
+
+  // Convites pendentes (ainda sem profiles row, ver buildConviteRow) vão
+  // depois dos alunos já aceitos — mesma tabela, seção visualmente separada
+  // só pelo badge de status.
+  convitesCache.forEach((c) => {
+    tableBodyEl.appendChild(buildConviteRow(c));
   });
 }
 
@@ -272,7 +314,7 @@ function renderExcluded() {
 
   excludedCache.forEach((s) => {
     const tr = document.createElement("tr");
-    [s.nome || "(convite pendente)", s.email || "—", fmtDate(s.excluido_em)].forEach((text) => {
+    [s.nome || "(sem nome)", s.email || "—", fmtDate(s.excluido_em)].forEach((text) => {
       const td = document.createElement("td");
       td.textContent = text;
       tr.appendChild(td);
@@ -338,6 +380,26 @@ async function loadExcluded() {
   renderExcluded();
 }
 
+// Convites "cancelado"/"usado" não aparecem aqui de propósito — um usado
+// virou aluno de verdade (já está em studentsCache), e um cancelado é
+// passado (RLS ainda deixa o professor ler a linha, mas não há motivo pra
+// mostrar na lista). Convite expirado (mas ainda "pendente") continua
+// aparecendo — precisa dar pra "Reenviar", ver buildConviteRow.
+async function loadConvites() {
+  let query = client
+    .from("convites")
+    .select("id, email, nome, expires_at, created_at")
+    .eq("professor_id", currentProfessorId)
+    .eq("status", "pendente");
+
+  query = IS_UNASSIGNED ? query.is("turma_id", null) : query.eq("turma_id", TURMA_ID);
+
+  const { data, error } = await query.order("created_at", { ascending: false });
+  if (error) console.error("Falha ao carregar convites:", error);
+  convitesCache = error ? [] : data || [];
+  renderStudents();
+}
+
 async function loadTurmasForSelect() {
   const { data, error } = await client
     .from("turmas")
@@ -393,7 +455,7 @@ async function loadQuickStats() {
 }
 
 async function refreshAll() {
-  await Promise.all([loadStudents(), loadExcluded()]);
+  await Promise.all([loadStudents(), loadExcluded(), loadConvites()]);
   await loadQuickStats();
 }
 
@@ -600,14 +662,14 @@ editForm.addEventListener("submit", async (ev) => {
   }
 });
 
-// --------------------------------------------------------- Reenviar convite
+// ------------------------------------------------------- Reenviar/cancelar convite
 
-async function resendInvite(student, btn) {
+async function resendInvite(convite, btn) {
   btn.disabled = true;
   const originalText = btn.textContent;
   btn.textContent = "Enviando...";
   try {
-    await callProfessorPortal({ action: "resend-invite", id: student.id });
+    await callProfessorPortal({ action: "resend-invite", id: convite.id });
     btn.textContent = "Convite reenviado!";
     setTimeout(() => {
       btn.textContent = originalText;
@@ -616,6 +678,21 @@ async function resendInvite(student, btn) {
   } catch (err) {
     window.alert(`Não foi possível reenviar o convite: ${err.message}`);
     btn.textContent = originalText;
+    btn.disabled = false;
+  }
+}
+
+async function cancelInvite(convite, btn) {
+  const label = convite.nome || convite.email || "este convite";
+  const confirmed = window.confirm(`Cancelar o convite de ${label}? Ele não vai mais conseguir usar esse código.`);
+  if (!confirmed) return;
+
+  btn.disabled = true;
+  try {
+    await callProfessorPortal({ action: "cancel-invite", id: convite.id });
+    await loadConvites();
+  } catch (err) {
+    window.alert(`Não foi possível cancelar o convite: ${err.message}`);
     btn.disabled = false;
   }
 }
@@ -672,11 +749,13 @@ const renameModal = document.getElementById("renameModal");
 const renameModalMsg = document.getElementById("renameModalMsg");
 const renameForm = document.getElementById("renameForm");
 const renameNome = document.getElementById("renameNome");
+const renameLimite = document.getElementById("renameLimite");
 const renameModalSaveBtn = document.getElementById("renameModalSave");
 
 function openRenameModal() {
   renameForm.reset();
   renameNome.value = turmaTitleEl.textContent;
+  renameLimite.value = currentTurmaLimite ?? "";
   clearMsg(renameModalMsg);
   renameModal.hidden = false;
   renameNome.focus();
@@ -697,10 +776,18 @@ renameForm.addEventListener("submit", async (ev) => {
   clearMsg(renameModalMsg);
   renameModalSaveBtn.disabled = true;
 
+  // Campo em branco = sem limite (null) — nunca 0, que travaria qualquer
+  // convite novo pra esta turma.
+  const limite = renameLimite.value.trim() ? parseInt(renameLimite.value, 10) : null;
+
   try {
-    const { error } = await client.from("turmas").update({ nome: renameNome.value.trim() }).eq("id", TURMA_ID);
+    const { error } = await client
+      .from("turmas")
+      .update({ nome: renameNome.value.trim(), limite_alunos: limite })
+      .eq("id", TURMA_ID);
     if (error) throw new Error(error.message);
     setTurmaName(renameNome.value.trim());
+    currentTurmaLimite = limite;
     await loadTurmasForSelect(); // atualiza o nome também nos seletores de turma da tabela
     renderStudents();
     closeRenameModal();

@@ -19,11 +19,16 @@
 --      function, um import relativo tipo "../_shared/..." quebra o
 --      bundling ("Module not found").
 --   3. Em Authentication > URL Configuration > Redirect URLs, adicione
---      TAMBÉM (além da de professor/definir-senha.html, se ainda não
---      tiver sido feito):
---        https://neuraoab.com.br/estudos/aceitar-convite.html
---      Sem isso o convite do ALUNO não funciona (mesmo problema que o
---      convite do professor tem se esse passo for pulado).
+--      a de professor/definir-senha.html, se ainda não tiver sido feito
+--      (convite de PROFESSOR continua usando generateLink/redirectTo).
+--
+--      [ATUALIZADO — ver schema_convites_turma.sql] O passo 3 original
+--      deste roteiro mandava cadastrar também
+--      "https://neuraoab.com.br/estudos/aceitar-convite.html" — esse
+--      arquivo não existe mais, e o convite de ALUNO não usa mais
+--      generateLink/redirectTo nenhum (virou um código validado por
+--      supabase/functions/aluno-portal/index.ts, ver schema_convites_
+--      turma.sql), então esse passo não é mais necessário.
 
 -- ---------------------------------------------------------------------------
 -- profiles.professor_id — liga um aluno ao professor que o convidou

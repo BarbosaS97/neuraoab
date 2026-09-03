@@ -1,13 +1,23 @@
 // supabase/functions/professor-portal/index.ts
 //
-// Backend do Portal do Professor: convite (individual e em lote), excluir/
+// Backend do Portal do Professor: convite por código (individual e em
+// lote, ver createConvite), reenviar/cancelar convite pendente, excluir/
 // restaurar aluno (caixa "Excluídos", ver requireOwnStudent) e ativar/
-// desativar (pausa reversível, sem remover da turma). Mesmo motivo de
-// portal-admin usar a service_role key (criar conta de auth por convite
-// exige a API administrativa do Supabase Auth, que a anon key não alcança)
-// — mas aqui o alvo é sempre um ALUNO do professor que chamou, nunca outro
-// professor ou admin, e nunca um aluno de outro professor (ver
+// desativar (pausa reversível, sem remover da turma). Usa a service_role
+// key porque cada ação aqui precisa confiar em turma_id/e-mail validados no
+// servidor (nunca no valor cru vindo do cliente) e, no caso do convite,
+// mandar e-mail de verdade via Resend — mas o alvo é sempre uma TURMA/ALUNO
+// do professor que chamou, nunca de outro professor ou admin (ver
 // requireProfessor + requireOwnStudent).
+//
+// O convite NÃO cria conta de aluno na hora (isso mudou — antes usava
+// auth.admin.generateLink({type:"invite"}), que criava a conta do aluno
+// direto e quebrava se o e-mail já tivesse conta própria, ver fluxo de
+// aluno avulso em schema_aluno_avulso.sql). Agora um convite é só um
+// REGISTRO (tabela "convites", ver schema_convites_turma.sql) com um
+// código e validade — quem vincula o perfil à turma é a Edge Function
+// "aluno-portal" (ação "ativar-convite"), quando o aluno aceita já
+// logado (conta nova ou avulsa já existente, tanto faz).
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
@@ -45,24 +55,33 @@ async function checkRateLimit(key: string, maxCount: number, windowSeconds: numb
   return data === true;
 }
 
-// Pra onde o link de convite do aluno leva depois que ele clica — precisa
-// estar cadastrada em Authentication > URL Configuration > Redirect URLs no
-// projeto Supabase (ver roteiro em supabase/schema_professor_portal.sql).
-const STUDENT_INVITE_REDIRECT_URL = "https://neuraoab.com.br/estudos/aceitar-convite.html";
+// Pra onde o link de convite do aluno leva — página estática, não precisa
+// estar cadastrada em Authentication > URL Configuration > Redirect URLs
+// (diferente do convite antigo): estudos/convite.html não depende de um
+// token de recuperação de senha do Supabase Auth, só lê "?c=" da própria
+// URL e chama a Edge Function "aluno-portal" pra validar.
+const STUDENT_INVITE_BASE_URL = "https://neuraoab.com.br/estudos/convite.html";
+
+// Convite pendente expira 7 dias depois de gerado (ou reenviado, ver
+// resendInvite) — mesmo espírito de MAX_BULK_INVITES abaixo: um número
+// fixo, sem UI de configuração, porque não há necessidade de mudar isso
+// por turma/professor hoje.
+const CONVITE_VALIDADE_DIAS = 7;
 
 const STUDENT_INVITE_EMAIL_COPY = {
-  subject: "Seu professor te convidou — NeuraOAB",
+  subject: "Você foi convidado para o NeuraOAB!",
   heading: "Você foi convidado para o NeuraOAB",
   bodyText:
-    "Seu professor te cadastrou no NeuraOAB. Clique no botão abaixo para definir seu nome e senha e começar a estudar.",
+    "Seu professor te convidou para uma turma no NeuraOAB. Clique no botão abaixo para entrar (ou criar sua conta, se ainda não tiver uma) e aceitar o convite — você ganha acesso Pro automaticamente.",
 };
 
 // Envio do convite por e-mail via Resend (https://resend.com). Secret
 // RESEND_API_KEY precisa estar configurado no projeto (mesmo secret que
 // portal-admin usa, ja' deve estar configurado se o convite de professor
 // ja' funciona). "convites@neuraoab.com.br" precisa estar verificado como
-// dominio no Resend — sem isso o envio falha (mas o cadastro do aluno NAO
-// e' desfeito por causa disso, ver inviteStudent abaixo).
+// dominio no Resend — sem isso o envio falha (mas o convite JA' foi gravado
+// em "convites" mesmo assim, ver createConvite abaixo — falha de e-mail
+// nunca desfaz o registro, só fica sem aviso pro aluno até um "Reenviar").
 //
 // Duplicado (nao importado de um modulo compartilhado) de proposito: o
 // deploy aqui e' feito colando o codigo direto no editor do Dashboard do
@@ -147,7 +166,8 @@ async function sendInviteEmail(
 
 // Máximo de e-mails por chamada de "bulk-invite-students" — limite pra não
 // deixar uma única invocação da Edge Function rodando tempo demais (cada
-// convite é uma chamada sequencial a auth.admin.generateLink + Resend).
+// convite é uma chamada sequencial a createConvite, que já inclui as
+// checagens de vaga/duplicata + Resend).
 const MAX_BULK_INVITES = 150;
 
 interface StudentInput {
@@ -181,13 +201,18 @@ interface ResendInvitePayload {
   action: "resend-invite";
   id: string;
 }
+interface CancelInvitePayload {
+  action: "cancel-invite";
+  id: string;
+}
 type RequestBody =
   | CreateStudentPayload
   | BulkInviteStudentsPayload
   | DeleteStudentPayload
   | RestoreStudentPayload
   | SetActiveStudentPayload
-  | ResendInvitePayload;
+  | ResendInvitePayload
+  | CancelInvitePayload;
 
 // Mesmo padrão de requireAdmin (portal-admin/index.ts), mas aceita role
 // "professor" (quem vai gerenciar os próprios alunos) OU "admin" (acesso
@@ -218,11 +243,6 @@ async function requireProfessor(req: Request): Promise<string | null> {
   return role?.name === "professor" || role?.name === "admin" ? userId : null;
 }
 
-async function getRoleId(name: string): Promise<string | null> {
-  const { data } = await adminClient.from("roles").select("id").eq("name", name).maybeSingle();
-  return data?.id ?? null;
-}
-
 // Confirma que o "id" alvo é realmente um aluno DESTE professor antes de
 // deixar qualquer ação (excluir/restaurar/ativar/desativar) mexer nele —
 // nunca confia num id vindo cru do cliente. Usado por todas as ações de
@@ -236,22 +256,36 @@ interface InviteResult {
   email: string;
   ok: boolean;
   id?: string;
-  inviteLink?: string;
   emailSent?: boolean;
   error?: string;
 }
 
-// Cria a conta do aluno por convite (generateLink, sem mandar e-mail
-// nenhum) + insere o perfil com professor_id = quem chamou + dispara o
-// e-mail via Resend — mesma sequência de "create" em portal-admin/
-// index.ts, adaptada pra aluno. Nunca lança: qualquer falha vira
-// {ok:false, error} pra não travar um lote inteiro por causa de uma linha.
-async function inviteStudent(
-  professorId: string,
-  alunoRoleId: string,
-  input: StudentInput,
-): Promise<InviteResult> {
-  const email = input.email?.trim();
+// 32 chars hex — curto o bastante pra caber numa URL legível, longo o
+// bastante (128 bits) pra não ser adivinhável por tentativa.
+function generateCodigo(): string {
+  return crypto.randomUUID().replace(/-/g, "");
+}
+
+// Quantos alunos JÁ ACEITARAM (linha em "profiles", excluído não conta —
+// mesmo filtro de loadStudents em turma.js) essa turma tem agora, pra
+// comparar com turmas.limite_alunos antes de gerar mais um convite.
+async function countTurmaAlunos(turmaId: string): Promise<number> {
+  const { count } = await adminClient
+    .from("profiles")
+    .select("id", { count: "exact", head: true })
+    .eq("turma_id", turmaId)
+    .is("excluido_em", null);
+  return count ?? 0;
+}
+
+// Cria um REGISTRO de convite (tabela "convites") + dispara o e-mail via
+// Resend — não toca em auth.users nem em "profiles" nenhuma vez: quem faz
+// isso é a Edge Function "aluno-portal" (ação "ativar-convite"), quando o
+// aluno aceita já logado (conta nova ou avulsa já existente). Nunca lança:
+// qualquer falha vira {ok:false, error} pra não travar um lote inteiro por
+// causa de uma linha.
+async function createConvite(professorId: string, input: StudentInput): Promise<InviteResult> {
+  const email = input.email?.trim().toLowerCase();
   if (!email) return { email: input.email ?? "", ok: false, error: "E-mail vazio." };
 
   // Confia so' num turma_id que realmente pertence a este professor — nunca
@@ -262,45 +296,74 @@ async function inviteStudent(
   if (input.turma_id) {
     const { data: turma } = await adminClient
       .from("turmas")
-      .select("id")
+      .select("id, limite_alunos")
       .eq("id", input.turma_id)
       .eq("professor_id", professorId)
       .maybeSingle();
     if (!turma) return { email, ok: false, error: "Turma inválida." };
     turmaId = turma.id;
+
+    if (turma.limite_alunos != null) {
+      const atual = await countTurmaAlunos(turma.id);
+      if (atual >= turma.limite_alunos) {
+        return { email, ok: false, error: "A turma já atingiu o limite de alunos." };
+      }
+    }
   }
 
-  const { data: linkData, error: linkError } = await adminClient.auth.admin.generateLink({
-    type: "invite",
-    email,
-    options: { redirectTo: STUDENT_INVITE_REDIRECT_URL },
-  });
-  if (linkError || !linkData?.user) {
-    // Mensagem mais util pro caso mais comum de falha aqui: e-mail que ja'
-    // tem conta (convite anterior, ou aluno de outro professor/duplicado).
-    // "Reenviar convite" (ver resendInvite abaixo) e' o caminho certo pra
-    // recuperar um convite pendente perdido, nao convidar de novo do zero.
-    const alreadyRegistered = /already|cadastrad|registered/i.test(linkError?.message || "");
-    const error = alreadyRegistered
-      ? "Este e-mail já foi convidado antes. Se o aluno perdeu o convite, use \"Reenviar convite\" na lista em vez de convidar de novo."
-      : linkError?.message || "Falha ao gerar o convite.";
-    return { email, ok: false, error };
+  // Já é aluno deste professor (aceitou um convite antes, ou foi movido pra
+  // cá manualmente)? Convidar de novo não faz sentido.
+  const { data: existingProfile } = await adminClient
+    .from("profiles")
+    .select("id")
+    .eq("email", email)
+    .eq("professor_id", professorId)
+    .is("excluido_em", null)
+    .maybeSingle();
+  if (existingProfile) {
+    return { email, ok: false, error: "Este aluno já está na sua lista." };
   }
 
-  const { error: profileError } = await adminClient.from("profiles").insert({
-    id: linkData.user.id,
-    role_id: alunoRoleId,
-    professor_id: professorId,
-    turma_id: turmaId,
-    nome: input.nome?.trim() || null,
-    email,
-  });
-  if (profileError) {
-    await adminClient.auth.admin.deleteUser(linkData.user.id);
-    return { email, ok: false, error: `Falha ao salvar o perfil do aluno: ${profileError.message}` };
+  // Convite pendente e ainda válido pro mesmo e-mail (nesta turma, ou "Sem
+  // turma" se turmaId for null) já existe — "Reenviar convite" na lista é
+  // o caminho certo pra recuperar um convite perdido, não convidar de novo.
+  let pendingQuery = adminClient
+    .from("convites")
+    .select("id")
+    .eq("professor_id", professorId)
+    .eq("email", email)
+    .eq("status", "pendente")
+    .gt("expires_at", new Date().toISOString());
+  pendingQuery = turmaId ? pendingQuery.eq("turma_id", turmaId) : pendingQuery.is("turma_id", null);
+  const { data: pending } = await pendingQuery.maybeSingle();
+  if (pending) {
+    return {
+      email,
+      ok: false,
+      error: 'Já existe um convite pendente pra este e-mail. Use "Reenviar convite" na lista em vez de convidar de novo.',
+    };
   }
 
-  const inviteLink = linkData.properties.action_link;
+  const codigo = generateCodigo();
+  const expiresAt = new Date(Date.now() + CONVITE_VALIDADE_DIAS * 24 * 60 * 60 * 1000).toISOString();
+
+  const { data: convite, error: insertError } = await adminClient
+    .from("convites")
+    .insert({
+      turma_id: turmaId,
+      professor_id: professorId,
+      email,
+      nome: input.nome?.trim() || null,
+      codigo,
+      expires_at: expiresAt,
+    })
+    .select("id")
+    .single();
+  if (insertError || !convite) {
+    return { email, ok: false, error: insertError?.message || "Falha ao gerar o convite." };
+  }
+
+  const inviteLink = `${STUDENT_INVITE_BASE_URL}?c=${codigo}`;
   const emailResult = await sendInviteEmail(email, inviteLink, STUDENT_INVITE_EMAIL_COPY);
   if (!emailResult.ok) {
     console.error(`Falha ao enviar convite por e-mail para ${email}: ${emailResult.error}`);
@@ -309,55 +372,70 @@ async function inviteStudent(
   return {
     email,
     ok: true,
-    id: linkData.user.id,
-    inviteLink,
+    id: convite.id,
     emailSent: emailResult.ok,
     error: emailResult.ok ? undefined : emailResult.error,
   };
 }
 
-// Reenvia o convite de um aluno pendente (nome ainda null, nunca aceitou) —
-// sem isso, um convite perdido/expirado ficava sem recuperação: o aluno já
-// tem linha em auth.users (criada no primeiro convite, ver inviteStudent),
-// então convidar de novo pelo mesmo fluxo esbarra em "e-mail já cadastrado"
-// (ver mensagem em inviteStudent acima). Usa generateLink tipo "recovery"
-// em vez de "invite" de propósito: "recovery" é o tipo documentado do
-// Supabase Auth pra gerar um link válido pra uma conta que JÁ existe
-// (confirmada ou não), enquanto "invite" é pra CRIAR uma conta nova — usar
-// "invite" de novo aqui é o que devolve o erro de "já cadastrado". O link
-// de recovery autentica o aluno e leva pra a mesma
-// estudos/aceitar-convite.html, que só chama auth.updateUser({password}),
-// então o fluxo do lado do aluno é idêntico ao de um convite normal.
+// Reenvia um convite pendente perdido/expirado — gera um código novo (o
+// antigo para de funcionar, já que a busca em aluno-portal é sempre pelo
+// código mais recente da linha) e uma validade nova, e manda o e-mail de
+// novo. Só faz sentido pra convite ainda "pendente" — um já aceito não tem
+// o que reenviar (ver resultado {ok:false} abaixo).
 async function resendInvite(id: string, professorId: string): Promise<{ ok: boolean; error?: string }> {
-  const { data: student } = await adminClient
-    .from("profiles")
-    .select("email, nome, professor_id")
+  const { data: convite } = await adminClient
+    .from("convites")
+    .select("email, status, professor_id")
     .eq("id", id)
     .maybeSingle();
 
-  if (!student || student.professor_id !== professorId) {
-    return { ok: false, error: "Aluno não encontrado." };
+  if (!convite || convite.professor_id !== professorId) {
+    return { ok: false, error: "Convite não encontrado." };
   }
-  if (student.nome) {
-    return { ok: false, error: "Este aluno já aceitou o convite — não é preciso reenviar." };
-  }
-  if (!student.email) {
-    return { ok: false, error: "Este aluno não tem e-mail cadastrado." };
+  if (convite.status !== "pendente") {
+    return { ok: false, error: "Este convite não está mais pendente." };
   }
 
-  const { data: linkData, error: linkError } = await adminClient.auth.admin.generateLink({
-    type: "recovery",
-    email: student.email,
-    options: { redirectTo: STUDENT_INVITE_REDIRECT_URL },
-  });
-  if (linkError || !linkData?.properties?.action_link) {
-    return { ok: false, error: linkError?.message || "Falha ao gerar o novo convite." };
+  const codigo = generateCodigo();
+  const expiresAt = new Date(Date.now() + CONVITE_VALIDADE_DIAS * 24 * 60 * 60 * 1000).toISOString();
+
+  const { error: updateError } = await adminClient
+    .from("convites")
+    .update({ codigo, expires_at: expiresAt })
+    .eq("id", id);
+  if (updateError) {
+    return { ok: false, error: updateError.message };
   }
 
-  const emailResult = await sendInviteEmail(student.email, linkData.properties.action_link, STUDENT_INVITE_EMAIL_COPY);
+  const inviteLink = `${STUDENT_INVITE_BASE_URL}?c=${codigo}`;
+  const emailResult = await sendInviteEmail(convite.email, inviteLink, STUDENT_INVITE_EMAIL_COPY);
   if (!emailResult.ok) {
     return { ok: false, error: `Não foi possível enviar o e-mail: ${emailResult.error}` };
   }
+  return { ok: true };
+}
+
+// Revoga um convite ainda não aceito — só existe porque agora um convite
+// não tem mais um efeito colateral em auth.users pra desfazer (o antigo
+// generateLink já criava a conta na hora); cancelar aqui é só marcar a
+// linha, sem apagar nada.
+async function cancelInvite(id: string, professorId: string): Promise<{ ok: boolean; error?: string }> {
+  const { data: convite } = await adminClient
+    .from("convites")
+    .select("status, professor_id")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (!convite || convite.professor_id !== professorId) {
+    return { ok: false, error: "Convite não encontrado." };
+  }
+  if (convite.status !== "pendente") {
+    return { ok: false, error: "Este convite não está mais pendente." };
+  }
+
+  const { error } = await adminClient.from("convites").update({ status: "cancelado" }).eq("id", id);
+  if (error) return { ok: false, error: error.message };
   return { ok: true };
 }
 
@@ -382,14 +460,6 @@ Deno.serve(async (req: Request) => {
   }
 
   if (body.action === "create-student" || body.action === "bulk-invite-students") {
-    const alunoRoleId = await getRoleId("aluno");
-    if (!alunoRoleId) {
-      return jsonResponse(
-        { error: "Papel 'aluno' não encontrado no banco — rode o schema_portal_mestre.sql primeiro." },
-        500,
-      );
-    }
-
     if (body.action === "create-student") {
       if (!body.email) return jsonResponse({ error: "'email' é obrigatório." }, 400);
       // Mesmo rate limit da acao bulk-invite-students, pra chamadas
@@ -398,7 +468,7 @@ Deno.serve(async (req: Request) => {
       if (!(await checkRateLimit(`bulk-invite:${professorId}`, 8, 3600))) {
         return jsonResponse({ error: "Muitos convites em pouco tempo. Aguarde um pouco e tente novamente." }, 429);
       }
-      const result = await inviteStudent(professorId, alunoRoleId, {
+      const result = await createConvite(professorId, {
         email: body.email,
         nome: body.nome,
         turma_id: body.turma_id,
@@ -426,13 +496,15 @@ Deno.serve(async (req: Request) => {
       return jsonResponse({ error: "Muitos convites em pouco tempo. Aguarde um pouco e tente novamente." }, 429);
     }
 
-    // Sequencial de propósito (não Promise.all): não há garantia documentada
-    // de taxa segura pra chamadas paralelas de auth.admin.generateLink, e
-    // cada linha já é isolada por try/catch dentro de inviteStudent — uma
-    // falha não impede as próximas.
+    // Sequencial de propósito (não Promise.all): a checagem de vaga
+    // (countTurmaAlunos) e de convite pendente duplicado dentro de
+    // createConvite precisa enxergar o efeito das linhas anteriores do
+    // mesmo lote — em paralelo, duas linhas pro mesmo e-mail (ou a última
+    // vaga da turma) poderiam passar as duas. Cada linha já é isolada por
+    // try/catch dentro de createConvite — uma falha não impede as próximas.
     const results: InviteResult[] = [];
     for (const student of students) {
-      results.push(await inviteStudent(professorId, alunoRoleId, student));
+      results.push(await createConvite(professorId, student));
     }
 
     return jsonResponse({ results });
@@ -442,6 +514,14 @@ Deno.serve(async (req: Request) => {
     const { id } = body;
     if (!id) return jsonResponse({ error: "'id' é obrigatório." }, 400);
     const result = await resendInvite(id, professorId);
+    if (!result.ok) return jsonResponse({ error: result.error }, 400);
+    return jsonResponse(result);
+  }
+
+  if (body.action === "cancel-invite") {
+    const { id } = body;
+    if (!id) return jsonResponse({ error: "'id' é obrigatório." }, 400);
+    const result = await cancelInvite(id, professorId);
     if (!result.ok) return jsonResponse({ error: result.error }, 400);
     return jsonResponse(result);
   }
