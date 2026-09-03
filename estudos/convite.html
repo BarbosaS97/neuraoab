@@ -24,6 +24,13 @@
     --ok: #35c78a;
   }
   * { box-sizing: border-box; }
+  /* [hidden] some por padrão no navegador via "display: none" da folha de
+     estilo padrão — mas qualquer regra de autor que também defina "display"
+     pro mesmo elemento (ex.: ".actions { display: flex }") empata em
+     especificidade e, por vir depois, VENCE, deixando o elemento visível
+     mesmo com o atributo presente. Essa regra, com !important, garante que
+     hidden sempre ganha, não importa o que mais mexa em "display". */
+  [hidden] { display: none !important; }
   html, body { margin: 0; height: 100%; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -92,10 +99,13 @@
     <h1 id="title">Convite</h1>
     <p class="sub" id="statusMsg">Confirmando seu convite...</p>
     <div class="spinner" id="spinner"></div>
+    <p class="msg" id="formMsg"></p>
 
+    <!-- Um botão só: "Entrar" e "Criar conta" levavam pro mesmo lugar
+         (a landing decide qual dos dois na hora), então dois botões aqui só
+         confundiam sem oferecer escolha nenhuma de verdade. -->
     <div class="actions" id="loggedOutActions" hidden>
-      <a class="btn-link" href="../index.html" id="loginLink">Entrar</a>
-      <a class="btn-link btn-secondary" href="../index.html" id="signupLink">Criar conta</a>
+      <a class="btn-link" href="../index.html" id="loginSignupLink">Entrar ou criar conta</a>
     </div>
 
     <div class="actions" id="acceptActions" hidden>
@@ -105,8 +115,6 @@
     <div class="actions" id="doneActions" hidden>
       <a class="btn-link" href="index.html">Ir para meus estudos</a>
     </div>
-
-    <p class="msg" id="formMsg"></p>
   </div>
 </div>
 
@@ -141,13 +149,15 @@
 
   function showInvalidLink() {
     spinner.hidden = true;
-    statusMsg.textContent = "Link inválido — nenhum código de convite encontrado nesta URL.";
+    titleEl.textContent = "Link inválido";
+    statusMsg.textContent = "Nenhum código de convite foi encontrado nesta URL. Confira se copiou o link inteiro do e-mail.";
     doneActions.hidden = false;
   }
 
   function showLoggedOut() {
     spinner.hidden = true;
-    statusMsg.textContent = "Entre ou crie sua conta pra aceitar o convite.";
+    titleEl.textContent = "Quase lá!";
+    statusMsg.textContent = "Entre ou crie sua conta pra aceitar o convite — depois de logar, você volta pra cá automaticamente.";
     sessionStorage.setItem(PENDING_CONVITE_KEY, codigo);
     loggedOutActions.hidden = false;
   }
@@ -177,7 +187,8 @@
       acceptActions.hidden = false;
     } catch (err) {
       spinner.hidden = true;
-      statusMsg.textContent = "Não foi possível confirmar este convite.";
+      titleEl.textContent = "Não foi possível confirmar";
+      statusMsg.textContent = "";
       showFormMsg(err.message || "Ocorreu um erro inesperado.", "err");
       doneActions.hidden = false;
     }
