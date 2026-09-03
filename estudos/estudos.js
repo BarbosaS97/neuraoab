@@ -50,6 +50,8 @@ const checkoutBillingSegmented = document.getElementById("checkoutBillingSegment
 const checkoutForm = document.getElementById("checkoutForm");
 const checkoutNome = document.getElementById("checkoutNome");
 const checkoutCpf = document.getElementById("checkoutCpf");
+const checkoutTelefoneField = document.getElementById("checkoutTelefoneField");
+const checkoutTelefone = document.getElementById("checkoutTelefone");
 const checkoutSubmitBtn = document.getElementById("checkoutSubmitBtn");
 const checkoutMsg = document.getElementById("checkoutMsg");
 const checkoutAlreadyOwned = document.getElementById("checkoutAlreadyOwned");
@@ -242,29 +244,46 @@ function setupSegmented(container, datasetKey, onChange) {
 }
 
 // Anual + cartão é a ÚNICA combinação parcelada (ver
-// CREDIT_CARD_YEARLY_INSTALLMENTS em criar-cobranca/index.ts — a própria
-// tela hospedada do Asaas não deixa o aluno escolher "em quantas vezes",
-// isso é decidido no servidor ao criar a cobrança) — avisa aqui ANTES do
-// clique em "Gerar cobrança", pra não ser surpresa só na hora de pagar.
+// CREDIT_CARD_YEARLY_INSTALLMENTS em criar-cobranca/index.ts — a tela
+// hospedada do Asaas, aberta via checkout.link, deixa o PRÓPRIO ALUNO
+// escolher de 1x a esse número, recalculando o valor da parcela) — avisa
+// aqui ANTES do clique em "Gerar cobrança", pra não ser surpresa só na
+// hora de pagar.
 const CREDIT_CARD_YEARLY_INSTALLMENTS = 10;
+
+function isParceladoAnual() {
+  return checkoutCiclo === "YEARLY" && checkoutBillingType === "CREDIT_CARD";
+}
 
 function updateCheckoutSummary() {
   checkoutTitle.textContent = `Plano ${CHECKOUT_PLAN_LABELS[checkoutPlano] ?? ""}`;
   checkoutSummaryAmount.textContent = CHECKOUT_PRICES[checkoutPlano]?.[checkoutCiclo] ?? "";
-  const isParceladoAnual = checkoutCiclo === "YEARLY" && checkoutBillingType === "CREDIT_CARD";
-  checkoutSummaryPeriod.textContent = isParceladoAnual
+  checkoutSummaryPeriod.textContent = isParceladoAnual()
     ? `${CHECKOUT_PERIOD_LABEL[checkoutCiclo]} · em até ${CREDIT_CARD_YEARLY_INSTALLMENTS}x no cartão`
     : CHECKOUT_PERIOD_LABEL[checkoutCiclo];
+}
+
+// Telefone só é pedido pra CREDIT_CARD + YEARLY — é o único caminho que usa
+// o Asaas Checkout, que exige customerData.phoneNumber (confirmado em
+// produção: "O campo phoneNumber deve ser informado"). PIX/boleto/cartão
+// mensal (assinatura de verdade, ver criar-cobranca/index.ts) não passam
+// por ali, então não faz sentido pedir de todo mundo.
+function updateTelefoneVisibility() {
+  const need = isParceladoAnual();
+  checkoutTelefoneField.hidden = !need;
+  checkoutTelefone.required = need;
 }
 
 setupSegmented(checkoutCicloSegmented, "ciclo", (value) => {
   checkoutCiclo = value;
   updateCheckoutSummary();
+  updateTelefoneVisibility();
 });
 
 setupSegmented(checkoutBillingSegmented, "billing", (value) => {
   checkoutBillingType = value;
   updateCheckoutSummary();
+  updateTelefoneVisibility();
 });
 
 function stopCheckoutPolling() {
@@ -332,7 +351,9 @@ function openCheckout(plano) {
   stopCheckoutPolling();
 
   updateCheckoutSummary();
+  updateTelefoneVisibility();
   checkoutNome.value = profNome.value || currentSession?.user?.user_metadata?.nome || "";
+  checkoutTelefone.value = profTelefone.value || "";
 
   plansGrid.hidden = true;
   plansModalNote.hidden = true;
@@ -384,12 +405,24 @@ checkoutCpf.addEventListener("input", () => {
   checkoutCpf.value = formatted;
 });
 
+// Mesma máscara cosmética do CPF acima, pro telefone (só aparece pra
+// CREDIT_CARD + YEARLY, ver updateTelefoneVisibility).
+checkoutTelefone.addEventListener("input", () => {
+  const digits = checkoutTelefone.value.replace(/\D/g, "").slice(0, 11);
+  let formatted = digits;
+  if (digits.length > 10) formatted = `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+  else if (digits.length > 6) formatted = `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+  else if (digits.length > 2) formatted = `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  checkoutTelefone.value = formatted;
+});
+
 checkoutForm.addEventListener("submit", async (ev) => {
   ev.preventDefault();
   checkoutMsg.className = "checkout-msg";
 
   const nome = checkoutNome.value.trim();
   const cpfCnpj = checkoutCpf.value.replace(/\D/g, "");
+  const telefone = checkoutTelefone.value.replace(/\D/g, "");
   const ciclo = checkoutCiclo;
   const billingType = checkoutBillingType;
 
@@ -399,6 +432,12 @@ checkoutForm.addEventListener("submit", async (ev) => {
   }
   if (cpfCnpj.length !== 11) {
     showCheckoutMsg("CPF inválido.");
+    return;
+  }
+  // Só CREDIT_CARD + YEARLY passa pelo Asaas Checkout, que exige telefone
+  // (ver updateTelefoneVisibility) — os outros caminhos nem mostram o campo.
+  if (isParceladoAnual() && telefone.length < 10) {
+    showCheckoutMsg("Informe um telefone válido, com DDD.");
     return;
   }
 
@@ -415,7 +454,11 @@ checkoutForm.addEventListener("submit", async (ev) => {
   const usingWoovi = billingType === "PIX";
   const { data, error } = await client.functions.invoke(
     usingWoovi ? "criar-cobranca-woovi" : "criar-cobranca",
-    { body: usingWoovi ? { plano: checkoutPlano, ciclo, nome, cpfCnpj } : { plano: checkoutPlano, ciclo, billingType, nome, cpfCnpj } },
+    {
+      body: usingWoovi
+        ? { plano: checkoutPlano, ciclo, nome, cpfCnpj }
+        : { plano: checkoutPlano, ciclo, billingType, nome, cpfCnpj, telefone },
+    },
   );
 
   if (error) {

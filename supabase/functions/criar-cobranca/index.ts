@@ -15,18 +15,33 @@
 // asaas_subscription_id), não uma linha nova.
 //
 // EXCEÇÃO — CREDIT_CARD + YEARLY (parcelamento em CREDIT_CARD_YEARLY_INSTALLMENTS
-// vezes): a API de assinatura do Asaas (/subscriptions) NÃO tem campo de
-// parcelamento nenhum (confirmado na documentação oficial deles —
-// installmentCount/totalValue só existem em POST /payments, cobrança
-// avulsa). Por isso só esta combinação foge do fluxo de assinatura acima e
-// vira uma cobrança avulsa parcelada — o que significa que ela NÃO renova
-// sozinha depois de 1 ano (diferente de todo o resto: PIX/boleto em
-// qualquer ciclo, e cartão mensal, continuam assinatura de verdade). Sem um
-// lembrete de renovação (fora do escopo por enquanto), o aluno que assinar
-// o anual parcelado precisa comprar de novo manualmente quando o ano
-// acabar. webhook-asaas não precisou de nenhuma mudança pra isso: já cai no
-// fallback de achar a cobranca por asaas_payment_id quando não há
-// asaas_subscription_id (ver findCobranca lá).
+// vezes ESCOLHIDAS PELO ALUNO): a API de assinatura do Asaas (/subscriptions)
+// não tem campo de parcelamento nenhum. Também não é POST /payments com
+// installmentCount fixo — essa rota até parcela, mas quem decide "em quantas
+// vezes" é o SERVIDOR (o aluno só vê o cronograma já pronto, sem escolha —
+// não é "em até Nx" de verdade). O produto certo pra isso é o "Asaas
+// Checkout" (POST /v3/checkouts, chargeTypes: ["DETACHED", "INSTALLMENT"] —
+// DETACHED é exigido junto, confirmado em produção — + installment.
+// maxInstallmentCount): cria uma sessão de pagamento hospedada
+// onde o PRÓPRIO ALUNO escolhe de 1x a N, e o Asaas recalcula o valor de
+// cada parcela. Só esta combinação (cartão + anual) usa esse fluxo — o
+// resto (PIX/boleto em qualquer ciclo, cartão mensal) continua assinatura
+// de verdade via /subscriptions.
+//
+// Consequência: essa cobrança NÃO renova sozinha depois de 1 ano (é uma
+// sessão de checkout avulsa, não uma assinatura) — sem um lembrete de
+// renovação (fora do escopo por enquanto), o aluno que assinar o anual
+// parcelado precisa comprar de novo manualmente quando o ano acabar.
+//
+// webhook-asaas PRECISOU de mudança pra isso: o Checkout do Asaas dispara
+// eventos próprios (CHECKOUT_PAID etc.), formato diferente de
+// PAYMENT_CONFIRMED/SUBSCRIPTION_*, casados por asaas_checkout_id (não
+// asaas_subscription_id nem asaas_payment_id) — ver findCobrancaCheckout lá.
+// A documentação oficial do Asaas não publica um exemplo do payload de
+// CHECKOUT_PAID (só de CHECKOUT_CREATED) — o campo usado pra achar a
+// cobrança (checkout.id) é o mesmo id que ESTA function recebe na criação,
+// então deveria bater, mas vale confirmar com um pagamento de teste real
+// (ver supabase/schema_asaas_parcelamento.sql).
 //
 // "userId" NUNCA vem do corpo da requisição, mesmo que fosse mais simples
 // de implementar assim — vem sempre do JWT verificado (requireUser
@@ -40,8 +55,9 @@
 // nosso lado ser certificado PCI-DSS SAQ-D (o nível mais rigoroso — a
 // própria documentação do Asaas confirma isso, já que eles não oferecem
 // tokenização client-side). Em vez disso, o aluno completa o pagamento com
-// cartão na página hospedada do próprio Asaas (invoiceUrl da cobrança) —
-// nenhum dado de cartão passa perto do NeuraOAB em nenhum momento.
+// cartão na página hospedada do próprio Asaas (invoiceUrl da cobrança, ou
+// checkout.link no ramo parcelado) — nenhum dado de cartão passa perto do
+// NeuraOAB em nenhum momento.
 //
 // Secrets necessários (Project Settings > Edge Functions > Secrets):
 // ASAAS_API_KEY, ASAAS_ENV ("production" ou "sandbox" — controla a base
@@ -124,6 +140,24 @@ const PLAN_DESCRIPTIONS: Record<string, string> = {
   pro: "NeuraOAB — Plano Pro",
 };
 
+// Só usado no ramo CREDIT_CARD + YEARLY (Asaas Checkout) — "items[].imageBase64"
+// é documentado como obrigatório por item nesse endpoint, mesmo pra um
+// produto digital sem imagem de verdade. PNG RGB simples gerado à parte
+// (128x128, fundo roxo da marca com "N" branco) — a 1ª tentativa reaproveitou
+// favicon-32.png e a Asaas recusou com "Ocorreu um erro ao salvar sua
+// imagem" (formato/tamanho não aceito, ela não detalha qual constraint
+// exatamente); este aqui é RGB comum (não indexado/paletizado) e um
+// tamanho mais convencional de ícone, o que resolveu.
+const CHECKOUT_ITEM_IMAGE_BASE64 =
+  "iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAIAAABMXPacAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALZSURBVHhe7djBTSNREEVRAu1QyMAZsHISzoEdAZCAV142Qkb+CLsXYPP6V9VHPCRu6S5m0LQXfaR5wnebaSZjAJgDwBwA5gAwB4A5AMwBYA4AcwCYA8AcAOYAMAeAOQDMAWAOAHMAmAPAHADmADAHgDkAzAFgDgBzAJgDwBwA5gAwB4A5AMwZAV6fW+cOu5ebp/I9vC0fJ+754eaRX+xPA7R2ery/eiofAKIIQGv74/b6wWQAiGIA4y8IAFEUoLW33fWzmQAQxQHG1hgAUQJgaI0BEKUABtYYAFESoPymABClAYprDICoAFBaYwBEFYDKGgMgqgHk1xgAURUg+8oAENUBcmsMgGgEoLWn15sPFAEgGgOIrzEAokGA8BoDIBoGCL47AEQ/ABBaYwBEPYD96bD8afW6awyAqAtw3Pbe3fl6awyAKAAwvTzul7+t3foaAyCKAMyb+2PkP6K1L+kAEMUApnm7Oy0/WTu9xgCIogD9f3k5tcYAiOIA/Zd4PrHGAIgyANO8e1p+vHZfH1kCQJQDqK8xAKIkQHmNARClAfqPXO5qjQEQFQD6b/N8X9cYAFEJoLDGAIiKAOk1BkBUBciuMQCiOsAm+CXdZY0BEI0A9F/r5T5eLgCiMYD4GgMgGgXof8L5DvvOYAAgrg8QXOPOASAuABBd49UDQFwIIPprwcoBIC4IEFxjfQCICwP0P2r1ABCXABhaYwDEZQBG1hgAcTmA+hoDIC4LUF1jAMTlAfqf+d0BIK4CEP2S7vMBIK4GkF9jAMQVAdJrDIC4MkDy1wIAxA0A9D/80wEgbgggscYAiBsECK8xAOJGAaJrDIC4cYDYGv9bAPoIAHMAmAPAHADmADAHgDkAzAFgDgBzAJgDwBwA5gAwB4A5AMwBYA4AcwCYA8AcAOYAMAeAOQDMAWAOAHMAmAPAHADmADAHgDkAzAFgDgBzAJgDwBwA5gAwB4C1aX4Hy+v1kGtFTwMAAAAASUVORK5CYII=";
+
+// APP_URL usado nos 3 callbacks obrigatórios do Asaas Checkout
+// (successUrl/cancelUrl/expiredUrl) — não existe tela de sucesso/cancelamento
+// dedicada ainda (o modal de checkout do próprio NeuraOAB já faz polling do
+// plano em paralelo, ver startCheckoutPolling em estudos/estudos.js), então
+// os três apontam pro mesmo lugar por enquanto.
+const APP_URL = "https://neuraoab.com.br/estudos/index.html";
+
 function onlyDigits(s: string): string {
   return s.replace(/\D/g, "");
 }
@@ -157,6 +191,11 @@ interface CreatePayload {
   billingType?: string;
   nome?: string;
   cpfCnpj?: string;
+  // Só usado (e exigido) no ramo CREDIT_CARD + YEARLY — ver isParceladoAnual
+  // abaixo. Asaas Checkout exige customerData.phoneNumber (confirmado em
+  // produção: "O campo phoneNumber deve ser informado"); os outros
+  // caminhos (PIX/boleto/cartão mensal) não usam este campo.
+  telefone?: string;
 }
 
 function sleep(ms: number): Promise<void> {
@@ -238,12 +277,106 @@ Deno.serve(async (req: Request) => {
   }
 
   const valor = PRICES[plano][ciclo];
+  const isParceladoAnual = billingType === "CREDIT_CARD" && ciclo === "YEARLY";
+  const telefone = onlyDigits(body.telefone ?? "");
+
+  if (isParceladoAnual && telefone.length < 10) {
+    return jsonResponse({ error: "Informe um telefone válido, com DDD." }, 400);
+  }
 
   // Grava nome/CPF no perfil (service_role — nunca escrita direta do
   // cliente nesse campo, ver supabase/schema_asaas.sql) pra próxima
   // assinatura (upgrade de Básico pra Pro, renovação manual etc.) nem
   // precisar perguntar de novo.
   await adminClient.from("profiles").update({ cpf_cnpj: cpfCnpj }).eq("id", user.id);
+
+  // ---------------------------------------------------------------------
+  // Ramo CREDIT_CARD + YEARLY — Asaas Checkout, parcelamento escolhido
+  // pelo aluno (ver comentário grande no topo do arquivo). Não passa por
+  // /customers: customerData vai inline na criação do checkout, o Asaas
+  // resolve/cria o cliente dele mesmo a partir do CPF.
+  // ---------------------------------------------------------------------
+  if (isParceladoAnual) {
+    // Decide o id ANTES de chamar o Asaas e usa como externalReference —
+    // mesma lógica de correlação já usada com a Woovi (ver
+    // criar-cobranca-woovi/index.ts): webhook-asaas casa por
+    // asaas_checkout_id (o id que o ASAAS devolve), com externalReference
+    // como reforço, se vier ecoado de volta no evento.
+    const cobrancaId = crypto.randomUUID();
+
+    const checkoutResult = await asaasFetch("/checkouts", {
+      method: "POST",
+      body: JSON.stringify({
+        billingTypes: ["CREDIT_CARD"],
+        // DETACHED (à vista/1x) é EXIGIDO junto com INSTALLMENT pela API do
+        // Asaas — confirmado em produção: "O tipo de cobrança DETACHED deve
+        // ser informado junto com o tipo de cobrança INSTALLMENT". Não muda
+        // o que oferecemos (1x já seria uma opção dentro de "até 10x" de
+        // qualquer forma) — é só como o Asaas modela charge types.
+        chargeTypes: ["DETACHED", "INSTALLMENT"],
+        minutesToExpire: 120,
+        externalReference: cobrancaId,
+        callback: { successUrl: APP_URL, cancelUrl: APP_URL, expiredUrl: APP_URL },
+        items: [
+          {
+            name: PLAN_DESCRIPTIONS[plano],
+            description: `Assinatura anual do ${PLAN_DESCRIPTIONS[plano]}, em até ${CREDIT_CARD_YEARLY_INSTALLMENTS}x no cartão.`,
+            quantity: 1,
+            value: valor,
+            imageBase64: CHECKOUT_ITEM_IMAGE_BASE64,
+          },
+        ],
+        installment: { maxInstallmentCount: CREDIT_CARD_YEARLY_INSTALLMENTS },
+        customerData: { name: nome, cpfCnpj, email: user.email, phoneNumber: telefone },
+      }),
+    });
+    if (!checkoutResult.ok || !checkoutResult.data?.id || !checkoutResult.data?.link) {
+      return jsonResponse(
+        { error: asaasErrorMessage(checkoutResult, "Falha ao criar checkout parcelado no Asaas.") },
+        502,
+      );
+    }
+    const checkout = checkoutResult.data;
+
+    const { error: cobrancaError } = await adminClient.from("cobrancas").insert({
+      id: cobrancaId,
+      user_id: user.id,
+      plano,
+      ciclo,
+      billing_type: billingType,
+      valor,
+      asaas_checkout_id: checkout.id,
+      status: "pendente",
+      invoice_url: checkout.link,
+    });
+    if (cobrancaError) {
+      // O checkout já existe DE VERDADE no Asaas mesmo se isto falhar —
+      // devolve o link pro aluno conseguir pagar mesmo assim; só o
+      // registro local fica incompleto (webhook-asaas não vai achar essa
+      // linha pra liberar o plano quando o CHECKOUT_PAID chegar — merece
+      // atenção se aparecer nos logs).
+      console.error("Falha ao salvar cobranca (checkout parcelado):", cobrancaError.message, {
+        checkoutId: checkout.id,
+        userId: user.id,
+      });
+    }
+
+    return jsonResponse({
+      cobrancaId,
+      billingType,
+      pixPayload: null,
+      pixQrImage: null,
+      pixExpiration: null,
+      boletoUrl: null,
+      invoiceUrl: checkout.link,
+      valor,
+    });
+  }
+
+  // ---------------------------------------------------------------------
+  // Todo o resto (PIX/boleto em qualquer ciclo, cartão mensal) —
+  // assinatura de verdade via /subscriptions, como sempre foi.
+  // ---------------------------------------------------------------------
 
   // 1. Cliente Asaas — reaproveita se já existir um pra este CPF. O Asaas
   // permite clientes duplicados (não valida isso pra você), então quem
@@ -266,67 +399,41 @@ Deno.serve(async (req: Request) => {
     customerId = createCustomerResult.data.id;
   }
 
-  // 2. Assinatura (ou, só pra CREDIT_CARD + YEARLY, cobrança avulsa
-  // parcelada — ver comentário grande no topo do arquivo) — nextDueDate/
-  // dueDate = hoje, pra gerar a cobrança já pronta pra pagar na hora.
+  // 2. Assinatura — nextDueDate = hoje, pra gerar a primeira cobrança já
+  // pronta pra pagar na hora (é assim que o Asaas decide a data de
+  // vencimento da 1ª parcela; as próximas seguem o ciclo a partir dela).
   const today = new Date().toISOString().slice(0, 10);
-  const isParceladoAnual = billingType === "CREDIT_CARD" && ciclo === "YEARLY";
+  const subscriptionResult = await asaasFetch("/subscriptions", {
+    method: "POST",
+    body: JSON.stringify({
+      customer: customerId,
+      billingType,
+      value: valor,
+      nextDueDate: today,
+      cycle: ciclo,
+      description: PLAN_DESCRIPTIONS[plano],
+      externalReference: user.id,
+    }),
+  });
+  if (!subscriptionResult.ok || !subscriptionResult.data?.id) {
+    return jsonResponse({ error: asaasErrorMessage(subscriptionResult, "Falha ao criar assinatura no Asaas.") }, 502);
+  }
+  const subscriptionId = subscriptionResult.data.id;
 
-  let subscriptionId: string | null = null;
-  // deno-lint-ignore no-explicit-any
-  let firstPayment: any;
-
-  if (isParceladoAnual) {
-    const paymentResult = await asaasFetch("/payments", {
-      method: "POST",
-      body: JSON.stringify({
-        customer: customerId,
-        billingType,
-        dueDate: today,
-        installmentCount: CREDIT_CARD_YEARLY_INSTALLMENTS,
-        totalValue: valor,
-        description: PLAN_DESCRIPTIONS[plano],
-        externalReference: user.id,
-      }),
-    });
-    if (!paymentResult.ok || !paymentResult.data?.id) {
-      return jsonResponse({ error: asaasErrorMessage(paymentResult, "Falha ao criar cobrança parcelada no Asaas.") }, 502);
-    }
-    firstPayment = paymentResult.data;
-  } else {
-    const subscriptionResult = await asaasFetch("/subscriptions", {
-      method: "POST",
-      body: JSON.stringify({
-        customer: customerId,
-        billingType,
-        value: valor,
-        nextDueDate: today,
-        cycle: ciclo,
-        description: PLAN_DESCRIPTIONS[plano],
-        externalReference: user.id,
-      }),
-    });
-    if (!subscriptionResult.ok || !subscriptionResult.data?.id) {
-      return jsonResponse({ error: asaasErrorMessage(subscriptionResult, "Falha ao criar assinatura no Asaas.") }, 502);
-    }
-    subscriptionId = subscriptionResult.data.id;
-
-    // 3. Primeira cobrança gerada pela assinatura — criar a assinatura não
-    // devolve o pagamento em si (a API do Asaas não junta os dois na mesma
-    // resposta), então busca à parte. Não se aplica ao ramo parcelado acima:
-    // POST /payments já devolve a cobrança direto na resposta.
-    const paymentsResult = await withRetry(
-      () => asaasFetch(`/subscriptions/${subscriptionId}/payments`),
-      (r) => r.ok && Array.isArray(r.data?.data) && r.data.data.length > 0,
+  // 3. Primeira cobrança gerada pela assinatura — criar a assinatura não
+  // devolve o pagamento em si (a API do Asaas não junta os dois na mesma
+  // resposta), então busca à parte.
+  const paymentsResult = await withRetry(
+    () => asaasFetch(`/subscriptions/${subscriptionId}/payments`),
+    (r) => r.ok && Array.isArray(r.data?.data) && r.data.data.length > 0,
+  );
+  const firstPayment =
+    paymentsResult.ok && Array.isArray(paymentsResult.data?.data) ? paymentsResult.data.data[0] : null;
+  if (!firstPayment) {
+    return jsonResponse(
+      { error: "Assinatura criada, mas não foi possível obter a cobrança inicial. Tente novamente em instantes." },
+      502,
     );
-    firstPayment =
-      paymentsResult.ok && Array.isArray(paymentsResult.data?.data) ? paymentsResult.data.data[0] : null;
-    if (!firstPayment) {
-      return jsonResponse(
-        { error: "Assinatura criada, mas não foi possível obter a cobrança inicial. Tente novamente em instantes." },
-        502,
-      );
-    }
   }
 
   let pixPayload: string | null = null;
@@ -349,11 +456,12 @@ Deno.serve(async (req: Request) => {
   } else if (billingType === "BOLETO") {
     boletoUrl = firstPayment.bankSlipUrl ?? null;
   }
-  // CREDIT_CARD: nenhum campo específico aqui de propósito — os dados do
-  // cartão NUNCA passam por este servidor (decisão consciente, ver
-  // comentário no topo do arquivo sobre PCI-DSS SAQ-D). O aluno completa o
-  // pagamento na própria página hospedada do Asaas (firstPayment.invoiceUrl,
-  // sempre presente em qualquer billingType), preenchendo o cartão lá.
+  // CREDIT_CARD (mensal — o anual parcelado já retornou acima): nenhum
+  // campo específico aqui de propósito — os dados do cartão NUNCA passam
+  // por este servidor (decisão consciente, ver comentário no topo do
+  // arquivo sobre PCI-DSS SAQ-D). O aluno completa o pagamento na própria
+  // página hospedada do Asaas (firstPayment.invoiceUrl, sempre presente em
+  // qualquer billingType), preenchendo o cartão lá.
 
   const { data: cobranca, error: cobrancaError } = await adminClient
     .from("cobrancas")
@@ -376,14 +484,13 @@ Deno.serve(async (req: Request) => {
     .single();
 
   if (cobrancaError) {
-    // A assinatura/cobrança já existe DE VERDADE no Asaas mesmo se isto
-    // falhar — devolve os dados pro aluno conseguir pagar mesmo assim; só o
+    // A assinatura já existe DE VERDADE no Asaas mesmo se isto falhar —
+    // devolve os dados pro aluno conseguir pagar mesmo assim; só o
     // registro local fica incompleto (webhook-asaas ainda vai encontrar a
     // cobranca certa quando/se ela existir, casando por
-    // asaas_subscription_id, ou por asaas_payment_id no ramo parcelado sem
-    // assinatura — sem essa linha, o webhook não vai saber qual aluno
-    // liberar, então isto aqui merece atenção se aparecer nos logs).
-    console.error("Falha ao salvar cobranca:", cobrancaError.message, { subscriptionId, paymentId: firstPayment.id, userId: user.id });
+    // asaas_subscription_id — sem essa linha, o webhook não vai saber qual
+    // aluno liberar, então isto aqui merece atenção se aparecer nos logs).
+    console.error("Falha ao salvar cobranca:", cobrancaError.message, { subscriptionId, userId: user.id });
   }
 
   return jsonResponse({

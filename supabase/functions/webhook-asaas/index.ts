@@ -182,7 +182,13 @@ async function sendPlanUpgradeEmail(email: string | null, nome: string | null, p
 // Eventos que liberam o plano — tanto a confirmação "vai cair na conta" (PAYMENT_CONFIRMED,
 // típico de cartão) quanto "já caiu" (PAYMENT_RECEIVED, típico de PIX/boleto)
 // contam como pago pra nós: nenhum dos dois volta atrás sozinho.
-const PAID_EVENTS = new Set(["PAYMENT_CONFIRMED", "PAYMENT_RECEIVED"]);
+//
+// CHECKOUT_PAID: evento do "Asaas Checkout" (POST /v3/checkouts), usado só
+// pelo ramo CREDIT_CARD + YEARLY parcelado de criar-cobranca/index.ts (ver
+// comentário grande lá). Corpo diferente dos eventos PAYMENT_*/SUBSCRIPTION_*
+// acima — vem um objeto "checkout", não "payment"/"subscription" — por isso
+// citado separado do resto da lógica abaixo (isCheckoutEvent).
+const PAID_EVENTS = new Set(["PAYMENT_CONFIRMED", "PAYMENT_RECEIVED", "CHECKOUT_PAID"]);
 
 // Vencida sem pagar — marca o status, mas NÃO revoga o plano na hora: dá
 // uma carência (o aluno pode ter pago e o banco ainda não processou, ou
@@ -191,13 +197,18 @@ const PAID_EVENTS = new Set(["PAYMENT_CONFIRMED", "PAYMENT_RECEIVED"]);
 // separado (cron) checando "atrasado desde" — não existe ainda.
 const OVERDUE_EVENTS = new Set(["PAYMENT_OVERDUE"]);
 
-// Cancela de vez — pagamento estornado/removido, ou a própria assinatura
-// encerrada/inativada. Aqui sim revoga o plano (de volta pra 'gratuito').
+// Cancela de vez — pagamento estornado/removido, a própria assinatura
+// encerrada/inativada, ou o checkout parcelado expirado/cancelado sem
+// pagar (nesses dois últimos o plano nem chegou a ser liberado, então a
+// tentativa de "rebaixar pra gratuito" abaixo não faz efeito nenhum — só
+// deixa "cobrancas.status" refletindo a realidade).
 const CANCEL_EVENTS = new Set([
   "PAYMENT_REFUNDED",
   "PAYMENT_DELETED",
   "SUBSCRIPTION_DELETED",
   "SUBSCRIPTION_INACTIVATED",
+  "CHECKOUT_EXPIRED",
+  "CHECKOUT_CANCELED",
 ]);
 
 interface WebhookBody {
@@ -211,6 +222,15 @@ interface WebhookBody {
   };
   subscription?: {
     id?: string;
+  };
+  // Formato não 100% confirmado pela documentação oficial (que só publica
+  // exemplo de CHECKOUT_CREATED, não de CHECKOUT_PAID) — ver comentário
+  // grande em criar-cobranca/index.ts. externalReference é o campo que ESTA
+  // function manda na criação do checkout; pode ou não vir ecoado de volta
+  // aqui, por isso é só reforço, nunca a chave primária de busca.
+  checkout?: {
+    id?: string;
+    externalReference?: string;
   };
 }
 
@@ -234,6 +254,33 @@ async function findCobranca(subscriptionId: string | null, paymentId: string | n
       .from("cobrancas")
       .select("id, user_id, plano")
       .eq("asaas_payment_id", paymentId)
+      .maybeSingle();
+    if (data) return data;
+  }
+  return null;
+}
+
+// Contraparte de findCobranca só pra eventos CHECKOUT_* (colunas/campos
+// diferentes, ver comentário na interface WebhookBody acima). checkout.id é
+// o id que o PRÓPRIO ASAAS devolveu quando criar-cobranca/index.ts criou o
+// checkout (gravado em cobrancas.asaas_checkout_id) — deveria estar sempre
+// presente e é a busca primária; externalReference (o cobrancaId que NÓS
+// escolhemos, ver criar-cobranca/index.ts) é só reforço, contra
+// cobrancas.id, caso o payload real inclua esse campo.
+async function findCobrancaCheckout(checkoutId: string | null, externalReference: string | null) {
+  if (checkoutId) {
+    const { data } = await adminClient
+      .from("cobrancas")
+      .select("id, user_id, plano")
+      .eq("asaas_checkout_id", checkoutId)
+      .maybeSingle();
+    if (data) return data;
+  }
+  if (externalReference) {
+    const { data } = await adminClient
+      .from("cobrancas")
+      .select("id, user_id, plano")
+      .eq("id", externalReference)
       .maybeSingle();
     if (data) return data;
   }
@@ -267,18 +314,34 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ ok: true, handled: false });
   }
 
+  const isCheckoutEvent = event.startsWith("CHECKOUT_");
   const isSubscriptionEvent = event.startsWith("SUBSCRIPTION_");
   const subscriptionId = isSubscriptionEvent ? body.subscription?.id ?? null : body.payment?.subscription ?? null;
-  const paymentId = isSubscriptionEvent ? null : body.payment?.id ?? null;
+  const paymentId = isCheckoutEvent || isSubscriptionEvent ? null : body.payment?.id ?? null;
+  const checkoutId = isCheckoutEvent ? body.checkout?.id ?? null : null;
+  const checkoutExternalReference = isCheckoutEvent ? body.checkout?.externalReference ?? null : null;
 
-  const cobranca = await findCobranca(subscriptionId, paymentId);
+  const cobranca = isCheckoutEvent
+    ? await findCobrancaCheckout(checkoutId, checkoutExternalReference)
+    : await findCobranca(subscriptionId, paymentId);
   if (!cobranca) {
     // Não achamos a cobranca correspondente (ex.: veio de uma assinatura
     // criada fora deste fluxo, ou a linha falhou ao gravar em
     // criar-cobranca — ver comentário lá). Devolve 200 mesmo assim: um
     // erro nosso de correlação não é motivo pro Asaas ficar retentando
     // pra sempre, e logar aqui é o bastante pra investigar manualmente.
-    console.error("webhook-asaas: cobranca não encontrada", { event, subscriptionId, paymentId });
+    // Pra eventos CHECKOUT_* especificamente (formato ainda não confirmado
+    // contra um pagamento real, ver comentário grande em
+    // criar-cobranca/index.ts) loga o corpo INTEIRO — é o que permite
+    // ajustar findCobrancaCheckout pro campo certo sem precisar adivinhar.
+    console.error("webhook-asaas: cobranca não encontrada", {
+      event,
+      subscriptionId,
+      paymentId,
+      checkoutId,
+      checkoutExternalReference,
+      ...(isCheckoutEvent ? { rawBody: body } : {}),
+    });
     return jsonResponse({ ok: true, handled: false, reason: "cobranca não encontrada" });
   }
 

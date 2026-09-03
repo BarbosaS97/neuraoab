@@ -320,6 +320,16 @@
             <label for="checkoutCpf">CPF</label>
             <input type="text" id="checkoutCpf" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" required>
           </div>
+          <!-- Só aparece pra CREDIT_CARD + YEARLY (parcelado) — é o único
+               caminho que passa pelo Asaas Checkout, que exige
+               customerData.phoneNumber (ver criar-cobranca/index.ts). PIX/
+               boleto/cartão mensal não precisam disso, então não vale pedir
+               de todo mundo. Visibilidade/obrigatoriedade alternada por
+               updateTelefoneVisibility em estudos.js. -->
+          <div class="checkout-field" id="checkoutTelefoneField" hidden>
+            <label for="checkoutTelefone">Telefone (necessário pra parcelar no cartão)</label>
+            <input type="text" id="checkoutTelefone" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" maxlength="15">
+          </div>
           <button type="submit" class="btn-primary checkout-submit" id="checkoutSubmitBtn">Gerar cobrança</button>
           <p class="checkout-msg" id="checkoutMsg"></p>
         </form>
@@ -738,7 +748,7 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=42"></script>
+<script src="estudos.js?v=43"></script>
 <script src="dr-laureano.js?v=11"></script>
 </body>
 </html>
