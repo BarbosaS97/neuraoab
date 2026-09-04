@@ -3221,6 +3221,28 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 .checkout-owned-card { text-align: left; }
 .checkout-owned-card .checkout-pay-head { margin-bottom: 0; }
 
+/* Confirmação de pagamento — mesma base de .checkout-owned-card, mas com
+   mais peso: fundo esverdeado, borda e faixa de destaque na cor de
+   sucesso (não o gradiente da marca, que é pra "momento de pagar", não pra
+   "já pagou"), ícone maior. */
+.checkout-paid-card {
+  background: linear-gradient(135deg, var(--success-dim), transparent 65%), var(--card-hover);
+  border-color: var(--success);
+}
+
+.checkout-pay-card-accent.checkout-paid-card::before {
+  background: var(--success);
+}
+
+.checkout-paid-card .checkout-pay-icon-success {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+}
+
+.checkout-paid-card h3 { font-size: 17px; }
+.checkout-paid-card p { font-size: 13px; }
+
 .checkout-pay-head h3 { margin: 0 0 4px; font-size: 15px; }
 .checkout-pay-head p { margin: 0; font-size: 12.5px; color: var(--text-dim); line-height: 1.5; }
 
@@ -3273,6 +3295,10 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   border: 1px solid var(--border);
   border-radius: 10px;
 }
+
+/* Regra de autor com "display" sempre vence "[hidden] { display: none }" do
+   navegador (mesma pegadinha de .plans-grid[hidden], ver comentário lá). */
+.checkout-status-row[hidden] { display: none; }
 
 .checkout-status-spinner {
   width: 15px;

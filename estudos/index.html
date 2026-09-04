@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=52">
+<link rel="stylesheet" href="style.css?v=53">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -424,9 +424,26 @@
             <a id="checkoutCardLink" class="btn-primary checkout-submit" target="_blank" rel="noopener">Inserir dados do cartão</a>
           </div>
 
-          <div class="checkout-status-row">
+          <div class="checkout-status-row" id="checkoutStatusRow">
             <span class="checkout-status-spinner" id="checkoutStatusSpinner" aria-hidden="true"></span>
             <p class="checkout-status" id="checkoutStatus">Assim que o pagamento for confirmado, seu plano é liberado automaticamente — pode fechar esta janela e continuar estudando enquanto isso.</p>
+          </div>
+
+          <!-- Substitui o card de QR/boleto/cartão + a linha de status quando
+               o polling confirma o pagamento (ver startCheckoutPolling em
+               estudos.js) — some o QR (não faz sentido continuar mostrando
+               algo já pago) e vira uma confirmação com peso de verdade, não
+               só uma linha de texto verde discreta. -->
+          <div class="checkout-pay-card checkout-pay-card-accent checkout-paid-card" id="checkoutPaidSuccess" hidden>
+            <div class="checkout-pay-head">
+              <span class="checkout-pay-icon checkout-pay-icon-success" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>
+              </span>
+              <div>
+                <h3>Pagamento confirmado</h3>
+                <p>Seu plano já foi atualizado — pode continuar estudando com tudo liberado.</p>
+              </div>
+            </div>
           </div>
 
           <!-- Aviso de titularidade — o nome que aparece no extrato/comprovante
@@ -763,7 +780,7 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=44"></script>
+<script src="estudos.js?v=45"></script>
 <script src="dr-laureano.js?v=11"></script>
 </body>
 </html>

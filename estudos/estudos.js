@@ -69,8 +69,10 @@ const checkoutBoletoResult = document.getElementById("checkoutBoletoResult");
 const checkoutBoletoLink = document.getElementById("checkoutBoletoLink");
 const checkoutCardResult = document.getElementById("checkoutCardResult");
 const checkoutCardLink = document.getElementById("checkoutCardLink");
+const checkoutStatusRow = document.getElementById("checkoutStatusRow");
 const checkoutStatus = document.getElementById("checkoutStatus");
 const checkoutStatusSpinner = document.getElementById("checkoutStatusSpinner");
+const checkoutPaidSuccess = document.getElementById("checkoutPaidSuccess");
 const profilePlanCard = document.getElementById("profilePlanCard");
 const profilePlanBadge = document.getElementById("profilePlanBadge");
 const profilePlanUpgrade = document.getElementById("profilePlanUpgrade");
@@ -368,9 +370,15 @@ function startCheckoutPolling(plano) {
     await loadPlanStatus();
     if (planStatus?.plano === plano) {
       stopCheckoutPolling();
-      checkoutStatus.textContent = "Pagamento confirmado! Seu plano foi atualizado. 🎉";
-      checkoutStatus.className = "checkout-status ok";
-      checkoutStatusSpinner.hidden = true;
+      // QR/boleto/link de cartão somem — não faz sentido continuar
+      // mostrando um jeito de pagar algo que já foi pago — e a linha de
+      // status discreta vira um card de confirmação de verdade (ver
+      // .checkout-paid-card no CSS).
+      checkoutPixResult.hidden = true;
+      checkoutBoletoResult.hidden = true;
+      checkoutCardResult.hidden = true;
+      checkoutStatusRow.hidden = true;
+      checkoutPaidSuccess.hidden = false;
       renderPlansModalCurrent();
       renderProfilePlan();
     } else if (attempts >= MAX_ATTEMPTS) {
@@ -405,6 +413,8 @@ function openCheckout(plano) {
   checkoutStatus.textContent =
     "Assim que o pagamento for confirmado, seu plano é liberado automaticamente — pode fechar esta janela e continuar estudando enquanto isso.";
   checkoutStatusSpinner.hidden = false;
+  checkoutStatusRow.hidden = false;
+  checkoutPaidSuccess.hidden = true;
   checkoutSubmitBtn.disabled = false;
   checkoutSubmitBtn.textContent = "Gerar cobrança";
   stopCheckoutPolling();
