@@ -1,11 +1,9 @@
 // NeuraOAB — Portal do Professor — detalhe de uma turma (ou o pseudo-id
-// "none", que representa "Sem turma"): lista de alunos, convite em lote
-// escopado a esta turma, mover de turma (seletor inline na própria tabela
-// — cobre tanto trocar de turma quanto incluir um aluno de "Sem turma"
-// numa turma), editar nome, inativar/reativar (pausa reversível de login,
-// sem sair da lista/estatísticas) e excluir/restaurar (sai da lista/
-// estatísticas de vez, vai pra caixa "Excluídos" — ver
-// supabase/schema_alunos_exclusao.sql).
+// "none", que representa "Sem turma"): dashboard rico com métricas de
+// desempenho por aluno (ver js/metrics.js), busca/filtro/ordenação, painel
+// de "alunos que precisam de atenção" e gráfico de evolução da turma (ver
+// js/charts.js) — além de tudo que já existia: convite em lote, mover de
+// turma, editar nome, inativar/reativar e excluir/restaurar.
 //
 // RLS de profiles/turmas (supabase/schema_turmas.sql, schema_professor_
 // portal.sql) já garante que este professor só vê/edita os PRÓPRIOS alunos
@@ -20,9 +18,16 @@ let alunoRoleId = null;
 let studentsCache = [];
 let convitesCache = []; // convites pendentes desta turma (ver loadConvites) — misturados na mesma tabela
 let excludedCache = [];
-let turmasCache = []; // todas as turmas do professor, pro seletor inline de cada linha da tabela
+let turmasCache = []; // todas as turmas do professor, pro seletor do modal de editar aluno
 let currentTurmaLimite = null; // turmas.limite_alunos desta turma (null = sem limite) — ver openRenameModal
 let studentsLoadError = null; // distingue "sem alunos" de "falha ao carregar" na tabela (ver renderStudents)
+let metricsByStudent = new Map(); // id -> { desempenho, band, evolucao, ultimoAcesso, atRisco }
+
+let searchTerm = "";
+let filterTipo = "todos";
+let filterDesempenho = "todos";
+let filterStatus = "todos";
+let sortBy = "nome";
 
 const turmaTitleEl = document.getElementById("turmaTitle"); // breadcrumb (nome curto)
 const turmaHeadingEl = document.getElementById("turmaHeading"); // h1 grande
@@ -37,6 +42,8 @@ const deleteTurmaBtn = document.getElementById("deleteTurmaBtn");
 const statAlunosEl = document.getElementById("statAlunos");
 const statAcertoFase1El = document.getElementById("statAcertoFase1");
 const statNotaFase2El = document.getElementById("statNotaFase2");
+const statParticipacaoEl = document.getElementById("statParticipacao");
+const statEmRiscoEl = document.getElementById("statEmRisco");
 const tableBodyEl = document.getElementById("studentsTableBody");
 
 function fmtDate(iso) {
@@ -46,6 +53,10 @@ function fmtDate(iso) {
   } catch {
     return "—";
   }
+}
+
+function fmtNota10(n) {
+  return n == null ? "—" : n.toFixed(1).replace(".", ",");
 }
 
 function showMsg(el, text, kind) {
@@ -79,7 +90,7 @@ async function loadTurmaHeader() {
   if (IS_UNASSIGNED) {
     setTurmaName("Sem turma");
     turmaSubtitleEl.textContent =
-      "Alunos que ainda não foram organizados em nenhuma turma — use o seletor \"Turma\" na tabela pra incluí-los numa.";
+      "Alunos que ainda não foram organizados em nenhuma turma — use \"Editar\" na tabela pra incluí-los numa.";
     renameTurmaBtn.hidden = true;
     deleteTurmaBtn.hidden = true; // "Sem turma" é um agrupamento, não uma turma de verdade — nada pra excluir
     return true;
@@ -101,7 +112,7 @@ async function loadTurmaHeader() {
 
   setTurmaName(turma.nome);
   currentTurmaLimite = turma.limite_alunos;
-  turmaSubtitleEl.textContent = "";
+  turmaSubtitleEl.textContent = "Organize seus alunos por turma pra acompanhar o progresso de cada grupo separadamente.";
   renameTurmaBtn.hidden = false;
   deleteTurmaBtn.hidden = false;
   return true;
@@ -135,27 +146,40 @@ deleteTurmaBtn.addEventListener("click", deleteTurma);
 
 // Convite pendente vira uma linha na mesma tabela dos alunos já aceitos —
 // mesma ideia de "Excluídos" (uma seção, não uma tela separada), mas aqui
-// misturado direto porque não há tanto volume normalmente. Sem "Turma"
-// selecionável, "Ver detalhes"/"Editar"/"Inativar"/"Excluir": nada disso
-// existe ainda pra um convite (não há profiles row até ser aceito, ver
+// misturado direto porque não há tanto volume normalmente. Sem métricas de
+// desempenho (não há profiles row até ser aceito, ver
 // supabase/functions/aluno-portal/index.ts) — só "Reenviar"/"Cancelar".
 function buildConviteRow(c) {
   const tr = document.createElement("tr");
   tr.className = "convite-row";
 
-  const nomeTd = document.createElement("td");
-  nomeTd.textContent = c.nome || "—";
-  tr.appendChild(nomeTd);
+  const alunoTd = document.createElement("td");
+  const cell = document.createElement("div");
+  cell.className = "student-cell";
+  cell.appendChild(buildAvatar(c.id, c.nome || c.email));
+  const info = document.createElement("div");
+  const nameEl = document.createElement("div");
+  nameEl.className = "student-cell-name";
+  nameEl.textContent = c.nome || "(sem nome)";
+  const emailEl = document.createElement("div");
+  emailEl.className = "student-cell-email";
+  emailEl.textContent = c.email || "—";
+  info.append(nameEl, emailEl);
+  cell.appendChild(info);
+  alunoTd.appendChild(cell);
+  tr.appendChild(alunoTd);
 
-  const turmaTd = document.createElement("td");
-  turmaTd.textContent = IS_UNASSIGNED ? "Sem turma" : turmaTitleEl.textContent;
-  tr.appendChild(turmaTd);
-
-  [c.email || "—", fmtDate(c.created_at)].forEach((text) => {
+  // Desempenho/Evolução não se aplicam a um convite ainda pendente (não há
+  // profiles row até ser aceito) — "—" em vez de célula vazia.
+  [1, 2].forEach(() => {
     const td = document.createElement("td");
-    td.textContent = text;
+    td.textContent = "—";
     tr.appendChild(td);
   });
+
+  const acessoTd = document.createElement("td");
+  acessoTd.textContent = "—";
+  tr.appendChild(acessoTd);
 
   const expirado = new Date(c.expires_at).getTime() < Date.now();
   const statusTd = document.createElement("td");
@@ -187,6 +211,163 @@ function buildConviteRow(c) {
   return tr;
 }
 
+// Fecha qualquer menu "⋯" aberto ao clicar fora ou trocar de linha — só um
+// aberto por vez.
+function closeAllRowMenus() {
+  document.querySelectorAll(".row-menu-dropdown.open").forEach((el) => el.classList.remove("open"));
+}
+document.addEventListener("click", closeAllRowMenus);
+
+function buildRowMenu(student) {
+  const wrap = document.createElement("div");
+  wrap.className = "row-menu";
+
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "row-menu-btn";
+  btn.setAttribute("aria-label", "Mais ações");
+  btn.textContent = "⋯";
+
+  const dropdown = document.createElement("div");
+  dropdown.className = "row-menu-dropdown";
+
+  const editBtn = document.createElement("button");
+  editBtn.type = "button";
+  editBtn.textContent = "Editar";
+  editBtn.addEventListener("click", () => {
+    closeAllRowMenus();
+    openEditModal(student);
+  });
+
+  const toggleActiveBtn = document.createElement("button");
+  toggleActiveBtn.type = "button";
+  toggleActiveBtn.textContent = student.ativo ? "Inativar" : "Reativar";
+  toggleActiveBtn.addEventListener("click", () => {
+    closeAllRowMenus();
+    toggleActive(student);
+  });
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.type = "button";
+  deleteBtn.className = "danger";
+  deleteBtn.textContent = "Excluir";
+  deleteBtn.addEventListener("click", () => {
+    closeAllRowMenus();
+    deleteStudent(student);
+  });
+
+  dropdown.append(editBtn, toggleActiveBtn, deleteBtn);
+
+  btn.addEventListener("click", (ev) => {
+    ev.stopPropagation();
+    const wasOpen = dropdown.classList.contains("open");
+    closeAllRowMenus();
+    dropdown.classList.toggle("open", !wasOpen);
+  });
+  dropdown.addEventListener("click", (ev) => ev.stopPropagation());
+
+  wrap.append(btn, dropdown);
+  return wrap;
+}
+
+function buildEvolucaoCell(evolucao) {
+  const td = document.createElement("td");
+  if (!evolucao) {
+    td.textContent = "—";
+    td.className = "evolucao-neutral";
+    return td;
+  }
+  const span = document.createElement("span");
+  span.className = evolucao.direction === "up" ? "evolucao-up" : "evolucao-down";
+  span.textContent = `${evolucao.direction === "up" ? "↑" : "↓"} ${evolucao.pct > 0 ? "+" : ""}${evolucao.pct}%`;
+  td.appendChild(span);
+  return td;
+}
+
+function buildStudentRow(s) {
+  const m = metricsByStudent.get(s.id) || {};
+  const tr = document.createElement("tr");
+
+  const alunoTd = document.createElement("td");
+  const cell = document.createElement("div");
+  cell.className = "student-cell";
+  cell.appendChild(buildAvatar(s.id, s.nome));
+  const info = document.createElement("div");
+  const nameEl = document.createElement("div");
+  nameEl.className = "student-cell-name";
+  nameEl.textContent = s.nome || "(sem nome)";
+  const emailEl = document.createElement("div");
+  emailEl.className = "student-cell-email";
+  emailEl.textContent = s.email || "—";
+  info.append(nameEl, emailEl);
+  cell.appendChild(info);
+  alunoTd.appendChild(cell);
+  tr.appendChild(alunoTd);
+
+  const desempenhoTd = document.createElement("td");
+  const desempenhoBadge = document.createElement("span");
+  desempenhoBadge.className = "badge " + (m.band || "critico");
+  desempenhoBadge.textContent = fmtNota10(m.desempenho);
+  desempenhoTd.appendChild(desempenhoBadge);
+  tr.appendChild(desempenhoTd);
+
+  tr.appendChild(buildEvolucaoCell(m.evolucao));
+
+  const acessoTd = document.createElement("td");
+  acessoTd.textContent = fmtUltimoAcesso(m.ultimoAcesso);
+  tr.appendChild(acessoTd);
+
+  const statusTd = document.createElement("td");
+  const badge = document.createElement("span");
+  badge.className = "badge " + (s.ativo ? "ativo" : "inativo");
+  badge.textContent = s.ativo ? "Ativo" : "Inativo";
+  statusTd.appendChild(badge);
+  tr.appendChild(statusTd);
+
+  const actionsTd = document.createElement("td");
+  const actions = document.createElement("div");
+  actions.className = "row-actions";
+
+  const detailsLink = document.createElement("a");
+  detailsLink.href = `aluno.html?id=${encodeURIComponent(s.id)}`;
+  detailsLink.textContent = "Ver detalhes";
+
+  actions.append(detailsLink, buildRowMenu(s));
+  actionsTd.appendChild(actions);
+  tr.appendChild(actionsTd);
+
+  return tr;
+}
+
+function matchesFilters(s) {
+  const term = searchTerm.trim().toLowerCase();
+  if (term) {
+    const haystack = `${s.nome || ""} ${s.email || ""}`.toLowerCase();
+    if (!haystack.includes(term)) return false;
+  }
+  if (filterStatus === "ativo" && !s.ativo) return false;
+  if (filterStatus === "inativo" && s.ativo) return false;
+
+  const m = metricsByStudent.get(s.id) || {};
+  if (filterDesempenho === "risco" && !m.atRisco) return false;
+  if (["bom", "atencao", "critico"].includes(filterDesempenho) && m.band !== filterDesempenho) return false;
+
+  return true;
+}
+
+function sortStudents(list) {
+  const sorted = list.slice();
+  sorted.sort((a, b) => {
+    const ma = metricsByStudent.get(a.id) || {};
+    const mb = metricsByStudent.get(b.id) || {};
+    if (sortBy === "desempenho") return (mb.desempenho ?? -1) - (ma.desempenho ?? -1);
+    if (sortBy === "evolucao") return (mb.evolucao?.pct ?? -Infinity) - (ma.evolucao?.pct ?? -Infinity);
+    if (sortBy === "acesso") return (mb.ultimoAcesso || "").localeCompare(ma.ultimoAcesso || "");
+    return (a.nome || "").localeCompare(b.nome || "", "pt-BR");
+  });
+  return sorted;
+}
+
 function renderStudents() {
   tableBodyEl.innerHTML = "";
 
@@ -202,97 +383,27 @@ function renderStudents() {
     return;
   }
 
-  if (studentsCache.length === 0 && convitesCache.length === 0) {
+  const showStudents = filterTipo !== "convites";
+  const showConvites = filterTipo !== "alunos";
+
+  const filteredStudents = showStudents ? sortStudents(studentsCache.filter(matchesFilters)) : [];
+  const filteredConvites = showConvites && filterDesempenho === "todos" ? convitesCache : [];
+
+  if (filteredStudents.length === 0 && filteredConvites.length === 0) {
     const tr = document.createElement("tr");
     tr.className = "empty-row";
     const td = document.createElement("td");
     td.colSpan = 6;
-    td.textContent = "Nenhum aluno aqui ainda.";
+    td.textContent = studentsCache.length === 0 && convitesCache.length === 0
+      ? "Nenhum aluno aqui ainda."
+      : "Nenhum aluno encontrado com esses filtros.";
     tr.appendChild(td);
     tableBodyEl.appendChild(tr);
     return;
   }
 
-  studentsCache.forEach((s) => {
-    const tr = document.createElement("tr");
-
-    const nomeTd = document.createElement("td");
-    nomeTd.textContent = s.nome || "(sem nome)";
-    tr.appendChild(nomeTd);
-
-    // Seletor de turma inline: move o aluno na hora, sem precisar abrir o
-    // modal de editar — cobre tanto "trocar de turma" quanto "incluir um
-    // aluno de 'Sem turma' numa turma", que é exatamente a mesma ação.
-    const turmaTd = document.createElement("td");
-    const turmaSelect = document.createElement("select");
-    turmaSelect.className = "turma-select";
-    const semTurmaOpt = document.createElement("option");
-    semTurmaOpt.value = "";
-    semTurmaOpt.textContent = "Sem turma";
-    turmaSelect.appendChild(semTurmaOpt);
-    turmasCache.forEach((t) => {
-      const opt = document.createElement("option");
-      opt.value = t.id;
-      opt.textContent = t.nome;
-      turmaSelect.appendChild(opt);
-    });
-    turmaSelect.value = s.turma_id || "";
-    turmaSelect.addEventListener("change", () => moveStudentToTurma(s, turmaSelect.value));
-    turmaTd.appendChild(turmaSelect);
-    tr.appendChild(turmaTd);
-
-    [s.email || "—", fmtDate(s.created_at)].forEach((text) => {
-      const td = document.createElement("td");
-      td.textContent = text;
-      tr.appendChild(td);
-    });
-
-    const statusTd = document.createElement("td");
-    const badge = document.createElement("span");
-    badge.className = "badge " + (s.ativo ? "ativo" : "inativo");
-    badge.textContent = s.ativo ? "Ativo" : "Inativo";
-    statusTd.appendChild(badge);
-    tr.appendChild(statusTd);
-
-    const actionsTd = document.createElement("td");
-    const actions = document.createElement("div");
-    actions.className = "row-actions";
-
-    const detailsLink = document.createElement("a");
-    detailsLink.href = `aluno.html?id=${encodeURIComponent(s.id)}`;
-    detailsLink.textContent = "Ver detalhes";
-
-    const editBtn = document.createElement("button");
-    editBtn.type = "button";
-    editBtn.textContent = "Editar";
-    editBtn.addEventListener("click", () => openEditModal(s));
-
-    // Inativar/Reativar: pausa reversível de login, sem tirar o aluno da
-    // turma nem das estatísticas — diferente de "Excluir" logo abaixo.
-    const toggleActiveBtn = document.createElement("button");
-    toggleActiveBtn.type = "button";
-    toggleActiveBtn.textContent = s.ativo ? "Inativar" : "Reativar";
-    toggleActiveBtn.addEventListener("click", () => toggleActive(s));
-
-    const deleteBtn = document.createElement("button");
-    deleteBtn.type = "button";
-    deleteBtn.className = "danger";
-    deleteBtn.textContent = "Excluir";
-    deleteBtn.addEventListener("click", () => deleteStudent(s));
-
-    actions.append(detailsLink, editBtn, toggleActiveBtn, deleteBtn);
-    actionsTd.appendChild(actions);
-    tr.appendChild(actionsTd);
-
-    tableBodyEl.appendChild(tr);
-  });
-
-  // Convites pendentes (ainda sem profiles row, ver buildConviteRow) vão
-  // depois dos alunos já aceitos — mesma tabela, seção visualmente separada
-  // só pelo badge de status.
-  convitesCache.forEach((c) => {
-    tableBodyEl.appendChild(buildConviteRow(c));
-  });
+  filteredStudents.forEach((s) => tableBodyEl.appendChild(buildStudentRow(s)));
+  filteredConvites.forEach((c) => tableBodyEl.appendChild(buildConviteRow(c)));
 }
 
 function renderExcluded() {
@@ -341,6 +452,86 @@ function renderExcluded() {
   });
 }
 
+// ------------------------------------------------------------ Painel de atenção
+
+function buildAttentionItem(s, m) {
+  const a = document.createElement("a");
+  a.className = "attention-item";
+  a.href = `aluno.html?id=${encodeURIComponent(s.id)}`;
+
+  a.appendChild(buildAvatar(s.id, s.nome));
+
+  const info = document.createElement("div");
+  info.className = "attention-item-info";
+  const nameEl = document.createElement("div");
+  nameEl.className = "attention-item-name";
+  nameEl.textContent = s.nome || "(sem nome)";
+  const metaEl = document.createElement("div");
+  metaEl.className = "attention-item-meta";
+
+  if (isInactive(m.ultimoAcesso)) {
+    if (!m.ultimoAcesso) {
+      metaEl.textContent = "Nunca acessou";
+    } else {
+      const days = Math.floor((Date.now() - new Date(m.ultimoAcesso).getTime()) / (24 * 60 * 60 * 1000));
+      metaEl.textContent = `Sem acesso há ${days} dias`;
+    }
+  } else {
+    metaEl.textContent = `${fmtNota10(m.desempenho)} de média`;
+    if (m.evolucao) {
+      const span = document.createElement("span");
+      span.className = m.evolucao.direction === "up" ? "evolucao-up" : "evolucao-down";
+      span.textContent = ` · ${m.evolucao.direction === "up" ? "↑" : "↓"} ${m.evolucao.pct}%`;
+      metaEl.appendChild(span);
+    }
+  }
+
+  info.append(nameEl, metaEl);
+  a.appendChild(info);
+
+  const chevron = document.createElement("span");
+  chevron.className = "attention-item-chevron";
+  chevron.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+  a.appendChild(chevron);
+
+  return a;
+}
+
+function renderAttentionPanel() {
+  const listEl = document.getElementById("attentionList");
+  const subtitleEl = document.getElementById("attentionSubtitle");
+  const viewAllBtn = document.getElementById("attentionViewAllBtn");
+  listEl.innerHTML = "";
+
+  const atRisk = studentsCache
+    .filter((s) => (metricsByStudent.get(s.id) || {}).atRisco)
+    .sort((a, b) => {
+      const ma = metricsByStudent.get(a.id) || {};
+      const mb = metricsByStudent.get(b.id) || {};
+      return (ma.desempenho ?? -1) - (mb.desempenho ?? -1);
+    });
+
+  subtitleEl.textContent = atRisk.length === 0
+    ? "Nenhum aluno abaixo da média ou sem atividade recente. 🎉"
+    : `${atRisk.length} aluno(s) abaixo da média ou sem atividade recente.`;
+
+  const VISIBLE = 3;
+  atRisk.slice(0, VISIBLE).forEach((s) => {
+    listEl.appendChild(buildAttentionItem(s, metricsByStudent.get(s.id) || {}));
+  });
+
+  viewAllBtn.hidden = atRisk.length <= VISIBLE;
+}
+
+document.getElementById("attentionViewAllBtn").addEventListener("click", () => {
+  document.getElementById("filterDesempenho").value = "risco";
+  filterDesempenho = "risco";
+  renderStudents();
+  document.querySelector(".turma-layout-main .panel").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+// -------------------------------------------------------------------- Dados
+
 // Excluído (excluido_em preenchido) some da lista principal e de TODA
 // estatística (aqui, em Turmas e em Análises) — só volta a contar depois
 // de restaurado. Ver supabase/schema_alunos_exclusao.sql.
@@ -360,7 +551,6 @@ async function loadStudents() {
   studentsLoadError = error ? error.message : null;
   studentsCache = error ? [] : data || [];
   statAlunosEl.textContent = studentsLoadError ? "—" : studentsCache.length;
-  renderStudents();
 }
 
 async function loadExcluded() {
@@ -397,7 +587,6 @@ async function loadConvites() {
   const { data, error } = await query.order("created_at", { ascending: false });
   if (error) console.error("Falha ao carregar convites:", error);
   convitesCache = error ? [] : data || [];
-  renderStudents();
 }
 
 async function loadTurmasForSelect() {
@@ -410,54 +599,139 @@ async function loadTurmasForSelect() {
   turmasCache = data || [];
 }
 
-// fetchAllRows (js/config.js) pagina de 1000 em 1000 — sem isso, uma turma
-// com muitas respostas/tentativas acumuladas ao longo do tempo podia
-// estourar o limite padrão do PostgREST e mostrar um % de acerto/nota
-// média calculado sobre um subconjunto arbitrário, sem nenhum aviso.
-async function loadQuickStats() {
+// Busca respostas (1ª fase) e tentativas (2ª fase) de TODOS os alunos desta
+// turma numa tacada só (em vez de uma query por aluno) e calcula as métricas
+// de cada um com js/metrics.js. fetchAllRows (js/config.js) pagina de 1000
+// em 1000 — sem isso, uma turma com muito histórico acumulado podia estourar
+// o limite padrão do PostgREST e as métricas saírem calculadas sobre um
+// subconjunto arbitrário, sem nenhum aviso.
+async function loadMetrics() {
   const ids = studentsCache.map((s) => s.id);
+  metricsByStudent = new Map();
+
   if (ids.length === 0) {
     statAcertoFase1El.textContent = "—";
     statNotaFase2El.textContent = "—";
-    return;
+    statParticipacaoEl.textContent = "—";
+    statEmRiscoEl.textContent = "0";
+    return { respostasByUser: new Map(), tentativasByUser: new Map() };
   }
 
   const { data: respostas1, error: err1 } = await fetchAllRows((from, to) =>
-    client.from("oab_respostas").select("correct").in("user_id", ids).range(from, to),
+    client.from("oab_respostas").select("user_id, correct, answered_at").in("user_id", ids).range(from, to),
   );
-  if (err1) {
-    console.error("Falha ao carregar estatísticas da 1ª fase:", err1);
-    statAcertoFase1El.textContent = "—";
-  } else if (respostas1 && respostas1.length > 0) {
-    const acertos = respostas1.filter((r) => r.correct).length;
-    statAcertoFase1El.textContent = `${Math.round((acertos / respostas1.length) * 100)}%`;
-  } else {
-    statAcertoFase1El.textContent = "—";
-  }
+  if (err1) console.error("Falha ao carregar estatísticas da 1ª fase:", err1);
 
   const { data: tentativas, error: err2 } = await fetchAllRows((from, to) =>
     client
       .from("oab2_tentativas")
-      .select("nota_total")
+      .select("user_id, nota_total, valor_total_tentativa, status, started_at, corrected_at")
       .in("user_id", ids)
-      .eq("status", "corrigida")
       .range(from, to),
   );
-  if (err2) {
-    console.error("Falha ao carregar estatísticas da 2ª fase:", err2);
-    statNotaFase2El.textContent = "—";
-  } else if (tentativas && tentativas.length > 0) {
-    const soma = tentativas.reduce((acc, t) => acc + (Number(t.nota_total) || 0), 0);
-    statNotaFase2El.textContent = (soma / tentativas.length).toFixed(2).replace(".", ",");
-  } else {
-    statNotaFase2El.textContent = "—";
-  }
+  if (err2) console.error("Falha ao carregar estatísticas da 2ª fase:", err2);
+
+  const respostasByUser = new Map();
+  (respostas1 || []).forEach((r) => {
+    if (!respostasByUser.has(r.user_id)) respostasByUser.set(r.user_id, []);
+    respostasByUser.get(r.user_id).push(r);
+  });
+
+  const tentativasByUser = new Map();
+  (tentativas || []).forEach((t) => {
+    if (!tentativasByUser.has(t.user_id)) tentativasByUser.set(t.user_id, []);
+    tentativasByUser.get(t.user_id).push(t);
+  });
+
+  studentsCache.forEach((s) => {
+    const respostas = respostasByUser.get(s.id) || [];
+    const tentativasAluno = tentativasByUser.get(s.id) || [];
+    const desempenho = computeDesempenho(respostas, tentativasAluno);
+    const ultimoAcesso = lastActivityAt(respostas, tentativasAluno);
+    metricsByStudent.set(s.id, {
+      desempenho,
+      band: classifyBand(desempenho),
+      evolucao: computeEvolucao(respostas, tentativasAluno),
+      ultimoAcesso,
+      atRisco: isAtRisk({ desempenho, lastActivityIso: ultimoAcesso, ativo: s.ativo }),
+    });
+  });
+
+  // Cards do topo: acerto geral (todas as respostas somadas), nota média
+  // geral (todas as tentativas corrigidas somadas), participação (% de
+  // alunos ATIVOS com pelo menos 1 atividade nos últimos 7 dias).
+  const allRespostas = respostas1 || [];
+  statAcertoFase1El.textContent = allRespostas.length > 0
+    ? `${Math.round((allRespostas.filter((r) => r.correct).length / allRespostas.length) * 100)}%`
+    : "—";
+
+  const corrigidas = (tentativas || []).filter((t) => t.status === "corrigida" && t.nota_total != null);
+  statNotaFase2El.textContent = corrigidas.length > 0
+    ? (corrigidas.reduce((acc, t) => acc + (Number(t.nota_total) || 0), 0) / corrigidas.length).toFixed(2).replace(".", ",")
+    : "—";
+
+  const ativos = studentsCache.filter((s) => s.ativo);
+  const ativosComAtividade = ativos.filter((s) => !isInactive(metricsByStudent.get(s.id)?.ultimoAcesso, new Date(), 7));
+  statParticipacaoEl.textContent = ativos.length > 0
+    ? `${Math.round((ativosComAtividade.length / ativos.length) * 100)}%`
+    : "—";
+
+  statEmRiscoEl.textContent = studentsCache.filter((s) => metricsByStudent.get(s.id)?.atRisco).length;
+
+  return { respostasByUser, tentativasByUser };
+}
+
+function renderTurmaChart(respostasByUser, tentativasByUser) {
+  const events = [];
+  respostasByUser.forEach((respostas) => {
+    respostas.forEach((r) => events.push({ at: r.answered_at, score01to10: r.correct ? 10 : 0 }));
+  });
+  tentativasByUser.forEach((tentativas) => {
+    tentativas
+      .filter((t) => t.status === "corrigida" && t.nota_total != null && t.valor_total_tentativa)
+      .forEach((t) => events.push({
+        at: t.corrected_at || t.started_at,
+        score01to10: (Number(t.nota_total) / Number(t.valor_total_tentativa)) * 10,
+      }));
+  });
+
+  const bucketed = bucketTimeline(events, 6);
+  const container = document.getElementById("turmaChartContainer");
+  buildLineChartSVG(container, [
+    { name: "Turma", color: "var(--accent)", points: bucketed.map((b) => ({ x: b.label, y: b.value * 10 })) },
+  ], { emptyText: "Ainda não há atividade suficiente pra mostrar a evolução da turma." });
 }
 
 async function refreshAll() {
   await Promise.all([loadStudents(), loadExcluded(), loadConvites()]);
-  await loadQuickStats();
+  const { respostasByUser, tentativasByUser } = await loadMetrics();
+  renderStudents();
+  renderAttentionPanel();
+  renderTurmaChart(respostasByUser, tentativasByUser);
 }
+
+// ------------------------------------------------------------ Toolbar
+
+document.getElementById("searchInput").addEventListener("input", (ev) => {
+  searchTerm = ev.target.value;
+  renderStudents();
+});
+document.getElementById("filterTipo").addEventListener("change", (ev) => {
+  filterTipo = ev.target.value;
+  renderStudents();
+});
+document.getElementById("filterDesempenho").addEventListener("change", (ev) => {
+  filterDesempenho = ev.target.value;
+  renderStudents();
+});
+document.getElementById("filterStatus").addEventListener("change", (ev) => {
+  filterStatus = ev.target.value;
+  renderStudents();
+});
+document.getElementById("sortBy").addEventListener("change", (ev) => {
+  sortBy = ev.target.value;
+  renderStudents();
+});
 
 // ------------------------------------------------------------ Convite modal
 
@@ -627,32 +901,32 @@ const editModalMsg = document.getElementById("editModalMsg");
 const editForm = document.getElementById("editForm");
 const edId = document.getElementById("edId");
 const edNome = document.getElementById("edNome");
+const edTurma = document.getElementById("edTurma");
 const editModalSaveBtn = document.getElementById("editModalSave");
+
+function populateEditTurmaSelect(selectedTurmaId) {
+  edTurma.innerHTML = "";
+  const semTurmaOpt = document.createElement("option");
+  semTurmaOpt.value = "";
+  semTurmaOpt.textContent = "Sem turma";
+  edTurma.appendChild(semTurmaOpt);
+  turmasCache.forEach((t) => {
+    const opt = document.createElement("option");
+    opt.value = t.id;
+    opt.textContent = t.nome;
+    edTurma.appendChild(opt);
+  });
+  edTurma.value = selectedTurmaId || "";
+}
 
 function openEditModal(student) {
   editForm.reset();
   edId.value = student.id;
   edNome.value = student.nome || "";
+  populateEditTurmaSelect(student.turma_id);
   clearMsg(editModalMsg);
   editModal.hidden = false;
   edNome.focus();
-}
-
-// Mover de turma é feito pelo seletor inline na tabela (ver renderStudents),
-// não pelo modal de editar — um clique, sem confirmação (fácil de desfazer
-// escolhendo a turma de volta).
-async function moveStudentToTurma(student, newTurmaId) {
-  try {
-    const { error } = await client
-      .from("profiles")
-      .update({ turma_id: newTurmaId || null })
-      .eq("id", student.id);
-    if (error) throw new Error(error.message);
-    await refreshAll();
-  } catch (err) {
-    window.alert(`Não foi possível mover o aluno: ${err.message}`);
-    await refreshAll(); // desfaz a seleção visual, volta pro estado real
-  }
 }
 function closeEditModal() {
   editModal.hidden = true;
@@ -672,7 +946,7 @@ editForm.addEventListener("submit", async (ev) => {
   try {
     const { error } = await client
       .from("profiles")
-      .update({ nome: edNome.value.trim() })
+      .update({ nome: edNome.value.trim(), turma_id: edTurma.value || null })
       .eq("id", edId.value);
     if (error) throw new Error(error.message);
 
@@ -714,6 +988,7 @@ async function cancelInvite(convite, btn) {
   try {
     await callProfessorPortal({ action: "cancel-invite", id: convite.id });
     await loadConvites();
+    renderStudents();
   } catch (err) {
     window.alert(`Não foi possível cancelar o convite: ${err.message}`);
     btn.disabled = false;
@@ -811,8 +1086,7 @@ renameForm.addEventListener("submit", async (ev) => {
     if (error) throw new Error(error.message);
     setTurmaName(renameNome.value.trim());
     currentTurmaLimite = limite;
-    await loadTurmasForSelect(); // atualiza o nome também nos seletores de turma da tabela
-    renderStudents();
+    await loadTurmasForSelect();
     closeRenameModal();
   } catch (err) {
     showMsg(renameModalMsg, err.message || "Ocorreu um erro inesperado.", "err");

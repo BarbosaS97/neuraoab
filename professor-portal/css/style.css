@@ -100,7 +100,8 @@ input, textarea {
   margin-bottom: 6px;
 }
 
-.field input {
+.field input,
+.field select {
   width: 100%;
   background: var(--bg);
   color: var(--text);
@@ -110,7 +111,8 @@ input, textarea {
   font-size: 14px;
 }
 
-.field input:focus {
+.field input:focus,
+.field select:focus {
   outline: none;
   border-color: var(--accent);
 }
@@ -257,6 +259,13 @@ input, textarea {
   padding: 32px 28px 60px;
 }
 
+/* turma.html/aluno.html viram dashboards mais densos (tabela + coluna
+   lateral, grade 2x2 de painéis) — precisam de mais largura que as telas
+   simples (Turmas/Análises) que ainda usam .main-inner puro. */
+.main-inner-wide {
+  max-width: 1360px;
+}
+
 .page-header {
   display: flex;
   align-items: flex-start;
@@ -338,6 +347,20 @@ input, textarea {
   font-size: 12.5px;
   color: var(--text-dim);
   margin-top: 4px;
+}
+
+.stat-card .label span.evolucao-up,
+.stat-card .label span.evolucao-down {
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+.stats-row-5 {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.stat-card-risk .num {
+  color: var(--err);
 }
 
 .panel {
@@ -482,6 +505,56 @@ tbody tr:last-child td { border-bottom: none; }
 .badge.err { background: rgba(239, 87, 87, 0.12); color: var(--err); }
 .badge.warn { background: rgba(232, 179, 57, 0.14); color: var(--warn); }
 
+/* Faixa de desempenho (ver classifyBand em js/metrics.js) — mesmas cores de
+   ok/err/warn acima, só com nome semântico pra quem lê turma.js/aluno-
+   detail.js não precisar traduzir "bom" -> "ok" de cabeça. */
+.badge.bom { background: rgba(53, 199, 138, 0.12); color: var(--ok); }
+.badge.atencao { background: rgba(232, 179, 57, 0.14); color: var(--warn); }
+.badge.critico { background: rgba(239, 87, 87, 0.12); color: var(--err); }
+
+.evolucao-up { color: var(--ok); font-weight: 600; white-space: nowrap; }
+.evolucao-down { color: var(--err); font-weight: 600; white-space: nowrap; }
+.evolucao-neutral { color: var(--text-dim); }
+
+/* Avatar circular com iniciais — cor derivada de um hash do id (ver
+   avatarColor em js/metrics.js), consistente entre a tabela de turma.html,
+   o painel de atenção e o cabeçalho de aluno.html. */
+.avatar-circle {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.avatar-circle-lg {
+  width: 56px;
+  height: 56px;
+  font-size: 19px;
+}
+
+.student-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.student-cell-name {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.student-cell-email {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 1px;
+}
+
 /* -------------------------------------------------- Estatísticas 1ª fase */
 /* (aluno.html, ver loadFase1Summary em js/aluno-detail.js) — mesma familia
    visual usada em estudos/style.css pra' tela de Estatisticas do proprio
@@ -508,77 +581,6 @@ tbody tr:last-child td { border-bottom: none; }
 }
 
 .period-btn.active { background: var(--accent); color: #fff; }
-
-.fase1-overall {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 18px;
-}
-
-.fase1-overall-pct {
-  font-size: 26px;
-  font-weight: 800;
-  color: var(--accent);
-  line-height: 1;
-  flex-shrink: 0;
-}
-
-.fase1-overall-label {
-  font-size: 12.5px;
-  color: var(--text-dim);
-}
-
-.fase1-overall-label b { color: var(--text); }
-
-.fase1-subjects {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 22px;
-}
-
-.fase1-subject-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(90px, 160px) 80px;
-  align-items: center;
-  gap: 12px;
-  background: var(--bg);
-  border: 1px solid var(--panel-border);
-  border-radius: 8px;
-  padding: 10px 12px;
-}
-
-.fase1-subject-name {
-  font-size: 12.5px;
-  color: var(--text);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.fase1-subject-bar {
-  height: 6px;
-  border-radius: 999px;
-  background: var(--panel-border);
-  overflow: hidden;
-}
-
-.fase1-subject-bar-fill {
-  height: 100%;
-  border-radius: 999px;
-  background: var(--accent);
-}
-
-.fase1-subject-bar-fill.low { background: var(--err); }
-.fase1-subject-bar-fill.high { background: var(--ok); }
-
-.fase1-subject-frac {
-  font-size: 11.5px;
-  color: var(--text-dim);
-  text-align: right;
-  white-space: nowrap;
-}
 
 .fase1-ai-title {
   font-size: 12.5px;
@@ -663,6 +665,381 @@ tbody tr:last-child td { border-bottom: none; }
   border-radius: 8px;
 }
 
+/* ----------------------------------------------------- Turma — dashboard rico */
+
+.turma-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+  align-items: start;
+}
+
+.turma-layout-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 32px;
+}
+
+@media (max-width: 960px) {
+  .turma-layout { grid-template-columns: 1fr; }
+  .turma-layout-aside { position: static; }
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.toolbar-search {
+  flex: 1 1 220px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 0 12px;
+  color: var(--text-dim);
+}
+
+.toolbar-search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  padding: 9px 0;
+  font-size: 13px;
+}
+
+.toolbar-search input:focus { outline: none; }
+
+.toolbar-select {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 13px;
+  flex: 0 0 auto;
+}
+
+.toolbar-select:focus { outline: none; border-color: var(--accent); }
+
+/* Menu "⋯" por linha da tabela — dropdown posicionado, fecha em click fora
+   (ver closeAllRowMenus em turma.js) ou Escape. */
+.row-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.row-menu-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--panel-border);
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.row-menu-btn:hover { color: var(--text); border-color: var(--accent); }
+
+.row-menu-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  z-index: 20;
+  min-width: 140px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.5);
+  padding: 6px;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.row-menu-dropdown.open { display: flex; }
+
+.row-menu-dropdown button {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  text-align: left;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 12.5px;
+}
+
+.row-menu-dropdown button:hover { background: var(--bg); }
+.row-menu-dropdown button.danger { color: var(--err); }
+
+/* Painel "Alunos que precisam de atenção". */
+.attention-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--warn);
+  margin-bottom: 4px;
+}
+
+.attention-panel-header h2 {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.attention-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--panel-border);
+  text-decoration: none;
+  color: inherit;
+}
+
+.attention-item:first-of-type { border-top: none; }
+
+.attention-item-info { flex: 1; min-width: 0; }
+
+.attention-item-name {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.attention-item-meta {
+  font-size: 11.5px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+.attention-item-chevron {
+  flex-shrink: 0;
+  color: var(--text-dim);
+}
+
+.attention-view-all {
+  width: 100%;
+  margin-top: 10px;
+  background: transparent;
+  border: none;
+  color: var(--accent);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: left;
+  padding: 4px 0 0;
+}
+
+.attention-view-all:hover { color: var(--accent-hover); }
+
+/* Gráfico de linha (ver js/charts.js). */
+.chart-panel svg { display: block; }
+
+.chart-legend {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.chart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.chart-legend-item i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* --------------------------------------------------- Aluno — dashboard rico */
+
+.student-page-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.back-link {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--panel-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.back-link:hover { color: var(--text); border-color: var(--accent); }
+
+.student-page-header h1 { margin: 0; font-size: 19px; font-weight: 700; }
+
+.student-header-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.student-header-info { min-width: 0; }
+
+.student-header-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.student-header-name-row h2 { margin: 0; font-size: 17px; font-weight: 700; }
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 960px) {
+  .dashboard-grid { grid-template-columns: 1fr; }
+}
+
+.desempenho-area-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.desempenho-area-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(90px, 200px) 44px;
+  align-items: center;
+  gap: 12px;
+}
+
+.desempenho-area-name {
+  font-size: 12.5px;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.desempenho-area-bar {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--panel-border);
+  overflow: hidden;
+}
+
+.desempenho-area-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--ok);
+}
+
+.desempenho-area-bar-fill.low { background: var(--err); }
+.desempenho-area-bar-fill.high { background: var(--ok); }
+.desempenho-area-bar-fill:not(.low):not(.high) { background: var(--warn); }
+
+.desempenho-area-pct {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-align: right;
+}
+
+.activity-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--panel-border);
+}
+
+.activity-item:first-child { border-top: none; }
+
+.activity-item-icon {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.activity-item-info { flex: 1; min-width: 0; }
+
+.activity-item-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.activity-item-meta {
+  font-size: 11.5px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+.activity-item-value {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.student-info-card .info-list {
+  margin: 0 0 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.student-info-card .info-list > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.student-info-card .info-list dt {
+  color: var(--text-dim);
+}
+
+.student-info-card .info-list dd {
+  margin: 0;
+  font-weight: 500;
+  text-align: right;
+}
+
+.student-info-card .info-list dd a { text-decoration: none; color: var(--accent); }
+.student-info-card .info-list dd a:hover { text-decoration: underline; }
+
 /* ---------------------------------------------------------------- Barras */
 /* Comparação simples entre turmas em analises.html — sem lib de gráfico. */
 
@@ -708,20 +1085,6 @@ tbody tr:last-child td { border-bottom: none; }
 .breadcrumb a:hover { color: var(--text); }
 .breadcrumb .breadcrumb-sep { opacity: 0.5; }
 .breadcrumb .breadcrumb-current { color: var(--text); font-weight: 600; }
-
-/* Seletor de turma inline na tabela de alunos — mesma altura/visual de
-   .field input, mas compacto o bastante pra caber numa célula de tabela. */
-.turma-select {
-  background: var(--bg);
-  color: var(--text);
-  border: 1px solid var(--panel-border);
-  border-radius: 6px;
-  padding: 5px 8px;
-  font-size: 12.5px;
-  max-width: 160px;
-}
-
-.turma-select:focus { outline: none; border-color: var(--accent); }
 
 /* ------------------------------------------------------- Detalhe do aluno */
 

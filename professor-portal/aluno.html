@@ -38,45 +38,83 @@
   </aside>
 
   <div class="main">
-    <div class="main-inner">
-      <nav class="breadcrumb">
-        <a href="dashboard.html">Turmas</a>
-        <span class="breadcrumb-sep">/</span>
-        <a href="dashboard.html" id="breadcrumbTurma">…</a>
-        <span class="breadcrumb-sep">/</span>
-        <span class="breadcrumb-current" id="breadcrumbAluno">…</span>
-      </nav>
+    <div class="main-inner main-inner-wide">
+      <div class="student-page-header">
+        <a href="dashboard.html" id="backLink" class="back-link" aria-label="Voltar">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </a>
+        <h1 id="studentPageTitle">Aluno — Carregando...</h1>
+      </div>
 
-      <div class="panel" id="studentHeaderPanel">
-        <div class="panel-header">
-          <h2 id="studentName">Carregando...</h2>
+      <div class="panel student-header-bar" id="studentHeaderPanel">
+        <div class="avatar-circle avatar-circle-lg" id="studentAvatar"></div>
+        <div class="student-header-info">
+          <div class="student-header-name-row">
+            <h2 id="studentName">Carregando...</h2>
+            <span class="badge" id="studentBandBadge" hidden></span>
+          </div>
+          <p class="field-hint" id="studentMeta"></p>
         </div>
-        <p class="field-hint" id="studentMeta"></p>
       </div>
 
       <div class="stats-row">
         <div class="stat-card">
+          <div class="num" id="statDesempenhoGeral">—</div>
+          <div class="label">Desempenho geral <span id="statDesempenhoEvolucao"></span></div>
+        </div>
+        <div class="stat-card">
           <div class="num" id="statFase1">—</div>
-          <div class="label">Acertos na 1ª fase</div>
+          <div class="label">Questões respondidas</div>
         </div>
         <div class="stat-card">
           <div class="num" id="statFase2">—</div>
-          <div class="label">Cadernos da 2ª fase respondidos</div>
+          <div class="label">Simulados realizados</div>
         </div>
       </div>
 
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Estatísticas — 1ª fase</h2>
-          <div class="period-switch" id="fase1PeriodSwitch">
-            <button class="period-btn" data-period="today" type="button">Hoje</button>
-            <button class="period-btn" data-period="7d" type="button">7 dias</button>
-            <button class="period-btn" data-period="30d" type="button">30 dias</button>
-            <button class="period-btn active" data-period="all" type="button">Sempre</button>
+      <div class="dashboard-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Desempenho por área</h2>
+            <div class="period-switch" id="fase1PeriodSwitch">
+              <button class="period-btn" data-period="today" type="button">Hoje</button>
+              <button class="period-btn" data-period="7d" type="button">7 dias</button>
+              <button class="period-btn" data-period="30d" type="button">30 dias</button>
+              <button class="period-btn active" data-period="all" type="button">Sempre</button>
+            </div>
+          </div>
+          <div id="fase1Detail">
+            <p class="field-hint">Carregando...</p>
           </div>
         </div>
-        <div id="fase1Detail">
-          <p class="field-hint">Carregando...</p>
+
+        <div class="panel chart-panel">
+          <div class="panel-header">
+            <h2>Evolução no tempo</h2>
+          </div>
+          <div id="evolucaoChartContainer"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Últimas atividades</h2>
+          </div>
+          <div id="activityFeed" class="activity-feed">
+            <p class="field-hint">Carregando...</p>
+          </div>
+        </div>
+
+        <div class="panel student-info-card">
+          <div class="panel-header">
+            <h2>Informações do aluno</h2>
+          </div>
+          <dl class="info-list">
+            <div><dt>E-mail</dt><dd id="infoEmail">—</dd></div>
+            <div><dt>Turma</dt><dd id="infoTurma">—</dd></div>
+            <div><dt>Convidado em</dt><dd id="infoConvidado">—</dd></div>
+            <div><dt>Último acesso</dt><dd id="infoUltimoAcesso">—</dd></div>
+          </dl>
+          <button type="button" class="btn-ghost" id="editStudentBtn" style="width: 100%; margin-top: 4px;">Editar aluno</button>
         </div>
       </div>
 
@@ -92,8 +130,38 @@
   </div>
 </div>
 
+<!-- Edição: só nome e turma — mesmo padrão do modal de editar aluno de turma.html. -->
+<div class="modal-overlay" id="editModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div class="modal-header">
+      <h2 id="editModalTitle">Editar aluno</h2>
+      <button type="button" id="editModalClose" class="modal-close" aria-label="Fechar">&times;</button>
+    </div>
+
+    <form id="editForm">
+      <div class="modal-body">
+        <p class="modal-msg" id="editModalMsg"></p>
+        <div class="field">
+          <label for="edNome">Nome completo</label>
+          <input type="text" id="edNome">
+        </div>
+        <div class="field">
+          <label for="edTurma">Turma</label>
+          <select id="edTurma"></select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-ghost" id="editModalCancel">Cancelar</button>
+        <button type="submit" class="btn-accent" id="editModalSave">Salvar alterações</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script src="js/config.js"></script>
 <script src="js/auth.js"></script>
+<script src="js/metrics.js"></script>
+<script src="js/charts.js"></script>
 <script src="js/aluno-detail.js"></script>
 <script src="js/theme.js"></script>
 </body>

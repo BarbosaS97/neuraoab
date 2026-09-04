@@ -38,7 +38,7 @@
   </aside>
 
   <div class="main">
-    <div class="main-inner">
+    <div class="main-inner main-inner-wide">
       <nav class="breadcrumb">
         <a href="dashboard.html">Turmas</a>
         <span class="breadcrumb-sep">/</span>
@@ -57,69 +57,128 @@
         </div>
       </div>
 
-      <div class="stats-row">
+      <div class="stats-row stats-row-5">
         <div class="stat-card">
           <div class="num" id="statAlunos">—</div>
-          <div class="label">Alunos</div>
+          <div class="label">Alunos cadastrados</div>
         </div>
         <div class="stat-card">
           <div class="num" id="statAcertoFase1">—</div>
-          <div class="label">% acerto na 1ª fase</div>
+          <div class="label">Acerto médio (1ª fase)</div>
         </div>
         <div class="stat-card">
           <div class="num" id="statNotaFase2">—</div>
-          <div class="label">Nota média na 2ª fase</div>
+          <div class="label">Média 2ª fase</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" id="statParticipacao">—</div>
+          <div class="label">Participação</div>
+        </div>
+        <div class="stat-card stat-card-risk">
+          <div class="num" id="statEmRisco">—</div>
+          <div class="label">Em risco</div>
         </div>
       </div>
 
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Alunos</h2>
-        </div>
-        <div style="overflow-x: auto;">
-          <table>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Turma</th>
-                <th>E-mail</th>
-                <th>Convidado em</th>
-                <th>Status</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody id="studentsTableBody">
-              <tr class="empty-row"><td colspan="6">Carregando...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <div class="turma-layout">
+        <div class="turma-layout-main">
+          <div class="toolbar">
+            <div class="toolbar-search">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="searchInput" placeholder="Buscar aluno...">
+            </div>
+            <select class="toolbar-select" id="filterTipo">
+              <option value="todos">Todos</option>
+              <option value="alunos">Somente alunos</option>
+              <option value="convites">Somente convites pendentes</option>
+            </select>
+            <select class="toolbar-select" id="filterDesempenho">
+              <option value="todos">Desempenho</option>
+              <option value="bom">Bom</option>
+              <option value="atencao">Atenção</option>
+              <option value="critico">Crítico</option>
+              <option value="risco">Em risco</option>
+            </select>
+            <select class="toolbar-select" id="filterStatus">
+              <option value="todos">Status</option>
+              <option value="ativo">Ativo</option>
+              <option value="inativo">Inativo</option>
+            </select>
+            <select class="toolbar-select" id="sortBy">
+              <option value="nome">Ordenar por: Nome</option>
+              <option value="desempenho">Ordenar por: Desempenho</option>
+              <option value="evolucao">Ordenar por: Evolução</option>
+              <option value="acesso">Ordenar por: Último acesso</option>
+            </select>
+          </div>
 
-      <!-- Caixa de excluídos: fechada por padrão (details/summary nativo,
-           mesmo recurso já usado em js/aluno-detail.js pra "ver resposta
-           do aluno") — alunos aqui não contam em NENHUMA estatística
-           (Turmas, Análises, stats desta turma) até serem restaurados. -->
-      <details class="panel" id="excludedPanel" style="margin-top: 20px;">
-        <summary class="panel-summary">
-          Excluídos (<span id="excludedCount">0</span>)
-          <svg class="toggle-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-        </summary>
-        <div style="overflow-x: auto; margin-top: 16px;">
-          <table>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Excluído em</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody id="excludedTableBody">
-              <tr class="empty-row"><td colspan="4">Nenhum aluno excluído.</td></tr>
-            </tbody>
-          </table>
+          <div class="panel">
+            <div style="overflow-x: auto;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Aluno</th>
+                    <th>Desempenho</th>
+                    <th>Evolução</th>
+                    <th>Último acesso</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="studentsTableBody">
+                  <tr class="empty-row"><td colspan="6">Carregando...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Caixa de excluídos: fechada por padrão (details/summary nativo,
+               mesmo recurso já usado em js/aluno-detail.js pra "ver resposta
+               do aluno") — alunos aqui não contam em NENHUMA estatística
+               (Turmas, Análises, stats desta turma) até serem restaurados. -->
+          <details class="panel" id="excludedPanel" style="margin-top: 20px;">
+            <summary class="panel-summary">
+              Excluídos (<span id="excludedCount">0</span>)
+              <svg class="toggle-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </summary>
+            <div style="overflow-x: auto; margin-top: 16px;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Excluído em</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="excludedTableBody">
+                  <tr class="empty-row"><td colspan="4">Nenhum aluno excluído.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
         </div>
-      </details>
+
+        <aside class="turma-layout-aside">
+          <div class="panel attention-panel">
+            <div class="attention-panel-header">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              <h2>Alunos que precisam de atenção</h2>
+            </div>
+            <p class="field-hint" id="attentionSubtitle">Carregando...</p>
+            <div id="attentionList"></div>
+            <button type="button" class="attention-view-all" id="attentionViewAllBtn" hidden>Ver todos →</button>
+          </div>
+
+          <div class="panel chart-panel">
+            <div class="panel-header">
+              <h2>Resumo da turma</h2>
+            </div>
+            <p class="field-hint" style="margin-bottom: 12px;">Evolução geral da turma</p>
+            <div id="turmaChartContainer"></div>
+          </div>
+        </aside>
+      </div>
     </div>
   </div>
 </div>
@@ -192,7 +251,11 @@
           <label for="edNome">Nome completo</label>
           <input type="text" id="edNome">
         </div>
-        <p class="field-hint">Pra mover o aluno de turma, use o seletor "Turma" direto na tabela.</p>
+        <div class="field">
+          <label for="edTurma">Turma</label>
+          <select id="edTurma"></select>
+          <p class="field-hint">Mover o aluno pra outra turma (ou "Sem turma").</p>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn-ghost" id="editModalCancel">Cancelar</button>
@@ -232,6 +295,8 @@
 
 <script src="js/config.js"></script>
 <script src="js/auth.js"></script>
+<script src="js/metrics.js"></script>
+<script src="js/charts.js"></script>
 <script src="js/turma.js"></script>
 <script src="js/theme.js"></script>
 </body>
