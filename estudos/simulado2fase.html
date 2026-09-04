@@ -23,7 +23,7 @@
   })();
 </script>
 <link rel="stylesheet" href="style.css?v=27">
-<link rel="stylesheet" href="simulado2fase.css?v=16">
+<link rel="stylesheet" href="simulado2fase.css?v=17">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
 <body class="sim2-body">
@@ -111,20 +111,40 @@
       <button type="button" id="dashboardRetryBtn" class="sim2-link-btn">Tentar de novo</button>
     </div>
 
-    <!-- Tier 1: "o que eu faço agora" — um unico card, sempre no mesmo
-         lugar, que troca de estado (novo x continuar) em vez de disputar
-         atencao com um card separado (ver renderHero em simulado2fase.js). -->
-    <div class="sim2-card sim2-card-accent sim2-hero-card">
-      <div id="heroFormState">
+    <!-- Tier 1: "o que eu faço agora" — dois cards lado a lado (não mais um
+         só trocando de estado): "Continuar" só aparece quando existe uma
+         tentativa em andamento (renderHero em simulado2fase.js) e some do
+         layout por completo quando não há nenhuma — nesse caso "Novo
+         simulado" ocupa a linha inteira sozinho (ver .sim2-hero-row no
+         CSS, flexbox, não precisa de classe extra pra isso). -->
+    <div class="sim2-hero-row" id="heroRow">
+      <div class="sim2-card sim2-card-accent sim2-hero-card sim2-hero-continue-card" id="heroContinueState" hidden>
         <div class="sim2-card-head">
+          <span class="sim2-hero-icon sim2-hero-icon-continue" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </span>
+          <span class="sim2-continue-badge" id="continueBadge">—</span>
+          <h2 class="sim2-continue-title">Continuar simulado</h2>
+          <p class="sim2-continue-sub" id="continueSub">—</p>
+        </div>
+        <div class="sim2-continue-progress" id="continueProgressWrap" hidden>
+          <div class="sim2-continue-progress-row">
+            <span id="continueProgressText">—</span>
+            <span id="continueProgressPct">—</span>
+          </div>
+          <div class="sim2-progress-bar"><div class="sim2-progress-bar-fill" id="continueProgressFill"></div></div>
+        </div>
+        <button type="button" id="btnContinuar" class="sim2-btn-primary sim2-btn-block">Continuar simulado →</button>
+      </div>
+
+      <div class="sim2-card sim2-card-accent sim2-hero-card sim2-hero-new-card" id="heroFormState">
+        <div class="sim2-card-head">
+          <span class="sim2-hero-icon sim2-hero-icon-new" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </span>
           <h2>Novo simulado</h2>
           <p class="sim2-card-head-sub">Escolha o exame, a área do Direito e o tipo de treinamento.</p>
         </div>
-
-        <p class="sim2-hero-switch-note" id="heroBackToContinueNote" hidden>
-          Você tem um simulado em andamento.
-          <button type="button" id="btnVoltarContinuar" class="sim2-link-btn">Voltar a continuar</button>
-        </p>
 
         <!-- Skeleton: ocupa o mesmo espaco do formulario real, pra pagina
              nao "pular" quando os dados chegam do Supabase. -->
@@ -167,21 +187,6 @@
         </div>
 
         <div id="pickerError" class="sim2-err-box" hidden></div>
-      </div>
-
-      <div id="heroContinueState" hidden>
-        <span class="sim2-continue-badge" id="continueBadge">—</span>
-        <h2 class="sim2-continue-title">Continuar simulado</h2>
-        <p class="sim2-continue-sub" id="continueSub">—</p>
-        <div class="sim2-continue-progress" id="continueProgressWrap" hidden>
-          <div class="sim2-continue-progress-row">
-            <span id="continueProgressText">—</span>
-            <span id="continueProgressPct">—</span>
-          </div>
-          <div class="sim2-progress-bar"><div class="sim2-progress-bar-fill" id="continueProgressFill"></div></div>
-        </div>
-        <button type="button" id="btnContinuar" class="sim2-btn-primary sim2-btn-block">Continuar simulado →</button>
-        <button type="button" id="btnComecarOutro" class="sim2-link-btn sim2-hero-switch-btn">Prefiro começar um simulado diferente</button>
       </div>
     </div>
 
@@ -401,6 +406,6 @@
 
 </main>
 
-<script src="simulado2fase.js?v=12"></script>
+<script src="simulado2fase.js?v=13"></script>
 </body>
 </html>

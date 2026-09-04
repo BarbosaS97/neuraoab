@@ -928,21 +928,39 @@
 }
 
 /* ------------------------------------------------------------- Hero card */
+/*
+  Dois cards lado a lado (ver comentário grande no HTML) — flex, não grid:
+  com só 1 filho visível (sem tentativa em andamento), esse filho estica
+  sozinho pra linha inteira de graça, sem precisar de classe extra alternada
+  por JS pra "modo 1 card" vs "modo 2 cards".
+*/
+.sim2-hero-row {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.sim2-hero-card { flex: 1 1 320px; }
 
 .sim2-hero-card .sim2-card-head h2 { font-size: 19px; }
 
-.sim2-hero-switch-note {
-  margin: -6px 0 18px;
-  font-size: 12.5px;
-  color: var(--text-dim);
+/* Selo de ícone acima do título — mesma linguagem visual do resto do
+   produto (ícone + cor de destaque, ver .checkout-pay-icon/.profile-plan-icon
+   em estudos/style.css) — diferencia "continuar" (azul, ação de retomar)
+   de "novo" (roxo, cor de CTA padrão) de relance. */
+.sim2-hero-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  margin-bottom: 10px;
 }
 
-.sim2-hero-switch-note .sim2-link-btn { display: inline; margin-top: 0; }
-
-/* So' espacamento (nao mexe em cor) — evita que o link herde o cinza do
-   texto acima como .sim2-hero-switch-note faria se fosse reaproveitada
-   direto num <button class="sim2-link-btn">. */
-.sim2-hero-switch-btn { margin-top: 14px; }
+.sim2-hero-icon-continue { background: var(--logo-blue-dim); color: var(--logo-blue); }
+.sim2-hero-icon-new { background: var(--primary-dim); color: var(--primary); }
 
 /* ----------------------------------------------------------- Card header */
 
@@ -1010,7 +1028,10 @@
 }
 
 .sim2-continue-title { margin: 0 0 4px; font-size: 19px; }
-.sim2-continue-sub { margin: 0 0 18px; color: var(--text-dim); font-size: 13.5px; }
+/* Sem margem embaixo — é o último item dentro de .sim2-card-head, que já
+   reserva 18px de espaço até o próximo bloco (a barra de progresso ou o
+   botão); com as duas margens somadas ficava um vão dobrado. */
+.sim2-continue-sub { margin: 0; color: var(--text-dim); font-size: 13.5px; }
 
 .sim2-continue-progress { margin-bottom: 18px; }
 

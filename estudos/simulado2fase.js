@@ -84,9 +84,6 @@ const els = {
 
   heroFormState: document.getElementById("heroFormState"),
   heroContinueState: document.getElementById("heroContinueState"),
-  heroBackToContinueNote: document.getElementById("heroBackToContinueNote"),
-  btnVoltarContinuar: document.getElementById("btnVoltarContinuar"),
-  btnComecarOutro: document.getElementById("btnComecarOutro"),
 
   continueBadge: document.getElementById("continueBadge"),
   continueSub: document.getElementById("continueSub"),
@@ -593,12 +590,6 @@ function backToPicker() {
   currentModo = "completo";
   currentValorTotal = 0;
   drafts = new Map();
-  // Volta sempre pro estado padrao do hero (continuar, se houver uma
-  // tentativa em andamento) — sem isso, quem tivesse clicado "Prefiro
-  // começar um simulado diferente" antes de entrar no caderno veria o
-  // formulario de novo ao voltar, mesmo logo depois de retomar/criar uma
-  // tentativa.
-  heroShowingForm = false;
   showView("viewPicker");
   // Uma tentativa pode ter acabado de ser criada/concluida — recarrega o
   // dashboard pra refletir isso (card "Continuar simulado", estatisticas
@@ -1409,24 +1400,16 @@ function renderStreakPill() {
 
 // -------------------------------------------------------------- Hero card
 //
-// Um unico card de acao — "Novo simulado" (form) OU "Continuar simulado"
-// (progresso), NUNCA os dois ao mesmo tempo, pra nao dividir a atencao do
-// aluno logo na primeira decisao da tela. heroShowingForm existe so' pra
-// deixar o aluno espiar o formulario mesmo tendo uma tentativa em
-// andamento (btnComecarOutro) sem descartar essa tentativa.
-let heroShowingForm = false;
-
-function updateHeroVisibility() {
-  const showContinue = !!continueTentativa && !heroShowingForm;
-  els.heroContinueState.hidden = !showContinue;
-  els.heroFormState.hidden = showContinue;
-  els.heroBackToContinueNote.hidden = !(continueTentativa && heroShowingForm);
-}
-
+// Dois cards lado a lado — "Continuar simulado" (progresso) só aparece
+// quando existe uma tentativa em andamento; "Novo simulado" (form) fica
+// sempre visível do lado, pra dar acesso direto a começar outra coisa sem
+// precisar "sair" do card de continuar primeiro (pedido explícito de
+// redesenho — antes era um único card trocando de estado, nunca os dois ao
+// mesmo tempo).
 async function renderHero() {
   const emAndamento = minhasTentativas.find(t => t.status === "em_andamento") || null;
   continueTentativa = emAndamento;
-  updateHeroVisibility();
+  els.heroContinueState.hidden = !emAndamento;
 
   if (!emAndamento) return;
 
@@ -1465,16 +1448,6 @@ async function renderHero() {
     // Sem progresso detalhado o card continua funcional, so' sem a barra.
   }
 }
-
-els.btnVoltarContinuar.addEventListener("click", () => {
-  heroShowingForm = false;
-  updateHeroVisibility();
-});
-
-els.btnComecarOutro.addEventListener("click", () => {
-  heroShowingForm = true;
-  updateHeroVisibility();
-});
 
 // Dicas fixas (sem IA, sem chamada de rede) — mesma logica/motivo de
 // STUDY_TIPS em estudos.js (uma versao anterior recomendando via IA ja
@@ -1714,15 +1687,13 @@ function renderChart(corrigidasAsc) {
 // ------------------------------------------------- Próximo treino (IA)
 
 function focarPickerNaArea(area) {
-  heroShowingForm = true;
-  updateHeroVisibility();
   const prova = provas.find(p => p.area === area);
   if (prova) {
     els.selExame.value = String(prova.exam_number);
     populateAreaSelect();
     els.selArea.value = prova.id;
   }
-  document.querySelector(".sim2-hero-card")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  els.heroFormState.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 // Recomendacao real (area com a pior media do proprio aluno, comparada as
