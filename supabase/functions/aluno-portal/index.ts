@@ -543,6 +543,17 @@ Deno.serve(async (req: Request) => {
     // sequência. Sem corrigir aqui, "Tipo" no Portal Mestre (portal-mestre/
     // js/alunos.js) mostraria "Avulso" pra TODO aluno vinculado a
     // professor a partir de agora, mesmo com professor_id preenchido.
+    //
+    // excluido_em:null, ativo:true — BUG CORRIGIDO: quem aceita este convite
+    // pode já ter sido aluno antes e ter sido excluído (professor-portal,
+    // ação "delete-student" só marca excluido_em/ativo=false na linha
+    // existente, nunca apaga a conta de verdade — ver schema_alunos_
+    // exclusao.sql). Sem resetar os dois aqui, aceitar um convite NOVO
+    // reatribuía professor_id/turma_id normalmente, mas o aluno continuava
+    // escondido em "Excluídos" pra sempre (o filtro de toda tela do Portal
+    // do Professor é ".is('excluido_em', null)") — aceitar um convite é um
+    // sinal explícito de que o aluno está voltando/entrando de novo, então
+    // sempre desfaz a exclusão junto.
     const { error: profileError } = await adminClient
       .from("profiles")
       .update({
@@ -550,6 +561,8 @@ Deno.serve(async (req: Request) => {
         turma_id: result.convite.turma_id,
         plano: "pro",
         is_avulso: false,
+        excluido_em: null,
+        ativo: true,
       })
       .eq("id", caller.id);
     if (profileError) {

@@ -135,23 +135,6 @@ input, textarea {
   border-color: var(--accent);
 }
 
-.btn-primary {
-  width: 100%;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 11px 0;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 22px;
-  transition: background 0.15s ease;
-}
-
-.btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
-.btn-primary:disabled { background: #33394a; color: #767c8c; cursor: not-allowed; }
-
 .login-error {
   margin: 16px 0 0;
   padding: 10px 12px;
@@ -164,6 +147,162 @@ input, textarea {
 }
 
 .login-error.show { display: block; }
+
+/* Botão "Continuar com Google" — único método de login do Portal do
+   Professor (ver js/auth.js, initLoginPage). Mesmo visual do botão
+   equivalente na landing (index.html), adaptado às variáveis deste portal. */
+.google-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 11px 0;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.google-btn:hover:not(:disabled) { border-color: var(--accent); }
+.google-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ---------------------------------------------------- Acesso Restrito */
+/* Mostrada no lugar do .login-card quando a sessão do Google é válida mas
+   o e-mail não está autorizado (ver #restrictedView, js/planos-restrito.js). */
+
+.restricted-card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  padding: 32px 28px;
+  box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.6);
+}
+
+.restricted-title {
+  margin: 0 0 8px;
+  font-size: 19px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.restricted-sub {
+  margin: 0 0 22px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.plans-card {
+  background: var(--bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.plans-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 9px;
+  padding: 4px;
+  margin-bottom: 18px;
+}
+
+.plan-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  padding: 9px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.plan-tab.active { background: var(--accent); color: #fff; }
+
+.plan-alunos {
+  margin: 0 0 6px;
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.plan-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.plan-price-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.plan-price-period {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.plan-features {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.plan-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--text);
+}
+
+.plan-feature-item svg {
+  flex-shrink: 0;
+  color: var(--ok);
+}
+
+.plan-cta {
+  display: block;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.whatsapp-contact-line {
+  margin: 18px 0 0;
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.whatsapp-contact-line a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.whatsapp-contact-line a:hover { text-decoration: underline; }
 
 /* --------------------------------------------------------- Shell / sidebar */
 

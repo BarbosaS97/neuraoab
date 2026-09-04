@@ -70,6 +70,34 @@
 
   <div class="panel">
     <div class="panel-header">
+      <h2>Professores autorizados (login via Google)</h2>
+      <button type="button" class="btn-accent" id="newAutorizadoBtn">Autorizar e-mail</button>
+    </div>
+    <p class="field-hint">
+      E-mails aqui conseguem entrar no Portal do Professor sozinhos, fazendo login com Google — sem
+      precisar do convite por e-mail/senha da tabela acima. O primeiro login do e-mail autorizado já
+      vira professor na hora.
+    </p>
+
+    <div style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>E-mail</th>
+            <th>Nome</th>
+            <th>Autorizado em</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="autorizadosTableBody">
+          <tr class="empty-row"><td colspan="4">Carregando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
       <h2>Planos</h2>
     </div>
     <p class="field-hint">Limites de uso de cada plano — mudanças valem na hora, sem precisar redeployar nada. Campos de número em branco = ilimitado.</p>
@@ -214,9 +242,36 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="autorizadoModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="autorizadoModalTitle">
+    <div class="modal-header">
+      <h2 id="autorizadoModalTitle">Autorizar e-mail</h2>
+      <button type="button" id="autorizadoModalClose" class="modal-close" aria-label="Fechar">&times;</button>
+    </div>
+    <form id="autorizadoForm">
+      <div class="modal-body">
+        <p class="modal-msg" id="autorizadoModalMsg"></p>
+        <div class="field">
+          <label for="atEmail">E-mail</label>
+          <input type="email" id="atEmail" required autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="atNome">Nome (opcional)</label>
+          <input type="text" id="atNome">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-ghost" id="autorizadoModalCancel">Cancelar</button>
+        <button type="submit" class="btn-accent" id="autorizadoModalSave">Autorizar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script src="js/config.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/admin.js"></script>
+<script src="js/professores-autorizados.js"></script>
 <script src="js/planos.js"></script>
 <script src="js/alunos.js"></script>
 </body>

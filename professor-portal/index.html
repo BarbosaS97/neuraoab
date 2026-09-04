@@ -3,6 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Esconde a página inteira durante o round-trip de volta do Google (o
+     redirect leva um instante) — precisa rodar ANTES do <body> pintar,
+     mesmo mecanismo já usado em index.html (landing, login de aluno). Sem
+     isso a pessoa via um flash da tela de login antes do redirect pro
+     dashboard. -->
+<script>
+  (function () {
+    try {
+      if (sessionStorage.getItem("neuraoab-oauth-pending") === "1") {
+        document.documentElement.classList.add("oauth-returning");
+      }
+    } catch (e) {}
+  })();
+</script>
+<style>
+  html.oauth-returning body > *:not(#oauthReturningOverlay) { display: none !important; }
+  #oauthReturningOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #0f1420;
+    align-items: center;
+    justify-content: center;
+  }
+  html.oauth-returning #oauthReturningOverlay { display: flex; }
+  #oauthReturningOverlay .oauth-returning-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    border-top-color: #4f7cff;
+    border-radius: 50%;
+    animation: oauthReturningSpin 0.8s linear infinite;
+  }
+  @keyframes oauthReturningSpin { to { transform: rotate(360deg); } }
+</style>
 <title>Portal do Professor — NeuraOAB</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="../images/favicon.ico" sizes="any">
@@ -15,29 +51,52 @@
 </head>
 <body>
 
+<!-- Primeiro elemento do <body> de propósito — é o único que fica visível
+     enquanto "oauth-returning" está ativo (ver <style>/<script> no <head>).
+     Revelada/removida por revealPage() em js/auth.js, em todo caminho que
+     não termina em redirect de verdade (erro, ou o timeout de segurança). -->
+<div id="oauthReturningOverlay"><div class="oauth-returning-spinner"></div></div>
+
 <div class="login-screen">
-  <div class="login-card">
+  <div class="login-card" id="loginCard">
     <img src="../images/logotipo.png" alt="NeuraOAB" class="login-logo">
     <h1 class="login-title">Portal do Professor</h1>
-    <p class="login-sub">Acesso restrito a professores cadastrados</p>
+    <p class="login-sub">Acesso restrito a professores autorizados</p>
 
-    <form id="loginForm" novalidate>
-      <div class="field">
-        <label for="loginEmail">E-mail</label>
-        <input type="email" id="loginEmail" autocomplete="username" required>
-      </div>
-      <div class="field">
-        <label for="loginPassword">Senha</label>
-        <input type="password" id="loginPassword" autocomplete="current-password" required>
-      </div>
-      <button type="submit" class="btn-primary" id="loginSubmit">Entrar</button>
-    </form>
+    <button type="button" class="google-btn" id="googleLoginBtn">
+      <svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true">
+        <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.71v2.26h2.92c1.71-1.57 2.68-3.88 2.68-6.61z"/>
+        <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.19l-2.92-2.26c-.81.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.71H.96v2.33A9 9 0 0 0 9 18z"/>
+        <path fill="#FBBC05" d="M3.97 10.7A5.4 5.4 0 0 1 3.68 9c0-.59.1-1.17.29-1.7V4.97H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.03l3.01-2.33z"/>
+        <path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.59-2.59C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.97l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/>
+      </svg>
+      Continuar com Google
+    </button>
 
     <p class="login-error" id="loginError"></p>
+  </div>
+
+  <!-- Mostrada em vez do login-card quando a sessão do Google é válida mas
+       o e-mail não está autorizado (ver resolveAccess em js/auth.js) —
+       nunca as duas ao mesmo tempo. -->
+  <div class="restricted-card" id="restrictedView" hidden>
+    <img src="../images/logotipo.png" alt="NeuraOAB" class="login-logo">
+    <h1 class="restricted-title">Acesso Restrito</h1>
+    <p class="restricted-sub">
+      Sua conta Google ainda não está autorizada a usar o Portal do Professor. Contrate um dos
+      planos abaixo pra liberar o acesso pro seu cursinho.
+    </p>
+
+    <div class="plans-card" id="plansCard"></div>
+
+    <p class="whatsapp-contact-line" id="whatsappContactLine"></p>
+
+    <button type="button" class="btn-ghost" id="restrictedLogoutBtn" style="width: 100%; margin-top: 18px;">Sair</button>
   </div>
 </div>
 
 <script src="js/config.js"></script>
 <script src="js/auth.js"></script>
+<script src="js/planos-restrito.js"></script>
 </body>
 </html>
