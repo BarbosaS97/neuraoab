@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=53">
+<link rel="stylesheet" href="style.css?v=54">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -763,7 +763,22 @@
           <div class="chat-title">Dr. Laureano</div>
           <div class="chat-subtitle">Tira-dúvidas da questão atual</div>
         </div>
+        <button type="button" id="chatClearBtn" class="chat-clear-btn" aria-label="Limpar conversa" title="Limpar conversa">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+        </button>
         <button type="button" id="chatClose" class="chat-close" aria-label="Fechar chat">&times;</button>
+      </div>
+
+      <!-- Confirmação antes de apagar — mesmo padrão de duas etapas já usado
+           em "Zerar estatísticas"/"Excluir conta" (Meu Perfil, ver
+           estudos.js), só que como uma barra dentro do painel de chat em
+           vez de trocar uma seção de tela inteira. -->
+      <div class="chat-clear-confirm" id="chatClearConfirm" hidden>
+        <p>Apagar toda a conversa desta questão? Essa ação não pode ser desfeita.</p>
+        <div class="chat-clear-confirm-row">
+          <button type="button" id="chatClearCancel" class="btn-ghost">Cancelar</button>
+          <button type="button" id="chatClearConfirmBtn" class="btn-danger">Apagar conversa</button>
+        </div>
       </div>
 
       <div class="chat-messages" id="chatMessages"></div>
@@ -781,6 +796,6 @@
 </div>
 
 <script src="estudos.js?v=45"></script>
-<script src="dr-laureano.js?v=11"></script>
+<script src="dr-laureano.js?v=13"></script>
 </body>
 </html>

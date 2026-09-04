@@ -8,6 +8,10 @@ const chatPanel = document.getElementById("chatPanel");
 const chatToggle = document.getElementById("chatToggle");
 const chatToggleAvatar = document.getElementById("chatToggleAvatar");
 const chatClose = document.getElementById("chatClose");
+const chatClearBtn = document.getElementById("chatClearBtn");
+const chatClearConfirm = document.getElementById("chatClearConfirm");
+const chatClearCancel = document.getElementById("chatClearCancel");
+const chatClearConfirmBtn = document.getElementById("chatClearConfirmBtn");
 const chatMessagesEl = document.getElementById("chatMessages");
 const chatForm = document.getElementById("chatForm");
 const chatInput = document.getElementById("chatInput");
@@ -219,6 +223,9 @@ function updateInputAvailability() {
   chatInput.disabled = !currentQuestion || sending || limitReached;
   chatInput.placeholder = limitReached ? "Limite mensal atingido — faça upgrade pra continuar" : "Pergunte sobre esta questão...";
   chatSendBtn.disabled = !currentQuestion || limitReached;
+  // Limpar no meio de uma resposta sendo gerada não faz sentido (ela ainda
+  // ia terminar de "digitar" e recriar a bolha) — mesma trava de sending.
+  chatClearBtn.disabled = !currentQuestion || sending;
 }
 
 function setSendButtonMode(mode) {
@@ -260,6 +267,71 @@ function clearSuggestions() {
   }
 }
 
+// --------------------------------------------------------- Conversa salva
+//
+// Uma linha por (aluno, questão) — ver supabase/schema_chat_conversas.sql
+// pro porquê dessa chave (o chat é por questão, não um único fio contínuo).
+// Só funciona logado (currentSession vem de estudos.js, mesmo script
+// classico/escopo global do topo do arquivo) — uso anônimo do chat
+// continua exatamente como sempre foi, só sem sincronizar entre visitas.
+
+async function loadSavedConversation(questionId) {
+  if (!currentSession?.user || !questionId) return null;
+  const { data, error } = await client
+    .from("chat_conversas")
+    .select("messages")
+    .eq("user_id", currentSession.user.id)
+    .eq("question_id", questionId)
+    .maybeSingle();
+  if (error || !data || !Array.isArray(data.messages) || data.messages.length === 0) return null;
+  return data.messages;
+}
+
+// Dispara e esquece de propósito (nunca await no chamador) — salvar a
+// conversa é um "nice to have" em paralelo, não pode travar a digitação do
+// Dr. Laureano nem virar um erro visível pro aluno se a rede falhar.
+function saveConversation(questionId, messages) {
+  if (!currentSession?.user || !questionId) return;
+  client
+    .from("chat_conversas")
+    .upsert(
+      { user_id: currentSession.user.id, question_id: questionId, messages },
+      { onConflict: "user_id,question_id" },
+    )
+    .then(({ error }) => {
+      if (error) console.error("dr-laureano: falha ao salvar conversa", error.message);
+    });
+}
+
+function deleteSavedConversation(questionId) {
+  if (!currentSession?.user || !questionId) return Promise.resolve();
+  return client
+    .from("chat_conversas")
+    .delete()
+    .eq("user_id", currentSession.user.id)
+    .eq("question_id", questionId)
+    .then(({ error }) => {
+      if (error) console.error("dr-laureano: falha ao apagar conversa", error.message);
+    });
+}
+
+// Todo lugar que adicionava direto em chatHistory.push(...) passa a usar
+// isto — grava a mensagem E persiste o array inteiro de uma vez (ver
+// saveConversation), sem precisar lembrar de chamar as duas coisas em cada
+// call site.
+function recordMessage(role, content) {
+  chatHistory.push({ role, content });
+  saveConversation(currentQuestion?.id, chatHistory);
+}
+
+// Mostra uma mensagem já concluída de uma vez (sem o efeito de "digitando"
+// de sayAsLaureano) — usado só pra repor uma conversa salva, que o aluno já
+// leu antes; "tocar" ela de novo, letra por letra, seria estranho.
+function appendStaticMessage(role, content) {
+  const bubble = appendMessageBubble(role);
+  bubble.textContent = role === "assistant" ? stripMarkdown(content) : content;
+}
+
 async function resetChatForQuestion(question) {
   const myGeneration = ++chatGeneration;
   currentQuestion = question;
@@ -271,37 +343,84 @@ async function resetChatForQuestion(question) {
   sending = false; // abandona qualquer resposta pendente da questao anterior
   setSendButtonMode("send");
   updateInputAvailability();
+  chatClearConfirm.hidden = true; // confirmacao de limpar era da questao anterior
 
-  if (question) {
-    const disciplinaTxt = question.discipline ? ` de ${question.discipline}` : "";
-    const greeting = `Olá! Sou o Dr. Laureano. Estou vendo aqui a Questão ${question.number}${disciplinaTxt}. ` +
-      "Pode perguntar sobre o enunciado ou as alternativas, e eu te ajudo a raciocinar. " +
-      "Se quiser saber a resposta certa direto, é só pedir.";
-    const shown = await sayAsLaureano(greeting);
-    // Se outra chamada mais nova comecou nesse meio tempo (o aluno trocou
-    // de questao de novo antes desta saudacao terminar de "digitar"), essa
-    // chamada foi superada — desiste sem mexer no chat da questao atual.
-    if (myGeneration !== chatGeneration) return;
-    chatHistory.push({ role: "assistant", content: shown });
+  if (!question) {
+    appendStaticMessage("assistant", "Selecione uma questão para eu poder ajudar.");
+    return;
+  }
 
-    if (isChatLimitReached()) {
-      // Cota do mes ja' esgotada (ver isChatLimitReached) — nem oferece as
-      // sugestoes de pergunta, ja' avisa de cara em vez de deixar o aluno
-      // clicar numa delas so' pra' descobrir que esta' bloqueado.
-      const limitMsg = await sayAsLaureano(
-        `Você atingiu o limite de ${planStatus.chat_mensagens_por_mes} mensagens do plano grátis este mês.`,
-      );
-      if (myGeneration !== chatGeneration) return;
-      chatHistory.push({ role: "assistant", content: limitMsg });
-      appendUpgradeCta();
-      updateInputAvailability();
-    } else {
-      showSuggestions();
-    }
+  // Retoma a conversa salva desta questao, se existir — continua de onde
+  // parou (em qualquer dispositivo), sem saudacao nova nem sugestoes, como
+  // reabrir um chat de verdade em vez de comecar tudo de novo.
+  const saved = await loadSavedConversation(question.id);
+  if (myGeneration !== chatGeneration) return; // aluno ja' trocou de questao de novo
+
+  if (saved) {
+    chatHistory = saved;
+    saved.forEach((m) => appendStaticMessage(m.role, m.content));
+    updateInputAvailability();
+    return;
+  }
+
+  const disciplinaTxt = question.discipline ? ` de ${question.discipline}` : "";
+  const greeting = `Olá! Sou o Dr. Laureano. Estou vendo aqui a Questão ${question.number}${disciplinaTxt}. ` +
+    "Pode perguntar sobre o enunciado ou as alternativas, e eu te ajudo a raciocinar. " +
+    "Se quiser saber a resposta certa direto, é só pedir.";
+  // Fixa, sem efeito de "digitando" — é a PRIMEIRA coisa que aparece no
+  // chat, antes de qualquer interação do aluno (pedido explícito: só as
+  // respostas de verdade do Dr. Laureano, depois de uma pergunta, "falam"
+  // aos poucos; a saudação inicial só aparece pronta).
+  appendStaticMessage("assistant", greeting);
+  recordMessage("assistant", greeting);
+
+  if (isChatLimitReached()) {
+    // Cota do mes ja' esgotada (ver isChatLimitReached) — nem oferece as
+    // sugestoes de pergunta, ja' avisa de cara em vez de deixar o aluno
+    // clicar numa delas so' pra' descobrir que esta' bloqueado. Tambem
+    // fixa, mesmo motivo da saudacao acima — ainda antes de qualquer
+    // interacao do aluno.
+    const limitMsg = `Você atingiu o limite de ${planStatus.chat_mensagens_por_mes} mensagens do plano grátis este mês.`;
+    appendStaticMessage("assistant", limitMsg);
+    recordMessage("assistant", limitMsg);
+    appendUpgradeCta();
+    updateInputAvailability();
   } else {
-    await sayAsLaureano("Selecione uma questão para eu poder ajudar.");
+    showSuggestions();
   }
 }
+
+// ------------------------------------------------------------ Limpar tudo
+//
+// Confirmação de duas etapas (mesmo espírito de "Zerar estatísticas"/
+// "Excluir conta" em Meu Perfil, ver estudos.js) — apaga a conversa salva
+// desta questão (se logado) e recomeça do zero (saudação + sugestões).
+chatClearBtn.addEventListener("click", () => {
+  if (chatClearBtn.disabled) return;
+  chatClearConfirm.hidden = false;
+});
+
+chatClearCancel.addEventListener("click", () => {
+  chatClearConfirm.hidden = true;
+});
+
+chatClearConfirmBtn.addEventListener("click", async () => {
+  const question = currentQuestion;
+  if (!question) return;
+  chatClearConfirmBtn.disabled = true;
+  chatClearCancel.disabled = true;
+  try {
+    await deleteSavedConversation(question.id);
+  } finally {
+    chatClearConfirmBtn.disabled = false;
+    chatClearCancel.disabled = false;
+    chatClearConfirm.hidden = true;
+  }
+  // O proprio question ja' e' o currentQuestion — resetChatForQuestion tenta
+  // recarregar uma conversa salva, mas acabou de ser apagada, entao cai
+  // direto na saudacao nova.
+  resetChatForQuestion(question);
+});
 
 document.addEventListener("question:changed", (ev) => {
   resetChatForQuestion(ev.detail);
@@ -343,7 +462,7 @@ async function sendChatMessage(text) {
   // pra cima antes (mesmo comportamento de qualquer chat comum).
   stickToBottom = true;
 
-  chatHistory.push({ role: "user", content: text });
+  recordMessage("user", text);
   appendMessageBubble("user").textContent = text;
 
   const pending = appendMessageBubble("assistant pending");
@@ -417,7 +536,7 @@ async function sendChatMessage(text) {
     appendInterruptedNote();
   } else if (replyText === null) {
     const shown = await sayAsLaureano(friendlyError || "Desculpe, não consegui responder agora. Tente novamente em instantes.");
-    chatHistory.push({ role: "assistant", content: shown });
+    recordMessage("assistant", shown);
     if (limitReached) {
       appendUpgradeCta();
       // Recarrega planStatus (estudos.js) pra refletir o consumo que a
@@ -428,7 +547,7 @@ async function sendChatMessage(text) {
     }
   } else {
     const shown = await sayAsLaureano(replyText);
-    chatHistory.push({ role: "assistant", content: shown });
+    recordMessage("assistant", shown);
   }
 
   sending = false;

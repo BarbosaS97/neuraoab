@@ -2112,6 +2112,51 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 
 .chat-close:hover { color: var(--text); border-color: var(--primary); }
 
+.chat-clear-btn {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.12s ease, border-color 0.12s ease;
+}
+
+.chat-clear-btn:hover:not(:disabled) { color: var(--error); border-color: var(--error); }
+.chat-clear-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Confirmação de duas etapas antes de apagar — mesmo espírito de
+   .stats-reset-warning/.stats-reset-confirm-row (Meu Perfil), só compacto
+   pra caber na largura do painel de chat (--chat-w, 420px). */
+.chat-clear-confirm {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--error-dim);
+  flex-shrink: 0;
+}
+
+.chat-clear-confirm p {
+  margin: 0 0 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.chat-clear-confirm-row { display: flex; gap: 8px; }
+
+.chat-clear-confirm-row .btn-ghost,
+.chat-clear-confirm-row .btn-danger {
+  width: auto;
+  flex: 1;
+  padding: 7px 0;
+  font-size: 12px;
+}
+
 .chat-avatar-wrap {
   position: relative;
   flex-shrink: 0;
