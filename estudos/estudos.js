@@ -52,6 +52,10 @@ const checkoutNome = document.getElementById("checkoutNome");
 const checkoutCpf = document.getElementById("checkoutCpf");
 const checkoutTelefoneField = document.getElementById("checkoutTelefoneField");
 const checkoutTelefone = document.getElementById("checkoutTelefone");
+const checkoutCepField = document.getElementById("checkoutCepField");
+const checkoutCep = document.getElementById("checkoutCep");
+const checkoutAddressNumber = document.getElementById("checkoutAddressNumber");
+const checkoutAddressPreview = document.getElementById("checkoutAddressPreview");
 const checkoutSubmitBtn = document.getElementById("checkoutSubmitBtn");
 const checkoutMsg = document.getElementById("checkoutMsg");
 const checkoutAlreadyOwned = document.getElementById("checkoutAlreadyOwned");
@@ -263,27 +267,82 @@ function updateCheckoutSummary() {
     : CHECKOUT_PERIOD_LABEL[checkoutCiclo];
 }
 
-// Telefone só é pedido pra CREDIT_CARD + YEARLY — é o único caminho que usa
-// o Asaas Checkout, que exige customerData.phoneNumber (confirmado em
-// produção: "O campo phoneNumber deve ser informado"). PIX/boleto/cartão
-// mensal (assinatura de verdade, ver criar-cobranca/index.ts) não passam
-// por ali, então não faz sentido pedir de todo mundo.
-function updateTelefoneVisibility() {
+// Telefone + endereço só são pedidos pra CREDIT_CARD + YEARLY — é o único
+// caminho que usa o Asaas Checkout, que exige telefone e endereço completo
+// em customerData (confirmado em produção, um campo obrigatório de cada
+// vez: primeiro "phone", depois "address"/"addressNumber"/"postalCode"/
+// "province"/"city" — ver comentário grande em criar-cobranca/index.ts).
+// PIX/boleto/cartão mensal (assinatura de verdade) não passam por ali,
+// então não faz sentido pedir isso de todo mundo.
+function updateCreditCardExtrasVisibility() {
   const need = isParceladoAnual();
   checkoutTelefoneField.hidden = !need;
   checkoutTelefone.required = need;
+  checkoutCepField.hidden = !need;
+  checkoutAddressNumber.required = need;
 }
 
 setupSegmented(checkoutCicloSegmented, "ciclo", (value) => {
   checkoutCiclo = value;
   updateCheckoutSummary();
-  updateTelefoneVisibility();
+  updateCreditCardExtrasVisibility();
 });
 
 setupSegmented(checkoutBillingSegmented, "billing", (value) => {
   checkoutBillingType = value;
   updateCheckoutSummary();
-  updateTelefoneVisibility();
+  updateCreditCardExtrasVisibility();
+});
+
+// ---------------------------------------------------------- Endereço (CEP)
+//
+// Só rua/bairro/cidade — o resto (número, complemento) o aluno digita.
+// ViaCEP é gratuito, sem chave/autenticação, e devolve o código IBGE do
+// município direto ("ibge") — é exatamente o formato que customerData.city
+// da Asaas espera (número, não nome da cidade, ver criar-cobranca/index.ts).
+let checkoutAddressResolved = null; // { street, neighborhood, city, uf, ibge } | null
+
+async function lookupCep(cepDigits) {
+  checkoutAddressResolved = null;
+  checkoutAddressPreview.hidden = true;
+  checkoutAddressPreview.className = "checkout-address-preview";
+  if (cepDigits.length !== 8) return;
+
+  checkoutAddressPreview.hidden = false;
+  checkoutAddressPreview.textContent = "Buscando endereço...";
+
+  try {
+    const res = await fetch(`https://viacep.com.br/ws/${cepDigits}/json/`);
+    const data = await res.json();
+    if (!res.ok || data.erro) {
+      checkoutAddressPreview.textContent = "CEP não encontrado — confira e tente de novo.";
+      checkoutAddressPreview.className = "checkout-address-preview error";
+      return;
+    }
+    checkoutAddressResolved = {
+      street: data.logradouro || "",
+      neighborhood: data.bairro || "",
+      city: data.localidade || "",
+      uf: data.uf || "",
+      ibge: data.ibge || "",
+    };
+    checkoutAddressPreview.textContent = checkoutAddressResolved.street
+      ? `${checkoutAddressResolved.street}, ${checkoutAddressResolved.neighborhood} — ${checkoutAddressResolved.city}/${checkoutAddressResolved.uf}`
+      : `${checkoutAddressResolved.neighborhood} — ${checkoutAddressResolved.city}/${checkoutAddressResolved.uf}`;
+  } catch {
+    checkoutAddressPreview.textContent = "Não foi possível buscar o endereço agora — confira o CEP e tente de novo.";
+    checkoutAddressPreview.className = "checkout-address-preview error";
+  }
+}
+
+checkoutCep.addEventListener("input", () => {
+  const digits = checkoutCep.value.replace(/\D/g, "").slice(0, 8);
+  checkoutCep.value = digits.length > 5 ? `${digits.slice(0, 5)}-${digits.slice(5)}` : digits;
+  if (digits.length === 8) lookupCep(digits);
+  else {
+    checkoutAddressResolved = null;
+    checkoutAddressPreview.hidden = true;
+  }
 });
 
 function stopCheckoutPolling() {
@@ -351,9 +410,13 @@ function openCheckout(plano) {
   stopCheckoutPolling();
 
   updateCheckoutSummary();
-  updateTelefoneVisibility();
+  updateCreditCardExtrasVisibility();
   checkoutNome.value = profNome.value || currentSession?.user?.user_metadata?.nome || "";
   checkoutTelefone.value = profTelefone.value || "";
+  checkoutCep.value = "";
+  checkoutAddressNumber.value = "";
+  checkoutAddressResolved = null;
+  checkoutAddressPreview.hidden = true;
 
   plansGrid.hidden = true;
   plansModalNote.hidden = true;
@@ -406,7 +469,7 @@ checkoutCpf.addEventListener("input", () => {
 });
 
 // Mesma máscara cosmética do CPF acima, pro telefone (só aparece pra
-// CREDIT_CARD + YEARLY, ver updateTelefoneVisibility).
+// CREDIT_CARD + YEARLY, ver updateCreditCardExtrasVisibility).
 checkoutTelefone.addEventListener("input", () => {
   const digits = checkoutTelefone.value.replace(/\D/g, "").slice(0, 11);
   let formatted = digits;
@@ -423,6 +486,8 @@ checkoutForm.addEventListener("submit", async (ev) => {
   const nome = checkoutNome.value.trim();
   const cpfCnpj = checkoutCpf.value.replace(/\D/g, "");
   const telefone = checkoutTelefone.value.replace(/\D/g, "");
+  const cep = checkoutCep.value.replace(/\D/g, "");
+  const addressNumber = checkoutAddressNumber.value.trim();
   const ciclo = checkoutCiclo;
   const billingType = checkoutBillingType;
 
@@ -434,11 +499,22 @@ checkoutForm.addEventListener("submit", async (ev) => {
     showCheckoutMsg("CPF inválido.");
     return;
   }
-  // Só CREDIT_CARD + YEARLY passa pelo Asaas Checkout, que exige telefone
-  // (ver updateTelefoneVisibility) — os outros caminhos nem mostram o campo.
-  if (isParceladoAnual() && telefone.length < 10) {
-    showCheckoutMsg("Informe um telefone válido, com DDD.");
-    return;
+  // Só CREDIT_CARD + YEARLY passa pelo Asaas Checkout, que exige telefone e
+  // endereço completo (ver updateCreditCardExtrasVisibility) — os outros
+  // caminhos nem mostram esses campos.
+  if (isParceladoAnual()) {
+    if (telefone.length < 10) {
+      showCheckoutMsg("Informe um telefone válido, com DDD.");
+      return;
+    }
+    if (cep.length !== 8 || !checkoutAddressResolved) {
+      showCheckoutMsg("Informe um CEP válido — aguarde o endereço aparecer antes de continuar.");
+      return;
+    }
+    if (!addressNumber) {
+      showCheckoutMsg("Informe o número do endereço.");
+      return;
+    }
   }
 
   checkoutSubmitBtn.disabled = true;
@@ -457,7 +533,22 @@ checkoutForm.addEventListener("submit", async (ev) => {
     {
       body: usingWoovi
         ? { plano: checkoutPlano, ciclo, nome, cpfCnpj }
-        : { plano: checkoutPlano, ciclo, billingType, nome, cpfCnpj, telefone },
+        : {
+            plano: checkoutPlano,
+            ciclo,
+            billingType,
+            nome,
+            cpfCnpj,
+            telefone,
+            // Só preenchidos/relevantes no ramo parcelado — ver validação
+            // acima (checkoutAddressResolved só existe depois de um lookup
+            // de CEP bem-sucedido, ver lookupCep).
+            cep,
+            addressNumber,
+            address: checkoutAddressResolved?.street ?? "",
+            province: checkoutAddressResolved?.neighborhood ?? "",
+            cityIbge: checkoutAddressResolved?.ibge ?? "",
+          },
     },
   );
 

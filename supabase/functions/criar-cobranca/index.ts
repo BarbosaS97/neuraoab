@@ -192,10 +192,23 @@ interface CreatePayload {
   nome?: string;
   cpfCnpj?: string;
   // Só usado (e exigido) no ramo CREDIT_CARD + YEARLY — ver isParceladoAnual
-  // abaixo. Asaas Checkout exige customerData.phoneNumber (confirmado em
-  // produção: "O campo phoneNumber deve ser informado"); os outros
-  // caminhos (PIX/boleto/cartão mensal) não usam este campo.
+  // abaixo. Asaas Checkout exige customerData.phone (confirmado em
+  // produção: sem ele, a Asaas recusa com "O campo phoneNumber deve ser
+  // informado" — nome interno do atributo no modelo de cliente deles, o
+  // campo que se manda mesmo é "phone"); os outros caminhos (PIX/boleto/
+  // cartão mensal) não usam este campo.
   telefone?: string;
+  // Endereço — também só usado (e exigido) no ramo CREDIT_CARD + YEARLY,
+  // mesmo motivo do telefone acima: depois de aceitar "phone", o Asaas
+  // Checkout passou a recusar por falta de endereço também (confirmado em
+  // produção: "O campo address deve ser informado"). O front-end resolve
+  // rua/bairro/cidade a partir do CEP via ViaCEP (ver lookupCep em
+  // estudos.js) — só addressNumber é digitado à mão.
+  cep?: string;
+  addressNumber?: string;
+  address?: string;
+  province?: string; // "bairro" — nome que o Asaas usa pro campo, não estado/UF
+  cityIbge?: string; // código IBGE do município (string aqui, mas customerData.city quer number)
 }
 
 function sleep(ms: number): Promise<void> {
@@ -279,9 +292,22 @@ Deno.serve(async (req: Request) => {
   const valor = PRICES[plano][ciclo];
   const isParceladoAnual = billingType === "CREDIT_CARD" && ciclo === "YEARLY";
   const telefone = onlyDigits(body.telefone ?? "");
+  const cep = onlyDigits(body.cep ?? "");
+  const addressNumber = (body.addressNumber ?? "").trim();
+  const address = (body.address ?? "").trim();
+  const province = (body.province ?? "").trim();
+  const cityIbge = onlyDigits(body.cityIbge ?? "");
 
-  if (isParceladoAnual && telefone.length < 10) {
-    return jsonResponse({ error: "Informe um telefone válido, com DDD." }, 400);
+  if (isParceladoAnual) {
+    if (telefone.length < 10) {
+      return jsonResponse({ error: "Informe um telefone válido, com DDD." }, 400);
+    }
+    if (cep.length !== 8 || !address || !province || !cityIbge) {
+      return jsonResponse({ error: "Informe um CEP válido e o número do endereço." }, 400);
+    }
+    if (!addressNumber) {
+      return jsonResponse({ error: "Informe o número do endereço." }, 400);
+    }
   }
 
   // Grava nome/CPF no perfil (service_role — nunca escrita direta do
@@ -327,7 +353,30 @@ Deno.serve(async (req: Request) => {
           },
         ],
         installment: { maxInstallmentCount: CREDIT_CARD_YEARLY_INSTALLMENTS },
-        customerData: { name: nome, cpfCnpj, email: user.email, phoneNumber: telefone },
+        // O campo certo é "phone" (confirmado no exemplo oficial da
+        // documentação: "phone": "47988887777") — a mensagem de erro que a
+        // Asaas devolve quando falta ("O campo phoneNumber deve ser
+        // informado") cita o nome INTERNO do atributo no modelo de cliente
+        // deles, não o nome do campo que se manda aqui; "phoneNumber" (o
+        // nome usado na 1ª tentativa) não existe nesse corpo, por isso
+        // sempre dava esse erro mesmo com o telefone preenchido.
+        customerData: {
+          name: nome,
+          cpfCnpj,
+          email: user.email,
+          phone: telefone,
+          // Exemplo oficial da documentação: address (rua), addressNumber
+          // (número, tipo NUMBER), postalCode (CEP), province (isto aqui é
+          // o BAIRRO, apesar do nome — não estado/UF) e city (código IBGE
+          // do município, também NUMBER, não o nome da cidade em texto).
+          // Resolvidos a partir do CEP no front-end via ViaCEP (ver
+          // lookupCep em estudos.js) — só addressNumber vem digitado.
+          address,
+          addressNumber: Number(addressNumber) || addressNumber,
+          postalCode: cep,
+          province,
+          city: Number(cityIbge),
+        },
       }),
     });
     if (!checkoutResult.ok || !checkoutResult.data?.id || !checkoutResult.data?.link) {

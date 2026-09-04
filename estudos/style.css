@@ -3055,6 +3055,17 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 
 .checkout-field { margin-bottom: 18px; }
 
+.checkout-field-row { display: flex; gap: 10px; }
+
+.checkout-address-preview {
+  margin: 8px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+.checkout-address-preview.error { color: var(--error); }
+
 .checkout-field > label {
   display: block;
   font-size: 12px;
