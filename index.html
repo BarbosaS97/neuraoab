@@ -1233,20 +1233,32 @@
   /* ------------------------------------------------------ Planos: cursinhos */
   /* Bloco único (texto + abas de preço + contato) — ver comentário no HTML.
      Reaproveita as variáveis de tema já usadas em .pricing-card acima
-     (--card/--border/--primary/--success). */
+     (--card/--border/--primary/--success). Horizontal (texto à esquerda,
+     card de preço à direita) até a largura empilhar em telas estreitas. */
   .cursinho-plans {
-    max-width: 560px;
+    max-width: 920px;
     margin: 32px auto 0;
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 18px;
-    padding: 32px;
+    padding: 34px;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    display: flex;
+    align-items: center;
+    gap: 36px;
   }
 
-  .cursinho-plans-copy { margin-bottom: 26px; }
+  .cursinho-plans-copy { flex: 1 1 320px; min-width: 0; }
   .cursinho-plans-copy h3 { margin: 10px 0 8px; font-size: 18px; font-weight: 800; }
   .cursinho-plans-copy p { margin: 0; font-size: 13px; line-height: 1.65; color: var(--text-dim); }
+
+  .cursinho-plans-card { flex: 0 0 320px; width: 320px; }
+
+  @media (max-width: 760px) {
+    .cursinho-plans { flex-direction: column; align-items: stretch; padding: 28px; }
+    .cursinho-plans-copy { flex: none; }
+    .cursinho-plans-card { flex: none; width: 100%; }
+  }
 
   .cursinho-tabs {
     display: flex;
@@ -2322,14 +2334,16 @@
       <p>Leve o NeuraOAB pra dentro da sua turma: seus alunos estudam com questões oficiais, tutor de IA e simulado completo da 2ª fase — e você acompanha o desempenho de cada um no Portal do Professor. Escolha o plano pelo tamanho da sua turma:</p>
     </div>
 
-    <div class="cursinho-tabs" id="cursinhoTabs">
-      <button type="button" class="cursinho-tab active" data-plano="curso20">Curso 20</button>
-      <button type="button" class="cursinho-tab" data-plano="curso50">Curso 50</button>
-      <button type="button" class="cursinho-tab" data-plano="curso100">Curso 100</button>
-    </div>
-    <div class="cursinho-panel" id="cursinhoPanel"></div>
+    <div class="cursinho-plans-card">
+      <div class="cursinho-tabs" id="cursinhoTabs">
+        <button type="button" class="cursinho-tab active" data-plano="curso20">Curso 20</button>
+        <button type="button" class="cursinho-tab" data-plano="curso50">Curso 50</button>
+        <button type="button" class="cursinho-tab" data-plano="curso100">Curso 100</button>
+      </div>
+      <div class="cursinho-panel" id="cursinhoPanel"></div>
 
-    <p class="cursinho-contact">💬 Entre em contato: <a id="cursinhoContactLink" href="#" target="_blank" rel="noopener noreferrer">(61) 98239-5208</a></p>
+      <p class="cursinho-contact">💬 Entre em contato: <a id="cursinhoContactLink" href="#" target="_blank" rel="noopener noreferrer">(61) 98239-5208</a></p>
+    </div>
   </div>
 </section>
 
