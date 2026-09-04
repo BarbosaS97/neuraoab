@@ -228,8 +228,7 @@ async function loadTurmas() {
 }
 
 // excluido_em IS NULL de propósito: aluno excluído não conta em NENHUMA
-// estatística (aqui, na turma, ou em Análises) — ver
-// supabase/schema_alunos_exclusao.sql.
+// estatística (aqui ou na turma) — ver supabase/schema_alunos_exclusao.sql.
 async function loadStudents() {
   if (!alunoRoleId) return;
   const { data, error } = await client

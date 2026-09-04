@@ -110,17 +110,14 @@ async function requireProfessorSession() {
   });
 })();
 
-// Marca o link ativo da sidebar a partir da URL de verdade, em vez de cada
-// HTML fixar "class=active" na mão — turma.html e aluno.html não têm link
-// próprio na sidebar (são páginas de detalhe abertas a partir de uma
-// turma), então contam como "Turmas" ativo, não "Análises".
+// Marca o link "Turmas" da sidebar como ativo em toda página que a tem —
+// único item do menu hoje (a aba "Análises" foi removida por ficar
+// redundante com o dashboard de turma.html), incluindo turma.html/
+// aluno.html (páginas de detalhe abertas a partir de uma turma, sem link
+// próprio na sidebar).
 (function highlightActiveSidebarLink() {
   const navLinks = document.querySelectorAll(".sidebar-nav a");
-  if (navLinks.length === 0) return; // index.html (login) não tem sidebar
-
-  const page = window.location.pathname.split("/").pop();
-  const activeHref = page === "analises.html" ? "analises.html" : "dashboard.html";
   navLinks.forEach((a) => {
-    a.classList.toggle("active", a.getAttribute("href") === activeHref);
+    a.classList.toggle("active", a.getAttribute("href") === "dashboard.html");
   });
 })();

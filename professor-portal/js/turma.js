@@ -533,8 +533,8 @@ document.getElementById("attentionViewAllBtn").addEventListener("click", () => {
 // -------------------------------------------------------------------- Dados
 
 // Excluído (excluido_em preenchido) some da lista principal e de TODA
-// estatística (aqui, em Turmas e em Análises) — só volta a contar depois
-// de restaurado. Ver supabase/schema_alunos_exclusao.sql.
+// estatística desta turma — só volta a contar depois de restaurado. Ver
+// supabase/schema_alunos_exclusao.sql.
 async function loadStudents() {
   if (!alunoRoleId) return;
   let query = client
@@ -1108,8 +1108,8 @@ async function init() {
   // Checa a sessão ANTES de qualquer outra coisa, mesmo se a URL não tiver
   // "?id=" válido — sem isso, um visitante sem sessão que abrisse
   // turma.html sem parâmetro nunca passava pela guarda de autenticação
-  // (inconsistente com dashboard.html/aluno.html/analises.html, que sempre
-  // checam primeiro).
+  // (inconsistente com dashboard.html/aluno.html, que sempre checam
+  // primeiro).
   const user = await requireProfessorSession();
   if (!user) return;
   currentProfessorId = user.id;

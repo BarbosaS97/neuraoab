@@ -1,6 +1,5 @@
 // NeuraOAB — Portal do Professor — gráfico de linha simples em SVG puro, sem
-// nenhuma lib externa (mesmo espírito das barras que já existem em
-// analises.js) — usado no resumo de evolução da turma (1 linha) e no
+// nenhuma lib externa — usado no resumo de evolução da turma (1 linha) e no
 // gráfico "aluno vs turma" do detalhe do aluno (2 linhas).
 //
 // series: [{ name, color, points: [{ x: label, y: 0-100 }] }]

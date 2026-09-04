@@ -218,17 +218,19 @@ function buildDesempenhoAreaRow({ discipline, total, correct }) {
 }
 
 // Mesma Edge Function usada em estudos/estudos.js (requestStatsAnalysis) —
-// ela so' recebe estatisticas ja' agregadas e devolve uma analise textual,
-// sem tocar no banco nem checar quem esta' chamando, entao reusar daqui
-// (com os dados do ALUNO, nao do professor) funciona sem nenhuma mudanca
-// no backend.
-async function requestFase1Analysis(stats, container) {
+// só que aqui manda também o "studentId": a function checa se a análise por
+// IA está liberada olhando o PLANO de quem ela vai analisar, não de quem
+// chamou — sem o studentId ela checava o plano do PROFESSOR (que nunca tem
+// profiles.plano preenchido, então sempre caía no plano grátis e recusava
+// com 403, não importa o plano do aluno) — ver resolveStatsSubject em
+// supabase/functions/estatisticas-ia/index.ts.
+async function requestFase1Analysis(stats, container, studentId) {
   const loading = document.createElement("p");
   loading.className = "fase1-ai-loading";
   loading.textContent = "Analisando o desempenho do aluno...";
   container.appendChild(loading);
 
-  const { data, error } = await client.functions.invoke("estatisticas-ia", { body: stats });
+  const { data, error } = await client.functions.invoke("estatisticas-ia", { body: { ...stats, studentId } });
   loading.remove();
 
   if (error || !data) {
@@ -372,7 +374,7 @@ function renderFase1Filtered() {
 
   const totalAll = answers.length;
   const correctAll = answers.filter((a) => a.correct).length;
-  requestFase1Analysis({ overall: { total: totalAll, correct: correctAll }, bySubject: bySubjectList }, aiContainer);
+  requestFase1Analysis({ overall: { total: totalAll, correct: correctAll }, bySubject: bySubjectList }, aiContainer, getStudentId());
 }
 
 // -------------------------------------------------------- Últimas atividades

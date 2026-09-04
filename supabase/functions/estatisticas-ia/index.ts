@@ -45,6 +45,19 @@ function jsonResponse(body: unknown, status = 200): Response {
 // (Basico/Pro — editavel no Portal Mestre) consegue gerar a analise; aluno
 // do plano gratuito continua vendo as estatisticas normais (calculadas no
 // front-end, sem chamar esta function), so' sem o texto gerado por IA.
+//
+// BUG CORRIGIDO: quando quem chama e' o PROFESSOR (vendo a estatistica de um
+// ALUNO no Portal do Professor), o plano que importa e' o do ALUNO, nao o do
+// professor — profiles.plano de contas de professor e' sempre null (esse
+// campo so' existe pra aluno avulso, ver schema_aluno_avulso.sql), e
+// get_plan_status_for trata null como 'gratuito' (estatisticas_ia=false).
+// Ou seja: SEMPRE dava 403 pro professor, nao importa o plano de qual aluno
+// ele estivesse vendo — "Nao foi possivel gerar a analise agora." pra
+// sempre. Corrigido aceitando um "studentId" opcional no body: quando
+// presente e diferente de quem chamou, resolveStatsSubject confirma que
+// quem chamou e' professor/admin DESSE aluno (mesma checagem de
+// requireOwnStudent em professor-portal/index.ts) e o plano checado passa a
+// ser o do ALUNO, nao o de quem chamou.
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
 const authClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
@@ -83,6 +96,42 @@ async function planAllowsAiStats(userId: string): Promise<boolean> {
   const { data, error } = await adminClient.rpc("get_plan_status_for", { p_user_id: userId });
   if (error || !data || data.length === 0) return true;
   return (data[0] as { estatisticas_ia: boolean }).estatisticas_ia !== false;
+}
+
+// Resolve de QUEM é o plano que deve ser checado: o próprio caller (fluxo
+// normal, estudos/estudos.js analisando a própria estatística) ou — quando
+// "studentId" vem no body e é diferente do caller — o ALUNO sendo visto no
+// Portal do Professor, DEPOIS de confirmar que o caller é professor/admin
+// DESSE aluno específico (mesmo modelo de requireOwnStudent em
+// professor-portal/index.ts: nunca confia num id vindo cru do cliente sem
+// checar o vínculo professor_id no banco). Retorna null se o caller pediu
+// o plano de outra pessoa sem ter esse vínculo — nesse caso a function
+// recusa a chamada (403) em vez de vazar ou usar um plano errado.
+async function resolveStatsSubject(callerId: string, studentId: string | null): Promise<string | null> {
+  if (!studentId || studentId === callerId) return callerId;
+
+  const { data: callerProfile } = await adminClient
+    .from("profiles")
+    .select("role_id")
+    .eq("id", callerId)
+    .maybeSingle();
+  if (!callerProfile?.role_id) return null;
+
+  const { data: callerRole } = await adminClient
+    .from("roles")
+    .select("name")
+    .eq("id", callerProfile.role_id)
+    .maybeSingle();
+  const isProfessorOrAdmin = callerRole?.name === "professor" || callerRole?.name === "admin";
+  if (!isProfessorOrAdmin) return null;
+  if (callerRole?.name === "admin") return studentId;
+
+  const { data: studentProfile } = await adminClient
+    .from("profiles")
+    .select("professor_id")
+    .eq("id", studentId)
+    .maybeSingle();
+  return studentProfile?.professor_id === callerId ? studentId : null;
 }
 
 interface SubjectStat {
@@ -252,18 +301,30 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ error: "É preciso estar logado para gerar essa análise." }, 401);
   }
 
-  if (!(await planAllowsAiStats(userId))) {
-    return jsonResponse(
-      { error: "A análise por IA não está disponível no plano grátis. Faça upgrade pra desbloquear.", planLocked: true },
-      403,
-    );
-  }
-
   let body: unknown;
   try {
     body = await req.json();
   } catch {
     return jsonResponse({ error: "JSON inválido." }, 400);
+  }
+
+  // "studentId" só vem preenchido quando quem chama é o Portal do Professor
+  // olhando a estatística de um aluno específico (ver requestFase1Analysis,
+  // professor-portal/js/aluno-detail.js) — ausente no fluxo normal do aluno
+  // analisando a própria estatística (estudos/estudos.js).
+  const rawStudentId = (body as Record<string, unknown> | null)?.studentId;
+  const studentId = typeof rawStudentId === "string" && rawStudentId.length > 0 ? rawStudentId : null;
+
+  const subjectUserId = await resolveStatsSubject(userId, studentId);
+  if (!subjectUserId) {
+    return jsonResponse({ error: "Sem permissão para gerar a análise deste aluno." }, 403);
+  }
+
+  if (!(await planAllowsAiStats(subjectUserId))) {
+    return jsonResponse(
+      { error: "A análise por IA não está disponível no plano grátis. Faça upgrade pra desbloquear.", planLocked: true },
+      403,
+    );
   }
 
   const stats = sanitizeStats(body);

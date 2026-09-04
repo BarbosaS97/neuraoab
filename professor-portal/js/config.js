@@ -18,7 +18,7 @@ const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // grandes) isso pode virar uma estatística silenciosamente errada pro
 // professor. fetchAllRows pagina em blocos de 1000 até esgotar o resultado;
 // buildQuery(from, to) deve devolver a MESMA query base com .range(from, to)
-// aplicado. Compartilhado entre js/turma.js, js/turmas.js, js/analises.js e
+// aplicado. Compartilhado entre js/turma.js, js/turmas.js e
 // js/aluno-detail.js — todos carregam este arquivo antes do seu próprio.
 const FETCH_ALL_PAGE_SIZE = 1000;
 
