@@ -111,6 +111,19 @@ async function checkIsProfessor(userId) {
     revealPage();
   }
 
+  // IMPORTANTE (config do Supabase, não é código): "redirectTo" só é
+  // respeitado se essa URL exata estiver em Authentication > URL
+  // Configuration > Redirect URLs no painel do Supabase — senão o GoTrue
+  // ignora silenciosamente e volta pro "Site URL" padrão do projeto (sem
+  // erro nenhum pro cliente). Se isso não estiver cadastrado, o retorno do
+  // Google cai na landing (index.html da raiz) em vez de voltar aqui — e
+  // como as duas páginas escutam o MESMO sessionStorage["neuraoab-oauth-
+  // pending"], é a landing que processa a sessão sozinha e manda pro
+  // dashboard de ALUNO (ROLE_DESTINATIONS.aluno), porque o role ainda não
+  // foi promovido (isso só acontece dentro de resolveAccess, aqui). Mesmo
+  // aviso já existia pra professor/definir-senha.html, ver schema_
+  // professor_portal.sql — cadastre também a URL desta página (produção e
+  // qualquer ambiente de teste) antes de usar o login com Google aqui.
   googleBtn.addEventListener("click", async () => {
     googleBtn.disabled = true;
     sessionStorage.setItem(OAUTH_PENDING_KEY, "1");

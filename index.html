@@ -1258,6 +1258,87 @@
     .pricing-b2b-cta .btn-gradient-sm { width: 100%; }
   }
 
+  /* Card com abas dos planos de cursinho (Curso 20/50/100) — ver comentário
+     no HTML, logo depois de .pricing-b2b. Reaproveita as variáveis de tema
+     já usadas em .pricing-card acima (--card/--border/--primary/--success),
+     só que num card único e mais estreito, com abas no lugar de 3 colunas. */
+  .cursinho-plans {
+    max-width: 420px;
+    margin: 32px auto 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .cursinho-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 4px;
+    margin-bottom: 22px;
+  }
+
+  .cursinho-tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    padding: 10px 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .cursinho-tab.active { background: var(--primary); color: #fff; }
+
+  .cursinho-alunos { margin: 0 0 6px; font-size: 13px; color: var(--text-dim); text-align: center; }
+
+  .cursinho-price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 22px;
+  }
+  .cursinho-price .amount { font-size: 30px; font-weight: 800; letter-spacing: -0.01em; }
+  .cursinho-price .unit { font-size: 13px; color: var(--text-dim); font-weight: 600; }
+
+  .cursinho-features {
+    list-style: none;
+    margin: 0 0 22px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cursinho-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .cursinho-features li svg { flex-shrink: 0; margin-top: 2px; color: var(--success); }
+
+  .cursinho-cta { display: block; width: 100%; text-align: center; }
+
+  .cursinho-contact {
+    margin: 18px 0 0;
+    font-size: 13px;
+    color: var(--text-dim);
+    text-align: center;
+  }
+  .cursinho-contact a { color: var(--primary); font-weight: 700; text-decoration: none; }
+  .cursinho-contact a:hover { text-decoration: underline; }
+
   /* --------------------------------------------------------------- FAQ */
 
   .faq {
@@ -2252,13 +2333,88 @@
         Para cursinhos e escolas
       </p>
       <h3>Tem um cursinho ou uma escola de Direito?</h3>
-      <p>Leve o NeuraOAB pra dentro da sua turma: seus alunos estudam com questões oficiais, tutor de IA e simulado completo da 2ª fase — e você acompanha o desempenho de cada um no Portal do Professor. Fale com a gente pra montar um plano sob medida pro tamanho da sua turma.</p>
-    </div>
-    <div class="pricing-b2b-cta">
-      <a class="btn-gradient-sm" href="mailto:contato@neuraoab.com.br?subject=Quero%20levar%20o%20NeuraOAB%20para%20o%20meu%20cursinho">Fale conosco</a>
+      <p>Leve o NeuraOAB pra dentro da sua turma: seus alunos estudam com questões oficiais, tutor de IA e simulado completo da 2ª fase — e você acompanha o desempenho de cada um no Portal do Professor. Escolha o plano pelo tamanho da sua turma:</p>
     </div>
   </div>
+
+  <!-- Card com abas dos planos de cursinho (Curso 20/50/100) — preço fixo
+       por faixa de alunos, diferente dos planos de aluno acima (que são
+       auto-serviço via cartão). Aqui a contratação é sempre por WhatsApp,
+       por isso não passa por data-open-login nem pela Edge Function de
+       planos. Mesmos dados/números usados na tela "Acesso Restrito" do
+       Portal do Professor (ver professor-portal/js/planos-restrito.js) —
+       arquivos diferentes de propósito (a landing não compartilha JS com
+       professor-portal), mas têm que continuar batendo se os preços
+       mudarem. -->
+  <div class="cursinho-plans" data-aos="fade-up">
+    <div class="cursinho-tabs" id="cursinhoTabs">
+      <button type="button" class="cursinho-tab active" data-plano="curso20">Curso 20</button>
+      <button type="button" class="cursinho-tab" data-plano="curso50">Curso 50</button>
+      <button type="button" class="cursinho-tab" data-plano="curso100">Curso 100</button>
+    </div>
+    <div class="cursinho-panel" id="cursinhoPanel"></div>
+  </div>
+  <p class="cursinho-contact">💬 Entre em contato: <a id="cursinhoContactLink" href="#" target="_blank" rel="noopener noreferrer">(61) 98239-5208</a></p>
 </section>
+
+<script>
+  // Card de planos de cursinho (ver comentário acima) — autocontido, não
+  // depende do restante do script grande do fim da página.
+  (function () {
+    const PLANOS_CURSINHO = [
+      { id: "curso20", label: "Curso 20", alunos: "até 20 alunos", preco: "R$ 239,80" },
+      { id: "curso50", label: "Curso 50", alunos: "até 50 alunos", preco: "R$ 549,50" },
+      { id: "curso100", label: "Curso 100", alunos: "até 100 alunos", preco: "R$ 989,00" },
+    ];
+    const BENEFICIOS_CURSINHO = [
+      "Tudo do Pro",
+      "Gestão de turmas",
+      "Relatórios por aluno",
+      "Convite em lote",
+      "Dashboard do professor",
+    ];
+    const WHATSAPP_NUMERO = "5561982395208"; // (61) 98239-5208
+    const CHECK_ICON = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+    function whatsappLink(mensagem) {
+      return `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagem)}`;
+    }
+
+    const tabsEl = document.getElementById("cursinhoTabs");
+    const panelEl = document.getElementById("cursinhoPanel");
+    const contactLink = document.getElementById("cursinhoContactLink");
+    if (!tabsEl || !panelEl) return; // segurança, caso a seção não exista nesta página
+
+    function renderPanel(planoId) {
+      const plano = PLANOS_CURSINHO.find((p) => p.id === planoId) || PLANOS_CURSINHO[0];
+      panelEl.innerHTML = `
+        <p class="cursinho-alunos">${plano.alunos}</p>
+        <div class="cursinho-price"><span class="amount">${plano.preco}</span><span class="unit">por mês</span></div>
+        <ul class="cursinho-features">
+          ${BENEFICIOS_CURSINHO.map((b) => `<li>${CHECK_ICON}${b}</li>`).join("")}
+        </ul>
+        <a class="btn-gradient-sm cursinho-cta" target="_blank" rel="noopener noreferrer"
+           href="${whatsappLink(`Olá! Tenho interesse no plano ${plano.label} (${plano.alunos}) do Portal do Professor NeuraOAB.`)}">
+          Contratar via WhatsApp
+        </a>
+      `;
+    }
+
+    tabsEl.querySelectorAll(".cursinho-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabsEl.querySelectorAll(".cursinho-tab").forEach((t) => t.classList.remove("active"));
+        tab.classList.add("active");
+        renderPanel(tab.dataset.plano);
+      });
+    });
+
+    if (contactLink) {
+      contactLink.href = whatsappLink("Olá! Gostaria de saber mais sobre os planos pra cursinho do NeuraOAB.");
+    }
+
+    renderPanel(PLANOS_CURSINHO[0].id);
+  })();
+</script>
 
 <section class="faq" id="perguntas">
   <div class="section-head" data-aos="fade-up">
