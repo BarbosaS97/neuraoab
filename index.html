@@ -1236,26 +1236,26 @@
      (--card/--border/--primary/--success). Horizontal (texto à esquerda,
      card de preço à direita) até a largura empilhar em telas estreitas. */
   .cursinho-plans {
-    max-width: 920px;
-    margin: 32px auto 0;
+    max-width: 880px;
+    margin: 20px auto 0;
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 18px;
-    padding: 34px;
+    padding: 30px 26px;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
     display: flex;
-    align-items: center;
-    gap: 36px;
+    align-items: flex-start;
+    gap: 30px;
   }
 
-  .cursinho-plans-copy { flex: 1 1 320px; min-width: 0; }
-  .cursinho-plans-copy h3 { margin: 10px 0 8px; font-size: 18px; font-weight: 800; }
-  .cursinho-plans-copy p { margin: 0; font-size: 13px; line-height: 1.65; color: var(--text-dim); }
+  .cursinho-plans-copy { flex: 1 1 300px; min-width: 0; padding-top: 2px; }
+  .cursinho-plans-copy h3 { margin: 8px 0 6px; font-size: 17px; font-weight: 800; }
+  .cursinho-plans-copy p { margin: 0; font-size: 12.5px; line-height: 1.6; color: var(--text-dim); }
 
-  .cursinho-plans-card { flex: 0 0 320px; width: 320px; }
+  .cursinho-plans-card { flex: 0 0 300px; width: 300px; }
 
   @media (max-width: 760px) {
-    .cursinho-plans { flex-direction: column; align-items: stretch; padding: 28px; }
+    .cursinho-plans { flex-direction: column; align-items: stretch; padding: 24px; gap: 22px; }
     .cursinho-plans-copy { flex: none; }
     .cursinho-plans-card { flex: none; width: 100%; }
   }
@@ -1265,9 +1265,9 @@
     gap: 4px;
     background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: 11px;
-    padding: 4px;
-    margin-bottom: 22px;
+    border-radius: 10px;
+    padding: 3px;
+    margin-bottom: 16px;
   }
 
   .cursinho-tab {
@@ -1275,43 +1275,43 @@
     background: transparent;
     border: none;
     color: var(--text-dim);
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 700;
     font-family: inherit;
-    padding: 10px 6px;
-    border-radius: 8px;
+    padding: 8px 6px;
+    border-radius: 7px;
     cursor: pointer;
     transition: background 0.15s ease, color 0.15s ease;
   }
 
   .cursinho-tab.active { background: var(--primary); color: #fff; }
 
-  .cursinho-alunos { margin: 0 0 6px; font-size: 13px; color: var(--text-dim); text-align: center; }
+  .cursinho-alunos { margin: 0 0 4px; font-size: 12.5px; color: var(--text-dim); text-align: center; }
 
   .cursinho-price {
     display: flex;
     align-items: baseline;
     justify-content: center;
     gap: 6px;
-    margin-bottom: 22px;
+    margin-bottom: 16px;
   }
-  .cursinho-price .amount { font-size: 30px; font-weight: 800; letter-spacing: -0.01em; }
-  .cursinho-price .unit { font-size: 13px; color: var(--text-dim); font-weight: 600; }
+  .cursinho-price .amount { font-size: 26px; font-weight: 800; letter-spacing: -0.01em; }
+  .cursinho-price .unit { font-size: 12.5px; color: var(--text-dim); font-weight: 600; }
 
   .cursinho-features {
     list-style: none;
-    margin: 0 0 22px;
+    margin: 0 0 16px;
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 7px;
   }
   .cursinho-features li {
     display: flex;
     align-items: flex-start;
-    gap: 9px;
-    font-size: 13px;
-    line-height: 1.5;
+    gap: 8px;
+    font-size: 12.5px;
+    line-height: 1.45;
     color: var(--text);
   }
   .cursinho-features li svg { flex-shrink: 0; margin-top: 2px; color: var(--success); }
@@ -1319,8 +1319,8 @@
   .cursinho-cta { display: block; width: 100%; text-align: center; }
 
   .cursinho-contact {
-    margin: 18px 0 0;
-    font-size: 13px;
+    margin: 14px 0 0;
+    font-size: 12.5px;
     color: var(--text-dim);
     text-align: center;
   }
