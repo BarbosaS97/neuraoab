@@ -1385,10 +1385,19 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 
 .progress-ring-svg { display: block; }
 .progress-ring-track { stroke: var(--border); }
-.progress-ring-fill {
-  stroke: var(--primary);
+
+/* Dois arcos (acertos/erros) em vez de um só roxo — ver buildProgressRingSVG
+   em estudos.js, que já manda os dois comprimentos certos (cada um cobre a
+   fração exata de acertos/erros do total, lado a lado, sem sobra). */
+.progress-ring-correct {
+  stroke: var(--success);
   stroke-linecap: round;
-  transition: stroke-dashoffset 0.6s ease;
+  transition: stroke-dasharray 0.6s ease;
+}
+.progress-ring-wrong {
+  stroke: var(--error);
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.6s ease, stroke-dashoffset 0.6s ease;
 }
 
 .progress-ring-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }

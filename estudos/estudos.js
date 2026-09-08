@@ -917,19 +917,35 @@ const STAR_ICON = `<svg viewBox="0 0 24 24" width="14" height="14" fill="current
   <polygon points="12 2.5 15.09 8.76 22 9.77 17 14.64 18.18 21.52 12 18.27 5.82 21.52 7 14.64 2 9.77 8.91 8.76"></polygon>
 </svg>`;
 
-// Anel de progresso em SVG puro (sem lib) — usado no card em destaque e nos
-// dois paineis da barra lateral. stroke-dashoffset calculado aqui a partir
-// do %; a cor do preenchimento fica pra CSS (.progress-ring-fill).
-function buildProgressRingSVG(pct, size = 84, stroke = 8) {
+// Anel de progresso em SVG puro (sem lib) — usado no painel "Seu progresso"
+// da barra lateral. Dois arcos lado a lado em vez de um só roxo: um verde
+// cobrindo a fração de ACERTOS, um vermelho logo em seguida cobrindo a
+// fração de ERROS — juntos sempre fecham o círculo inteiro quando total > 0
+// (as cores/traço ficam pra CSS, .progress-ring-correct/.progress-ring-wrong).
+//
+// Truque do stroke-dasharray/stroke-dashoffset: cada <circle> desenha um
+// padrão "traço, vão" que se repete ao longo do perímetro (comprimento c).
+// O arco verde usa dasharray="correctLen (c - correctLen)" a partir do
+// início do caminho (12h, por causa do rotate(-90)) — fica visível só nos
+// primeiros correctLen. O arco vermelho usa o MESMO truque, mas com
+// dashoffset="-correctLen": desloca o padrão pra trás, fazendo o "traço"
+// (de tamanho wrongLen) começar bem onde o verde parou, em vez de também
+// começar às 12h.
+function buildProgressRingSVG(correct, total, size = 84, stroke = 8) {
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
-  const clamped = Math.max(0, Math.min(100, pct));
-  const offset = c * (1 - clamped / 100);
+  const safeTotal = Math.max(0, total || 0);
+  const safeCorrect = Math.max(0, Math.min(correct || 0, safeTotal));
+  const wrong = safeTotal - safeCorrect;
+  const correctLen = safeTotal > 0 ? (c * safeCorrect) / safeTotal : 0;
+  const wrongLen = safeTotal > 0 ? (c * wrong) / safeTotal : 0;
+  const rotate = `rotate(-90 ${size / 2} ${size / 2})`;
   return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" class="progress-ring-svg">
     <circle class="progress-ring-track" cx="${size / 2}" cy="${size / 2}" r="${r}" stroke-width="${stroke}" fill="none"></circle>
-    <circle class="progress-ring-fill" cx="${size / 2}" cy="${size / 2}" r="${r}" stroke-width="${stroke}" fill="none"
-      stroke-dasharray="${c}" stroke-dashoffset="${offset}"
-      transform="rotate(-90 ${size / 2} ${size / 2})"></circle>
+    <circle class="progress-ring-correct" cx="${size / 2}" cy="${size / 2}" r="${r}" stroke-width="${stroke}" fill="none"
+      stroke-dasharray="${correctLen} ${c - correctLen}" transform="${rotate}"></circle>
+    <circle class="progress-ring-wrong" cx="${size / 2}" cy="${size / 2}" r="${r}" stroke-width="${stroke}" fill="none"
+      stroke-dasharray="${wrongLen} ${c - wrongLen}" stroke-dashoffset="${-correctLen}" transform="${rotate}"></circle>
   </svg>`;
 }
 
@@ -1357,7 +1373,7 @@ function renderSidePanels() {
   const correct = answers.filter(a => a.correct).length;
   const pct = pctOf(correct, total);
 
-  progressRingWrap.innerHTML = buildProgressRingSVG(pct);
+  progressRingWrap.innerHTML = buildProgressRingSVG(correct, total);
   progressRingPct.textContent = total > 0 ? `${pct}%` : "—";
   progressTotalNum.textContent = total;
   progressAcertosNum.textContent = correct;
