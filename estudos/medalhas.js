@@ -167,10 +167,21 @@ client.auth.onAuthStateChange((_event, session) => {
 
 const PAGE_SIZE = 1000; // mesmo limite do PostgREST contornado em estudos.js (fetchAllQuestions)
 
-// Só "id, discipline" — bem mais leve que o fetch completo de estudos.js
-// (que também traz enunciado/alternativas), porque aqui só precisamos saber
-// de qual matéria é cada questão respondida, pras medalhas de categoria.
+// Só id/discipline — só isso que as medalhas de categoria precisam pra
+// saber de qual matéria é cada questão respondida (sem enunciado/
+// alternativas, que esta página não usa). Se estudos/index.html já rodou
+// nesta aba antes, o cache compartilhado (ver estudos/questions-cache.js)
+// já tem TODAS as colunas — reaproveita em vez de buscar de novo. Sem cache
+// (ex.: aluno abriu "Minhas Medalhas" direto, sem passar pela 1ª fase antes
+// nesta sessão), busca só id/discipline mesmo — e NÃO grava esse
+// subconjunto no cache compartilhado, pra nunca sobrescrever um cache
+// completo por um parcial.
 async function fetchQuestionDisciplines() {
+  const cached = loadQuestionsCache();
+  if (cached && cached.length > 0) {
+    return cached.map(q => ({ id: q.id, discipline: q.discipline }));
+  }
+
   const rows = [];
   let from = 0;
   while (true) {

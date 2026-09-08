@@ -3059,6 +3059,22 @@ async function fetchAllQuestions() {
   return rows;
 }
 
+// Envelope de fetchAllQuestions() com cache em sessionStorage (ver
+// estudos/questions-cache.js, carregado antes deste arquivo) — é essa busca
+// que fazia o dashboard demorar pra reaparecer toda vez que o aluno voltava
+// da 2ª fase (a mais pesada de longe do init(), paginada e com enunciado/
+// alternativas de toda questão). Com cache "quente" (mesma aba, sessão já
+// tinha carregado antes), pula a rede inteiramente — sem cache, busca normal
+// e guarda pra próxima vez nesta mesma aba.
+async function fetchAllQuestionsCached() {
+  const cached = loadQuestionsCache();
+  if (cached && cached.length > 0) return cached;
+
+  const rows = await fetchAllQuestions();
+  saveQuestionsCache(rows);
+  return rows;
+}
+
 // Troca a tela de carregamento de "carregando" pra "pronto pra comecar":
 // para a animacao de pulso, mostra a lista de funcionalidades (so' texto e
 // icones, nada clicavel ali) e revela o botao "Comecar" — o UNICO controle
@@ -3233,7 +3249,7 @@ async function init() {
   let phase2Summary;
   try {
     [data, answers, , firstName, , phase2Summary] = await Promise.all([
-      fetchAllQuestions(),
+      fetchAllQuestionsCached(),
       fetchStudentAnswers(session.user.id),
       loadFavoritos(),
       fetchStudentFirstName(session.user.id),
