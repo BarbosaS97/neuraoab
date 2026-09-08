@@ -125,13 +125,13 @@ const progressTotalNum = document.getElementById("progressTotalNum");
 const progressAcertosNum = document.getElementById("progressAcertosNum");
 const progressErrosNum = document.getElementById("progressErrosNum");
 const progressCtaBtn = document.getElementById("progressCtaBtn");
-const lastActivityPanel = document.getElementById("lastActivityPanel");
-const lastActivityExam = document.getElementById("lastActivityExam");
-const lastActivityBadge = document.getElementById("lastActivityBadge");
-const lastActivityRingWrap = document.getElementById("lastActivityRingWrap");
-const lastActivityPctText = document.getElementById("lastActivityPctText");
-const lastActivityDate = document.getElementById("lastActivityDate");
-const lastActivityReviewBtn = document.getElementById("lastActivityReviewBtn");
+const reviewModePanel = document.getElementById("reviewModePanel");
+const reviewModeCountNum = document.getElementById("reviewModeCountNum");
+const reviewModeCountLabel = document.getElementById("reviewModeCountLabel");
+const reviewModeOpenBtn = document.getElementById("reviewModeOpenBtn");
+const reviewModalOverlay = document.getElementById("reviewModalOverlay");
+const reviewModalCloseBtn = document.getElementById("reviewModalCloseBtn");
+const reviewOptionsList = document.getElementById("reviewOptionsList");
 
 let allQuestions = [];
 let filtered = [];
@@ -637,7 +637,8 @@ plansOverlay.addEventListener("click", (ev) => {
 
 document.addEventListener("keydown", (ev) => {
   if (ev.key !== "Escape") return;
-  if (!conviteOverlay.hidden) closeConviteModal();
+  if (!reviewModalOverlay.hidden) closeReviewModal();
+  else if (!conviteOverlay.hidden) closeConviteModal();
   else if (!plansOverlay.hidden) closePlansModal();
   else if (!helpOverlay.hidden) closeHelpModal();
   else if (!profileOverlay.hidden) closeProfileModal();
@@ -866,6 +867,45 @@ function currentWrongQuestions(predicate) {
     if (!v || v.correct) return false;
     return predicate ? predicate(q) : true;
   });
+}
+
+// Exame com o answered_at mais recente entre todos os grupos de
+// computeExamStats — usado pelo card/modal "Modo Revisão" (opção "Revisar
+// último exame") e antes disso já era a mesma conta que "Última atividade"
+// fazia. null quando o aluno nunca respondeu nada ainda.
+function findLastActivityExam() {
+  const stats = computeExamStats();
+  let lastKey = null;
+  let lastAt = "";
+  stats.forEach((s, key) => {
+    if (s.lastAnsweredAt > lastAt) {
+      lastAt = s.lastAnsweredAt;
+      lastKey = key;
+    }
+  });
+  return lastKey ? { key: lastKey, stats: stats.get(lastKey) } : null;
+}
+
+// Total de erros ATUAIS + o mesmo total quebrado por matéria, ordenado do
+// maior pro menor — uma única fonte pro card/modal "Modo Revisão" (Tela 1) E
+// pra tela de Estatísticas (ver renderStats), que antes recalculava isso na
+// mão sempre que precisava. Período-independente de propósito: revisar é
+// sobre corrigir o que ainda está errado, não sobre um recorte de tempo.
+function wrongCountsSummary() {
+  const verdicts = latestVerdictByQuestion();
+  const bySubjectMap = new Map(); // discipline -> count
+  let total = 0;
+  allQuestions.forEach(q => {
+    const v = verdicts.get(q.id);
+    if (!v || v.correct) return;
+    total++;
+    const disc = q.discipline || "Sem disciplina";
+    bySubjectMap.set(disc, (bySubjectMap.get(disc) || 0) + 1);
+  });
+  const bySubject = [...bySubjectMap.entries()]
+    .map(([discipline, count]) => ({ discipline, count }))
+    .sort((a, b) => b.count - a.count);
+  return { total, bySubject };
 }
 
 // "Hoje"/"Ontem"/"Há N dias" pra' data relativa de última atividade — sem
@@ -1332,42 +1372,144 @@ function renderSidePanels() {
   progressAcertosNum.textContent = correct;
   progressErrosNum.textContent = total - correct;
 
-  // "Última atividade": exame com o answered_at mais recente entre todos os
-  // grupos calculados em computeExamStats.
-  const stats = computeExamStats();
-  const counts = buildCounts(allQuestions, examKey);
-
-  let lastKey = null;
-  let lastAt = "";
-  stats.forEach((s, key) => {
-    if (s.lastAnsweredAt > lastAt) {
-      lastAt = s.lastAnsweredAt;
-      lastKey = key;
-    }
-  });
-
-  if (!lastKey) {
-    lastActivityPanel.hidden = true;
-    return;
+  // "Modo Revisão": só aparece com pelo menos 1 questão errada ATUAL, em
+  // qualquer exame (currentWrongQuestions/wrongCountsSummary) — o conteúdo
+  // detalhado (as 3 opções) só é montado quando o modal abre de fato, ver
+  // openReviewModal, sempre com o dado mais recente na hora do clique.
+  const wrongTotal = wrongCountsSummary().total;
+  reviewModePanel.hidden = wrongTotal === 0;
+  if (wrongTotal > 0) {
+    reviewModeCountNum.textContent = wrongTotal;
+    reviewModeCountLabel.textContent = wrongTotal === 1 ? "questão para revisar" : "questões para revisar";
   }
-
-  const s = stats.get(lastKey);
-  const examTotal = counts.get(lastKey) || 0;
-  const done = s.answered >= examTotal && examTotal > 0;
-  const pctExam = pctOf(s.correct, s.answered);
-
-  lastActivityPanel.hidden = false;
-  lastActivityExam.textContent = examLabel(lastKey);
-  lastActivityBadge.textContent = done ? "Concluído" : "Em andamento";
-  lastActivityBadge.className = "badge " + (done ? "badge-done" : "badge-progress");
-  lastActivityRingWrap.innerHTML = buildProgressRingSVG(pctExam, 48, 5);
-  lastActivityPctText.textContent = `${pctExam}% de acerto`;
-  lastActivityDate.textContent = fmtRelativeDate(s.lastAnsweredAt);
-
-  const hasWrong = s.correct < s.answered;
-  lastActivityReviewBtn.hidden = !hasWrong;
-  lastActivityReviewBtn.onclick = () => reviewMistakes(lastKey);
 }
+
+// ------------------------------------------------------- Modal "Modo Revisão"
+//
+// As 3 formas de revisar erros (ver reviewAllMistakes/reviewMistakesBySubject/
+// reviewMistakes em estudos.js, seção "Atalho Começar simulado"), reunidas
+// num só modal aberto pelo botão do card "Modo Revisão". Montado do zero a
+// cada abertura (buildReviewOptions), nunca a partir de dado guardado de
+// quando a página carregou — mesmo padrão de .convite-list.
+
+const REVIEW_OPTION_ICONS = {
+  all: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>`,
+  subject: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>`,
+  lastExam: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>`,
+};
+
+// Monta a "casca" comum das 3 opções (ícone + título + badge opcional +
+// descrição) — devolve também `body`, onde cada chamador pendura o que for
+// específico daquela opção (nada mais, pra opção 1/3; a lista de chips de
+// matéria, pra opção 2). Não decide sozinho se o card inteiro é clicável —
+// ver makeReviewOptionClickable, só usado pelas opções 1 e 3.
+function buildReviewOptionShell({ icon, title, description, badgeText }) {
+  const card = document.createElement("div");
+  card.className = "review-option";
+
+  const iconEl = document.createElement("span");
+  iconEl.className = "review-option-icon";
+  iconEl.innerHTML = icon;
+  card.appendChild(iconEl);
+
+  const body = document.createElement("div");
+  body.className = "review-option-body";
+
+  const titleRow = document.createElement("div");
+  titleRow.className = "review-option-title-row";
+  const titleEl = document.createElement("strong");
+  titleEl.textContent = title;
+  titleRow.appendChild(titleEl);
+  if (badgeText) {
+    const badge = document.createElement("span");
+    badge.className = "badge review-option-badge";
+    badge.textContent = badgeText;
+    titleRow.appendChild(badge);
+  }
+  body.appendChild(titleRow);
+
+  const descEl = document.createElement("p");
+  descEl.className = "review-option-desc";
+  descEl.textContent = description;
+  body.appendChild(descEl);
+
+  card.appendChild(body);
+  return { card, body };
+}
+
+function makeReviewOptionClickable(card, onActivate) {
+  card.classList.add("review-option-clickable");
+  card.setAttribute("role", "button");
+  card.tabIndex = 0;
+  card.addEventListener("click", onActivate);
+  card.addEventListener("keydown", ev => {
+    if (ev.key !== "Enter" && ev.key !== " ") return;
+    ev.preventDefault();
+    onActivate();
+  });
+}
+
+function buildReviewOptions() {
+  reviewOptionsList.innerHTML = "";
+  const { total, bySubject } = wrongCountsSummary();
+  const lastActivity = findLastActivityExam();
+
+  const { card: allCard } = buildReviewOptionShell({
+    icon: REVIEW_OPTION_ICONS.all,
+    title: "Revisar todos os erros",
+    description: "Todas as questões que você errou em todos os exames",
+    badgeText: total === 1 ? "1 questão" : `${total} questões`,
+  });
+  makeReviewOptionClickable(allCard, () => { closeReviewModal(); reviewAllMistakes(); });
+  reviewOptionsList.appendChild(allCard);
+
+  const { card: subjectCard, body: subjectBody } = buildReviewOptionShell({
+    icon: REVIEW_OPTION_ICONS.subject,
+    title: "Revisar por matéria",
+    description: "Escolha uma matéria específica para revisar",
+  });
+  const chipsWrap = document.createElement("div");
+  chipsWrap.className = "review-option-subjects";
+  bySubject.forEach(({ discipline, count }) => {
+    const chip = document.createElement("button");
+    chip.type = "button";
+    chip.className = "review-option-subject-chip";
+    chip.textContent = `${discipline} (${count})`;
+    chip.addEventListener("click", () => { closeReviewModal(); reviewMistakesBySubject(discipline); });
+    chipsWrap.appendChild(chip);
+  });
+  subjectBody.appendChild(chipsWrap);
+  reviewOptionsList.appendChild(subjectCard);
+
+  // Só existe quando o aluno já respondeu alguma coisa alguma vez — se
+  // "Modo Revisão" está visível (wrongTotal > 0), isso é sempre verdade.
+  if (lastActivity) {
+    const pctExam = pctOf(lastActivity.stats.correct, lastActivity.stats.answered);
+    const { card: lastCard } = buildReviewOptionShell({
+      icon: REVIEW_OPTION_ICONS.lastExam,
+      title: "Revisar último exame",
+      description: `${examLabel(lastActivity.key)} — ${pctExam}% de acerto`,
+      badgeText: fmtRelativeDate(lastActivity.stats.lastAnsweredAt),
+    });
+    makeReviewOptionClickable(lastCard, () => { closeReviewModal(); reviewMistakes(lastActivity.key); });
+    reviewOptionsList.appendChild(lastCard);
+  }
+}
+
+function openReviewModal() {
+  buildReviewOptions();
+  reviewModalOverlay.hidden = false;
+}
+
+function closeReviewModal() {
+  reviewModalOverlay.hidden = true;
+}
+
+reviewModeOpenBtn.addEventListener("click", openReviewModal);
+reviewModalCloseBtn.addEventListener("click", closeReviewModal);
+reviewModalOverlay.addEventListener("click", (ev) => {
+  if (ev.target === reviewModalOverlay) closeReviewModal();
+});
 
 // ------------------------------------------------------- Dica do dia
 
@@ -2624,19 +2766,13 @@ function renderStats(stats) {
   statsBody.appendChild(overall);
 
   // Contagem de erros ATUAIS (período-independente: revisar é sobre corrigir
-  // o que ainda está errado, não sobre o que aconteceu num período) — calculada
-  // à parte de `stats`, que é o corpo enviado pra Edge Function estatisticas-ia
-  // logo abaixo (requestStatsAnalysis) e não deve ganhar campos extras.
-  const verdicts = latestVerdictByQuestion();
-  let totalWrongNow = 0;
-  const wrongCountBySubject = new Map();
-  allQuestions.forEach(q => {
-    const v = verdicts.get(q.id);
-    if (!v || v.correct) return;
-    totalWrongNow++;
-    const disc = q.discipline || "Sem disciplina";
-    wrongCountBySubject.set(disc, (wrongCountBySubject.get(disc) || 0) + 1);
-  });
+  // o que ainda está errado, não sobre o que aconteceu num período) — mesma
+  // fonte usada pelo card/modal "Modo Revisão" da Tela 1 (wrongCountsSummary),
+  // calculada à parte de `stats`, que é o corpo enviado pra Edge Function
+  // estatisticas-ia logo abaixo (requestStatsAnalysis) e não deve ganhar
+  // campos extras.
+  const { total: totalWrongNow, bySubject: wrongBySubjectList } = wrongCountsSummary();
+  const wrongCountBySubject = new Map(wrongBySubjectList.map(s => [s.discipline, s.count]));
 
   if (totalWrongNow > 0) {
     const cta = document.createElement("div");

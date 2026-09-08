@@ -488,6 +488,24 @@
   </div>
 </div>
 
+<!-- ------------------------------------------------- Modal "Modo Revisão" -->
+<!-- Aberto pelo botão "Ver todas as opções" do card "Modo Revisão" (Tela 1,
+     ver openReviewModal em estudos.js). As 3 opções são construídas na hora
+     da abertura, sempre com os números mais atuais (currentWrongQuestions/
+     computeExamStats) — igual .convite-list acima, nunca conteúdo "parado"
+     de quando a página carregou. Reaproveita .help-overlay/.help-modal. -->
+<div class="help-overlay" id="reviewModalOverlay" hidden>
+  <div class="help-modal review-modal" role="dialog" aria-modal="true" aria-labelledby="reviewModalTitle">
+    <div class="help-modal-header">
+      <h2 id="reviewModalTitle">Modo Revisão</h2>
+      <button type="button" id="reviewModalCloseBtn" class="help-modal-close" aria-label="Fechar">&times;</button>
+    </div>
+    <div class="help-modal-body">
+      <div class="review-options" id="reviewOptionsList"></div>
+    </div>
+  </div>
+</div>
+
 <header class="topbar">
   <div class="topbar-left">
     <button type="button" id="menuBtn" class="menu-btn" aria-label="Abrir menu" aria-expanded="false">
@@ -657,24 +675,26 @@
             </button>
           </div>
 
-          <div class="side-panel last-activity-panel" id="lastActivityPanel" hidden>
+          <!-- "Modo Revisão": card com as 3 formas de revisar erros (tudo,
+               por matéria, último exame) — ver renderSidePanels/openReviewModal
+               em estudos.js. Só aparece quando sobra pelo menos 1 questão
+               errada AGORA (currentWrongQuestions), em qualquer exame. -->
+          <div class="side-panel review-mode-panel" id="reviewModePanel" hidden>
             <div class="side-panel-title">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              Última atividade
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+              Modo Revisão
             </div>
-            <div class="last-activity-head">
-              <span class="last-activity-exam" id="lastActivityExam">—</span>
-              <span class="badge" id="lastActivityBadge">—</span>
+            <div class="review-mode-count">
+              <span class="review-mode-count-num" id="reviewModeCountNum">0</span>
+              <span class="review-mode-count-label" id="reviewModeCountLabel">questões para revisar</span>
             </div>
-            <div class="last-activity-row">
-              <div class="progress-ring-wrap small" id="lastActivityRingWrap"></div>
-              <div class="last-activity-text">
-                <span id="lastActivityPctText">—</span>
-                <span class="last-activity-date" id="lastActivityDate">—</span>
-              </div>
+            <div class="review-mode-preview">
+              <span class="badge">Todos os erros</span>
+              <span class="badge">Por matéria</span>
+              <span class="badge">Último exame</span>
             </div>
-            <button type="button" class="side-panel-cta" id="lastActivityReviewBtn" hidden>
-              Revisar erros
+            <button type="button" class="side-panel-cta" id="reviewModeOpenBtn">
+              Ver todas as opções
               <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </button>
           </div>
