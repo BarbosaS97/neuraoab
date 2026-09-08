@@ -72,7 +72,7 @@ Deno.serve(async (req: Request) => {
 
   const { data: autorizado } = await adminClient
     .from("professores_autorizados")
-    .select("email")
+    .select("email, nome")
     .eq("email", caller.email.toLowerCase())
     .maybeSingle();
 
@@ -85,7 +85,7 @@ Deno.serve(async (req: Request) => {
   // toa a cada login.
   const { data: callerProfile } = await adminClient
     .from("profiles")
-    .select("role_id")
+    .select("role_id, nome")
     .eq("id", caller.id)
     .maybeSingle();
 
@@ -115,9 +115,19 @@ Deno.serve(async (req: Request) => {
   // O trigger handle_new_auth_user (schema_aluno_avulso.sql) já criou uma
   // profiles row com role_id='aluno' pra QUALQUER login novo, incluindo
   // este — então aqui é sempre um UPDATE, nunca um INSERT.
+  const updatePayload: { role_id: string; nome?: string } = { role_id: professorRole.id };
+  // Sem Google, não tem mais nome vindo do perfil OAuth pra preencher
+  // profiles.nome sozinho — usa o nome que o admin já cadastrou junto do
+  // e-mail na allowlist (professores_autorizados.nome), só quando o
+  // profile ainda não tiver nome nenhum (nunca sobrescreve o que a pessoa
+  // já editou em "Meu Perfil").
+  if (!callerProfile?.nome && autorizado.nome) {
+    updatePayload.nome = autorizado.nome;
+  }
+
   const { error: updateError } = await adminClient
     .from("profiles")
-    .update({ role_id: professorRole.id })
+    .update(updatePayload)
     .eq("id", caller.id);
   if (updateError) {
     return jsonResponse({ error: updateError.message }, 400);

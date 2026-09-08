@@ -1,18 +1,23 @@
 -- NeuraOAB — allowlist de e-mails autorizados a entrar no Portal do
--- Professor via login com Google (ver supabase/functions/professor-auth-
--- check/index.ts e professor-portal/js/auth.js). Execute este script uma
--- vez no SQL Editor do Supabase, depois de schema_portal_mestre.sql
--- (precisa de is_admin()). Aditivo e idempotente — seguro re-rodar.
+-- Professor por autoatendimento, e-mail+senha (ver supabase/functions/
+-- professor-auth-check/index.ts e professor-portal/js/auth.js). Execute
+-- este script uma vez no SQL Editor do Supabase, depois de
+-- schema_portal_mestre.sql (precisa de is_admin()). Aditivo e idempotente
+-- — seguro re-rodar.
 --
 -- CONTEXTO: antes, virar professor exigia o admin criar a conta manualmente
 -- no Portal Mestre (convite por e-mail/senha, ver portal-admin/index.ts).
 -- Isso continua funcionando em paralelo — quem já tem profiles.role_id
 -- ='professor' não passa por esta tabela. Esta allowlist é um segundo
 -- caminho, mais leve: o admin só precisa cadastrar o e-mail aqui (Portal
--- Mestre, painel "Professores autorizados") e a pessoa entra sozinha
--- fazendo login com Google — a Edge Function professor-auth-check promove
--- profiles.role_id pra "professor" na hora, na primeira vez que o e-mail
--- autorizado loga.
+-- Mestre, painel "Professores autorizados") e a pessoa entra sozinha,
+-- criando a própria conta (e-mail+senha) — a Edge Function
+-- professor-auth-check promove profiles.role_id pra "professor" na hora,
+-- na primeira vez que o e-mail autorizado loga. (Login com Google existiu
+-- aqui antes, mas foi removido: o retorno do OAuth podia cair na landing em
+-- vez de voltar pro Portal do Professor se o redirect não estivesse
+-- cadastrado certinho no painel do Supabase, promovendo a pessoa como aluno
+-- em vez de professor — ver histórico de professor-portal/js/auth.js.)
 
 create table if not exists professores_autorizados (
   email text primary key,

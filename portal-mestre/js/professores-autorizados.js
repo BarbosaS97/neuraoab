@@ -1,6 +1,7 @@
 // NeuraOAB — Portal Mestre — allowlist de e-mails autorizados a entrar no
-// Portal do Professor via login com Google (tabela "professores_
-// autorizados", ver supabase/schema_professores_autorizados.sql). CRUD
+// Portal do Professor por autoatendimento (e-mail+senha, criando a própria
+// conta na primeira vez — ver professor-portal/js/auth.js), tabela
+// "professores_autorizados" (ver supabase/schema_professores_autorizados.sql). CRUD
 // direto na tabela (RLS "professores_autorizados_admin" já exige
 // is_admin() — sem precisar de Edge Function, mesmo padrão de js/planos.js
 // pra editar plan_limits). A checagem em si, no momento do login, é feita
