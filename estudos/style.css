@@ -13,6 +13,13 @@
   --success-dim: rgba(46, 160, 67, 0.14);
   --error: #da3633;
   --error-dim: rgba(218, 54, 51, 0.14);
+  /* Cor de destaque das medalhas conquistadas (ver estudos/medals.js) —
+     única cor nova do sistema de gamificação, deliberadamente diferente de
+     --primary/--success/--error (que já significam outras coisas no app),
+     pra "conquistado" ser reconhecível de relance. */
+  --gold: #d4af37;
+  --gold-dim: rgba(212, 175, 55, 0.14);
+  --gold-glow: rgba(212, 175, 55, 0.45);
   /* Cores extraidas do logotipo (images/logotipo.png), usadas como traco de
      identidade visual no topo do dashboard. */
   --logo-orange: #e2500a;
@@ -2996,6 +3003,171 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   color: var(--primary);
   background: var(--primary-dim);
 }
+
+/* -------------------------------------------------- Medalhas (gamificação) */
+/* Ver estudos/medals.js (catálogo/lógica, compartilhado por 3 páginas) —
+   aqui: o modal de comemoração (replicado em estudos/index.html e
+   estudos/simulado2fase.html) e os cards da própria estudos/medalhas.html. */
+
+.medal-celebration-modal { max-width: 420px; }
+
+.medal-celebration-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding-top: 28px;
+}
+
+.medal-celebration-badge {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: var(--gold-dim);
+  color: var(--gold);
+  border: 2px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  box-shadow: 0 0 0 6px var(--gold-dim);
+}
+
+.medal-celebration-body h2 { margin: 0; font-size: 17px; }
+
+.medal-celebration-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.medal-celebration-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  background: var(--card-hover);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.medal-celebration-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--gold-dim);
+  color: var(--gold);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.medal-celebration-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.medal-celebration-info strong { font-size: 13.5px; }
+.medal-celebration-info span { font-size: 12px; color: var(--text-dim); }
+
+/* ------------------------------------------------- Tela "Minhas Medalhas" */
+
+.medal-category-group { margin-bottom: 18px; }
+.medal-category-group:last-child { margin-bottom: 0; }
+
+.medal-category-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-dim);
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.medal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.medal-card {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  transition: opacity 0.15s ease, border-color 0.15s ease;
+}
+
+/* Bloqueada: opaca e sem cor de destaque — ver checkAndAwardMedals/
+   fetchEarnedMedalsMap, o estado "unlocked" vem sempre do banco
+   (oab_medals_earned), nunca só do cálculo local ao vivo. */
+.medal-card.locked { opacity: 0.45; }
+.medal-card.locked .medal-card-icon { background: var(--card-hover); color: var(--text-dim); }
+
+.medal-card.unlocked {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, var(--gold-dim), transparent 70%);
+}
+
+.medal-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--gold-dim);
+  color: var(--gold);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.medal-card-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+
+.medal-card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.medal-card-title-row strong { font-size: 13px; }
+
+.medal-tier-dots { display: flex; gap: 3px; flex-shrink: 0; }
+
+.medal-tier-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.medal-card.unlocked .medal-tier-dot.filled { background: var(--gold); }
+.medal-card.locked .medal-tier-dot.filled { background: var(--text-dim); }
+
+.medal-card-desc {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.45;
+}
+
+.medal-card-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+.medal-card-status.earned { color: var(--gold); }
+.medal-card-status svg { flex-shrink: 0; }
 
 /* -------------------------------------------------------- Modal de perfil */
 /*

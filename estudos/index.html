@@ -21,7 +21,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=54">
+<link rel="stylesheet" href="style.css?v=55">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -506,6 +506,26 @@
   </div>
 </div>
 
+<!-- --------------------------------------------- Modal de medalha conquistada -->
+<!-- Aberto por checkAndAwardMedals/renderMedalCelebration (ver estudos/medals.js,
+     carregado antes de estudos.js) logo depois de uma resposta ou do carregamento
+     inicial revelar medalha(s) nova(s). Um só botão ("Continuar praticando") que
+     só fecha o modal — a tela por trás já é a certa, sem navegação nenhuma. -->
+<div class="help-overlay" id="medalCelebrationOverlay" hidden>
+  <div class="help-modal medal-celebration-modal" role="dialog" aria-modal="true" aria-labelledby="medalCelebrationTitle">
+    <div class="help-modal-body medal-celebration-body">
+      <div class="medal-celebration-badge" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"></circle><path d="M9 14.5 7 22l5-3 5 3-2-7.5"></path></svg>
+      </div>
+      <h2 id="medalCelebrationTitle">Medalha conquistada!</h2>
+      <div class="medal-celebration-list" id="medalCelebrationList"></div>
+    </div>
+    <div class="help-modal-footer">
+      <button type="button" id="medalCelebrationContinueBtn" class="btn-primary">Continuar praticando</button>
+    </div>
+  </div>
+</div>
+
 <header class="topbar">
   <div class="topbar-left">
     <button type="button" id="menuBtn" class="menu-btn" aria-label="Abrir menu" aria-expanded="false">
@@ -549,6 +569,7 @@
   <section class="menu-item-list">
     <button type="button" id="menuProfileBtn" class="menu-item-btn">Meu Perfil</button>
     <button type="button" id="menuStatsBtn" class="menu-item-btn">Estatísticas</button>
+    <button type="button" id="menuMedalhasBtn" class="menu-item-btn">Minhas Medalhas</button>
     <!-- convitesBadge: bolinha que só aparece quando há convite pendente de
          verdade (ver loadConvites/renderConvites em estudos.js) — não é só
          decoração, é o sinal de "tem algo esperando aqui". -->
@@ -822,7 +843,8 @@
   </aside>
 </div>
 
-<script src="estudos.js?v=45"></script>
+<script src="medals.js?v=1"></script>
+<script src="estudos.js?v=46"></script>
 <script src="dr-laureano.js?v=13"></script>
 </body>
 </html>

@@ -22,6 +22,7 @@ const menuBackdrop = document.getElementById("menuBackdrop");
 const menuPanel = document.getElementById("menuPanel");
 const menuProfileBtn = document.getElementById("menuProfileBtn");
 const menuStatsBtn = document.getElementById("menuStatsBtn");
+const menuMedalhasBtn = document.getElementById("menuMedalhasBtn");
 const menuAvatar = document.getElementById("menuAvatar");
 const menuUserLabel = document.getElementById("menuUserLabel");
 const sessionLogoutBtn = document.getElementById("sessionLogoutBtn");
@@ -908,19 +909,9 @@ function wrongCountsSummary() {
   return { total, bySubject };
 }
 
-// "Hoje"/"Ontem"/"Há N dias" pra' data relativa de última atividade — sem
-// hora exata (o app não mede tempo de sessão na 1ª fase, só o timestamp de
-// cada resposta gravada).
-function fmtRelativeDate(iso) {
-  if (!iso) return "—";
-  const date = new Date(iso);
-  const startOfDay = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
-  const diffDays = Math.round((startOfDay(new Date()) - startOfDay(date)) / 86400000);
-  if (diffDays <= 0) return "Hoje";
-  if (diffDays === 1) return "Ontem";
-  if (diffDays < 30) return `Há ${diffDays} dias`;
-  return date.toLocaleDateString("pt-BR");
-}
+// fmtRelativeDate ("Hoje"/"Ontem"/"Há N dias") agora vive em medals.js
+// (carregado antes deste arquivo) — passou a ser usada em mais de uma
+// página (medalhas.html também precisa dela), então saiu daqui.
 
 const STAR_ICON = `<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
   <polygon points="12 2.5 15.09 8.76 22 9.77 17 14.64 18.18 21.52 12 18.27 5.82 21.52 7 14.64 2 9.77 8.91 8.76"></polygon>
@@ -2276,6 +2267,16 @@ async function handleAnswer(q, letter, correctLetter, altButtons, feedbackEl) {
         }).then(({ error }) => {
           if (error) console.error("Falha ao registrar resposta:", error.message);
         });
+
+        // Empilha localmente (statsAnswersCache só recarrega de verdade ao
+        // abrir Estatísticas) — sem isso, uma medalha só apareceria depois
+        // de sair e voltar pra esta tela. Timestamp do cliente, não do
+        // servidor (o insert acima é fire-and-forget, sem round-trip pra
+        // esperar); só usado pra avaliação de medalha nesta sessão, nunca
+        // gravado em lugar nenhum.
+        statsAnswersCache = statsAnswersCache || [];
+        statsAnswersCache.push({ question_id: q.id, correct: isCorrect, answered_at: new Date().toISOString() });
+        runMedalsCheck();
       }
     }
   } finally {
@@ -2573,11 +2574,21 @@ let screenBeforeStats = "exams";
 // trocar o filtro de periodo (ver statsPeriod) so' refiltra esse cache em
 // memoria e re-renderiza, sem nova consulta ao banco a cada clique.
 let statsAnswersCache = null;
+
+// Contraparte da 2ª fase pro sistema de medalhas (ver fetchPhase2MedalsSummary/
+// runMedalsCheck) — populado uma vez no init(), atualizado localmente depois
+// de cada simulado (não existe aqui: quem termina um simulado é a OUTRA
+// página, simulado2fase.js, que tem seu próprio contexto).
+let phase2MedalsSummary = { count: 0, dates: [] };
 let statsPeriod = "all"; // "today" | "7d" | "30d" | "all"
 
 menuStatsBtn.addEventListener("click", () => {
   closeMenu();
   openStatsScreen();
+});
+
+menuMedalhasBtn.addEventListener("click", () => {
+  window.location.href = "medalhas.html";
 });
 
 backFromStatsBtn.addEventListener("click", () => {
@@ -3140,6 +3151,48 @@ async function fetchStudentAnswers(userId) {
   return data || [];
 }
 
+// Resumo leve da 2ª fase só pro sistema de medalhas (ver estudos/medals.js)
+// — bem menor que o que simulado2fase.js busca (nota_total, prova_id etc.):
+// só o suficiente pra contar "quantos simulados corrigidos" (medalhas
+// Estreante/Praticante/Mestre) e achar os dias com atividade lá (medalhas de
+// Tempo de Estudo). Nunca lança, mesmo raciocínio de fetchStudentAnswers.
+async function fetchPhase2MedalsSummary(userId) {
+  const { data, error } = await client
+    .from("oab2_tentativas")
+    .select("finished_at")
+    .eq("user_id", userId)
+    .eq("status", "corrigida");
+  if (error) {
+    console.error("Falha ao carregar simulados da 2ª fase (medalhas):", error.message);
+    return { count: 0, dates: [] };
+  }
+  const rows = data || [];
+  return { count: rows.length, dates: rows.map(r => r.finished_at).filter(Boolean) };
+}
+
+// Monta o contexto completo (1ª fase + 2ª fase) e dispara a checagem de
+// medalhas — chamado no carregamento inicial (pega o que o aluno já tinha
+// conquistado antes de a funcionalidade existir) e de novo depois de cada
+// resposta em handleAnswer(). Nunca aguardado pelo chamador (fire-and-forget,
+// mesmo padrão de toggleFavorito/increment_plan_usage): uma falha aqui não
+// deve atrapalhar o estudo em si.
+function runMedalsCheck() {
+  if (!currentSession?.user) return;
+  const questionsById = new Map(allQuestions.map(q => [q.id, { discipline: q.discipline }]));
+  const studyDates = [
+    ...(statsAnswersCache || []).map(a => a.answered_at),
+    ...phase2MedalsSummary.dates,
+  ];
+  checkAndAwardMedals(client, currentSession.user.id, {
+    answers: statsAnswersCache || [],
+    questionsById,
+    phase2CorrigidasCount: phase2MedalsSummary.count,
+    studyDates,
+  }).then(newMedals => {
+    if (newMedals.length > 0) renderMedalCelebration(newMedals);
+  });
+}
+
 // A saudacao busca "profiles.nome" direto (em vez de reaproveitar
 // currentSession.user.user_metadata?.nome, como o resto do app faz) porque
 // nem toda conta passa por ali com nome preenchido no metadata (ex.: login
@@ -3177,13 +3230,15 @@ async function init() {
   let data;
   let answers;
   let firstName;
+  let phase2Summary;
   try {
-    [data, answers, , firstName] = await Promise.all([
+    [data, answers, , firstName, , phase2Summary] = await Promise.all([
       fetchAllQuestions(),
       fetchStudentAnswers(session.user.id),
       loadFavoritos(),
       fetchStudentFirstName(session.user.id),
       loadPlanStatus(),
+      fetchPhase2MedalsSummary(session.user.id),
     ]);
   } catch (error) {
     showLoadingError(`Erro ao carregar questões: ${error.message}`);
@@ -3192,6 +3247,7 @@ async function init() {
 
   allQuestions = data || [];
   statsAnswersCache = answers || [];
+  phase2MedalsSummary = phase2Summary || { count: 0, dates: [] };
   renderDashboardGreeting(firstName);
   applyPhaseTabLock();
   renderTopbarPlanBadge();
@@ -3206,6 +3262,7 @@ async function init() {
   renderDashboardTip();
   showScreen("exams");
   showLoadingReady();
+  runMedalsCheck(); // pega medalhas que o aluno já tinha alcançado antes de a funcionalidade existir
 
   // Chegou aqui com "#upgrade" na URL (ex.: link de upgrade em
   // simulado2fase.js, que não tem o modal de planos na própria página) —

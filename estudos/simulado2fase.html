@@ -22,7 +22,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=27">
+<link rel="stylesheet" href="style.css?v=28">
 <link rel="stylesheet" href="simulado2fase.css?v=17">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
@@ -74,6 +74,10 @@
     </div>
   </section>
 
+  <section class="menu-item-list">
+    <button type="button" id="menuMedalhasBtn" class="menu-item-btn">Minhas Medalhas</button>
+  </section>
+
   <!-- Acesso a' area da 2a fase agora EXIGE login (ver requireAuth em
        simulado2fase.js, mesmo padrao de estudos/index.html) — so' chega ate'
        aqui quem ja' tem uma sessao valida, entao esta secao nunca precisa de
@@ -86,6 +90,25 @@
     </div>
     <button type="button" id="sessionLogoutBtn" class="btn-ghost">Sair</button>
   </section>
+</div>
+
+<!-- --------------------------------------------- Modal de medalha conquistada -->
+<!-- Mesmo markup/comportamento de estudos/index.html (ver estudos/medals.js,
+     checkAndAwardMedals/renderMedalCelebration) — disparado logo depois que um
+     simulado da 2ª fase termina de ser corrigido, na tela de resultado. -->
+<div class="help-overlay" id="medalCelebrationOverlay" hidden>
+  <div class="help-modal medal-celebration-modal" role="dialog" aria-modal="true" aria-labelledby="medalCelebrationTitle">
+    <div class="help-modal-body medal-celebration-body">
+      <div class="medal-celebration-badge" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"></circle><path d="M9 14.5 7 22l5-3 5 3-2-7.5"></path></svg>
+      </div>
+      <h2 id="medalCelebrationTitle">Medalha conquistada!</h2>
+      <div class="medal-celebration-list" id="medalCelebrationList"></div>
+    </div>
+    <div class="help-modal-footer">
+      <button type="button" id="medalCelebrationContinueBtn" class="btn-primary">Continuar praticando</button>
+    </div>
+  </div>
 </div>
 
 <main class="sim2-main">
@@ -406,6 +429,7 @@
 
 </main>
 
-<script src="simulado2fase.js?v=13"></script>
+<script src="medals.js?v=1"></script>
+<script src="simulado2fase.js?v=14"></script>
 </body>
 </html>

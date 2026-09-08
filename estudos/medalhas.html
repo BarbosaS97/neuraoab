@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuraOAB — Minhas Medalhas</title>
+<link rel="icon" href="../images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#0d1117">
+<script>
+  // Aplica o tema salvo ANTES do CSS pintar a tela — mesmo truque anti-FOUC e
+  // mesma chave de localStorage de estudos/index.html e estudos/simulado2fase.html,
+  // pra o tema escolhido em qualquer uma das três páginas valer nas outras.
+  (function () {
+    try {
+      if (localStorage.getItem("neuraoab-theme") === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="style.css?v=55">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="menu-backdrop" id="menuBackdrop" hidden></div>
+<div class="menu-panel" id="menuPanel" hidden role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="menu-panel-head">
+    <span>Menu</span>
+    <button type="button" id="menuCloseBtn" class="icon-btn" aria-label="Fechar menu">&times;</button>
+  </div>
+
+  <section>
+    <h2 class="menu-section-title">Configurações</h2>
+    <div class="mode-switch">
+      <button class="mode-btn active" data-theme-btn="dark" type="button">Escuro</button>
+      <button class="mode-btn" data-theme-btn="light" type="button">Claro</button>
+    </div>
+  </section>
+
+  <section id="menuSessionLoggedIn">
+    <h2 class="menu-section-title">Conta</h2>
+    <div class="menu-user-row">
+      <span class="avatar" id="menuAvatar">?</span>
+      <span class="menu-user-name" id="menuUserLabel"></span>
+    </div>
+    <button type="button" id="sessionLogoutBtn" class="btn-ghost">Sair</button>
+  </section>
+</div>
+
+<!-- Mesmo topbar de estudos/index.html e estudos/simulado2fase.html (classes
+     .topbar/.topbar-left/.topbar-right, menu ≡ + painel lateral) — sem
+     cronômetro (não é uma tela de prova). -->
+<header class="topbar">
+  <div class="topbar-left">
+    <button type="button" id="menuBtn" class="menu-btn" aria-label="Abrir menu" aria-expanded="false">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+    <a href="../index.html" class="topbar-logo"><img src="../images/logotipo.png" alt="NeuraOAB"></a>
+  </div>
+  <div class="topbar-right">
+    <nav class="phase-tabs" aria-label="Fase do exame">
+      <a href="index.html" class="phase-tab">1ª Fase</a>
+      <a href="simulado2fase.html" class="phase-tab">2ª Fase</a>
+    </nav>
+  </div>
+</header>
+
+<div class="app">
+  <main class="content">
+    <section class="pick-screen">
+      <div class="pick-screen-head">
+        <h1>Minhas Medalhas</h1>
+        <p class="pick-screen-hint" id="medalsCountHint">Carregando suas medalhas...</p>
+      </div>
+      <div id="medalsBody">
+        <p class="stats-loading">Carregando suas medalhas...</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="medals.js?v=1"></script>
+<script src="medalhas.js?v=1"></script>
+</body>
+</html>

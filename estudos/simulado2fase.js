@@ -167,6 +167,7 @@ const els = {
   menuPanel: document.getElementById("menuPanel"),
   menuAvatar: document.getElementById("menuAvatar"),
   menuUserLabel: document.getElementById("menuUserLabel"),
+  menuMedalhasBtn: document.getElementById("menuMedalhasBtn"),
 
   sessionLogoutBtn: document.getElementById("sessionLogoutBtn"),
 };
@@ -191,6 +192,9 @@ function closeMenu() {
 els.menuBtn.addEventListener("click", openMenu);
 els.menuCloseBtn.addEventListener("click", closeMenu);
 els.menuBackdrop.addEventListener("click", closeMenu);
+els.menuMedalhasBtn.addEventListener("click", () => {
+  window.location.href = "medalhas.html";
+});
 
 document.addEventListener("keydown", (ev) => {
   if (ev.key === "Escape" && !els.menuPanel.hidden) closeMenu();
@@ -1149,6 +1153,7 @@ els.btnFinalizar.addEventListener("click", async () => {
   safeRemoveItem(TENTATIVA_PTR_PREFIX + provaId);
 
   renderResultado(notaTotal, resultados);
+  runMedalsCheckPhase2(); // este simulado acabou de virar "corrigida" — pode ter desbloqueado Estreante/Praticante/Mestre
 });
 
 // -------------------------------------------------------- 4. Resultado
@@ -1772,6 +1777,43 @@ els.dashboardRetryBtn.addEventListener("click", () => {
   });
 });
 
+// -------------------------------------------------------- Medalhas (fase 2)
+//
+// Contexto PARCIAL de propósito (ver comentário no topo de estudos/medals.js
+// sobre contexto parcial, e a seção "Onde os critérios são avaliados" do
+// plano): esta página não carrega o banco de questões da 1ª fase (custaria
+// uma busca pesada só pra isso), então só dá pra avaliar aqui as medalhas de
+// 2ª Fase e de Tempo de Estudo — as de categoria/geral/sequência ficam pra
+// próxima visita à 1ª fase ou à tela de medalhas, sem perda, só timing.
+async function fetchMedalsContextPhase2(userId) {
+  const [tentativasRes, respostasRes] = await Promise.all([
+    client.from("oab2_tentativas").select("finished_at").eq("user_id", userId).eq("status", "corrigida"),
+    client.from("oab_respostas").select("answered_at").eq("user_id", userId),
+  ]);
+  if (tentativasRes.error) console.error("Falha ao carregar simulados da 2ª fase (medalhas):", tentativasRes.error.message);
+  if (respostasRes.error) console.error("Falha ao carregar respostas da 1ª fase (medalhas):", respostasRes.error.message);
+  const tentativas = tentativasRes.data || [];
+  const respostas = respostasRes.data || [];
+  return {
+    phase2CorrigidasCount: tentativas.length,
+    studyDates: [
+      ...tentativas.map(t => t.finished_at).filter(Boolean),
+      ...respostas.map(r => r.answered_at).filter(Boolean),
+    ],
+  };
+}
+
+// Fire-and-forget, mesmo raciocínio de runMedalsCheck() em estudos.js — uma
+// falha aqui não deve atrapalhar o simulado em si.
+function runMedalsCheckPhase2() {
+  if (!currentSession?.user) return;
+  fetchMedalsContextPhase2(currentSession.user.id).then(context => (
+    checkAndAwardMedals(client, currentSession.user.id, context).then(newMedals => {
+      if (newMedals.length > 0) renderMedalCelebration(newMedals);
+    })
+  ));
+}
+
 // ---------------------------------------------------------------- Init
 //
 // requireAuth() ANTES de tudo — sem sessão válida, redireciona pra' landing
@@ -1785,4 +1827,5 @@ els.dashboardRetryBtn.addEventListener("click", () => {
   updateSessionUI();
   await applySegundaFaseLock();
   initPicker();
+  runMedalsCheckPhase2(); // pega medalhas que o aluno já tinha alcançado antes de a funcionalidade existir
 })();
