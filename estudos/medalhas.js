@@ -18,6 +18,18 @@ const menuUserLabel = document.getElementById("menuUserLabel");
 const sessionLogoutBtn = document.getElementById("sessionLogoutBtn");
 const medalsBody = document.getElementById("medalsBody");
 const medalsCountHint = document.getElementById("medalsCountHint");
+const backBtn = document.getElementById("backBtn");
+
+// Esta página é aberta tanto da 1ª quanto da 2ª fase (menu "Minhas
+// Medalhas" em estudos.js e simulado2fase.js, sempre via
+// window.location.href — nunca um link normal aberto em aba nova), então
+// sempre existe uma entrada anterior no histórico da MESMA aba pra voltar.
+// Só cai no fallback (dashboard da 1ª fase) se a página foi aberta direto
+// (link salvo, digitado na barra de endereço etc.), sem histórico nenhum.
+backBtn.addEventListener("click", () => {
+  if (window.history.length > 1) window.history.back();
+  else window.location.href = "index.html";
+});
 
 // ------------------------------------------------------------------ Menu
 //
