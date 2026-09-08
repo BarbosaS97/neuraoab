@@ -1326,6 +1326,41 @@
 .sim2-last-item-tag.mid { color: var(--text-dim); background: var(--card-hover); }
 .sim2-last-item-tag.down { color: var(--error); background: var(--error-dim); }
 
+/* "Ver histórico completo" (ver historyMoreBtn/openHistoricoModal em
+   simulado2fase.js) — texto-link discreto, mesmo espírito de .feature-link
+   da landing, só que sem sublinhado fixo (aparece só no hover). */
+.sim2-history-more-btn {
+  display: block;
+  margin: 12px auto 0;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--primary);
+  cursor: pointer;
+}
+.sim2-history-more-btn:hover { text-decoration: underline; }
+.sim2-history-more-btn[hidden] { display: none; }
+
+/* Modal "Histórico de simulados" — mesma base .help-overlay/.help-modal de
+   estudos/style.css, reaproveitando os cards .sim2-last-item de sempre (ver
+   buildHistoryItemRow em simulado2fase.js), só que SEM limite de 5 e dentro
+   de uma lista rolável (pode ter dezenas de simulados). */
+.historico-modal { max-width: 560px; }
+
+.historico-modal-list {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+  max-height: min(60vh, 520px);
+  overflow-y: auto;
+  /* Some espaço pro scrollbar não colar em cima do "lado direito" (nota/tag)
+     dos cards — mesma folga que .help-modal-body já dá nas laterais. */
+  padding-right: 2px;
+}
+
 /* Proximo treino recomendado pela IA */
 
 .sim2-priority-badge {

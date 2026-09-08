@@ -118,6 +118,10 @@ const els = {
   historyEmptyText: document.getElementById("historyEmptyText"),
   chartWrap: document.getElementById("chartWrap"),
   lastList: document.getElementById("lastList"),
+  historyMoreBtn: document.getElementById("historyMoreBtn"),
+  historicoModalOverlay: document.getElementById("historicoModalOverlay"),
+  historicoModalCloseBtn: document.getElementById("historicoModalCloseBtn"),
+  historicoModalList: document.getElementById("historicoModalList"),
 
   recommendEmpty: document.getElementById("recommendEmpty"),
   recommendEmptyText: document.getElementById("recommendEmptyText"),
@@ -1622,49 +1626,102 @@ function renderHistoryPanel() {
   renderChart(porDataAsc);
 }
 
+// Um card de tentativa corrigida (exame/área, modo, data, nota e a tag de
+// "acima/na/abaixo da média") — usado tanto na lista de "últimos 5" do
+// dashboard quanto na lista completa do modal de histórico (ver
+// buildHistoryItemRow abaixo). Clicar sempre chama openResultadoHistorico,
+// que é só leitura (mesma tela de resultado de sempre, sem nenhum campo
+// editável nem caminho de reenvio).
+function buildHistoryItemRow(t, media) {
+  const item = document.createElement("button");
+  item.type = "button";
+  item.className = "sim2-last-item";
+
+  const main = document.createElement("span");
+  main.className = "sim2-last-item-main";
+  const titleRow = document.createElement("span");
+  titleRow.className = "sim2-last-item-title-row";
+  const dot = document.createElement("span");
+  dot.className = "sim2-last-item-dot";
+  dot.style.setProperty("--dot-color", `var(${MODO_DOT_VAR[t.modo] || MODO_DOT_VAR.completo})`);
+  const title = document.createElement("span");
+  title.className = "sim2-last-item-title";
+  title.textContent = `${t.exam_number}º Exame · ${t.area}`;
+  titleRow.append(dot, title);
+  const sub = document.createElement("span");
+  sub.className = "sim2-last-item-sub";
+  const dataStr = t.finished_at ? new Date(t.finished_at).toLocaleDateString("pt-BR") : "—";
+  sub.textContent = `${MODO_LABELS[t.modo] || MODO_LABELS.completo} · ${dataStr}`;
+  main.append(titleRow, sub);
+
+  const side = document.createElement("span");
+  side.className = "sim2-last-item-side";
+  const nota = document.createElement("span");
+  nota.className = "sim2-last-item-nota";
+  nota.innerHTML = `${fmtValor(t.nota_total)} <span class="den">/ ${fmtValor(t.valor_total)}</span>`;
+  const diff = notaPct(t.nota_total, t.valor_total) - media;
+  const tag = document.createElement("span");
+  tag.className = "sim2-last-item-tag " + (diff > 0.3 ? "up" : diff < -0.3 ? "down" : "mid");
+  tag.textContent = diff > 0.3 ? "Acima da sua média" : diff < -0.3 ? "Abaixo da média" : "Na média";
+  side.append(nota, tag);
+
+  item.append(main, side);
+  item.addEventListener("click", () => {
+    // Fecha o modal de histórico se estiver aberto (no-op, inofensivo, se
+    // o clique veio da lista de "últimos 5" do painel, que não tem modal
+    // nenhum pra fechar) antes de trocar pra tela de resultado.
+    closeHistoricoModal();
+    openResultadoHistorico(t);
+  });
+  return item;
+}
+
+// Guarda a lista completa (não só os 5 mostrados no painel) + a média geral
+// — o modal de histórico (openHistoricoModal) reaproveita as duas em vez de
+// recalcular, já que renderHistoryPanel já buscou tudo via minhasTentativas.
+let historicoCompleto = [];
+let historicoMedia = 0;
+
 function renderLastList(corrigidasDesc) {
   els.lastList.hidden = false;
-  const media = corrigidasDesc.reduce((a, t) => a + notaPct(t.nota_total, t.valor_total), 0) / corrigidasDesc.length;
+  historicoCompleto = corrigidasDesc;
+  historicoMedia = corrigidasDesc.reduce((a, t) => a + notaPct(t.nota_total, t.valor_total), 0) / corrigidasDesc.length;
 
   els.lastList.innerHTML = "";
   corrigidasDesc.slice(0, 5).forEach(t => {
-    const item = document.createElement("button");
-    item.type = "button";
-    item.className = "sim2-last-item";
-
-    const main = document.createElement("span");
-    main.className = "sim2-last-item-main";
-    const titleRow = document.createElement("span");
-    titleRow.className = "sim2-last-item-title-row";
-    const dot = document.createElement("span");
-    dot.className = "sim2-last-item-dot";
-    dot.style.setProperty("--dot-color", `var(${MODO_DOT_VAR[t.modo] || MODO_DOT_VAR.completo})`);
-    const title = document.createElement("span");
-    title.className = "sim2-last-item-title";
-    title.textContent = `${t.exam_number}º Exame · ${t.area}`;
-    titleRow.append(dot, title);
-    const sub = document.createElement("span");
-    sub.className = "sim2-last-item-sub";
-    const dataStr = t.finished_at ? new Date(t.finished_at).toLocaleDateString("pt-BR") : "—";
-    sub.textContent = `${MODO_LABELS[t.modo] || MODO_LABELS.completo} · ${dataStr}`;
-    main.append(titleRow, sub);
-
-    const side = document.createElement("span");
-    side.className = "sim2-last-item-side";
-    const nota = document.createElement("span");
-    nota.className = "sim2-last-item-nota";
-    nota.innerHTML = `${fmtValor(t.nota_total)} <span class="den">/ ${fmtValor(t.valor_total)}</span>`;
-    const diff = notaPct(t.nota_total, t.valor_total) - media;
-    const tag = document.createElement("span");
-    tag.className = "sim2-last-item-tag " + (diff > 0.3 ? "up" : diff < -0.3 ? "down" : "mid");
-    tag.textContent = diff > 0.3 ? "Acima da sua média" : diff < -0.3 ? "Abaixo da média" : "Na média";
-    side.append(nota, tag);
-
-    item.append(main, side);
-    item.addEventListener("click", () => openResultadoHistorico(t));
-    els.lastList.appendChild(item);
+    els.lastList.appendChild(buildHistoryItemRow(t, historicoMedia));
   });
+
+  // Só faz sentido oferecer "ver mais" quando sobra algo além do que a
+  // lista de cima já mostra.
+  els.historyMoreBtn.hidden = corrigidasDesc.length <= 5;
 }
+
+// ---------------------------------------------- Modal "Histórico completo"
+
+function openHistoricoModal() {
+  els.historicoModalList.innerHTML = "";
+  historicoCompleto.forEach(t => {
+    els.historicoModalList.appendChild(buildHistoryItemRow(t, historicoMedia));
+  });
+  els.historicoModalOverlay.hidden = false;
+}
+
+function closeHistoricoModal() {
+  els.historicoModalOverlay.hidden = true;
+}
+
+// Cada linha do modal já fecha ele sozinha (buildHistoryItemRow chama
+// openResultadoHistorico, que troca a view inteira pra viewResultado) —
+// este listener aqui é só o "×"/clicar fora/Esc de fechar sem escolher nada.
+els.historyMoreBtn.addEventListener("click", openHistoricoModal);
+els.historicoModalCloseBtn.addEventListener("click", closeHistoricoModal);
+els.historicoModalOverlay.addEventListener("click", (ev) => {
+  if (ev.target === els.historicoModalOverlay) closeHistoricoModal();
+});
+document.addEventListener("keydown", (ev) => {
+  if (ev.key === "Escape" && !els.historicoModalOverlay.hidden) closeHistoricoModal();
+});
 
 // Grafico de linha em SVG puro (mesma filosofia do anel de progresso da 1a
 // fase, ver buildProgressRingSVG em estudos.js — sem lib nenhuma).

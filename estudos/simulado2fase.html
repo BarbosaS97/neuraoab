@@ -23,7 +23,7 @@
   })();
 </script>
 <link rel="stylesheet" href="style.css?v=28">
-<link rel="stylesheet" href="simulado2fase.css?v=17">
+<link rel="stylesheet" href="simulado2fase.css?v=18">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
 <body class="sim2-body">
@@ -119,6 +119,25 @@
     </div>
     <div class="help-modal-footer">
       <button type="button" id="medalCelebrationContinueBtn" class="btn-primary">Continuar praticando</button>
+    </div>
+  </div>
+</div>
+
+<!-- ------------------------------------------ Modal "Histórico de simulados" -->
+<!-- Aberto pelo botão "Ver histórico completo" do painel "Sua evolução" (ver
+     openHistoricoModal em simulado2fase.js) — lista TODOS os simulados
+     corrigidos do aluno (o painel embaixo do gráfico só mostra os 5 mais
+     recentes). Cada linha reaproveita o mesmo clique de sempre
+     (openResultadoHistorico): fecha o modal e abre a tela de resultado
+     daquela tentativa, só leitura — nada aqui permite editar/reenviar. -->
+<div class="help-overlay" id="historicoModalOverlay" hidden>
+  <div class="help-modal historico-modal" role="dialog" aria-modal="true" aria-labelledby="historicoModalTitle">
+    <div class="help-modal-header">
+      <h2 id="historicoModalTitle">Histórico de simulados</h2>
+      <button type="button" id="historicoModalCloseBtn" class="help-modal-close" aria-label="Fechar">&times;</button>
+    </div>
+    <div class="help-modal-body">
+      <div class="sim2-last-list historico-modal-list" id="historicoModalList"></div>
     </div>
   </div>
 </div>
@@ -302,6 +321,12 @@
         <div id="chartWrap" class="sim2-chart-wrap" hidden></div>
 
         <div id="lastList" class="sim2-last-list" hidden></div>
+
+        <!-- Só aparece com mais de 5 simulados corrigidos (ver renderLastList/
+             updateHistoryMoreBtn em simulado2fase.js) — a lista acima já É o
+             histórico completo até 5 itens, "ver mais" sem ter mais nada pra
+             ver seria um botão morto. -->
+        <button type="button" id="historyMoreBtn" class="sim2-history-more-btn" hidden>Ver histórico completo →</button>
       </section>
 
       <!-- Tier 2/3: recomendacao real (area mais fraca do proprio aluno),
@@ -442,6 +467,6 @@
 </main>
 
 <script src="medals.js?v=1"></script>
-<script src="simulado2fase.js?v=15"></script>
+<script src="simulado2fase.js?v=16"></script>
 </body>
 </html>
