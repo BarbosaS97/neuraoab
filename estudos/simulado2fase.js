@@ -167,7 +167,11 @@ const els = {
   menuPanel: document.getElementById("menuPanel"),
   menuAvatar: document.getElementById("menuAvatar"),
   menuUserLabel: document.getElementById("menuUserLabel"),
+  menuProfileBtn: document.getElementById("menuProfileBtn"),
+  menuStatsBtn: document.getElementById("menuStatsBtn"),
   menuMedalhasBtn: document.getElementById("menuMedalhasBtn"),
+  menuConvitesBtn: document.getElementById("menuConvitesBtn"),
+  convitesBadge: document.getElementById("convitesBadge"),
 
   sessionLogoutBtn: document.getElementById("sessionLogoutBtn"),
 };
@@ -192,8 +196,23 @@ function closeMenu() {
 els.menuBtn.addEventListener("click", openMenu);
 els.menuCloseBtn.addEventListener("click", closeMenu);
 els.menuBackdrop.addEventListener("click", closeMenu);
+
+// "Meu Perfil"/"Estatísticas"/"Meus convites" não têm modal/tela nesta
+// página (só existem em estudos/index.html) — navega pra lá já com o hash
+// certo, que o init() de estudos.js reconhece e abre na hora (ver
+// HASH_ACTIONS lá). Mesmo raciocínio de "#upgrade", que esta página já
+// usava (ver window.location.href logo abaixo, no gate de plano).
+els.menuProfileBtn.addEventListener("click", () => {
+  window.location.href = "index.html#perfil";
+});
+els.menuStatsBtn.addEventListener("click", () => {
+  window.location.href = "index.html#estatisticas";
+});
 els.menuMedalhasBtn.addEventListener("click", () => {
   window.location.href = "medalhas.html";
+});
+els.menuConvitesBtn.addEventListener("click", () => {
+  window.location.href = "index.html#convites";
 });
 
 document.addEventListener("keydown", (ev) => {
@@ -235,6 +254,25 @@ function updateSessionUI() {
   els.menuAvatar.textContent = label.trim().charAt(0).toUpperCase() || "?";
   els.menuUserLabel.textContent = currentSession.user.email;
   renderGreeting();
+}
+
+// Bolinha do item "Meus convites" no menu (ver convitesBadge) — esta página
+// não tem o modal de convites em si (só existe em estudos/index.html, o
+// clique no menu navega pra lá), mas o menu precisa mostrar a MESMA bolinha
+// que apareceria lá, senão o menu não é de verdade o mesmo em toda página.
+// Mesma checagem de loadConvites() em estudos.js, só que sem guardar a
+// lista inteira (aqui não existe onde renderizá-la). Fire-and-forget: uma
+// falha aqui não deve atrapalhar o simulado, só deixa a bolinha desatualizada.
+async function refreshConvitesBadge() {
+  try {
+    const { data, error } = await client.functions.invoke("aluno-portal", { body: { action: "listar-convites" } });
+    if (error) throw new Error(error.message);
+    if (data?.error) throw new Error(data.error);
+    const convites = data.convites || [];
+    els.convitesBadge.hidden = convites.every(c => c.expirado);
+  } catch (err) {
+    console.error("Falha ao carregar convites (bolinha do menu):", err.message);
+  }
 }
 
 // Mesmo comportamento de estudos/estudos.js (handleSessionLogout): sai e
@@ -1828,4 +1866,5 @@ function runMedalsCheckPhase2() {
   await applySegundaFaseLock();
   initPicker();
   runMedalsCheckPhase2(); // pega medalhas que o aluno já tinha alcançado antes de a funcionalidade existir
+  refreshConvitesBadge();
 })();

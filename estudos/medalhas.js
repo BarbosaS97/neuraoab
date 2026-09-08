@@ -15,6 +15,11 @@ const menuBackdrop = document.getElementById("menuBackdrop");
 const menuPanel = document.getElementById("menuPanel");
 const menuAvatar = document.getElementById("menuAvatar");
 const menuUserLabel = document.getElementById("menuUserLabel");
+const menuProfileBtn = document.getElementById("menuProfileBtn");
+const menuStatsBtn = document.getElementById("menuStatsBtn");
+const menuMedalhasBtn = document.getElementById("menuMedalhasBtn");
+const menuConvitesBtn = document.getElementById("menuConvitesBtn");
+const convitesBadge = document.getElementById("convitesBadge");
 const sessionLogoutBtn = document.getElementById("sessionLogoutBtn");
 const medalsBody = document.getElementById("medalsBody");
 const medalsCountHint = document.getElementById("medalsCountHint");
@@ -55,6 +60,25 @@ menuBackdrop.addEventListener("click", closeMenu);
 
 document.addEventListener("keydown", ev => {
   if (ev.key === "Escape" && !menuPanel.hidden) closeMenu();
+});
+
+// "Meu Perfil"/"Estatísticas"/"Meus convites" não têm modal/tela nesta
+// página (só existem em estudos/index.html) — navega pra lá já com o hash
+// certo, que o init() de estudos.js reconhece e abre na hora (ver
+// HASH_ACTIONS lá, mesmo padrão de "#upgrade" que já existia). "Minhas
+// Medalhas" fica de fora dessa lógica por já ser a própria página atual —
+// clicar de novo aqui só recarrega, sem nenhum efeito prático.
+menuProfileBtn.addEventListener("click", () => {
+  window.location.href = "index.html#perfil";
+});
+menuStatsBtn.addEventListener("click", () => {
+  window.location.href = "index.html#estatisticas";
+});
+menuMedalhasBtn.addEventListener("click", () => {
+  window.location.href = "medalhas.html";
+});
+menuConvitesBtn.addEventListener("click", () => {
+  window.location.href = "index.html#convites";
 });
 
 // ------------------------------------------------------------------ Tema
@@ -104,6 +128,22 @@ function updateSessionUI() {
   const label = currentSession.user.user_metadata?.nome || currentSession.user.email || "?";
   menuAvatar.textContent = label.trim().charAt(0).toUpperCase() || "?";
   menuUserLabel.textContent = currentSession.user.email;
+}
+
+// Bolinha do item "Meus convites" no menu — mesma checagem de loadConvites()
+// em estudos.js, só que sem guardar a lista inteira (aqui não existe onde
+// renderizá-la; o clique no menu já manda pra index.html#convites). Ver
+// comentário igual em simulado2fase.js. Fire-and-forget.
+async function refreshConvitesBadge() {
+  try {
+    const { data, error } = await client.functions.invoke("aluno-portal", { body: { action: "listar-convites" } });
+    if (error) throw new Error(error.message);
+    if (data?.error) throw new Error(data.error);
+    const convites = data.convites || [];
+    convitesBadge.hidden = convites.every(c => c.expirado);
+  } catch (err) {
+    console.error("Falha ao carregar convites (bolinha do menu):", err.message);
+  }
 }
 
 sessionLogoutBtn.addEventListener("click", async () => {
@@ -336,6 +376,7 @@ async function loadAndRenderMedals(userId) {
 
   currentSession = session;
   updateSessionUI();
+  refreshConvitesBadge();
 
   try {
     await loadAndRenderMedals(session.user.id);

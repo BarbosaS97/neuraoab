@@ -3264,12 +3264,24 @@ async function init() {
   showLoadingReady();
   runMedalsCheck(); // pega medalhas que o aluno já tinha alcançado antes de a funcionalidade existir
 
-  // Chegou aqui com "#upgrade" na URL (ex.: link de upgrade em
-  // simulado2fase.js, que não tem o modal de planos na própria página) —
-  // abre o modal direto, sem o aluno precisar achar "Meu Perfil" sozinho.
-  if (window.location.hash === "#upgrade") {
+  // Chegou aqui com um desses hashes na URL — sinal de que o clique
+  // aconteceu no MENU de outra página (2ª fase, Minhas Medalhas), que não
+  // tem o modal/tela em si (só existem aqui): em vez de duplicar Meu
+  // Perfil/Estatísticas/Convites/Planos nas outras páginas, o item do menu
+  // de lá só navega pra cá com o hash certo, e a gente abre na hora — o
+  // aluno nem percebe que trocou de página. Mesmo raciocínio de "#upgrade"
+  // de sempre (ver window.location.href em simulado2fase.js), só que agora
+  // com um item por destino em vez de um "if" só.
+  const HASH_ACTIONS = {
+    "#upgrade": openPlansModal,
+    "#perfil": openProfileModal,
+    "#estatisticas": openStatsScreen,
+    "#convites": openConviteModal,
+  };
+  const hashAction = HASH_ACTIONS[window.location.hash];
+  if (hashAction) {
     history.replaceState({}, document.title, window.location.pathname);
-    openPlansModal();
+    hashAction();
   }
 }
 
