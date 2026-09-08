@@ -21,7 +21,31 @@
     } catch (e) {}
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=55">
+<script>
+  // Evita a tela de carregamento "piscar" toda vez que o aluno volta da 2a
+  // fase (troca de aba = navegacao de pagina de verdade nesta stack, sem
+  // SPA/router — cada ida-e-volta recarrega este HTML do zero). Mesma chave
+  // de sessionStorage que ja' controlava so' a intro/lista de recursos (ver
+  // INTRO_SEEN_KEY/hasSeenIntro em estudos.js) — "ja' vi a intro nesta aba"
+  // agora tambem significa "nao precisa mostrar a tela de carregamento de
+  // novo", ja' que os dois so' fazem sentido na PRIMEIRA entrada na
+  // plataforma. Precisa rodar aqui, ANTES do CSS pintar a pagina (mesmo
+  // motivo do script de tema logo acima): so' assim da' pra esconder a
+  // splash sem ela sequer chegar a aparecer por uma fracao de segundo. O
+  // dashboard por tras fica visivel na hora (mesmo comportamento de sempre,
+  // so' que sem a splash por cima) e se preenche assim que os dados
+  // chegarem — showLoadingReady()/showLoadingError() em estudos.js
+  // continuam removendo a splash do DOM ao final, isto aqui so' evita ela
+  // aparecer visualmente antes disso.
+  (function () {
+    try {
+      if (sessionStorage.getItem("neuraoab-intro-seen") === "1") {
+        document.documentElement.classList.add("intro-seen");
+      }
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="style.css?v=56">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0/dist/umd/supabase.js" integrity="sha384-UxmVkfpcoSCBn4QrHwxxZVlCbloMpP/2Ay2ByWcNy6TcMxC3JUgqa8Geipyl0tP7" crossorigin="anonymous"></script>
 </head>
 <body>

@@ -153,6 +153,12 @@ a { color: inherit; }
   gap: 14px;
 }
 
+/* Já viu a intro nesta aba (ver script inline no <head> de estudos/index.html
+   e hasSeenIntro() em estudos.js) — não mostra a splash de novo ao voltar
+   da 2ª fase, só na primeira entrada de verdade na plataforma. Inerte nas
+   outras páginas (não têm #loadingSplash). */
+html.intro-seen #loadingSplash { display: none; }
+
 .loading-image {
   width: min(120px, 32vw);
   height: auto;
