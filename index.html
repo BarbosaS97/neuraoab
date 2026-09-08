@@ -420,6 +420,11 @@
 
   .google-btn:hover:not(:disabled) { border-color: var(--primary); transform: translateY(-1px); }
   .google-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  /* Sem isso, o atributo "hidden" (ver googleBtn.hidden em updateCredsFormMode)
+     não tem efeito nenhum: "display: flex" acima é regra de autor e vence o
+     "display: none" implícito do [hidden] do navegador, mesmo com o atributo
+     presente no DOM — mesmo cuidado que .login-overlay[hidden] já tinha. */
+  .google-btn[hidden] { display: none; }
 
   .login-divider {
     display: flex;
@@ -431,6 +436,8 @@
     text-transform: uppercase;
     letter-spacing: 0.04em;
   }
+
+  .login-divider[hidden] { display: none; }
 
   .login-divider::before, .login-divider::after {
     content: "";
@@ -3087,12 +3094,16 @@
   document.querySelectorAll("[data-carousel]").forEach(initCarousel);
 </script>
 
-<!-- Modal de login em duas etapas: escolha do perfil (aluno/professor) ->
-     formulário de credenciais. O papel escolhido só define o TÍTULO
-     mostrado; quem decide pra onde a pessoa é mandada depois de logar é o
-     role de verdade em profiles/roles (ver getRoleName/ROLE_DESTINATIONS
-     abaixo) — assim, se alguém clicar na aba errada por engano, ainda cai
-     no lugar certo em vez de travar num erro. -->
+<!-- Modal de login em duas etapas: escolha do perfil -> formulário de
+     credenciais. "Professor" nem chega na segunda etapa — manda direto pro
+     Portal do Professor (professor-portal/index.html, ver o listener de
+     ".role-choice" no <script> abaixo), que tem a lógica de verdade
+     (allowlist, criar conta, "Acesso Restrito"). Só "Aluno" segue pra
+     etapa de credenciais aqui. Mesmo que alguém com conta de professor
+     entre pela etapa de credenciais (ex.: sessão antiga, ou digitou e-mail/
+     senha sem passar pela escolha de papel), quem decide pra onde vai
+     depois de logar é o role de verdade em profiles/roles (ver
+     getRoleName/ROLE_DESTINATIONS abaixo), não o papel escolhido aqui. -->
 <div class="login-overlay" id="loginOverlay" hidden>
   <div class="login-modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle">
     <button type="button" class="login-modal-close" id="loginModalClose" aria-label="Fechar">&times;</button>
@@ -3126,9 +3137,10 @@
       <h2 class="login-modal-title" id="credsTitle">Entrar</h2>
       <p class="login-modal-sub" id="credsSub">Use o e-mail e senha da sua conta</p>
 
-      <!-- Só aparece pro papel "aluno" (professor não tem auto-cadastro,
-           só entra por convite) — ver updateCredsFormMode no <script>
-           abaixo, que mostra/esconde isto de acordo com o papel escolhido. -->
+      <!-- Google só faz sentido pro aluno — professor nem chega nesta etapa
+           (ver comentário no topo do modal, acima). Fica hidden por padrão
+           aqui e updateCredsFormMode (no <script> abaixo) revela quando a
+           etapa é aberta. -->
       <button type="button" class="google-btn" id="googleBtn" hidden>
         <svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true">
           <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.71v2.26h2.92c1.71-1.57 2.68-3.88 2.68-6.61z"/>
@@ -3182,9 +3194,9 @@
       <div class="turnstile-wrap" id="turnstileContainer"></div>
       <button type="submit" class="login-submit" id="loginSubmitBtn" disabled>Entrar</button>
       <p class="login-error" id="loginErrorMsg"></p>
-      <!-- Alterna entrar/cadastrar — só visível pro papel "aluno" (ver
-           updateCredsFormMode). Professor nunca vê isto: conta só existe
-           por convite (portal-mestre/js/admin.js), sem auto-cadastro. -->
+      <!-- Alterna entrar/cadastrar — só existe pro papel "aluno" (ver
+           updateCredsFormMode). Professor nem chega nesta etapa (ver
+           comentário no topo do modal). -->
       <p class="login-toggle-mode" id="toggleModeWrap" hidden>
         <span id="toggleModeText">Não tem conta?</span><button type="button" class="login-toggle-link" id="toggleModeBtn">Criar conta grátis</button>
       </p>
@@ -3249,9 +3261,10 @@
   const toggleModeBtn = document.getElementById("toggleModeBtn");
   const turnstileContainer = document.getElementById("turnstileContainer");
 
-  // "aluno" é o único papel com auto-cadastro (professor só entra por
-  // convite, ver portal-mestre/js/admin.js) — currentMode só importa
-  // quando currentRole === "aluno" (ver updateCredsFormMode abaixo).
+  // Professor nunca chega a setar currentRole (redireciona pro Portal do
+  // Professor antes disso, ver o listener de ".role-choice" abaixo) — na
+  // prática só vale "aluno" aqui. currentMode (entrar/cadastrar) só existe
+  // por causa disso.
   let currentRole = null;
   let currentMode = "login"; // "login" | "signup"
 
@@ -3351,9 +3364,10 @@
 
   // Atalho pros CTAs "Começar agora" (data-open-login="signup") — pula
   // direto pro formulário de cadastro do aluno, sem passar pela escolha de
-  // papel: quem clica ali já está dizendo que quer criar conta, e professor
-  // não tem auto-cadastro mesmo (só convite), então não faz sentido
-  // perguntar "você é aluno ou professor?" nesse fluxo.
+  // papel: esses CTAs são todos sobre testar o plano grátis do aluno, então
+  // não faz sentido perguntar "você é aluno ou professor?" nesse fluxo
+  // (professor tem seu próprio cadastro, mas em professor-portal/index.html,
+  // nunca por aqui).
   function openSignup() {
     credsForm.reset();
     currentRole = "aluno";
@@ -3403,13 +3417,13 @@
       credsTitle.textContent = "Criar conta grátis";
       credsSub.textContent = "Teste o plano grátis, sem precisar de convite";
     } else {
-      credsTitle.textContent = currentRole === "professor" ? "Entrar como professor" : "Entrar como aluno";
+      credsTitle.textContent = "Entrar como aluno";
       credsSub.textContent = "Use o e-mail e senha da sua conta";
     }
 
-    // Login com Google só faz sentido pro aluno (professor não tem
-    // auto-cadastro, então também não tem OAuth — a conta dele é sempre
-    // e-mail/senha definida ao aceitar o convite).
+    // Google só existe pra este formulário mesmo (professor nem chega
+    // aqui, ver comentário no topo do modal) — isAluno é sempre true neste
+    // ponto, mas mantido explícito por clareza.
     googleBtn.hidden = !isAluno;
     loginDivider.hidden = !isAluno;
 
@@ -3425,6 +3439,19 @@
 
   document.querySelectorAll(".role-choice").forEach((btn) => {
     btn.addEventListener("click", () => {
+      // "Professor" não loga aqui dentro — manda direto pro Portal do
+      // Professor (professor-portal/index.html), que é quem tem a lógica
+      // de verdade (allowlist "professores_autorizados" + promoção de role
+      // via Edge Function professor-auth-check, criar conta, tela "Acesso
+      // Restrito"). Esse form de credenciais aqui só sabia checar
+      // profiles.role_id já existente — quem estivesse autorizado mas sem
+      // conta ainda, ou na allowlist mas ainda não promovido, esbarrava
+      // num erro genérico em vez de ser atendido direito. Preferimos ter
+      // UM lugar só de verdade pra login de professor.
+      if (btn.dataset.role === "professor") {
+        window.location.href = "professor-portal/index.html";
+        return;
+      }
       currentRole = btn.dataset.role;
       currentMode = "login";
       roleStep.hidden = true;
