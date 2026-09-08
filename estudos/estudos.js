@@ -105,8 +105,11 @@ const toSubjectsBtn = document.getElementById("toSubjectsBtn");
 const toStudyBtn = document.getElementById("toStudyBtn");
 const backToExamsBtn = document.getElementById("backToExamsBtn");
 const backToSubjectsBtn = document.getElementById("backToSubjectsBtn");
+const backToSubjectsBtnText = document.getElementById("backToSubjectsBtnText");
 const examPickFooter = document.getElementById("examPickFooter");
 const subjectPickFooter = document.getElementById("subjectPickFooter");
+const reviewBanner = document.getElementById("reviewBanner");
+const reviewBannerSub = document.getElementById("reviewBannerSub");
 
 // Dashboard da 1ª fase (Tela 1) — ver seção "Tela 1" mais abaixo.
 const dashboardGreeting = document.getElementById("dashboardGreeting");
@@ -141,6 +144,14 @@ let answeredCount = 0;
 let selectedExams = new Set(); // chaves de exam_number (ou "__none__")
 let selectedSubjects = new Set(); // disciplinas (ou "__none__")
 let examPool = []; // allQuestions filtrado pelos exames selecionados
+
+// Estado da Tela 3 que não é sobre QUAIS questões (isso é `filtered`), mas
+// sobre COMO se chegou nela — ver enterStudy(). studyBackTarget é sempre um
+// dos nomes aceitos por showScreen(); reviewMode/reviewEmptyState só existem
+// durante uma sessão de "Revisar erros" (ver renderReviewBanner/renderQuestion).
+let studyBackTarget = "subjects";
+let reviewMode = null; // { scopeLabel, count } | null
+let reviewEmptyState = null; // { title, message, ctaLabel?, onCta? } | null
 
 // ------------------------------------------------------------------- Menu
 //
@@ -691,10 +702,33 @@ function updateScoreUI() {
 // Sem menu lateral: so' um dos 3 <section> fica visivel por vez.
 
 function showScreen(name) {
+  // Sair da Tela 3 sempre encerra o modo revisão (se algum) — evita que o
+  // banner/estado vazio de uma sessão de revisão "vaze" pra próxima vez que
+  // o aluno entrar num estudo normal (ver enterStudy/renderReviewBanner).
+  if (name !== "study") {
+    reviewMode = null;
+    reviewEmptyState = null;
+  }
   screenExams.hidden = name !== "exams";
   screenSubjects.hidden = name !== "subjects";
   screenStudy.hidden = name !== "study";
   screenStats.hidden = name !== "stats";
+  renderReviewBanner();
+}
+
+// Banner "Modo Revisão de Erros" acima do #viewer (ver enterStudy) + o rótulo
+// do botão "Voltar" da Tela 3, que muda pra "Sair da revisão" nesse modo —
+// mesmo botão, mesmo destino (studyBackTarget), só o texto muda pra deixar
+// claro que a sessão atual é uma revisão, não um estudo normal.
+function renderReviewBanner() {
+  reviewBanner.hidden = !reviewMode;
+  if (reviewMode) {
+    const count = reviewMode.count === 1 ? "1 questão errada" : `${reviewMode.count} questões erradas`;
+    reviewBannerSub.textContent = `${count} · ${reviewMode.scopeLabel}`;
+    backToSubjectsBtnText.textContent = "Sair da revisão";
+  } else {
+    backToSubjectsBtnText.textContent = "Voltar";
+  }
 }
 
 // Tela atual ANTES de abrir Estatisticas (pelo menu, acessivel de qualquer
@@ -780,39 +814,58 @@ function examMetaMap() {
   return meta;
 }
 
-// Progresso do aluno por exame, a partir de statsAnswersCache (já carregado
-// no init(), ver hoisting da busca de oab_respostas). Uma questão pode ter
-// mais de uma linha em oab_respostas (o aluno pode praticar de novo) —
-// aqui conta-se por QUESTÃO DISTINTA respondida (não por linha bruta), com
-// o acerto da tentativa MAIS RECENTE de cada uma, pra "X/Y respondidas"
-// nunca passar de Y nem "misturar" um erro antigo já corrigido depois.
-// (O painel "Seu progresso" é diferente: reaproveita a MESMA agregação
-// poolada que a tela de Estatísticas sempre usou, ver renderSidePanels.)
-function computeExamStats() {
-  const byId = new Map(allQuestions.map(q => [q.id, q]));
-  const groups = new Map(); // examKey -> Map(question_id -> {correct, answered_at})
-
+// Uma questão pode ter mais de uma linha em oab_respostas (o aluno pode
+// praticar de novo) — este é o ÚNICO lugar que decide qual tentativa "vale"
+// pra cada questão (a mais recente). computeExamStats() E currentWrongQuestions()
+// (ver abaixo) partem sempre daqui, pra nunca mais divergir sobre o que conta
+// como "ainda errado" (bug antigo: reviewMistakes filtrava statsAnswersCache
+// direto, sem essa dedupe, e mostrava questão já corrigida como "erro").
+function latestVerdictByQuestion() {
+  const map = new Map(); // question_id -> {correct, answered_at}
   (statsAnswersCache || []).forEach(a => {
-    const q = byId.get(a.question_id);
-    if (!q) return;
-    const key = examKey(q);
-    let g = groups.get(key);
-    if (!g) { g = new Map(); groups.set(key, g); }
-    const prev = g.get(a.question_id);
+    const prev = map.get(a.question_id);
     if (!prev || a.answered_at > prev.answered_at) {
-      g.set(a.question_id, { correct: a.correct, answered_at: a.answered_at });
+      map.set(a.question_id, { correct: a.correct, answered_at: a.answered_at });
     }
   });
+  return map;
+}
 
-  const result = new Map();
-  groups.forEach((g, key) => {
-    const entries = [...g.values()];
-    const answered = entries.length;
-    const correct = entries.filter(e => e.correct).length;
-    const lastAnsweredAt = entries.reduce((max, e) => (e.answered_at > max ? e.answered_at : max), "");
-    result.set(key, { answered, correct, lastAnsweredAt });
+// Progresso do aluno por exame — conta-se por QUESTÃO DISTINTA respondida
+// (não por linha bruta), com o acerto da tentativa MAIS RECENTE de cada uma,
+// pra "X/Y respondidas" nunca passar de Y nem "misturar" um erro antigo já
+// corrigido depois. (O painel "Seu progresso" é diferente: reaproveita a
+// MESMA agregação poolada que a tela de Estatísticas sempre usou, ver
+// renderSidePanels.)
+function computeExamStats() {
+  const byId = new Map(allQuestions.map(q => [q.id, q]));
+  const result = new Map(); // examKey -> {answered, correct, lastAnsweredAt}
+
+  latestVerdictByQuestion().forEach((verdict, questionId) => {
+    const q = byId.get(questionId);
+    if (!q) return;
+    const key = examKey(q);
+    let g = result.get(key);
+    if (!g) { g = { answered: 0, correct: 0, lastAnsweredAt: "" }; result.set(key, g); }
+    g.answered++;
+    if (verdict.correct) g.correct++;
+    if (verdict.answered_at > g.lastAnsweredAt) g.lastAnsweredAt = verdict.answered_at;
   });
+
   return result;
+}
+
+// Questões cuja tentativa MAIS RECENTE foi errada, agora mesmo — a lista real
+// de "o que revisar". `predicate` opcional filtra por exame/matéria (ver
+// reviewMistakes/reviewAllMistakes/reviewMistakesBySubject); sem predicate,
+// retorna o total do aluno em todos os exames.
+function currentWrongQuestions(predicate) {
+  const verdicts = latestVerdictByQuestion();
+  return allQuestions.filter(q => {
+    const v = verdicts.get(q.id);
+    if (!v || v.correct) return false;
+    return predicate ? predicate(q) : true;
+  });
 }
 
 // "Hoje"/"Ontem"/"Há N dias" pra' data relativa de última atividade — sem
@@ -1033,6 +1086,26 @@ function buildExamCard({ key, year, count, stat, hero, selected, onToggle }) {
 
 // -------------------------------------------------- Atalho "Começar simulado"
 
+// Cauda comum de todo caminho que entra na Tela 3 (simulado normal, atalho
+// "Começar simulado", qualquer modo de revisão): centraliza filtered/index/
+// resposta selecionada + pra onde "Voltar" deve levar (studyBackTarget) +
+// o estado do banner de revisão (reviewMode) e do estado vazio dedicado
+// (reviewEmptyState) — ver renderReviewBanner/renderQuestion mais abaixo.
+// NÃO mexe em examPool/selectedExams/selectedSubjects: cada chamador decide
+// o que faz sentido pra esses (ex.: toStudyBtn não deve sobrescrever a
+// seleção que o aluno acabou de fazer na Tela 2).
+function enterStudy(pool, { backTarget = "subjects", review = null, empty = null } = {}) {
+  filtered = pool;
+  currentIndex = 0;
+  selectedAnswer = null;
+  studyBackTarget = backTarget;
+  reviewMode = review;
+  reviewEmptyState = empty;
+  showScreen("study");
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+}
+
 // Faz de uma vez só o que o fluxo manual faz em 2 passos (Ver matérias ->
 // selecionar todas -> Estudar): seleciona só este exame, TODAS as matérias
 // dele, e já abre a Tela 3. Reaproveita exatamente as mesmas variáveis/telas
@@ -1045,39 +1118,74 @@ function startSimulado(key) {
   selectedExams = new Set([key]);
   examPool = allQuestions.filter(q => examKey(q) === key);
   selectedSubjects = new Set(allSubjectKeys());
-  filtered = examPool;
-  currentIndex = 0;
-  selectedAnswer = null;
-  showScreen("study");
-  renderQuestion();
-  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  enterStudy(examPool, { backTarget: "exams" });
 }
 
-// Mesma ideia do atalho acima, mas só com as questões que o aluno já
-// respondeu ERRADO nesse exame (usado pelo botão "Revisar erros" do painel
-// "Última atividade") — quando não sobra nenhuma questão errada nesse
-// exame, cai no simulado completo dele mesmo.
+function examLabel(key) {
+  return key === "__none__" ? "Sem exame" : `${key}º Exame`;
+}
+
+// Mesma ideia do atalho acima, mas só com as questões cuja tentativa mais
+// recente nesse exame foi ERRADA (usado pelo botão "Revisar erros" do painel
+// "Última atividade") — usa currentWrongQuestions(), a MESMA fonte de
+// computeExamStats(), então nunca mais diverge sobre o que já foi corrigido.
+// Sem erro nenhum sobrando, mostra um estado vazio explícito em vez de cair
+// direto (e sem aviso) no simulado completo.
 function reviewMistakes(key) {
-  const stats = computeExamStats().get(key);
-  const byId = new Map(allQuestions.map(q => [q.id, q]));
-  const wrongIds = new Set(
-    (statsAnswersCache || [])
-      .filter(a => !a.correct && byId.has(a.question_id) && examKey(byId.get(a.question_id)) === key)
-      .map(a => a.question_id),
-  );
-  if (!stats || wrongIds.size === 0) {
-    startSimulado(key);
+  const pool = currentWrongQuestions(q => examKey(q) === key);
+  if (pool.length === 0) {
+    enterStudy([], {
+      backTarget: "exams",
+      empty: {
+        title: "Nada pra revisar por aqui 🎉",
+        message: `Você não tem nenhuma questão errada no ${examLabel(key)} agora.`,
+        ctaLabel: "Fazer esse simulado do zero",
+        onCta: () => startSimulado(key),
+      },
+    });
     return;
   }
   selectedExams = new Set([key]);
   examPool = allQuestions.filter(q => examKey(q) === key);
   selectedSubjects = new Set(allSubjectKeys());
-  filtered = examPool.filter(q => wrongIds.has(q.id));
-  currentIndex = 0;
-  selectedAnswer = null;
-  showScreen("study");
-  renderQuestion();
-  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  enterStudy(pool, {
+    backTarget: "exams",
+    review: { scopeLabel: examLabel(key), count: pool.length },
+  });
+}
+
+// Revisão "global": todas as questões erradas do aluno, em qualquer exame —
+// e por matéria, reaproveitando o mesmo agrupamento que a tela de
+// Estatísticas já usa (q.discipline || "Sem disciplina"). Chamadas pelos
+// botões novos da tela de Estatísticas (ver renderStats).
+function reviewAllMistakes() {
+  const pool = currentWrongQuestions();
+  if (pool.length === 0) {
+    enterStudy([], {
+      backTarget: "stats",
+      empty: {
+        title: "Nenhum erro pra revisar 🎉",
+        message: "Você não tem nenhuma questão errada agora, em nenhum exame.",
+      },
+    });
+    return;
+  }
+  enterStudy(pool, { backTarget: "stats", review: { scopeLabel: "Todos os exames", count: pool.length } });
+}
+
+function reviewMistakesBySubject(discipline) {
+  const pool = currentWrongQuestions(q => (q.discipline || "Sem disciplina") === discipline);
+  if (pool.length === 0) {
+    enterStudy([], {
+      backTarget: "stats",
+      empty: {
+        title: "Nenhum erro pra revisar 🎉",
+        message: `Você não tem nenhuma questão errada em ${discipline} agora.`,
+      },
+    });
+    return;
+  }
+  enterStudy(pool, { backTarget: "stats", review: { scopeLabel: discipline, count: pool.length } });
 }
 
 // --------------------------------------------------- Abas de filtro + grade
@@ -1249,7 +1357,7 @@ function renderSidePanels() {
   const pctExam = pctOf(s.correct, s.answered);
 
   lastActivityPanel.hidden = false;
-  lastActivityExam.textContent = lastKey === "__none__" ? "Sem exame" : `${lastKey}º Exame`;
+  lastActivityExam.textContent = examLabel(lastKey);
   lastActivityBadge.textContent = done ? "Concluído" : "Em andamento";
   lastActivityBadge.className = "badge " + (done ? "badge-done" : "badge-progress");
   lastActivityRingWrap.innerHTML = buildProgressRingSVG(pctExam, 48, 5);
@@ -1389,16 +1497,12 @@ backToExamsBtn.addEventListener("click", () => {
 
 toStudyBtn.addEventListener("click", () => {
   if (selectedSubjects.size === 0) return;
-  filtered = examPool.filter(q => selectedSubjects.has(subjectKey(q)));
-  currentIndex = 0;
-  selectedAnswer = null;
-  showScreen("study");
-  renderQuestion();
-  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  const pool = examPool.filter(q => selectedSubjects.has(subjectKey(q)));
+  enterStudy(pool, { backTarget: "subjects" });
 });
 
 backToSubjectsBtn.addEventListener("click", () => {
-  showScreen("subjects");
+  showScreen(studyBackTarget);
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
 });
 
@@ -1556,18 +1660,76 @@ function renderQuestionBody(q, body) {
 // carregadas de uma vez so' na tela de carregamento (ver init(), mais
 // abaixo) — entao renderizar uma questao aqui e' sempre sincrono, sem
 // nenhuma busca de rede no meio.
+const REVIEW_EMPTY_ICON = `<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="12" r="10"></circle>
+  <path d="M8 12.5l2.5 2.5L16 9.5"></path>
+</svg>`;
+
+// Estado vazio dedicado de uma sessão de revisão (reviewEmptyState, ver
+// enterStudy/reviewMistakes/reviewAllMistakes/reviewMistakesBySubject) — em
+// vez do fallback genérico de baixo, que existia pra "nenhuma questão bate
+// com a seleção" e nunca foi pensado pra comunicar "parabéns, sem erros".
+// Sem redirecionamento automático pra outro conteúdo: o aluno decide o
+// próximo passo pelos botões (ctaLabel/onCta, quando fizer sentido, e
+// sempre "Voltar").
+function renderReviewEmptyState(container) {
+  container.classList.add("empty-review");
+
+  const icon = document.createElement("div");
+  icon.className = "empty-review-icon";
+  icon.innerHTML = REVIEW_EMPTY_ICON;
+  container.appendChild(icon);
+
+  const title = document.createElement("div");
+  title.className = "empty-review-title";
+  title.textContent = reviewEmptyState.title;
+  container.appendChild(title);
+
+  const message = document.createElement("p");
+  message.className = "empty-review-message";
+  message.textContent = reviewEmptyState.message;
+  container.appendChild(message);
+
+  const actions = document.createElement("div");
+  actions.className = "empty-review-actions";
+
+  if (reviewEmptyState.ctaLabel && reviewEmptyState.onCta) {
+    const ctaBtn = document.createElement("button");
+    ctaBtn.type = "button";
+    ctaBtn.className = "btn-primary";
+    ctaBtn.textContent = reviewEmptyState.ctaLabel;
+    ctaBtn.addEventListener("click", reviewEmptyState.onCta);
+    actions.appendChild(ctaBtn);
+  }
+
+  const backBtn = document.createElement("button");
+  backBtn.type = "button";
+  backBtn.className = "btn-link";
+  backBtn.textContent = "Voltar";
+  backBtn.addEventListener("click", () => showScreen(studyBackTarget));
+  actions.appendChild(backBtn);
+
+  container.appendChild(actions);
+}
+
 function renderQuestion() {
   if (filtered.length === 0) {
     viewer.innerHTML = "";
     const empty = document.createElement("div");
     empty.className = "empty";
-    empty.append("Nenhuma questão encontrada para a seleção atual. ");
-    const backLink = document.createElement("button");
-    backLink.type = "button";
-    backLink.className = "btn-link";
-    backLink.textContent = "Voltar";
-    backLink.addEventListener("click", () => showScreen("subjects"));
-    empty.appendChild(backLink);
+
+    if (reviewEmptyState) {
+      renderReviewEmptyState(empty);
+    } else {
+      empty.append("Nenhuma questão encontrada para a seleção atual. ");
+      const backLink = document.createElement("button");
+      backLink.type = "button";
+      backLink.className = "btn-link";
+      backLink.textContent = "Voltar";
+      backLink.addEventListener("click", () => showScreen(studyBackTarget));
+      empty.appendChild(backLink);
+    }
+
     viewer.appendChild(empty);
     document.dispatchEvent(new CustomEvent("question:changed", { detail: null }));
     return;
@@ -2398,7 +2560,10 @@ function renderFilteredStats() {
   renderStats({ overall: { total, correct }, bySubject: bySubjectList });
 }
 
-function buildStatsSubjectRow({ discipline, total, correct }) {
+function buildStatsSubjectRow({ discipline, total, correct, wrongNow }) {
+  const wrap = document.createElement("div");
+  wrap.className = "stats-subject-wrap";
+
   const row = document.createElement("div");
   row.className = "stats-subject-row";
 
@@ -2421,7 +2586,24 @@ function buildStatsSubjectRow({ discipline, total, correct }) {
   frac.textContent = `${correct}/${total} (${pct}%)`;
   row.appendChild(frac);
 
-  return row;
+  wrap.appendChild(row);
+
+  // Link de revisão só quando sobra erro DE VERDADE nessa matéria agora
+  // (currentWrongQuestions, período-independente) — não usa `total`/`correct`
+  // dessa linha, que são só do período escolhido no filtro (Hoje/7d/30d/
+  // Sempre) e contam tentativa por tentativa, não questão distinta.
+  if (wrongNow > 0) {
+    const link = document.createElement("button");
+    link.type = "button";
+    link.className = "stats-subject-review-link";
+    link.textContent = wrongNow === 1
+      ? "Revisar 1 questão errada dessa matéria"
+      : `Revisar ${wrongNow} questões erradas dessa matéria`;
+    link.addEventListener("click", () => reviewMistakesBySubject(discipline));
+    wrap.appendChild(link);
+  }
+
+  return wrap;
 }
 
 function renderStats(stats) {
@@ -2441,6 +2623,42 @@ function renderStats(stats) {
   overall.appendChild(labelEl);
   statsBody.appendChild(overall);
 
+  // Contagem de erros ATUAIS (período-independente: revisar é sobre corrigir
+  // o que ainda está errado, não sobre o que aconteceu num período) — calculada
+  // à parte de `stats`, que é o corpo enviado pra Edge Function estatisticas-ia
+  // logo abaixo (requestStatsAnalysis) e não deve ganhar campos extras.
+  const verdicts = latestVerdictByQuestion();
+  let totalWrongNow = 0;
+  const wrongCountBySubject = new Map();
+  allQuestions.forEach(q => {
+    const v = verdicts.get(q.id);
+    if (!v || v.correct) return;
+    totalWrongNow++;
+    const disc = q.discipline || "Sem disciplina";
+    wrongCountBySubject.set(disc, (wrongCountBySubject.get(disc) || 0) + 1);
+  });
+
+  if (totalWrongNow > 0) {
+    const cta = document.createElement("div");
+    cta.className = "stats-review-cta";
+    const ctaText = document.createElement("div");
+    ctaText.className = "stats-review-cta-text";
+    const ctaTitle = document.createElement("strong");
+    ctaTitle.textContent = totalWrongNow === 1
+      ? "Você tem 1 questão errada pra revisar"
+      : `Você tem ${totalWrongNow} questões erradas pra revisar`;
+    const ctaSub = document.createElement("span");
+    ctaSub.textContent = "Reveja só o que ainda está errado, juntando todos os exames.";
+    ctaText.append(ctaTitle, ctaSub);
+    const ctaBtn = document.createElement("button");
+    ctaBtn.type = "button";
+    ctaBtn.className = "btn-primary stats-review-cta-btn";
+    ctaBtn.textContent = "Revisar agora";
+    ctaBtn.addEventListener("click", reviewAllMistakes);
+    cta.append(ctaText, ctaBtn);
+    statsBody.appendChild(cta);
+  }
+
   const subjectsSection = document.createElement("div");
   const subjectsTitle = document.createElement("h2");
   subjectsTitle.className = "stats-section-title";
@@ -2448,7 +2666,9 @@ function renderStats(stats) {
   subjectsSection.appendChild(subjectsTitle);
   const subjectsList = document.createElement("div");
   subjectsList.className = "stats-subjects";
-  stats.bySubject.forEach(s => subjectsList.appendChild(buildStatsSubjectRow(s)));
+  stats.bySubject.forEach(s => subjectsList.appendChild(
+    buildStatsSubjectRow({ ...s, wrongNow: wrongCountBySubject.get(s.discipline) || 0 }),
+  ));
   subjectsSection.appendChild(subjectsList);
   statsBody.appendChild(subjectsSection);
 

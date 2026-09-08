@@ -714,9 +714,16 @@
       <div class="study-topbar">
         <button type="button" class="btn-back" id="backToSubjectsBtn">
           <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-          Voltar
+          <span id="backToSubjectsBtnText">Voltar</span>
         </button>
         <span class="study-score">Acertos: <b id="scoreText">0 / 0</b></span>
+      </div>
+      <div class="review-banner" id="reviewBanner" hidden>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="review-banner-icon"><path d="M3 12a9 9 0 1 0 3-6.7"></path><polyline points="3 4 3 9 8 9"></polyline></svg>
+        <div class="review-banner-text">
+          <strong>Modo Revisão de Erros</strong>
+          <span id="reviewBannerSub">—</span>
+        </div>
       </div>
       <div id="viewer" class="question-card">
         <div class="loading">Carregando questões do banco...</div>
