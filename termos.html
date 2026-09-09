@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  (function () {
+    try {
+      if (localStorage.getItem("neuraoab-theme") === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    } catch (e) {}
+  })();
+</script>
+<title>Termos de Uso — NeuraOAB</title>
+<meta name="description" content="Termos de Uso da NeuraOAB — condições de cadastro, planos, pagamentos e uso da plataforma de preparação para a OAB.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://neuraoab.com.br/termos.html">
+<link rel="icon" href="images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
+<meta name="theme-color" content="#0d1117">
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #f0f6fc;
+    --text-dim: #8b949e;
+    --primary: #8b5cf6;
+    --secondary: #3b82f6;
+  }
+  :root[data-theme="light"] {
+    --bg: #f6f7fb;
+    --card: #ffffff;
+    --border: #e2e5ec;
+    --text: #10151d;
+    --text-dim: #5b6472;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  a { color: var(--secondary); }
+  ::selection { background: rgba(139, 92, 246, 0.35); color: #fff; }
+
+  .top-bar {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 28px 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .top-bar img { height: 30px; width: auto; }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13.5px;
+  }
+  .back-link:hover { color: var(--text); }
+
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  h1 { font-size: 28px; margin: 0 0 6px; }
+  .updated-at { color: var(--text-dim); font-size: 13px; margin: 0 0 40px; }
+
+  h2 {
+    font-size: 18px;
+    margin: 40px 0 12px;
+    padding-top: 4px;
+  }
+  h2 .num { color: var(--primary); margin-right: 8px; }
+
+  p, li { color: var(--text-dim); font-size: 14.5px; }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--text); font-weight: 600; }
+
+  .contact-box {
+    margin-top: 48px;
+    padding: 20px 22px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .contact-box p { margin: 0; color: var(--text-dim); }
+  .contact-box a { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <img src="images/logotipo.png" alt="NeuraOAB" loading="lazy">
+  <a class="back-link" href="index.html">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    Voltar para o site
+  </a>
+</div>
+
+<main>
+  <h1>Termos de Uso</h1>
+  <p class="updated-at">Última atualização: setembro de 2026</p>
+
+  <p>
+    Estes Termos de Uso regulam o acesso e a utilização da plataforma <strong>NeuraOAB</strong>
+    (“NeuraOAB”, “nós” ou “plataforma”), incluindo o site, o portal do aluno, o portal do professor
+    e o portal administrativo. Ao criar uma conta ou usar qualquer parte da plataforma, você declara
+    que leu, entendeu e concorda com estes termos.
+  </p>
+
+  <h2><span class="num">1.</span>O que é a NeuraOAB</h2>
+  <p>
+    A NeuraOAB é uma plataforma de preparação para o Exame de Ordem (OAB), com banco de questões
+    da 1ª fase baseado em provas oficiais aplicadas pela FGV, simulados de 2ª fase com correção
+    apoiada por inteligência artificial, estatísticas de desempenho e um tutor de IA para tirar
+    dúvidas e explicar erros.
+  </p>
+  <p>
+    A NeuraOAB é um produto independente e <strong>não possui qualquer vínculo, parceria ou
+    afiliação com a FGV, a OAB/CFOAB ou qualquer banca examinadora</strong>. O uso de questões e
+    critérios oficiais tem finalidade exclusivamente pedagógica, dentro dos limites do uso legítimo
+    de conteúdo de domínio público/educacional.
+  </p>
+
+  <h2><span class="num">2.</span>Cadastro e contas</h2>
+  <p>A plataforma tem três tipos de conta, cada uma com um nível de acesso diferente:</p>
+  <ul>
+    <li><strong>Aluno</strong> — pode se cadastrar sozinho (conta avulsa) ou ser convidado por um professor/cursinho, vinculado a uma turma.</li>
+    <li><strong>Professor</strong> — gerencia turmas e alunos vinculados a ele, com acesso a estatísticas agregadas de desempenho da turma.</li>
+    <li><strong>Administrador</strong> — responsável pela operação da plataforma.</li>
+  </ul>
+  <p>
+    Você é responsável por manter a confidencialidade da sua senha e por todas as atividades
+    realizadas na sua conta. Avise-nos imediatamente se suspeitar de uso não autorizado. As
+    informações de cadastro (nome, e-mail e demais dados fornecidos) devem ser verdadeiras e
+    mantidas atualizadas.
+  </p>
+  <p>
+    Contas de professor criadas por convite ou autoatendimento dependem de autorização prévia do
+    administrador da plataforma; contas de aluno vinculadas a um professor podem ter o acesso
+    removido ou o plano alterado por esse professor ou pelo administrador, a qualquer momento.
+  </p>
+
+  <h2><span class="num">3.</span>Planos e pagamentos</h2>
+  <p>
+    A NeuraOAB oferece um plano gratuito com uso limitado e planos pagos com recursos adicionais
+    (como maior volume de questões, análise de desempenho por IA e simulados de 2ª fase), conforme
+    descrito na página de preços no momento da contratação.
+  </p>
+  <ul>
+    <li>Os pagamentos de planos pagos são processados por um parceiro de pagamentos terceirizado; a NeuraOAB não armazena dados completos de cartão de crédito.</li>
+    <li>Assinaturas são renovadas automaticamente no ciclo contratado (mensal ou conforme o plano escolhido), até que sejam canceladas.</li>
+    <li>Você pode cancelar a renovação automática a qualquer momento; o acesso ao plano pago permanece até o fim do período já pago.</li>
+    <li>Reembolsos, quando aplicáveis, seguem a legislação consumerista brasileira (incluindo o direito de arrependimento em até 7 dias após a contratação, para compras feitas fora de estabelecimento comercial).</li>
+    <li>Alterações de preço não afetam cobranças já realizadas, apenas ciclos futuros, e serão comunicadas com antecedência razoável.</li>
+  </ul>
+
+  <h2><span class="num">4.</span>Uso aceitável</h2>
+  <p>Ao usar a NeuraOAB, você concorda em não:</p>
+  <ul>
+    <li>Compartilhar sua conta ou credenciais de acesso com terceiros, nem revender ou redistribuir acesso à plataforma;</li>
+    <li>Extrair, copiar ou reproduzir em massa o banco de questões, gabaritos ou conteúdo gerado pela plataforma para fins comerciais próprios;</li>
+    <li>Tentar burlar limites de uso do plano contratado, mecanismos de autenticação ou de segurança da plataforma;</li>
+    <li>Usar a plataforma para qualquer finalidade ilícita ou que viole direitos de terceiros.</li>
+  </ul>
+  <p>
+    O descumprimento destas regras pode levar à suspensão ou ao encerramento da conta, sem prejuízo
+    de outras medidas cabíveis.
+  </p>
+
+  <h2><span class="num">5.</span>Inteligência artificial e conteúdo gerado</h2>
+  <p>
+    Algumas funcionalidades (explicações de questões, correção de peças e simulados de 2ª fase,
+    estatísticas de desempenho e chat com tutor de IA) utilizam modelos de inteligência artificial.
+    As respostas e correções geradas por IA são um apoio pedagógico e podem conter imprecisões —
+    elas não substituem a orientação de um professor, tampouco constituem aconselhamento jurídico
+    profissional. A responsabilidade pela preparação e pelo desempenho no exame é sempre do
+    candidato.
+  </p>
+
+  <h2><span class="num">6.</span>Propriedade intelectual</h2>
+  <p>
+    O software, o design, a marca NeuraOAB e o conteúdo produzido pela plataforma (explicações,
+    resumos, correções geradas por IA) pertencem à NeuraOAB ou a seus licenciantes. Questões e
+    critérios de correção baseados em provas oficiais permanecem de titularidade de seus respectivos
+    autores/instituições; a NeuraOAB os utiliza sob as hipóteses legais de uso educacional.
+  </p>
+
+  <h2><span class="num">7.</span>Isenção de responsabilidade e limitação de garantias</h2>
+  <p>
+    A NeuraOAB é fornecida "como está". Fazemos o possível para manter a plataforma disponível,
+    precisa e atualizada, mas não garantimos aprovação no Exame de Ordem nem resultado específico
+    de desempenho — o uso da plataforma é uma ferramenta de estudo, não uma promessa de resultado.
+    Não nos responsabilizamos por indisponibilidades temporárias, falhas técnicas de terceiros
+    (provedores de e-mail, pagamento, hospedagem) ou por decisões tomadas exclusivamente com base
+    em conteúdo gerado por IA.
+  </p>
+
+  <h2><span class="num">8.</span>Privacidade e dados pessoais</h2>
+  <p>
+    Tratamos os dados pessoais coletados (cadastro, uso da plataforma, respostas e desempenho) em
+    conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018). Os dados são usados para
+    operar a plataforma, personalizar sua experiência de estudo e, quando aplicável, processar
+    pagamentos — nunca são vendidos a terceiros. Você pode solicitar a exclusão da sua conta e dos
+    seus dados a qualquer momento pelos canais indicados na plataforma.
+  </p>
+
+  <h2><span class="num">9.</span>Encerramento de conta</h2>
+  <p>
+    Você pode encerrar sua conta a qualquer momento pelas opções disponíveis no seu perfil. A
+    NeuraOAB pode suspender ou encerrar contas que violem estes termos, mediante aviso quando
+    possível. O encerramento de uma conta paga não gera reembolso automático de período já
+    utilizado, ressalvado o direito de arrependimento previsto no item 3.
+  </p>
+
+  <h2><span class="num">10.</span>Alterações destes termos</h2>
+  <p>
+    Podemos atualizar estes Termos de Uso periodicamente para refletir mudanças na plataforma ou na
+    legislação aplicável. Alterações relevantes serão comunicadas na plataforma; o uso continuado
+    após a atualização implica concordância com a nova versão.
+  </p>
+
+  <h2><span class="num">11.</span>Lei aplicável e foro</h2>
+  <p>
+    Estes termos são regidos pelas leis da República Federativa do Brasil. Fica eleito o foro do
+    domicílio do consumidor para dirimir eventuais controvérsias, conforme o Código de Defesa do
+    Consumidor.
+  </p>
+
+  <div class="contact-box">
+    <p>
+      Dúvidas sobre estes termos? Fale com a gente pelo canal de suporte indicado dentro da
+      plataforma ou volte para a <a href="index.html">página inicial</a>.
+    </p>
+  </div>
+</main>
+
+</body>
+</html>
