@@ -1577,31 +1577,57 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   padding: 30px 0;
 }
 
+/* Mesmo anel verde/vermelho do card "Seu progresso" da Tela 1 (ver
+   buildProgressRingSVG/renderSidePanels em estudos.js — .progress-ring-svg/
+   -track/-correct/-wrong são as MESMAS classes, size-agnósticas, então o
+   anel daqui reaproveita a cor/traço já definidos ali sem duplicar nada),
+   só que maior e com o detalhamento (respondidas/acertos/erros) ao lado em
+   vez de embaixo — a versão "grande" pedida pra tela de Estatísticas. */
 .stats-overall {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 18px;
+  gap: 28px;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 20px 22px;
+  padding: 24px 26px;
 }
 
-.stats-overall-pct {
-  font-size: 32px;
-  font-weight: 800;
-  color: var(--primary);
-  line-height: 1;
-  flex-shrink: 0;
+.stats-overall-ring-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.stats-overall-label {
-  font-size: 13px;
-  color: var(--text-dim);
-  line-height: 1.5;
+.stats-overall-ring-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.stats-overall-ring-pct { font-size: 40px; font-weight: 800; color: var(--text); line-height: 1.1; }
+.stats-overall-ring-label { font-size: 13px; color: var(--text-dim); }
+
+.stats-overall-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 32px;
+  padding-left: 24px;
+  border-left: 1px solid var(--border);
 }
 
-.stats-overall-label b { color: var(--text); }
+.stats-overall-stat { display: flex; flex-direction: column; gap: 3px; }
+.stats-overall-stat-num { font-size: 22px; font-weight: 700; color: var(--text); }
+.stats-overall-stat-num.ok { color: var(--success); }
+.stats-overall-stat-num.err { color: var(--error); }
+.stats-overall-stat-label { font-size: 12px; color: var(--text-dim); }
+
+/* Telas estreitas: o divisor lateral vira só mais uma linha da mesma
+   coluna — sem borda vertical sobrando quando tudo já empilhou. */
+@media (max-width: 520px) {
+  .stats-overall-breakdown {
+    padding-left: 0;
+    border-left: none;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+}
 
 /* Card de destaque "Revisar agora" (ver renderStats em estudos.js) — só
    aparece quando sobra pelo menos 1 questão errada ATUAL (independente do

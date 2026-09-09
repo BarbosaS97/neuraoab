@@ -716,6 +716,24 @@ function showScreen(name) {
   screenStudy.hidden = name !== "study";
   screenStats.hidden = name !== "stats";
   renderReviewBanner();
+
+  // Sempre que a Tela 1 (exames) ou a Tela 2 (matérias) reaparece —
+  // sobretudo voltando de um estudo (Tela 3) onde o aluno acabou de
+  // responder questões — re-renderiza a partir do cache em memória
+  // (statsAnswersCache, atualizado localmente a cada resposta, ver
+  // handleAnswer/"Empilha localmente" mais abaixo no arquivo). Sem isso, o
+  // placar por prova/matéria e o card "Seu progresso" da barra lateral
+  // ficavam parados no valor de quando a tela abriu pela última vez, só
+  // atualizando de verdade se a página fosse recarregada. Barato (sem
+  // request de rede, só reconstrói o DOM a partir do que já está em
+  // memória), então não tem problema chamar isso toda vez que a tela troca,
+  // mesmo quando nada mudou.
+  if (name === "exams") {
+    renderExamGrid();
+    renderSidePanels();
+  } else if (name === "subjects") {
+    renderSubjectGrid();
+  }
 }
 
 // Banner "Modo Revisão de Erros" acima do #viewer (ver enterStudy) + o rótulo
@@ -2608,15 +2626,11 @@ menuMedalhasBtn.addEventListener("click", () => {
 });
 
 backFromStatsBtn.addEventListener("click", () => {
+  // showScreen já re-renderiza a Tela 1 (exames)/Tela 2 (matérias) sozinho
+  // quando é pra uma delas que se está voltando — cobre o caso de
+  // Estatísticas ter acabado de buscar dados mais novos (ou zerado tudo,
+  // ver "Zerar estatísticas" abaixo).
   showScreen(screenBeforeStats);
-  // Estatísticas pode ter acabado de buscar dados mais novos (ou zerado
-  // tudo, ver "Zerar estatísticas" abaixo) — sem isso, o dashboard da Tela
-  // 1 (progresso por exame, painel lateral) ficaria mostrando o estado de
-  // antes de abrir Estatísticas até a página ser recarregada.
-  if (screenBeforeStats === "exams") {
-    renderExamGrid();
-    renderSidePanels();
-  }
 });
 
 function pctOf(correct, total) {
@@ -2778,18 +2792,55 @@ function buildStatsSubjectRow({ discipline, total, correct, wrongNow }) {
 function renderStats(stats) {
   statsBody.innerHTML = "";
 
+  // Mesmo anel verde/vermelho do card "Seu progresso" da Tela 1 (ver
+  // buildProgressRingSVG/renderSidePanels), só que maior — pedido explícito
+  // pra Estatísticas mostrar "o progresso total como aparece no dashboard".
+  // O filtro de período (Hoje/7d/30d/Sempre, ver statsPeriodSwitch) já
+  // controla esse `stats.overall` desde antes, então o anel já respeita o
+  // período escolhido de graça, sem precisar de nada novo aqui.
+  const { correct, total } = stats.overall;
+  const pct = pctOf(correct, total);
+
   const overall = document.createElement("div");
   overall.className = "stats-overall";
-  const pctEl = document.createElement("div");
-  pctEl.className = "stats-overall-pct";
-  pctEl.textContent = `${pctOf(stats.overall.correct, stats.overall.total)}%`;
-  overall.appendChild(pctEl);
-  const labelEl = document.createElement("div");
-  labelEl.className = "stats-overall-label";
-  const b = document.createElement("b");
-  b.textContent = `${stats.overall.correct} de ${stats.overall.total}`;
-  labelEl.append(b, " questões respondidas corretamente, no total.");
-  overall.appendChild(labelEl);
+
+  const ringWrap = document.createElement("div");
+  ringWrap.className = "stats-overall-ring-row";
+  const ringSvgWrap = document.createElement("div");
+  ringSvgWrap.className = "stats-overall-ring";
+  ringSvgWrap.innerHTML = buildProgressRingSVG(correct, total, 140, 13);
+  const ringText = document.createElement("div");
+  ringText.className = "stats-overall-ring-text";
+  const pctEl = document.createElement("span");
+  pctEl.className = "stats-overall-ring-pct";
+  pctEl.textContent = `${pct}%`;
+  const ringLabel = document.createElement("span");
+  ringLabel.className = "stats-overall-ring-label";
+  ringLabel.textContent = "Aproveitamento geral";
+  ringText.append(pctEl, ringLabel);
+  ringWrap.append(ringSvgWrap, ringText);
+  overall.appendChild(ringWrap);
+
+  const breakdown = document.createElement("div");
+  breakdown.className = "stats-overall-breakdown";
+  [
+    { num: total, label: "Questões respondidas" },
+    { num: correct, label: "Acertos", cls: "ok" },
+    { num: total - correct, label: "Erros", cls: "err" },
+  ].forEach(({ num, label, cls }) => {
+    const stat = document.createElement("div");
+    stat.className = "stats-overall-stat";
+    const numEl = document.createElement("span");
+    numEl.className = "stats-overall-stat-num" + (cls ? ` ${cls}` : "");
+    numEl.textContent = num;
+    const labelEl = document.createElement("span");
+    labelEl.className = "stats-overall-stat-label";
+    labelEl.textContent = label;
+    stat.append(numEl, labelEl);
+    breakdown.appendChild(stat);
+  });
+  overall.appendChild(breakdown);
+
   statsBody.appendChild(overall);
 
   // Contagem de erros ATUAIS (período-independente: revisar é sobre corrigir
