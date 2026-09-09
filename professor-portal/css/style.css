@@ -139,6 +139,18 @@ input, textarea {
   border-color: var(--accent);
 }
 
+/* Status da checagem de e-mail no modo "Criar conta" (ver
+   checkEmailForSignup em js/auth.js) — mesma paleta ok/err/neutro do resto
+   do formulário, só que embutida no próprio campo em vez de um bloco
+   separado, pra dar feedback junto de onde a pessoa está digitando. */
+.field-status {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+.field-status.ok { color: var(--ok); }
+.field-status.err { color: var(--err); }
+
 .login-error {
   margin: 16px 0 0;
   padding: 10px 12px;

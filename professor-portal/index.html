@@ -31,8 +31,12 @@
       <div class="field">
         <label for="loginEmail">E-mail</label>
         <input type="email" id="loginEmail" autocomplete="email" required>
+        <!-- Só aparece no modo "Criar conta" — confirma contra a allowlist
+             do Portal Mestre (professores_autorizados) antes de liberar o
+             campo de senha abaixo (ver checkEmailForSignup em js/auth.js). -->
+        <p class="field-status" id="signupEmailStatus" hidden></p>
       </div>
-      <div class="field">
+      <div class="field" id="loginPasswordField">
         <label for="loginPassword">Senha</label>
         <input type="password" id="loginPassword" autocomplete="current-password" minlength="8" required>
       </div>
