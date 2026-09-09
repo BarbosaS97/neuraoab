@@ -10,15 +10,22 @@
 let autorizadosCache = [];
 let currentAdminId = null;
 
-const tableBodyEl = document.getElementById("autorizadosTableBody");
-const modalOverlay = document.getElementById("autorizadoModal");
-const modalMsg = document.getElementById("autorizadoModalMsg");
-const modalForm = document.getElementById("autorizadoForm");
-const fieldEmail = document.getElementById("atEmail");
-const fieldNome = document.getElementById("atNome");
-const modalSaveBtn = document.getElementById("autorizadoModalSave");
+// Nomes prefixados com "autorizado"/"at" de propósito — este script roda no
+// mesmo escopo global que admin.js (scripts clássicos, não módulos), que já
+// declara tableBodyEl/modalOverlay/modalMsg/modalForm/fieldEmail/fieldNome/
+// modalSaveBtn/fmtDate/showModalMsg/clearModalMsg pro painel de Professores;
+// reusar esses nomes aqui é um SyntaxError de redeclaração que impede o
+// arquivo INTEIRO de rodar (mesmo padrão de prefixo que js/alunos.js já usa
+// pros seus próprios elementos, ex.: studentsTableBodyEl).
+const autorizadosTableBodyEl = document.getElementById("autorizadosTableBody");
+const autorizadoModalOverlay = document.getElementById("autorizadoModal");
+const autorizadoModalMsgEl = document.getElementById("autorizadoModalMsg");
+const autorizadoModalForm = document.getElementById("autorizadoForm");
+const atFieldEmail = document.getElementById("atEmail");
+const atFieldNome = document.getElementById("atNome");
+const autorizadoModalSaveBtn = document.getElementById("autorizadoModalSave");
 
-function fmtDate(iso) {
+function fmtDateAutorizado(iso) {
   if (!iso) return "—";
   try {
     return new Date(iso).toLocaleDateString("pt-BR");
@@ -27,17 +34,17 @@ function fmtDate(iso) {
   }
 }
 
-function showModalMsg(text, kind) {
-  modalMsg.textContent = text;
-  modalMsg.className = `modal-msg show ${kind}`;
+function showAutorizadoModalMsg(text, kind) {
+  autorizadoModalMsgEl.textContent = text;
+  autorizadoModalMsgEl.className = `modal-msg show ${kind}`;
 }
-function clearModalMsg() {
-  modalMsg.className = "modal-msg";
-  modalMsg.textContent = "";
+function clearAutorizadoModalMsg() {
+  autorizadoModalMsgEl.className = "modal-msg";
+  autorizadoModalMsgEl.textContent = "";
 }
 
 function renderAutorizados() {
-  tableBodyEl.innerHTML = "";
+  autorizadosTableBodyEl.innerHTML = "";
 
   if (autorizadosCache.length === 0) {
     const tr = document.createElement("tr");
@@ -46,13 +53,13 @@ function renderAutorizados() {
     td.colSpan = 4;
     td.textContent = "Nenhum e-mail autorizado ainda.";
     tr.appendChild(td);
-    tableBodyEl.appendChild(tr);
+    autorizadosTableBodyEl.appendChild(tr);
     return;
   }
 
   autorizadosCache.forEach((a) => {
     const tr = document.createElement("tr");
-    [a.email, a.nome || "—", fmtDate(a.created_at)].forEach((text) => {
+    [a.email, a.nome || "—", fmtDateAutorizado(a.created_at)].forEach((text) => {
       const td = document.createElement("td");
       td.textContent = text;
       tr.appendChild(td);
@@ -72,7 +79,7 @@ function renderAutorizados() {
     actionsTd.appendChild(actions);
     tr.appendChild(actionsTd);
 
-    tableBodyEl.appendChild(tr);
+    autorizadosTableBodyEl.appendChild(tr);
   });
 }
 
@@ -92,32 +99,32 @@ async function loadAutorizados() {
 }
 
 function openAutorizadoModal() {
-  modalForm.reset();
-  clearModalMsg();
-  modalOverlay.hidden = false;
-  fieldEmail.focus();
+  autorizadoModalForm.reset();
+  clearAutorizadoModalMsg();
+  autorizadoModalOverlay.hidden = false;
+  atFieldEmail.focus();
 }
 function closeAutorizadoModal() {
-  modalOverlay.hidden = true;
+  autorizadoModalOverlay.hidden = true;
 }
 
 document.getElementById("newAutorizadoBtn").addEventListener("click", openAutorizadoModal);
 document.getElementById("autorizadoModalClose").addEventListener("click", closeAutorizadoModal);
 document.getElementById("autorizadoModalCancel").addEventListener("click", closeAutorizadoModal);
-modalOverlay.addEventListener("click", (ev) => {
-  if (ev.target === modalOverlay) closeAutorizadoModal();
+autorizadoModalOverlay.addEventListener("click", (ev) => {
+  if (ev.target === autorizadoModalOverlay) closeAutorizadoModal();
 });
 document.addEventListener("keydown", (ev) => {
-  if (ev.key === "Escape" && !modalOverlay.hidden) closeAutorizadoModal();
+  if (ev.key === "Escape" && !autorizadoModalOverlay.hidden) closeAutorizadoModal();
 });
 
-modalForm.addEventListener("submit", async (ev) => {
+autorizadoModalForm.addEventListener("submit", async (ev) => {
   ev.preventDefault();
-  clearModalMsg();
-  modalSaveBtn.disabled = true;
+  clearAutorizadoModalMsg();
+  autorizadoModalSaveBtn.disabled = true;
 
-  const email = fieldEmail.value.trim().toLowerCase();
-  const nome = fieldNome.value.trim() || null;
+  const email = atFieldEmail.value.trim().toLowerCase();
+  const nome = atFieldNome.value.trim() || null;
 
   try {
     const { error } = await client
@@ -127,9 +134,9 @@ modalForm.addEventListener("submit", async (ev) => {
     closeAutorizadoModal();
     await loadAutorizados();
   } catch (err) {
-    showModalMsg(err.message || "Ocorreu um erro inesperado.", "err");
+    showAutorizadoModalMsg(err.message || "Ocorreu um erro inesperado.", "err");
   } finally {
-    modalSaveBtn.disabled = false;
+    autorizadoModalSaveBtn.disabled = false;
   }
 });
 
