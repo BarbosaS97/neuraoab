@@ -15,6 +15,10 @@
   --ok: #35c78a;
   --err: #ef5757;
   --warn: #e8b339;
+  /* Mesmo roxo já usado em AVATAR_PALETTE (js/metrics.js) — reaproveitado
+     aqui pro card de estatística "Turmas criadas" e pro avatar/ícone de
+     turma no dashboard, pra ter uma 4ª cor de destaque sem inventar outra. */
+  --purple: #a55eea;
 }
 
 :root[data-theme="light"] {
@@ -473,6 +477,9 @@ input, textarea {
 .btn-ghost.danger:hover { color: var(--err); border-color: var(--err); }
 
 .btn-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: var(--accent);
   color: #fff;
   border: none;
@@ -522,6 +529,26 @@ input, textarea {
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
+/* Ícone colorido opcional dentro de um .stat-card (ver dashboard.html) —
+   embrulha .num/.label existentes num wrapper à parte em vez de mudar o
+   "display" do próprio .stat-card, pra não afetar os 5 cards de turma.html
+   (esses não têm ícone, continuam empilhados verticalmente como sempre). */
+.stat-card-icon-row { display: flex; align-items: center; gap: 14px; }
+
+.stat-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-card-icon.blue { background: rgba(79, 124, 255, 0.14); color: var(--accent); }
+.stat-card-icon.green { background: rgba(53, 199, 138, 0.14); color: var(--ok); }
+.stat-card-icon.purple { background: rgba(165, 94, 234, 0.14); color: var(--purple); }
+
 .stat-card-risk .num {
   color: var(--err);
 }
@@ -556,7 +583,7 @@ input, textarea {
 
 .turmas-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 16px;
 }
 
@@ -568,7 +595,7 @@ input, textarea {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   text-decoration: none;
   color: inherit;
   transition: border-color 0.15s ease, transform 0.15s ease;
@@ -577,54 +604,167 @@ input, textarea {
 .turma-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 .turma-card.turma-card-unassigned { border-style: dashed; }
 
-.turma-card h3 {
+/* Avatar + nome/descrição + menu "⋯" (.row-menu, ver css mais abaixo), lado
+   a lado no topo do card — substitui os 2 ícones de editar/excluir sempre
+   visíveis de antes (agora atrás do menu, mesmo padrão já usado na tabela
+   de alunos de turma.html). */
+.turma-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.turma-card-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.turma-card-heading { flex: 1; min-width: 0; }
+
+.turma-card-heading h3 {
   margin: 0;
-  padding-right: 56px;
   font-size: 15.5px;
   font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.turma-card .turma-stats {
+.turma-card-subtitle {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--text-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 3 métricas lado a lado (alunos / acerto médio 1ª fase / média 2ª fase) —
+   mesma base visual de .stat-card .num/.label, só compacta e com ícone. */
+.turma-card-metrics {
   display: flex;
-  gap: 18px;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-.turma-card .turma-stats strong {
-  display: block;
-  font-size: 17px;
+.turma-card-metric { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+
+.turma-card-metric-icon {
+  color: var(--text-dim);
+  margin-bottom: 2px;
+}
+
+.turma-card-metric strong {
+  font-size: 16px;
   color: var(--text);
+  white-space: nowrap;
 }
 
-.turma-card .turma-stats span {
+.turma-card-metric span {
+  font-size: 10.5px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+/* Barra de progresso do acerto médio (1ª fase) — cor por faixa de
+   desempenho (mesmos limiares de classifyBand em js/metrics.js: >=7/10 bom,
+   >=5/10 atenção, resto crítico) ou neutra quando a turma ainda não tem
+   nenhuma resposta registrada (nunca pinta uma turma nova de vermelho só
+   por falta de dado). */
+.progress-bar {
+  height: 7px;
+  border-radius: 999px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.progress-bar-fill.band-bom { background: var(--ok); }
+.progress-bar-fill.band-atencao { background: var(--warn); }
+.progress-bar-fill.band-critico { background: var(--err); }
+.progress-bar-fill.band-sem-dados { background: var(--text-dim); }
+
+/* "Última atividade" + "convites pendentes", lado a lado, separadas do
+   resto do card por uma linha (mesmo tratamento visual do .panel-header). */
+.turma-card-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--panel-border);
+}
+
+.turma-card-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
   font-size: 11.5px;
   color: var(--text-dim);
 }
 
-.turma-card-actions {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  display: flex;
-  gap: 6px;
-  z-index: 1;
-}
+.turma-card-meta-item svg { flex-shrink: 0; }
+.turma-card-meta-item b { color: var(--text); font-weight: 600; }
 
-.turma-card-actions button {
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
-  border: 1px solid var(--panel-border);
-  background: var(--bg);
-  color: var(--text-dim);
-  font-size: 12px;
+.turma-card-footer-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  gap: 6px;
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 9px 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+  transition: border-color 0.15s ease, color 0.15s ease;
 }
 
-.turma-card-actions button:hover { color: var(--text); border-color: var(--accent); }
-.turma-card-actions button.danger:hover { color: var(--err); border-color: var(--err); }
+.turma-card:hover .turma-card-footer-btn { border-color: var(--accent); color: var(--accent); }
+
+/* Card tracejado "Criar nova turma", último item da grade — mesmo <button>
+   estilizado como card (não <a>, não navega, só abre o modal de sempre). */
+.turma-card-create {
+  background: transparent;
+  border: 1.5px dashed var(--panel-border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  min-height: 200px;
+  color: var(--text-dim);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.turma-card-create:hover { border-color: var(--accent); color: var(--accent); }
+
+.turma-card-create-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.turma-card-create strong { color: var(--text); font-size: 14px; }
+.turma-card-create p { margin: 0; font-size: 12px; max-width: 200px; }
 
 /* ------------------------------------------------------------- Tabela */
 

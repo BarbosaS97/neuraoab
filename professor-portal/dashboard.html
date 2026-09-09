@@ -38,24 +38,60 @@
       <div class="page-header">
         <div>
           <h1>Turmas</h1>
-          <p>Organize seus alunos por turma pra acompanhar o progresso de cada grupo separadamente.</p>
+          <p>Organize seus alunos por turma e acompanhe o progresso de cada grupo separadamente.</p>
         </div>
-        <button type="button" class="btn-accent" id="newTurmaBtn">Nova turma</button>
+        <button type="button" class="btn-accent" id="newTurmaBtn">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          Nova turma
+        </button>
       </div>
 
       <div class="stats-row">
         <div class="stat-card">
-          <div class="num" id="statTotalAlunos">—</div>
-          <div class="label">Alunos cadastrados</div>
+          <div class="stat-card-icon-row">
+            <span class="stat-card-icon blue" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </span>
+            <div>
+              <div class="num" id="statTotalAlunos">—</div>
+              <div class="label">Alunos cadastrados</div>
+            </div>
+          </div>
         </div>
         <div class="stat-card">
-          <div class="num" id="statAlunosAtivos">—</div>
-          <div class="label">Alunos ativos</div>
+          <div class="stat-card-icon-row">
+            <span class="stat-card-icon green" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+            </span>
+            <div>
+              <div class="num" id="statAlunosAtivos">—</div>
+              <div class="label">Alunos ativos</div>
+            </div>
+          </div>
         </div>
         <div class="stat-card">
-          <div class="num" id="statTotalTurmas">—</div>
-          <div class="label">Turmas criadas</div>
+          <div class="stat-card-icon-row">
+            <span class="stat-card-icon purple" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"></path><path d="M6 12.5V17c0 1.1 2.7 3 6 3s6-1.9 6-3v-4.5"></path></svg>
+            </span>
+            <div>
+              <div class="num" id="statTotalTurmas">—</div>
+              <div class="label">Turma(s) criada(s)</div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="toolbar-search">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="turmaSearchInput" placeholder="Buscar turma...">
+        </div>
+        <select class="toolbar-select" id="turmaFilterSelect">
+          <option value="todas">Todas</option>
+          <option value="convites">Com convites pendentes</option>
+          <option value="critico">Desempenho crítico</option>
+        </select>
       </div>
 
       <div id="turmasGrid" class="turmas-grid">
@@ -80,6 +116,10 @@
           <input type="text" id="tuNome" required placeholder="Ex.: Intensivo Dezembro 2026">
         </div>
         <div class="field">
+          <label for="tuDescricao">Descrição (opcional)</label>
+          <input type="text" id="tuDescricao" placeholder="Ex.: Preparação - 2ª Fase OAB">
+        </div>
+        <div class="field">
           <label for="tuLimite">Limite de alunos</label>
           <input type="number" id="tuLimite" min="1" step="1" placeholder="Sem limite">
           <p class="field-hint">Deixe em branco pra não limitar quantos alunos podem aceitar convite pra esta turma.</p>
@@ -95,6 +135,7 @@
 
 <script src="js/config.js"></script>
 <script src="js/auth.js"></script>
+<script src="js/metrics.js"></script>
 <script src="js/turmas.js"></script>
 <script src="js/theme.js"></script>
 </body>
