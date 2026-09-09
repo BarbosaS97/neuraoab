@@ -56,13 +56,14 @@
             <th>Nome</th>
             <th>E-mail</th>
             <th>Cursinho</th>
+            <th>Alunos</th>
             <th>Cadastrado em</th>
             <th>Status</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody id="professorsTableBody">
-          <tr class="empty-row"><td colspan="6">Carregando...</td></tr>
+          <tr class="empty-row"><td colspan="7">Carregando...</td></tr>
         </tbody>
       </table>
     </div>
@@ -220,6 +221,12 @@
           <div class="field">
             <label for="pfTelefone">Telefone (opcional)</label>
             <input type="text" id="pfTelefone">
+          </div>
+
+          <div class="field">
+            <label for="pfLimiteAlunos">Limite de alunos (opcional)</label>
+            <input type="number" id="pfLimiteAlunos" min="0" step="1" placeholder="Deixe em branco pra sem limite">
+            <p class="field-hint">Quantos alunos esse professor pode ter no total, somando todas as turmas dele. Dá pra mudar isso depois em "Editar".</p>
           </div>
 
           <div class="field" id="pfAtivoWrap" hidden>

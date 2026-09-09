@@ -307,6 +307,20 @@ async function countTurmaAlunos(turmaId: string): Promise<number> {
   return count ?? 0;
 }
 
+// Quantos alunos (de TODAS as turmas do professor, somados) já aceitaram
+// convite agora — mesmo filtro de countTurmaAlunos, só que por professor_id
+// em vez de turma_id, pra comparar com profiles.limite_alunos (definido só
+// pelo admin no Portal Mestre, ver portal-mestre/js/admin.js) antes de gerar
+// mais um convite.
+async function countProfessorAlunos(professorId: string): Promise<number> {
+  const { count } = await adminClient
+    .from("profiles")
+    .select("id", { count: "exact", head: true })
+    .eq("professor_id", professorId)
+    .is("excluido_em", null);
+  return count ?? 0;
+}
+
 // Cria um REGISTRO de convite (tabela "convites") + dispara o e-mail via
 // Resend — não toca em auth.users nem em "profiles" nenhuma vez: quem faz
 // isso é a Edge Function "aluno-portal" (ação "ativar-convite"), quando o
@@ -316,6 +330,22 @@ async function countTurmaAlunos(turmaId: string): Promise<number> {
 async function createConvite(professorId: string, input: StudentInput): Promise<InviteResult> {
   const email = input.email?.trim().toLowerCase();
   if (!email) return { email: input.email ?? "", ok: false, error: "E-mail vazio." };
+
+  // Limite do PROFESSOR (profiles.limite_alunos, definido só pelo admin no
+  // Portal Mestre) — checado antes do limite da turma, porque é o teto mais
+  // amplo: soma todas as turmas dele, não só a que está recebendo este
+  // convite agora.
+  const { data: professorProfile } = await adminClient
+    .from("profiles")
+    .select("limite_alunos")
+    .eq("id", professorId)
+    .maybeSingle();
+  if (professorProfile?.limite_alunos != null) {
+    const atualProfessor = await countProfessorAlunos(professorId);
+    if (atualProfessor >= professorProfile.limite_alunos) {
+      return { email, ok: false, error: "Você já atingiu o limite de alunos permitido na sua conta." };
+    }
+  }
 
   // Confia so' num turma_id que realmente pertence a este professor — nunca
   // no valor cru vindo do cliente (mesmo cuidado de requireProfessor

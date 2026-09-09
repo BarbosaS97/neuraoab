@@ -356,9 +356,25 @@ async function validateConvite(codigo: string, callerEmail: string): Promise<Val
 
   const { data: professor } = await adminClient
     .from("profiles")
-    .select("nome, email")
+    .select("nome, email, limite_alunos")
     .eq("id", convite.professor_id)
     .maybeSingle();
+
+  // Limite do PROFESSOR (profiles.limite_alunos, definido só pelo admin no
+  // Portal Mestre) — mesmo espírito do limite de turma acima, mas somando
+  // TODAS as turmas dele. Reavaliado aqui (não só na hora de gerar o
+  // convite, em createConvite no professor-portal) porque o admin pode ter
+  // reduzido o limite entre o convite ser gerado e ser aceito.
+  if (professor?.limite_alunos != null) {
+    const { count } = await adminClient
+      .from("profiles")
+      .select("id", { count: "exact", head: true })
+      .eq("professor_id", convite.professor_id)
+      .is("excluido_em", null);
+    if ((count ?? 0) >= professor.limite_alunos) {
+      return { ok: false, error: "Seu professor já atingiu o limite de alunos da conta dele." };
+    }
+  }
 
   return {
     ok: true,

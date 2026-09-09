@@ -5,8 +5,18 @@
 // no header Authorization automaticamente — mesmo padrão já usado em
 // estudos/dr-laureano.js e estudos/simulado2fase.js pras outras Edge
 // Functions do projeto). "Editar" campos simples (nome/cursinho/
-// telefone/ativo) é um UPDATE direto em profiles, protegido pela policy
-// de RLS "profiles_update_admin" — não precisa da service_role pra isso.
+// telefone/ativo/limite_alunos) é um UPDATE direto em profiles, protegido
+// pela policy de RLS "profiles_update_admin" — não precisa da service_role
+// pra isso.
+//
+// limite_alunos: teto de quantos alunos (somando TODAS as turmas) um
+// professor pode ter — null/vazio = sem limite. Só o admin mexe nisso (ver
+// gatilho protect_profile_privileged_fields em schema_limite_alunos_
+// professor.sql); é checado no servidor ao gerar/aceitar um convite de
+// aluno (supabase/functions/professor-portal e aluno-portal), não só aqui
+// na UI — mudar o número aqui nunca "expulsa" quem já foi aceito antes,
+// só passa a bloquear convite novo enquanto o professor estiver no limite
+// ou acima dele.
 
 let professorRoleId = null;
 let professorsCache = [];
@@ -24,6 +34,7 @@ const fieldNome = document.getElementById("pfNome");
 const fieldEmail = document.getElementById("pfEmail");
 const fieldCursinho = document.getElementById("pfCursinho");
 const fieldTelefone = document.getElementById("pfTelefone");
+const fieldLimiteAlunos = document.getElementById("pfLimiteAlunos");
 const fieldAtivo = document.getElementById("pfAtivo");
 const passwordSection = document.getElementById("pfPasswordSection");
 const fieldPassword = document.getElementById("pfPassword");
@@ -52,6 +63,22 @@ function fmtDate(iso) {
   } catch {
     return "—";
   }
+}
+
+// Lê pfLimiteAlunos e devolve { value } com um inteiro >= 0 ou null (campo
+// vazio = sem limite), ou { error } se o admin digitou algo inválido
+// (negativo, fracionário) — mesma validação que a Edge Function portal-admin
+// já faz na criação (ver "create" em supabase/functions/portal-admin/
+// index.ts), repetida aqui só pra dar o erro na hora, sem round-trip, tanto
+// na criação quanto na edição (que não passa pela Edge Function).
+function readLimiteAlunosField() {
+  const raw = fieldLimiteAlunos.value.trim();
+  if (raw === "") return { value: null };
+  const n = Number(raw);
+  if (!Number.isInteger(n) || n < 0) {
+    return { error: "O limite de alunos precisa ser um número inteiro (0 ou mais), ou vazio pra sem limite." };
+  }
+  return { value: n };
 }
 
 function showModalMsg(text, kind) {
@@ -104,7 +131,7 @@ function renderProfessors() {
     const tr = document.createElement("tr");
     tr.className = "empty-row";
     const td = document.createElement("td");
-    td.colSpan = 6;
+    td.colSpan = 7;
     td.textContent = "Nenhum professor cadastrado ainda.";
     tr.appendChild(td);
     tableBodyEl.appendChild(tr);
@@ -128,11 +155,22 @@ function renderProfessors() {
     }
     tr.appendChild(nomeTd);
 
-    [p.email || "—", p.cursinho || "—", fmtDate(p.created_at)].forEach((text) => {
+    [p.email || "—", p.cursinho || "—"].forEach((text) => {
       const td = document.createElement("td");
       td.textContent = text;
       tr.appendChild(td);
     });
+
+    const alunosTd = document.createElement("td");
+    const alunosAtuais = professorStudentCounts.get(p.id) ?? 0;
+    // "sem limite" continua explícito (não só o número) pra não parecer que
+    // 0 alunos = 0 de limite — os dois são conceitos diferentes.
+    alunosTd.textContent = p.limite_alunos == null ? `${alunosAtuais} (sem limite)` : `${alunosAtuais} / ${p.limite_alunos}`;
+    tr.appendChild(alunosTd);
+
+    const dateTd = document.createElement("td");
+    dateTd.textContent = fmtDate(p.created_at);
+    tr.appendChild(dateTd);
 
     const statusTd = document.createElement("td");
     const badge = document.createElement("span");
@@ -164,11 +202,31 @@ function renderProfessors() {
   });
 }
 
+// id do professor -> quantos alunos ele tem hoje (excluído não conta, mesmo
+// filtro de countProfessorAlunos em supabase/functions/professor-portal/
+// index.ts) — preenchido por loadProfessorStudentCounts, usado só pra exibir
+// "3 / 10" na tabela (a checagem que vale de verdade é sempre no servidor).
+let professorStudentCounts = new Map();
+
+async function loadProfessorStudentCounts() {
+  professorStudentCounts = new Map();
+  if (professorsCache.length === 0) return;
+
+  const { data, error } = await client.from("profiles").select("professor_id").not("professor_id", "is", null).is("excluido_em", null);
+  if (error) {
+    console.error("Falha ao contar alunos por professor:", error);
+    return;
+  }
+  (data || []).forEach((row) => {
+    professorStudentCounts.set(row.professor_id, (professorStudentCounts.get(row.professor_id) ?? 0) + 1);
+  });
+}
+
 async function loadProfessors() {
   if (!professorRoleId) return;
   const { data, error } = await client
     .from("profiles")
-    .select("id, nome, email, cursinho, telefone, ativo, created_at")
+    .select("id, nome, email, cursinho, telefone, limite_alunos, ativo, created_at")
     .eq("role_id", professorRoleId)
     .order("created_at", { ascending: false });
 
@@ -178,6 +236,7 @@ async function loadProfessors() {
   } else {
     professorsCache = data || [];
   }
+  await loadProfessorStudentCounts();
   renderProfessors();
 }
 
@@ -222,6 +281,7 @@ function openEditModal(professor) {
   fieldNome.value = professor.nome || "";
   fieldCursinho.value = professor.cursinho || "";
   fieldTelefone.value = professor.telefone || "";
+  fieldLimiteAlunos.value = professor.limite_alunos ?? "";
   fieldAtivo.checked = !!professor.ativo;
 
   modalTitle.textContent = "Editar professor";
@@ -319,6 +379,14 @@ modalForm.addEventListener("submit", async (ev) => {
   const cursinho = fieldCursinho.value.trim();
   const telefone = fieldTelefone.value.trim();
 
+  const limiteAlunosResult = readLimiteAlunosField();
+  if (limiteAlunosResult.error) {
+    showModalMsg(limiteAlunosResult.error, "err");
+    modalSaveBtn.disabled = false;
+    return;
+  }
+  const limiteAlunos = limiteAlunosResult.value;
+
   try {
     if (!id) {
       // Criação: sempre passa pela Edge Function, porque cria uma conta
@@ -326,7 +394,13 @@ modalForm.addEventListener("submit", async (ev) => {
       // no topo do arquivo. Sem nome nem senha aqui: o professor define
       // os dois ao aceitar o convite.
       const email = fieldEmail.value.trim();
-      const result = await callPortalAdmin({ action: "create", email, cursinho, telefone });
+      const result = await callPortalAdmin({
+        action: "create",
+        email,
+        cursinho,
+        telefone,
+        limite_alunos: limiteAlunos,
+      });
       await refreshAll(); // já reflete o novo professor na lista, atrás do modal
       showInviteResult(result.inviteLink, result.emailSent);
       return; // modal continua aberto, mostrando o link — fecha em inviteDoneBtn
@@ -339,7 +413,7 @@ modalForm.addEventListener("submit", async (ev) => {
     const password = fieldPassword.value;
     const { error } = await client
       .from("profiles")
-      .update({ nome, cursinho, telefone, ativo: fieldAtivo.checked })
+      .update({ nome, cursinho, telefone, limite_alunos: limiteAlunos, ativo: fieldAtivo.checked })
       .eq("id", id);
     if (error) throw new Error(error.message);
 
@@ -384,7 +458,7 @@ async function init() {
     tableBodyEl.innerHTML = "";
     const tr = document.createElement("tr");
     const td = document.createElement("td");
-    td.colSpan = 6;
+    td.colSpan = 7;
     td.textContent = "Papel \"professor\" não encontrado — rode supabase/schema_portal_mestre.sql.";
     tr.appendChild(td);
     tableBodyEl.appendChild(tr);

@@ -180,6 +180,7 @@ interface CreatePayload {
   email: string;
   cursinho?: string;
   telefone?: string;
+  limite_alunos?: number | string | null;
 }
 interface DeletePayload {
   action: "delete";
@@ -250,9 +251,24 @@ Deno.serve(async (req: Request) => {
   }
 
   if (body.action === "create") {
-    const { email, cursinho, telefone } = body;
+    const { email, cursinho, telefone, limite_alunos } = body;
     if (!email) {
       return jsonResponse({ error: "'email' é obrigatório." }, 400);
+    }
+
+    // Vazio/null = sem limite (profiles.limite_alunos fica null); qualquer
+    // outro valor precisa ser um inteiro >= 0 — negativo ou fracionário não
+    // faz sentido como "quantidade máxima de alunos".
+    let limiteAlunos: number | null = null;
+    if (limite_alunos !== undefined && limite_alunos !== null && limite_alunos !== "") {
+      const n = Number(limite_alunos);
+      if (!Number.isInteger(n) || n < 0) {
+        return jsonResponse(
+          { error: "'limite_alunos' precisa ser um número inteiro (0 ou mais), ou vazio pra sem limite." },
+          400,
+        );
+      }
+      limiteAlunos = n;
     }
 
     const professorRoleId = await getRoleId("professor");
@@ -285,6 +301,7 @@ Deno.serve(async (req: Request) => {
       email,
       cursinho: cursinho || null,
       telefone: telefone || null,
+      limite_alunos: limiteAlunos,
     });
     if (profileError) {
       // Sem o perfil, a conta de auth ficaria orfa (login existe, mas sem
