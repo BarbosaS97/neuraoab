@@ -85,9 +85,20 @@ Deno.serve(async (req: Request) => {
   // toa a cada login.
   const { data: callerProfile } = await adminClient
     .from("profiles")
-    .select("role_id, nome")
+    .select("role_id, nome, ativo")
     .eq("id", caller.id)
     .maybeSingle();
+
+  // "ativo=false" barra aqui mesmo com e-mail autorizado — cobre tanto quem
+  // já é professor e foi desativado pelo admin (Portal Mestre, tabela
+  // "Professores") quanto quem ainda está pendente (role "aluno") e teve a
+  // conta desativada antes de completar o primeiro login como professor
+  // (tabela "Professores autorizados", ver js/professores-autorizados.js).
+  // Sem esta checagem "Desativar" não bloqueava nada de verdade — só mudava
+  // um badge na tela.
+  if (callerProfile?.ativo === false) {
+    return jsonResponse({ authorized: false });
+  }
 
   let currentRoleName: string | null = null;
   if (callerProfile?.role_id) {

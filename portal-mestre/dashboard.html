@@ -77,7 +77,8 @@
     <p class="field-hint">
       E-mails aqui conseguem entrar no Portal do Professor sozinhos, criando a própria senha — sem
       precisar do convite por e-mail/senha da tabela acima. O primeiro login do e-mail autorizado já
-      vira professor na hora.
+      vira professor na hora. A coluna "Conta" mostra se esse e-mail já tentou entrar (mesmo que ainda
+      não tenha virado professor) — dá pra desativar ou excluir essa conta direto daqui.
     </p>
 
     <div style="overflow-x: auto;">
@@ -86,12 +87,13 @@
           <tr>
             <th>E-mail</th>
             <th>Nome</th>
+            <th>Conta</th>
             <th>Autorizado em</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody id="autorizadosTableBody">
-          <tr class="empty-row"><td colspan="4">Carregando...</td></tr>
+          <tr class="empty-row"><td colspan="5">Carregando...</td></tr>
         </tbody>
       </table>
     </div>

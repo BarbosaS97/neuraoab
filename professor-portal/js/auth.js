@@ -9,10 +9,15 @@
 async function checkIsProfessor(userId) {
   const { data: profile, error: profileError } = await client
     .from("profiles")
-    .select("role_id")
+    .select("role_id, ativo")
     .eq("id", userId)
     .maybeSingle();
   if (profileError || !profile?.role_id) return false;
+  // Desativado pelo admin (Portal Mestre) — mesma checagem do lado servidor
+  // em requireProfessor (supabase/functions/professor-portal/index.ts) e
+  // professor-auth-check/index.ts; sem ela "Desativar" só mudava um badge
+  // na tela, sem bloquear login de verdade.
+  if (profile.ativo === false) return false;
 
   const { data: role, error: roleError } = await client
     .from("roles")

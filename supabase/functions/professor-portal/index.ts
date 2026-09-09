@@ -247,6 +247,13 @@ type RequestBody =
 // "professor" (quem vai gerenciar os próprios alunos) OU "admin" (acesso
 // total, mesmo padrão de is_admin() ser superset de is_professor() no
 // banco — útil pra suporte/depuração). Devolve o id do chamador.
+//
+// "ativo=false" barra aqui mesmo já sendo professor/admin — antes esse
+// campo só era exibido (badge Ativo/Inativo no Portal Mestre) sem nenhuma
+// checagem de verdade em lugar nenhum, então "Desativar professor" não
+// bloqueava nada de fato; esta é a checagem que faz o botão funcionar (ver
+// mesmo ajuste em professor-portal/js/auth.js e professor-auth-check/
+// index.ts).
 async function requireProfessor(req: Request): Promise<string | null> {
   const authHeader = req.headers.get("Authorization") ?? "";
   const jwt = authHeader.replace(/^Bearer\s+/i, "").trim();
@@ -258,10 +265,10 @@ async function requireProfessor(req: Request): Promise<string | null> {
 
   const { data: profile } = await adminClient
     .from("profiles")
-    .select("role_id")
+    .select("role_id, ativo")
     .eq("id", userId)
     .maybeSingle();
-  if (!profile?.role_id) return null;
+  if (!profile?.role_id || profile.ativo === false) return null;
 
   const { data: role } = await adminClient
     .from("roles")
