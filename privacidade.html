@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  (function () {
+    try {
+      if (localStorage.getItem("neuraoab-theme") === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    } catch (e) {}
+  })();
+</script>
+<title>Política de Privacidade — NeuraOAB</title>
+<meta name="description" content="Política de Privacidade da NeuraOAB — quais dados coletamos, para que usamos, com quem compartilhamos e como exercer seus direitos como titular (LGPD).">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://neuraoab.com.br/privacidade.html">
+<link rel="icon" href="images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
+<meta name="theme-color" content="#0d1117">
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #f0f6fc;
+    --text-dim: #8b949e;
+    --primary: #8b5cf6;
+    --secondary: #3b82f6;
+  }
+  :root[data-theme="light"] {
+    --bg: #f6f7fb;
+    --card: #ffffff;
+    --border: #e2e5ec;
+    --text: #10151d;
+    --text-dim: #5b6472;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  a { color: var(--secondary); }
+  ::selection { background: rgba(139, 92, 246, 0.35); color: #fff; }
+
+  .top-bar {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 28px 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .top-bar img { height: 30px; width: auto; }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13.5px;
+  }
+  .back-link:hover { color: var(--text); }
+
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  h1 { font-size: 28px; margin: 0 0 6px; }
+  .updated-at { color: var(--text-dim); font-size: 13px; margin: 0 0 40px; }
+
+  h2 {
+    font-size: 18px;
+    margin: 40px 0 12px;
+    padding-top: 4px;
+  }
+  h2 .num { color: var(--primary); margin-right: 8px; }
+
+  p, li { color: var(--text-dim); font-size: 14.5px; }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--text); font-weight: 600; }
+
+  table { width: 100%; border-collapse: collapse; margin: 0 0 20px; font-size: 13.5px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); color: var(--text-dim); vertical-align: top; }
+  th { color: var(--text); font-weight: 600; }
+
+  .contact-box {
+    margin-top: 48px;
+    padding: 20px 22px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .contact-box p { margin: 0; color: var(--text-dim); }
+  .contact-box a { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <img src="images/logotipo.png" alt="NeuraOAB" loading="lazy">
+  <a class="back-link" href="index.html">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    Voltar para o site
+  </a>
+</div>
+
+<main>
+  <h1>Política de Privacidade</h1>
+  <p class="updated-at">Última atualização: setembro de 2026</p>
+
+  <p>
+    Esta Política de Privacidade explica como a <strong>NeuraOAB</strong> coleta, usa, armazena,
+    compartilha e protege dados pessoais de quem usa o site, o portal do aluno, o portal do professor
+    e o portal administrativo, em conformidade com a Lei Geral de Proteção de Dados (Lei nº
+    13.709/2018 — LGPD). Ela complementa os nossos <a href="termos.html">Termos de Uso</a>.
+  </p>
+
+  <h2><span class="num">1.</span>Quais dados coletamos</h2>
+  <table>
+    <tr><th>Dado</th><th>Quando coletamos</th></tr>
+    <tr><td>Nome e e-mail</td><td>No cadastro (conta própria, convite de professor ou convite de administrador)</td></tr>
+    <tr><td>Senha</td><td>No cadastro — armazenada de forma criptografada pelo provedor de autenticação, nunca em texto puro</td></tr>
+    <tr><td>Telefone e nome do cursinho</td><td>Opcionalmente, no cadastro de professor</td></tr>
+    <tr><td>Respostas de questões, tentativas de simulado e conversas com o tutor de IA</td><td>Durante o uso da plataforma, pra calcular seu desempenho e histórico de estudo</td></tr>
+    <tr><td>Plano contratado e status de pagamento</td><td>Ao assinar um plano pago</td></tr>
+    <tr><td>Dados de pagamento (cartão, PIX, boleto)</td><td>Processados diretamente pelo parceiro de pagamentos — a NeuraOAB não recebe nem armazena o número completo do cartão</td></tr>
+  </table>
+
+  <h2><span class="num">2.</span>Para que usamos seus dados</h2>
+  <ul>
+    <li>Criar e manter sua conta, e autenticar seu login;</li>
+    <li>Operar as funcionalidades da plataforma (banco de questões, simulados, estatísticas, tutor de IA);</li>
+    <li>Processar pagamentos e gerenciar assinaturas;</li>
+    <li>Enviar e-mails transacionais — convite de acesso, confirmação de cadastro, redefinição de senha;</li>
+    <li>Dar suporte a professores/cursinhos na gestão de suas turmas e alunos;</li>
+    <li>Cumprir obrigações legais e responder a autoridades competentes, quando exigido por lei.</li>
+  </ul>
+  <p>
+    Não usamos seus dados para publicidade direcionada de terceiros, e não os vendemos. A plataforma
+    não utiliza cookies de rastreamento nem pixels de terceiros para fins de marketing hoje.
+  </p>
+
+  <h2><span class="num">3.</span>Base legal (LGPD)</h2>
+  <p>
+    Tratamos seus dados com base na execução do contrato de uso da plataforma (art. 7º, V, da LGPD),
+    no cumprimento de obrigação legal ou regulatória (art. 7º, II, quando aplicável a dados fiscais
+    de pagamento) e no legítimo interesse em manter a plataforma segura e funcional (art. 7º, IX),
+    sempre observando os direitos e liberdades fundamentais do titular.
+  </p>
+
+  <h2><span class="num">4.</span>Com quem compartilhamos dados</h2>
+  <p>Compartilhamos dados apenas com prestadores de serviço estritamente necessários pra operar a plataforma:</p>
+  <ul>
+    <li><strong>Processador de pagamentos</strong> — para cobrança de planos pagos e emissão de recibos;</li>
+    <li><strong>Provedor de envio de e-mail transacional</strong> — para entregar convites, confirmações de cadastro e recuperação de senha;</li>
+    <li><strong>Provedor de infraestrutura (banco de dados, autenticação e hospedagem)</strong> — para armazenar e servir a plataforma com segurança;</li>
+    <li><strong>Seu professor/cursinho</strong>, se você for aluno convidado por um — vê seu nome, e-mail e estatísticas agregadas de desempenho na turma, não o conteúdo detalhado de conversas com o tutor de IA.</li>
+  </ul>
+  <p>
+    Cada um desses parceiros só recebe os dados mínimos necessários pra prestar o serviço contratado
+    e está sujeito a obrigações de confidencialidade e segurança.
+  </p>
+
+  <h2><span class="num">5.</span>Por quanto tempo guardamos seus dados</h2>
+  <p>
+    Mantemos seus dados enquanto sua conta estiver ativa. Se você for removido ou excluído de uma
+    turma por um professor, seu histórico de respostas pode continuar registrado (de forma
+    reversível) até você excluir a própria conta ou solicitar a exclusão definitiva — nesse caso,
+    apagamos os dados do banco, ressalvado o que a lei exigir manter (ex.: registros fiscais de
+    pagamento, pelo prazo legal).
+  </p>
+
+  <h2><span class="num">6.</span>Seus direitos como titular</h2>
+  <p>Nos termos da LGPD, você pode a qualquer momento solicitar:</p>
+  <ul>
+    <li>Confirmação de que tratamos seus dados e acesso a eles;</li>
+    <li>Correção de dados incompletos, inexatos ou desatualizados;</li>
+    <li>Anonimização, bloqueio ou eliminação de dados desnecessários ou tratados em desconformidade com a lei;</li>
+    <li>Portabilidade dos dados a outro fornecedor de serviço;</li>
+    <li>Eliminação dos dados tratados com base no seu consentimento;</li>
+    <li>Informação sobre com quem compartilhamos seus dados;</li>
+    <li>Revogação do consentimento, quando o tratamento se basear nele.</li>
+  </ul>
+  <p>
+    Você pode exercer esses direitos pelas opções do seu perfil na plataforma ou pelos canais de
+    contato indicados ao final desta página.
+  </p>
+
+  <h2><span class="num">7.</span>Segurança da informação</h2>
+  <p>
+    Usamos conexão criptografada (HTTPS) em toda a plataforma, senhas nunca armazenadas em texto
+    puro, e controle de acesso a nível de linha no banco de dados — um aluno só enxerga os próprios
+    dados, um professor só enxerga os alunos da própria turma, e o acesso administrativo é restrito a
+    contas autorizadas.
+  </p>
+  <p>
+    Em caso de incidente de segurança que comprometa dados pessoais, notificaremos os titulares
+    afetados e a Autoridade Nacional de Proteção de Dados (ANPD) nos termos da LGPD, informando a
+    natureza dos dados afetados e as medidas adotadas para conter e remediar o incidente.
+  </p>
+
+  <h2><span class="num">8.</span>Menores de idade</h2>
+  <p>
+    Alunos menores de idade podem usar a plataforma quando convidados por um professor/cursinho ou
+    com autorização e supervisão de seu responsável legal, que deve concordar com esta Política e
+    com os Termos de Uso em nome do menor.
+  </p>
+
+  <h2><span class="num">9.</span>Armazenamento local no navegador</h2>
+  <p>
+    Usamos <code>localStorage</code> do navegador para guardar sua preferência de tema (claro/escuro)
+    e o token de sessão que mantém você conectado entre visitas — nada disso é compartilhado com
+    terceiros nem usado para rastreamento entre sites.
+  </p>
+
+  <h2><span class="num">10.</span>Alterações desta política</h2>
+  <p>
+    Podemos atualizar esta Política de Privacidade periodicamente para refletir mudanças na
+    plataforma ou na legislação aplicável. Alterações relevantes serão comunicadas na plataforma; o
+    uso continuado após a atualização implica ciência da nova versão.
+  </p>
+
+  <div class="contact-box">
+    <p>
+      Dúvidas sobre esta política ou pedidos relacionados aos seus dados pessoais? Fale com a gente
+      pelo canal de suporte indicado dentro da plataforma, ou volte para a
+      <a href="index.html">página inicial</a>.
+    </p>
+  </div>
+</main>
+
+</body>
+</html>
