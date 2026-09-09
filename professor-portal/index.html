@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- CSP (auditoria de segurança 2026-09-09, ver comentário completo em
+     index.html) — mesma política em toda página "interna" do site que só
+     carrega supabase-js do jsdelivr + o próprio Supabase do projeto. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://lgcphxncteqpbntnlzhe.supabase.co; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
 <title>Portal do Professor — NeuraOAB</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="../images/favicon.ico" sizes="any">
@@ -22,8 +26,9 @@
     <p class="login-sub" id="loginSub">Acesso restrito a professores autorizados</p>
 
     <!-- Um formulário só, alternando entre "Entrar" e "Criar conta" (ver
-         setMode em js/auth.js) — id="password2" só é mostrado no modo
-         "Criar conta". Sem Turnstile aqui de propósito: professor é
+         setMode em js/auth.js) — o campo de senha só aparece no modo
+         "Entrar"; quem cria conta define a senha depois, em professor/
+         definir-senha.html. Sem Turnstile aqui de propósito: professor é
          público pequeno/curado, autorizado por e-mail (ver
          professores_autorizados no Portal Mestre), diferente do cadastro
          aberto de aluno na landing. -->
@@ -33,16 +38,14 @@
         <input type="email" id="loginEmail" autocomplete="email" required>
         <!-- Só aparece no modo "Criar conta" — confirma contra a allowlist
              do Portal Mestre (professores_autorizados) antes de liberar o
-             campo de senha abaixo (ver checkEmailForSignup em js/auth.js). -->
+             botão "Criar conta" (ver checkEmailForSignup em js/auth.js). A
+             senha em si não é escolhida aqui — só depois, em professor/
+             definir-senha.html, ao clicar no link do convite por e-mail. -->
         <p class="field-status" id="signupEmailStatus" hidden></p>
       </div>
       <div class="field" id="loginPasswordField">
         <label for="loginPassword">Senha</label>
         <input type="password" id="loginPassword" autocomplete="current-password" minlength="8" required>
-      </div>
-      <div class="field" id="loginPassword2Field" hidden>
-        <label for="loginPassword2">Confirme a senha</label>
-        <input type="password" id="loginPassword2" autocomplete="new-password" minlength="8">
       </div>
       <button type="submit" class="btn-primary" id="loginSubmitBtn">Entrar</button>
     </form>

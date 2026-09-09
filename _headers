@@ -1,0 +1,27 @@
+# NeuraOAB — cabeçalhos de segurança (auditoria 2026-09-09).
+#
+# Formato Netlify/Cloudflare Pages (os dois leem "_headers" na raiz
+# automaticamente, sem configuração extra). Se o site for hospedado em
+# Vercel, use vercel.json (mesmo diretório) em vez deste arquivo — os dois
+# convivem sem conflito, cada plataforma só lê o que reconhece.
+#
+# Por que aqui e não só na <meta> CSP de cada página: "X-Frame-Options" não
+# tem equivalente em <meta> (só existe como cabeçalho HTTP de verdade), e
+# "frame-ancestors" da CSP é EXPLICITAMENTE ignorado pelo spec quando entregue
+# via <meta> — só funciona como cabeçalho também. Sem este arquivo, nenhuma
+# página do site tinha proteção real contra clickjacking (um site malicioso
+# podia colocar o Portal Mestre ou o Portal do Professor num <iframe>
+# invisível por cima de botões falsos). O resto do CSP (script-src, connect-
+# src etc., mais específico por página) continua vindo da <meta> de cada
+# HTML — não repetido aqui de propósito, pra não colidir com o que cada
+# página já declara (múltiplas CSP se combinam pela interseção mais
+# restritiva de cada diretiva, então duplicar com valores diferentes só cria
+# risco de quebrar alguma página sem necessidade).
+
+/*
+  X-Frame-Options: DENY
+  Content-Security-Policy: frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()

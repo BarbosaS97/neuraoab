@@ -41,12 +41,36 @@ const authClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: { autoRefreshToken: false, persistSession: false },
 });
 
-async function requireAuthenticatedUser(req: Request): Promise<boolean> {
+// Devolve o id do usuário (não só um boolean) pra poder usá-lo como chave
+// de rate limit logo abaixo.
+async function requireAuthenticatedUser(req: Request): Promise<string | null> {
   const authHeader = req.headers.get("Authorization") ?? "";
   const jwt = authHeader.replace(/^Bearer\s+/i, "").trim();
-  if (!jwt) return false;
+  if (!jwt) return null;
   const { data, error } = await authClient.auth.getUser(jwt);
-  return !error && !!data?.user;
+  if (error || !data?.user) return null;
+  return data.user.id;
+}
+
+// AUDITORIA DE SEGURANÇA (2026-09-09): esta function exigia login mas não
+// tinha NENHUM rate limit nem checagem de plano — qualquer conta recém-
+// cadastrada de graça (trivial de criar em massa) podia chamar isso em loop
+// apertado, cada chamada pagando uma geração de verdade na DeepSeek, sem
+// nenhum freio. Mesmo padrão de check_rate_limit() usado nas outras
+// functions de IA (ver supabase/schema_security_hardening.sql) — chave por
+// usuário, já que login é obrigatório aqui (diferente de dr-laureano/
+// corretor-2fase, que também atendem chamada anônima e por isso usam IP).
+const RATE_LIMIT_MAX = 20;
+const RATE_LIMIT_WINDOW_SECONDS = 600;
+
+async function checkRateLimit(userId: string): Promise<boolean> {
+  const { data, error } = await authClient.rpc("check_rate_limit", {
+    p_key: `recomendacao-dashboard:user:${userId}`,
+    p_max_count: RATE_LIMIT_MAX,
+    p_window_seconds: RATE_LIMIT_WINDOW_SECONDS,
+  });
+  if (error) return true;
+  return data === true;
 }
 
 interface ExamStat {
@@ -201,8 +225,13 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ error: "Método não permitido." }, 405);
   }
 
-  if (!(await requireAuthenticatedUser(req))) {
+  const userId = await requireAuthenticatedUser(req);
+  if (!userId) {
     return jsonResponse({ error: "É preciso estar logado para gerar essa recomendação." }, 401);
+  }
+
+  if (!(await checkRateLimit(userId))) {
+    return jsonResponse({ error: "Muitas recomendações em pouco tempo. Aguarde alguns minutos e tente novamente." }, 429);
   }
 
   let body: unknown;
@@ -242,12 +271,16 @@ Deno.serve(async (req: Request) => {
       body: JSON.stringify(payload),
     });
   } catch (err) {
-    return jsonResponse({ error: "Falha ao conectar com a API da DeepSeek.", detail: String(err) }, 502);
+    // Detalhe cru só no log do servidor (auditoria de segurança 2026-09-09)
+    // — nunca no corpo devolvido ao cliente.
+    console.error("Falha ao conectar com a API da DeepSeek:", String(err));
+    return jsonResponse({ error: "Falha ao conectar com a API da DeepSeek." }, 502);
   }
 
   if (!upstream.ok) {
-    const detail = await upstream.text();
-    return jsonResponse({ error: "A API da DeepSeek retornou um erro.", detail }, 502);
+    const detail = await upstream.text().catch(() => "");
+    console.error(`DeepSeek respondeu ${upstream.status}:`, detail);
+    return jsonResponse({ error: "A API da DeepSeek retornou um erro." }, 502);
   }
 
   const data = await upstream.json();

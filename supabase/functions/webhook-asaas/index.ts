@@ -287,13 +287,32 @@ async function findCobrancaCheckout(checkoutId: string | null, externalReference
   return null;
 }
 
+// Comparação em tempo constante (auditoria de segurança 2026-09-09) — "!=="
+// numa string para no primeiro byte diferente, o que teoricamente vaza
+// quantos caracteres do token o atacante já acertou por diferença de tempo
+// de resposta. Baixo risco na prática (rede real tem jitter suficiente pra
+// tornar isso bem difícil de explorar), mas é uma troca de uma linha por
+// zero custo.
+function timingSafeEqual(a: string, b: string): boolean {
+  const bufA = new TextEncoder().encode(a);
+  const bufB = new TextEncoder().encode(b);
+  // Comprimento diferente já garante "não bate", mas ainda percorre os dois
+  // buffers (contra si mesmos) pra não devolver mais rápido nesse caso.
+  const len = Math.max(bufA.length, bufB.length, 1);
+  let diff = bufA.length ^ bufB.length;
+  for (let i = 0; i < len; i++) {
+    diff |= (bufA[i] ?? 0) ^ (bufB[i] ?? 0);
+  }
+  return diff === 0;
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method !== "POST") {
     return jsonResponse({ error: "Método não permitido." }, 405);
   }
 
   const receivedToken = req.headers.get("asaas-access-token") ?? "";
-  if (!ASAAS_WEBHOOK_TOKEN || receivedToken !== ASAAS_WEBHOOK_TOKEN) {
+  if (!ASAAS_WEBHOOK_TOKEN || !timingSafeEqual(receivedToken, ASAAS_WEBHOOK_TOKEN)) {
     return jsonResponse({ error: "Token inválido." }, 401);
   }
 

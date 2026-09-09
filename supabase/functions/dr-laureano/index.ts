@@ -300,12 +300,18 @@ Deno.serve(async (req: Request) => {
       body: JSON.stringify(payload),
     });
   } catch (err) {
-    return jsonResponse({ error: "Falha ao conectar com a API da DeepSeek.", detail: String(err) }, 502);
+    // Detalhe cru só no log do servidor (auditoria de segurança 2026-09-09:
+    // devolver isso pro cliente vazava corpo de erro/estado de billing da
+    // DeepSeek sem necessidade nenhuma) — o chamador só precisa saber que
+    // falhou, não os detalhes internos.
+    console.error("Falha ao conectar com a API da DeepSeek:", String(err));
+    return jsonResponse({ error: "Falha ao conectar com a API da DeepSeek." }, 502);
   }
 
   if (!upstream.ok) {
-    const detail = await upstream.text();
-    return jsonResponse({ error: "A API da DeepSeek retornou um erro.", detail }, 502);
+    const detail = await upstream.text().catch(() => "");
+    console.error(`DeepSeek respondeu ${upstream.status}:`, detail);
+    return jsonResponse({ error: "A API da DeepSeek retornou um erro." }, 502);
   }
 
   const data = await upstream.json();

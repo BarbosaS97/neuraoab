@@ -100,17 +100,27 @@ function getClientIp(req: Request): string {
   return req.headers.get("cf-connecting-ip") ?? "unknown";
 }
 
-async function checkRateLimit(req: Request): Promise<boolean> {
-  const key = `corretor-2fase:${getClientIp(req)}`;
+async function checkRateLimitKey(key: string, maxCount: number): Promise<boolean> {
   const { data, error } = await rateLimitClient.rpc("check_rate_limit", {
     p_key: key,
-    p_max_count: RATE_LIMIT_MAX,
+    p_max_count: maxCount,
     p_window_seconds: RATE_LIMIT_WINDOW_SECONDS,
   });
   // Se a checagem em si falhar (RPC indisponivel etc.), deixa passar — um
   // erro de infra aqui nao pode travar a correcao pra todo mundo.
   if (error) return true;
   return data === true;
+}
+
+// Duas chaves independentes, as DUAS precisam passar: por IP (trava um
+// script rodando de uma máquina só) E por conta (trava a MESMA conta Pro
+// martelando de IPs diferentes — ex.: rotacionando por um proxy/VPN barato
+// — auditoria de segurança 2026-09-09 apontou que só a chave por IP deixava
+// esse contorno trivial).
+async function checkRateLimit(req: Request, callerId: string): Promise<boolean> {
+  const ipOk = await checkRateLimitKey(`corretor-2fase:ip:${getClientIp(req)}`, RATE_LIMIT_MAX);
+  const userOk = await checkRateLimitKey(`corretor-2fase:user:${callerId}`, RATE_LIMIT_MAX);
+  return ipOk && userOk;
 }
 
 interface SubItem {
@@ -496,13 +506,16 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ error: "Método não permitido." }, 405);
   }
 
-  if (!(await checkRateLimit(req))) {
-    return jsonResponse({ error: "Muitas correções em pouco tempo. Aguarde alguns minutos e tente novamente." }, 429);
-  }
-
+  // Login é obrigatório de qualquer forma (schema_fase2_login_obrigatorio.sql)
+  // — checa o chamador ANTES do rate limit, pra poder usar o id dele como
+  // segunda chave (ver checkRateLimit acima).
   const callerId = await requireCaller(req);
   if (!callerId) {
     return jsonResponse({ error: "Acesso negado: é preciso estar logado." }, 401);
+  }
+
+  if (!(await checkRateLimit(req, callerId))) {
+    return jsonResponse({ error: "Muitas correções em pouco tempo. Aguarde alguns minutos e tente novamente." }, 429);
   }
 
   if (!(await planAllowsSegundaFase(callerId))) {
@@ -589,12 +602,16 @@ Deno.serve(async (req: Request) => {
       body: JSON.stringify(payload),
     });
   } catch (err) {
-    return jsonResponse({ error: "Falha ao conectar com a API da DeepSeek.", detail: String(err) }, 502);
+    // Detalhe cru só no log do servidor (auditoria de segurança 2026-09-09)
+    // — nunca no corpo devolvido ao cliente.
+    console.error("Falha ao conectar com a API da DeepSeek:", String(err));
+    return jsonResponse({ error: "Falha ao conectar com a API da DeepSeek." }, 502);
   }
 
   if (!upstream.ok) {
-    const detail = await upstream.text();
-    return jsonResponse({ error: "A API da DeepSeek retornou um erro.", detail }, 502);
+    const detail = await upstream.text().catch(() => "");
+    console.error(`DeepSeek respondeu ${upstream.status}:`, detail);
+    return jsonResponse({ error: "A API da DeepSeek retornou um erro." }, 502);
   }
 
   const data = await upstream.json();
@@ -604,12 +621,14 @@ Deno.serve(async (req: Request) => {
   try {
     parsed = JSON.parse(content);
   } catch {
-    return jsonResponse({ error: "A IA não retornou um JSON válido.", detail: content }, 502);
+    console.error("A IA não retornou um JSON válido:", content);
+    return jsonResponse({ error: "A IA não retornou um JSON válido." }, 502);
   }
 
   const result = validateAndNormalize(parsed, item);
   if (!result) {
-    return jsonResponse({ error: "A resposta da IA não teve o formato esperado.", detail: content }, 502);
+    console.error("A resposta da IA não teve o formato esperado:", content);
+    return jsonResponse({ error: "A resposta da IA não teve o formato esperado." }, 502);
   }
 
   return jsonResponse(result);

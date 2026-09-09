@@ -98,6 +98,28 @@ async function planAllowsAiStats(userId: string): Promise<boolean> {
   return (data[0] as { estatisticas_ia: boolean }).estatisticas_ia !== false;
 }
 
+// AUDITORIA DE SEGURANÇA (2026-09-09): esta function exigia login e o gate
+// de plano acima, mas não tinha NENHUM rate limit — uma única conta Básico/
+// Pro (ou um professor, que também passa) podia chamar isso em loop
+// apertado sem custar mais que o tempo de rede, cada chamada pagando uma
+// geração de verdade na DeepSeek. Mesmo padrão de check_rate_limit() usado
+// em dr-laureano/corretor-2fase (ver supabase/schema_security_hardening.sql)
+// — chave por usuário (já exige login, então é o identificador mais
+// confiável aqui, ao contrário de dr-laureano/corretor-2fase que também
+// atendem chamada anônima e por isso usam IP).
+const RATE_LIMIT_MAX = 20;
+const RATE_LIMIT_WINDOW_SECONDS = 600;
+
+async function checkRateLimit(userId: string): Promise<boolean> {
+  const { data, error } = await adminClient.rpc("check_rate_limit", {
+    p_key: `estatisticas-ia:user:${userId}`,
+    p_max_count: RATE_LIMIT_MAX,
+    p_window_seconds: RATE_LIMIT_WINDOW_SECONDS,
+  });
+  if (error) return true;
+  return data === true;
+}
+
 // Resolve de QUEM é o plano que deve ser checado: o próprio caller (fluxo
 // normal, estudos/estudos.js analisando a própria estatística) ou — quando
 // "studentId" vem no body e é diferente do caller — o ALUNO sendo visto no
@@ -301,6 +323,10 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ error: "É preciso estar logado para gerar essa análise." }, 401);
   }
 
+  if (!(await checkRateLimit(userId))) {
+    return jsonResponse({ error: "Muitas análises em pouco tempo. Aguarde alguns minutos e tente novamente." }, 429);
+  }
+
   let body: unknown;
   try {
     body = await req.json();
@@ -355,12 +381,16 @@ Deno.serve(async (req: Request) => {
       body: JSON.stringify(payload),
     });
   } catch (err) {
-    return jsonResponse({ error: "Falha ao conectar com a API da DeepSeek.", detail: String(err) }, 502);
+    // Detalhe cru só no log do servidor (auditoria de segurança 2026-09-09)
+    // — nunca no corpo devolvido ao cliente.
+    console.error("Falha ao conectar com a API da DeepSeek:", String(err));
+    return jsonResponse({ error: "Falha ao conectar com a API da DeepSeek." }, 502);
   }
 
   if (!upstream.ok) {
-    const detail = await upstream.text();
-    return jsonResponse({ error: "A API da DeepSeek retornou um erro.", detail }, 502);
+    const detail = await upstream.text().catch(() => "");
+    console.error(`DeepSeek respondeu ${upstream.status}:`, detail);
+    return jsonResponse({ error: "A API da DeepSeek retornou um erro." }, 502);
   }
 
   const data = await upstream.json();

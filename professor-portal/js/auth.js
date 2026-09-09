@@ -50,14 +50,17 @@ async function checkIsProfessor(userId) {
 // ver js/planos-restrito.js) em vez de ser deslogado — a sessão continua
 // válida, só não abre o dashboard.
 //
-// Criar conta: o campo de senha só aparece DEPOIS que o e-mail é confirmado
-// contra a allowlist (checkEmailForSignup, debounced a cada tecla) — evita
-// a pessoa preencher tudo pra só no fim descobrir que o e-mail não foi
-// autorizado. A criação em si passa pela Edge Function professor-self-signup
-// (não client.auth.signUp direto): o e-mail de confirmação sai por Resend,
-// igual às outras Edge Functions do projeto — o mailer padrão do Supabase
-// (usado por signUp) não tem SMTP configurado aqui e não estava entregando
-// nada.
+// Criar conta: em vez de escolher senha nesta página, a pessoa só informa o
+// e-mail — a Edge Function professor-self-signup confirma contra a allowlist
+// (checkEmailForSignup, debounced a cada tecla, libera o botão "Criar conta"
+// só se autorizado) e manda um convite por e-mail (via Resend, igual às
+// outras Edge Functions do projeto — o mailer padrão do Supabase não tem
+// SMTP configurado aqui e não estava entregando nada). A senha só é
+// escolhida DEPOIS, em professor/definir-senha.html, ao clicar no link do
+// convite — de propósito, por segurança: ver o comentário no topo de
+// supabase/functions/professor-self-signup/index.ts sobre por que deixar
+// escolher senha ANTES de confirmar o e-mail abria brecha pra alguém
+// "reservar" a senha de uma conta que não é dela (account pre-hijacking).
 (function initLoginPage() {
   const form = document.getElementById("loginForm");
   if (!form) return; // esta pagina nao e' a de login
@@ -66,8 +69,6 @@ async function checkIsProfessor(userId) {
   const emailStatusEl = document.getElementById("signupEmailStatus");
   const passwordField = document.getElementById("loginPasswordField");
   const passwordInput = document.getElementById("loginPassword");
-  const password2Field = document.getElementById("loginPassword2Field");
-  const password2Input = document.getElementById("loginPassword2");
   const submitBtn = document.getElementById("loginSubmitBtn");
   const toggleModeBtn = document.getElementById("loginToggleModeBtn");
   const forgotPasswordBtn = document.getElementById("forgotPasswordBtn");
@@ -99,23 +100,15 @@ async function checkIsProfessor(userId) {
     emailStatusEl.className = "field-status" + (kind ? ` ${kind}` : "");
   }
 
-  // Esconde o campo de senha (modo "signup", antes de confirmar o e-mail) —
-  // "required" também sai daqui, senão o navegador bloqueia o submit por um
-  // campo obrigatório que nem está visível.
-  function lockPasswordFields() {
+  // Modo "signup" nunca mostra campo de senha (ver comentário no topo do
+  // arquivo) — só controla se o botão "Criar conta" está liberado, conforme
+  // checkEmailForSignup confirma (ou não) a autorização do e-mail digitado.
+  function lockSubmit() {
     signupEmailAuthorized = false;
-    passwordField.hidden = true;
-    passwordInput.required = false;
-    password2Field.hidden = true;
-    password2Input.required = false;
     submitBtn.disabled = true;
   }
-  function unlockPasswordFields() {
+  function unlockSubmit() {
     signupEmailAuthorized = true;
-    passwordField.hidden = false;
-    passwordInput.required = true;
-    password2Field.hidden = false;
-    password2Input.required = true;
     submitBtn.disabled = false;
   }
 
@@ -133,12 +126,12 @@ async function checkIsProfessor(userId) {
 
     if (!email || !email.includes("@")) {
       showEmailStatus("", null);
-      lockPasswordFields();
+      lockSubmit();
       return;
     }
 
     showEmailStatus("Verificando...", null);
-    lockPasswordFields();
+    lockSubmit();
 
     let result;
     try {
@@ -159,8 +152,8 @@ async function checkIsProfessor(userId) {
       return;
     }
     if (result.authorized) {
-      showEmailStatus("✓ E-mail autorizado — escolha uma senha abaixo.", "ok");
-      unlockPasswordFields();
+      showEmailStatus('✓ E-mail autorizado — clique em "Criar conta" pra receber o link de confirmação por e-mail.', "ok");
+      unlockSubmit();
       return;
     }
     showEmailStatus("Esse e-mail ainda não foi autorizado. Peça pro administrador liberar no Portal Mestre.", "err");
@@ -176,6 +169,11 @@ async function checkIsProfessor(userId) {
     mode = next;
     clearMessage();
     const isSignup = mode === "signup";
+    // Senha só existe no modo "login" agora — quem cria conta a define
+    // depois, em professor/definir-senha.html (ver comentário no topo do
+    // arquivo).
+    passwordField.hidden = isSignup;
+    passwordInput.required = !isSignup;
     submitBtn.textContent = isSignup ? "Criar conta" : "Entrar";
     toggleModeBtn.textContent = isSignup ? "Já tem conta? Entrar" : "Primeiro acesso? Criar conta";
     forgotPasswordBtn.hidden = isSignup;
@@ -184,14 +182,10 @@ async function checkIsProfessor(userId) {
       : "Acesso restrito a professores autorizados";
 
     if (isSignup) {
-      lockPasswordFields(); // some até checkEmailForSignup confirmar
+      lockSubmit(); // trava até checkEmailForSignup confirmar
       if (emailInput.value.trim()) checkEmailForSignup();
     } else {
       showEmailStatus("", null);
-      passwordField.hidden = false;
-      passwordInput.required = true;
-      password2Field.hidden = true;
-      password2Input.required = false;
       submitBtn.disabled = false;
     }
   }
@@ -265,31 +259,16 @@ async function checkIsProfessor(userId) {
         showMessage("Confirme um e-mail autorizado (veja a mensagem abaixo do campo de e-mail) antes de continuar.");
         return;
       }
-      const password2 = password2Input.value;
-      if (password.length < 8) {
-        showMessage("A senha precisa ter pelo menos 8 caracteres.");
-        return;
-      }
-      if (password !== password2) {
-        showMessage("As senhas não coincidem.");
-        return;
-      }
 
       submitBtn.disabled = true;
-      submitBtn.textContent = "Criando conta...";
+      submitBtn.textContent = "Enviando convite...";
 
       try {
-        // IMPORTANTE: mesmo aviso do resetPasswordForEmail acima — esta URL
-        // (a própria página) também precisa estar na allowlist de Redirect
-        // URLs do Supabase, senão o link de confirmação de e-mail cai no
-        // Site URL padrão em vez de voltar aqui.
+        // Sem senha aqui de propósito — ela é escolhida depois, ao clicar no
+        // link do e-mail (ver comentário no topo do arquivo e em
+        // supabase/functions/professor-self-signup/index.ts).
         const { data, error } = await client.functions.invoke("professor-self-signup", {
-          body: {
-            action: "create",
-            email,
-            password,
-            redirectTo: window.location.origin + window.location.pathname,
-          },
+          body: { action: "create", email },
         });
         if (error) {
           let detail = error.message;
@@ -303,20 +282,12 @@ async function checkIsProfessor(userId) {
         }
         if (data?.error) throw new Error(data.error);
 
-        if (!data.emailSent) {
-          // Resend falhou (ex.: RESEND_API_KEY ausente) — a conta já foi
-          // criada mesmo assim; mostra o link de confirmação direto aqui
-          // como reforço, mesmo padrão de showInviteResult em portal-mestre/
-          // js/admin.js.
-          showMessage(
-            data.confirmLink
-              ? `Conta criada, mas não conseguimos mandar o e-mail. Abra este link pra confirmar: ${data.confirmLink}`
-              : "Conta criada, mas não conseguimos mandar o e-mail de confirmação. Fale com o administrador.",
-            "info",
-          );
-        } else {
-          showMessage("Conta criada! Confira seu e-mail e clique no link de confirmação pra entrar.", "info");
-        }
+        showMessage(
+          data.emailSent
+            ? "Convite enviado! Confira seu e-mail e clique no link pra confirmar e escolher sua senha."
+            : "Conta criada, mas não conseguimos mandar o e-mail de confirmação agora. Fale com o administrador pra reenviar.",
+          "info",
+        );
       } catch (err) {
         showMessage(err.message || "Não foi possível criar a conta.");
       } finally {

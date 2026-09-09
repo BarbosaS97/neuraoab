@@ -271,6 +271,25 @@ async function registrarHistorico(params: {
   }
 }
 
+// Comparação em tempo constante (auditoria de segurança 2026-09-09) — "!=="
+// numa string para no primeiro byte diferente, o que teoricamente vaza
+// quantos caracteres do token o atacante já acertou por diferença de tempo
+// de resposta. Baixo risco na prática (rede real tem jitter suficiente pra
+// tornar isso bem difícil de explorar), mas é uma troca de uma linha por
+// zero custo. Mesma função em webhook-asaas/index.ts (duplicada de
+// propósito — mesmo motivo do resto do projeto: cada Edge Function é colada
+// isolada no editor do Supabase, sem import compartilhado).
+function timingSafeEqual(a: string, b: string): boolean {
+  const bufA = new TextEncoder().encode(a);
+  const bufB = new TextEncoder().encode(b);
+  const len = Math.max(bufA.length, bufB.length, 1);
+  let diff = bufA.length ^ bufB.length;
+  for (let i = 0; i < len; i++) {
+    diff |= (bufA[i] ?? 0) ^ (bufB[i] ?? 0);
+  }
+  return diff === 0;
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method !== "POST") {
     return jsonResponse({ error: "Método não permitido." }, 405);
@@ -297,7 +316,7 @@ Deno.serve(async (req: Request) => {
 
   const authHeader = req.headers.get("Authorization") ?? "";
   const receivedToken = authHeader.replace(/^Bearer\s+/i, "").trim();
-  if (!WOOVI_WEBHOOK_TOKEN || receivedToken !== WOOVI_WEBHOOK_TOKEN) {
+  if (!WOOVI_WEBHOOK_TOKEN || !timingSafeEqual(receivedToken, WOOVI_WEBHOOK_TOKEN)) {
     // Sem isto, um 401 aqui é indistinguível nos logs de um 401 do GATEWAY
     // do Supabase (que rejeita ANTES deste código rodar, se "Enforce JWT
     // Verification" estiver ligado pra esta function) — se esta linha

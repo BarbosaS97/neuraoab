@@ -3,11 +3,11 @@
 // Portal do Professor — fluxo de autoatendimento (ver professor-portal/
 // js/auth.js): a pessoa digita o e-mail, o front-end confirma que está na
 // allowlist (tabela "professores_autorizados", gerenciada pelo admin no
-// Portal Mestre) ANTES de liberar o campo de senha, e só então cria a
-// conta. Público (sem sessão) de propósito, já que roda ANTES do login —
-// nenhuma das duas ações abaixo mexe em nada que exija ser professor/admin,
-// só validam contra a allowlist e (na criação) chamam a API administrativa
-// do Supabase Auth com a service_role key.
+// Portal Mestre) ANTES de liberar o botão "Criar conta". Público (sem
+// sessão) de propósito, já que roda ANTES do login — nenhuma das duas ações
+// abaixo mexe em nada que exija ser professor/admin, só validam contra a
+// allowlist e (na criação) chamam a API administrativa do Supabase Auth com
+// a service_role key.
 //
 // POR QUE ISSO SUBSTITUI client.auth.signUp() (o jeito antigo, ver git
 // blame de professor-portal/js/auth.js): signUp() manda o e-mail de
@@ -18,6 +18,30 @@
 // aluno com generateLink() + Resend (remetente/domínio verificado, já
 // funcionando); esta function usa exatamente o mesmo mecanismo, só que
 // disparado pela PRÓPRIA pessoa em vez de um admin/professor.
+//
+// AUDITORIA DE SEGURANÇA (2026-09-09) — "create" NÃO recebe mais senha
+// nenhuma, de propósito: a versão anterior deixava QUALQUER chamador
+// (a ação é pública, sem sessão) escolher a senha de uma conta pra um
+// e-mail allowlisted ainda não confirmado — um ataque de "pre-hijacking"
+// clássico (ver pesquisa de Paverd/Sudhodanan sobre account pre-hijacking):
+// um atacante que soubesse (ou adivinhasse) um e-mail já autorizado no
+// Portal Mestre podia chamar "create" primeiro, definir uma senha própria,
+// e só esperar a vítima clicar no link de confirmação que chegou por
+// e-mail — nesse momento ela seria logada numa conta cuja senha o
+// atacante já conhecia. O fallback "confirmLink" (devolvido no corpo da
+// resposta pra QUALQUER chamador quando o Resend falhava) piorava isso:
+// virava um link de login funcional entregue direto pra quem chamou a
+// function, sem nunca precisar ler o e-mail de verdade.
+//
+// Correção: "create" agora só gera um convite (generateLink type "invite",
+// sem senha nenhuma) — exatamente o mesmo mecanismo que portal-admin usa
+// pro convite feito pelo admin — e manda a pessoa pra professor/definir-
+// senha.html, onde ELA escolhe a própria senha só DEPOIS de provar que
+// controla a caixa de entrada (clicando no link único que só chega lá).
+// Ninguém mais pode "reservar" uma senha antes da confirmação. O link
+// nunca é devolvido no corpo da resposta pra ninguém — nem como fallback —
+// só é logado no console da function (visível só nos logs do Supabase, não
+// pro chamador HTTP) se o envio pelo Resend falhar.
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
@@ -62,14 +86,17 @@ function rateLimitKey(req: Request, email: string): string {
   return ip || `email:${email}`;
 }
 
-// Volta pro próprio Portal do Professor se o front-end não mandar
-// "redirectTo" (nunca deveria acontecer — é sempre enviado por js/auth.js —
-// mas evita um link quebrado se acontecer). Precisa estar cadastrada em
-// Authentication > URL Configuration > Redirect URLs no painel do Supabase,
-// senão o GoTrue ignora e volta pro Site URL padrão do projeto.
-const DEFAULT_REDIRECT_URL = "https://neuraoab.com.br/professor-portal/index.html";
-
-const MIN_PASSWORD_LENGTH = 8;
+// Pra onde o link de convite leva depois que a pessoa clica — a MESMA
+// página que o convite feito pelo admin usa (PROFESSOR_INVITE_REDIRECT_URL
+// em portal-admin/index.ts): ela escolhe nome+senha lá, só depois de a
+// sessão já vir confirmada pelo clique no link. Fixo no servidor (não vem
+// mais do corpo da requisição): sem isso um chamador poderia apontar
+// "redirectTo" pra qualquer URL da allowlist de Redirect URLs do Supabase —
+// baixo risco de qualquer forma (o Supabase já rejeita URLs fora da
+// allowlist), mas não há motivo pra aceitar isso do cliente já que só existe
+// um destino de verdade. Precisa estar cadastrada em Authentication > URL
+// Configuration > Redirect URLs no painel do Supabase.
+const PROFESSOR_INVITE_REDIRECT_URL = "https://neuraoab.com.br/professor/definir-senha.html";
 
 function normalizeEmail(raw: unknown): string {
   return typeof raw === "string" ? raw.trim().toLowerCase() : "";
@@ -106,6 +133,11 @@ async function isEmailAllowlisted(email: string): Promise<boolean> {
   return !!data;
 }
 
+async function getRoleId(name: string): Promise<string | null> {
+  const { data } = await adminClient.from("roles").select("id").eq("name", name).maybeSingle();
+  return data?.id ?? null;
+}
+
 // -----------------------------------------------------------------------
 // Envio do e-mail de confirmação via Resend — mesmo mecanismo (e mesma
 // cópia duplicada de propósito, ver comentário equivalente em portal-admin/
@@ -119,7 +151,7 @@ const SIGNUP_EMAIL_COPY = {
   subject: "Confirme seu cadastro no Portal do Professor — NeuraOAB",
   heading: "Confirme seu e-mail",
   bodyText:
-    "Recebemos seu cadastro no Portal do Professor da NeuraOAB. Clique no botão abaixo pra confirmar seu e-mail e ativar sua conta.",
+    "Recebemos seu cadastro no Portal do Professor da NeuraOAB. Clique no botão abaixo pra confirmar seu e-mail e escolher sua senha.",
 };
 
 function buildEmailHtml(link: string, copy: typeof SIGNUP_EMAIL_COPY): string {
@@ -207,8 +239,6 @@ interface CheckEmailPayload {
 interface CreatePayload {
   action: "create";
   email: string;
-  password: string;
-  redirectTo?: string;
 }
 type RequestBody = CheckEmailPayload | CreatePayload;
 
@@ -259,13 +289,6 @@ Deno.serve(async (req: Request) => {
   }
 
   if (body.action === "create") {
-    const { password } = body as CreatePayload;
-    const redirectTo = (body as CreatePayload).redirectTo || DEFAULT_REDIRECT_URL;
-
-    if (!password || password.length < MIN_PASSWORD_LENGTH) {
-      return jsonResponse({ error: `A senha precisa ter pelo menos ${MIN_PASSWORD_LENGTH} caracteres.` }, 400);
-    }
-
     if (!(await checkRateLimit(`professor-signup-create:${rateLimitKey(req, email)}`, 5, 3600))) {
       return jsonResponse({ error: "Muitas tentativas em pouco tempo. Aguarde um pouco e tente de novo." }, 429);
     }
@@ -293,40 +316,61 @@ Deno.serve(async (req: Request) => {
       await adminClient.auth.admin.deleteUser(profile.id);
     }
 
-    // type "signup" (não "invite"): cria a conta JÁ com a senha escolhida
-    // agora — a pessoa só precisa clicar no link pra confirmar o e-mail e
-    // ficar logada, sem precisar escolher senha de novo depois (diferente
-    // do convite de admin, que manda pra professor/definir-senha.html).
-    // invited_at fica null nesse tipo, então o gatilho handle_new_auth_user
-    // (schema_aluno_avulso.sql) cria a profiles row normal (role "aluno")
-    // — profiles.role_id só vira "professor" depois, quando a pessoa loga
-    // de fato e o Portal do Professor chama a Edge Function
-    // professor-auth-check (ver resolveAccess em professor-portal/js/
-    // auth.js), exatamente como já acontecia no fluxo antigo.
+    const professorRoleId = await getRoleId("professor");
+    if (!professorRoleId) {
+      return jsonResponse(
+        { error: "Papel 'professor' não encontrado no banco — rode o schema_portal_mestre.sql primeiro." },
+        500,
+      );
+    }
+
+    // type "invite" (não "signup", nem senha nenhuma no payload) — mesmo
+    // mecanismo do convite feito pelo admin (portal-admin/index.ts): ninguém
+    // escolhe senha antes de provar que controla a caixa de entrada. A
+    // pessoa só define a própria senha em professor/definir-senha.html,
+    // DEPOIS de clicar no link único que só chega lá. invited_at fica
+    // preenchido nesse tipo, então o gatilho handle_new_auth_user
+    // (schema_aluno_avulso.sql) NÃO cria a profiles row sozinho — por isso o
+    // INSERT explícito logo abaixo, já com role "professor" (a autorização
+    // já foi validada acima, não precisa esperar um primeiro login pra
+    // promover via professor-auth-check como no fluxo antigo).
     const { data: linkData, error: linkError } = await adminClient.auth.admin.generateLink({
-      type: "signup",
+      type: "invite",
       email,
-      password,
-      options: { redirectTo },
+      options: { redirectTo: PROFESSOR_INVITE_REDIRECT_URL },
     });
-    if (linkError || !linkData?.properties?.action_link) {
+    if (linkError || !linkData?.user || !linkData?.properties?.action_link) {
       return jsonResponse({ error: linkError?.message || "Não foi possível criar a conta." }, 400);
+    }
+
+    const { error: profileError } = await adminClient.from("profiles").insert({
+      id: linkData.user.id,
+      role_id: professorRoleId,
+      nome: null, // a própria pessoa preenche isso em definir-senha.html
+      email,
+    });
+    if (profileError) {
+      // Sem o perfil, a conta de auth ficaria órfã — desfaz a criação em vez
+      // de deixar esse lixo pra trás (mesmo padrão de portal-admin/index.ts).
+      await adminClient.auth.admin.deleteUser(linkData.user.id);
+      return jsonResponse({ error: `Falha ao salvar o perfil: ${profileError.message}` }, 500);
     }
 
     const link = linkData.properties.action_link;
     const emailResult = await sendConfirmationEmail(email, link);
     if (!emailResult.ok) {
-      console.error(`Falha ao enviar confirmação de cadastro para ${email}: ${emailResult.error}`);
+      // O link NUNCA volta no corpo da resposta (nem como fallback) — só no
+      // log do servidor, visível só pra quem tem acesso aos logs da Edge
+      // Function, nunca pro chamador HTTP. Ver comentário no topo do arquivo
+      // sobre por que devolver esse link pra "quem chamou create" (que pode
+      // não ser o dono do e-mail, já que a ação é pública) é o próprio
+      // buraco de pre-hijacking que esta versão corrige.
+      console.error(`Falha ao enviar confirmação de cadastro para ${email}: ${emailResult.error} — link: ${link}`);
     }
 
     return jsonResponse({
       ok: true,
       emailSent: emailResult.ok,
-      emailError: emailResult.ok ? undefined : emailResult.error,
-      // Fallback pro front-end mostrar um link clicável se o Resend falhar
-      // (RESEND_API_KEY ausente, domínio não verificado etc.) — mesmo
-      // espírito de showInviteResult em portal-mestre/js/admin.js.
-      confirmLink: emailResult.ok ? undefined : link,
     });
   }
 

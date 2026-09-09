@@ -1,9 +1,21 @@
 // supabase/functions/validate-turnstile/index.ts
 //
-// Valida um token do Cloudflare Turnstile (widget anti-bot no formulario de
-// login, ver index.html) contra a API do Cloudflare, usando a Secret Key —
-// essa chave NUNCA pode chegar no navegador (por isso a validacao acontece
-// aqui, nao no front-end), so' a Site Key (publica) fica em index.html.
+// NÃO CHAMADA MAIS POR NINGUÉM (auditoria de segurança 2026-09-09) — deixada
+// no repositório só como referência, não precisa mais estar deployada.
+// index.html validava o Turnstile chamando esta function ANTES de tentar o
+// login de verdade — mas isso é um passo à parte que dá pra pular (chamar
+// client.auth.signInWithPassword direto com a anon key, sem nunca passar por
+// aqui). A validação agora acontece DENTRO do próprio Supabase Auth (opção
+// "Enable Captcha protection" > Turnstile, painel Authentication > Settings,
+// com a mesma TURNSTILE_SECRET_KEY que esta function usava) — index.html
+// passa "captchaToken" direto em signUp/signInWithPassword, então não tem
+// mais como pular a verificação chamando a API de auth direto. Ver
+// comentário em credsForm.addEventListener("submit", ...) em index.html.
+//
+// Valida um token do Cloudflare Turnstile contra a API do Cloudflare, usando
+// a Secret Key — essa chave NUNCA pode chegar no navegador (por isso a
+// validacao acontece aqui, nao no front-end), so' a Site Key (publica) fica
+// em index.html.
 //
 // Mesmo padrao de function usada em dr-laureano/index.ts e
 // estatisticas-ia/index.ts (CORS, jsonResponse, defensivo contra payload

@@ -3636,31 +3636,34 @@
       return;
     }
 
-    // O token so' serve UMA vez — guarda antes de resetar (reset ja' zera
-    // turnstileToken e dispara um novo desafio em segundo plano, pra uma
-    // proxima tentativa, se precisar, nao esbarrar num token ja usado).
+    // AUDITORIA DE SEGURANÇA (2026-09-09): antes disso, a checagem do
+    // Turnstile passava só pela Edge Function "validate-turnstile" — um
+    // atacante podia pular ela inteira chamando a API do Supabase Auth
+    // (client.auth.signInWithPassword) direto com a anon key, já pública em
+    // qualquer HTML do site, sem nunca resolver o desafio. A checagem de
+    // verdade agora é feita pelo PRÓPRIO Supabase Auth (opção "Enable
+    // Captcha protection" > Turnstile, painel Authentication > Settings,
+    // com a mesma Secret Key que "validate-turnstile" já usava) — passando
+    // "captchaToken" direto em signUp/signInWithPassword abaixo, ninguém
+    // consegue chamar o endpoint de login sem passar pelo desafio, porque a
+    // verificação acontece DENTRO do próprio caminho de autenticação, não
+    // num passo à parte que dá pra pular.
+    //
+    // O token so' serve UMA vez (Turnstile invalida no primeiro uso) — por
+    // isso NUNCA duas chamadas validando o MESMO token (era exatamente esse
+    // duplo-consumo, com a antiga validate-turnstile E o GoTrue tentando
+    // validar o mesmo token, que quebrou todo login em produção antes —
+    // ver histórico do arquivo). Guarda o token antes de resetar (reset já
+    // zera turnstileToken e dispara um novo desafio em segundo plano, pra
+    // uma próxima tentativa não esbarrar num token já usado) e usa essa
+    // cópia UMA ÚNICA vez, na chamada de auth abaixo — nada mais no fluxo
+    // toca nele.
     const tokenToValidate = turnstileToken;
     loginSubmitBtn.disabled = true;
-    loginSubmitBtn.textContent = "Verificando...";
+    loginSubmitBtn.textContent = isSignup ? "Criando conta..." : "Entrando...";
     resetTurnstile();
 
-    // Antes de QUALQUER tentativa de login de verdade: confirma com a
-    // Edge Function (que fala com a API do Cloudflare usando a Secret Key,
-    // nunca exposta aqui) que quem preencheu o formulario passou no
-    // Turnstile. So' prossegue pro Supabase Auth se isso vier true.
-    const { data: verify, error: verifyError } = await client.functions.invoke("validate-turnstile", {
-      body: { token: tokenToValidate },
-    });
-
-    if (verifyError || !verify?.success) {
-      loginSubmitBtn.textContent = isSignup ? "Criar conta" : "Entrar";
-      showLoginError("Não foi possível confirmar a verificação de segurança. Tente novamente.");
-      return;
-    }
-
     if (isSignup) {
-      loginSubmitBtn.textContent = "Criando conta...";
-
       // Cria a própria conta (aluno avulso, sem convite de professor). O
       // gatilho handle_new_auth_user (ver supabase/schema_aluno_avulso.sql)
       // é quem grava o perfil em "profiles" — role "aluno", is_avulso=true,
@@ -3669,7 +3672,7 @@
       const { data: signUpData, error: signUpError } = await client.auth.signUp({
         email,
         password,
-        options: { data: { nome } },
+        options: { data: { nome }, captchaToken: tokenToValidate },
       });
 
       if (signUpError) {
@@ -3702,22 +3705,16 @@
       return;
     }
 
-    loginSubmitBtn.textContent = "Entrando...";
-
-    // NAO passar captchaToken aqui pro signInWithPassword: o mesmo token so'
-    // serve UMA vez (Turnstile invalida no primeiro uso), e a chamada a
-    // validate-turnstile logo acima JA' o consumiu verificando com a API do
-    // Cloudflare. Mandar de novo aqui faria o GoTrue tentar validar um token
-    // ja' gasto e falhar com 400 em TODO login, mesmo com e-mail/senha
-    // corretos (foi exatamente isso que quebrou o login em produção — ver
-    // histórico). Se um dia quiser exigir o token no proprio endpoint do
-    // Supabase Auth (mais forte que so' a Edge Function), a Edge Function
-    // validate-turnstile precisa ser removida do fluxo (ou passar a so'
-    // checar formato, nao consumir via siteverify), nunca as duas chamadas
-    // validando o MESMO token.
-    const { data, error } = await client.auth.signInWithPassword({ email, password });
+    const { data, error } = await client.auth.signInWithPassword({
+      email,
+      password,
+      options: { captchaToken: tokenToValidate },
+    });
     if (error || !data?.user) {
       loginSubmitBtn.textContent = "Entrar";
+      // Falha de captcha (token inválido/expirado) e senha errada dão o
+      // mesmo erro genérico de propósito — não ajuda um atacante a
+      // distinguir "captcha falhou" de "senha errada".
       showLoginError("E-mail ou senha inválidos.");
       return;
     }

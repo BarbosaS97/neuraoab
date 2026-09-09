@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- CSP (auditoria de segurança 2026-09-09, ver comentário completo em
+     index.html) — mais restrita que a das páginas "internas": esta é
+     conteúdo estático puro, não carrega supabase-js nem chama a API do
+     Supabase. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
 <script>
   (function () {
     try {
