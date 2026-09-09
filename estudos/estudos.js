@@ -134,6 +134,23 @@ const reviewModalOverlay = document.getElementById("reviewModalOverlay");
 const reviewModalCloseBtn = document.getElementById("reviewModalCloseBtn");
 const reviewOptionsList = document.getElementById("reviewOptionsList");
 
+const calendarStreakBadge = document.getElementById("calendarStreakBadge");
+const calendarPrevBtn = document.getElementById("calendarPrevBtn");
+const calendarNextBtn = document.getElementById("calendarNextBtn");
+const calendarMonthLabel = document.getElementById("calendarMonthLabel");
+const calendarPeriodPicker = document.getElementById("calendarPeriodPicker");
+const calendarMonthSelect = document.getElementById("calendarMonthSelect");
+const calendarYearSelect = document.getElementById("calendarYearSelect");
+const calendarGrid = document.getElementById("calendarGrid");
+const calendarDayModalOverlay = document.getElementById("calendarDayModalOverlay");
+const calendarDayModalCloseBtn = document.getElementById("calendarDayModalCloseBtn");
+const calendarDayModalTitle = document.getElementById("calendarDayModalTitle");
+const calendarDayQuickstats = document.getElementById("calendarDayQuickstats");
+const calendarDaySubjectsSection = document.getElementById("calendarDaySubjectsSection");
+const calendarDaySubjects = document.getElementById("calendarDaySubjects");
+const calendarDayExamsSection = document.getElementById("calendarDayExamsSection");
+const calendarDayExams = document.getElementById("calendarDayExams");
+
 let allQuestions = [];
 let filtered = [];
 let currentIndex = 0;
@@ -638,7 +655,8 @@ plansOverlay.addEventListener("click", (ev) => {
 
 document.addEventListener("keydown", (ev) => {
   if (ev.key !== "Escape") return;
-  if (!reviewModalOverlay.hidden) closeReviewModal();
+  if (!calendarDayModalOverlay.hidden) closeCalendarDayModal();
+  else if (!reviewModalOverlay.hidden) closeReviewModal();
   else if (!conviteOverlay.hidden) closeConviteModal();
   else if (!plansOverlay.hidden) closePlansModal();
   else if (!helpOverlay.hidden) closeHelpModal();
@@ -1407,6 +1425,11 @@ function renderSidePanels() {
     reviewModeCountNum.textContent = wrongTotal;
     reviewModeCountLabel.textContent = wrongTotal === 1 ? "questão para revisar" : "questões para revisar";
   }
+
+  // "Calendário de Estudos": sempre visível (diferente do Modo Revisão
+  // acima), então sempre re-renderiza junto — mesma fonte de dados
+  // (statsAnswersCache), já atualizada em tempo real a cada resposta.
+  renderCalendarPanel();
 }
 
 // ------------------------------------------------------- Modal "Modo Revisão"
@@ -1534,6 +1557,350 @@ reviewModeOpenBtn.addEventListener("click", openReviewModal);
 reviewModalCloseBtn.addEventListener("click", closeReviewModal);
 reviewModalOverlay.addEventListener("click", (ev) => {
   if (ev.target === reviewModalOverlay) closeReviewModal();
+});
+
+// ------------------------------------------------------- Calendário de Estudos
+//
+// Mapa mensal de dias com atividade (1ª fase via statsAnswersCache, 2ª fase
+// via minhasTentativas — ambos já carregados em memória no init(), sem
+// nenhuma busca de rede nova pra desenhar o calendário ou abrir o detalhe de
+// um dia). Sequências (⭐ 2-4 dias, 🔥 5+) usam a mesma lógica de dia-a-dia
+// de estudos/medals.js (toDateKey/consecutiveDayRuns/currentDayStreak),
+// carregado antes deste arquivo — nada duplicado aqui.
+
+const PT_MONTH_NAMES = [
+  "janeiro", "fevereiro", "março", "abril", "maio", "junho",
+  "julho", "agosto", "setembro", "outubro", "novembro", "dezembro",
+];
+
+// Mês/ano atualmente visível no card — inicializado no primeiro render
+// (renderCalendarPanel), sempre no mês de hoje.
+let calendarViewYear = null;
+let calendarViewMonth = null; // 0-11
+
+// Só questões da 1ª fase entram na estimativa (2ª fase é redigir uma peça/
+// questão discursiva inteira, tempo muito maior e de natureza diferente de
+// "responder uma múltipla escolha" — misturar os dois faria a estimativa
+// de qualquer um dos dois ficar sem sentido).
+//
+// SEM tracking de sessão de verdade no banco (nenhuma tabela guarda
+// início/fim de uma sessão de estudo) — "tempo de estudo" é uma ESTIMATIVA
+// a partir do espaçamento entre respostas consecutivas do mesmo dia, com um
+// teto por questão (GAP_CAP_MS) pra um intervalo longo (ex.: respondeu de
+// manhã, voltou à noite) não inflar a estimativa como se tivesse ficado
+// estudando o dia inteiro. Por isso sempre exibida com "estimado" ao lado —
+// nunca como se fosse tempo medido de verdade.
+const STUDY_TIME_GAP_CAP_MS = 4 * 60 * 1000; // 4 min entre uma questão e a próxima
+const STUDY_TIME_BASE_MS = 45 * 1000; // tempo mínimo atribuído à 1ª questão do dia
+
+function estimateStudyMinutes(sortedAnsweredAtIso) {
+  if (sortedAnsweredAtIso.length === 0) return 0;
+  let totalMs = STUDY_TIME_BASE_MS;
+  for (let i = 1; i < sortedAnsweredAtIso.length; i++) {
+    const gap = new Date(sortedAnsweredAtIso[i]) - new Date(sortedAnsweredAtIso[i - 1]);
+    totalMs += Math.max(0, Math.min(gap, STUDY_TIME_GAP_CAP_MS));
+  }
+  return Math.round(totalMs / 60000);
+}
+
+function fmtStudyMinutes(totalMinutes) {
+  if (totalMinutes <= 0) return "—";
+  const h = Math.floor(totalMinutes / 60);
+  const m = totalMinutes % 60;
+  if (h === 0) return `${m}min`;
+  if (m === 0) return `${h}h`;
+  return `${h}h ${m}min`;
+}
+
+// Limiar do selo "dia com muitas questões" (ver spec do produto) — só um
+// número redondo, não um dado configurável em lugar nenhum.
+const CALENDAR_BUSY_DAY_THRESHOLD = 50;
+
+// Monta o índice do calendário inteiro (todo o histórico, não só o mês
+// visível) a partir do que já está em memória: statsAnswersCache (1ª fase),
+// minhasTentativas (2ª fase, só as corrigidas) e allQuestions (pra achar a
+// disciplina de cada questão respondida). Recalculado a cada render (ver
+// renderCalendarPanel) — barato o bastante (só percorre arrays já
+// carregados, sem nenhuma requisição) pra não precisar de cache próprio.
+function buildCalendarDayIndex() {
+  const index = new Map(); // dateKey -> { total, correct, answeredAt: string[], disciplines: Map, simulados: [] }
+  const questionsById = new Map(allQuestions.map(q => [q.id, q]));
+
+  function dayEntry(key) {
+    let entry = index.get(key);
+    if (!entry) {
+      entry = { total: 0, correct: 0, answeredAt: [], disciplines: new Map(), simulados: [] };
+      index.set(key, entry);
+    }
+    return entry;
+  }
+
+  (statsAnswersCache || []).forEach(a => {
+    const key = toDateKey(a.answered_at);
+    const entry = dayEntry(key);
+    entry.total++;
+    if (a.correct) entry.correct++;
+    entry.answeredAt.push(a.answered_at);
+
+    const discipline = questionsById.get(a.question_id)?.discipline || "Sem disciplina";
+    const d = entry.disciplines.get(discipline) || { total: 0, correct: 0 };
+    d.total++;
+    if (a.correct) d.correct++;
+    entry.disciplines.set(discipline, d);
+  });
+
+  minhasTentativas
+    .filter(t => t.status === "corrigida" && t.finished_at)
+    .forEach(t => {
+      const key = toDateKey(t.finished_at);
+      const entry = dayEntry(key);
+      const areaLabel = t.area ? ` - ${t.area}` : "";
+      entry.simulados.push({
+        nome: `${t.exam_number ? `${t.exam_number}º Exame` : "Simulado"}${areaLabel}`,
+        nota: t.nota_total,
+        valorTotal: t.valor_total,
+      });
+    });
+
+  return index;
+}
+
+// Todos os dias (de qualquer fase) com atividade — entrada única de datas
+// pras funções de sequência de medals.js, mesmo conjunto que runMedalsCheck
+// já monta pra outro fim (studyDates).
+function calendarAllStudyDates() {
+  return [
+    ...(statsAnswersCache || []).map(a => a.answered_at),
+    ...phase2MedalsSummary.dates,
+  ];
+}
+
+function renderCalendarPanel() {
+  const today = new Date();
+  if (calendarViewYear === null) {
+    calendarViewYear = today.getFullYear();
+    calendarViewMonth = today.getMonth();
+  }
+
+  const dayIndex = buildCalendarDayIndex();
+  const studyDates = calendarAllStudyDates();
+  const runs = consecutiveDayRuns(studyDates);
+  const runLengthByDay = new Map();
+  runs.forEach(run => {
+    if (run.length < 2) return; // dia isolado não é "sequência"
+    run.keys.forEach(key => runLengthByDay.set(key, run.length));
+  });
+
+  const streak = currentDayStreak(studyDates);
+  calendarStreakBadge.hidden = streak < 2;
+  if (streak >= 2) {
+    calendarStreakBadge.textContent = streak >= 5 ? `🔥 ${streak} dias` : `⭐ ${streak} dias`;
+  }
+
+  calendarMonthLabel.textContent = `${PT_MONTH_NAMES[calendarViewMonth]} de ${calendarViewYear}`;
+
+  const todayKey = toDateKey(today.toISOString());
+  const firstOfMonth = new Date(calendarViewYear, calendarViewMonth, 1);
+  const daysInMonth = new Date(calendarViewYear, calendarViewMonth + 1, 0).getDate();
+  const leadingBlanks = firstOfMonth.getDay(); // 0 (dom) a 6 (sáb)
+
+  calendarGrid.innerHTML = "";
+
+  for (let i = 0; i < leadingBlanks; i++) {
+    const blank = document.createElement("span");
+    blank.className = "calendar-day calendar-day-outside";
+    calendarGrid.appendChild(blank);
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateObj = new Date(calendarViewYear, calendarViewMonth, day);
+    const key = `${calendarViewYear}-${String(calendarViewMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    const entry = dayIndex.get(key);
+    const runLength = runLengthByDay.get(key) || 0;
+
+    const cell = document.createElement("button");
+    cell.type = "button";
+    cell.textContent = String(day);
+
+    const classes = ["calendar-day"];
+    if (entry) {
+      classes.push("calendar-day-studied");
+      if (runLength >= 5) classes.push("calendar-day-fire");
+      else if (runLength >= 2) classes.push("calendar-day-streak");
+      if (entry.total >= CALENDAR_BUSY_DAY_THRESHOLD) classes.push("calendar-day-busy");
+    } else {
+      classes.push("calendar-day-empty");
+    }
+    if (key === todayKey) classes.push("calendar-day-today");
+    cell.className = classes.join(" ");
+
+    const dateLabel = dateObj.toLocaleDateString("pt-BR");
+    if (entry) {
+      const pct = pctOf(entry.correct, entry.total);
+      const streakSuffix = runLength >= 2 ? ` · ${runLength} dias em sequência` : "";
+      cell.title = `${dateLabel}: ${entry.total} questão(ões), ${pct}% de acerto${streakSuffix}`;
+      cell.addEventListener("click", () => openCalendarDayModal(key, entry, runLength));
+    } else {
+      cell.title = key === todayKey ? `${dateLabel}: hoje, sem estudo ainda` : `${dateLabel}: sem estudo`;
+      cell.disabled = true;
+    }
+
+    calendarGrid.appendChild(cell);
+  }
+}
+
+function shiftCalendarMonth(delta) {
+  if (calendarViewYear === null) renderCalendarPanel();
+  let month = calendarViewMonth + delta;
+  let year = calendarViewYear;
+  while (month < 0) { month += 12; year--; }
+  while (month > 11) { month -= 12; year++; }
+  calendarViewMonth = month;
+  calendarViewYear = year;
+  renderCalendarPanel();
+}
+
+calendarPrevBtn.addEventListener("click", () => shiftCalendarMonth(-1));
+calendarNextBtn.addEventListener("click", () => shiftCalendarMonth(1));
+
+// Seletor rápido de mês/ano — troca o label clicável por dois <select>,
+// preenchidos na hora da abertura (o intervalo de anos depende de quando o
+// aluno começou a estudar, não é fixo). Escolher um valor já aplica e fecha
+// o seletor, sem precisar de um botão "Confirmar" à parte.
+function toggleCalendarPeriodPicker() {
+  const opening = calendarPeriodPicker.hidden;
+  if (!opening) {
+    calendarPeriodPicker.hidden = true;
+    return;
+  }
+
+  calendarMonthSelect.innerHTML = PT_MONTH_NAMES
+    .map((name, i) => `<option value="${i}">${name[0].toUpperCase()}${name.slice(1)}</option>`)
+    .join("");
+  calendarMonthSelect.value = String(calendarViewMonth);
+
+  const studyYears = calendarAllStudyDates().map(iso => new Date(iso).getFullYear());
+  const earliestYear = studyYears.length > 0 ? Math.min(...studyYears) : calendarViewYear;
+  const currentYear = new Date().getFullYear();
+  const years = [];
+  for (let y = Math.min(earliestYear, calendarViewYear); y <= Math.max(currentYear, calendarViewYear); y++) years.push(y);
+  calendarYearSelect.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join("");
+  calendarYearSelect.value = String(calendarViewYear);
+
+  calendarPeriodPicker.hidden = false;
+}
+
+calendarMonthLabel.addEventListener("click", toggleCalendarPeriodPicker);
+
+function applyCalendarPeriodPicker() {
+  calendarViewMonth = Number(calendarMonthSelect.value);
+  calendarViewYear = Number(calendarYearSelect.value);
+  calendarPeriodPicker.hidden = true;
+  renderCalendarPanel();
+}
+calendarMonthSelect.addEventListener("change", applyCalendarPeriodPicker);
+calendarYearSelect.addEventListener("change", applyCalendarPeriodPicker);
+
+// ---------------------------------------------- Modal de detalhe do dia
+
+function buildCalendarDaySubjectRow({ discipline, total, correct }) {
+  const wrap = document.createElement("div");
+  wrap.className = "stats-subject-wrap";
+
+  const row = document.createElement("div");
+  row.className = "stats-subject-row";
+
+  const name = document.createElement("div");
+  name.className = "stats-subject-name";
+  name.textContent = discipline;
+  row.appendChild(name);
+
+  const pct = pctOf(correct, total);
+  const bar = document.createElement("div");
+  bar.className = "stats-subject-bar";
+  const fill = document.createElement("div");
+  fill.className = "stats-subject-bar-fill" + (pct < 50 ? " low" : pct >= 75 ? " high" : "");
+  fill.style.width = `${pct}%`;
+  bar.appendChild(fill);
+  row.appendChild(bar);
+
+  const frac = document.createElement("div");
+  frac.className = "stats-subject-frac";
+  frac.textContent = `${correct}/${total} (${pct}%)`;
+  row.appendChild(frac);
+
+  wrap.appendChild(row);
+  return wrap;
+}
+
+function buildCalendarQuickstat(num, label, cls) {
+  const stat = document.createElement("div");
+  stat.className = "calendar-day-quickstat";
+  const numEl = document.createElement("span");
+  numEl.className = "calendar-day-quickstat-num" + (cls ? ` ${cls}` : "");
+  numEl.textContent = num;
+  const labelEl = document.createElement("span");
+  labelEl.className = "calendar-day-quickstat-label";
+  labelEl.textContent = label;
+  stat.append(numEl, labelEl);
+  return stat;
+}
+
+function openCalendarDayModal(dateKey, entry, runLength) {
+  const dateObj = new Date(`${dateKey}T00:00:00`);
+  calendarDayModalTitle.textContent = dateObj.toLocaleDateString("pt-BR", {
+    day: "2-digit", month: "long", year: "numeric",
+  });
+
+  const pct = pctOf(entry.correct, entry.total);
+  const minutes = estimateStudyMinutes([...entry.answeredAt].sort());
+
+  calendarDayQuickstats.innerHTML = "";
+  calendarDayQuickstats.append(
+    buildCalendarQuickstat(fmtStudyMinutes(minutes), "Tempo estimado de estudo"),
+    buildCalendarQuickstat(entry.total, "Questões respondidas"),
+    buildCalendarQuickstat(`${entry.correct} (${pct}%)`, "Acertos", "ok"),
+  );
+  if (runLength >= 2) {
+    calendarDayQuickstats.appendChild(
+      buildCalendarQuickstat(`${runLength} dias`, "Sequência", "streak"),
+    );
+  }
+
+  const bySubject = [...entry.disciplines.entries()]
+    .map(([discipline, s]) => ({ discipline, total: s.total, correct: s.correct }))
+    .sort((a, b) => b.total - a.total);
+  calendarDaySubjectsSection.hidden = bySubject.length === 0;
+  calendarDaySubjects.innerHTML = "";
+  bySubject.forEach(s => calendarDaySubjects.appendChild(buildCalendarDaySubjectRow(s)));
+
+  calendarDayExamsSection.hidden = entry.simulados.length === 0;
+  calendarDayExams.innerHTML = "";
+  entry.simulados.forEach(sim => {
+    const row = document.createElement("div");
+    row.className = "calendar-day-exam-row";
+    const name = document.createElement("span");
+    name.className = "calendar-day-exam-name";
+    name.textContent = sim.nome;
+    const nota = document.createElement("span");
+    nota.className = "calendar-day-exam-nota";
+    nota.textContent = sim.valorTotal
+      ? `${pctOf(sim.nota, sim.valorTotal)}%`
+      : String(sim.nota ?? "—");
+    row.append(name, nota);
+    calendarDayExams.appendChild(row);
+  });
+
+  calendarDayModalOverlay.hidden = false;
+}
+
+function closeCalendarDayModal() {
+  calendarDayModalOverlay.hidden = true;
+}
+
+calendarDayModalCloseBtn.addEventListener("click", closeCalendarDayModal);
+calendarDayModalOverlay.addEventListener("click", (ev) => {
+  if (ev.target === calendarDayModalOverlay) closeCalendarDayModal();
 });
 
 // ------------------------------------------------------- Dica do dia
@@ -1690,6 +2057,21 @@ function parseLetter(altString) {
 
 function stripLetter(altString) {
   return String(altString).replace(/^\s*[A-Da-d]\)\s*/, "");
+}
+
+// Sinalização editorial (ver supabase/schema_questoes_desatualizadas.sql) —
+// marca questões cujo enunciado/gabarito pode não refletir mais a lei atual
+// (revisão jurídica questão a questão, feita fora do app). O clique chama
+// reportPossiblyOutdated, definida em dr-laureano.js (mesmo escopo global de
+// scripts clássicos, ver comentário no topo daquele arquivo): abre o chat e
+// já manda a pergunta pro Dr. Laureano confirmar/explicar.
+function buildOutdatedBanner(q) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "outdated-flag-btn";
+  btn.textContent = "⚠ Questão possivelmente desatualizada";
+  btn.addEventListener("click", () => reportPossiblyOutdated(q));
+  return btn;
 }
 
 function buildMetaBadges(q) {
@@ -1913,6 +2295,7 @@ function renderQuestion() {
   viewer.style.animation = "";
 
   viewer.innerHTML = "";
+  if (q.possibly_outdated) viewer.appendChild(buildOutdatedBanner(q));
   viewer.appendChild(buildMetaBadges(q));
 
   const body = document.createElement("div");
@@ -2612,8 +2995,14 @@ let statsAnswersCache = null;
 // Contraparte da 2ª fase pro sistema de medalhas (ver fetchPhase2MedalsSummary/
 // runMedalsCheck) — populado uma vez no init(), atualizado localmente depois
 // de cada simulado (não existe aqui: quem termina um simulado é a OUTRA
-// página, simulado2fase.js, que tem seu próprio contexto).
+// página, simulado2fase.js, que tem seu próprio contexto). Derivado de
+// minhasTentativas (ver fetchMinhasTentativas), não buscado à parte.
 let phase2MedalsSummary = { count: 0, dates: [] };
+
+// Histórico completo de tentativas da 2ª fase (ver fetchMinhasTentativas) —
+// populado uma vez no init(), usado pelo Calendário de Estudos pra mostrar
+// "simulados realizados" no detalhe de um dia.
+let minhasTentativas = [];
 let statsPeriod = "all"; // "today" | "7d" | "30d" | "all"
 
 menuStatsBtn.addEventListener("click", () => {
@@ -3101,7 +3490,7 @@ const PAGE_SIZE = 1000;
 // alternativas incluidos) — de proposito, mesmo sendo mais pesado que so'
 // os campos leves: e' isso que permite, depois da tela de carregamento,
 // navegar entre questoes sem nenhuma espera nem busca de rede no meio.
-const QUESTION_COLUMNS = "id, year, exam_number, exam_type, number, discipline, correct_answer, statement, alternatives";
+const QUESTION_COLUMNS = "id, year, exam_number, exam_type, number, discipline, correct_answer, statement, alternatives, possibly_outdated, outdated_reason";
 
 async function fetchAllQuestions() {
   const rows = [];
@@ -3222,35 +3611,66 @@ loadingStartBtn.addEventListener("click", () => {
 // já nascer com dado real, sem esperar o aluno abrir Estatísticas primeiro.
 // Nunca lança: uma falha aqui não deve impedir a Tela 1 de aparecer, só
 // deixa o progresso "zerado" até o aluno tentar de novo em Estatísticas.
+// Paginado (mesmo motivo/mesmo padrão de fetchAllQuestions, ver PAGE_SIZE
+// mais abaixo) — CORRIGIDO (auditoria do Calendário de Estudos): antes fazia
+// um .select() sem .range() nenhum, então qualquer aluno com mais de 1000
+// respostas registradas (fácil de bater em alguns meses de uso) tinha
+// respostas mais antigas silenciosamente cortadas pelo limite padrão do
+// PostgREST — corrompendo silenciosamente estatísticas, medalhas de
+// sequência E o novo calendário (dias faltando, sequência errada). Não dá
+// pra paginar por p_key/id como fetchAllQuestions (sem "order" estável
+// óbvio aqui), então pagina por período: sempre pega o próximo lote mais
+// ANTIGO ainda não visto, usando o "answered_at" do último item do lote
+// anterior como corte — funciona mesmo com timestamps repetidos porque o
+// corte é "<", nunca reprocessa o mesmo instante duas vezes de propósito
+// (só arrisca, na pior das hipóteses, pular 1 resposta rara com timestamp
+// EXATAMENTE igual ao corte — aceitável, muito melhor que perder centenas).
 async function fetchStudentAnswers(userId) {
-  const { data, error } = await client
-    .from("oab_respostas")
-    .select("question_id, correct, answered_at")
-    .eq("user_id", userId);
+  const rows = [];
+  let before = null;
+  while (true) {
+    let query = client
+      .from("oab_respostas")
+      .select("question_id, correct, answered_at")
+      .eq("user_id", userId)
+      .order("answered_at", { ascending: false })
+      .limit(PAGE_SIZE);
+    if (before) query = query.lt("answered_at", before);
+
+    const { data, error } = await query;
+    if (error) {
+      console.error("Falha ao carregar respostas do aluno:", error.message);
+      break;
+    }
+    if (!data || data.length === 0) break;
+
+    rows.push(...data);
+    if (data.length < PAGE_SIZE) break;
+    before = data[data.length - 1].answered_at;
+  }
+  return rows;
+}
+
+// Histórico completo de tentativas da 2ª fase — mesma RPC que
+// simulado2fase.js usa (oab2_minhas_tentativas, ver schema_fase2_dashboard.sql),
+// que já devolve exam_number/area resolvidos via join com oab2_provas (uma
+// leitura direta de oab2_tentativas não teria isso). Cap de 200 tentativas
+// (mesmo da própria RPC) — generoso pra qualquer uso real, já que cada
+// tentativa é uma peça+4 questões discursivas corrigida por IA, não uma
+// resposta rápida de múltipla escolha.
+//
+// Substituiu o antigo fetchPhase2MedalsSummary (só contava/achava datas) —
+// esta versão serve TANTO o sistema de medalhas quanto o Calendário de
+// Estudos (que precisa do nome do exame + nota pra mostrar "simulados
+// realizados" no detalhe de um dia, ver buildCalendarDayIndex). Nunca
+// lança, mesmo raciocínio de fetchStudentAnswers.
+async function fetchMinhasTentativas(userId) {
+  const { data, error } = await client.rpc("oab2_minhas_tentativas", { p_aluno_id: userId });
   if (error) {
-    console.error("Falha ao carregar respostas do aluno:", error.message);
+    console.error("Falha ao carregar histórico de simulados:", error.message);
     return [];
   }
   return data || [];
-}
-
-// Resumo leve da 2ª fase só pro sistema de medalhas (ver estudos/medals.js)
-// — bem menor que o que simulado2fase.js busca (nota_total, prova_id etc.):
-// só o suficiente pra contar "quantos simulados corrigidos" (medalhas
-// Estreante/Praticante/Mestre) e achar os dias com atividade lá (medalhas de
-// Tempo de Estudo). Nunca lança, mesmo raciocínio de fetchStudentAnswers.
-async function fetchPhase2MedalsSummary(userId) {
-  const { data, error } = await client
-    .from("oab2_tentativas")
-    .select("finished_at")
-    .eq("user_id", userId)
-    .eq("status", "corrigida");
-  if (error) {
-    console.error("Falha ao carregar simulados da 2ª fase (medalhas):", error.message);
-    return { count: 0, dates: [] };
-  }
-  const rows = data || [];
-  return { count: rows.length, dates: rows.map(r => r.finished_at).filter(Boolean) };
 }
 
 // Monta o contexto completo (1ª fase + 2ª fase) e dispara a checagem de
@@ -3313,15 +3733,15 @@ async function init() {
   let data;
   let answers;
   let firstName;
-  let phase2Summary;
+  let tentativas;
   try {
-    [data, answers, , firstName, , phase2Summary] = await Promise.all([
+    [data, answers, , firstName, , tentativas] = await Promise.all([
       fetchAllQuestionsCached(),
       fetchStudentAnswers(session.user.id),
       loadFavoritos(),
       fetchStudentFirstName(session.user.id),
       loadPlanStatus(),
-      fetchPhase2MedalsSummary(session.user.id),
+      fetchMinhasTentativas(session.user.id),
     ]);
   } catch (error) {
     showLoadingError(`Erro ao carregar questões: ${error.message}`);
@@ -3330,7 +3750,12 @@ async function init() {
 
   allQuestions = data || [];
   statsAnswersCache = answers || [];
-  phase2MedalsSummary = phase2Summary || { count: 0, dates: [] };
+  minhasTentativas = tentativas || [];
+  // Derivado de minhasTentativas (não buscado à parte) — só o que o sistema
+  // de medalhas precisa (contagem + datas dos simulados CORRIGIDOS); ver
+  // fetchMinhasTentativas acima.
+  const corrigidas = minhasTentativas.filter(t => t.status === "corrigida");
+  phase2MedalsSummary = { count: corrigidas.length, dates: corrigidas.map(t => t.finished_at).filter(Boolean) };
   renderDashboardGreeting(firstName);
   applyPhaseTabLock();
   renderTopbarPlanBadge();

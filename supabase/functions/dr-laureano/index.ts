@@ -116,6 +116,8 @@ interface QuestionContext {
   statement?: string;
   alternatives?: string[];
   correct_answer?: string | null;
+  year?: number;
+  outdated_reason?: string | null;
 }
 
 // Limites defensivos sobre o payload recebido: esta funcao e' publica (so'
@@ -132,6 +134,7 @@ const MAX_DISCIPLINE_CHARS = 120;
 const MAX_ANSWER_CHARS = 20;
 const MAX_MESSAGE_CHARS = 4000;
 const MAX_MESSAGES = 10;
+const MAX_OUTDATED_REASON_CHARS = 500;
 
 function cap(value: unknown, max: number): string {
   const s = typeof value === "string" ? value : "";
@@ -146,8 +149,27 @@ function buildSystemPrompt(question: QuestionContext): string {
   const discipline = cap(question.discipline, MAX_DISCIPLINE_CHARS) || "não informada";
   const correctAnswer = cap(question.correct_answer, MAX_ANSWER_CHARS) || "não informado";
   const number = question.number ?? "?";
+  const examYear = question.year ?? null;
+  const outdatedReason = cap(question.outdated_reason, MAX_OUTDATED_REASON_CHARS);
+  const today = new Date().toLocaleDateString("pt-BR", { day: "numeric", month: "long", year: "numeric", timeZone: "America/Sao_Paulo" });
+
+  const outdatedBlock = outdatedReason
+    ? [
+      "",
+      "SINALIZAÇÃO EDITORIAL DESTA QUESTÃO, MUITO IMPORTANTE:",
+      "- Uma revisão jurídica feita fora deste chat sinalizou esta questão como possivelmente",
+      `  desatualizada, pelo seguinte motivo: "${outdatedReason}"`,
+      "- Quando o aluno perguntar sobre isso, confirme se esse motivo procede (aplicando a mesma",
+      "  trava antialucinação abaixo — só afirme com certeza o que você sabe ser verdade), explique",
+      "  em termos simples o que mudou desde a prova e diga como isso afeta (ou não) a alternativa",
+      "  correta original. Se você não tiver certeza suficiente sobre o motivo apontado, diga isso",
+      "  com honestidade em vez de inventar uma confirmação.",
+    ].join("\n")
+    : "";
 
   return [
+    `Data de hoje: ${today}.`,
+    "",
     "Você é o Dr. Laureano, tutor especialista em todas as áreas do Direito, dentro do NeuraOAB,",
     "uma plataforma de estudos para o Exame de Ordem (OAB). Seu tom é encorajador, direto e",
     "prático, sempre com foco em levar o aluno à aprovação — nunca em parecer erudito ou em",
@@ -159,12 +181,13 @@ function buildSystemPrompt(question: QuestionContext): string {
     "o aluno perguntar algo sem relação com essa questão específica, recuse educadamente e o",
     "convide a voltar ao assunto da questão atual.",
     "",
-    `Questão nº ${number}`,
+    `Questão nº ${number}${examYear ? ` (prova de ${examYear})` : ""}`,
     `Disciplina: ${discipline}`,
     `Enunciado: ${statement}`,
     "Alternativas:",
     alternatives,
     `Gabarito oficial (uso interno seu, ver regras abaixo sobre quando e como usar): ${correctAnswer}`,
+    outdatedBlock,
     "",
     "REGRA DE OURO — CONCISÃO E FORMATO, MUITO IMPORTANTE:",
     "- Resposta curta e escaneável: no máximo 2 a 3 parágrafos, até umas 160 palavras no total.",

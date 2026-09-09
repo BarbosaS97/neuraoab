@@ -1437,6 +1437,252 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   gap: 6px;
 }
 
+/* --------------------------------------------- Card "Calendário de Estudos" */
+/*
+   Cores reaproveitadas das já existentes no tema, de propósito — nenhuma cor
+   nova só pra este card:
+     --primary  (roxo)   -> dia com estudo
+     --gold     (dourado, já é "cor de conquista" das medalhas) -> sequência
+                             iniciando (2-4 dias consecutivos)
+     --logo-orange (laranja, já é o tom "quente" da marca) -> sequência
+                             "em chamas" (5+ dias consecutivos)
+     --secondary (azul)  -> anel do dia de hoje
+   Ver buildCalendarDayIndex/renderCalendarPanel em estudos.js.
+*/
+
+.calendar-panel-title {
+  justify-content: space-between;
+}
+
+.calendar-panel-title-text {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.calendar-streak-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--logo-orange);
+  background: var(--logo-orange-dim);
+  border-radius: 999px;
+  padding: 3px 9px;
+}
+
+.calendar-streak-badge[hidden] { display: none; }
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.calendar-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  background: var(--card-hover);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.calendar-nav-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+.calendar-nav-label {
+  flex: 1;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  text-transform: capitalize;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+}
+.calendar-nav-label:hover { color: var(--primary); }
+
+.calendar-period-picker {
+  display: flex;
+  gap: 8px;
+}
+.calendar-period-picker[hidden] { display: none; }
+
+.calendar-period-select {
+  flex: 1;
+  background: var(--card-hover);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12.5px;
+  padding: 6px 8px;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.calendar-day {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  font-family: inherit;
+  font-size: 11px;
+  color: var(--text-dim);
+  cursor: default;
+  padding: 0;
+}
+
+/* Dias fora do mês visível (preenchimento da grade) — mantém o alinhamento
+   dos dias de semana sem confundir com dias reais do mês. */
+.calendar-day-outside { visibility: hidden; }
+
+.calendar-day-empty { box-shadow: inset 0 0 0 1.5px var(--border); }
+
+.calendar-day-studied {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+.calendar-day-studied:hover { filter: brightness(1.12); }
+
+/* Sequência de 2-4 dias — "começando", brilho sutil dourado por cima da cor
+   normal de "estudou". */
+.calendar-day-streak {
+  background: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-dim);
+}
+
+/* Sequência de 5+ dias — "em chamas", brilho mais forte em laranja. */
+.calendar-day-fire {
+  background: var(--logo-orange);
+  box-shadow: 0 0 0 4px var(--logo-orange-glow);
+}
+
+/* Dia de hoje — anel azul por cima de qualquer outro estado (estudou ou
+   não), sempre reconhecível de relance. */
+.calendar-day-today { box-shadow: 0 0 0 2px var(--secondary); }
+.calendar-day-today.calendar-day-streak,
+.calendar-day-today.calendar-day-fire { box-shadow: 0 0 0 2px var(--secondary), 0 0 0 5px var(--gold-dim); }
+
+/* 50+ questões no dia — estrelinha no canto, sem aumentar o círculo (evita
+   quebrar o alinhamento da grade). */
+.calendar-day-busy::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 1.5px solid var(--card);
+}
+
+.calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border);
+}
+
+.calendar-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  color: var(--text-dim);
+}
+
+.calendar-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.calendar-dot-empty { box-shadow: inset 0 0 0 1.5px var(--border); }
+.calendar-dot-studied { background: var(--primary); }
+.calendar-dot-streak { background: var(--gold); }
+.calendar-dot-fire { background: var(--logo-orange); }
+
+/* Modal de detalhe do dia (ver openCalendarDayModal em estudos.js) —
+   reaproveita .stats-subject-* (mesmas barras de "Desempenho por matéria" da
+   tela de Estatísticas) pro detalhamento por disciplina. */
+.calendar-day-quickstats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 26px;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.calendar-day-quickstat { display: flex; flex-direction: column; gap: 3px; }
+.calendar-day-quickstat-num { font-size: 20px; font-weight: 800; color: var(--text); line-height: 1; }
+.calendar-day-quickstat-num.ok { color: var(--success); }
+.calendar-day-quickstat-num.streak { color: var(--logo-orange); }
+.calendar-day-quickstat-label { font-size: 11.5px; color: var(--text-dim); }
+
+.calendar-day-section { margin-top: 20px; }
+.calendar-day-section-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+
+.calendar-day-exams {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.calendar-day-exam-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: var(--card-hover);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 9px 12px;
+  font-size: 12.5px;
+}
+
+.calendar-day-exam-name { color: var(--text); }
+.calendar-day-exam-nota { font-weight: 700; color: var(--primary); flex-shrink: 0; }
+
 /* ------------------------------------------------------------ Tela de estudo */
 
 .study-screen {
@@ -1908,6 +2154,25 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 @media (min-width: 600px) {
   .question-card { padding: 34px 42px; }
 }
+
+.outdated-flag-btn {
+  display: block;
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 11px 16px;
+  background: var(--error);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+.outdated-flag-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
 .meta {
   display: flex;

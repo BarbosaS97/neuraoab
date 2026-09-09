@@ -537,6 +537,32 @@
   </div>
 </div>
 
+<!-- --------------------------------------- Modal de detalhe do dia (Calendário) -->
+<!-- Aberto ao clicar num dia com atividade no card "Calendário de Estudos"
+     (ver openCalendarDayModal em estudos.js). Conteúdo montado do zero a
+     cada abertura, a partir do índice já calculado em memória (buildCalendarDayIndex)
+     — nenhuma consulta de rede nova ao clicar num dia. Reaproveita
+     .help-overlay/.help-modal, mesmo padrão dos outros modais acima. -->
+<div class="help-overlay" id="calendarDayModalOverlay" hidden>
+  <div class="help-modal calendar-day-modal" role="dialog" aria-modal="true" aria-labelledby="calendarDayModalTitle">
+    <div class="help-modal-header">
+      <h2 id="calendarDayModalTitle">Dia</h2>
+      <button type="button" id="calendarDayModalCloseBtn" class="help-modal-close" aria-label="Fechar">&times;</button>
+    </div>
+    <div class="help-modal-body">
+      <div class="calendar-day-quickstats" id="calendarDayQuickstats"></div>
+      <div class="calendar-day-section" id="calendarDaySubjectsSection" hidden>
+        <h3 class="calendar-day-section-title">Detalhamento por disciplina</h3>
+        <div class="stats-subjects" id="calendarDaySubjects"></div>
+      </div>
+      <div class="calendar-day-section" id="calendarDayExamsSection" hidden>
+        <h3 class="calendar-day-section-title">Simulados realizados</h3>
+        <div class="calendar-day-exams" id="calendarDayExams"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- --------------------------------------------- Modal de medalha conquistada -->
 <!-- Aberto por checkAndAwardMedals/renderMedalCelebration (ver estudos/medals.js,
      carregado antes de estudos.js) logo depois de uma resposta ou do carregamento
@@ -749,6 +775,52 @@
               Ver todas as opções
               <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </button>
+          </div>
+
+          <!-- "Calendário de Estudos": mapa mensal de dias com atividade (1ª
+               e 2ª fase), sequências destacadas, clique no dia abre o
+               detalhe (ver renderCalendarPanel/openCalendarDayModal em
+               estudos.js). Sempre visível (diferente do Modo Revisão, que só
+               aparece com erro pendente) — mesmo sem nada estudado ainda, ver
+               o mês vazio é o que convida a começar a sequência. -->
+          <div class="side-panel calendar-panel" id="calendarPanel">
+            <div class="side-panel-title calendar-panel-title">
+              <span class="calendar-panel-title-text">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                Calendário de Estudos
+              </span>
+              <span class="calendar-streak-badge" id="calendarStreakBadge" hidden></span>
+            </div>
+
+            <div class="calendar-nav">
+              <button type="button" class="calendar-nav-btn" id="calendarPrevBtn" aria-label="Mês anterior">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+              <button type="button" class="calendar-nav-label" id="calendarMonthLabel">Setembro 2026</button>
+              <button type="button" class="calendar-nav-btn" id="calendarNextBtn" aria-label="Próximo mês">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+            </div>
+
+            <!-- Seletor rápido de mês/ano — some no lugar do label acima ao
+                 clicar nele (ver toggleCalendarPeriodPicker), some de volta
+                 assim que um valor é escolhido. -->
+            <div class="calendar-period-picker" id="calendarPeriodPicker" hidden>
+              <select class="calendar-period-select" id="calendarMonthSelect" aria-label="Mês"></select>
+              <select class="calendar-period-select" id="calendarYearSelect" aria-label="Ano"></select>
+            </div>
+
+            <div class="calendar-weekdays" aria-hidden="true">
+              <span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+
+            <div class="calendar-legend">
+              <span class="calendar-legend-item"><i class="calendar-dot calendar-dot-empty"></i>Sem estudo</span>
+              <span class="calendar-legend-item"><i class="calendar-dot calendar-dot-studied"></i>Estudou</span>
+              <span class="calendar-legend-item"><i class="calendar-dot calendar-dot-streak"></i>Sequência</span>
+              <span class="calendar-legend-item"><i class="calendar-dot calendar-dot-fire"></i>5+ dias</span>
+            </div>
           </div>
         </aside>
       </div>

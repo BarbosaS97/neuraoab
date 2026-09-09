@@ -258,6 +258,56 @@ function bestConsecutiveDayStreak(isoDates) {
   return best;
 }
 
+// Sequência ATIVA agora (termina hoje ou ontem) — 0 se a última atividade
+// foi antes de ontem, ou seja, a sequência já quebrou. Complementa
+// bestConsecutiveDayStreak (que é sobre o recorde histórico, não sobre "estou
+// em sequência AGORA") — usado pelo Calendário de Estudos (estudos.js) pro
+// badge "🔥 N dias em sequência" no card.
+function currentDayStreak(isoDates) {
+  const uniqueDays = [...new Set(isoDates.map(toDateKey))].sort();
+  if (uniqueDays.length === 0) return 0;
+
+  const todayKey = toDateKey(new Date().toISOString());
+  const lastKey = uniqueDays[uniqueDays.length - 1];
+  const daysSinceLast = Math.round(
+    (new Date(`${todayKey}T00:00:00`) - new Date(`${lastKey}T00:00:00`)) / 86400000,
+  );
+  if (daysSinceLast > 1) return 0;
+
+  let streak = 1;
+  for (let i = uniqueDays.length - 1; i > 0; i--) {
+    const cur = new Date(`${uniqueDays[i]}T00:00:00`);
+    const prev = new Date(`${uniqueDays[i - 1]}T00:00:00`);
+    if (Math.round((cur - prev) / 86400000) === 1) streak++;
+    else break;
+  }
+  return streak;
+}
+
+// Todos os "runs" (sequências) de dias consecutivos com atividade, do
+// histórico INTEIRO — diferente de currentDayStreak/bestConsecutiveDayStreak
+// (que só devolvem um número), aqui cada dia dentro de um run de 2+ fica
+// disponível pra ser destacado visualmente no Calendário de Estudos (⭐ 2-4
+// dias, 🔥 5+ dias), não só a sequência ativa/recorde.
+function consecutiveDayRuns(isoDates) {
+  const uniqueDays = [...new Set(isoDates.map(toDateKey))].sort();
+  const runs = [];
+  let current = [];
+  let prevDate = null;
+  uniqueDays.forEach(key => {
+    const date = new Date(`${key}T00:00:00`);
+    if (prevDate && Math.round((date - prevDate) / 86400000) === 1) {
+      current.push(key);
+    } else {
+      if (current.length > 0) runs.push(current);
+      current = [key];
+    }
+    prevDate = date;
+  });
+  if (current.length > 0) runs.push(current);
+  return runs.map(keys => ({ keys, length: keys.length }));
+}
+
 // Pré-calcula tudo que mais de uma medalha usa (uma vez só por chamada, não
 // uma vez por medalha) a partir do contexto disponível — ver comentário no
 // topo do arquivo sobre contexto PARCIAL: cada bloco só roda se a página

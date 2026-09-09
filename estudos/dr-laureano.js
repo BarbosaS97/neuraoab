@@ -422,9 +422,34 @@ chatClearConfirmBtn.addEventListener("click", async () => {
   resetChatForQuestion(question);
 });
 
+// Guardamos a promise do reset em andamento (loadSavedConversation, dentro
+// dela, e' assincrono) pra' reportPossiblyOutdated poder esperar o chat
+// estar de fato pronto pra' questao atual antes de mandar a pergunta —
+// senao' correria o risco de mandar em cima da saudacao/conversa antiga
+// ainda sendo carregada.
+let resetChatPromise = Promise.resolve();
+
 document.addEventListener("question:changed", (ev) => {
-  resetChatForQuestion(ev.detail);
+  resetChatPromise = resetChatForQuestion(ev.detail);
 });
+
+// Chamada pelo botao vermelho "Questao possivelmente desatualizada" (ver
+// buildOutdatedBanner em estudos.js, mesmo escopo global de scripts
+// classicos) — abre o chat na questao atual e ja' dispara a pergunta pro Dr.
+// Laureano confirmar/explicar, sem o aluno precisar digitar nada.
+const OUTDATED_QUESTION_PROMPT =
+  "Essa questão foi sinalizada como possivelmente desatualizada. Confirme se procede, explique o que mudou desde a prova e como isso afeta a resposta.";
+
+async function reportPossiblyOutdated(question) {
+  setChatExpanded(true);
+  await resetChatPromise;
+  // Aluno pode ter trocado de questao enquanto o reset ainda carregava a
+  // conversa salva (loadSavedConversation) — nesse caso currentQuestion ja'
+  // e' outra, e mandar a pergunta aqui escreveria no chat errado.
+  if (!currentQuestion || currentQuestion.id !== question.id) return;
+  if (sending) return; // ja' ha' uma resposta em andamento, nao empilha
+  sendChatMessage(OUTDATED_QUESTION_PROMPT);
+}
 
 // ----------------------------------------------------------------- Envio
 
@@ -476,6 +501,8 @@ async function sendChatMessage(text) {
         alternatives: currentQuestion.alternatives,
         discipline: currentQuestion.discipline,
         correct_answer: currentQuestion.correct_answer,
+        year: currentQuestion.year,
+        outdated_reason: currentQuestion.possibly_outdated ? currentQuestion.outdated_reason : null,
       },
       messages: chatHistory,
     },
