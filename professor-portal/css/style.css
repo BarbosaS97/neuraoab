@@ -476,6 +476,26 @@ input, textarea {
 .btn-ghost:hover { color: var(--text); border-color: var(--accent); }
 .btn-ghost.danger:hover { color: var(--err); border-color: var(--err); }
 
+/* Botão "Voltar" no topo de páginas de detalhe (ver turma.html/aluno.html)
+   — mesma base visual de .btn-ghost, só com o ícone de seta embutido. */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid var(--panel-border);
+  color: var(--text-dim);
+  border-radius: 7px;
+  padding: 7px 12px;
+  font-size: 12.5px;
+  text-decoration: none;
+  margin-bottom: 14px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-back:hover { color: var(--text); border-color: var(--accent); }
+.btn-back svg { flex-shrink: 0; }
+
 .btn-accent {
   display: inline-flex;
   align-items: center;
