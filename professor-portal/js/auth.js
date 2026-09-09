@@ -342,21 +342,22 @@ async function checkIsProfessor(userId) {
 
   // Pega a sessão estabelecida sozinha pelo supabase-js quando a página
   // carrega com um link mágico na URL (ex.: confirmação de e-mail depois
-  // do "Criar conta", ver emailRedirectTo acima) — sem OAuth não tem mais
-  // flag de sessionStorage pra filtrar "essa sessão era esperada": qualquer
-  // sessão que aparecer aqui já é motivo pra checar acesso, e o guard
-  // `resolved` acima evita processar a mesma sessão duas vezes (ex.: se
-  // isso disparar de novo logo depois de um signIn/signUp pelo formulário).
-  client.auth.onAuthStateChange((_event, session) => {
+  // do "Criar conta", ver emailRedirectTo acima) — dispara "SIGNED_IN".
+  //
+  // "INITIAL_SESSION" é ignorado de propósito: é o evento que o supabase-js
+  // dispara sozinho quando a página abre e já existe uma sessão SALVA de
+  // antes (localStorage) — sem esse filtro, só de digitar o e-mail (ou nem
+  // isso) a pessoa caía direto no dashboard, sem nunca digitar/conferir a
+  // senha, porque essa sessão antiga era aceita na hora. Continua reagindo a
+  // um login de verdade acontecendo AGORA: signInWithPassword no formulário
+  // (que já chama handleSession direto, não depende deste evento) ou o
+  // clique no link de confirmação de e-mail, que é sempre "SIGNED_IN". O
+  // guard `resolved` acima evita processar a mesma sessão duas vezes (ex.:
+  // se isso disparar de novo logo depois de um signIn pelo formulário).
+  client.auth.onAuthStateChange((event, session) => {
+    if (event === "INITIAL_SESSION") return;
     if (session?.user) handleSession(session);
   });
-
-  // Visita direta com uma sessão já existente (não passou pelo formulário
-  // agora) — ex.: quem já foi autorizado antes e só reabre index.html.
-  (async () => {
-    const { data: { session } } = await client.auth.getSession();
-    if (session?.user) await handleSession(session);
-  })();
 
   if (restrictedLogoutBtn) {
     restrictedLogoutBtn.addEventListener("click", async () => {
