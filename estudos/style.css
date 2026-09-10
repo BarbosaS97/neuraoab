@@ -2180,7 +2180,12 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 }
 
 .outdated-flag-btn {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 10px;
+  row-gap: 4px;
   width: 100%;
   margin-bottom: 16px;
   padding: 11px 16px;
@@ -2193,10 +2198,43 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   font-family: inherit;
   letter-spacing: 0.01em;
   cursor: pointer;
-  transition: filter 0.15s ease, transform 0.15s ease;
+  transition: filter 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  animation: outdatedPulse 2.4s ease-in-out infinite;
 }
 
-.outdated-flag-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.outdated-flag-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  animation-play-state: paused;
+}
+
+/* Pulso sutil no contorno — chama atencao pro botao sem gritar (nada de
+   piscar cor/tamanho), so' um "anel" que respira, convidando ao clique. */
+@keyframes outdatedPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(218, 54, 51, 0.45); }
+  50% { box-shadow: 0 0 0 6px rgba(218, 54, 51, 0); }
+}
+
+.outdated-flag-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.outdated-flag-btn:hover .outdated-flag-cta { background: rgba(255, 255, 255, 0.28); }
+
+.outdated-flag-cta-arrow {
+  transition: transform 0.15s ease;
+}
+
+.outdated-flag-btn:hover .outdated-flag-cta-arrow { transform: translateX(2px); }
 
 .meta {
   display: flex;
@@ -2626,36 +2664,48 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 
 .chat-length-label {
   font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   color: var(--text-dim);
   flex-shrink: 0;
 }
 
+/* Fundo levemente "entalhado" (inset) pra sugerir uma trilha onde a pilula
+   ativa desliza — mesma ideia visual de um seletor de segmento nativo. */
 .chat-length-options {
   display: flex;
-  gap: 4px;
+  gap: 2px;
   background: var(--card-hover);
   border: 1px solid var(--border);
   border-radius: 999px;
-  padding: 2px;
+  padding: 3px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .chat-length-btn {
   border: none;
   background: transparent;
   color: var(--text-dim);
-  font-size: 11px;
+  font-size: 11.5px;
+  font-weight: 600;
   font-family: inherit;
-  padding: 5px 11px;
+  padding: 6px 13px;
   border-radius: 999px;
   cursor: pointer;
-  transition: background 0.12s ease, color 0.12s ease;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.chat-length-btn:hover { color: var(--text); }
+.chat-length-btn:hover:not(.active) { color: var(--text); background: rgba(255, 255, 255, 0.06); }
 
+/* Pilula ativa em destaque: gradiente da marca (mesma familia de cores do
+   logo, ver --logo-gradient) + sombra colorida e leve elevacao, pra parecer
+   fisicamente "pressionada" em vez de so' trocar de cor. */
 .chat-length-btn.active {
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--logo-purple), var(--primary));
   color: #fff;
+  box-shadow: 0 2px 8px -1px rgba(139, 92, 246, 0.55);
+  transform: translateY(-1px);
 }
 
 /* Confirmação de duas etapas antes de apagar — mesmo espírito de

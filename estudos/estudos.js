@@ -2069,7 +2069,18 @@ function buildOutdatedBanner(q) {
   const btn = document.createElement("button");
   btn.type = "button";
   btn.className = "outdated-flag-btn";
-  btn.textContent = "⚠ Questão possivelmente desatualizada";
+
+  const label = document.createElement("span");
+  label.textContent = "⚠ Questão possivelmente desatualizada";
+  btn.appendChild(label);
+
+  // Sem isso o botao parece so' um aviso estatico — este selo deixa claro,
+  // de cara, que da' pra clicar nele pra' ir direto pro Dr. Laureano.
+  const cta = document.createElement("span");
+  cta.className = "outdated-flag-cta";
+  cta.innerHTML = "Perguntar ao Dr. Laureano <span class=\"outdated-flag-cta-arrow\">&rarr;</span>";
+  btn.appendChild(cta);
+
   btn.addEventListener("click", () => reportPossiblyOutdated(q));
   return btn;
 }
