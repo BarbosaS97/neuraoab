@@ -44,6 +44,12 @@ const STOP_ICON = `<svg viewBox="0 0 24 24" width="13" height="13" fill="current
 
 function setChatExpanded(expanded) {
   chatPanel.classList.toggle("expanded", expanded);
+  // Com o chat expandido (desktop), .chat-panel vira position: fixed (ver
+  // style.css) e sai do fluxo do flex — esta classe em <body> e' o que faz
+  // .content reservar o espaco da largura dele (padding-right), ja que a
+  // reserva automatica do flexbox para de valer nesse estado. Ver comentario
+  // grande em ".content" no style.css pro motivo de tudo isso existir.
+  document.body.classList.toggle("chat-expanded", expanded);
   chatToggle.setAttribute("aria-expanded", String(expanded));
   chatToggle.setAttribute("aria-label", expanded ? "Fechar chat com Dr. Laureano" : "Abrir chat com Dr. Laureano");
   const scrollArea = chatPanel.querySelector(".chat-scroll");

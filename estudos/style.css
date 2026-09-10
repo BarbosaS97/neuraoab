@@ -695,6 +695,30 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
   .content { padding: 32px 40px 60px; }
 }
 
+/* Com o chat expandido (desktop — mobile ja' vira overlay em tela cheia, ver
+   @media (max-width: 680px) mais abaixo), .chat-panel some do fluxo do flex
+   (vira position: fixed logo ali embaixo) pra nao "descolar" do fundo da
+   viewport perto do fim de uma questao longa (bug real: sticky se solta do
+   pai assim que o pai — que compartilha altura com .content — termina antes
+   da pagina, deixando uma faixa vazia abaixo do chat). Sem mais participar
+   do flex, quem reserva o espaco da largura dele deixa de ser automatico —
+   este padding-right faz esse papel (chatExpanded, alternado em body pelo
+   JS junto com a classe "expanded" do proprio painel, ver setChatExpanded
+   em dr-laureano.js). Os valores espelham o padding-right de .content nos
+   mesmos breakpoints acima, só somando --chat-w. */
+@media (min-width: 681px) {
+  body.chat-expanded .content {
+    padding-right: calc(16px + var(--chat-w));
+    transition: padding-right 0.22s ease;
+  }
+}
+
+@media (min-width: 900px) {
+  body.chat-expanded .content {
+    padding-right: calc(40px + var(--chat-w));
+  }
+}
+
 /* ------------------------------------------------------- Telas de escolha */
 /*
   Tela 1 (exames) e Tela 2 (materias): mesma estrutura de grade de cards
@@ -2436,6 +2460,18 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 }
 
 .chat-panel.expanded { width: var(--chat-w); }
+
+/* Ver comentario grande em ".content" (acima) sobre o porque de sair do
+   sticky aqui — isto e' o que de fato tira o painel expandido do fluxo do
+   flex e o gruda na viewport, imune ao tamanho de .content. */
+@media (min-width: 681px) {
+  .chat-panel.expanded {
+    position: fixed;
+    top: var(--topbar-h);
+    right: 0;
+    height: calc(100vh - var(--topbar-h));
+  }
+}
 
 /* Retrato do Dr. Laureano em cima do botao "IA" — parcialmente pra fora da
    faixa recolhida, os dois elementos agrupados numa coluna. O deslocamento
