@@ -3713,6 +3713,40 @@ async function fetchStudentFirstName(userId) {
   return data.nome.trim().split(/\s+/)[0] || null;
 }
 
+// Preferência de tamanho das respostas do Dr. Laureano (controle no topo do
+// painel de chat, ver dr-laureano.js) — igual a "nome"/"telefone", fica em
+// "profiles" (preferência de conta, não de questão) e usa o mesmo
+// protocolo/policy de leitura já usados por fetchStudentFirstName acima.
+const CHAT_LENGTH_VALUES = ["curta", "media", "longa"];
+const DEFAULT_CHAT_LENGTH = "media";
+let chatResponseLength = DEFAULT_CHAT_LENGTH;
+
+async function fetchChatResponseLength(userId) {
+  const { data, error } = await client
+    .from("profiles")
+    .select("chat_resposta_tamanho")
+    .eq("id", userId)
+    .maybeSingle();
+  if (error || !CHAT_LENGTH_VALUES.includes(data?.chat_resposta_tamanho)) return DEFAULT_CHAT_LENGTH;
+  return data.chat_resposta_tamanho;
+}
+
+// Chamada por dr-laureano.js quando o aluno troca o controle "Curtas/Médias/
+// Longas" — dispara e esquece de propósito (mesmo espírito de
+// saveConversation em dr-laureano.js): é preferência de conta, não deve
+// travar a troca visual do controle nem virar erro perceptível se a rede
+// falhar; na pior hipótese, só não persiste pra próxima visita.
+function saveChatResponseLength(value) {
+  if (!currentSession?.user) return;
+  client
+    .from("profiles")
+    .update({ chat_resposta_tamanho: value })
+    .eq("id", currentSession.user.id)
+    .then(({ error }) => {
+      if (error) console.error("Falha ao salvar preferência de tamanho do chat:", error.message);
+    });
+}
+
 // Sem nome cadastrado ainda (aluno convidado que nunca preencheu "Meu
 // Perfil"), o título cai de volta pro texto estático já escrito no HTML
 // (ver <h1 id="dashboardGreeting"> em estudos/index.html) — nunca um
@@ -3734,14 +3768,16 @@ async function init() {
   let answers;
   let firstName;
   let tentativas;
+  let chatLength;
   try {
-    [data, answers, , firstName, , tentativas] = await Promise.all([
+    [data, answers, , firstName, , tentativas, chatLength] = await Promise.all([
       fetchAllQuestionsCached(),
       fetchStudentAnswers(session.user.id),
       loadFavoritos(),
       fetchStudentFirstName(session.user.id),
       loadPlanStatus(),
       fetchMinhasTentativas(session.user.id),
+      fetchChatResponseLength(session.user.id),
     ]);
   } catch (error) {
     showLoadingError(`Erro ao carregar questões: ${error.message}`);
@@ -3751,6 +3787,7 @@ async function init() {
   allQuestions = data || [];
   statsAnswersCache = answers || [];
   minhasTentativas = tentativas || [];
+  chatResponseLength = chatLength || DEFAULT_CHAT_LENGTH;
   // Derivado de minhasTentativas (não buscado à parte) — só o que o sistema
   // de medalhas precisa (contagem + datas dos simulados CORRIGIDOS); ver
   // fetchMinhasTentativas acima.

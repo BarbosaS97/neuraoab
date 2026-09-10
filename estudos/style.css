@@ -2578,6 +2578,50 @@ a.phase-tab:hover { color: var(--text); background: var(--card-hover); }
 .chat-clear-btn:hover:not(:disabled) { color: var(--error); border-color: var(--error); }
 .chat-clear-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+.chat-length-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.chat-length-label {
+  font-size: 11px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+.chat-length-options {
+  display: flex;
+  gap: 4px;
+  background: var(--card-hover);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px;
+}
+
+.chat-length-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 11px;
+  font-family: inherit;
+  padding: 5px 11px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.chat-length-btn:hover { color: var(--text); }
+
+.chat-length-btn.active {
+  background: var(--primary);
+  color: #fff;
+}
+
 /* Confirmação de duas etapas antes de apagar — mesmo espírito de
    .stats-reset-warning/.stats-reset-confirm-row (Meu Perfil), só compacto
    pra caber na largura do painel de chat (--chat-w, 420px). */

@@ -920,6 +920,17 @@
         <button type="button" id="chatClose" class="chat-close" aria-label="Fechar chat">&times;</button>
       </div>
 
+      <!-- Preferência de tamanho das respostas, salva em profiles.chat_resposta_tamanho
+           (ver estudos.js/dr-laureano.js) — vale pra próxima pergunta em diante. -->
+      <div class="chat-length-row" role="group" aria-label="Tamanho das respostas do Dr. Laureano">
+        <span class="chat-length-label">Respostas</span>
+        <div class="chat-length-options">
+          <button type="button" class="chat-length-btn" data-length="curta">Curtas</button>
+          <button type="button" class="chat-length-btn" data-length="media">Médias</button>
+          <button type="button" class="chat-length-btn" data-length="longa">Longas</button>
+        </div>
+      </div>
+
       <!-- Confirmação antes de apagar — mesmo padrão de duas etapas já usado
            em "Zerar estatísticas"/"Excluir conta" (Meu Perfil, ver
            estudos.js), só que como uma barra dentro do painel de chat em

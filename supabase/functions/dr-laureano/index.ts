@@ -136,12 +136,54 @@ const MAX_MESSAGE_CHARS = 4000;
 const MAX_MESSAGES = 10;
 const MAX_OUTDATED_REASON_CHARS = 500;
 
+// Teto de tokens da resposta, por preferencia de tamanho (ver
+// GOLDEN_RULE_BY_LENGTH abaixo) — rede de seguranca generosa contra corte no
+// meio da frase, nao o mecanismo de controle de tamanho em si (isso vem da
+// "REGRA DE OURO" no prompt). "longa" precisa de mais teto pra nao truncar.
+const MAX_TOKENS_BY_LENGTH: Record<"curta" | "media" | "longa", number> = {
+  curta: 500,
+  media: 800,
+  longa: 1400,
+};
+
 function cap(value: unknown, max: number): string {
   const s = typeof value === "string" ? value : "";
   return s.length > max ? s.slice(0, max) : s;
 }
 
-function buildSystemPrompt(question: QuestionContext): string {
+const RESPONSE_LENGTHS = ["curta", "media", "longa"] as const;
+type ResponseLength = (typeof RESPONSE_LENGTHS)[number];
+
+function normalizeResponseLength(value: unknown): ResponseLength {
+  return RESPONSE_LENGTHS.includes(value as ResponseLength) ? (value as ResponseLength) : "media";
+}
+
+// Preferência de conta (profiles.chat_resposta_tamanho, editável no topo do
+// painel de chat — ver estudos/dr-laureano.js) — três variantes da mesma
+// "REGRA DE OURO" de sempre, só mudando o tamanho-alvo. Precisão continua
+// valendo mais que extensão nas três: nenhuma delas autoriza encher a
+// resposta com repetição só pra bater um tamanho.
+const GOLDEN_RULE_BY_LENGTH: Record<ResponseLength, string[]> = {
+  curta: [
+    "- O aluno pediu respostas CURTAS: 1 parágrafo só, até uns 70 palavras. Vá direto ao ponto —",
+    "  a conclusão e o fundamento que a sustenta, sem rodeio, sem exemplo extra e sem mnemônico",
+    "  (a não ser que o aluno peça um macete explicitamente).",
+  ],
+  media: [
+    "- Resposta curta e escaneável: no máximo 2 a 3 parágrafos, até umas 160 palavras no total.",
+    "  Precisão vale mais que extensão — nunca alongue o texto só pra parecer completo, e nunca",
+    "  repita em outras palavras algo que você já disse na mesma resposta.",
+  ],
+  longa: [
+    "- O aluno pediu respostas LONGAS: pode usar até uns 5 a 6 parágrafos (~350-400 palavras) pra",
+    "  explicar com mais profundidade — comente o fundamento de cada alternativa relevante, não só",
+    "  da correta, e traga o contexto jurídico por trás da regra quando ajudar a fixar o conteúdo.",
+    "  Mesmo assim, cada frase precisa acrescentar algo novo: mais espaço não é licença pra",
+    "  repetir a mesma ideia com outras palavras nem pra encher com floreio.",
+  ],
+};
+
+function buildSystemPrompt(question: QuestionContext, responseLength: ResponseLength): string {
   const statement = cap(question.statement, MAX_STATEMENT_CHARS);
   const alternatives = Array.isArray(question.alternatives)
     ? question.alternatives.slice(0, MAX_ALTERNATIVES).map((a) => cap(a, MAX_ALT_CHARS)).join("\n")
@@ -190,9 +232,7 @@ function buildSystemPrompt(question: QuestionContext): string {
     outdatedBlock,
     "",
     "REGRA DE OURO — CONCISÃO E FORMATO, MUITO IMPORTANTE:",
-    "- Resposta curta e escaneável: no máximo 2 a 3 parágrafos, até umas 160 palavras no total.",
-    "  Precisão vale mais que extensão — nunca alongue o texto só pra parecer completo, e nunca",
-    "  repita em outras palavras algo que você já disse na mesma resposta.",
+    ...GOLDEN_RULE_BY_LENGTH[responseLength],
     "- Quando o aluno defender uma alternativa (certa ou errada) ou pedir a resposta direto, siga",
     "  esta ordem: primeiro diga, em poucas linhas, por que a ideia dele está certa ou errada;",
     "  depois confirme o fundamento correto (a regra ou o artigo que resolve o caso); por fim,",
@@ -224,6 +264,21 @@ function buildSystemPrompt(question: QuestionContext): string {
     "  assunto). Faltando qualquer uma das duas certezas, não arrisque o número: diga \"por",
     "  entendimento consolidado\", \"pela leitura do texto constitucional\" ou equivalente, sem",
     "  inventar ou adivinhar o número.",
+    "- REGRA DOS DOIS PASSOS, antes de escrever qualquer número de artigo, súmula, inciso, decreto",
+    "  ou lei: pare mentalmente e responda (1) tenho certeza real de que esse número existe nesse",
+    "  diploma específico, e não em outro parecido? e (2) tenho certeza de que o CONTEÚDO desse",
+    "  dispositivo é exatamente o que vou afirmar? Só escreva o número se a resposta às duas for",
+    "  sim sem hesitação. Isso vale com força redobrada pra súmulas (número muda de tribunal pra",
+    "  tribunal e de época pra época) e pra reformas recentes (Reforma Trabalhista de 2017, Novo",
+    "  CPC de 2015, Nova Lei de Licitações, Nova Lei de Improbidade de 2021, LGPD, entre outras) —",
+    "  questões de provas mais antigas às vezes tratam de um instituto que uma reforma posterior",
+    "  mudou; se não tiver certeza absoluta de que a regra citada ainda é a vigente hoje, diga isso",
+    "  ao aluno em vez de afirmar como se fosse certeza.",
+    "- Nunca confunda institutos de ramos diferentes do Direito só porque têm nome parecido (ex.:",
+    "  prazo de prescrição cível, trabalhista, tributário e de improbidade são todos diferentes e",
+    "  contados de formas diferentes — não empreste a regra de um ramo pra outro). Também não",
+    "  apresente uma posição doutrinária ou uma corrente minoritária como se fosse jurisprudência",
+    "  pacífica ou texto expresso de lei — deixe claro quando algo é entendimento, não letra de lei.",
     "- Se o aluno apontar, com razão, uma imprecisão sua, admita o erro em uma frase direta (ex.:",
     "  \"Você está certo, eu me equivoquei nesse ponto\") e corrija na sequência — sem rodeios e",
     "  sem inventar uma norma nova só pra justificar o que você disse antes. Nunca insista numa",
@@ -267,14 +322,14 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ error: "Muitas mensagens em pouco tempo. Aguarde alguns minutos e tente novamente." }, 429);
   }
 
-  let body: { question?: QuestionContext; messages?: Array<{ role: string; content: string }> };
+  let body: { question?: QuestionContext; messages?: Array<{ role: string; content: string }>; responseLength?: unknown };
   try {
     body = await req.json();
   } catch {
     return jsonResponse({ error: "JSON inválido." }, 400);
   }
 
-  const { question, messages } = body;
+  const { question, messages, responseLength } = body;
 
   if (!question || typeof question !== "object" || !Array.isArray(messages)) {
     return jsonResponse({ error: "Requisição inválida: 'question' e 'messages' são obrigatórios." }, 400);
@@ -298,18 +353,21 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ error: "Chave da API da DeepSeek não configurada no servidor." }, 500);
   }
 
+  const normalizedLength = normalizeResponseLength(responseLength);
+
   const payload = {
     model: DEEPSEEK_MODEL,
-    messages: [{ role: "system", content: buildSystemPrompt(question) }, ...history],
+    messages: [{ role: "system", content: buildSystemPrompt(question, normalizedLength) }, ...history],
     // temperature baixa (precisao/consistencia > criatividade, adequado pra
     // tutor juridico factual). max_tokens continua generoso DE PROPOSITO:
     // quem causa resposta cortada no meio da frase e' um teto BAIXO, nao um
     // teto alto — reduzir isso pioraria os cortes em vez de evitar. A
-    // brevidade de verdade (~160 palavras) vem da "REGRA DE OURO" do
-    // prompt; o teto aqui e' so' uma rede de seguranca generosa contra
-    // repeticao/alucinacao, nao o mecanismo de controle de tamanho.
+    // brevidade de verdade vem da "REGRA DE OURO" do prompt (variavel por
+    // responseLength, ver GOLDEN_RULE_BY_LENGTH); o teto aqui e' so' uma
+    // rede de seguranca generosa contra repeticao/alucinacao, nao o
+    // mecanismo de controle de tamanho.
     temperature: 0.1,
-    max_tokens: 800,
+    max_tokens: MAX_TOKENS_BY_LENGTH[normalizedLength],
   };
 
   let upstream: Response;

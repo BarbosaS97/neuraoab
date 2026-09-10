@@ -16,6 +16,7 @@ const chatMessagesEl = document.getElementById("chatMessages");
 const chatForm = document.getElementById("chatForm");
 const chatInput = document.getElementById("chatInput");
 const chatSendBtn = document.getElementById("chatSend");
+const chatLengthButtons = document.querySelectorAll(".chat-length-btn");
 
 let currentQuestion = null;
 let chatHistory = []; // { role: "user" | "assistant", content } — so' para o contexto enviado a IA
@@ -64,6 +65,31 @@ chatToggleAvatar.addEventListener("click", () => {
 chatClose.addEventListener("click", () => setChatExpanded(false));
 
 setChatExpanded(false);
+
+// ----------------------------------------------------- Tamanho da resposta
+//
+// "chatResponseLength" (curta/media/longa) e' declarada em estudos.js (mesmo
+// escopo global de scripts classicos, ver comentario no topo deste arquivo)
+// e ja' vem carregada de profiles.chat_resposta_tamanho quando init() (la')
+// termina. So' afeta a PROXIMA pergunta em diante — nao re-gera respostas
+// ja' mostradas no historico.
+function setChatLengthUI(value) {
+  chatLengthButtons.forEach(btn => {
+    const active = btn.dataset.length === value;
+    btn.classList.toggle("active", active);
+    btn.setAttribute("aria-pressed", String(active));
+  });
+}
+
+chatLengthButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const value = btn.dataset.length;
+    if (value === chatResponseLength) return;
+    chatResponseLength = value;
+    setChatLengthUI(value);
+    saveChatResponseLength(value); // definida em estudos.js — grava em profiles, dispara e esquece
+  });
+});
 
 // ------------------------------------------------------------- Mensagens
 //
@@ -335,6 +361,7 @@ function appendStaticMessage(role, content) {
 async function resetChatForQuestion(question) {
   const myGeneration = ++chatGeneration;
   currentQuestion = question;
+  setChatLengthUI(chatResponseLength); // sincroniza o controle caso o valor real (de profiles) so' tenha chegado agora
   chatHistory = [];
   chatMessagesEl.innerHTML = "";
   suggestionsEl = null;
@@ -505,6 +532,7 @@ async function sendChatMessage(text) {
         outdated_reason: currentQuestion.possibly_outdated ? currentQuestion.outdated_reason : null,
       },
       messages: chatHistory,
+      responseLength: chatResponseLength,
     },
   }).then(async ({ data, error }) => {
     if (error) {
